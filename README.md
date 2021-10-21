@@ -1,1 +1,3 @@
-ic3
+# FTB IC
+
+## Industrial Contraptions
