@@ -14,6 +14,7 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
@@ -75,8 +76,38 @@ public class FTBICDataGenHandler {
 		@Override
 		protected void addTranslations() {
 			add("itemGroup.ftbic", "FTB Industrial Contraptions");
+
 			addBlock(FTBICBlocks.RUBBER_SHEET, "Rubber Sheet");
+			addBlock(FTBICBlocks.REINFORCED_STONE, "Reinforced Stone");
+			addBlock(FTBICBlocks.REINFORCED_GLASS, "Reinforced Glass");
+			addBlock(FTBICBlocks.MACHINE_BLOCK, "Machine Block");
+			addBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK, "Advanced Machine Block");
+
 			addItem(FTBICItems.RUBBER, "Rubber");
+			addItem(FTBICItems.RESIN, "Resin");
+			addItem(FTBICItems.MIXED_METAL_INGOT, "Mixed Metal Ingot");
+			addItem(FTBICItems.ADVANCED_ALLOY, "Advanced Alloy");
+			addItem(FTBICItems.COAL_BALL, "Coal Ball");
+			addItem(FTBICItems.COMPRESSED_COAL_BALL, "Compressed Coal Ball");
+			addItem(FTBICItems.COAL_CHUNK, "Coal Chunk");
+			addItem(FTBICItems.RAW_IRIDIUM, "Raw Iridium");
+			addItem(FTBICItems.IRIDIUM_PLATE, "Iridium Plate");
+			addItem(FTBICItems.SCRAP, "Scrap");
+			addItem(FTBICItems.SCRAP_BOX, "Scrap Box");
+			addItem(FTBICItems.SINGLE_USE_BATTERY, "Single Use Battery");
+			addItem(FTBICItems.BATTERY, "Battery");
+			addItem(FTBICItems.CRYSTAL_BATTERY, "Crystal Battery");
+			addItem(FTBICItems.GRAPHENE_BATTERY, "Graphene Battery");
+			addItem(FTBICItems.IRIDIUM_BATTERY, "Iridium Battery");
+			addItem(FTBICItems.OVERCLOCKER_UPGRADE, "Overclocker Upgrade");
+			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy Storage Upgrade");
+			addItem(FTBICItems.TRANSFORMER_UPGRADE, "Transformer Upgrade");
+			addItem(FTBICItems.CLAY_DUST, "Clay Dust");
+			addItem(FTBICItems.ELECTRONIC_CIRCUIT, "Electronic Circuit");
+			addItem(FTBICItems.ADVANCED_CIRCUIT, "Advanced Circuit");
+			addItem(FTBICItems.RAW_CARBON_FIBRE, "Raw Carbon Fibre");
+			addItem(FTBICItems.RAW_CARBON_MESH, "Raw Carbon Mesh");
+			addItem(FTBICItems.CARBON_PLATE, "Carbon Plate");
 		}
 	}
 
@@ -87,9 +118,11 @@ public class FTBICDataGenHandler {
 
 		@Override
 		protected void registerStatesAndModels() {
-			// simpleBlock(FTBICBlocks.RUBBER_SHEET.get());
-
 			simpleBlock(FTBICBlocks.RUBBER_SHEET.get(), models().getExistingFile(modLoc("block/rubber_sheet")));
+			simpleBlock(FTBICBlocks.REINFORCED_STONE.get());
+			simpleBlock(FTBICBlocks.REINFORCED_GLASS.get());
+			simpleBlock(FTBICBlocks.MACHINE_BLOCK.get());
+			simpleBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get());
 		}
 	}
 
@@ -108,11 +141,49 @@ public class FTBICDataGenHandler {
 			super(generator, modid, existingFileHelper);
 		}
 
+		private void basicItem(Supplier<Item> item) {
+			String id = item.get().getRegistryName().getPath();
+			singleTexture(id, mcLoc("item/generated"), "layer0", modLoc("item/" + id));
+		}
+
+		private void basicBlockItem(Supplier<Block> block) {
+			String id = block.get().getRegistryName().getPath();
+			withExistingParent(id, modLoc("block/" + id));
+		}
+
 		@Override
 		protected void registerModels() {
-			singleTexture("rubber", mcLoc("item/generated"), "layer0", modLoc("item/rubber"));
+			basicBlockItem(FTBICBlocks.RUBBER_SHEET);
+			basicBlockItem(FTBICBlocks.REINFORCED_STONE);
+			basicBlockItem(FTBICBlocks.REINFORCED_GLASS);
+			basicBlockItem(FTBICBlocks.MACHINE_BLOCK);
+			basicBlockItem(FTBICBlocks.ADVANCED_MACHINE_BLOCK);
 
-			withExistingParent("rubber_sheet", modLoc("block/rubber_sheet"));
+			basicItem(FTBICItems.RUBBER);
+			basicItem(FTBICItems.RESIN);
+			basicItem(FTBICItems.MIXED_METAL_INGOT);
+			basicItem(FTBICItems.ADVANCED_ALLOY);
+			basicItem(FTBICItems.COAL_BALL);
+			basicItem(FTBICItems.COMPRESSED_COAL_BALL);
+			basicItem(FTBICItems.COAL_CHUNK);
+			basicItem(FTBICItems.RAW_IRIDIUM);
+			basicItem(FTBICItems.IRIDIUM_PLATE);
+			basicItem(FTBICItems.SCRAP);
+			basicItem(FTBICItems.SCRAP_BOX);
+			basicItem(FTBICItems.SINGLE_USE_BATTERY);
+			basicItem(FTBICItems.BATTERY);
+			basicItem(FTBICItems.CRYSTAL_BATTERY);
+			basicItem(FTBICItems.GRAPHENE_BATTERY);
+			basicItem(FTBICItems.IRIDIUM_BATTERY);
+			basicItem(FTBICItems.OVERCLOCKER_UPGRADE);
+			basicItem(FTBICItems.ENERGY_STORAGE_UPGRADE);
+			basicItem(FTBICItems.TRANSFORMER_UPGRADE);
+			basicItem(FTBICItems.CLAY_DUST);
+			basicItem(FTBICItems.ELECTRONIC_CIRCUIT);
+			basicItem(FTBICItems.ADVANCED_CIRCUIT);
+			basicItem(FTBICItems.RAW_CARBON_FIBRE);
+			basicItem(FTBICItems.RAW_CARBON_MESH);
+			basicItem(FTBICItems.CARBON_PLATE);
 		}
 	}
 
@@ -123,6 +194,7 @@ public class FTBICDataGenHandler {
 
 		@Override
 		protected void addTags() {
+			tag(BlockTags.bind(MODID + ":reinforced")).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
 		}
 	}
 
@@ -133,6 +205,7 @@ public class FTBICDataGenHandler {
 
 		@Override
 		protected void addTags() {
+			tag(ItemTags.bind(MODID + ":reinforced")).add(FTBICItems.REINFORCED_STONE.get(), FTBICItems.REINFORCED_GLASS.get());
 		}
 	}
 
@@ -179,6 +252,10 @@ public class FTBICDataGenHandler {
 		@Override
 		protected void addTables() {
 			dropSelf(FTBICBlocks.RUBBER_SHEET.get());
+			dropSelf(FTBICBlocks.REINFORCED_STONE.get());
+			dropSelf(FTBICBlocks.REINFORCED_GLASS.get());
+			dropSelf(FTBICBlocks.MACHINE_BLOCK.get());
+			dropSelf(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get());
 		}
 
 		@Override
