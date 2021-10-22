@@ -1,0 +1,9 @@
+6e4255852359a733ca3abdc8a8d7287b8dd39ca1 assets/ftbic/blockstates/rubber_sheet.json
+1d7ac069a61e3a212ba093d8e5292386ed25d9ba assets/ftbic/lang/en_us.json
+cc79e144f9e948229ccf6b233ddb25aa5bea469c assets/ftbic/models/item/rubber.json
+458c2f614a937f52d2815ee2ba92cb3359ada56d assets/ftbic/models/item/rubber_sheet.json
+be3af16eb7a4c34506153da74ff6e50659cd7310 data/ftbic/advancements/recipes/ftbic/rubber.json
+a34d98cc9f082335b662b80856b915b916bb9d20 data/ftbic/advancements/recipes/ftbic/rubber_sheet.json
+fc50b8e706ee6289f322645110d0321fb8cb3871 data/ftbic/loot_tables/blocks/rubber_sheet.json
+dcf6431534bf7df754ba136041c857c32a6593ee data/ftbic/recipes/rubber.json
+0f5b12873ead48e4820e25a0adfc2ea1e2955437 data/ftbic/recipes/rubber_sheet.json
