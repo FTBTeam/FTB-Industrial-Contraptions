@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic;
 
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
+import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.FTBICBlockEntities;
 import dev.ftb.mods.ftbic.client.FTBICClient;
 import dev.ftb.mods.ftbic.item.FTBICItems;
@@ -34,6 +35,7 @@ public class FTBIC {
 		FTBICBlocks.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICItems.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICBlockEntities.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
+		FTBICElectricBlocks.init();
 		PROXY.init();
 	}
 }

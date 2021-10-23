@@ -1,5 +1,5 @@
 {
-	"parent": "block/block",
+	"parent": "minecraft:block/block",
 	"textures": {
 		"texture": "ftbic:block/rubber_sheet",
 		"particle": "ftbic:block/rubber_sheet"

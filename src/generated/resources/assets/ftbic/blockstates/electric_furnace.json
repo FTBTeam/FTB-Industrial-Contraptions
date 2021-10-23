@@ -1,0 +1,64 @@
+{
+	"variants": {
+		"dark=false,facing=north,lit=false": {
+			"model": "ftbic:block/electric/light/electric_furnace"
+		},
+		"dark=true,facing=north,lit=false": {
+			"model": "ftbic:block/electric/dark/electric_furnace"
+		},
+		"dark=false,facing=south,lit=false": {
+			"model": "ftbic:block/electric/light/electric_furnace",
+			"y": 180
+		},
+		"dark=true,facing=south,lit=false": {
+			"model": "ftbic:block/electric/dark/electric_furnace",
+			"y": 180
+		},
+		"dark=false,facing=west,lit=false": {
+			"model": "ftbic:block/electric/light/electric_furnace",
+			"y": 270
+		},
+		"dark=true,facing=west,lit=false": {
+			"model": "ftbic:block/electric/dark/electric_furnace",
+			"y": 270
+		},
+		"dark=false,facing=east,lit=false": {
+			"model": "ftbic:block/electric/light/electric_furnace",
+			"y": 90
+		},
+		"dark=true,facing=east,lit=false": {
+			"model": "ftbic:block/electric/dark/electric_furnace",
+			"y": 90
+		},
+		"dark=false,facing=north,lit=true": {
+			"model": "ftbic:block/electric/light/electric_furnace_on"
+		},
+		"dark=true,facing=north,lit=true": {
+			"model": "ftbic:block/electric/dark/electric_furnace_on"
+		},
+		"dark=false,facing=south,lit=true": {
+			"model": "ftbic:block/electric/light/electric_furnace_on",
+			"y": 180
+		},
+		"dark=true,facing=south,lit=true": {
+			"model": "ftbic:block/electric/dark/electric_furnace_on",
+			"y": 180
+		},
+		"dark=false,facing=west,lit=true": {
+			"model": "ftbic:block/electric/light/electric_furnace_on",
+			"y": 270
+		},
+		"dark=true,facing=west,lit=true": {
+			"model": "ftbic:block/electric/dark/electric_furnace_on",
+			"y": 270
+		},
+		"dark=false,facing=east,lit=true": {
+			"model": "ftbic:block/electric/light/electric_furnace_on",
+			"y": 90
+		},
+		"dark=true,facing=east,lit=true": {
+			"model": "ftbic:block/electric/dark/electric_furnace_on",
+			"y": 90
+		}
+	}
+}

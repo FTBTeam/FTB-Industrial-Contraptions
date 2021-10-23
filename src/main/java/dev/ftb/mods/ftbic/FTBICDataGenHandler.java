@@ -3,8 +3,12 @@ package dev.ftb.mods.ftbic;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
+import dev.ftb.mods.ftbic.block.ElectricBlock;
+import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
+import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -19,13 +23,16 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeLootTableProvider;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -54,8 +61,8 @@ public class FTBICDataGenHandler {
 
 		if (event.includeClient()) {
 			gen.addProvider(new ICLang(gen, MODID, "en_us"));
-			gen.addProvider(new ICBlockStates(gen, MODID, event.getExistingFileHelper()));
 			gen.addProvider(new ICBlockModels(gen, MODID, event.getExistingFileHelper()));
+			gen.addProvider(new ICBlockStates(gen, MODID, event.getExistingFileHelper()));
 			gen.addProvider(new ICItemModels(gen, MODID, event.getExistingFileHelper()));
 		}
 
@@ -82,6 +89,12 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.REINFORCED_GLASS, "Reinforced Glass");
 			addBlock(FTBICBlocks.MACHINE_BLOCK, "Machine Block");
 			addBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK, "Advanced Machine Block");
+
+			addBlock(FTBICBlocks.IRON_FURNACE, "Iron Furnace");
+
+			for (ElectricBlockInstance machine : FTBICElectricBlocks.MACHINES) {
+				addBlock(machine.block, machine.name);
+			}
 
 			addItem(FTBICItems.RUBBER, "Rubber");
 			addItem(FTBICItems.RESIN, "Resin");
@@ -123,6 +136,44 @@ public class FTBICDataGenHandler {
 			simpleBlock(FTBICBlocks.REINFORCED_GLASS.get());
 			simpleBlock(FTBICBlocks.MACHINE_BLOCK.get());
 			simpleBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get());
+
+			getVariantBuilder(FTBICBlocks.IRON_FURNACE.get()).forAllStatesExcept(state -> {
+				boolean lit = state.getValue(BlockStateProperties.LIT);
+				Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+
+				return ConfiguredModel.builder()
+						.modelFile(models().getExistingFile(modLoc(lit ? "block/iron_furnace_on" : "block/iron_furnace")))
+						.rotationY(((facing.get2DDataValue() & 3) * 90 + 180) % 360)
+						.build();
+			});
+
+			for (ElectricBlockInstance machine : FTBICElectricBlocks.MACHINES) {
+				if (!machine.noModel) {
+					getVariantBuilder(machine.block.get()).forAllStatesExcept(state -> {
+						boolean lit = state.getValue(BlockStateProperties.LIT);
+						boolean dark = state.getValue(ElectricBlock.DARK);
+						ModelFile modelFile = models().getExistingFile(modLoc("block/electric/" + (dark ? "dark" : "light") + "/" + machine.id + (lit ? "_on" : "")));
+
+						if (machine.horizontal) {
+							Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+
+							return ConfiguredModel.builder()
+									.modelFile(modelFile)
+									.rotationY(((facing.get2DDataValue() & 3) * 90 + 180) % 360)
+									.build();
+						} else {
+							Direction facing = state.getValue(BlockStateProperties.FACING);
+
+							return ConfiguredModel.builder()
+									.modelFile(modelFile)
+									.rotationX(facing == Direction.DOWN ? 180 : (facing.getAxis().isHorizontal() ? 90 : 0))
+									.rotationY(facing.getAxis().isVertical() ? 0 : ((facing.get2DDataValue() & 3) * 90 + 180) % 360)
+									.build();
+						}
+					});
+				}
+				// simpleBlock(machine.block.get());
+			}
 		}
 	}
 
@@ -131,8 +182,32 @@ public class FTBICDataGenHandler {
 			super(generator, modid, existingFileHelper);
 		}
 
+		private void electric(String id, String front, String side, String top) {
+			orientable("block/electric/light/" + id, modLoc("block/electric/light/" + side), modLoc("block/electric/light/" + front), modLoc("block/electric/light/" + top));
+			orientable("block/electric/dark/" + id, modLoc("block/electric/dark/" + side), modLoc("block/electric/dark/" + front), modLoc("block/electric/dark/" + top));
+		}
+
 		@Override
 		protected void registerModels() {
+			withExistingParent("block/rubber_sheet", "block/block")
+					.texture("texture", modLoc("block/rubber_sheet"))
+					.texture("particle", modLoc("block/rubber_sheet"))
+					.element()
+					.from(0F, 0F, 0F)
+					.to(16F, 3F, 16F)
+					.face(Direction.DOWN).texture("#texture").cullface(Direction.DOWN).end()
+					.face(Direction.UP).texture("#texture").end()
+					.face(Direction.NORTH).texture("#texture").cullface(Direction.NORTH).end()
+					.face(Direction.SOUTH).texture("#texture").cullface(Direction.SOUTH).end()
+					.face(Direction.WEST).texture("#texture").cullface(Direction.WEST).end()
+					.face(Direction.EAST).texture("#texture").cullface(Direction.EAST).end()
+					.end()
+			;
+
+			orientable("block/iron_furnace", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front"), modLoc("block/iron_furnace_side"));
+			orientable("block/iron_furnace_on", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_on"), modLoc("block/iron_furnace_side"));
+			electric("electric_furnace", "electric_furnace_front", "side", "top");
+			electric("electric_furnace_on", "electric_furnace_front_on", "side", "top");
 		}
 	}
 
@@ -158,6 +233,13 @@ public class FTBICDataGenHandler {
 			basicBlockItem(FTBICBlocks.REINFORCED_GLASS);
 			basicBlockItem(FTBICBlocks.MACHINE_BLOCK);
 			basicBlockItem(FTBICBlocks.ADVANCED_MACHINE_BLOCK);
+			basicBlockItem(FTBICBlocks.IRON_FURNACE);
+
+			for (ElectricBlockInstance machine : FTBICElectricBlocks.MACHINES) {
+				if (!machine.noModel) {
+					withExistingParent(machine.id, modLoc("block/electric/light/" + machine.id));
+				}
+			}
 
 			basicItem(FTBICItems.RUBBER);
 			basicItem(FTBICItems.RESIN);
@@ -256,6 +338,11 @@ public class FTBICDataGenHandler {
 			dropSelf(FTBICBlocks.REINFORCED_GLASS.get());
 			dropSelf(FTBICBlocks.MACHINE_BLOCK.get());
 			dropSelf(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get());
+			dropSelf(FTBICBlocks.IRON_FURNACE.get());
+
+			for (ElectricBlockInstance machine : FTBICElectricBlocks.MACHINES) {
+				dropSelf(machine.block.get());
+			}
 		}
 
 		@Override

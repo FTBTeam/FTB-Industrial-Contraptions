@@ -10,4 +10,6 @@ public class FTBICConfig {
 	public static int MV_BATTERY_CAPACITY = 400_000;
 	public static int HV_BATTERY_CAPACITY = 4_000_000;
 	public static int EV_BATTERY_CAPACITY = 1_000_000_000;
+
+	public static int IRON_FURNACE_ITEMS_PER_COAL = 12;
 }
