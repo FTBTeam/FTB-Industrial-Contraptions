@@ -1,0 +1,9 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "ftbic:resin"
+	},
+	"result": "ftbic:rubber",
+	"experience": 0.0,
+	"cookingtime": 150
+}

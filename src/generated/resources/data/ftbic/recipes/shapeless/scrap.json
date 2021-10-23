@@ -1,0 +1,13 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"group": "ftbic:scrap",
+	"ingredients": [
+		{
+			"item": "ftbic:scrap_box"
+		}
+	],
+	"result": {
+		"item": "ftbic:scrap",
+		"count": 9
+	}
+}

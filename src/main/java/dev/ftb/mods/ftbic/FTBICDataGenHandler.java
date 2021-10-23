@@ -15,6 +15,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -22,6 +23,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -298,20 +301,55 @@ public class FTBICDataGenHandler {
 			super(generatorIn);
 		}
 
+		private ResourceLocation modLoc(String s) {
+			return new ResourceLocation(MODID, s);
+		}
+
+		private ResourceLocation shapedLoc(String s) {
+			return modLoc("shaped/" + s);
+		}
+
+		private ResourceLocation shapelessLoc(String s) {
+			return modLoc("shapeless/" + s);
+		}
+
 		@Override
 		protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer) {
+			SimpleCookingRecipeBuilder.cooking(Ingredient.of(FTBICItems.RESIN.get()), FTBICItems.RUBBER.get(), 0F, 150, RecipeSerializer.SMELTING_RECIPE)
+					.unlockedBy("has_item", has(FTBICItems.RESIN.get()))
+					.save(consumer, modLoc("smelting/rubber"));
+
+			SimpleCookingRecipeBuilder.cooking(Ingredient.of(FTBICItems.RESIN.get()), FTBICItems.RUBBER.get(), 0F, 300, RecipeSerializer.CAMPFIRE_COOKING_RECIPE)
+					.unlockedBy("has_item", has(FTBICItems.RESIN.get()))
+					.save(consumer, modLoc("campfire_cooking/rubber"));
+
 			ShapedRecipeBuilder.shaped(FTBICItems.RUBBER_SHEET.get())
-					.unlockedBy("has_item", has(FTBICItems.RUBBER.get()))
+					.unlockedBy("has_item", has(FTBICItems.RUBBER_SHEET.get()))
 					.group(MODID + ":rubber")
 					.pattern("III")
 					.define('I', FTBICItems.RUBBER.get())
-					.save(consumer);
+					.save(consumer, shapedLoc("rubber_sheet"));
+
+			ShapedRecipeBuilder.shaped(FTBICItems.SCRAP_BOX.get())
+					.unlockedBy("has_item", has(FTBICItems.SCRAP.get()))
+					.group(MODID + ":scrap")
+					.pattern("SSS")
+					.pattern("SSS")
+					.pattern("SSS")
+					.define('S', FTBICItems.SCRAP.get())
+					.save(consumer, shapedLoc("scrap_box"));
 
 			ShapelessRecipeBuilder.shapeless(FTBICItems.RUBBER.get(), 3)
 					.unlockedBy("has_item", has(FTBICItems.RUBBER.get()))
 					.group(MODID + ":rubber")
 					.requires(FTBICItems.RUBBER_SHEET.get())
-					.save(consumer);
+					.save(consumer, shapelessLoc("rubber"));
+
+			ShapelessRecipeBuilder.shapeless(FTBICItems.SCRAP.get(), 9)
+					.unlockedBy("has_item", has(FTBICItems.SCRAP_BOX.get()))
+					.group(MODID + ":scrap")
+					.requires(FTBICItems.SCRAP_BOX.get())
+					.save(consumer, shapelessLoc("scrap"));
 		}
 	}
 

@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:rubber_sheet"
+			"ftbic:shaped/scrap_box"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:rubber"
+						"item": "ftbic:scrap"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:rubber_sheet"
+				"recipe": "ftbic:shaped/scrap_box"
 			}
 		}
 	},
