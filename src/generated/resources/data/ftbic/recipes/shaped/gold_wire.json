@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:cable",
+	"pattern": [
+		"MMM"
+	],
+	"key": {
+		"M": {
+			"tag": "forge:ingots/gold"
+		}
+	},
+	"result": {
+		"item": "ftbic:gold_wire",
+		"count": 6
+	}
+}

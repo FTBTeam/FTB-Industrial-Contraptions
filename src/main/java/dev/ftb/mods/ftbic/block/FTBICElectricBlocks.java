@@ -30,7 +30,7 @@ public interface FTBICElectricBlocks {
 		return instance;
 	}
 
-	ElectricBlockInstance BASIC_GENERATOR = register("basic_generator", BasicGeneratorBlockEntity::new).noModel();
+	ElectricBlockInstance BASIC_GENERATOR = register("basic_generator", BasicGeneratorBlockEntity::new);
 	ElectricBlockInstance GEOTHERMAL_GENERATOR = register("geothermal_generator", GeothermalGeneratorBlockEntity::new).noModel();
 	ElectricBlockInstance WATER_MILL = register("water_mill", WaterMillBlockEntity::new).noModel();
 	ElectricBlockInstance WIND_MILL = register("wind_mill", WindMillBlockEntity::new).noModel();

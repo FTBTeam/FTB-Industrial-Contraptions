@@ -136,16 +136,20 @@ public class CableBlock extends Block implements SimpleWaterloggedBlock {
 			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 
-		return state.setValue(CONNECTION[facing.ordinal()], canTubeConnectFrom(facingState, world, facingPos, facing.getOpposite()));
+		return state.setValue(CONNECTION[facing.ordinal()], canCableConnectFrom(facingState, world, facingPos, facing.getOpposite()));
 	}
 
-	private boolean canTubeConnectFrom(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+	private boolean canCableConnectFrom(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
 		if (state.getBlock() instanceof CableBlock) {
 			return ((CableBlock) state.getBlock()).tier == tier;
+		} else if (state.getBlock() instanceof ElectricBlock) {
+			return true;
+		} else if (!state.isAir()) {
+			BlockEntity t = world.getBlockEntity(pos);
+			return t != null && t.getCapability(CapabilityEnergy.ENERGY, face).isPresent();
 		}
 
-		BlockEntity t = world.getBlockEntity(pos);
-		return t != null && t.getCapability(CapabilityEnergy.ENERGY, face).isPresent();
+		return false;
 	}
 
 	@Override
@@ -158,7 +162,7 @@ public class CableBlock extends Block implements SimpleWaterloggedBlock {
 			BlockPos p = pos.relative(direction);
 			BlockState s = world.getBlockState(p);
 
-			if (canTubeConnectFrom(s, world, p, direction.getOpposite())) {
+			if (canCableConnectFrom(s, world, p, direction.getOpposite())) {
 				state = state.setValue(CONNECTION[direction.ordinal()], true);
 			}
 		}

@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:cable",
+	"pattern": [
+		"MMM"
+	],
+	"key": {
+		"M": {
+			"tag": "forge:ingots/aluminum"
+		}
+	},
+	"result": {
+		"item": "ftbic:aluminum_wire",
+		"count": 3
+	}
+}

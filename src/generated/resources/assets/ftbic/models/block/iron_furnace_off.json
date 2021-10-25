@@ -2,7 +2,7 @@
 	"parent": "minecraft:block/orientable",
 	"textures": {
 		"side": "ftbic:block/iron_furnace_side",
-		"front": "ftbic:block/iron_furnace_front",
+		"front": "ftbic:block/iron_furnace_front_off",
 		"top": "ftbic:block/iron_furnace_side"
 	}
 }

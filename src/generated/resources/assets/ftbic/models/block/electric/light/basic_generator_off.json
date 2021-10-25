@@ -2,7 +2,7 @@
 	"parent": "minecraft:block/orientable",
 	"textures": {
 		"side": "ftbic:block/electric/light/side",
-		"front": "ftbic:block/electric/light/electric_furnace_front",
+		"front": "ftbic:block/electric/light/basic_generator_front_off",
 		"top": "ftbic:block/electric/light/top"
 	}
 }
