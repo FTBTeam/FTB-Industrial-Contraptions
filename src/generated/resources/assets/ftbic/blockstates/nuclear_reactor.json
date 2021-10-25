@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"dark=false,state=off": {
+			"model": "ftbic:block/electric/light/nuclear_reactor_off"
+		},
+		"dark=true,state=off": {
+			"model": "ftbic:block/electric/dark/nuclear_reactor_off"
+		},
+		"dark=false,state=on": {
+			"model": "ftbic:block/electric/light/nuclear_reactor_on"
+		},
+		"dark=true,state=on": {
+			"model": "ftbic:block/electric/dark/nuclear_reactor_on"
+		}
+	}
+}

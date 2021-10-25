@@ -80,6 +80,8 @@ public class FTBICDataGenHandler {
 			gen.addProvider(new FTBICComponentRecipes(gen));
 			gen.addProvider(new FTBICCableRecipes(gen));
 			gen.addProvider(new FTBICBatteryRecipes(gen));
+			gen.addProvider(new FTBICGeneratorRecipes(gen));
+			gen.addProvider(new FTBICMachineRecipes(gen));
 			gen.addProvider(new FTBICNuclearRecipes(gen));
 			gen.addProvider(new ICLootTableProvider(gen));
 		}
@@ -132,16 +134,25 @@ public class FTBICDataGenHandler {
 		private void makeThemedElectric(String path, boolean side, boolean advanced) {
 			TextureData lightBase = load(modLoc("block/electric/light/" + (advanced ? "advanced_" : "") + (side ? "side" : "top")));
 			TextureData darkBase = load(modLoc("block/electric/dark/" + (advanced ? "advanced_" : "") + (side ? "side" : "top")));
-			make(modLoc("block/electric/light/" + path + "_on"), lightBase.combine(load(modLoc("block/electric/light/template/" + path + "_on"))));
-			make(modLoc("block/electric/dark/" + path + "_on"), darkBase.combine(load(modLoc("block/electric/dark/template/" + path + "_on"))));
-			make(modLoc("block/electric/light/" + path + "_off"), lightBase.combine(load(modLoc("block/electric/light/template/" + path + "_off"))));
-			make(modLoc("block/electric/dark/" + path + "_off"), darkBase.combine(load(modLoc("block/electric/dark/template/" + path + "_off"))));
+			make(modLoc("block/electric/light/" + path), lightBase.combine(load(modLoc("block/electric/light/template/" + path))));
+			make(modLoc("block/electric/dark/" + path), darkBase.combine(load(modLoc("block/electric/dark/template/" + path))));
+		}
+
+		private void makeThemedElectricOnOff(String path, boolean side, boolean advanced) {
+			makeThemedElectric(path + "_on", side, advanced);
+			makeThemedElectric(path + "_off", side, advanced);
 		}
 
 		@Override
 		public void registerTextures() {
-			makeThemedElectric("electric_furnace_front", true, false);
-			makeThemedElectric("basic_generator_front", true, false);
+			makeThemedElectricOnOff("electric_furnace_front", true, false);
+			makeThemedElectricOnOff("basic_generator_front", true, false);
+			makeThemedElectricOnOff("geothermal_generator_front", true, false);
+			makeThemedElectric("wind_mill_front", true, false);
+			makeThemedElectric("lv_solar_panel_top", false, false);
+			makeThemedElectric("mv_solar_panel_top", false, false);
+			makeThemedElectric("hv_solar_panel_top", false, true);
+			makeThemedElectricOnOff("nuclear_reactor_side", true, true);
 		}
 	}
 
@@ -210,6 +221,14 @@ public class FTBICDataGenHandler {
 			electric("electric_furnace_on", "electric_furnace_front_on", "side", "top");
 			electric("basic_generator_off", "basic_generator_front_off", "side", "top");
 			electric("basic_generator_on", "basic_generator_front_on", "side", "top");
+			electric("geothermal_generator_off", "geothermal_generator_front_off", "side", "top");
+			electric("geothermal_generator_on", "geothermal_generator_front_on", "side", "top");
+			electric("wind_mill", "wind_mill_front", "side", "top");
+			electric("lv_solar_panel", "side", "side", "lv_solar_panel_top");
+			electric("mv_solar_panel", "side", "side", "mv_solar_panel_top");
+			electric("hv_solar_panel", "advanced_side", "advanced_side", "hv_solar_panel_top");
+			electric("nuclear_reactor_off", "nuclear_reactor_side_off", "nuclear_reactor_side_off", "advanced_top");
+			electric("nuclear_reactor_on", "nuclear_reactor_side_on", "nuclear_reactor_side_on", "advanced_top");
 		}
 	}
 
@@ -254,19 +273,23 @@ public class FTBICDataGenHandler {
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
 					getVariantBuilder(machine.block.get()).forAllStatesExcept(state -> {
-						boolean on = state.getValue(ElectricBlock.STATE) == ElectricBlockState.ON;
+						boolean on = machine.stateProperty != null && state.getValue(machine.stateProperty) == ElectricBlockState.ON;
 						boolean dark = state.getValue(ElectricBlock.DARK);
-						ModelFile modelFile = models().getExistingFile(modLoc("block/electric/" + (dark ? "dark" : "light") + "/" + machine.id + (on ? "_on" : "_off")));
+						ModelFile modelFile = models().getExistingFile(modLoc("block/electric/" + (dark ? "dark" : "light") + "/" + machine.id + (machine.stateProperty == null ? "" : (on ? "_on" : "_off"))));
 
-						if (machine.horizontal) {
-							Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+						if (machine.facingProperty == null) {
+							return ConfiguredModel.builder()
+									.modelFile(modelFile)
+									.build();
+						} else if (machine.facingProperty == BlockStateProperties.HORIZONTAL_FACING) {
+							Direction facing = state.getValue(machine.facingProperty);
 
 							return ConfiguredModel.builder()
 									.modelFile(modelFile)
 									.rotationY(((facing.get2DDataValue() & 3) * 90 + 180) % 360)
 									.build();
 						} else {
-							Direction facing = state.getValue(BlockStateProperties.FACING);
+							Direction facing = state.getValue(machine.facingProperty);
 
 							return ConfiguredModel.builder()
 									.modelFile(modelFile)
@@ -310,7 +333,7 @@ public class FTBICDataGenHandler {
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
-					withExistingParent(machine.id, modLoc("block/electric/light/" + machine.id + "_off"));
+					withExistingParent(machine.id, modLoc("block/electric/light/" + machine.id + (machine.stateProperty != null ? "_off" : "")));
 				}
 			}
 
@@ -379,18 +402,22 @@ public class FTBICDataGenHandler {
 			}
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
-				add(machine.block.get(), LootTable.lootTable()
-						.withPool(LootPool.lootPool()
-								.when(InvertedLootItemCondition.invert(LootItemBlockStatePropertyCondition.hasBlockStateProperties(machine.block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(ElectricBlock.STATE, ElectricBlockState.BURNT))))
-								.setRolls(ConstantIntValue.exactly(1))
-								.add(LootItem.lootTableItem(machine.item.get()))
-						)
-						.withPool(LootPool.lootPool()
-								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(machine.block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(ElectricBlock.STATE, ElectricBlockState.BURNT)))
-								.setRolls(ConstantIntValue.exactly(1))
-								.add(LootItem.lootTableItem(machine.advanced ? FTBICItems.ADVANCED_MACHINE_BLOCK.get() : FTBICItems.MACHINE_BLOCK.get()))
-						)
-				);
+				if (machine.stateProperty == ElectricBlockState.ON_OFF_BURNT) {
+					add(machine.block.get(), LootTable.lootTable()
+							.withPool(LootPool.lootPool()
+									.when(InvertedLootItemCondition.invert(LootItemBlockStatePropertyCondition.hasBlockStateProperties(machine.block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(machine.stateProperty, ElectricBlockState.BURNT))))
+									.setRolls(ConstantIntValue.exactly(1))
+									.add(LootItem.lootTableItem(machine.item.get()))
+							)
+							.withPool(LootPool.lootPool()
+									.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(machine.block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(machine.stateProperty, ElectricBlockState.BURNT)))
+									.setRolls(ConstantIntValue.exactly(1))
+									.add(LootItem.lootTableItem(machine.advanced ? FTBICItems.ADVANCED_MACHINE_BLOCK.get() : FTBICItems.MACHINE_BLOCK.get()))
+							)
+					);
+				} else {
+					dropSelf(machine.block.get());
+				}
 			}
 		}
 

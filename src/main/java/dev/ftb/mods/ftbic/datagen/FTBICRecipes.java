@@ -25,6 +25,7 @@ public abstract class FTBICRecipes extends RecipeProvider {
 	public final Tag<Item> COPPER_INGOT = ItemTags.bind("forge:ingots/copper");
 	public final Tag<Item> TIN_INGOT = ItemTags.bind("forge:ingots/tin");
 	public final Tag<Item> ALUMINUM_INGOT = ItemTags.bind("forge:ingots/aluminum");
+	public final Tag<Item> COAL_DUST = ItemTags.bind("forge:dusts/coal");
 	public final Item RESIN = FTBICItems.RESIN.get();
 	public final Item RUBBER = FTBICItems.RUBBER.get();
 

@@ -6,6 +6,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 import java.util.Arrays;
 import java.util.function.Supplier;
@@ -17,8 +20,9 @@ public class ElectricBlockInstance {
 	public final String id;
 	public String name;
 	public boolean advanced = false;
-	public boolean horizontal = true;
+	public DirectionProperty facingProperty = BlockStateProperties.HORIZONTAL_FACING;
 	public boolean noModel = false;
+	public EnumProperty<ElectricBlockState> stateProperty = ElectricBlockState.ON_OFF;
 	public final Supplier<Block> block;
 	public final Supplier<BlockItem> item;
 	public final Supplier<BlockEntityType<?>> blockEntity;
@@ -49,13 +53,28 @@ public class ElectricBlockInstance {
 		return this;
 	}
 
-	public ElectricBlockInstance notHorizontal() {
-		horizontal = false;
+	public ElectricBlockInstance noRotation() {
+		facingProperty = null;
+		return this;
+	}
+
+	public ElectricBlockInstance rotate3D() {
+		facingProperty = BlockStateProperties.FACING;
 		return this;
 	}
 
 	public ElectricBlockInstance noModel() {
 		noModel = true;
+		return this;
+	}
+
+	public ElectricBlockInstance canBurn() {
+		stateProperty = ElectricBlockState.ON_OFF_BURNT;
+		return this;
+	}
+
+	public ElectricBlockInstance noState() {
+		stateProperty = null;
 		return this;
 	}
 }

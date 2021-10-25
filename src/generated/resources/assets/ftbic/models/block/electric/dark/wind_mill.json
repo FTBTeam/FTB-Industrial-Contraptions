@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/orientable",
+	"textures": {
+		"side": "ftbic:block/electric/dark/side",
+		"front": "ftbic:block/electric/dark/wind_mill_front",
+		"top": "ftbic:block/electric/dark/top"
+	}
+}

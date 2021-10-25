@@ -11,32 +11,7 @@
 			],
 			"conditions": [
 				{
-					"condition": "minecraft:inverted",
-					"term": {
-						"condition": "minecraft:block_state_property",
-						"block": "ftbic:nuclear_reactor",
-						"properties": {
-							"state": "burnt"
-						}
-					}
-				}
-			]
-		},
-		{
-			"rolls": 1,
-			"entries": [
-				{
-					"type": "minecraft:item",
-					"name": "ftbic:advanced_machine_block"
-				}
-			],
-			"conditions": [
-				{
-					"condition": "minecraft:block_state_property",
-					"block": "ftbic:nuclear_reactor",
-					"properties": {
-						"state": "burnt"
-					}
+					"condition": "minecraft:survives_explosion"
 				}
 			]
 		}

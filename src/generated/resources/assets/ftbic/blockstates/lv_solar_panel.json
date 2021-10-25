@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"dark=false": {
+			"model": "ftbic:block/electric/light/lv_solar_panel"
+		},
+		"dark=true": {
+			"model": "ftbic:block/electric/dark/lv_solar_panel"
+		}
+	}
+}

@@ -15,8 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -26,17 +24,24 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 
 public class ElectricBlock extends Block {
-	public static final EnumProperty<ElectricBlockState> STATE = EnumProperty.create("state", ElectricBlockState.class);
 	public static final BooleanProperty DARK = BooleanProperty.create("dark");
 
 	public final ElectricBlockInstance electricBlockInstance;
-	public final DirectionProperty facingProperty;
 
 	public ElectricBlock(ElectricBlockInstance m) {
 		super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops());
 		electricBlockInstance = m;
-		facingProperty = electricBlockInstance.horizontal ? BlockStateProperties.HORIZONTAL_FACING : BlockStateProperties.FACING;
-		registerDefaultState(getStateDefinition().any().setValue(facingProperty, Direction.SOUTH).setValue(STATE, ElectricBlockState.OFF).setValue(DARK, false));
+		BlockState state = getStateDefinition().any().setValue(DARK, false);
+
+		if (electricBlockInstance.facingProperty != null) {
+			state = state.setValue(electricBlockInstance.facingProperty, Direction.SOUTH);
+		}
+
+		if (electricBlockInstance.stateProperty != null) {
+			state = state.setValue(electricBlockInstance.stateProperty, ElectricBlockState.OFF);
+		}
+
+		registerDefaultState(state);
 	}
 
 	@Override
@@ -52,34 +57,44 @@ public class ElectricBlock extends Block {
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(ElectricBlockInstance.current.horizontal ? BlockStateProperties.HORIZONTAL_FACING : BlockStateProperties.FACING, STATE, DARK);
+		builder.add(DARK);
+
+		if (ElectricBlockInstance.current.facingProperty != null) {
+			builder.add(ElectricBlockInstance.current.facingProperty);
+		}
+
+		if (ElectricBlockInstance.current.stateProperty != null) {
+			builder.add(ElectricBlockInstance.current.stateProperty);
+		}
 	}
 
 	@Override
 	@Deprecated
 	public BlockState rotate(BlockState state, Rotation rotation) {
-		return state.setValue(facingProperty, rotation.rotate(state.getValue(facingProperty)));
+		return electricBlockInstance.facingProperty == null ? state : state.setValue(electricBlockInstance.facingProperty, rotation.rotate(state.getValue(electricBlockInstance.facingProperty)));
 	}
 
 	@Override
 	@Deprecated
 	public BlockState mirror(BlockState state, Mirror mirror) {
-		return state.rotate(mirror.getRotation(state.getValue(facingProperty)));
+		return electricBlockInstance.facingProperty == null ? state : state.rotate(mirror.getRotation(state.getValue(electricBlockInstance.facingProperty)));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext arg) {
-		if (electricBlockInstance.horizontal) {
-			return defaultBlockState().setValue(facingProperty, arg.getHorizontalDirection().getOpposite());
+		if (electricBlockInstance.facingProperty == null) {
+			return defaultBlockState();
+		} else if (electricBlockInstance.facingProperty == BlockStateProperties.HORIZONTAL_FACING) {
+			return defaultBlockState().setValue(electricBlockInstance.facingProperty, arg.getHorizontalDirection().getOpposite());
 		} else {
-			return defaultBlockState().setValue(facingProperty, arg.getNearestLookingDirection().getOpposite());
+			return defaultBlockState().setValue(electricBlockInstance.facingProperty, arg.getNearestLookingDirection().getOpposite());
 		}
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
-		if (state.getValue(STATE) == ElectricBlockState.BURNT) {
+		if (electricBlockInstance.stateProperty == ElectricBlockState.ON_OFF_BURNT && state.getValue(electricBlockInstance.stateProperty) == ElectricBlockState.BURNT) {
 			for (int i = 0; i < 5; i++) {
 				level.addParticle(ParticleTypes.SMOKE, pos.getX() + random.nextFloat(), pos.getY() + 1D, pos.getZ() + random.nextFloat(), 0D, 0D, 0D);
 			}
