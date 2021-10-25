@@ -11,7 +11,32 @@
 			],
 			"conditions": [
 				{
-					"condition": "minecraft:survives_explosion"
+					"condition": "minecraft:inverted",
+					"term": {
+						"condition": "minecraft:block_state_property",
+						"block": "ftbic:lv_solar_panel",
+						"properties": {
+							"state": "burnt"
+						}
+					}
+				}
+			]
+		},
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "ftbic:machine_block"
+				}
+			],
+			"conditions": [
+				{
+					"condition": "minecraft:block_state_property",
+					"block": "ftbic:lv_solar_panel",
+					"properties": {
+						"state": "burnt"
+					}
 				}
 			]
 		}

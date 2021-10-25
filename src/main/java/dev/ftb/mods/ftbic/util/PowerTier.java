@@ -12,9 +12,11 @@ public enum PowerTier {
 
 	public final String name;
 	public final int transferRate;
+	public final int batteryTransferRate;
 
 	PowerTier(String n, int t) {
 		name = n;
 		transferRate = t;
+		batteryTransferRate = (int) (transferRate * FTBICConfig.BATTERY_TRANSFER_EFFICIENCY);
 	}
 }

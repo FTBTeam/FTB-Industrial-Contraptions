@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "ftbic:item/coal_chunk"
+		"layer0": "ftbic:item/creative_battery"
 	}
 }

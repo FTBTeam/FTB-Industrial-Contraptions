@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:nuclear",
+	"pattern": [
+		"SSS",
+		"SAS",
+		"SSS"
+	],
+	"key": {
+		"S": {
+			"item": "minecraft:smooth_stone"
+		},
+		"A": {
+			"item": "ftbic:advanced_alloy"
+		}
+	},
+	"result": {
+		"item": "ftbic:reinforced_stone",
+		"count": 4
+	}
+}

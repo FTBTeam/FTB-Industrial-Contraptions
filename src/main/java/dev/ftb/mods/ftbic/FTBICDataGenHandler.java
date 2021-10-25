@@ -5,9 +5,12 @@ import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
+import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.item.MaterialItem;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
@@ -16,6 +19,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.recipes.UpgradeRecipeBuilder;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -23,19 +27,26 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.ConstantIntValue;
+import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeLootTableProvider;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -92,38 +103,22 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.REINFORCED_GLASS, "Reinforced Glass");
 			addBlock(FTBICBlocks.MACHINE_BLOCK, "Machine Block");
 			addBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK, "Advanced Machine Block");
-
 			addBlock(FTBICBlocks.IRON_FURNACE, "Iron Furnace");
 
-			for (ElectricBlockInstance machine : FTBICElectricBlocks.MACHINES) {
+			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
 			}
 
-			addItem(FTBICItems.RUBBER, "Rubber");
-			addItem(FTBICItems.RESIN, "Resin");
-			addItem(FTBICItems.MIXED_METAL_INGOT, "Mixed Metal Ingot");
-			addItem(FTBICItems.ADVANCED_ALLOY, "Advanced Alloy");
-			addItem(FTBICItems.COAL_BALL, "Coal Ball");
-			addItem(FTBICItems.COMPRESSED_COAL_BALL, "Compressed Coal Ball");
-			addItem(FTBICItems.COAL_CHUNK, "Coal Chunk");
-			addItem(FTBICItems.RAW_IRIDIUM, "Raw Iridium");
-			addItem(FTBICItems.IRIDIUM_PLATE, "Iridium Plate");
-			addItem(FTBICItems.SCRAP, "Scrap");
-			addItem(FTBICItems.SCRAP_BOX, "Scrap Box");
+			for (MaterialItem item : FTBICItems.MATERIALS) {
+				addItem(item.item, item.name);
+			}
+
 			addItem(FTBICItems.SINGLE_USE_BATTERY, "Single Use Battery");
 			addItem(FTBICItems.BATTERY, "Battery");
 			addItem(FTBICItems.CRYSTAL_BATTERY, "Crystal Battery");
 			addItem(FTBICItems.GRAPHENE_BATTERY, "Graphene Battery");
 			addItem(FTBICItems.IRIDIUM_BATTERY, "Iridium Battery");
-			addItem(FTBICItems.OVERCLOCKER_UPGRADE, "Overclocker Upgrade");
-			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy Storage Upgrade");
-			addItem(FTBICItems.TRANSFORMER_UPGRADE, "Transformer Upgrade");
-			addItem(FTBICItems.CLAY_DUST, "Clay Dust");
-			addItem(FTBICItems.ELECTRONIC_CIRCUIT, "Electronic Circuit");
-			addItem(FTBICItems.ADVANCED_CIRCUIT, "Advanced Circuit");
-			addItem(FTBICItems.RAW_CARBON_FIBRE, "Raw Carbon Fibre");
-			addItem(FTBICItems.RAW_CARBON_MESH, "Raw Carbon Mesh");
-			addItem(FTBICItems.CARBON_PLATE, "Carbon Plate");
+			addItem(FTBICItems.CREATIVE_BATTERY, "Creative Battery");
 		}
 	}
 
@@ -150,12 +145,12 @@ public class FTBICDataGenHandler {
 						.build();
 			});
 
-			for (ElectricBlockInstance machine : FTBICElectricBlocks.MACHINES) {
+			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
 					getVariantBuilder(machine.block.get()).forAllStatesExcept(state -> {
-						boolean lit = state.getValue(BlockStateProperties.LIT);
+						boolean on = state.getValue(ElectricBlock.STATE) == ElectricBlockState.ON;
 						boolean dark = state.getValue(ElectricBlock.DARK);
-						ModelFile modelFile = models().getExistingFile(modLoc("block/electric/" + (dark ? "dark" : "light") + "/" + machine.id + (lit ? "_on" : "")));
+						ModelFile modelFile = models().getExistingFile(modLoc("block/electric/" + (dark ? "dark" : "light") + "/" + machine.id + (on ? "_on" : "")));
 
 						if (machine.horizontal) {
 							Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
@@ -238,37 +233,22 @@ public class FTBICDataGenHandler {
 			basicBlockItem(FTBICBlocks.ADVANCED_MACHINE_BLOCK);
 			basicBlockItem(FTBICBlocks.IRON_FURNACE);
 
-			for (ElectricBlockInstance machine : FTBICElectricBlocks.MACHINES) {
+			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
 					withExistingParent(machine.id, modLoc("block/electric/light/" + machine.id));
 				}
 			}
 
-			basicItem(FTBICItems.RUBBER);
-			basicItem(FTBICItems.RESIN);
-			basicItem(FTBICItems.MIXED_METAL_INGOT);
-			basicItem(FTBICItems.ADVANCED_ALLOY);
-			basicItem(FTBICItems.COAL_BALL);
-			basicItem(FTBICItems.COMPRESSED_COAL_BALL);
-			basicItem(FTBICItems.COAL_CHUNK);
-			basicItem(FTBICItems.RAW_IRIDIUM);
-			basicItem(FTBICItems.IRIDIUM_PLATE);
-			basicItem(FTBICItems.SCRAP);
-			basicItem(FTBICItems.SCRAP_BOX);
+			for (MaterialItem item : FTBICItems.MATERIALS) {
+				basicItem(item.item);
+			}
+
 			basicItem(FTBICItems.SINGLE_USE_BATTERY);
 			basicItem(FTBICItems.BATTERY);
 			basicItem(FTBICItems.CRYSTAL_BATTERY);
 			basicItem(FTBICItems.GRAPHENE_BATTERY);
 			basicItem(FTBICItems.IRIDIUM_BATTERY);
-			basicItem(FTBICItems.OVERCLOCKER_UPGRADE);
-			basicItem(FTBICItems.ENERGY_STORAGE_UPGRADE);
-			basicItem(FTBICItems.TRANSFORMER_UPGRADE);
-			basicItem(FTBICItems.CLAY_DUST);
-			basicItem(FTBICItems.ELECTRONIC_CIRCUIT);
-			basicItem(FTBICItems.ADVANCED_CIRCUIT);
-			basicItem(FTBICItems.RAW_CARBON_FIBRE);
-			basicItem(FTBICItems.RAW_CARBON_MESH);
-			basicItem(FTBICItems.CARBON_PLATE);
+			basicItem(FTBICItems.CREATIVE_BATTERY);
 		}
 	}
 
@@ -295,7 +275,14 @@ public class FTBICDataGenHandler {
 	}
 
 	private static class ICRecipes extends RecipeProvider {
-		public final Tag<Item> IRON_INGOT = ItemTags.bind("forge:ingots/iron");
+		public final Tag<Item> REDSTONE = Tags.Items.DUSTS_REDSTONE;
+		public final Tag<Item> GLASS = Tags.Items.GLASS_COLORLESS;
+		public final Tag<Item> COAL = ItemTags.COALS;
+		public final Tag<Item> DIAMOND = Tags.Items.GEMS_DIAMOND;
+		public final Tag<Item> QUARTZ = Tags.Items.GEMS_QUARTZ;
+		public final Tag<Item> IRON_INGOT = Tags.Items.INGOTS_IRON;
+		public final Tag<Item> COPPER_INGOT = ItemTags.bind("forge:ingots/copper");
+		public final Tag<Item> TIN_INGOT = ItemTags.bind("forge:ingots/tin");
 
 		public ICRecipes(DataGenerator generatorIn) {
 			super(generatorIn);
@@ -303,6 +290,14 @@ public class FTBICDataGenHandler {
 
 		private ResourceLocation modLoc(String s) {
 			return new ResourceLocation(MODID, s);
+		}
+
+		private ResourceLocation smeltingLoc(String s) {
+			return modLoc("smelting/" + s);
+		}
+
+		private ResourceLocation campfireCookingLoc(String s) {
+			return modLoc("campfire_cooking/" + s);
 		}
 
 		private ResourceLocation shapedLoc(String s) {
@@ -313,22 +308,50 @@ public class FTBICDataGenHandler {
 			return modLoc("shapeless/" + s);
 		}
 
+		private ResourceLocation smithingLoc(String s) {
+			return modLoc("smithing/" + s);
+		}
+
 		@Override
 		protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer) {
-			SimpleCookingRecipeBuilder.cooking(Ingredient.of(FTBICItems.RESIN.get()), FTBICItems.RUBBER.get(), 0F, 150, RecipeSerializer.SMELTING_RECIPE)
-					.unlockedBy("has_item", has(FTBICItems.RESIN.get()))
-					.save(consumer, modLoc("smelting/rubber"));
+			// Cooking
 
-			SimpleCookingRecipeBuilder.cooking(Ingredient.of(FTBICItems.RESIN.get()), FTBICItems.RUBBER.get(), 0F, 300, RecipeSerializer.CAMPFIRE_COOKING_RECIPE)
+			SimpleCookingRecipeBuilder.cooking(FTBICItems.RESIN.ingredient(), FTBICItems.RUBBER.get(), 0F, 150, RecipeSerializer.SMELTING_RECIPE)
 					.unlockedBy("has_item", has(FTBICItems.RESIN.get()))
-					.save(consumer, modLoc("campfire_cooking/rubber"));
+					.save(consumer, smeltingLoc("rubber"));
+
+			SimpleCookingRecipeBuilder.cooking(FTBICItems.RESIN.ingredient(), FTBICItems.RUBBER.get(), 0F, 300, RecipeSerializer.CAMPFIRE_COOKING_RECIPE)
+					.unlockedBy("has_item", has(FTBICItems.RESIN.get()))
+					.save(consumer, campfireCookingLoc("rubber"));
+
+			// Shaped
 
 			ShapedRecipeBuilder.shaped(FTBICItems.RUBBER_SHEET.get())
 					.unlockedBy("has_item", has(FTBICItems.RUBBER_SHEET.get()))
 					.group(MODID + ":rubber")
 					.pattern("III")
-					.define('I', FTBICItems.RUBBER.get())
+					.define('I', FTBICItems.RUBBER.ingredient())
 					.save(consumer, shapedLoc("rubber_sheet"));
+
+			ShapedRecipeBuilder.shaped(FTBICItems.REINFORCED_STONE.get(), 4)
+					.unlockedBy("has_item", has(FTBICItems.ADVANCED_ALLOY.get()))
+					.group(MODID + ":nuclear")
+					.pattern("SSS")
+					.pattern("SAS")
+					.pattern("SSS")
+					.define('S', Items.SMOOTH_STONE)
+					.define('A', FTBICItems.ADVANCED_ALLOY.ingredient())
+					.save(consumer, shapedLoc("reinforced_stone"));
+
+			ShapedRecipeBuilder.shaped(FTBICItems.REINFORCED_GLASS.get(), 4)
+					.unlockedBy("has_item", has(FTBICItems.REINFORCED_STONE.get()))
+					.group(MODID + ":nuclear")
+					.pattern("RGR")
+					.pattern("G G")
+					.pattern("RGR")
+					.define('R', FTBICItems.REINFORCED_STONE.get())
+					.define('G', GLASS)
+					.save(consumer, shapedLoc("reinforced_glass"));
 
 			ShapedRecipeBuilder.shaped(FTBICItems.SCRAP_BOX.get())
 					.unlockedBy("has_item", has(FTBICItems.SCRAP.get()))
@@ -336,8 +359,63 @@ public class FTBICDataGenHandler {
 					.pattern("SSS")
 					.pattern("SSS")
 					.pattern("SSS")
-					.define('S', FTBICItems.SCRAP.get())
+					.define('S', FTBICItems.SCRAP.ingredient())
 					.save(consumer, shapedLoc("scrap_box"));
+
+			ShapedRecipeBuilder.shaped(FTBICItems.COAL_BALL.get())
+					.unlockedBy("has_item", has(Items.COAL))
+					.group(MODID + ":graphene")
+					.pattern("CCC")
+					.pattern("CFC")
+					.pattern("CCC")
+					.define('C', Ingredient.of(COAL))
+					.define('F', Items.FLINT)
+					.save(consumer, shapedLoc("coal_ball"));
+
+			ShapedRecipeBuilder.shaped(FTBICItems.GRAPHENE.get())
+					.unlockedBy("has_item", has(FTBICItems.COMPRESSED_COAL_BALL.get()))
+					.group(MODID + ":graphene")
+					.pattern("CCC")
+					.pattern("COC")
+					.pattern("CCC")
+					.define('C', FTBICItems.COMPRESSED_COAL_BALL.ingredient())
+					.define('O', Items.OBSIDIAN)
+					.save(consumer, shapedLoc("graphene"));
+
+			ShapedRecipeBuilder.shaped(FTBICItems.ENERGY_CRYSTAL.get())
+					.unlockedBy("has_item", has(Items.DIAMOND))
+					.group(MODID + ":energy_crystal")
+					.pattern("RQR")
+					.pattern("QDQ")
+					.pattern("RQR")
+					.define('R', REDSTONE)
+					.define('D', DIAMOND)
+					.define('Q', QUARTZ)
+					.save(consumer, shapedLoc("energy_crystal"));
+
+			ShapedRecipeBuilder.shaped(FTBICItems.SINGLE_USE_BATTERY.get())
+					.unlockedBy("has_item", has(COAL))
+					.group(MODID + ":battery")
+					.pattern("C")
+					.pattern("R")
+					.pattern("O")
+					.define('C', FTBICItems.RUBBER.ingredient()) // TODO: Change to copper cable
+					.define('O', COAL)
+					.define('R', REDSTONE)
+					.save(consumer, shapedLoc("single_use_battery"));
+
+			ShapedRecipeBuilder.shaped(FTBICItems.BATTERY.get())
+					.unlockedBy("has_item", has(TIN_INGOT))
+					.group(MODID + ":battery")
+					.pattern(" C ")
+					.pattern("TRT")
+					.pattern("TRT")
+					.define('C', FTBICItems.RUBBER.ingredient()) // TODO: Change to copper cable
+					.define('T', TIN_INGOT)
+					.define('R', REDSTONE)
+					.save(consumer, shapedLoc("battery"));
+
+			// Shapeless
 
 			ShapelessRecipeBuilder.shapeless(FTBICItems.RUBBER.get(), 3)
 					.unlockedBy("has_item", has(FTBICItems.RUBBER.get()))
@@ -348,8 +426,22 @@ public class FTBICDataGenHandler {
 			ShapelessRecipeBuilder.shapeless(FTBICItems.SCRAP.get(), 9)
 					.unlockedBy("has_item", has(FTBICItems.SCRAP_BOX.get()))
 					.group(MODID + ":scrap")
-					.requires(FTBICItems.SCRAP_BOX.get())
+					.requires(FTBICItems.SCRAP_BOX.ingredient())
 					.save(consumer, shapelessLoc("scrap"));
+
+			// Smithing
+
+			UpgradeRecipeBuilder.smithing(Ingredient.of(FTBICItems.BATTERY.get()), FTBICItems.ENERGY_CRYSTAL.ingredient(), FTBICItems.CRYSTAL_BATTERY.get())
+					.unlocks("has_item", has(FTBICItems.ENERGY_CRYSTAL.get()))
+					.save(consumer, smithingLoc("crystal_battery"));
+
+			UpgradeRecipeBuilder.smithing(Ingredient.of(FTBICItems.CRYSTAL_BATTERY.get()), FTBICItems.GRAPHENE.ingredient(), FTBICItems.GRAPHENE_BATTERY.get())
+					.unlocks("has_item", has(FTBICItems.GRAPHENE.get()))
+					.save(consumer, smithingLoc("graphene_battery"));
+
+			UpgradeRecipeBuilder.smithing(Ingredient.of(FTBICItems.GRAPHENE_BATTERY.get()), FTBICItems.IRIDIUM_PLATE.ingredient(), FTBICItems.IRIDIUM_BATTERY.get())
+					.unlocks("has_item", has(FTBICItems.IRIDIUM_PLATE.get()))
+					.save(consumer, smithingLoc("iridium_battery"));
 		}
 	}
 
@@ -378,8 +470,19 @@ public class FTBICDataGenHandler {
 			dropSelf(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get());
 			dropSelf(FTBICBlocks.IRON_FURNACE.get());
 
-			for (ElectricBlockInstance machine : FTBICElectricBlocks.MACHINES) {
-				dropSelf(machine.block.get());
+			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
+				add(machine.block.get(), LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.when(InvertedLootItemCondition.invert(LootItemBlockStatePropertyCondition.hasBlockStateProperties(machine.block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(ElectricBlock.STATE, ElectricBlockState.BURNT))))
+								.setRolls(ConstantIntValue.exactly(1))
+								.add(LootItem.lootTableItem(machine.item.get()))
+						)
+						.withPool(LootPool.lootPool()
+								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(machine.block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(ElectricBlock.STATE, ElectricBlockState.BURNT)))
+								.setRolls(ConstantIntValue.exactly(1))
+								.add(LootItem.lootTableItem(machine.advanced ? FTBICItems.ADVANCED_MACHINE_BLOCK.get() : FTBICItems.MACHINE_BLOCK.get()))
+						)
+				);
 			}
 		}
 

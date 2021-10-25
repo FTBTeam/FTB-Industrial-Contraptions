@@ -16,6 +16,7 @@ public class ElectricBlockInstance {
 
 	public final String id;
 	public String name;
+	public boolean advanced = false;
 	public boolean horizontal = true;
 	public boolean noModel = false;
 	public final Supplier<Block> block;
@@ -36,6 +37,11 @@ public class ElectricBlockInstance {
 		item = FTBICItems.blockItem(id, block);
 
 		blockEntity = FTBICBlockEntities.register(id, blockEntitySupplier, block);
+	}
+
+	public ElectricBlockInstance advanced() {
+		advanced = true;
+		return this;
 	}
 
 	public ElectricBlockInstance name(String n) {

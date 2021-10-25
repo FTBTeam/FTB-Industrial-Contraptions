@@ -10,10 +10,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public interface FTBICItems {
 	DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, FTBIC.MOD_ID);
+	List<MaterialItem> MATERIALS = new ArrayList<>();
 
 	static Supplier<BlockItem> blockItem(String id, Supplier<Block> sup) {
 		return REGISTRY.register(id, () -> new BlockItem(sup.get(), new Item.Properties().tab(FTBIC.TAB)));
@@ -23,6 +26,13 @@ public interface FTBICItems {
 		return REGISTRY.register(id, () -> new Item(new Item.Properties().tab(FTBIC.TAB)));
 	}
 
+	static MaterialItem material(String id) {
+		MaterialItem m = new MaterialItem(id);
+		m.item = basicItem(id);
+		MATERIALS.add(m);
+		return m;
+	}
+
 	Supplier<BlockItem> RUBBER_SHEET = blockItem("rubber_sheet", FTBICBlocks.RUBBER_SHEET);
 	Supplier<BlockItem> REINFORCED_STONE = blockItem("reinforced_stone", FTBICBlocks.REINFORCED_STONE);
 	Supplier<BlockItem> REINFORCED_GLASS = blockItem("reinforced_glass", FTBICBlocks.REINFORCED_GLASS);
@@ -30,29 +40,33 @@ public interface FTBICItems {
 	Supplier<BlockItem> ADVANCED_MACHINE_BLOCK = blockItem("advanced_machine_block", FTBICBlocks.ADVANCED_MACHINE_BLOCK);
 	Supplier<BlockItem> IRON_FURNACE = blockItem("iron_furnace", FTBICBlocks.IRON_FURNACE);
 
-	Supplier<Item> RUBBER = basicItem("rubber");
-	Supplier<Item> RESIN = basicItem("resin");
-	Supplier<Item> MIXED_METAL_INGOT = basicItem("mixed_metal_ingot");
-	Supplier<Item> ADVANCED_ALLOY = basicItem("advanced_alloy");
-	Supplier<Item> COAL_BALL = basicItem("coal_ball");
-	Supplier<Item> COMPRESSED_COAL_BALL = basicItem("compressed_coal_ball");
-	Supplier<Item> COAL_CHUNK = basicItem("coal_chunk");
-	Supplier<Item> RAW_IRIDIUM = basicItem("raw_iridium");
-	Supplier<Item> IRIDIUM_PLATE = basicItem("iridium_plate");
-	Supplier<Item> SCRAP = basicItem("scrap");
-	Supplier<Item> SCRAP_BOX = basicItem("scrap_box");
-	Supplier<Item> SINGLE_USE_BATTERY = basicItem("single_use_battery");
-	Supplier<Item> BATTERY = REGISTRY.register("battery", () -> new BatteryItem(PowerTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));
-	Supplier<Item> CRYSTAL_BATTERY = REGISTRY.register("crystal_battery", () -> new BatteryItem(PowerTier.MV, FTBICConfig.MV_BATTERY_CAPACITY));
-	Supplier<Item> GRAPHENE_BATTERY = REGISTRY.register("graphene_battery", () -> new BatteryItem(PowerTier.HV, FTBICConfig.HV_BATTERY_CAPACITY));
-	Supplier<Item> IRIDIUM_BATTERY = REGISTRY.register("iridium_battery", () -> new BatteryItem(PowerTier.EV, FTBICConfig.EV_BATTERY_CAPACITY));
-	Supplier<Item> OVERCLOCKER_UPGRADE = basicItem("overclocker_upgrade");
-	Supplier<Item> ENERGY_STORAGE_UPGRADE = basicItem("energy_storage_upgrade");
-	Supplier<Item> TRANSFORMER_UPGRADE = basicItem("transformer_upgrade");
-	Supplier<Item> CLAY_DUST = basicItem("clay_dust");
-	Supplier<Item> ELECTRONIC_CIRCUIT = basicItem("electronic_circuit");
-	Supplier<Item> ADVANCED_CIRCUIT = basicItem("advanced_circuit");
-	Supplier<Item> RAW_CARBON_FIBRE = basicItem("raw_carbon_fibre");
-	Supplier<Item> RAW_CARBON_MESH = basicItem("raw_carbon_mesh");
-	Supplier<Item> CARBON_PLATE = basicItem("carbon_plate");
+	MaterialItem RUBBER = material("rubber");
+	MaterialItem RESIN = material("resin");
+	MaterialItem MIXED_METAL_INGOT = material("mixed_metal_ingot");
+	MaterialItem ADVANCED_ALLOY = material("advanced_alloy");
+	MaterialItem COAL_BALL = material("coal_ball");
+	MaterialItem COMPRESSED_COAL_BALL = material("compressed_coal_ball");
+	MaterialItem GRAPHENE = material("graphene");
+	MaterialItem RAW_IRIDIUM = material("raw_iridium");
+	MaterialItem IRIDIUM_PLATE = material("iridium_plate");
+	MaterialItem SCRAP = material("scrap");
+	MaterialItem SCRAP_BOX = material("scrap_box");
+	MaterialItem OVERCLOCKER_UPGRADE = material("overclocker_upgrade");
+	MaterialItem ENERGY_STORAGE_UPGRADE = material("energy_storage_upgrade");
+	MaterialItem TRANSFORMER_UPGRADE = material("transformer_upgrade");
+	MaterialItem CLAY_DUST = material("clay_dust");
+	MaterialItem ELECTRONIC_CIRCUIT = material("electronic_circuit");
+	MaterialItem ADVANCED_CIRCUIT = material("advanced_circuit");
+	MaterialItem RAW_CARBON_FIBRE = material("raw_carbon_fibre");
+	MaterialItem RAW_CARBON_MESH = material("raw_carbon_mesh");
+	MaterialItem CARBON_PLATE = material("carbon_plate");
+	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
+	MaterialItem FUSE = material("fuse");
+
+	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, PowerTier.LV, FTBICConfig.SINGLE_USE_BATTERY_CAPACITY));
+	Supplier<Item> BATTERY = REGISTRY.register("battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));
+	Supplier<Item> CRYSTAL_BATTERY = REGISTRY.register("crystal_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.MV, FTBICConfig.MV_BATTERY_CAPACITY));
+	Supplier<Item> GRAPHENE_BATTERY = REGISTRY.register("graphene_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.HV, FTBICConfig.HV_BATTERY_CAPACITY));
+	Supplier<Item> IRIDIUM_BATTERY = REGISTRY.register("iridium_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.EV, FTBICConfig.EV_BATTERY_CAPACITY));
+	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, PowerTier.EV, Integer.MAX_VALUE));
 }

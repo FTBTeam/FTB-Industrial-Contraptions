@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:battery",
+	"pattern": [
+		"C",
+		"R",
+		"O"
+	],
+	"key": {
+		"C": {
+			"item": "ftbic:rubber"
+		},
+		"O": {
+			"tag": "minecraft:coals"
+		},
+		"R": {
+			"tag": "forge:dusts/redstone"
+		}
+	},
+	"result": {
+		"item": "ftbic:single_use_battery"
+	}
+}

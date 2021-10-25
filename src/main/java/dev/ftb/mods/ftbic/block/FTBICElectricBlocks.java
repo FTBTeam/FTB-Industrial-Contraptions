@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public interface FTBICElectricBlocks {
-	List<ElectricBlockInstance> MACHINES = new ArrayList<>();
+	List<ElectricBlockInstance> ALL = new ArrayList<>();
 
 	static ElectricBlockInstance register(String id, Supplier<BlockEntity> supplier) {
 		ElectricBlockInstance instance = new ElectricBlockInstance(id, supplier);
-		MACHINES.add(instance);
+		ALL.add(instance);
 		return instance;
 	}
 
@@ -36,16 +36,16 @@ public interface FTBICElectricBlocks {
 	ElectricBlockInstance WIND_MILL = register("wind_mill", WindMillBlockEntity::new).noModel();
 	ElectricBlockInstance LV_SOLAR_PANEL = register("lv_solar_panel", LVSolarPanelBlockEntity::new).name("LV Solar Panel").noModel();
 	ElectricBlockInstance MV_SOLAR_PANEL = register("mv_solar_panel", MVSolarPanelBlockEntity::new).name("MV Solar Panel").noModel();
-	ElectricBlockInstance HV_SOLAR_PANEL = register("hv_solar_panel", HVSolarPanelBlockEntity::new).name("HV Solar Panel").noModel();
-	ElectricBlockInstance NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorBlockEntity::new).noModel();
+	ElectricBlockInstance HV_SOLAR_PANEL = register("hv_solar_panel", HVSolarPanelBlockEntity::new).advanced().name("HV Solar Panel").noModel();
+	ElectricBlockInstance NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorBlockEntity::new).advanced().noModel();
 
 	ElectricBlockInstance ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceBlockEntity::new);
 	ElectricBlockInstance MACERATOR = register("macerator", MaceratorBlockEntity::new).noModel();
 	ElectricBlockInstance EXTRACTOR = register("extractor", ExtractorBlockEntity::new).noModel();
 	ElectricBlockInstance COMPRESSOR = register("compressor", CompressorBlockEntity::new).noModel();
 	ElectricBlockInstance ELECTROLYZER = register("electrolyzer", ElectrolyzerBlockEntity::new).noModel();
-	ElectricBlockInstance RECYCLER = register("recycler", RecyclerBlockEntity::new).noModel();
-	ElectricBlockInstance INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlockEntity::new).noModel();
+	ElectricBlockInstance RECYCLER = register("recycler", RecyclerBlockEntity::new).advanced().noModel();
+	ElectricBlockInstance INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlockEntity::new).advanced().noModel();
 
 	static void init() {
 	}

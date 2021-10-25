@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:nuclear",
+	"pattern": [
+		"RGR",
+		"G G",
+		"RGR"
+	],
+	"key": {
+		"R": {
+			"item": "ftbic:reinforced_stone"
+		},
+		"G": {
+			"tag": "forge:glass/colorless"
+		}
+	},
+	"result": {
+		"item": "ftbic:reinforced_glass",
+		"count": 4
+	}
+}

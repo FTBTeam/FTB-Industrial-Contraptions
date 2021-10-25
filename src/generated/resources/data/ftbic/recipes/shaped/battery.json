@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:battery",
+	"pattern": [
+		" C ",
+		"TRT",
+		"TRT"
+	],
+	"key": {
+		"C": {
+			"item": "ftbic:rubber"
+		},
+		"T": {
+			"tag": "forge:ingots/tin"
+		},
+		"R": {
+			"tag": "forge:dusts/redstone"
+		}
+	},
+	"result": {
+		"item": "ftbic:battery"
+	}
+}
