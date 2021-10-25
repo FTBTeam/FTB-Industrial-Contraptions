@@ -39,6 +39,12 @@ public interface FTBICItems {
 	Supplier<BlockItem> MACHINE_BLOCK = blockItem("machine_block", FTBICBlocks.MACHINE_BLOCK);
 	Supplier<BlockItem> ADVANCED_MACHINE_BLOCK = blockItem("advanced_machine_block", FTBICBlocks.ADVANCED_MACHINE_BLOCK);
 	Supplier<BlockItem> IRON_FURNACE = blockItem("iron_furnace", FTBICBlocks.IRON_FURNACE);
+	Supplier<BlockItem> COPPER_WIRE = blockItem("copper_wire", FTBICBlocks.COPPER_WIRE);
+	Supplier<BlockItem> COPPER_CABLE = blockItem("copper_cable", FTBICBlocks.COPPER_CABLE);
+	Supplier<BlockItem> GOLD_WIRE = blockItem("gold_wire", FTBICBlocks.GOLD_WIRE);
+	Supplier<BlockItem> GOLD_CABLE = blockItem("gold_cable", FTBICBlocks.GOLD_CABLE);
+	Supplier<BlockItem> ALUMINUM_WIRE = blockItem("aluminum_wire", FTBICBlocks.ALUMINUM_WIRE);
+	Supplier<BlockItem> ALUMINUM_CABLE = blockItem("aluminum_cable", FTBICBlocks.ALUMINUM_CABLE);
 
 	MaterialItem RUBBER = material("rubber");
 	MaterialItem RESIN = material("resin");

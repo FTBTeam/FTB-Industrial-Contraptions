@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
+import dev.ftb.mods.ftbic.block.CableBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.ElectricBlockState;
@@ -46,6 +47,7 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeLootTableProvider;
@@ -104,6 +106,12 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.MACHINE_BLOCK, "Machine Block");
 			addBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK, "Advanced Machine Block");
 			addBlock(FTBICBlocks.IRON_FURNACE, "Iron Furnace");
+			addBlock(FTBICBlocks.COPPER_WIRE, "Copper Wire");
+			addBlock(FTBICBlocks.COPPER_CABLE, "Copper Cable");
+			addBlock(FTBICBlocks.GOLD_WIRE, "Gold Wire");
+			addBlock(FTBICBlocks.GOLD_CABLE, "Gold Cable");
+			addBlock(FTBICBlocks.ALUMINUM_WIRE, "Aluminum Wire");
+			addBlock(FTBICBlocks.ALUMINUM_CABLE, "Aluminum Cable");
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -119,6 +127,72 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.GRAPHENE_BATTERY, "Graphene Battery");
 			addItem(FTBICItems.IRIDIUM_BATTERY, "Iridium Battery");
 			addItem(FTBICItems.CREATIVE_BATTERY, "Creative Battery");
+		}
+	}
+
+	private static class ICBlockModels extends BlockModelProvider {
+		public ICBlockModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
+			super(generator, modid, existingFileHelper);
+		}
+
+		private void electric(String id, String front, String side, String top) {
+			orientable("block/electric/light/" + id, modLoc("block/electric/light/" + side), modLoc("block/electric/light/" + front), modLoc("block/electric/light/" + top));
+			orientable("block/electric/dark/" + id, modLoc("block/electric/dark/" + side), modLoc("block/electric/dark/" + front), modLoc("block/electric/dark/" + top));
+		}
+
+		@Override
+		protected void registerModels() {
+			withExistingParent("block/rubber_sheet", "block/block")
+					.texture("texture", modLoc("block/rubber_sheet"))
+					.texture("particle", modLoc("block/rubber_sheet"))
+					.element()
+					.from(0F, 0F, 0F)
+					.to(16F, 3F, 16F)
+					.face(Direction.DOWN).texture("#texture").cullface(Direction.DOWN).end()
+					.face(Direction.UP).texture("#texture").end()
+					.face(Direction.NORTH).texture("#texture").cullface(Direction.NORTH).end()
+					.face(Direction.SOUTH).texture("#texture").cullface(Direction.SOUTH).end()
+					.face(Direction.WEST).texture("#texture").cullface(Direction.WEST).end()
+					.face(Direction.EAST).texture("#texture").cullface(Direction.EAST).end()
+					.end()
+			;
+
+			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
+				CableBlock block = (CableBlock) cable.get();
+				String id = block.getRegistryName().getPath();
+
+				withExistingParent("block/" + id + "_base", "block/block")
+						.texture("texture", modLoc("block/" + id))
+						.texture("particle", modLoc("block/" + id))
+						.element()
+						.from(block.border, block.border, block.border)
+						.to(16F - block.border, 16F - block.border, 16F - block.border)
+						.face(Direction.DOWN).texture("#texture").end()
+						.face(Direction.UP).texture("#texture").end()
+						.face(Direction.NORTH).texture("#texture").end()
+						.face(Direction.SOUTH).texture("#texture").end()
+						.face(Direction.WEST).texture("#texture").end()
+						.face(Direction.EAST).texture("#texture").end()
+						.end();
+
+				withExistingParent("block/" + id + "_connection", "block/block")
+						.texture("texture", modLoc("block/" + id))
+						.texture("particle", modLoc("block/" + id))
+						.element()
+						.from(block.border, 0, block.border)
+						.to(16F - block.border, block.border, 16F - block.border)
+						.face(Direction.DOWN).texture("#texture").cullface(Direction.DOWN).end()
+						.face(Direction.NORTH).texture("#texture").end()
+						.face(Direction.SOUTH).texture("#texture").end()
+						.face(Direction.WEST).texture("#texture").end()
+						.face(Direction.EAST).texture("#texture").end()
+						.end();
+			}
+
+			orientable("block/iron_furnace", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front"), modLoc("block/iron_furnace_side"));
+			orientable("block/iron_furnace_on", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_on"), modLoc("block/iron_furnace_side"));
+			electric("electric_furnace", "electric_furnace_front", "side", "top");
+			electric("electric_furnace_on", "electric_furnace_front_on", "side", "top");
 		}
 	}
 
@@ -144,6 +218,21 @@ public class FTBICDataGenHandler {
 						.rotationY(((facing.get2DDataValue() & 3) * 90 + 180) % 360)
 						.build();
 			});
+
+			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
+				CableBlock block = (CableBlock) cable.get();
+				String id = block.getRegistryName().getPath();
+				// simpleBlock(cable.get(), models().getExistingFile(modLoc("block/" + id + "_base")));
+
+				MultiPartBlockStateBuilder builder = getMultipartBuilder(cable.get());
+				builder.part().modelFile(models().getExistingFile(modLoc("block/" + id + "_base"))).addModel().end();
+				builder.part().modelFile(models().getExistingFile(modLoc("block/" + id + "_connection"))).rotationX(0).rotationY(0).addModel().condition(CableBlock.CONNECTION[0], true).end();
+				builder.part().modelFile(models().getExistingFile(modLoc("block/" + id + "_connection"))).rotationX(180).rotationY(0).addModel().condition(CableBlock.CONNECTION[1], true).end();
+				builder.part().modelFile(models().getExistingFile(modLoc("block/" + id + "_connection"))).rotationX(90).rotationY(180).addModel().condition(CableBlock.CONNECTION[2], true).end();
+				builder.part().modelFile(models().getExistingFile(modLoc("block/" + id + "_connection"))).rotationX(90).rotationY(0).addModel().condition(CableBlock.CONNECTION[3], true).end();
+				builder.part().modelFile(models().getExistingFile(modLoc("block/" + id + "_connection"))).rotationX(90).rotationY(90).addModel().condition(CableBlock.CONNECTION[4], true).end();
+				builder.part().modelFile(models().getExistingFile(modLoc("block/" + id + "_connection"))).rotationX(90).rotationY(270).addModel().condition(CableBlock.CONNECTION[5], true).end();
+			}
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
@@ -175,46 +264,12 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICBlockModels extends BlockModelProvider {
-		public ICBlockModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
-			super(generator, modid, existingFileHelper);
-		}
-
-		private void electric(String id, String front, String side, String top) {
-			orientable("block/electric/light/" + id, modLoc("block/electric/light/" + side), modLoc("block/electric/light/" + front), modLoc("block/electric/light/" + top));
-			orientable("block/electric/dark/" + id, modLoc("block/electric/dark/" + side), modLoc("block/electric/dark/" + front), modLoc("block/electric/dark/" + top));
-		}
-
-		@Override
-		protected void registerModels() {
-			withExistingParent("block/rubber_sheet", "block/block")
-					.texture("texture", modLoc("block/rubber_sheet"))
-					.texture("particle", modLoc("block/rubber_sheet"))
-					.element()
-					.from(0F, 0F, 0F)
-					.to(16F, 3F, 16F)
-					.face(Direction.DOWN).texture("#texture").cullface(Direction.DOWN).end()
-					.face(Direction.UP).texture("#texture").end()
-					.face(Direction.NORTH).texture("#texture").cullface(Direction.NORTH).end()
-					.face(Direction.SOUTH).texture("#texture").cullface(Direction.SOUTH).end()
-					.face(Direction.WEST).texture("#texture").cullface(Direction.WEST).end()
-					.face(Direction.EAST).texture("#texture").cullface(Direction.EAST).end()
-					.end()
-			;
-
-			orientable("block/iron_furnace", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front"), modLoc("block/iron_furnace_side"));
-			orientable("block/iron_furnace_on", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_on"), modLoc("block/iron_furnace_side"));
-			electric("electric_furnace", "electric_furnace_front", "side", "top");
-			electric("electric_furnace_on", "electric_furnace_front_on", "side", "top");
-		}
-	}
-
 	private static class ICItemModels extends ItemModelProvider {
 		public ICItemModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
 			super(generator, modid, existingFileHelper);
 		}
 
-		private void basicItem(Supplier<Item> item) {
+		private void basicItem(Supplier<? extends Item> item) {
 			String id = item.get().getRegistryName().getPath();
 			singleTexture(id, mcLoc("item/generated"), "layer0", modLoc("item/" + id));
 		}
@@ -232,6 +287,10 @@ public class FTBICDataGenHandler {
 			basicBlockItem(FTBICBlocks.MACHINE_BLOCK);
 			basicBlockItem(FTBICBlocks.ADVANCED_MACHINE_BLOCK);
 			basicBlockItem(FTBICBlocks.IRON_FURNACE);
+
+			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
+				basicItem(() -> cable.get().asItem());
+			}
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
@@ -399,7 +458,7 @@ public class FTBICDataGenHandler {
 					.pattern("C")
 					.pattern("R")
 					.pattern("O")
-					.define('C', FTBICItems.RUBBER.ingredient()) // TODO: Change to copper cable
+					.define('C', FTBICItems.COPPER_CABLE.get())
 					.define('O', COAL)
 					.define('R', REDSTONE)
 					.save(consumer, shapedLoc("single_use_battery"));
@@ -410,7 +469,7 @@ public class FTBICDataGenHandler {
 					.pattern(" C ")
 					.pattern("TRT")
 					.pattern("TRT")
-					.define('C', FTBICItems.RUBBER.ingredient()) // TODO: Change to copper cable
+					.define('C', FTBICItems.COPPER_CABLE.get())
 					.define('T', TIN_INGOT)
 					.define('R', REDSTONE)
 					.save(consumer, shapedLoc("battery"));
@@ -469,6 +528,10 @@ public class FTBICDataGenHandler {
 			dropSelf(FTBICBlocks.MACHINE_BLOCK.get());
 			dropSelf(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get());
 			dropSelf(FTBICBlocks.IRON_FURNACE.get());
+
+			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
+				dropSelf(cable.get());
+			}
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				add(machine.block.get(), LootTable.lootTable()
