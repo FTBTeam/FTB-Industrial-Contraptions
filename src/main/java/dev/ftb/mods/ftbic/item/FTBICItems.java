@@ -45,6 +45,7 @@ public interface FTBICItems {
 	Supplier<BlockItem> GOLD_CABLE = blockItem("gold_cable", FTBICBlocks.GOLD_CABLE);
 	Supplier<BlockItem> ALUMINUM_WIRE = blockItem("aluminum_wire", FTBICBlocks.ALUMINUM_WIRE);
 	Supplier<BlockItem> ALUMINUM_CABLE = blockItem("aluminum_cable", FTBICBlocks.ALUMINUM_CABLE);
+	Supplier<BlockItem> GLASS_CABLE = blockItem("glass_cable", FTBICBlocks.GLASS_CABLE);
 
 	MaterialItem RUBBER = material("rubber");
 	MaterialItem RESIN = material("resin");

@@ -93,5 +93,17 @@ public class FTBICCableRecipes extends FTBICRecipes {
 				.requires(RUBBER)
 				.requires(RUBBER)
 				.save(consumer, shapelessLoc("aluminum_cable"));
+
+		// Glass cable
+
+		ShapedRecipeBuilder.shaped(FTBICItems.GLASS_CABLE.get(), 6)
+				.unlockedBy("has_item", has(FTBICItems.ENERGY_CRYSTAL.get()))
+				.group(MODID + ":cable")
+				.pattern("GGG")
+				.pattern(" C ")
+				.pattern("GGG")
+				.define('G', GLASS)
+				.define('C', FTBICItems.ENERGY_CRYSTAL.get())
+				.save(consumer, shapedLoc("glass_cable"));
 	}
 }

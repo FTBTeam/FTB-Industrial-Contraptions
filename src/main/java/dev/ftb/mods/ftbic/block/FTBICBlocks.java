@@ -28,7 +28,8 @@ public interface FTBICBlocks {
 	Supplier<Block> COPPER_CABLE = REGISTRY.register("copper_cable", () -> new CableBlock(PowerTier.LV, 0, 5));
 	Supplier<Block> GOLD_WIRE = REGISTRY.register("gold_wire", () -> new CableBlock(PowerTier.MV, 3, 7));
 	Supplier<Block> GOLD_CABLE = REGISTRY.register("gold_cable", () -> new CableBlock(PowerTier.MV, 0, 6));
-	Supplier<Block> ALUMINUM_WIRE = REGISTRY.register("aluminum_wire", () -> new CableBlock(PowerTier.EV, 10, 5));
-	Supplier<Block> ALUMINUM_CABLE = REGISTRY.register("aluminum_cable", () -> new CableBlock(PowerTier.EV, 0, 4));
-	List<Supplier<Block>> CABLES = Arrays.asList(COPPER_WIRE, COPPER_CABLE, GOLD_WIRE, GOLD_CABLE, ALUMINUM_WIRE, ALUMINUM_CABLE);
+	Supplier<Block> ALUMINUM_WIRE = REGISTRY.register("aluminum_wire", () -> new CableBlock(PowerTier.HV, 10, 5));
+	Supplier<Block> ALUMINUM_CABLE = REGISTRY.register("aluminum_cable", () -> new CableBlock(PowerTier.HV, 0, 4));
+	Supplier<Block> GLASS_CABLE = REGISTRY.register("glass_cable", () -> new CableBlock(PowerTier.EV, 0, 6));
+	List<Supplier<Block>> CABLES = Arrays.asList(COPPER_WIRE, COPPER_CABLE, GOLD_WIRE, GOLD_CABLE, ALUMINUM_WIRE, ALUMINUM_CABLE, GLASS_CABLE);
 }

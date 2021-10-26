@@ -108,6 +108,7 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.GOLD_CABLE, "Gold Cable");
 			addBlock(FTBICBlocks.ALUMINUM_WIRE, "Aluminum Wire");
 			addBlock(FTBICBlocks.ALUMINUM_CABLE, "Aluminum Cable");
+			addBlock(FTBICBlocks.GLASS_CABLE, "Glass Cable");
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);

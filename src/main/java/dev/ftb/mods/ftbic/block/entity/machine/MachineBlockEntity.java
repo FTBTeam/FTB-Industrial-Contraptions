@@ -7,4 +7,9 @@ public class MachineBlockEntity extends ElectricBlockEntity {
 	public MachineBlockEntity(BlockEntityType<?> type) {
 		super(type);
 	}
+
+	@Override
+	public boolean canReceive() {
+		return true;
+	}
 }
