@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:advanced_machine_block",
+	"pattern": [
+		" C ",
+		"AMA",
+		" C "
+	],
+	"key": {
+		"M": {
+			"item": "ftbic:machine_block"
+		},
+		"C": {
+			"item": "ftbic:carbon_plate"
+		},
+		"A": {
+			"item": "ftbic:advanced_alloy"
+		}
+	},
+	"result": {
+		"item": "ftbic:advanced_machine_block"
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:coolant_60k",
+	"pattern": [
+		"TCT",
+		"TAT",
+		"TCT"
+	],
+	"key": {
+		"T": {
+			"tag": "forge:ingots/tin"
+		},
+		"C": {
+			"item": "ftbic:coolant_30k"
+		},
+		"A": {
+			"tag": "forge:plates/copper"
+		}
+	},
+	"result": {
+		"item": "ftbic:coolant_60k"
+	}
+}

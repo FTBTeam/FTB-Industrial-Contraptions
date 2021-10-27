@@ -26,7 +26,7 @@ public class FTBIC {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack makeIcon() {
-			return new ItemStack(FTBICItems.MACHINE_BLOCK.get());
+			return new ItemStack(FTBICElectricBlocks.ELECTRIC_FURNACE.item.get());
 		}
 	};
 

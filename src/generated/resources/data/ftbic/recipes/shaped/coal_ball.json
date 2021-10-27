@@ -1,6 +1,6 @@
 {
 	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:graphene",
+	"group": "ftbic:coal_ball",
 	"pattern": [
 		"CCC",
 		"CFC",

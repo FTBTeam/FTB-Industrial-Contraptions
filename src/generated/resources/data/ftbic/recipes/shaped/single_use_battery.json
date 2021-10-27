@@ -1,6 +1,6 @@
 {
 	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:battery",
+	"group": "ftbic:single_use_battery",
 	"pattern": [
 		"C",
 		"R",

@@ -1,0 +1,44 @@
+{
+	"type": "minecraft:block",
+	"pools": [
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "ftbic:hv_battery_box"
+				}
+			],
+			"conditions": [
+				{
+					"condition": "minecraft:inverted",
+					"term": {
+						"condition": "minecraft:block_state_property",
+						"block": "ftbic:hv_battery_box",
+						"properties": {
+							"state": "burnt"
+						}
+					}
+				}
+			]
+		},
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "ftbic:advanced_machine_block"
+				}
+			],
+			"conditions": [
+				{
+					"condition": "minecraft:block_state_property",
+					"block": "ftbic:hv_battery_box",
+					"properties": {
+						"state": "burnt"
+					}
+				}
+			]
+		}
+	]
+}

@@ -102,7 +102,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 					}
 				} else if (state.hasTileEntity()) {
 					BlockEntity entity = level.getBlockEntity(ptr);
-					IEnergyStorage storage = entity == null ? null : entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+					IEnergyStorage storage = entity instanceof IEnergyStorage ? (IEnergyStorage) entity : entity == null ? null : entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
 
 					if (storage != null && storage != this && storage.canReceive() && isValidConnectedBlock(storage)) {
 						CachedEnergyStorage s = new CachedEnergyStorage();

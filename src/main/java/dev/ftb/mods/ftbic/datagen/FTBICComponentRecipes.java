@@ -1,15 +1,14 @@
 package dev.ftb.mods.ftbic.datagen;
 
-import dev.ftb.mods.ftbic.item.FTBICItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class FTBICComponentRecipes extends FTBICRecipes {
@@ -19,6 +18,10 @@ public class FTBICComponentRecipes extends FTBICRecipes {
 
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
+		SimpleCookingRecipeBuilder.cooking(Ingredient.of(IRON_INGOT), INDUSTRIAL_GRADE_METAL, 0F, 200, RecipeSerializer.BLASTING_RECIPE)
+				.unlockedBy("has_item", has(IRON_INGOT))
+				.save(consumer, blastingLoc("industrial_grade_metal"));
+
 		SimpleCookingRecipeBuilder.cooking(Ingredient.of(RESIN), RUBBER, 0F, 150, RecipeSerializer.SMELTING_RECIPE)
 				.unlockedBy("has_item", has(RESIN))
 				.save(consumer, smeltingLoc("rubber"));
@@ -27,44 +30,44 @@ public class FTBICComponentRecipes extends FTBICRecipes {
 				.unlockedBy("has_item", has(RESIN))
 				.save(consumer, campfireCookingLoc("rubber"));
 
-		ShapedRecipeBuilder.shaped(FTBICItems.RUBBER_SHEET.get())
-				.unlockedBy("has_item", has(FTBICItems.RUBBER_SHEET.get()))
-				.group(MODID + ":rubber")
+		ShapedRecipeBuilder.shaped(RUBBER_SHEET)
+				.unlockedBy("has_item", has(RUBBER))
+				.group(MODID + ":rubber_sheet")
 				.pattern("III")
 				.define('I', RUBBER)
 				.save(consumer, shapedLoc("rubber_sheet"));
 
-		ShapedRecipeBuilder.shaped(FTBICItems.SCRAP_BOX.get())
-				.unlockedBy("has_item", has(FTBICItems.SCRAP.get()))
-				.group(MODID + ":scrap")
+		ShapedRecipeBuilder.shaped(SCRAP_BOX)
+				.unlockedBy("has_item", has(SCRAP))
+				.group(MODID + ":scrap_box")
 				.pattern("SSS")
 				.pattern("SSS")
 				.pattern("SSS")
-				.define('S', FTBICItems.SCRAP.ingredient())
+				.define('S', SCRAP)
 				.save(consumer, shapedLoc("scrap_box"));
 
-		ShapedRecipeBuilder.shaped(FTBICItems.COAL_BALL.get())
-				.unlockedBy("has_item", has(Items.COAL))
-				.group(MODID + ":graphene")
+		ShapedRecipeBuilder.shaped(COAL_BALL)
+				.unlockedBy("has_item", has(COAL))
+				.group(MODID + ":coal_ball")
 				.pattern("CCC")
 				.pattern("CFC")
 				.pattern("CCC")
-				.define('C', Ingredient.of(COAL))
-				.define('F', Items.FLINT)
+				.define('C', COAL)
+				.define('F', FLINT)
 				.save(consumer, shapedLoc("coal_ball"));
 
-		ShapedRecipeBuilder.shaped(FTBICItems.GRAPHENE.get())
-				.unlockedBy("has_item", has(FTBICItems.COMPRESSED_COAL_BALL.get()))
+		ShapedRecipeBuilder.shaped(GRAPHENE)
+				.unlockedBy("has_item", has(COMPRESSED_COAL_BALL))
 				.group(MODID + ":graphene")
 				.pattern("CCC")
 				.pattern("COC")
 				.pattern("CCC")
-				.define('C', FTBICItems.COMPRESSED_COAL_BALL.ingredient())
-				.define('O', Items.OBSIDIAN)
+				.define('C', COMPRESSED_COAL_BALL)
+				.define('O', OBSIDIAN)
 				.save(consumer, shapedLoc("graphene"));
 
-		ShapedRecipeBuilder.shaped(FTBICItems.ENERGY_CRYSTAL.get())
-				.unlockedBy("has_item", has(Items.DIAMOND))
+		ShapedRecipeBuilder.shaped(ENERGY_CRYSTAL)
+				.unlockedBy("has_item", has(DIAMOND))
 				.group(MODID + ":energy_crystal")
 				.pattern("RQR")
 				.pattern("QDQ")
@@ -77,13 +80,65 @@ public class FTBICComponentRecipes extends FTBICRecipes {
 		ShapelessRecipeBuilder.shapeless(RUBBER, 3)
 				.unlockedBy("has_item", has(RUBBER))
 				.group(MODID + ":rubber")
-				.requires(FTBICItems.RUBBER_SHEET.get())
+				.requires(RUBBER_SHEET)
 				.save(consumer, shapelessLoc("rubber"));
 
-		ShapelessRecipeBuilder.shapeless(FTBICItems.SCRAP.get(), 9)
-				.unlockedBy("has_item", has(FTBICItems.SCRAP_BOX.get()))
+		ShapelessRecipeBuilder.shapeless(SCRAP, 9)
+				.unlockedBy("has_item", has(SCRAP_BOX))
 				.group(MODID + ":scrap")
-				.requires(FTBICItems.SCRAP_BOX.ingredient())
+				.requires(SCRAP_BOX)
 				.save(consumer, shapelessLoc("scrap"));
+
+		ShapedRecipeBuilder.shaped(FUSE, 24)
+				.unlockedBy("has_item", has(GLASS))
+				.group(MODID + ":fuse")
+				.pattern("GGG")
+				.pattern("MMM")
+				.pattern("GGG")
+				.define('G', GLASS)
+				.define('M', Ingredient.merge(Arrays.asList(Ingredient.of(IRON_INGOT), Ingredient.of(COPPER_INGOT), Ingredient.of(TIN_INGOT))))
+				.save(consumer, shapedLoc("fuse"));
+
+		ShapedRecipeBuilder.shaped(MACHINE_BLOCK)
+				.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
+				.group(MODID + ":machine_block")
+				.pattern("MMM")
+				.pattern("M M")
+				.pattern("MMM")
+				.define('M', INDUSTRIAL_GRADE_METAL)
+				.save(consumer, shapedLoc("machine_block"));
+
+		ShapedRecipeBuilder.shaped(ADVANCED_MACHINE_BLOCK)
+				.unlockedBy("has_item", has(MACHINE_BLOCK))
+				.group(MODID + ":advanced_machine_block")
+				.pattern(" C ")
+				.pattern("AMA")
+				.pattern(" C ")
+				.define('M', MACHINE_BLOCK)
+				.define('C', CARBON_PLATE)
+				.define('A', ADVANCED_ALLOY)
+				.save(consumer, shapedLoc("advanced_machine_block_h"));
+
+		ShapedRecipeBuilder.shaped(ADVANCED_MACHINE_BLOCK)
+				.unlockedBy("has_item", has(MACHINE_BLOCK))
+				.group(MODID + ":advanced_machine_block")
+				.pattern(" A ")
+				.pattern("CMC")
+				.pattern(" A ")
+				.define('M', MACHINE_BLOCK)
+				.define('C', CARBON_PLATE)
+				.define('A', ADVANCED_ALLOY)
+				.save(consumer, shapedLoc("advanced_machine_block_v"));
+
+		ShapedRecipeBuilder.shaped(EMPTY_CELL, 4)
+				.unlockedBy("has_item", has(TIN_INGOT))
+				.group(MODID + ":empty_cell")
+				.pattern(" T ")
+				.pattern("T T")
+				.pattern(" T ")
+				.define('T', TIN_INGOT)
+				.save(consumer, shapedLoc("empty_cell"));
+
+
 	}
 }

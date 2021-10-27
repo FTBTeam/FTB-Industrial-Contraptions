@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:electronic_circuit",
+	"pattern": [
+		"CCC",
+		"RMR",
+		"CCC"
+	],
+	"key": {
+		"C": {
+			"item": "ftbic:copper_cable"
+		},
+		"R": {
+			"tag": "forge:dusts/redstone"
+		},
+		"M": {
+			"item": "ftbic:industrial_grade_metal"
+		}
+	},
+	"result": {
+		"item": "ftbic:electronic_circuit"
+	}
+}

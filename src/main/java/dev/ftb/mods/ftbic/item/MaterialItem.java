@@ -1,14 +1,12 @@
 package dev.ftb.mods.ftbic.item;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class MaterialItem implements Supplier<Item> {
+public class MaterialItem {
 	public final String id;
 	public String name;
 	public Supplier<Item> item;
@@ -21,18 +19,5 @@ public class MaterialItem implements Supplier<Item> {
 	public MaterialItem name(String n) {
 		name = n;
 		return this;
-	}
-
-	@Override
-	public Item get() {
-		return item.get();
-	}
-
-	public ItemStack stack() {
-		return new ItemStack(item.get());
-	}
-
-	public Ingredient ingredient() {
-		return Ingredient.of(item.get());
 	}
 }

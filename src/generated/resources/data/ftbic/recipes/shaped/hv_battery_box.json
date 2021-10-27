@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:hv_battery_box",
+	"pattern": [
+		"BCB",
+		"BXB",
+		"BMB"
+	],
+	"key": {
+		"C": {
+			"item": "ftbic:advanced_circuit"
+		},
+		"B": {
+			"item": "ftbic:graphene_battery"
+		},
+		"X": {
+			"item": "ftbic:mv_battery_box"
+		},
+		"M": {
+			"item": "ftbic:advanced_machine_block"
+		}
+	},
+	"result": {
+		"item": "ftbic:hv_battery_box"
+	}
+}

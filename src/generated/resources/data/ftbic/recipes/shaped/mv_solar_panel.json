@@ -1,6 +1,6 @@
 {
 	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:solar_panel",
+	"group": "ftbic:mv_solar_panel",
 	"pattern": [
 		"SES",
 		"SAS",

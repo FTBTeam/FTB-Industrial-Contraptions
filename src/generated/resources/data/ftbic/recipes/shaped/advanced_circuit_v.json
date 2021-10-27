@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:advanced_circuit",
+	"pattern": [
+		"RQR",
+		"GCG",
+		"RQR"
+	],
+	"key": {
+		"R": {
+			"tag": "forge:dusts/redstone"
+		},
+		"G": {
+			"tag": "forge:dusts/glowstone"
+		},
+		"Q": {
+			"tag": "forge:gems/quartz"
+		},
+		"C": {
+			"item": "ftbic:electronic_circuit"
+		}
+	},
+	"result": {
+		"item": "ftbic:advanced_circuit"
+	}
+}

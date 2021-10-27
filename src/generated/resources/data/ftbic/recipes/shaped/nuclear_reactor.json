@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:nuclear_reactor",
+	"pattern": [
+		"RCR",
+		"AGA",
+		"RMR"
+	],
+	"key": {
+		"A": {
+			"tag": "forge:plates/copper"
+		},
+		"R": {
+			"item": "ftbic:reinforced_stone"
+		},
+		"M": {
+			"item": "ftbic:advanced_machine_block"
+		},
+		"C": {
+			"item": "ftbic:iridium_circuit"
+		},
+		"G": {
+			"item": "ftbic:basic_generator"
+		}
+	},
+	"result": {
+		"item": "ftbic:nuclear_reactor"
+	}
+}

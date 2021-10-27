@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:canning_machine",
+	"pattern": [
+		"TCT",
+		"TMT",
+		"TTT"
+	],
+	"key": {
+		"T": {
+			"tag": "forge:ingots/tin"
+		},
+		"M": {
+			"item": "ftbic:machine_block"
+		},
+		"C": {
+			"item": "ftbic:electronic_circuit"
+		}
+	},
+	"result": {
+		"item": "ftbic:canning_machine"
+	}
+}

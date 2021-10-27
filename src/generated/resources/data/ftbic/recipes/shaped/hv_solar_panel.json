@@ -1,6 +1,6 @@
 {
 	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:solar_panel",
+	"group": "ftbic:hv_solar_panel",
 	"pattern": [
 		"SGS",
 		"SAS",
@@ -17,7 +17,7 @@
 			"item": "ftbic:advanced_machine_block"
 		},
 		"C": {
-			"item": "ftbic:iridium_plate"
+			"item": "ftbic:iridium_circuit"
 		}
 	},
 	"result": {

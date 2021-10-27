@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"tag": "forge:dusts/coal"
+						"item": "ftbic:basic_generator"
 					}
 				]
 			}

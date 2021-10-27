@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:coolant_10k",
+	"pattern": [
+		" T ",
+		"TCT",
+		" T "
+	],
+	"key": {
+		"T": {
+			"tag": "forge:ingots/tin"
+		},
+		"C": {
+			"item": "ftbic:water_cell"
+		}
+	},
+	"result": {
+		"item": "ftbic:coolant_10k"
+	}
+}

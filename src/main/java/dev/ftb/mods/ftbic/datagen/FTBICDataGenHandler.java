@@ -78,10 +78,14 @@ public class FTBICDataGenHandler {
 			gen.addProvider(blockTags);
 			gen.addProvider(new ICItemTags(gen, blockTags, MODID, efh));
 			gen.addProvider(new FTBICComponentRecipes(gen));
+			gen.addProvider(new FTBICCircuitRecipes(gen));
+			gen.addProvider(new FTBICUpgradeRecipes(gen));
 			gen.addProvider(new FTBICCableRecipes(gen));
 			gen.addProvider(new FTBICBatteryRecipes(gen));
 			gen.addProvider(new FTBICGeneratorRecipes(gen));
 			gen.addProvider(new FTBICMachineRecipes(gen));
+			gen.addProvider(new FTBICEnergyStorageRecipes(gen));
+			gen.addProvider(new FTBICToolRecipes(gen));
 			gen.addProvider(new FTBICNuclearRecipes(gen));
 			gen.addProvider(new ICLootTableProvider(gen));
 		}
@@ -124,6 +128,13 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.GRAPHENE_BATTERY, "Graphene Battery");
 			addItem(FTBICItems.IRIDIUM_BATTERY, "Iridium Battery");
 			addItem(FTBICItems.CREATIVE_BATTERY, "Creative Battery");
+			addItem(FTBICItems.TREE_TAP, "Tree Tap");
+			addItem(FTBICItems.EMPTY_CELL, "Empty Cell");
+			addItem(FTBICItems.WATER_CELL, "Water Cell");
+			addItem(FTBICItems.LAVA_CELL, "Lava Cell");
+			addItem(FTBICItems.COOLANT_10K, "10k Coolant Cell");
+			addItem(FTBICItems.COOLANT_30K, "30k Coolant Cell");
+			addItem(FTBICItems.COOLANT_60K, "60k Coolant Cell");
 		}
 	}
 
@@ -348,6 +359,13 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.GRAPHENE_BATTERY);
 			basicItem(FTBICItems.IRIDIUM_BATTERY);
 			basicItem(FTBICItems.CREATIVE_BATTERY);
+			basicItem(FTBICItems.TREE_TAP);
+			basicItem(FTBICItems.EMPTY_CELL);
+			basicItem(FTBICItems.WATER_CELL);
+			basicItem(FTBICItems.LAVA_CELL);
+			basicItem(FTBICItems.COOLANT_10K);
+			basicItem(FTBICItems.COOLANT_30K);
+			basicItem(FTBICItems.COOLANT_60K);
 		}
 	}
 

@@ -14,6 +14,7 @@ public class FTBICClient extends FTBICCommon {
 	}
 
 	private void setup(FMLClientSetupEvent event) {
-		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.REINFORCED_GLASS.get(), RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.REINFORCED_GLASS.get(), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.GLASS_CABLE.get(), RenderType.cutout());
 	}
 }

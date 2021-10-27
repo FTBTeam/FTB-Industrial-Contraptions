@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:electrolyzer",
+	"pattern": [
+		"W W",
+		"WCW",
+		"EME"
+	],
+	"key": {
+		"W": {
+			"item": "ftbic:copper_cable"
+		},
+		"E": {
+			"item": "ftbic:empty_cell"
+		},
+		"M": {
+			"item": "ftbic:machine_block"
+		},
+		"C": {
+			"item": "ftbic:electronic_circuit"
+		}
+	},
+	"result": {
+		"item": "ftbic:electrolyzer"
+	}
+}

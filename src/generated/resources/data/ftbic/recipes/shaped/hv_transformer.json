@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:hv_transformer",
+	"pattern": [
+		" W ",
+		"CTE",
+		" W "
+	],
+	"key": {
+		"W": {
+			"item": "ftbic:aluminum_cable"
+		},
+		"C": {
+			"item": "ftbic:electronic_circuit"
+		},
+		"E": {
+			"item": "ftbic:energy_crystal"
+		},
+		"T": {
+			"item": "ftbic:mv_transformer"
+		}
+	},
+	"result": {
+		"item": "ftbic:hv_transformer"
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:cable",
+	"pattern": [
+		"GGG",
+		" C ",
+		"GGG"
+	],
+	"key": {
+		"G": {
+			"tag": "forge:glass/colorless"
+		},
+		"C": {
+			"item": "ftbic:energy_crystal"
+		}
+	},
+	"result": {
+		"item": "ftbic:glass_cable",
+		"count": 6
+	}
+}

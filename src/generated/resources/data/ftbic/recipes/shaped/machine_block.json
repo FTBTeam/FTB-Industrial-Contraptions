@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:machine_block",
+	"pattern": [
+		"MMM",
+		"M M",
+		"MMM"
+	],
+	"key": {
+		"M": {
+			"item": "ftbic:industrial_grade_metal"
+		}
+	},
+	"result": {
+		"item": "ftbic:machine_block"
+	}
+}

@@ -1,6 +1,5 @@
 package dev.ftb.mods.ftbic.datagen;
 
-import dev.ftb.mods.ftbic.item.FTBICItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -17,21 +16,21 @@ public class FTBICCableRecipes extends FTBICRecipes {
 	public void add(Consumer<FinishedRecipe> consumer) {
 		// Wire from metal
 
-		ShapedRecipeBuilder.shaped(FTBICItems.COPPER_WIRE.get(), 6)
+		ShapedRecipeBuilder.shaped(COPPER_WIRE, 6)
 				.unlockedBy("has_item", has(COPPER_INGOT))
 				.group(MODID + ":cable")
 				.pattern("MMM")
 				.define('M', COPPER_INGOT)
 				.save(consumer, shapedLoc("copper_wire"));
 
-		ShapedRecipeBuilder.shaped(FTBICItems.GOLD_WIRE.get(), 6)
+		ShapedRecipeBuilder.shaped(GOLD_WIRE, 6)
 				.unlockedBy("has_item", has(GOLD_INGOT))
 				.group(MODID + ":cable")
 				.pattern("MMM")
 				.define('M', GOLD_INGOT)
 				.save(consumer, shapedLoc("gold_wire"));
 
-		ShapedRecipeBuilder.shaped(FTBICItems.ALUMINUM_WIRE.get(), 3)
+		ShapedRecipeBuilder.shaped(ALUMINUM_WIRE, 3)
 				.unlockedBy("has_item", has(ALUMINUM_INGOT))
 				.group(MODID + ":cable")
 				.pattern("MMM")
@@ -40,7 +39,7 @@ public class FTBICCableRecipes extends FTBICRecipes {
 
 		// Cable from metal + rubber
 
-		ShapedRecipeBuilder.shaped(FTBICItems.COPPER_CABLE.get(), 6)
+		ShapedRecipeBuilder.shaped(COPPER_CABLE, 6)
 				.unlockedBy("has_item", has(RUBBER))
 				.group(MODID + ":cable")
 				.pattern("RRR")
@@ -50,7 +49,7 @@ public class FTBICCableRecipes extends FTBICRecipes {
 				.define('M', COPPER_INGOT)
 				.save(consumer, shapedLoc("copper_cable"));
 
-		ShapedRecipeBuilder.shaped(FTBICItems.GOLD_CABLE.get(), 6)
+		ShapedRecipeBuilder.shaped(GOLD_CABLE, 6)
 				.unlockedBy("has_item", has(RUBBER))
 				.group(MODID + ":cable")
 				.pattern("RRR")
@@ -60,7 +59,7 @@ public class FTBICCableRecipes extends FTBICRecipes {
 				.define('M', GOLD_INGOT)
 				.save(consumer, shapedLoc("gold_cable"));
 
-		ShapedRecipeBuilder.shaped(FTBICItems.ALUMINUM_CABLE.get(), 3)
+		ShapedRecipeBuilder.shaped(ALUMINUM_CABLE, 3)
 				.unlockedBy("has_item", has(RUBBER))
 				.group(MODID + ":cable")
 				.pattern("RRR")
@@ -72,38 +71,38 @@ public class FTBICCableRecipes extends FTBICRecipes {
 
 		// Cable from wire + rubber
 
-		ShapelessRecipeBuilder.shapeless(FTBICItems.COPPER_CABLE.get())
+		ShapelessRecipeBuilder.shapeless(COPPER_CABLE)
 				.unlockedBy("has_item", has(RUBBER))
 				.group(MODID + ":cable")
-				.requires(FTBICItems.COPPER_WIRE.get())
+				.requires(COPPER_WIRE)
 				.requires(RUBBER)
 				.save(consumer, shapelessLoc("copper_cable"));
 
-		ShapelessRecipeBuilder.shapeless(FTBICItems.GOLD_CABLE.get())
+		ShapelessRecipeBuilder.shapeless(GOLD_CABLE)
 				.unlockedBy("has_item", has(RUBBER))
 				.group(MODID + ":cable")
-				.requires(FTBICItems.GOLD_WIRE.get())
+				.requires(GOLD_WIRE)
 				.requires(RUBBER)
 				.save(consumer, shapelessLoc("gold_cable"));
 
-		ShapelessRecipeBuilder.shapeless(FTBICItems.ALUMINUM_CABLE.get())
+		ShapelessRecipeBuilder.shapeless(ALUMINUM_CABLE)
 				.unlockedBy("has_item", has(RUBBER))
 				.group(MODID + ":cable")
-				.requires(FTBICItems.ALUMINUM_WIRE.get())
+				.requires(ALUMINUM_WIRE)
 				.requires(RUBBER)
 				.requires(RUBBER)
 				.save(consumer, shapelessLoc("aluminum_cable"));
 
 		// Glass cable
 
-		ShapedRecipeBuilder.shaped(FTBICItems.GLASS_CABLE.get(), 6)
-				.unlockedBy("has_item", has(FTBICItems.ENERGY_CRYSTAL.get()))
+		ShapedRecipeBuilder.shaped(GLASS_CABLE, 6)
+				.unlockedBy("has_item", has(ENERGY_CRYSTAL))
 				.group(MODID + ":cable")
 				.pattern("GGG")
 				.pattern(" C ")
 				.pattern("GGG")
 				.define('G', GLASS)
-				.define('C', FTBICItems.ENERGY_CRYSTAL.get())
+				.define('C', ENERGY_CRYSTAL)
 				.save(consumer, shapedLoc("glass_cable"));
 	}
 }

@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:fuse",
+	"pattern": [
+		"GGG",
+		"MMM",
+		"GGG"
+	],
+	"key": {
+		"G": {
+			"tag": "forge:glass/colorless"
+		},
+		"M": [
+			{
+				"tag": "forge:ingots/iron"
+			},
+			{
+				"tag": "forge:ingots/copper"
+			},
+			{
+				"tag": "forge:ingots/tin"
+			}
+		]
+	},
+	"result": {
+		"item": "ftbic:fuse",
+		"count": 24
+	}
+}

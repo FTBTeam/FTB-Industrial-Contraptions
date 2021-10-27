@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:extractor",
+	"pattern": [
+		"TMT",
+		"TCT"
+	],
+	"key": {
+		"T": {
+			"item": "ftbic:tree_tap"
+		},
+		"M": {
+			"item": "ftbic:machine_block"
+		},
+		"C": {
+			"item": "ftbic:electronic_circuit"
+		}
+	},
+	"result": {
+		"item": "ftbic:extractor"
+	}
+}

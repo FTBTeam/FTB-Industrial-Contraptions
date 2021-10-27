@@ -1,6 +1,6 @@
 {
 	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:solar_panel",
+	"group": "ftbic:lv_solar_panel",
 	"pattern": [
 		"LLL",
 		"DDD",
