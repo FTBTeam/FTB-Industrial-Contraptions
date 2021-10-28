@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/orientable",
+	"textures": {
+		"side": "ftbic:block/electric/light/side",
+		"front": "ftbic:block/electric/light/compressor_front_off",
+		"top": "ftbic:block/electric/light/compressor_top"
+	}
+}

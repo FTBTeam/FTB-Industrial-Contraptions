@@ -50,7 +50,6 @@ public interface FTBICItems {
 
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");
-	MaterialItem RESIN = material("resin");
 	MaterialItem MIXED_METAL_INGOT = material("mixed_metal_ingot");
 	MaterialItem ADVANCED_ALLOY = material("advanced_alloy");
 	MaterialItem COAL_BALL = material("coal_ball");
@@ -79,11 +78,11 @@ public interface FTBICItems {
 	Supplier<Item> GRAPHENE_BATTERY = REGISTRY.register("graphene_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.HV, FTBICConfig.HV_BATTERY_CAPACITY));
 	Supplier<Item> IRIDIUM_BATTERY = REGISTRY.register("iridium_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.EV, FTBICConfig.EV_BATTERY_CAPACITY));
 	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, PowerTier.EV, Integer.MAX_VALUE));
-	Supplier<Item> TREE_TAP = REGISTRY.register("tree_tap", TreeTapItem::new);
 	Supplier<Item> EMPTY_CELL = REGISTRY.register("empty_cell", () -> new CellItem(Fluids.EMPTY));
 	Supplier<Item> WATER_CELL = REGISTRY.register("water_cell", () -> new CellItem(Fluids.WATER));
 	Supplier<Item> LAVA_CELL = REGISTRY.register("lava_cell", () -> new CellItem(Fluids.LAVA));
 	Supplier<Item> COOLANT_10K = REGISTRY.register("coolant_10k", () -> new CoolantItem(10_000));
 	Supplier<Item> COOLANT_30K = REGISTRY.register("coolant_30k", () -> new CoolantItem(30_000));
 	Supplier<Item> COOLANT_60K = REGISTRY.register("coolant_60k", () -> new CoolantItem(60_000));
+	Supplier<Item> CANNED_FOOD = REGISTRY.register("canned_food", CannedFoodItem::new);
 }

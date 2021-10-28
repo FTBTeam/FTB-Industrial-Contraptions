@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.datagen;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import io.alwa.mods.myrtrees.common.item.MyrtreesItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -36,6 +37,9 @@ public abstract class FTBICRecipes extends RecipeProvider {
 	public static final Item OBSIDIAN = Items.OBSIDIAN;
 	public static final Item FLINT = Items.FLINT;
 	public static final Tag<Item> STONE = Tags.Items.STONE;
+	public static final Tag<Item> SLIMEBALL = Tags.Items.SLIMEBALLS;
+	public static final Item LATEX = MyrtreesItems.LATEX.get();
+	public static final Item TREE_TAP = MyrtreesItems.TREE_TAP.get();
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
 	public static final Item REINFORCED_STONE = FTBICItems.REINFORCED_STONE.get();
@@ -53,7 +57,6 @@ public abstract class FTBICRecipes extends RecipeProvider {
 
 	public static final Item INDUSTRIAL_GRADE_METAL = FTBICItems.INDUSTRIAL_GRADE_METAL.item.get();
 	public static final Item RUBBER = FTBICItems.RUBBER.item.get();
-	public static final Item RESIN = FTBICItems.RESIN.item.get();
 	public static final Item MIXED_METAL_INGOT = FTBICItems.MIXED_METAL_INGOT.item.get();
 	public static final Item ADVANCED_ALLOY = FTBICItems.ADVANCED_ALLOY.item.get();
 	public static final Item COAL_BALL = FTBICItems.COAL_BALL.item.get();
@@ -82,13 +85,13 @@ public abstract class FTBICRecipes extends RecipeProvider {
 	public static final Item GRAPHENE_BATTERY = FTBICItems.GRAPHENE_BATTERY.get();
 	public static final Item IRIDIUM_BATTERY = FTBICItems.IRIDIUM_BATTERY.get();
 	public static final Item CREATIVE_BATTERY = FTBICItems.CREATIVE_BATTERY.get();
-	public static final Item TREE_TAP = FTBICItems.TREE_TAP.get();
 	public static final Item EMPTY_CELL = FTBICItems.EMPTY_CELL.get();
 	public static final Item WATER_CELL = FTBICItems.WATER_CELL.get();
 	public static final Item LAVA_CELL = FTBICItems.LAVA_CELL.get();
 	public static final Item COOLANT_10K = FTBICItems.COOLANT_10K.get();
 	public static final Item COOLANT_30K = FTBICItems.COOLANT_30K.get();
 	public static final Item COOLANT_60K = FTBICItems.COOLANT_60K.get();
+	public static final Item CANNED_FOOD = FTBICItems.CANNED_FOOD.get();
 
 	public static final Item BASIC_GENERATOR = FTBICElectricBlocks.BASIC_GENERATOR.item.get();
 	public static final Item GEOTHERMAL_GENERATOR = FTBICElectricBlocks.GEOTHERMAL_GENERATOR.item.get();
@@ -106,6 +109,7 @@ public abstract class FTBICRecipes extends RecipeProvider {
 	public static final Item CANNING_MACHINE = FTBICElectricBlocks.CANNING_MACHINE.item.get();
 	public static final Item INDUCTION_FURNACE = FTBICElectricBlocks.INDUCTION_FURNACE.item.get();
 	public static final Item ROTARY_MACERATOR = FTBICElectricBlocks.ROTARY_MACERATOR.item.get();
+	public static final Item VACUUM_EXTRACTOR = FTBICElectricBlocks.VACUUM_EXTRACTOR.item.get();
 	public static final Item SINGULARITY_COMPRESSOR = FTBICElectricBlocks.SINGULARITY_COMPRESSOR.item.get();
 	public static final Item LV_BATTERY_BOX = FTBICElectricBlocks.LV_BATTERY_BOX.item.get();
 	public static final Item MV_BATTERY_BOX = FTBICElectricBlocks.MV_BATTERY_BOX.item.get();

@@ -55,6 +55,14 @@ repositories {
 		content {
 			includeGroup "dev.latvian.mods"
 			includeGroup "dev.ftb.mods"
+			includeGroup "io.alwa.mods"
+		}
+	}
+
+	maven {
+		url "https://maven.ftb.dev"
+		content {
+			includeGroup "io.alwa.mods"
 		}
 	}
 }
@@ -66,6 +74,7 @@ dependencies {
 	modImplementation "me.shedaniel:architectury-forge:${rootProject.architectury_version}"
 	modImplementation "curse.maven:jei-238222:${jei_file}"
 	modImplementation "curse.maven:emendatus-enigmatica-399630:${emendatus_enigmatica_file}"
+	modImplementation "io.alwa.mods:myrtrees-forge:${myrtrees_version}"
 }
 
 processResources {

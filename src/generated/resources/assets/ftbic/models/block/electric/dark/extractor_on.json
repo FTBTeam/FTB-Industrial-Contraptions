@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/orientable",
+	"textures": {
+		"side": "ftbic:block/electric/dark/side",
+		"front": "ftbic:block/electric/dark/extractor_front_on",
+		"top": "ftbic:block/electric/dark/extractor_top"
+	}
+}

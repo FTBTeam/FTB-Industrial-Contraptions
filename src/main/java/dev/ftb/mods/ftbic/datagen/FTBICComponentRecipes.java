@@ -22,12 +22,12 @@ public class FTBICComponentRecipes extends FTBICRecipes {
 				.unlockedBy("has_item", has(IRON_INGOT))
 				.save(consumer, blastingLoc("industrial_grade_metal"));
 
-		SimpleCookingRecipeBuilder.cooking(Ingredient.of(RESIN), RUBBER, 0F, 150, RecipeSerializer.SMELTING_RECIPE)
-				.unlockedBy("has_item", has(RESIN))
+		SimpleCookingRecipeBuilder.cooking(Ingredient.of(SLIMEBALL), RUBBER, 0F, 150, RecipeSerializer.SMELTING_RECIPE)
+				.unlockedBy("has_item", has(SLIMEBALL))
 				.save(consumer, smeltingLoc("rubber"));
 
-		SimpleCookingRecipeBuilder.cooking(Ingredient.of(RESIN), RUBBER, 0F, 300, RecipeSerializer.CAMPFIRE_COOKING_RECIPE)
-				.unlockedBy("has_item", has(RESIN))
+		SimpleCookingRecipeBuilder.cooking(Ingredient.of(SLIMEBALL), RUBBER, 0F, 300, RecipeSerializer.CAMPFIRE_COOKING_RECIPE)
+				.unlockedBy("has_item", has(SLIMEBALL))
 				.save(consumer, campfireCookingLoc("rubber"));
 
 		ShapedRecipeBuilder.shaped(RUBBER_SHEET)

@@ -11,32 +11,7 @@
 			],
 			"conditions": [
 				{
-					"condition": "minecraft:inverted",
-					"term": {
-						"condition": "minecraft:block_state_property",
-						"block": "ftbic:mv_battery_box",
-						"properties": {
-							"state": "burnt"
-						}
-					}
-				}
-			]
-		},
-		{
-			"rolls": 1,
-			"entries": [
-				{
-					"type": "minecraft:item",
-					"name": "ftbic:machine_block"
-				}
-			],
-			"conditions": [
-				{
-					"condition": "minecraft:block_state_property",
-					"block": "ftbic:mv_battery_box",
-					"properties": {
-						"state": "burnt"
-					}
+					"condition": "minecraft:survives_explosion"
 				}
 			]
 		}

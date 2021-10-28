@@ -5,6 +5,7 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.FTBICBlockEntities;
 import dev.ftb.mods.ftbic.client.FTBICClient;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import io.alwa.mods.myrtrees.common.MyrtreesConfig;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,5 +38,6 @@ public class FTBIC {
 		FTBICBlockEntities.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICElectricBlocks.init();
 		PROXY.init();
+		MyrtreesConfig.ALL_BIOMES = true;
 	}
 }

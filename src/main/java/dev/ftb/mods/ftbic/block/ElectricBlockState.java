@@ -10,6 +10,7 @@ public enum ElectricBlockState implements StringRepresentable {
 
 	public static final EnumProperty<ElectricBlockState> ON_OFF = EnumProperty.create("state", ElectricBlockState.class, ON, OFF);
 	public static final EnumProperty<ElectricBlockState> ON_OFF_BURNT = EnumProperty.create("state", ElectricBlockState.class, ON, OFF, BURNT);
+	public static final EnumProperty<ElectricBlockState> OFF_BURNT = EnumProperty.create("state", ElectricBlockState.class, OFF, BURNT);
 
 	private final String name;
 

@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:resin"
+						"tag": "forge:slimeballs"
 					}
 				]
 			}

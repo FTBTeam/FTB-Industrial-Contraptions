@@ -122,6 +122,17 @@ public class FTBICMachineRecipes extends FTBICRecipes {
 				.define('C', INDUSTRIAL_GRADE_METAL)
 				.save(consumer, shapedLoc("rotary_macerator"));
 
+		ShapedRecipeBuilder.shaped(VACUUM_EXTRACTOR)
+				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
+				.group(MODID + ":vacuum_extractor")
+				.pattern("CCC")
+				.pattern("CFC")
+				.pattern("CMC")
+				.define('F', EXTRACTOR)
+				.define('M', ADVANCED_MACHINE_BLOCK)
+				.define('C', ALUMINUM_INGOT)
+				.save(consumer, shapedLoc("vacuum_extractor"));
+
 		ShapedRecipeBuilder.shaped(SINGULARITY_COMPRESSOR)
 				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
 				.group(MODID + ":singularity_compressor")

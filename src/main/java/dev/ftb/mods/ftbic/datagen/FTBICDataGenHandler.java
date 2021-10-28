@@ -24,6 +24,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.ConstantIntValue;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -37,6 +38,7 @@ import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -128,13 +130,13 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.GRAPHENE_BATTERY, "Graphene Battery");
 			addItem(FTBICItems.IRIDIUM_BATTERY, "Iridium Battery");
 			addItem(FTBICItems.CREATIVE_BATTERY, "Creative Battery");
-			addItem(FTBICItems.TREE_TAP, "Tree Tap");
 			addItem(FTBICItems.EMPTY_CELL, "Empty Cell");
 			addItem(FTBICItems.WATER_CELL, "Water Cell");
 			addItem(FTBICItems.LAVA_CELL, "Lava Cell");
 			addItem(FTBICItems.COOLANT_10K, "10k Coolant Cell");
 			addItem(FTBICItems.COOLANT_30K, "30k Coolant Cell");
 			addItem(FTBICItems.COOLANT_60K, "60k Coolant Cell");
+			addItem(FTBICItems.CANNED_FOOD, "Canned Food");
 		}
 	}
 
@@ -157,7 +159,6 @@ public class FTBICDataGenHandler {
 
 		@Override
 		public void registerTextures() {
-			makeThemedElectricOnOff("electric_furnace_front", true, false);
 			makeThemedElectricOnOff("basic_generator_front", true, false);
 			makeThemedElectricOnOff("geothermal_generator_front", true, false);
 			makeThemedElectric("wind_mill_front", true, false);
@@ -165,6 +166,26 @@ public class FTBICDataGenHandler {
 			makeThemedElectric("mv_solar_panel_top", false, false);
 			makeThemedElectric("hv_solar_panel_top", false, true);
 			makeThemedElectricOnOff("nuclear_reactor_side", true, true);
+
+			makeThemedElectricOnOff("electric_furnace_front", true, false);
+			makeThemedElectric("macerator_front", true, false);
+			makeThemedElectricOnOff("macerator_top", false, false);
+			makeThemedElectricOnOff("extractor_front", true, false);
+			makeThemedElectric("extractor_top", false, false);
+			makeThemedElectricOnOff("compressor_front", true, false);
+			makeThemedElectric("compressor_top", false, false);
+			makeThemedElectricOnOff("electrolyzer_side", true, false);
+			makeThemedElectricOnOff("recycler_front", true, false);
+			makeThemedElectric("recycler_top", false, false);
+			makeThemedElectricOnOff("canning_machine_front", true, false);
+
+			makeThemedElectricOnOff("induction_furnace_front", true, true);
+			makeThemedElectric("rotary_macerator_front", true, true);
+			makeThemedElectricOnOff("rotary_macerator_top", false, true);
+			makeThemedElectricOnOff("vacuum_extractor_front", true, true);
+			makeThemedElectric("vacuum_extractor_top", false, true);
+			makeThemedElectricOnOff("singularity_compressor_front", true, true);
+			makeThemedElectric("singularity_compressor_top", false, true);
 		}
 	}
 
@@ -176,6 +197,11 @@ public class FTBICDataGenHandler {
 		private void electric(String id, String front, String side, String top) {
 			orientable("block/electric/light/" + id, modLoc("block/electric/light/" + side), modLoc("block/electric/light/" + front), modLoc("block/electric/light/" + top));
 			orientable("block/electric/dark/" + id, modLoc("block/electric/dark/" + side), modLoc("block/electric/dark/" + front), modLoc("block/electric/dark/" + top));
+		}
+
+		private void electric3d(String id, String front, String side) {
+			withExistingParent("block/electric/light/" + id, modLoc("block/orientable_3d")).texture("side", modLoc("block/electric/light/" + side)).texture("front", modLoc("block/electric/light/" + front));
+			withExistingParent("block/electric/dark/" + id, modLoc("block/orientable_3d")).texture("side", modLoc("block/electric/dark/" + side)).texture("front", modLoc("block/electric/dark/" + front));
 		}
 
 		@Override
@@ -192,6 +218,20 @@ public class FTBICDataGenHandler {
 					.face(Direction.SOUTH).texture("#texture").cullface(Direction.SOUTH).end()
 					.face(Direction.WEST).texture("#texture").cullface(Direction.WEST).end()
 					.face(Direction.EAST).texture("#texture").cullface(Direction.EAST).end()
+					.end()
+			;
+
+			withExistingParent("block/orientable_3d", "block/block")
+					.texture("particle", "#side")
+					.element()
+					.from(0F, 0F, 0F)
+					.to(16F, 16F, 16F)
+					.face(Direction.DOWN).texture("#side").cullface(Direction.DOWN).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+					.face(Direction.UP).texture("#side").cullface(Direction.UP).end()
+					.face(Direction.NORTH).texture("#front").cullface(Direction.NORTH).end()
+					.face(Direction.SOUTH).texture("#side").cullface(Direction.SOUTH).end() // #bottom
+					.face(Direction.WEST).texture("#side").cullface(Direction.WEST).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).end()
+					.face(Direction.EAST).texture("#side").cullface(Direction.EAST).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
 					.end()
 			;
 
@@ -229,8 +269,7 @@ public class FTBICDataGenHandler {
 
 			orientable("block/iron_furnace_off", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_off"), modLoc("block/iron_furnace_side"));
 			orientable("block/iron_furnace_on", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_on"), modLoc("block/iron_furnace_side"));
-			electric("electric_furnace_off", "electric_furnace_front_off", "side", "top");
-			electric("electric_furnace_on", "electric_furnace_front_on", "side", "top");
+
 			electric("basic_generator_off", "basic_generator_front_off", "side", "top");
 			electric("basic_generator_on", "basic_generator_front_on", "side", "top");
 			electric("geothermal_generator_off", "geothermal_generator_front_off", "side", "top");
@@ -241,6 +280,37 @@ public class FTBICDataGenHandler {
 			electric("hv_solar_panel", "advanced_side", "advanced_side", "hv_solar_panel_top");
 			electric("nuclear_reactor_off", "nuclear_reactor_side_off", "nuclear_reactor_side_off", "advanced_top");
 			electric("nuclear_reactor_on", "nuclear_reactor_side_on", "nuclear_reactor_side_on", "advanced_top");
+
+			electric("electric_furnace_off", "electric_furnace_front_off", "side", "top");
+			electric("electric_furnace_on", "electric_furnace_front_on", "side", "top");
+			electric("macerator_off", "macerator_front", "side", "macerator_top_off");
+			electric("macerator_on", "macerator_front", "side", "macerator_top_on");
+			electric("extractor_off", "extractor_front_off", "side", "extractor_top");
+			electric("extractor_on", "extractor_front_on", "side", "extractor_top");
+			electric("compressor_off", "compressor_front_off", "side", "compressor_top");
+			electric("compressor_on", "compressor_front_on", "side", "compressor_top");
+			electric("electrolyzer_off", "electrolyzer_side_off", "electrolyzer_side_off", "top");
+			electric("electrolyzer_on", "electrolyzer_side_on", "electrolyzer_side_on", "top");
+			electric("recycler_off", "recycler_front_off", "side", "recycler_top");
+			electric("recycler_on", "recycler_front_on", "side", "recycler_top");
+			electric("canning_machine_off", "canning_machine_front_off", "side", "top");
+			electric("canning_machine_on", "canning_machine_front_on", "side", "top");
+
+			electric("induction_furnace_off", "induction_furnace_front_off", "advanced_side", "advanced_top");
+			electric("induction_furnace_on", "induction_furnace_front_on", "advanced_side", "advanced_top");
+			electric("rotary_macerator_off", "rotary_macerator_front", "advanced_side", "rotary_macerator_top_off");
+			electric("rotary_macerator_on", "rotary_macerator_front", "advanced_side", "rotary_macerator_top_on");
+			electric("vacuum_extractor_off", "vacuum_extractor_front_off", "advanced_side", "vacuum_extractor_top");
+			electric("vacuum_extractor_on", "vacuum_extractor_front_on", "advanced_side", "vacuum_extractor_top");
+			electric("singularity_compressor_off", "singularity_compressor_front_off", "advanced_side", "singularity_compressor_top");
+			electric("singularity_compressor_on", "singularity_compressor_front_on", "advanced_side", "singularity_compressor_top");
+
+			electric3d("lv_battery_box", "lv_battery_box_out", "lv_battery_box_in");
+			electric3d("mv_battery_box", "mv_battery_box_out", "mv_battery_box_in");
+			electric3d("hv_battery_box", "hv_battery_box_out", "hv_battery_box_in");
+			electric3d("lv_transformer", "lv_transformer_in", "lv_transformer_out");
+			electric3d("mv_transformer", "mv_transformer_in", "mv_transformer_out");
+			electric3d("hv_transformer", "hv_transformer_in", "hv_transformer_out");
 		}
 	}
 
@@ -284,10 +354,17 @@ public class FTBICDataGenHandler {
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
+					List<Property<?>> ignoredProperties = new ArrayList<>();
+
+					if (machine.stateProperty == ElectricBlockState.OFF_BURNT) {
+						ignoredProperties.add(ElectricBlockState.OFF_BURNT);
+					}
+
 					getVariantBuilder(machine.block.get()).forAllStatesExcept(state -> {
-						boolean on = machine.stateProperty != null && state.getValue(machine.stateProperty) == ElectricBlockState.ON;
+						boolean hasOnState = machine.hasOnState();
+						boolean on = hasOnState && state.getValue(machine.stateProperty) == ElectricBlockState.ON;
 						boolean dark = state.getValue(ElectricBlock.DARK);
-						ModelFile modelFile = models().getExistingFile(modLoc("block/electric/" + (dark ? "dark" : "light") + "/" + machine.id + (machine.stateProperty == null ? "" : (on ? "_on" : "_off"))));
+						ModelFile modelFile = models().getExistingFile(modLoc("block/electric/" + (dark ? "dark" : "light") + "/" + machine.id + (hasOnState ? (on ? "_on" : "_off") : "")));
 
 						if (machine.facingProperty == null) {
 							return ConfiguredModel.builder()
@@ -305,11 +382,11 @@ public class FTBICDataGenHandler {
 
 							return ConfiguredModel.builder()
 									.modelFile(modelFile)
-									.rotationX(facing == Direction.DOWN ? 180 : (facing.getAxis().isHorizontal() ? 90 : 0))
+									.rotationX(facing == Direction.DOWN ? 90 : (facing.getAxis().isHorizontal() ? 0 : 270))
 									.rotationY(facing.getAxis().isVertical() ? 0 : ((facing.get2DDataValue() & 3) * 90 + 180) % 360)
 									.build();
 						}
-					});
+					}, ignoredProperties.toArray(new Property[0]));
 				}
 			}
 		}
@@ -345,7 +422,7 @@ public class FTBICDataGenHandler {
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
-					withExistingParent(machine.id, modLoc("block/electric/light/" + machine.id + (machine.stateProperty != null ? "_off" : "")));
+					withExistingParent(machine.id, modLoc("block/electric/light/" + machine.id + (machine.hasOnState() ? "_off" : "")));
 				}
 			}
 
@@ -359,13 +436,13 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.GRAPHENE_BATTERY);
 			basicItem(FTBICItems.IRIDIUM_BATTERY);
 			basicItem(FTBICItems.CREATIVE_BATTERY);
-			basicItem(FTBICItems.TREE_TAP);
 			basicItem(FTBICItems.EMPTY_CELL);
 			basicItem(FTBICItems.WATER_CELL);
 			basicItem(FTBICItems.LAVA_CELL);
 			basicItem(FTBICItems.COOLANT_10K);
 			basicItem(FTBICItems.COOLANT_30K);
 			basicItem(FTBICItems.COOLANT_60K);
+			basicItem(FTBICItems.CANNED_FOOD);
 		}
 	}
 

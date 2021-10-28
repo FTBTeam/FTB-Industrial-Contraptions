@@ -1,0 +1,7 @@
+{
+	"parent": "ftbic:block/orientable_3d",
+	"textures": {
+		"side": "ftbic:block/electric/light/mv_transformer_out",
+		"front": "ftbic:block/electric/light/mv_transformer_in"
+	}
+}

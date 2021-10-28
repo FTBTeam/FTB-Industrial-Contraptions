@@ -73,8 +73,17 @@ public class ElectricBlockInstance {
 		return this;
 	}
 
+	public ElectricBlockInstance canBurnOrOff() {
+		stateProperty = ElectricBlockState.OFF_BURNT;
+		return this;
+	}
+
 	public ElectricBlockInstance noState() {
 		stateProperty = null;
 		return this;
+	}
+
+	public boolean hasOnState() {
+		return stateProperty == ElectricBlockState.ON_OFF || stateProperty == ElectricBlockState.ON_OFF_BURNT;
 	}
 }
