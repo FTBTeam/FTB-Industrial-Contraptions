@@ -16,7 +16,7 @@ import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
 
-public abstract class FTBICRecipes extends RecipeProvider {
+public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final String MODID = FTBIC.MOD_ID;
 	public static final Tag<Item> REDSTONE = Tags.Items.DUSTS_REDSTONE;
 	public static final Tag<Item> GLOWSTONE = Tags.Items.DUSTS_GLOWSTONE;
@@ -32,6 +32,11 @@ public abstract class FTBICRecipes extends RecipeProvider {
 	public static final Tag<Item> ALUMINUM_INGOT = ItemTags.bind("forge:ingots/aluminum");
 	public static final Tag<Item> COAL_DUST = ItemTags.bind("forge:dusts/coal");
 	public static final Tag<Item> PLANKS = ItemTags.PLANKS;
+	public static final Tag<Item> LOGS_THAT_BURN = ItemTags.LOGS_THAT_BURN;
+	public static final Tag<Item> STICK = Tags.Items.RODS_WOODEN;
+	public static final Tag<Item> SAPLING = ItemTags.SAPLINGS;
+	public static final Item SUGAR_CANE = Items.SUGAR_CANE;
+	public static final Item CACTUS = Items.CACTUS;
 	public static final Tag<Item> COBBLESTONE = Tags.Items.COBBLESTONE;
 	public static final Item SMOOTH_STONE = Items.SMOOTH_STONE;
 	public static final Item OBSIDIAN = Items.OBSIDIAN;
@@ -40,6 +45,7 @@ public abstract class FTBICRecipes extends RecipeProvider {
 	public static final Tag<Item> SLIMEBALL = Tags.Items.SLIMEBALLS;
 	public static final Item LATEX = MyrtreesItems.LATEX.get();
 	public static final Item TREE_TAP = MyrtreesItems.TREE_TAP.get();
+	public static final Item RUBBERWOOD_SAPLING = MyrtreesItems.RUBBERWOOD_SAPLING.get();
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
 	public static final Item REINFORCED_STONE = FTBICItems.REINFORCED_STONE.get();
@@ -118,7 +124,7 @@ public abstract class FTBICRecipes extends RecipeProvider {
 	public static final Item MV_TRANSFORMER = FTBICElectricBlocks.MV_TRANSFORMER.item.get();
 	public static final Item HV_TRANSFORMER = FTBICElectricBlocks.HV_TRANSFORMER.item.get();
 
-	public FTBICRecipes(DataGenerator generator) {
+	public FTBICRecipesGen(DataGenerator generator) {
 		super(generator);
 	}
 

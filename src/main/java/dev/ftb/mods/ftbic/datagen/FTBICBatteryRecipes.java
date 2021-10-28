@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Consumer;
 
-public class FTBICBatteryRecipes extends FTBICRecipes {
+public class FTBICBatteryRecipes extends FTBICRecipesGen {
 	public FTBICBatteryRecipes(DataGenerator generator) {
 		super(generator);
 	}

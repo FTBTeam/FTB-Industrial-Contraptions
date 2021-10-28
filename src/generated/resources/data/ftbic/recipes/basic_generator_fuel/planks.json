@@ -1,0 +1,7 @@
+{
+	"type": "ftbic:basic_generator_fuel",
+	"ingredient": {
+		"tag": "minecraft:planks"
+	},
+	"ticks": 300
+}

@@ -7,7 +7,7 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 
 import java.util.function.Consumer;
 
-public class FTBICCableRecipes extends FTBICRecipes {
+public class FTBICCableRecipes extends FTBICRecipesGen {
 	public FTBICCableRecipes(DataGenerator generator) {
 		super(generator);
 	}

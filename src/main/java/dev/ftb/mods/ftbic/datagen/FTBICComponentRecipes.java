@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-public class FTBICComponentRecipes extends FTBICRecipes {
+public class FTBICComponentRecipes extends FTBICRecipesGen {
 	public FTBICComponentRecipes(DataGenerator generator) {
 		super(generator);
 	}

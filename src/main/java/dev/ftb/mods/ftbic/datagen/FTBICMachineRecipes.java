@@ -7,7 +7,7 @@ import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
-public class FTBICMachineRecipes extends FTBICRecipes {
+public class FTBICMachineRecipes extends FTBICRecipesGen {
 	public FTBICMachineRecipes(DataGenerator generator) {
 		super(generator);
 	}

@@ -6,7 +6,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 
 import java.util.function.Consumer;
 
-public class FTBICNuclearRecipes extends FTBICRecipes {
+public class FTBICNuclearRecipes extends FTBICRecipesGen {
 	public FTBICNuclearRecipes(DataGenerator generator) {
 		super(generator);
 	}

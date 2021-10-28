@@ -5,7 +5,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 
 import java.util.function.Consumer;
 
-public class FTBICToolRecipes extends FTBICRecipes {
+public class FTBICToolRecipes extends FTBICRecipesGen {
 	public FTBICToolRecipes(DataGenerator generator) {
 		super(generator);
 	}

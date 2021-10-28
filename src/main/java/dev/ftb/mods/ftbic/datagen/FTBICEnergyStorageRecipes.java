@@ -6,7 +6,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 
 import java.util.function.Consumer;
 
-public class FTBICEnergyStorageRecipes extends FTBICRecipes {
+public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 	public FTBICEnergyStorageRecipes(DataGenerator generator) {
 		super(generator);
 	}
