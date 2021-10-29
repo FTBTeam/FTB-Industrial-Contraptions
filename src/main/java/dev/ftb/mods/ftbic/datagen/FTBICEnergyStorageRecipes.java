@@ -25,16 +25,15 @@ public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("lv_battery_box"));
 
 		ShapedRecipeBuilder.shaped(MV_BATTERY_BOX)
-				.unlockedBy("has_item", has(CRYSTAL_BATTERY))
+				.unlockedBy("has_item", has(ENERGY_CRYSTAL))
 				.group(MODID + ":mv_battery_box")
 				.pattern("WBW")
 				.pattern("BMB")
 				.pattern("WBW")
 				.define('W', GOLD_CABLE)
-				.define('B', CRYSTAL_BATTERY)
+				.define('B', ENERGY_CRYSTAL)
 				.define('M', MACHINE_BLOCK)
 				.save(consumer, shapedLoc("mv_battery_box"));
-
 
 		ShapedRecipeBuilder.shaped(HV_BATTERY_BOX)
 				.unlockedBy("has_item", has(GRAPHENE_BATTERY))

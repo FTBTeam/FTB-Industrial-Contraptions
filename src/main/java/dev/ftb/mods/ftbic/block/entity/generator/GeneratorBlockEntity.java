@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.block.CableBlock;
 import dev.ftb.mods.ftbic.block.entity.CachedEnergyStorage;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.util.PowerTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.TextComponent;
@@ -29,37 +30,67 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 	public GeneratorBlockEntity(BlockEntityType<?> type) {
 		super(type);
+		outputPowerTier = PowerTier.LV;
+	}
+
+	public void handleEnergyOutput() {
+		if (level.isClientSide()) {
+			return;
+		}
+
+		int tenergy = Math.min(energy, outputPowerTier.transferRate);
+
+		if (tenergy <= 0) {
+			return;
+		}
+
+		CachedEnergyStorage[] blocks = getConnectedEnergyBlocks();
+
+		int validBlocks = 0;
+
+		for (CachedEnergyStorage storage : blocks) {
+			if (storage.isInvalid()) {
+				electricNetworkUpdated(level, storage.blockEntity.getBlockPos());
+			} else if (storage.shouldReceiveEnergy()) {
+				validBlocks++;
+			}
+		}
+
+		if (tenergy >= validBlocks && validBlocks > 0) {
+			int e = tenergy / validBlocks;
+
+			for (CachedEnergyStorage storage : blocks) {
+				if (storage.isInvalid() || !storage.shouldReceiveEnergy()) {
+					continue;
+				}
+
+				int a = storage.energyStorage.receiveEnergy(e, false);
+
+				if (a > 0) {
+					energy -= a;
+					setChanged();
+				}
+
+				if (energy < e) {
+					break;
+				}
+			}
+		}
+	}
+
+	public void handleGeneration() {
 	}
 
 	@Override
 	public void tick() {
-		if (energy > 0 && !level.isClientSide()) {
-			CachedEnergyStorage[] blocks = getConnectedEnergyBlocks();
+		handleEnergyInput();
 
-			if (energy >= blocks.length && blocks.length > 0) {
-				int e = energy / blocks.length;
-
-				for (CachedEnergyStorage storage : blocks) {
-					if (storage.isInvalid()) {
-						electricNetworkUpdated(level, storage.blockEntity.getBlockPos());
-						continue;
-					}
-
-					int a = storage.energyStorage.receiveEnergy(e, false);
-
-					if (a > 0) {
-						energy -= a;
-						setChanged();
-					}
-
-					if (energy < e) {
-						break;
-					}
-				}
-			}
+		if (!level.isClientSide()) {
+			handleGeneration();
 		}
 
-		super.tick();
+		handleEnergyOutput();
+		handleChanges();
 	}
 
 	public boolean isValidLookupSide(Direction direction) {

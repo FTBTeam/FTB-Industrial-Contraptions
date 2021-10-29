@@ -12,11 +12,6 @@ public class TransformerBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public boolean isValidLookupSide(Direction direction) {
-		return direction == getBlockState().getValue(BlockStateProperties.FACING);
-	}
-
-	@Override
-	public boolean canReceive() {
-		return true;
+		return direction != getBlockState().getValue(BlockStateProperties.FACING);
 	}
 }

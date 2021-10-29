@@ -14,9 +14,4 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	public boolean isValidLookupSide(Direction direction) {
 		return direction == getBlockState().getValue(BlockStateProperties.FACING);
 	}
-
-	@Override
-	public boolean canReceive() {
-		return true;
-	}
 }

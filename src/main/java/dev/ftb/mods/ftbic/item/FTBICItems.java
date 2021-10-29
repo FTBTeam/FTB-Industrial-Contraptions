@@ -62,7 +62,6 @@ public interface FTBICItems {
 	MaterialItem OVERCLOCKER_UPGRADE = material("overclocker_upgrade");
 	MaterialItem ENERGY_STORAGE_UPGRADE = material("energy_storage_upgrade");
 	MaterialItem TRANSFORMER_UPGRADE = material("transformer_upgrade");
-	MaterialItem CLAY_DUST = material("clay_dust");
 	MaterialItem ELECTRONIC_CIRCUIT = material("electronic_circuit");
 	MaterialItem ADVANCED_CIRCUIT = material("advanced_circuit");
 	MaterialItem IRIDIUM_CIRCUIT = material("iridium_circuit");
@@ -71,6 +70,7 @@ public interface FTBICItems {
 	MaterialItem CARBON_PLATE = material("carbon_plate");
 	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
 	MaterialItem FUSE = material("fuse");
+	MaterialItem EMPTY_CAN = material("empty_can");
 
 	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, PowerTier.LV, FTBICConfig.SINGLE_USE_BATTERY_CAPACITY));
 	Supplier<Item> BATTERY = REGISTRY.register("battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));

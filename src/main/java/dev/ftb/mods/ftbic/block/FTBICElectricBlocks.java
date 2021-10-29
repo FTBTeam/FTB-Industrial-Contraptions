@@ -47,24 +47,24 @@ public interface FTBICElectricBlocks {
 	ElectricBlockInstance HV_SOLAR_PANEL = register("hv_solar_panel", HVSolarPanelBlockEntity::new).advanced().name("HV Solar Panel").noRotation().noState();
 	ElectricBlockInstance NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorBlockEntity::new).noRotation().advanced();
 
-	ElectricBlockInstance ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceBlockEntity::new).canBurn();
-	ElectricBlockInstance MACERATOR = register("macerator", MaceratorBlockEntity::new).canBurn();
-	ElectricBlockInstance EXTRACTOR = register("extractor", ExtractorBlockEntity::new).canBurn();
-	ElectricBlockInstance COMPRESSOR = register("compressor", CompressorBlockEntity::new).canBurn();
-	ElectricBlockInstance ELECTROLYZER = register("electrolyzer", ElectrolyzerBlockEntity::new).canBurn();
-	ElectricBlockInstance RECYCLER = register("recycler", RecyclerBlockEntity::new).canBurn().advanced();
-	ElectricBlockInstance CANNING_MACHINE = register("canning_machine", CanningMachineBlockEntity::new).canBurn();
-	ElectricBlockInstance INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlockEntity::new).canBurn().advanced();
-	ElectricBlockInstance ROTARY_MACERATOR = register("rotary_macerator", RotaryMaceratorBlockEntity::new).canBurn().advanced();
-	ElectricBlockInstance VACUUM_EXTRACTOR = register("vacuum_extractor", VacuumExtractorBlockEntity::new).canBurn().advanced();
-	ElectricBlockInstance SINGULARITY_COMPRESSOR = register("singularity_compressor", SingularityCompressorBlockEntity::new).canBurn().advanced();
+	ElectricBlockInstance ELECTRIC_FURNACE = register("electric_furnace", ElectricFurnaceBlockEntity::new).onOffBurnt();
+	ElectricBlockInstance MACERATOR = register("macerator", MaceratorBlockEntity::new).onOffBurnt();
+	ElectricBlockInstance EXTRACTOR = register("extractor", ExtractorBlockEntity::new).onOffBurnt();
+	ElectricBlockInstance COMPRESSOR = register("compressor", CompressorBlockEntity::new).onOffBurnt();
+	ElectricBlockInstance ELECTROLYZER = register("electrolyzer", ElectrolyzerBlockEntity::new).onOffBurnt();
+	ElectricBlockInstance RECYCLER = register("recycler", RecyclerBlockEntity::new).onOffBurnt().advanced();
+	ElectricBlockInstance CANNING_MACHINE = register("canning_machine", CanningMachineBlockEntity::new).onOffBurnt();
+	ElectricBlockInstance INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlockEntity::new).onOffBurnt().advanced();
+	ElectricBlockInstance ROTARY_MACERATOR = register("rotary_macerator", RotaryMaceratorBlockEntity::new).onOffBurnt().advanced();
+	ElectricBlockInstance VACUUM_EXTRACTOR = register("vacuum_extractor", VacuumExtractorBlockEntity::new).onOffBurnt().advanced();
+	ElectricBlockInstance SINGULARITY_COMPRESSOR = register("singularity_compressor", SingularityCompressorBlockEntity::new).onOffBurnt().advanced();
 
-	ElectricBlockInstance LV_BATTERY_BOX = register("lv_battery_box", LVBatteryBoxBlockEntity::new).name("LV Battery Box").rotate3D().canBurnOrOff();
-	ElectricBlockInstance MV_BATTERY_BOX = register("mv_battery_box", MVBatteryBoxBlockEntity::new).name("MV Battery Box").rotate3D().canBurnOrOff();
-	ElectricBlockInstance HV_BATTERY_BOX = register("hv_battery_box", HVBatteryBoxBlockEntity::new).name("HV Battery Box").rotate3D().canBurnOrOff().advanced();
-	ElectricBlockInstance LV_TRANSFORMER = register("lv_transformer", LVTransformerBlockEntity::new).name("LV Transformer").rotate3D().canBurnOrOff();
-	ElectricBlockInstance MV_TRANSFORMER = register("mv_transformer", MVTransformerBlockEntity::new).name("MV Transformer").rotate3D().canBurnOrOff();
-	ElectricBlockInstance HV_TRANSFORMER = register("hv_transformer", HVTransformerBlockEntity::new).name("HV Transformer").rotate3D().canBurnOrOff().advanced();
+	ElectricBlockInstance LV_BATTERY_BOX = register("lv_battery_box", LVBatteryBoxBlockEntity::new).name("LV Battery Box").rotate3D().offBurnt();
+	ElectricBlockInstance MV_BATTERY_BOX = register("mv_battery_box", MVBatteryBoxBlockEntity::new).name("MV Battery Box").rotate3D().offBurnt();
+	ElectricBlockInstance HV_BATTERY_BOX = register("hv_battery_box", HVBatteryBoxBlockEntity::new).name("HV Battery Box").rotate3D().offBurnt().advanced();
+	ElectricBlockInstance LV_TRANSFORMER = register("lv_transformer", LVTransformerBlockEntity::new).name("LV Transformer").rotate3D().offBurnt();
+	ElectricBlockInstance MV_TRANSFORMER = register("mv_transformer", MVTransformerBlockEntity::new).name("MV Transformer").rotate3D().offBurnt();
+	ElectricBlockInstance HV_TRANSFORMER = register("hv_transformer", HVTransformerBlockEntity::new).name("HV Transformer").rotate3D().offBurnt().advanced();
 
 	static void init() {
 	}

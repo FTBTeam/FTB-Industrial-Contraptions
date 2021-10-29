@@ -73,8 +73,10 @@ dependencies {
 	forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
 	modImplementation "me.shedaniel:architectury-forge:${rootProject.architectury_version}"
 	modImplementation "curse.maven:jei-238222:${jei_file}"
-	modImplementation "curse.maven:emendatus-enigmatica-399630:${emendatus_enigmatica_file}"
-	modImplementation "io.alwa.mods:myrtrees-forge:${myrtrees_version}"
+	modImplementation "curse.maven:emendatus-enigmatica-399630:${rootProject.emendatus_enigmatica_file}"
+	modImplementation "io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}"
+	modImplementation "dev.latvian.mods:rhino-forge:${rootProject.rhino_version}"
+	modImplementation "dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}"
 }
 
 processResources {

@@ -3,24 +3,21 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class SolarPanelBlockEntity extends GeneratorBlockEntity {
+	public int solarOutput;
+
 	public SolarPanelBlockEntity(BlockEntityType<?> type) {
 		super(type);
-	}
-
-	public int getGeneration() {
-		return 1;
+		solarOutput = 0;
 	}
 
 	@Override
-	public void tick() {
-		if (energy < energyCapacity && !level.isClientSide() && level.isDay() && level.canSeeSky(worldPosition.above())) {
-			energy += Math.min(energyCapacity - energy, getGeneration());
+	public void handleGeneration() {
+		if (energy < energyCapacity && level.isDay() && level.canSeeSky(worldPosition.above())) {
+			energy += Math.min(energyCapacity - energy, solarOutput);
 
 			if (energy == energyCapacity) {
 				setChanged();
 			}
 		}
-
-		super.tick();
 	}
 }

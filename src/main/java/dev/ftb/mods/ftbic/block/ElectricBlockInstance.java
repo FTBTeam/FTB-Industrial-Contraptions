@@ -68,18 +68,18 @@ public class ElectricBlockInstance {
 		return this;
 	}
 
-	public ElectricBlockInstance canBurn() {
+	public ElectricBlockInstance noState() {
+		stateProperty = null;
+		return this;
+	}
+
+	public ElectricBlockInstance onOffBurnt() {
 		stateProperty = ElectricBlockState.ON_OFF_BURNT;
 		return this;
 	}
 
-	public ElectricBlockInstance canBurnOrOff() {
+	public ElectricBlockInstance offBurnt() {
 		stateProperty = ElectricBlockState.OFF_BURNT;
-		return this;
-	}
-
-	public ElectricBlockInstance noState() {
-		stateProperty = null;
 		return this;
 	}
 

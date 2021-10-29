@@ -1,5 +1,10 @@
 package dev.ftb.mods.ftbic.block.entity;
 
+import dev.ftb.mods.ftbic.block.ElectricBlock;
+import dev.ftb.mods.ftbic.block.ElectricBlockState;
+import dev.ftb.mods.ftbic.recipe.RecipeCache;
+import dev.ftb.mods.ftbic.util.PowerTier;
+import dev.ftb.mods.ftbic.util.TieredEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -15,13 +20,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, IEnergyStorage {
+public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, TieredEnergyStorage {
 	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
@@ -36,8 +40,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	private boolean changed = false;
 	public int energy = 0;
 	public int energyCapacity = 40000;
-	public int maxTransfer = 1000;
+	public int energyAdded = 0;
+	public PowerTier outputPowerTier = null;
+	public PowerTier inputPowerTier = null;
 	private LazyOptional<?> thisOptional = null;
+	public ElectricBlockState changeState = null;
 
 	public ElectricBlockEntity(BlockEntityType<?> type) {
 		super(type);
@@ -92,12 +99,45 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		return super.getCapability(cap, side);
 	}
 
-	@Override
-	public void tick() {
+	protected void handleEnergyInput() {
+		if (level.isClientSide()) {
+			return;
+		}
+
+		if (inputPowerTier != null && energyAdded > 0) {
+			if (energyAdded > inputPowerTier.transferRate) {
+				// TODO: Burn the machine if config is enabled
+			}
+
+			if (energy < energyCapacity) {
+				energy += Math.min(energyAdded, energyCapacity - energy);
+
+				if (energy == energyCapacity) {
+					setChanged();
+				}
+			}
+
+			energyAdded = 0;
+		}
+	}
+
+	protected void handleChanges() {
+		if (changeState != null) {
+			level.setBlock(worldPosition, getBlockState().setValue(((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.stateProperty, changeState), 3);
+			changeState = null;
+			setChanged();
+		}
+
 		if (changed) {
 			changed = false;
 			level.blockEntityChanged(worldPosition, this);
 		}
+	}
+
+	@Override
+	public void tick() {
+		handleEnergyInput();
+		handleChanges();
 	}
 
 	@Override
@@ -111,11 +151,10 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			return 0;
 		}
 
-		int energyReceived = Math.min(energyCapacity - energy, Math.min(maxTransfer, maxReceive));
+		int energyReceived = Math.min(energyCapacity - energy, maxReceive);
 
 		if (!simulate) {
-			energy += energyReceived;
-			setChanged();
+			energyAdded += energyReceived;
 		}
 
 		return energyReceived;
@@ -127,7 +166,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			return 0;
 		}
 
-		int energyExtracted = Math.min(energy, Math.min(maxTransfer, maxExtract));
+		int energyExtracted = Math.min(energy, maxExtract);
 
 		if (!simulate) {
 			energy -= energyExtracted;
@@ -149,15 +188,32 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public boolean canExtract() {
-		return false;
+		return outputPowerTier != null;
 	}
 
 	@Override
 	public boolean canReceive() {
-		return false;
+		return inputPowerTier != null;
 	}
 
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		return InteractionResult.PASS;
+	}
+
+	@Override
+	@Nullable
+	public final PowerTier getInputPowerTier() {
+		return inputPowerTier;
+	}
+
+	@Nullable
+	@Override
+	public PowerTier getOutputPowerTier() {
+		return outputPowerTier;
+	}
+
+	@Nullable
+	public RecipeCache getRecipeCache() {
+		return level == null ? null : RecipeCache.get(level);
 	}
 }

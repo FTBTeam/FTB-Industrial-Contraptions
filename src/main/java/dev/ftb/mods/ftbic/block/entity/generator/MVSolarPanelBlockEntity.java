@@ -6,10 +6,6 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 public class MVSolarPanelBlockEntity extends SolarPanelBlockEntity {
 	public MVSolarPanelBlockEntity() {
 		super(FTBICElectricBlocks.MV_SOLAR_PANEL.blockEntity.get());
-	}
-
-	@Override
-	public int getGeneration() {
-		return FTBICConfig.MV_SOLAR_PANEL_GENERATION;
+		solarOutput = FTBICConfig.MV_SOLAR_PANEL_GENERATION;
 	}
 }

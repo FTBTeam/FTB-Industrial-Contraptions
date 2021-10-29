@@ -27,4 +27,8 @@ public class CachedEnergyStorage {
 	public String toString() {
 		return String.format("%s@%d,%d,%d", blockEntity.getType().getRegistryName(), blockEntity.getBlockPos().getX(), blockEntity.getBlockPos().getY(), blockEntity.getBlockPos().getZ());
 	}
+
+	public boolean shouldReceiveEnergy() {
+		return energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored();
+	}
 }

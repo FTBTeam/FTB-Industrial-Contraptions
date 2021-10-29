@@ -35,7 +35,7 @@ ed1e379681b7c961e99d9107a099af03ab0baed5 assets/ftbic/blockstates/reinforced_sto
 0e45c528c38d94b758fe8f6883f10c948c887132 assets/ftbic/blockstates/singularity_compressor.json
 9d0ba041fb3b25705743fa737646060da96079c1 assets/ftbic/blockstates/vacuum_extractor.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-3754f13cc87962facdde413521345a2cca924d0e assets/ftbic/lang/en_us.json
+b2392f1fef8a4b12e854e35cc3cfe45cce843a07 assets/ftbic/lang/en_us.json
 c525560918b7e30211271cc3c3dcdada0e9ef5f9 assets/ftbic/models/block/advanced_machine_block.json
 07639236919b9e54cbbe36c2b2a72de20d4c4802 assets/ftbic/models/block/aluminum_cable_base.json
 95aaf3441e53f9a7c31fd7f07b9a273475c6c461 assets/ftbic/models/block/aluminum_cable_connection.json
@@ -144,7 +144,6 @@ f9143091c090018617561b7f25c88043d4adc6e3 assets/ftbic/models/item/battery.json
 299926d6e7c84c5a84bf8867d8d4994edab8e690 assets/ftbic/models/item/canned_food.json
 37406a9faa180cc90e2a15f4ec3c3d26e2968bb9 assets/ftbic/models/item/canning_machine.json
 a7b1b563de4b1d4ed46932940519997e5cafa3f1 assets/ftbic/models/item/carbon_plate.json
-84d46b2fd1858c15233eaffea7addd90b3f92a21 assets/ftbic/models/item/clay_dust.json
 fa261e06543b52dbd101ec0db586e4d6150a2fe0 assets/ftbic/models/item/coal_ball.json
 180de12509a08e1cd0bd0b105eb2b272ee10e307 assets/ftbic/models/item/compressed_coal_ball.json
 1f9308802a4e884f5b4cddb72c8aecd5b27f0ee5 assets/ftbic/models/item/compressor.json
@@ -158,6 +157,7 @@ a69112db7baaf7e0acf4365664235da0a3363b1a assets/ftbic/models/item/crystal_batter
 8609f9460212352fc4f194b35574397759e6a4ee assets/ftbic/models/item/electric_furnace.json
 20559755f3ccec5c51980cba545b1eedec82abef assets/ftbic/models/item/electrolyzer.json
 551f3f54c81fefe5ba5dd2f831754bcf5c52be87 assets/ftbic/models/item/electronic_circuit.json
+b12b0c5ec3ad9e38492dc8a90b67db345cf8c7d2 assets/ftbic/models/item/empty_can.json
 e5cf3f8f288a7c1de22ae4cbd5a0466757069bbd assets/ftbic/models/item/empty_cell.json
 cff9e351905af6a57b3391223348b752b05ad69d assets/ftbic/models/item/energy_crystal.json
 2e7ef82c3670511765fd0107b2e6bdda048951a8 assets/ftbic/models/item/energy_storage_upgrade.json
@@ -329,7 +329,7 @@ af24c0eb1d8ae2a8c95641d51aa6a2fbbf369193 data/ftbic/advancements/recipes/ftbic/s
 656663697d9b14220f682139be21662d7ce29f05 data/ftbic/advancements/recipes/ftbic/shaped/lv_transformer.json
 bfec2ae4444f69aded9964b1761f37d4c2229743 data/ftbic/advancements/recipes/ftbic/shaped/macerator.json
 0d2e4172267d2f04eca40e0bda0dbc8883ddaf4e data/ftbic/advancements/recipes/ftbic/shaped/machine_block.json
-8a52bc0bcdb5c38384387bcf2f19bba849173c71 data/ftbic/advancements/recipes/ftbic/shaped/mv_battery_box.json
+33b8af9d976560d6483956519d1bfb4ca9f90708 data/ftbic/advancements/recipes/ftbic/shaped/mv_battery_box.json
 726cbe5fc5d03eecb04c7f45b1af02feefb871e4 data/ftbic/advancements/recipes/ftbic/shaped/mv_solar_panel.json
 c47385cf59b86f1ef51c9bdf1213fbdef4d33f6c data/ftbic/advancements/recipes/ftbic/shaped/mv_transformer.json
 e01133ce627d53a7c4f0eb703c72f2f831187db0 data/ftbic/advancements/recipes/ftbic/shaped/nuclear_reactor.json
@@ -451,7 +451,7 @@ cf45e8c7c1b365f6cd14c52af11439479a58e3c4 data/ftbic/recipes/shaped/iridium_circu
 b63a4720b4857f95e66fa28c111cf39c3592f86b data/ftbic/recipes/shaped/lv_transformer.json
 703ab39eb24384a26988a152ca4d211731b69e3d data/ftbic/recipes/shaped/macerator.json
 7922bd8a4a5eb64b6b2e3642364d4c38be2f9472 data/ftbic/recipes/shaped/machine_block.json
-be371ba4de769120e84833aa6f660cd1ed1b6d90 data/ftbic/recipes/shaped/mv_battery_box.json
+81edbda1fa8007cac7fcbebac7f6a24368a9f7f3 data/ftbic/recipes/shaped/mv_battery_box.json
 a02f2ef374ffe138d932a4280e336527fccecd05 data/ftbic/recipes/shaped/mv_solar_panel.json
 14b904d7ff0b25257c82889d1bb50e46319187f7 data/ftbic/recipes/shaped/mv_transformer.json
 d57806bb7af467a83973f1de393017a2ca860dd2 data/ftbic/recipes/shaped/nuclear_reactor.json
