@@ -15,17 +15,15 @@ import org.jetbrains.annotations.Nullable;
 
 public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<MachineRecipe> {
 	public final RecipeType<MachineRecipe> recipeType;
-	public final int inputItems;
-	public final int inputFluids;
-	public final int outputItems;
-	public final int outputFluids;
+	public int jeiWidth = 82;
+	public int jeiHeight = 54;
+	public int jeiPowerX = 2;
+	public int jeiPowerY = 20;
+	public int jeiArrowX = 24;
+	public int jeiArrowY = 18;
 
-	public MachineRecipeSerializer(String id, int inItems, int inFluids, int outItems, int outFluids) {
+	public MachineRecipeSerializer(String id) {
 		recipeType = RecipeType.register(FTBIC.MOD_ID + ":" + id);
-		inputItems = inItems;
-		inputFluids = inFluids;
-		outputItems = outItems;
-		outputFluids = outFluids;
 	}
 
 	@Override
@@ -36,6 +34,11 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 		recipe.outputItems = FTBICUtils.listFromJson(json, "outputItems", StackWithChance::new);
 		recipe.outputFluids = FTBICUtils.listFromJson(json, "outputFluids", FTBICUtils::fluidFromJson);
 		recipe.processingTime = json.has("processingTime") ? json.get("processingTime").getAsInt() : 0;
+
+		if (recipe.processingTime == 0) {
+			recipe.processingTime = 200;
+		}
+
 		return recipe;
 	}
 

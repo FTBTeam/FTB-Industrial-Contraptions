@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.jei;
 
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
@@ -9,18 +10,17 @@ import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -31,14 +31,20 @@ import java.util.stream.Collectors;
 public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 	public final MachineRecipeSerializer serializer;
 	public final ElectricBlockInstance electricBlockInstance;
+	public final ResourceLocation texture;
 	private final IDrawable background;
 	private final IDrawable icon;
+	private final IDrawableAnimated animatedArrow;
+	private final IDrawableAnimated animatedPower;
 
 	public MachineRecipeCategory(Supplier<MachineRecipeSerializer> s, IGuiHelper guiHelper, ElectricBlockInstance item) {
 		serializer = s.get();
 		electricBlockInstance = item;
-		background = guiHelper.drawableBuilder(new ResourceLocation(FTBIC.MOD_ID + ":textures/gui/machine_jei.png"), 0, (serializer.inputItems + serializer.inputFluids) > 1 ? 55 : 0, 82, 54).setTextureSize(128, 128).build();
+		texture = new ResourceLocation(FTBIC.MOD_ID + ":textures/gui/" + serializer.getRegistryName().getPath() + "_jei.png");
+		background = guiHelper.drawableBuilder(texture, 0, 0, serializer.jeiWidth, serializer.jeiHeight).setTextureSize(128, 64).build();
 		icon = guiHelper.createDrawableIngredient(new ItemStack(item.item.get()));
+		animatedArrow = guiHelper.drawableBuilder(texture, 104, 0, 24, 17).setTextureSize(128, 64).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
+		animatedPower = guiHelper.createAnimatedDrawable(guiHelper.drawableBuilder(texture, 114, 18, 14, 14).setTextureSize(128, 64).build(), 84, IDrawableAnimated.StartDirection.TOP, true);
 	}
 
 	@Override
@@ -64,6 +70,12 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 	@Override
 	public IDrawable getIcon() {
 		return icon;
+	}
+
+	@Override
+	public void draw(MachineRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
+		animatedPower.draw(matrixStack, serializer.jeiPowerX, serializer.jeiPowerY);
+		animatedArrow.draw(matrixStack, serializer.jeiArrowX, serializer.jeiArrowY);
 	}
 
 	@Override
@@ -113,14 +125,5 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 		fluidStacks.set(ingredients);
 
 		// fluidStacks.addTooltipCallback((idx, input, stack, tooltip) -> tooltip.set(0, new TranslatableComponent("ftblibrary.mb", stack.getAmount(), stack.getDisplayName())));
-	}
-
-	@Override
-	public List<Component> getTooltipStrings(MachineRecipe recipe, double mouseX, double mouseY) {
-		if (mouseX >= 55D && mouseY >= 3D && mouseX < 73D && mouseY < 30D) {
-			// return Collections.singletonList(new TranslatableComponent(FTBJarMod.MOD_ID + ".processing_time", recipe.time / 20));
-		}
-
-		return Collections.emptyList();
 	}
 }

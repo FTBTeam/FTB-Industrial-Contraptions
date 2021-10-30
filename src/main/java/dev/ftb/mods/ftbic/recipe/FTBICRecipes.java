@@ -6,13 +6,14 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface FTBICRecipes {
 	DeferredRegister<RecipeSerializer<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, FTBIC.MOD_ID);
 
-	static Supplier<MachineRecipeSerializer> machine(String id, int inItems, int inFluids, int outItems, int outFluids) {
-		return REGISTRY.register(id, () -> new MachineRecipeSerializer(id, inItems, inFluids, outItems, outFluids));
+	static Supplier<MachineRecipeSerializer> machine(String id, Function<MachineRecipeSerializer, MachineRecipeSerializer> properties) {
+		return REGISTRY.register(id, () -> properties.apply(new MachineRecipeSerializer(id)));
 	}
 
 	Supplier<RecipeCacheSerializer> RECIPE_CACHE = REGISTRY.register("recipe_cache", RecipeCacheSerializer::new);
@@ -21,10 +22,14 @@ public interface FTBICRecipes {
 	Supplier<BasicGeneratorFuelRecipeSerializer> BASIC_GENERATOR_FUEL = REGISTRY.register("basic_generator_fuel", BasicGeneratorFuelRecipeSerializer::new);
 	RecipeType<BasicGeneratorFuelRecipe> BASIC_GENERATOR_FUEL_TYPE = RecipeType.register(FTBIC.MOD_ID + ":basic_generator_fuel");
 
-	Supplier<MachineRecipeSerializer> MACERATING = machine("macerating", 1, 0, 1, 0);
-	Supplier<MachineRecipeSerializer> EXTRACTING = machine("extracting", 1, 0, 1, 0);
-	Supplier<MachineRecipeSerializer> COMPRESSING = machine("compressing", 1, 0, 1, 0);
-	Supplier<MachineRecipeSerializer> ELECTROLYZING = machine("electrolyzing", 1, 0, 1, 0);
-	Supplier<MachineRecipeSerializer> RECYCLING = machine("recycling", 1, 0, 1, 0);
-	Supplier<MachineRecipeSerializer> CANNING = machine("canning", 2, 0, 1, 0);
+	Supplier<MachineRecipeSerializer> MACERATING = machine("macerating", Function.identity());
+	Supplier<MachineRecipeSerializer> EXTRACTING = machine("extracting", Function.identity());
+	Supplier<MachineRecipeSerializer> COMPRESSING = machine("compressing", Function.identity());
+	Supplier<MachineRecipeSerializer> ELECTROLYZING = machine("electrolyzing", Function.identity());
+	Supplier<MachineRecipeSerializer> RECYCLING = machine("recycling", Function.identity());
+	Supplier<MachineRecipeSerializer> CANNING = machine("canning", s -> {
+		s.jeiPowerX = 11;
+		s.jeiArrowX = 30;
+		return s;
+	});
 }
