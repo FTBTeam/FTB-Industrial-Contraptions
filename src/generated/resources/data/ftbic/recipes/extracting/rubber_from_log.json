@@ -1,0 +1,16 @@
+{
+	"type": "ftbic:extracting",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "myrtrees:rubberwood_log"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:rubber"
+		}
+	]
+}

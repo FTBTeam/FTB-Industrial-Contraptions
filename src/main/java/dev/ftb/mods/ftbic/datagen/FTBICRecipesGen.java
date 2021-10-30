@@ -42,9 +42,17 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item OBSIDIAN = Items.OBSIDIAN;
 	public static final Item FLINT = Items.FLINT;
 	public static final Tag<Item> STONE = Tags.Items.STONE;
+	public static final Tag<Item> GRAVEL = Tags.Items.GRAVEL;
+	public static final Tag<Item> WOOL = ItemTags.WOOL;
 	public static final Tag<Item> SLIMEBALL = Tags.Items.SLIMEBALLS;
+	public static final Tag<Item> SILICON = ItemTags.bind("forge:silicon");
+	public static final Tag<Item> SULFUR = ItemTags.bind("forge:gems/sulfur");
+	public static final Tag<Item> BITUMEN = ItemTags.bind("forge:bitumen");
+	public static final Tag<Item> URANIUM_DUST = ItemTags.bind("forge:dusts/uranium");
+	public static final Tag<Item> BLAZE_ROD = Tags.Items.RODS_BLAZE;
 	public static final Item LATEX = MyrtreesItems.LATEX.get();
 	public static final Item TREE_TAP = MyrtreesItems.TREE_TAP.get();
+	public static final Item RUBBERWOOD_LOG = MyrtreesItems.RUBBERWOOD_LOG.get();
 	public static final Item RUBBERWOOD_SAPLING = MyrtreesItems.RUBBERWOOD_SAPLING.get();
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
@@ -75,6 +83,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item OVERCLOCKER_UPGRADE = FTBICItems.OVERCLOCKER_UPGRADE.item.get();
 	public static final Item ENERGY_STORAGE_UPGRADE = FTBICItems.ENERGY_STORAGE_UPGRADE.item.get();
 	public static final Item TRANSFORMER_UPGRADE = FTBICItems.TRANSFORMER_UPGRADE.item.get();
+	public static final Item EJECTOR_UPGRADE = FTBICItems.EJECTOR_UPGRADE.item.get();
 	public static final Item ELECTRONIC_CIRCUIT = FTBICItems.ELECTRONIC_CIRCUIT.item.get();
 	public static final Item ADVANCED_CIRCUIT = FTBICItems.ADVANCED_CIRCUIT.item.get();
 	public static final Item IRIDIUM_CIRCUIT = FTBICItems.IRIDIUM_CIRCUIT.item.get();
@@ -83,6 +92,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item CARBON_PLATE = FTBICItems.CARBON_PLATE.item.get();
 	public static final Item ENERGY_CRYSTAL = FTBICItems.ENERGY_CRYSTAL.item.get();
 	public static final Item FUSE = FTBICItems.FUSE.item.get();
+	public static final Item EMPTY_CAN = FTBICItems.EMPTY_CAN.item.get();
 
 	public static final Item SINGLE_USE_BATTERY = FTBICItems.SINGLE_USE_BATTERY.get();
 	public static final Item BATTERY = FTBICItems.BATTERY.get();
@@ -96,6 +106,9 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item COOLANT_10K = FTBICItems.COOLANT_10K.get();
 	public static final Item COOLANT_30K = FTBICItems.COOLANT_30K.get();
 	public static final Item COOLANT_60K = FTBICItems.COOLANT_60K.get();
+	public static final Item URANIUM_FUEL_ROD = FTBICItems.URANIUM_FUEL_ROD.get();
+	public static final Item DUAL_URANIUM_FUEL_ROD = FTBICItems.DUAL_URANIUM_FUEL_ROD.get();
+	public static final Item QUAD_URANIUM_FUEL_ROD = FTBICItems.QUAD_URANIUM_FUEL_ROD.get();
 	public static final Item CANNED_FOOD = FTBICItems.CANNED_FOOD.get();
 
 	public static final Item BASIC_GENERATOR = FTBICElectricBlocks.BASIC_GENERATOR.item.get();
@@ -153,6 +166,30 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 
 	public static ResourceLocation smithingLoc(String s) {
 		return modLoc("smithing/" + s);
+	}
+
+	public static ResourceLocation maceratingLoc(String s) {
+		return modLoc("macerating/" + s);
+	}
+
+	public static ResourceLocation extractingLoc(String s) {
+		return modLoc("extracting/" + s);
+	}
+
+	public static ResourceLocation compressingLoc(String s) {
+		return modLoc("compressing/" + s);
+	}
+
+	public static ResourceLocation electrolyzingLoc(String s) {
+		return modLoc("electrolyzing/" + s);
+	}
+
+	public static ResourceLocation recyclingLoc(String s) {
+		return modLoc("recycling/" + s);
+	}
+
+	public static ResourceLocation canningLoc(String s) {
+		return modLoc("canning/" + s);
 	}
 
 	@Override

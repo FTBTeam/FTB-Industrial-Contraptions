@@ -5,6 +5,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -74,7 +75,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.pattern("RQR")
 				.define('R', REDSTONE)
 				.define('D', DIAMOND)
-				.define('Q', QUARTZ)
+				.define('Q', SILICON)
 				.save(consumer, shapedLoc("energy_crystal"));
 
 		ShapelessRecipeBuilder.shapeless(RUBBER, 3)
@@ -139,6 +140,42 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.define('T', TIN_INGOT)
 				.save(consumer, shapedLoc("empty_cell"));
 
+		ShapedRecipeBuilder.shaped(EMPTY_CAN, 5)
+				.unlockedBy("has_item", has(TIN_INGOT))
+				.group(MODID + ":empty_can")
+				.pattern("T T")
+				.pattern("TTT")
+				.define('T', TIN_INGOT)
+				.save(consumer, shapedLoc("empty_can"));
 
+		MachineRecipeBuilder.extracting()
+				.unlockedBy("has_item", has(LATEX))
+				.inputItem(Ingredient.of(LATEX))
+				.outputItem(new ItemStack(RUBBER, 3))
+				.save(consumer, extractingLoc("rubber_from_latex"));
+
+		MachineRecipeBuilder.extracting()
+				.unlockedBy("has_item", has(RUBBERWOOD_LOG))
+				.inputItem(Ingredient.of(RUBBERWOOD_LOG))
+				.outputItem(new ItemStack(RUBBER))
+				.save(consumer, extractingLoc("rubber_from_log"));
+
+		MachineRecipeBuilder.extracting()
+				.unlockedBy("has_item", has(RUBBERWOOD_SAPLING))
+				.inputItem(Ingredient.of(RUBBERWOOD_SAPLING))
+				.outputItem(new ItemStack(RUBBER))
+				.save(consumer, extractingLoc("rubber_from_sapling"));
+
+		MachineRecipeBuilder.compressing()
+				.unlockedBy("has_item", has(MIXED_METAL_INGOT))
+				.inputItem(Ingredient.of(MIXED_METAL_INGOT))
+				.outputItem(new ItemStack(ADVANCED_ALLOY))
+				.save(consumer, compressingLoc("advanced_alloy"));
+
+		MachineRecipeBuilder.compressing()
+				.unlockedBy("has_item", has(RAW_CARBON_MESH))
+				.inputItem(Ingredient.of(RAW_CARBON_MESH))
+				.outputItem(new ItemStack(CARBON_PLATE))
+				.save(consumer, compressingLoc("carbon_plate"));
 	}
 }

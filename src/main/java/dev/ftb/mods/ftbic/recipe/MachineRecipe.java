@@ -1,45 +1,49 @@
 package dev.ftb.mods.ftbic.recipe;
 
-import com.google.gson.JsonObject;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
-import net.minecraft.network.FriendlyByteBuf;
+import dev.ftb.mods.ftbic.util.StackWithChance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.fluids.FluidStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public abstract class MachineRecipe implements Recipe<NoContainer> {
+public class MachineRecipe implements Recipe<NoContainer> {
+	public final MachineRecipeSerializer serializer;
 	public final ResourceLocation id;
-	public final List<IngredientWithCount> inputItems;
-	public final List<ItemStack> outputItems;
+	public List<IngredientWithCount> inputItems;
+	public List<FluidStack> inputFluids;
+	public List<StackWithChance> outputItems;
+	public List<FluidStack> outputFluids;
+	public int processingTime;
 
-	public MachineRecipe(ResourceLocation id) {
-		this.id = id;
-		inputItems = new ArrayList<>();
-		outputItems = new ArrayList<>();
+	public MachineRecipe(MachineRecipeSerializer s, ResourceLocation i) {
+		serializer = s;
+		id = i;
 	}
 
 	@Override
 	public boolean matches(NoContainer container, Level level) {
-		return true;
+		return false;
 	}
 
 	@Override
 	public ItemStack assemble(NoContainer container) {
-		return ItemStack.EMPTY;
+		return getResultItem().copy();
 	}
 
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
-		return true;
+		return false;
 	}
 
 	@Override
 	public ItemStack getResultItem() {
-		return ItemStack.EMPTY;
+		return outputItems.isEmpty() ? ItemStack.EMPTY : outputItems.get(0).stack;
 	}
 
 	@Override
@@ -47,12 +51,13 @@ public abstract class MachineRecipe implements Recipe<NoContainer> {
 		return id;
 	}
 
-	public void parse(JsonObject json) {
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return serializer;
 	}
 
-	public void read(FriendlyByteBuf buf) {
-	}
-
-	public void write(FriendlyByteBuf buf) {
+	@Override
+	public RecipeType<?> getType() {
+		return serializer.recipeType;
 	}
 }

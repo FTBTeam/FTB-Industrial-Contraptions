@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:quad_uranium_fuel_rod",
+	"pattern": [
+		" R ",
+		"AMA",
+		" R "
+	],
+	"key": {
+		"R": {
+			"item": "ftbic:dual_uranium_fuel_rod"
+		},
+		"M": {
+			"item": "ftbic:industrial_grade_metal"
+		},
+		"A": {
+			"tag": "forge:plates/copper"
+		}
+	},
+	"result": {
+		"item": "ftbic:quad_uranium_fuel_rod"
+	}
+}

@@ -48,6 +48,8 @@
 	"item.ftbic.coolant_60k": "60k Coolant Cell",
 	"item.ftbic.creative_battery": "Creative Battery",
 	"item.ftbic.crystal_battery": "Crystal Battery",
+	"item.ftbic.dual_uranium_fuel_rod": "Dual Uranium Fuel Cell",
+	"item.ftbic.ejector_upgrade": "Ejector Upgrade",
 	"item.ftbic.electronic_circuit": "Electronic Circuit",
 	"item.ftbic.empty_can": "Empty Can",
 	"item.ftbic.empty_cell": "Empty Cell",
@@ -63,6 +65,7 @@
 	"item.ftbic.lava_cell": "Lava Cell",
 	"item.ftbic.mixed_metal_ingot": "Mixed Metal Ingot",
 	"item.ftbic.overclocker_upgrade": "Overclocker Upgrade",
+	"item.ftbic.quad_uranium_fuel_rod": "Quad Uranium Fuel Cell",
 	"item.ftbic.raw_carbon_fibre": "Raw Carbon Fibre",
 	"item.ftbic.raw_carbon_mesh": "Raw Carbon Mesh",
 	"item.ftbic.raw_iridium": "Raw Iridium",
@@ -71,6 +74,7 @@
 	"item.ftbic.scrap_box": "Scrap Box",
 	"item.ftbic.single_use_battery": "Single Use Battery",
 	"item.ftbic.transformer_upgrade": "Transformer Upgrade",
+	"item.ftbic.uranium_fuel_rod": "Uranium Fuel Cell",
 	"item.ftbic.water_cell": "Water Cell",
 	"itemGroup.ftbic": "FTB Industrial Contraptions"
 }

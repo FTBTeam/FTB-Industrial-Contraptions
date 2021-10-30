@@ -37,7 +37,6 @@ public class MachineFuelRecipeBuilder {
 	public void save(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
 		advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
 		consumer.accept(new Result(this, id, new ResourceLocation(id.getNamespace(), "recipes/ftbic_fuel/" + id.getPath())));
-		// new ResourceLocation(id.getNamespace(), "recipes/" + this.result.getItemCategory().getRecipeFolderName() + "/" + id.getPath())
 	}
 
 	public static class Result implements FinishedRecipe {

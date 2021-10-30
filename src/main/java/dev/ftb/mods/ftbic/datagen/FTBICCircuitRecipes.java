@@ -43,7 +43,7 @@ public class FTBICCircuitRecipes extends FTBICRecipesGen {
 				.pattern("RGR")
 				.define('R', REDSTONE)
 				.define('G', GLOWSTONE)
-				.define('Q', QUARTZ)
+				.define('Q', SILICON)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("advanced_circuit_h"));
 
@@ -55,7 +55,7 @@ public class FTBICCircuitRecipes extends FTBICRecipesGen {
 				.pattern("RQR")
 				.define('R', REDSTONE)
 				.define('G', GLOWSTONE)
-				.define('Q', QUARTZ)
+				.define('Q', SILICON)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("advanced_circuit_v"));
 

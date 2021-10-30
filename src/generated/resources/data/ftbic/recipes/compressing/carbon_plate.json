@@ -1,0 +1,16 @@
+{
+	"type": "ftbic:compressing",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "ftbic:raw_carbon_mesh"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:carbon_plate"
+		}
+	]
+}

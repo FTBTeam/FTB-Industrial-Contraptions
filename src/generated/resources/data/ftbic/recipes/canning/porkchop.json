@@ -1,0 +1,23 @@
+{
+	"type": "ftbic:canning",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "ftbic:empty_can"
+			},
+			"count": 2
+		},
+		{
+			"ingredient": {
+				"item": "minecraft:porkchop"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:canned_food",
+			"count": 2
+		}
+	]
+}

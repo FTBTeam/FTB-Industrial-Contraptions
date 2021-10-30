@@ -1,0 +1,17 @@
+{
+	"type": "ftbic:extracting",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "myrtrees:latex"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:rubber",
+			"count": 3
+		}
+	]
+}

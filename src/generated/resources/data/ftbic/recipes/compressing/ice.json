@@ -1,0 +1,16 @@
+{
+	"type": "ftbic:compressing",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "minecraft:snowball"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "minecraft:ice"
+		}
+	]
+}

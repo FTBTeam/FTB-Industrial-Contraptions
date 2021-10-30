@@ -1,0 +1,16 @@
+{
+	"type": "ftbic:compressing",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "ftbic:mixed_metal_ingot"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:advanced_alloy"
+		}
+	]
+}

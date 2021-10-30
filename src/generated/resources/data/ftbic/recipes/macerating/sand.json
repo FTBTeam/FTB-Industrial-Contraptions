@@ -1,0 +1,16 @@
+{
+	"type": "ftbic:macerating",
+	"inputItems": [
+		{
+			"ingredient": {
+				"tag": "forge:cobblestone"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "minecraft:sand"
+		}
+	]
+}

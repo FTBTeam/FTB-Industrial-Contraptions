@@ -62,6 +62,7 @@ public interface FTBICItems {
 	MaterialItem OVERCLOCKER_UPGRADE = material("overclocker_upgrade");
 	MaterialItem ENERGY_STORAGE_UPGRADE = material("energy_storage_upgrade");
 	MaterialItem TRANSFORMER_UPGRADE = material("transformer_upgrade");
+	MaterialItem EJECTOR_UPGRADE = material("ejector_upgrade");
 	MaterialItem ELECTRONIC_CIRCUIT = material("electronic_circuit");
 	MaterialItem ADVANCED_CIRCUIT = material("advanced_circuit");
 	MaterialItem IRIDIUM_CIRCUIT = material("iridium_circuit");
@@ -84,5 +85,8 @@ public interface FTBICItems {
 	Supplier<Item> COOLANT_10K = REGISTRY.register("coolant_10k", () -> new CoolantItem(10_000));
 	Supplier<Item> COOLANT_30K = REGISTRY.register("coolant_30k", () -> new CoolantItem(30_000));
 	Supplier<Item> COOLANT_60K = REGISTRY.register("coolant_60k", () -> new CoolantItem(60_000));
+	Supplier<Item> URANIUM_FUEL_ROD = REGISTRY.register("uranium_fuel_rod", () -> new FuelRodItem(10_000));
+	Supplier<Item> DUAL_URANIUM_FUEL_ROD = REGISTRY.register("dual_uranium_fuel_rod", () -> new FuelRodItem(20_000));
+	Supplier<Item> QUAD_URANIUM_FUEL_ROD = REGISTRY.register("quad_uranium_fuel_rod", () -> new FuelRodItem(40_000));
 	Supplier<Item> CANNED_FOOD = REGISTRY.register("canned_food", CannedFoodItem::new);
 }

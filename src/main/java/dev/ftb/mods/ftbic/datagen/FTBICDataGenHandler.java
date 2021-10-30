@@ -90,6 +90,7 @@ public class FTBICDataGenHandler {
 			gen.addProvider(new FTBICToolRecipes(gen));
 			gen.addProvider(new FTBICNuclearRecipes(gen));
 			gen.addProvider(new FTBICGeneratorFuelRecipes(gen));
+			gen.addProvider(new FTBICVanillaRecipes(gen));
 			gen.addProvider(new ICLootTableProvider(gen));
 		}
 	}
@@ -137,6 +138,9 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.COOLANT_10K, "10k Coolant Cell");
 			addItem(FTBICItems.COOLANT_30K, "30k Coolant Cell");
 			addItem(FTBICItems.COOLANT_60K, "60k Coolant Cell");
+			addItem(FTBICItems.URANIUM_FUEL_ROD, "Uranium Fuel Cell");
+			addItem(FTBICItems.DUAL_URANIUM_FUEL_ROD, "Dual Uranium Fuel Cell");
+			addItem(FTBICItems.QUAD_URANIUM_FUEL_ROD, "Quad Uranium Fuel Cell");
 			addItem(FTBICItems.CANNED_FOOD, "Canned Food");
 		}
 	}
@@ -443,6 +447,9 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.COOLANT_10K);
 			basicItem(FTBICItems.COOLANT_30K);
 			basicItem(FTBICItems.COOLANT_60K);
+			basicItem(FTBICItems.URANIUM_FUEL_ROD);
+			basicItem(FTBICItems.DUAL_URANIUM_FUEL_ROD);
+			basicItem(FTBICItems.QUAD_URANIUM_FUEL_ROD);
 			basicItem(FTBICItems.CANNED_FOOD);
 		}
 	}

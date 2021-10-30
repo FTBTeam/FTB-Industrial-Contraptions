@@ -3,6 +3,8 @@ package dev.ftb.mods.ftbic.datagen;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Consumer;
 
@@ -76,5 +78,51 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.define('C', COOLANT_30K)
 				.define('A', COPPER_PLATE)
 				.save(consumer, shapedLoc("coolant_60k"));
+
+		// TODO: Prevent depleted cells from being used
+		ShapedRecipeBuilder.shaped(DUAL_URANIUM_FUEL_ROD)
+				.unlockedBy("has_item", has(URANIUM_FUEL_ROD))
+				.group(MODID + ":dual_uranium_fuel_rod")
+				.pattern("RMR")
+				.define('R', URANIUM_FUEL_ROD)
+				.define('M', INDUSTRIAL_GRADE_METAL)
+				.save(consumer, shapedLoc("dual_uranium_fuel_rod"));
+
+		// TODO: Prevent depleted cells from being used
+		ShapedRecipeBuilder.shaped(QUAD_URANIUM_FUEL_ROD)
+				.unlockedBy("has_item", has(DUAL_URANIUM_FUEL_ROD))
+				.group(MODID + ":quad_uranium_fuel_rod")
+				.pattern("RMR")
+				.pattern("AMA")
+				.pattern("RMR")
+				.define('R', URANIUM_FUEL_ROD)
+				.define('M', INDUSTRIAL_GRADE_METAL)
+				.define('A', COPPER_PLATE)
+				.save(consumer, shapedLoc("quad_uranium_fuel_rod"));
+
+		// TODO: Prevent depleted cells from being used
+		ShapedRecipeBuilder.shaped(QUAD_URANIUM_FUEL_ROD)
+				.unlockedBy("has_item", has(DUAL_URANIUM_FUEL_ROD))
+				.group(MODID + ":quad_uranium_fuel_rod")
+				.pattern(" R ")
+				.pattern("AMA")
+				.pattern(" R ")
+				.define('R', DUAL_URANIUM_FUEL_ROD)
+				.define('M', INDUSTRIAL_GRADE_METAL)
+				.define('A', COPPER_PLATE)
+				.save(consumer, shapedLoc("quad_uranium_fuel_rod_from_dual"));
+
+		MachineRecipeBuilder.extracting()
+				.unlockedBy("has_item", has(WATER_CELL))
+				.inputItem(Ingredient.of(WATER_CELL))
+				.outputItem(new ItemStack(COOLANT_10K))
+				.save(consumer, extractingLoc("coolant_10k"));
+
+		MachineRecipeBuilder.canning()
+				.unlockedBy("has_item", has(URANIUM_DUST))
+				.inputItem(Ingredient.of(EMPTY_CELL))
+				.inputItem(Ingredient.of(URANIUM_DUST))
+				.outputItem(new ItemStack(URANIUM_FUEL_ROD))
+				.save(consumer, canningLoc("uranium_fuel_rod"));
 	}
 }

@@ -5,5 +5,7 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 public class ExtractorBlockEntity extends MachineBlockEntity {
 	public ExtractorBlockEntity() {
 		super(FTBICElectricBlocks.EXTRACTOR.blockEntity.get());
+		energyCapacity = 8000;
+		// use 20
 	}
 }

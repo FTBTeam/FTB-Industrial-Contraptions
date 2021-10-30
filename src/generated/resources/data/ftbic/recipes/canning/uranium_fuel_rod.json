@@ -1,0 +1,22 @@
+{
+	"type": "ftbic:canning",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "ftbic:empty_cell"
+			},
+			"count": 1
+		},
+		{
+			"ingredient": {
+				"tag": "forge:dusts/uranium"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:uranium_fuel_rod"
+		}
+	]
+}
