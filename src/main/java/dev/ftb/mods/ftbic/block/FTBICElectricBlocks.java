@@ -7,6 +7,7 @@ import dev.ftb.mods.ftbic.block.entity.generator.LVSolarPanelBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.MVSolarPanelBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.WindMillBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.AntimatterFabricatorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CanningMachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CompressorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ElectricFurnaceBlockEntity;
@@ -58,6 +59,7 @@ public interface FTBICElectricBlocks {
 	ElectricBlockInstance ROTARY_MACERATOR = register("rotary_macerator", RotaryMaceratorBlockEntity::new).onOffBurnt().advanced();
 	ElectricBlockInstance VACUUM_EXTRACTOR = register("vacuum_extractor", VacuumExtractorBlockEntity::new).onOffBurnt().advanced();
 	ElectricBlockInstance SINGULARITY_COMPRESSOR = register("singularity_compressor", SingularityCompressorBlockEntity::new).onOffBurnt().advanced();
+	ElectricBlockInstance ANTIMATTER_FABRICATOR = register("antimatter_fabricator", AntimatterFabricatorBlockEntity::new).advanced();
 
 	ElectricBlockInstance LV_BATTERY_BOX = register("lv_battery_box", LVBatteryBoxBlockEntity::new).name("LV Battery Box").rotate3D().offBurnt();
 	ElectricBlockInstance MV_BATTERY_BOX = register("mv_battery_box", MVBatteryBoxBlockEntity::new).name("MV Battery Box").rotate3D().offBurnt();

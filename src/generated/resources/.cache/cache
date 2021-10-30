@@ -1,6 +1,7 @@
 e6a97fcddf8723b3bf2378514da3dd9bf03d2957 assets/ftbic/blockstates/advanced_machine_block.json
 39c8d44d8ae4f039c56c3aba183989bccba21141 assets/ftbic/blockstates/aluminum_cable.json
 3e4f3700f79e451b791d8fd608b69dd962f7a1f0 assets/ftbic/blockstates/aluminum_wire.json
+9e801d6c2e2a6c56de9a3cc952e4e3ec4139a6fd assets/ftbic/blockstates/antimatter_fabricator.json
 fd76828bd6553476e9902a9d909666ab62f8fba9 assets/ftbic/blockstates/basic_generator.json
 13d1e58dcc8bb878966c4dc0570a827c113a517a assets/ftbic/blockstates/canning_machine.json
 44aeff1312ff5cc8fa30166ed1a0312ae8d9ddab assets/ftbic/blockstates/compressor.json
@@ -35,7 +36,7 @@ ed1e379681b7c961e99d9107a099af03ab0baed5 assets/ftbic/blockstates/reinforced_sto
 0e45c528c38d94b758fe8f6883f10c948c887132 assets/ftbic/blockstates/singularity_compressor.json
 9d0ba041fb3b25705743fa737646060da96079c1 assets/ftbic/blockstates/vacuum_extractor.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-c38cda4f934a5a2c07d49a66fdfe4fec2b7db4ce assets/ftbic/lang/en_us.json
+def66ed9d933dfedcbe01bea5db0e88c07f33f8f assets/ftbic/lang/en_us.json
 c525560918b7e30211271cc3c3dcdada0e9ef5f9 assets/ftbic/models/block/advanced_machine_block.json
 07639236919b9e54cbbe36c2b2a72de20d4c4802 assets/ftbic/models/block/aluminum_cable_base.json
 95aaf3441e53f9a7c31fd7f07b9a273475c6c461 assets/ftbic/models/block/aluminum_cable_connection.json
@@ -45,6 +46,8 @@ d9265b354961e5ad91b13aac7bdd5e10e53deecc assets/ftbic/models/block/copper_cable_
 b626eaf2d3f5cd2530b007c502981f4abdd4bcbd assets/ftbic/models/block/copper_cable_connection.json
 d45646faedd321da42b36e4f2003803f0da03381 assets/ftbic/models/block/copper_wire_base.json
 c363e5735d1d51fed18777db72b38f7cd2c4ba8c assets/ftbic/models/block/copper_wire_connection.json
+e07c65ec99d3309af8f98067c4c5aeb3b33d0053 assets/ftbic/models/block/electric/dark/antimatter_fabricator_off.json
+84aa4738894f70c866fd87963f0d10a4677bd1a6 assets/ftbic/models/block/electric/dark/antimatter_fabricator_on.json
 8d4e7d9988548237ed8cddf8cc1bbfc83a5bca17 assets/ftbic/models/block/electric/dark/basic_generator_off.json
 073150068db919c712d8e9d3673593d9744c045f assets/ftbic/models/block/electric/dark/basic_generator_on.json
 c94026057a2e286f7c5e33aba83e84fca778be0b assets/ftbic/models/block/electric/dark/canning_machine_off.json
@@ -83,6 +86,8 @@ c0e52a1e5f7b24ac161e4ab8b8319eea1f45b8c6 assets/ftbic/models/block/electric/dark
 9bdbed8c8ddfcf759154b9fadf9f76a07960415a assets/ftbic/models/block/electric/dark/vacuum_extractor_off.json
 375d9fc1eeda78537ea7899d42e248d128b06e40 assets/ftbic/models/block/electric/dark/vacuum_extractor_on.json
 c026a80daa8b3f1f2d99a63cf8273809fe819744 assets/ftbic/models/block/electric/dark/wind_mill.json
+d6748dc457de12dcb3d6edc0664e4a5164c258f3 assets/ftbic/models/block/electric/light/antimatter_fabricator_off.json
+be782dd03c544af05d245213b18572d5de1f9b95 assets/ftbic/models/block/electric/light/antimatter_fabricator_on.json
 630a22d7b2eb136494e327d09810e88915321513 assets/ftbic/models/block/electric/light/basic_generator_off.json
 9ac13324aad2d6186c333d6d4ea9f7d4fc06c8c2 assets/ftbic/models/block/electric/light/basic_generator_on.json
 af3f5b244cff6ac5596917512877df85ef95d5f6 assets/ftbic/models/block/electric/light/canning_machine_off.json
@@ -139,6 +144,8 @@ cb5e20ffdd03fb079c96e104f4f2d9ecf1c160ee assets/ftbic/models/item/advanced_alloy
 95cb24d002f671fc2de7efe5a8ebd6263b96cdb5 assets/ftbic/models/item/advanced_machine_block.json
 87861d4f6ac92cfeca769b4f69d1fcfd0c0ed91c assets/ftbic/models/item/aluminum_cable.json
 b4b205b1c71a92fb80ecdc3f8317eb34fde0c44e assets/ftbic/models/item/aluminum_wire.json
+19112c8497e4afbfa40b70bdbd989746c9b7787f assets/ftbic/models/item/antimatter.json
+4cf5e0f357614c38fea6afe1a701dc3822f38c8b assets/ftbic/models/item/antimatter_fabricator.json
 e1531ec7d5a6e9fd6aaf4d41cbdf680200a170a4 assets/ftbic/models/item/basic_generator.json
 f9143091c090018617561b7f25c88043d4adc6e3 assets/ftbic/models/item/battery.json
 299926d6e7c84c5a84bf8867d8d4994edab8e690 assets/ftbic/models/item/canned_food.json
@@ -154,6 +161,7 @@ c145ea780d1f16f08251ba74cf823ab8786584f9 assets/ftbic/models/item/copper_cable.j
 889adf00bb27e21e2fd67c1b0297f66823505bd1 assets/ftbic/models/item/copper_wire.json
 16c352680352cd746e3ccaf00d577510a93e4fe6 assets/ftbic/models/item/creative_battery.json
 a69112db7baaf7e0acf4365664235da0a3363b1a assets/ftbic/models/item/crystal_battery.json
+acd9919ec9e5d8941e42c11cb8b83f98dcb6a435 assets/ftbic/models/item/dark_spray_paint_can.json
 b01222518bd4e8e145cb8cf14dcc93212c9260ef assets/ftbic/models/item/dual_uranium_fuel_rod.json
 3b816bc4831581d5afc92c6f8335e32de3fa3cf2 assets/ftbic/models/item/ejector_upgrade.json
 8609f9460212352fc4f194b35574397759e6a4ee assets/ftbic/models/item/electric_furnace.json
@@ -181,6 +189,7 @@ db8af280bf10ab11af8a5b30031086432013678b assets/ftbic/models/item/induction_furn
 55bcc1737e53cf26981c0c983f291582a66658e9 assets/ftbic/models/item/iridium_plate.json
 0acacfb67715a505f0b853057c46f8096bd90210 assets/ftbic/models/item/iron_furnace.json
 3554499d1ea59ed398c16400ee914bc9365fcca5 assets/ftbic/models/item/lava_cell.json
+509da6d131612cfd520a3b4a908e34a98897139d assets/ftbic/models/item/light_spray_paint_can.json
 f35b38b1ce74ca4a2ecc546ce77e3fd9acc76418 assets/ftbic/models/item/lv_battery_box.json
 72ed599ffc4e77e676d82a44c63ef0db100f218d assets/ftbic/models/item/lv_solar_panel.json
 75088418f012e0173ed26242411bc7c37303b9ba assets/ftbic/models/item/lv_transformer.json
@@ -211,6 +220,9 @@ aed914fc55fb093c9eeee9079b01183d073c7035 assets/ftbic/models/item/uranium_fuel_r
 04bc0c6cc52c720d4f77f8b32c89375f3224409c assets/ftbic/models/item/vacuum_extractor.json
 39f226e9d3d4154768e1f8f5cbd74007ea41d636 assets/ftbic/models/item/water_cell.json
 ddfdf478daf49f03fa0c531744ce35e890123241 assets/ftbic/models/item/wind_mill.json
+99ae7de65cff19bbc1d68f098e60374bde96983b assets/ftbic/textures/block/electric/dark/antimatter_fabricator_front_off.png
+b7a0f6f4d3ef9002b27df50e586c829e1875a812 assets/ftbic/textures/block/electric/dark/antimatter_fabricator_front_on.png
+1462583a4ad46754b8d9ce878c1cd1179fff284b assets/ftbic/textures/block/electric/dark/antimatter_fabricator_side.png
 3274b9ef04daac8f5958d0eb37c58591c95f3f2c assets/ftbic/textures/block/electric/dark/basic_generator_front_off.png
 ba31355c4dac87305c57f8a15dccd97ffc8e5aaa assets/ftbic/textures/block/electric/dark/basic_generator_front_on.png
 a5bb7fb07c1aa7d7b3b35ed492dc1d5b67f05251 assets/ftbic/textures/block/electric/dark/canning_machine_front_off.png
@@ -250,6 +262,9 @@ fc40cb5a8281cb71d781a4d93102ac83f4d5d9e2 assets/ftbic/textures/block/electric/da
 b82cddcf8a3282b85f8ed2f59dca6eb3ae58032a assets/ftbic/textures/block/electric/dark/vacuum_extractor_front_on.png
 7b4a9bf67205cf2a6612486deee39741d91f57b7 assets/ftbic/textures/block/electric/dark/vacuum_extractor_top.png
 bf1b8d4d95d54b3763ab341186ae097ef2827d5c assets/ftbic/textures/block/electric/dark/wind_mill_front.png
+cb6253fc57b93a181214598d08a7c3d391a78914 assets/ftbic/textures/block/electric/light/antimatter_fabricator_front_off.png
+d03a3f45eafa40f568829b58c973a35bdfc65d82 assets/ftbic/textures/block/electric/light/antimatter_fabricator_front_on.png
+843e8e604ad159360da97540b08882a8f4c13057 assets/ftbic/textures/block/electric/light/antimatter_fabricator_side.png
 732527960fd78a7cf18a5abfad6c36d67da0075f assets/ftbic/textures/block/electric/light/basic_generator_front_off.png
 6a6cac9b93420afc726f44333631f61fb5a6e8c6 assets/ftbic/textures/block/electric/light/basic_generator_front_on.png
 8191db802e8d89570c40933e5373ded8ca475bfd assets/ftbic/textures/block/electric/light/canning_machine_front_off.png
@@ -343,6 +358,7 @@ b8b579c04375cf848ea1f914250c84d29af61132 data/ftbic/advancements/recipes/ftbic/e
 0e19c09c553b94136ddb3b7b2f5e6c7563818dc3 data/ftbic/advancements/recipes/ftbic/shaped/advanced_machine_block_v.json
 60ed35512e93fb2def2534f7ff8ceed77fd6e7c6 data/ftbic/advancements/recipes/ftbic/shaped/aluminum_cable.json
 f85af28cc6d392941afdb0107cd01c9f6d029eb4 data/ftbic/advancements/recipes/ftbic/shaped/aluminum_wire.json
+564832946cf07f86ef86a54f4707f0c43fbb39ec data/ftbic/advancements/recipes/ftbic/shaped/antimatter_fabricator.json
 ec3dfa148ad43cbf47082aa2bf690f4ec620ff00 data/ftbic/advancements/recipes/ftbic/shaped/basic_generator.json
 d57fc05832e5464b4c40d767a75ecc50cc30a746 data/ftbic/advancements/recipes/ftbic/shaped/battery.json
 e88eb0015fcab9a47ef96b8e8e42c329cd8d0365 data/ftbic/advancements/recipes/ftbic/shaped/canning_machine.json
@@ -426,6 +442,7 @@ cf1b5a2021499b61da3a792637b6d29fec36c80f data/ftbic/advancements/recipes/misc/ma
 f336b386c9cf965bd7cfb029211c6501bde376b3 data/ftbic/loot_tables/blocks/advanced_machine_block.json
 2a09fc8f632d0bbd233e9d8a9af1e89e832294f3 data/ftbic/loot_tables/blocks/aluminum_cable.json
 c5945a77725fb2e177cd2da526788fcb2bcd4a78 data/ftbic/loot_tables/blocks/aluminum_wire.json
+c7f3f2946f0a1515d82b1e4ec4c2bc2468f176b8 data/ftbic/loot_tables/blocks/antimatter_fabricator.json
 1ef41d8001cfdc88096134996c474b19137b284a data/ftbic/loot_tables/blocks/basic_generator.json
 30329dd63b447866ea86d2c14b3484e6ddb85ec2 data/ftbic/loot_tables/blocks/canning_machine.json
 9d8ada1f2543b46fa8a180a3dac466b33b224315 data/ftbic/loot_tables/blocks/compressor.json
@@ -528,6 +545,7 @@ aa4214d6fcf2309c6ecdfb7e2b770b14a228bc53 data/ftbic/recipes/shaped/advanced_circ
 3565bacba44f60fe527673142534d3964d955e23 data/ftbic/recipes/shaped/advanced_machine_block_v.json
 cba1964f4969eb2a8ae74973e5300577d2bc3e02 data/ftbic/recipes/shaped/aluminum_cable.json
 2b491cf512f62ad6fbceccca0848d44215689f15 data/ftbic/recipes/shaped/aluminum_wire.json
+9bb6a3554ff37128a270de72b2c3809f3d25a3c5 data/ftbic/recipes/shaped/antimatter_fabricator.json
 18482038f9ddb24db4a727c69844298c24de55ef data/ftbic/recipes/shaped/basic_generator.json
 81698cab5f2ca86e0516d8d20c2d2fb4ff48fea1 data/ftbic/recipes/shaped/battery.json
 36ebcf067ef7053f7352ebaf068df52d987161ed data/ftbic/recipes/shaped/canning_machine.json

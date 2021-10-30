@@ -72,6 +72,7 @@ public interface FTBICItems {
 	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
 	MaterialItem FUSE = material("fuse");
 	MaterialItem EMPTY_CAN = material("empty_can");
+	MaterialItem ANTIMATTER = material("antimatter");
 
 	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, PowerTier.LV, FTBICConfig.SINGLE_USE_BATTERY_CAPACITY));
 	Supplier<Item> BATTERY = REGISTRY.register("battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));
@@ -89,4 +90,6 @@ public interface FTBICItems {
 	Supplier<Item> DUAL_URANIUM_FUEL_ROD = REGISTRY.register("dual_uranium_fuel_rod", () -> new FuelRodItem(20_000));
 	Supplier<Item> QUAD_URANIUM_FUEL_ROD = REGISTRY.register("quad_uranium_fuel_rod", () -> new FuelRodItem(40_000));
 	Supplier<Item> CANNED_FOOD = REGISTRY.register("canned_food", CannedFoodItem::new);
+	Supplier<Item> DARK_SPRAY_PAINT_CAN = REGISTRY.register("dark_spray_paint_can", () -> new SprayPaintCanItem(true));
+	Supplier<Item> LIGHT_SPRAY_PAINT_CAN = REGISTRY.register("light_spray_paint_can", () -> new SprayPaintCanItem(false));
 }

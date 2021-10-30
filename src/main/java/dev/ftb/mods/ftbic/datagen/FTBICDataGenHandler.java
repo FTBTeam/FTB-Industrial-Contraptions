@@ -5,11 +5,11 @@ import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.CableBlock;
-import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.block.SprayPaintable;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
@@ -142,6 +142,8 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.DUAL_URANIUM_FUEL_ROD, "Dual Uranium Fuel Cell");
 			addItem(FTBICItems.QUAD_URANIUM_FUEL_ROD, "Quad Uranium Fuel Cell");
 			addItem(FTBICItems.CANNED_FOOD, "Canned Food");
+			addItem(FTBICItems.DARK_SPRAY_PAINT_CAN, "Spray Paint Can (Dark)");
+			addItem(FTBICItems.LIGHT_SPRAY_PAINT_CAN, "Spray Paint Can (Light)");
 		}
 	}
 
@@ -191,6 +193,8 @@ public class FTBICDataGenHandler {
 			makeThemedElectric("vacuum_extractor_top", false, true);
 			makeThemedElectricOnOff("singularity_compressor_front", true, true);
 			makeThemedElectric("singularity_compressor_top", false, true);
+			makeThemedElectricOnOff("antimatter_fabricator_front", true, true);
+			makeThemedElectric("antimatter_fabricator_side", true, true);
 		}
 	}
 
@@ -309,6 +313,8 @@ public class FTBICDataGenHandler {
 			electric("vacuum_extractor_on", "vacuum_extractor_front_on", "advanced_side", "vacuum_extractor_top");
 			electric("singularity_compressor_off", "singularity_compressor_front_off", "advanced_side", "singularity_compressor_top");
 			electric("singularity_compressor_on", "singularity_compressor_front_on", "advanced_side", "singularity_compressor_top");
+			electric("antimatter_fabricator_off", "antimatter_fabricator_front_off", "antimatter_fabricator_side", "advanced_top");
+			electric("antimatter_fabricator_on", "antimatter_fabricator_front_on", "antimatter_fabricator_side", "advanced_top");
 
 			electric3d("lv_battery_box", "lv_battery_box_out", "lv_battery_box_in");
 			electric3d("mv_battery_box", "mv_battery_box_out", "mv_battery_box_in");
@@ -368,7 +374,7 @@ public class FTBICDataGenHandler {
 					getVariantBuilder(machine.block.get()).forAllStatesExcept(state -> {
 						boolean hasOnState = machine.hasOnState();
 						boolean on = hasOnState && state.getValue(machine.stateProperty) == ElectricBlockState.ON;
-						boolean dark = state.getValue(ElectricBlock.DARK);
+						boolean dark = state.getValue(SprayPaintable.DARK);
 						ModelFile modelFile = models().getExistingFile(modLoc("block/electric/" + (dark ? "dark" : "light") + "/" + machine.id + (hasOnState ? (on ? "_on" : "_off") : "")));
 
 						if (machine.facingProperty == null) {
@@ -451,6 +457,8 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.DUAL_URANIUM_FUEL_ROD);
 			basicItem(FTBICItems.QUAD_URANIUM_FUEL_ROD);
 			basicItem(FTBICItems.CANNED_FOOD);
+			basicItem(FTBICItems.DARK_SPRAY_PAINT_CAN);
+			basicItem(FTBICItems.LIGHT_SPRAY_PAINT_CAN);
 		}
 	}
 

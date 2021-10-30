@@ -143,5 +143,17 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('M', ADVANCED_MACHINE_BLOCK)
 				.define('C', OBSIDIAN)
 				.save(consumer, shapedLoc("singularity_compressor"));
+
+		ShapedRecipeBuilder.shaped(ANTIMATTER_FABRICATOR)
+				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
+				.group(MODID + ":antimatter_fabricator")
+				.pattern("GCG")
+				.pattern("MEM")
+				.pattern("GCG")
+				.define('G', GLOWSTONE)
+				.define('M', ADVANCED_MACHINE_BLOCK)
+				.define('C', IRIDIUM_CIRCUIT)
+				.define('E', Items.NETHER_STAR)
+				.save(consumer, shapedLoc("antimatter_fabricator"));
 	}
 }

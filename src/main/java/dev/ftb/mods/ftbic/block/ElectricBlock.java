@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,15 +27,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public class ElectricBlock extends Block {
-	public static final BooleanProperty DARK = BooleanProperty.create("dark");
-
+public class ElectricBlock extends Block implements SprayPaintable {
 	public final ElectricBlockInstance electricBlockInstance;
 
 	public ElectricBlock(ElectricBlockInstance m) {
 		super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops());
 		electricBlockInstance = m;
-		BlockState state = getStateDefinition().any().setValue(DARK, false);
+		BlockState state = getStateDefinition().any().setValue(SprayPaintable.DARK, false);
 
 		if (electricBlockInstance.facingProperty != null) {
 			state = state.setValue(electricBlockInstance.facingProperty, Direction.SOUTH);
@@ -62,7 +59,7 @@ public class ElectricBlock extends Block {
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(DARK);
+		builder.add(SprayPaintable.DARK);
 
 		if (ElectricBlockInstance.current.facingProperty != null) {
 			builder.add(ElectricBlockInstance.current.facingProperty);
