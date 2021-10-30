@@ -1,5 +1,5 @@
 {
-	"parent": "minecraft:block/orientable",
+	"parent": "ftbic:block/orientable_2d",
 	"textures": {
 		"side": "ftbic:block/electric/light/side",
 		"front": "ftbic:block/electric/light/electric_furnace_front_on",

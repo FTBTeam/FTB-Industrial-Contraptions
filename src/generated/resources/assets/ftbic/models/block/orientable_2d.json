@@ -31,13 +31,13 @@
 			],
 			"faces": {
 				"down": {
-					"texture": "#side",
-					"cullface": "down",
-					"rotation": 180
+					"texture": "#top",
+					"cullface": "down"
 				},
 				"up": {
-					"texture": "#side",
-					"cullface": "up"
+					"texture": "#top",
+					"cullface": "up",
+					"rotation": 180
 				},
 				"north": {
 					"texture": "#front",
@@ -49,13 +49,11 @@
 				},
 				"west": {
 					"texture": "#side",
-					"cullface": "west",
-					"rotation": 270
+					"cullface": "west"
 				},
 				"east": {
 					"texture": "#side",
-					"cullface": "east",
-					"rotation": 90
+					"cullface": "east"
 				}
 			}
 		}

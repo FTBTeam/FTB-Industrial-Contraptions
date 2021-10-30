@@ -211,8 +211,10 @@ public class FTBICDataGenHandler {
 		}
 
 		private void electric(String id, String front, String side, String top) {
-			orientable("block/electric/light/" + id, modLoc("block/electric/light/" + side), modLoc("block/electric/light/" + front), modLoc("block/electric/light/" + top));
-			orientable("block/electric/dark/" + id, modLoc("block/electric/dark/" + side), modLoc("block/electric/dark/" + front), modLoc("block/electric/dark/" + top));
+			//orientable("block/electric/light/" + id, modLoc("block/electric/light/" + side), modLoc("block/electric/light/" + front), modLoc("block/electric/light/" + top));
+			//orientable("block/electric/dark/" + id, modLoc("block/electric/dark/" + side), modLoc("block/electric/dark/" + front), modLoc("block/electric/dark/" + top));
+			withExistingParent("block/electric/light/" + id, modLoc("block/orientable_2d")).texture("side", modLoc("block/electric/light/" + side)).texture("front", modLoc("block/electric/light/" + front)).texture("top", modLoc("block/electric/light/" + top));
+			withExistingParent("block/electric/dark/" + id, modLoc("block/orientable_2d")).texture("side", modLoc("block/electric/dark/" + side)).texture("front", modLoc("block/electric/dark/" + front)).texture("top", modLoc("block/electric/dark/" + top));
 		}
 
 		private void electric3d(String id, String front, String side) {
@@ -237,8 +239,36 @@ public class FTBICDataGenHandler {
 					.end()
 			;
 
+			withExistingParent("block/orientable_2d", "block/block")
+					.texture("particle", "#side")
+					.transforms()
+					.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+					.rotation(0F, 135F, 0F)
+					.translation(0F, 0F, 0F)
+					.scale(0.4F, 0.4F, 0.4F)
+					.end()
+					.end()
+					.element()
+					.from(0F, 0F, 0F)
+					.to(16F, 16F, 16F)
+					.face(Direction.DOWN).texture("#top").cullface(Direction.DOWN).end()
+					.face(Direction.UP).texture("#top").cullface(Direction.UP).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+					.face(Direction.NORTH).texture("#front").cullface(Direction.NORTH).end()
+					.face(Direction.SOUTH).texture("#side").cullface(Direction.SOUTH).end() // #bottom
+					.face(Direction.WEST).texture("#side").cullface(Direction.WEST).end()
+					.face(Direction.EAST).texture("#side").cullface(Direction.EAST).end()
+					.end()
+			;
+
 			withExistingParent("block/orientable_3d", "block/block")
 					.texture("particle", "#side")
+					.transforms()
+					.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+					.rotation(0F, 135F, 0F)
+					.translation(0F, 0F, 0F)
+					.scale(0.4F, 0.4F, 0.4F)
+					.end()
+					.end()
 					.element()
 					.from(0F, 0F, 0F)
 					.to(16F, 16F, 16F)

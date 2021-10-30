@@ -1,5 +1,5 @@
 {
-	"parent": "minecraft:block/orientable",
+	"parent": "ftbic:block/orientable_2d",
 	"textures": {
 		"side": "ftbic:block/electric/light/advanced_side",
 		"front": "ftbic:block/electric/light/vacuum_extractor_front_on",
