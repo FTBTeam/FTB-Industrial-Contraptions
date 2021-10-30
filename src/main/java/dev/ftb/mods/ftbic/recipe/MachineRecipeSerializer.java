@@ -15,9 +15,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<MachineRecipe> {
 	public final RecipeType<MachineRecipe> recipeType;
+	public final int inputItems;
+	public final int inputFluids;
+	public final int outputItems;
+	public final int outputFluids;
 
-	public MachineRecipeSerializer(String id) {
+	public MachineRecipeSerializer(String id, int inItems, int inFluids, int outItems, int outFluids) {
 		recipeType = RecipeType.register(FTBIC.MOD_ID + ":" + id);
+		inputItems = inItems;
+		inputFluids = inFluids;
+		outputItems = outItems;
+		outputFluids = outFluids;
 	}
 
 	@Override

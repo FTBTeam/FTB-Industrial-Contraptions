@@ -31,6 +31,17 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(SLIMEBALL))
 				.save(consumer, campfireCookingLoc("rubber"));
 
+		ShapedRecipeBuilder.shaped(MIXED_METAL_INGOT, 3)
+				.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
+				.group(MODID + ":mixed_metal_ingot")
+				.pattern("MMM")
+				.pattern("CCC")
+				.pattern("TTT")
+				.define('M', INDUSTRIAL_GRADE_METAL)
+				.define('C', COPPER_INGOT)
+				.define('T', TIN_INGOT)
+				.save(consumer, shapedLoc("mixed_metal_ingot"));
+
 		ShapedRecipeBuilder.shaped(RUBBER_SHEET)
 				.unlockedBy("has_item", has(RUBBER))
 				.group(MODID + ":rubber_sheet")
@@ -169,8 +180,8 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(IRON_INGOT))
 				.inputItem(Ingredient.of(IRON_INGOT), 3)
-				.outputItem(new ItemStack(MIXED_METAL_INGOT, 3))
-				.save(consumer, compressingLoc("mixed_metal_ingot"));
+				.outputItem(new ItemStack(INDUSTRIAL_GRADE_METAL, 3))
+				.save(consumer, compressingLoc("industrial_grade_metal"));
 
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(MIXED_METAL_INGOT))
@@ -183,5 +194,11 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.inputItem(Ingredient.of(RAW_CARBON_MESH))
 				.outputItem(new ItemStack(CARBON_PLATE))
 				.save(consumer, compressingLoc("carbon_plate"));
+
+		MachineRecipeBuilder.compressing()
+				.unlockedBy("has_item", has(COAL_BALL))
+				.inputItem(Ingredient.of(COAL_BALL))
+				.outputItem(new ItemStack(COMPRESSED_COAL_BALL))
+				.save(consumer, compressingLoc("compressed_coal_ball"));
 	}
 }

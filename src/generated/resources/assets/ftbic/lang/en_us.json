@@ -80,5 +80,11 @@
 	"item.ftbic.transformer_upgrade": "Transformer Upgrade",
 	"item.ftbic.uranium_fuel_rod": "Uranium Fuel Cell",
 	"item.ftbic.water_cell": "Water Cell",
-	"itemGroup.ftbic": "FTB Industrial Contraptions"
+	"itemGroup.ftbic": "FTB Industrial Contraptions",
+	"recipe.ftbic.canning": "Canning",
+	"recipe.ftbic.compressing": "Compressing",
+	"recipe.ftbic.electrolyzing": "Electrolyzing",
+	"recipe.ftbic.extracting": "Extracting",
+	"recipe.ftbic.macerating": "Macerating",
+	"recipe.ftbic.recycling": "Recycling"
 }

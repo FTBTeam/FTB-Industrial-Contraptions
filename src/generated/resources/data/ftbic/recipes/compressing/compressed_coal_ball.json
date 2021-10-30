@@ -3,15 +3,14 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"tag": "forge:ingots/iron"
+				"item": "ftbic:coal_ball"
 			},
-			"count": 3
+			"count": 1
 		}
 	],
 	"outputItems": [
 		{
-			"item": "ftbic:mixed_metal_ingot",
-			"count": 3
+			"item": "ftbic:compressed_coal_ball"
 		}
 	]
 }

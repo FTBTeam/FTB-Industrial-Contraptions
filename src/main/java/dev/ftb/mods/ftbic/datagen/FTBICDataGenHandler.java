@@ -144,6 +144,13 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.CANNED_FOOD, "Canned Food");
 			addItem(FTBICItems.DARK_SPRAY_PAINT_CAN, "Spray Paint Can (Dark)");
 			addItem(FTBICItems.LIGHT_SPRAY_PAINT_CAN, "Spray Paint Can (Light)");
+
+			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
+			add("recipe." + FTBIC.MOD_ID + ".extracting", "Extracting");
+			add("recipe." + FTBIC.MOD_ID + ".compressing", "Compressing");
+			add("recipe." + FTBIC.MOD_ID + ".electrolyzing", "Electrolyzing");
+			add("recipe." + FTBIC.MOD_ID + ".recycling", "Recycling");
+			add("recipe." + FTBIC.MOD_ID + ".canning", "Canning");
 		}
 	}
 

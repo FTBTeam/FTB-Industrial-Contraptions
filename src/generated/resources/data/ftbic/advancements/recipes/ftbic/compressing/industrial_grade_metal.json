@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:compressing/mixed_metal_ingot"
+			"ftbic:compressing/industrial_grade_metal"
 		]
 	},
 	"criteria": {
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:compressing/mixed_metal_ingot"
+				"recipe": "ftbic:compressing/industrial_grade_metal"
 			}
 		}
 	},
