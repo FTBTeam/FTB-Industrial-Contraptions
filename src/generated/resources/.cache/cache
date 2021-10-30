@@ -332,6 +332,7 @@ ae7a1184c8d87f2cc2f37ec8cc6816db01295f3d data/ftbic/advancements/recipes/ftbic/c
 00028ee033822f991b6ec68ba430aeee68895057 data/ftbic/advancements/recipes/ftbic/canning/uranium_fuel_rod.json
 dbbf7fb03898eec2008f0b3c993f8ad230b25b2b data/ftbic/advancements/recipes/ftbic/compressing/advanced_alloy.json
 de20e7b0aaf83c34de9a6c99dd11870159219b20 data/ftbic/advancements/recipes/ftbic/compressing/carbon_plate.json
+ec6600e52143cb70860cde20951dd8b4558e6418 data/ftbic/advancements/recipes/ftbic/compressing/mixed_metal_ingot.json
 867c38bd0a36eec9a68689936c2916851ceba74a data/ftbic/advancements/recipes/ftbic/extracting/coolant_10k.json
 ab81b631a33ce4a36e97b6ec9cf9712575699cce data/ftbic/advancements/recipes/ftbic/extracting/rubber_from_latex.json
 3683126d1789155290d5578ef80d1b56891ef433 data/ftbic/advancements/recipes/ftbic/extracting/rubber_from_log.json
@@ -506,6 +507,7 @@ d2c9a996cca3da2190e0f4b7ab987bc0f372c49a data/ftbic/recipes/canning/rabbit.json
 9c20ea903d2c55e8b77ecd195d6012ac1c5f1b59 data/ftbic/recipes/compressing/carbon_plate.json
 7fa55452ca0f425fe031c7186bfd2630e5db168b data/ftbic/recipes/compressing/diamond.json
 3de0b3270610b0c63daff13d1c4a0a0f344ac613 data/ftbic/recipes/compressing/ice.json
+7c74f6a23194a931fb14228513db73b73ae000f1 data/ftbic/recipes/compressing/mixed_metal_ingot.json
 6f2dbc2096ac6c62e47669e3f0df01a275af44b8 data/ftbic/recipes/compressing/snowball.json
 e07d4bc52622c9bc531c5d5362345aa6afd440ff data/ftbic/recipes/extracting/coolant_10k.json
 622f6573ac171dbb4909a2cdf12aab31c9d753fb data/ftbic/recipes/extracting/rubber_from_latex.json

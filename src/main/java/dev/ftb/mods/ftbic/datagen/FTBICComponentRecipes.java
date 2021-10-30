@@ -167,6 +167,12 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, extractingLoc("rubber_from_sapling"));
 
 		MachineRecipeBuilder.compressing()
+				.unlockedBy("has_item", has(IRON_INGOT))
+				.inputItem(Ingredient.of(IRON_INGOT), 3)
+				.outputItem(new ItemStack(MIXED_METAL_INGOT, 3))
+				.save(consumer, compressingLoc("mixed_metal_ingot"));
+
+		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(MIXED_METAL_INGOT))
 				.inputItem(Ingredient.of(MIXED_METAL_INGOT))
 				.outputItem(new ItemStack(ADVANCED_ALLOY))
