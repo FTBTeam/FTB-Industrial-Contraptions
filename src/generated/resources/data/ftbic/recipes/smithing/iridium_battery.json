@@ -4,7 +4,7 @@
 		"item": "ftbic:graphene_battery"
 	},
 	"addition": {
-		"item": "ftbic:iridium_plate"
+		"item": "ftbic:iridium_alloy"
 	},
 	"result": {
 		"item": "ftbic:iridium_battery"

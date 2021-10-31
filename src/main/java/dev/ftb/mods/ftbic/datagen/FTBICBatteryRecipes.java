@@ -45,8 +45,8 @@ public class FTBICBatteryRecipes extends FTBICRecipesGen {
 				.unlocks("has_item", has(GRAPHENE))
 				.save(consumer, smithingLoc("graphene_battery"));
 
-		UpgradeRecipeBuilder.smithing(Ingredient.of(GRAPHENE_BATTERY), Ingredient.of(IRIDIUM_PLATE), IRIDIUM_BATTERY)
-				.unlocks("has_item", has(IRIDIUM_PLATE))
+		UpgradeRecipeBuilder.smithing(Ingredient.of(GRAPHENE_BATTERY), Ingredient.of(IRIDIUM_ALLOY), IRIDIUM_BATTERY)
+				.unlocks("has_item", has(IRIDIUM_ALLOY))
 				.save(consumer, smithingLoc("iridium_battery"));
 	}
 }

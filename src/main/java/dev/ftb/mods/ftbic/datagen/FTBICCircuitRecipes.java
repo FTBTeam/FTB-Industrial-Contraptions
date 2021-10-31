@@ -67,7 +67,7 @@ public class FTBICCircuitRecipes extends FTBICRecipesGen {
 				.pattern("AGA")
 				.define('A', ADVANCED_ALLOY)
 				.define('G', GRAPHENE)
-				.define('I', IRIDIUM_PLATE)
+				.define('I', IRIDIUM_ALLOY)
 				.define('C', ADVANCED_CIRCUIT)
 				.save(consumer, shapedLoc("iridium_circuit_h"));
 
@@ -79,7 +79,7 @@ public class FTBICCircuitRecipes extends FTBICRecipesGen {
 				.pattern("ACA")
 				.define('A', ADVANCED_ALLOY)
 				.define('G', GRAPHENE)
-				.define('I', IRIDIUM_PLATE)
+				.define('I', IRIDIUM_ALLOY)
 				.define('C', ADVANCED_CIRCUIT)
 				.save(consumer, shapedLoc("iridium_circuit_v"));
 	}

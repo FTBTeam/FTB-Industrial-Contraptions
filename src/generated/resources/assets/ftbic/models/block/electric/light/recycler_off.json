@@ -1,7 +1,7 @@
 {
 	"parent": "ftbic:block/orientable_2d",
 	"textures": {
-		"side": "ftbic:block/electric/light/side",
+		"side": "ftbic:block/electric/light/basic_side",
 		"front": "ftbic:block/electric/light/recycler_front_off",
 		"top": "ftbic:block/electric/light/recycler_top"
 	}

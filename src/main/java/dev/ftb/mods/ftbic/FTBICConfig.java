@@ -22,8 +22,9 @@ public class FTBICConfig {
 	public static int EV_BATTERY_BOX_CAPACITY = 400_000_000;
 
 	public static int IRON_FURNACE_ITEMS_PER_COAL = 12;
-
 	public static int BASIC_GENERATOR_OUTPUT = 100;
+	public static int GEOTHERMAL_GENERATOR_LAVA_TANK = 8000;
+	public static int GEOTHERMAL_GENERATOR_OUTPUT = 100;
 
 	public static int LV_SOLAR_PANEL_GENERATION = 4;
 	public static int MV_SOLAR_PANEL_GENERATION = 32;

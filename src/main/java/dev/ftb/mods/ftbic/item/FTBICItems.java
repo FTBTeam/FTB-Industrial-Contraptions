@@ -55,8 +55,7 @@ public interface FTBICItems {
 	MaterialItem COAL_BALL = material("coal_ball");
 	MaterialItem COMPRESSED_COAL_BALL = material("compressed_coal_ball");
 	MaterialItem GRAPHENE = material("graphene");
-	MaterialItem IRIDIUM_DUST = material("iridium_dust");
-	MaterialItem IRIDIUM_PLATE = material("iridium_plate");
+	MaterialItem IRIDIUM_ALLOY = material("iridium_alloy");
 	MaterialItem SCRAP = material("scrap");
 	MaterialItem SCRAP_BOX = material("scrap_box");
 	MaterialItem OVERCLOCKER_UPGRADE = material("overclocker_upgrade");

@@ -6,7 +6,6 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -160,22 +159,16 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.define('T', TIN_INGOT)
 				.save(consumer, shapedLoc("empty_can"));
 
-		ShapedRecipeBuilder.shaped(IRIDIUM_PLATE)
-				.unlockedBy("has_item", has(IRIDIUM_DUST))
-				.group(MODID + ":iridium_plate")
+		ShapedRecipeBuilder.shaped(IRIDIUM_ALLOY)
+				.unlockedBy("has_item", has(IRIDIUM_INGOT))
+				.group(MODID + ":iridium_alloy")
 				.pattern("IAI")
 				.pattern("ADA")
 				.pattern("IAI")
-				.define('I', IRIDIUM_DUST)
+				.define('I', IRIDIUM_INGOT)
 				.define('A', ADVANCED_ALLOY)
 				.define('D', DIAMOND)
-				.save(consumer, shapedLoc("iridium_plate"));
-
-		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(Items.NETHER_STAR))
-				.inputItem(Ingredient.of(Items.NETHER_STAR))
-				.outputItem(new ItemStack(IRIDIUM_DUST, 4))
-				.save(consumer, maceratingLoc("iridium_dust"));
+				.save(consumer, shapedLoc("iridium_alloy"));
 
 		MachineRecipeBuilder.extracting()
 				.unlockedBy("has_item", has(LATEX))

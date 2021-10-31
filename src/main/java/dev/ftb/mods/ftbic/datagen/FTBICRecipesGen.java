@@ -49,6 +49,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> SULFUR = ItemTags.bind("forge:gems/sulfur");
 	public static final Tag<Item> BITUMEN = ItemTags.bind("forge:bitumen");
 	public static final Tag<Item> URANIUM_DUST = ItemTags.bind("forge:dusts/uranium");
+	public static final Tag<Item> IRIDIUM_INGOT = ItemTags.bind("forge:ingots/iridium");
 	public static final Tag<Item> BLAZE_ROD = Tags.Items.RODS_BLAZE;
 	public static final Item LATEX = MyrtreesItems.LATEX.get();
 	public static final Item TREE_TAP = MyrtreesItems.TREE_TAP.get();
@@ -77,8 +78,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item COAL_BALL = FTBICItems.COAL_BALL.item.get();
 	public static final Item COMPRESSED_COAL_BALL = FTBICItems.COMPRESSED_COAL_BALL.item.get();
 	public static final Item GRAPHENE = FTBICItems.GRAPHENE.item.get();
-	public static final Item IRIDIUM_DUST = FTBICItems.IRIDIUM_DUST.item.get();
-	public static final Item IRIDIUM_PLATE = FTBICItems.IRIDIUM_PLATE.item.get();
+	public static final Item IRIDIUM_ALLOY = FTBICItems.IRIDIUM_ALLOY.item.get();
 	public static final Item SCRAP = FTBICItems.SCRAP.item.get();
 	public static final Item SCRAP_BOX = FTBICItems.SCRAP_BOX.item.get();
 	public static final Item OVERCLOCKER_UPGRADE = FTBICItems.OVERCLOCKER_UPGRADE.item.get();

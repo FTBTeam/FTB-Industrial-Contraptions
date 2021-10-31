@@ -43,7 +43,7 @@ public class FTBICAntimatterRecipes extends FTBICRecipesGen {
 		addChunk(consumer, Materials.REDSTONE, 24, "redstone", " A ", "AAA");
 		addChunk(consumer, Materials.DIAMOND, 1, "diamond", "AAA", "AAA", "AAA");
 		addChunk(consumer, Materials.EMERALD, 1, "emerald", "AAA", "A A", "AAA");
-		add(consumer, new ItemStack(IRIDIUM_DUST), "iridium", "AAA", " A ", "AAA");
+		addChunk(consumer, Materials.IRIDIUM, 1, "iridium", "AAA", " A ", "AAA");
 		add(consumer, new ItemStack(Items.CLAY_BALL, 48), "clay", "AA", "A ", "AA");
 		add(consumer, new ItemStack(Items.GLOWSTONE, 8), "glowstone", " A ", "A A", "AAA");
 		add(consumer, new ItemStack(Items.GRASS_BLOCK, 16), "grass", "A", "A");
