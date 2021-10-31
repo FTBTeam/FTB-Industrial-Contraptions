@@ -91,6 +91,7 @@ public class FTBICDataGenHandler {
 			gen.addProvider(new FTBICNuclearRecipes(gen));
 			gen.addProvider(new FTBICGeneratorFuelRecipes(gen));
 			gen.addProvider(new FTBICVanillaRecipes(gen));
+			gen.addProvider(new FTBICAntimatterRecipes(gen));
 			gen.addProvider(new ICLootTableProvider(gen));
 		}
 	}

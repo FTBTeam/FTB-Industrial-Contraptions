@@ -104,7 +104,7 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(Items.SUGAR_CANE))
-				.inputItem(Ingredient.of(Items.SUGAR_CANE))
+				.inputItem(Ingredient.of(Items.SUGAR_CANE), 3)
 				.outputItem(new ItemStack(Items.PAPER, 5))
 				.save(consumer, compressingLoc("paper"));
 	}

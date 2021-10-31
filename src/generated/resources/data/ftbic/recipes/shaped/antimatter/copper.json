@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:antimatter/copper",
+	"pattern": [
+		"  A",
+		"A A"
+	],
+	"key": {
+		"A": {
+			"item": "ftbic:antimatter"
+		}
+	},
+	"result": {
+		"item": "emendatusenigmatica:copper_chunk",
+		"count": 5
+	}
+}

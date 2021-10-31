@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:antimatter/emerald",
+	"pattern": [
+		"AAA",
+		"A A",
+		"AAA"
+	],
+	"key": {
+		"A": {
+			"item": "ftbic:antimatter"
+		}
+	},
+	"result": {
+		"item": "emendatusenigmatica:emerald_chunk"
+	}
+}

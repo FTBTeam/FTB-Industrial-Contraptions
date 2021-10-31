@@ -160,6 +160,17 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.define('T', TIN_INGOT)
 				.save(consumer, shapedLoc("empty_can"));
 
+		ShapedRecipeBuilder.shaped(IRIDIUM_PLATE)
+				.unlockedBy("has_item", has(IRIDIUM_DUST))
+				.group(MODID + ":iridium_plate")
+				.pattern("IAI")
+				.pattern("ADA")
+				.pattern("IAI")
+				.define('I', IRIDIUM_DUST)
+				.define('A', ADVANCED_ALLOY)
+				.define('D', DIAMOND)
+				.save(consumer, shapedLoc("iridium_plate"));
+
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", has(Items.NETHER_STAR))
 				.inputItem(Ingredient.of(Items.NETHER_STAR))
