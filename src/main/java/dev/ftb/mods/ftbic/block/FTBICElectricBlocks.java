@@ -11,7 +11,6 @@ import dev.ftb.mods.ftbic.block.entity.machine.AntimatterFabricatorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CanningMachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CompressorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ElectricFurnaceBlockEntity;
-import dev.ftb.mods.ftbic.block.entity.machine.ElectrolyzerBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ExtractorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.InductionFurnaceBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MaceratorBlockEntity;
@@ -52,7 +51,6 @@ public interface FTBICElectricBlocks {
 	ElectricBlockInstance MACERATOR = register("macerator", MaceratorBlockEntity::new).onOffBurnt();
 	ElectricBlockInstance EXTRACTOR = register("extractor", ExtractorBlockEntity::new).onOffBurnt();
 	ElectricBlockInstance COMPRESSOR = register("compressor", CompressorBlockEntity::new).onOffBurnt();
-	ElectricBlockInstance ELECTROLYZER = register("electrolyzer", ElectrolyzerBlockEntity::new).onOffBurnt();
 	ElectricBlockInstance RECYCLER = register("recycler", RecyclerBlockEntity::new).onOffBurnt().advanced();
 	ElectricBlockInstance CANNING_MACHINE = register("canning_machine", CanningMachineBlockEntity::new).onOffBurnt();
 	ElectricBlockInstance INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlockEntity::new).onOffBurnt().advanced();

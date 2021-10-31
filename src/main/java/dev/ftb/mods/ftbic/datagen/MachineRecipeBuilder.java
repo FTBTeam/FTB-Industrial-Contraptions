@@ -53,14 +53,6 @@ public class MachineRecipeBuilder {
 		return machine(FTBICRecipes.COMPRESSING);
 	}
 
-	public static MachineRecipeBuilder electrolyzing() {
-		return machine(FTBICRecipes.ELECTROLYZING);
-	}
-
-	public static MachineRecipeBuilder recycling() {
-		return machine(FTBICRecipes.RECYCLING);
-	}
-
 	public static MachineRecipeBuilder canning() {
 		return machine(FTBICRecipes.CANNING);
 	}

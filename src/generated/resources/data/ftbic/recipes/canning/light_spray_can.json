@@ -1,0 +1,22 @@
+{
+	"type": "ftbic:canning",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "ftbic:empty_cell"
+			},
+			"count": 1
+		},
+		{
+			"ingredient": {
+				"tag": "forge:dyes/white"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:light_spray_paint_can"
+		}
+	]
+}

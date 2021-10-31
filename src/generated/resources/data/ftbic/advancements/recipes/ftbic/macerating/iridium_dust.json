@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:extracting/rubber_from_sapling"
+			"ftbic:macerating/iridium_dust"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "myrtrees:rubberwood_sapling"
+						"item": "minecraft:nether_star"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:extracting/rubber_from_sapling"
+				"recipe": "ftbic:macerating/iridium_dust"
 			}
 		}
 	},

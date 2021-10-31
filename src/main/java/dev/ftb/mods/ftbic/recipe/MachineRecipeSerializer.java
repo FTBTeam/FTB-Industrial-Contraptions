@@ -26,6 +26,12 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 		recipeType = RecipeType.register(FTBIC.MOD_ID + ":" + id);
 	}
 
+	public MachineRecipeSerializer twoInputs() {
+		jeiPowerX = 11;
+		jeiArrowX = 30;
+		return this;
+	}
+
 	@Override
 	public MachineRecipe fromJson(ResourceLocation id, JsonObject json) {
 		MachineRecipe recipe = new MachineRecipe(this, id);

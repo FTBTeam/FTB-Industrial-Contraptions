@@ -3,14 +3,14 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"item": "myrtrees:rubberwood_log"
+				"item": "myrtrees:rubberwood_sapling"
 			},
 			"count": 1
 		}
 	],
 	"outputItems": [
 		{
-			"item": "ftbic:rubber"
+			"item": "myrtrees:latex"
 		}
 	]
 }

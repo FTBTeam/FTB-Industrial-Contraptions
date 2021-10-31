@@ -1,0 +1,16 @@
+{
+	"type": "ftbic:extracting",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "myrtrees:rubberwood_leaves"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "myrtrees:latex"
+		}
+	]
+}

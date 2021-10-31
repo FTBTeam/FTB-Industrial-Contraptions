@@ -3,14 +3,15 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"item": "myrtrees:rubberwood_sapling"
+				"item": "minecraft:sugar_cane"
 			},
 			"count": 1
 		}
 	],
 	"outputItems": [
 		{
-			"item": "ftbic:rubber"
+			"item": "minecraft:sugar",
+			"count": 2
 		}
 	]
 }

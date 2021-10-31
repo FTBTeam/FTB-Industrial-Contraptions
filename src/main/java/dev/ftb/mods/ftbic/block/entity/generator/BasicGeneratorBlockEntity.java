@@ -52,7 +52,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 			RecipeCache recipeCache = getRecipeCache();
 
 			if (recipeCache != null) {
-				int fuel = recipeCache.getBasicGeneratorFuelTicks(level, player.getItemInHand(hand));
+				int fuel = recipeCache.getBasicGeneratorFuelTicks(level, player.getItemInHand(hand).getItem());
 
 				if (fuel > 0) {
 					if (!player.isCrouching()) {

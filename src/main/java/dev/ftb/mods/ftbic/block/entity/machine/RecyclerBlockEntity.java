@@ -7,5 +7,7 @@ public class RecyclerBlockEntity extends MachineBlockEntity {
 	public RecyclerBlockEntity() {
 		super(FTBICElectricBlocks.RECYCLER.blockEntity.get());
 		inputPowerTier = PowerTier.MV;
+		energyCapacity = 40000;
+		// energyUse = 80;
 	}
 }

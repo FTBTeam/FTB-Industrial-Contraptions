@@ -7,6 +7,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
@@ -34,5 +35,19 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 				}
 			}
 		}
+
+		MachineRecipeBuilder.canning()
+				.unlockedBy("has_item", has(EMPTY_CELL))
+				.inputItem(Ingredient.of(EMPTY_CELL))
+				.inputItem(Ingredient.of(Tags.Items.DYES_WHITE))
+				.outputItem(new ItemStack(LIGHT_SPRAY_CAN))
+				.save(consumer, canningLoc("light_spray_can"));
+
+		MachineRecipeBuilder.canning()
+				.unlockedBy("has_item", has(EMPTY_CELL))
+				.inputItem(Ingredient.of(EMPTY_CELL))
+				.inputItem(Ingredient.of(Tags.Items.DYES_BLACK))
+				.outputItem(new ItemStack(DARK_SPRAY_CAN))
+				.save(consumer, canningLoc("dark_spray_can"));
 	}
 }

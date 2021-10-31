@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:extracting/rubber_from_log"
+			"ftbic:extracting/sugar"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "myrtrees:rubberwood_log"
+						"item": "minecraft:sugar_cane"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:extracting/rubber_from_log"
+				"recipe": "ftbic:extracting/sugar"
 			}
 		}
 	},

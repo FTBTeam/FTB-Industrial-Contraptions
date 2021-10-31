@@ -6,6 +6,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -159,6 +160,12 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.define('T', TIN_INGOT)
 				.save(consumer, shapedLoc("empty_can"));
 
+		MachineRecipeBuilder.macerating()
+				.unlockedBy("has_item", has(Items.NETHER_STAR))
+				.inputItem(Ingredient.of(Items.NETHER_STAR))
+				.outputItem(new ItemStack(IRIDIUM_DUST, 4))
+				.save(consumer, maceratingLoc("iridium_dust"));
+
 		MachineRecipeBuilder.extracting()
 				.unlockedBy("has_item", has(LATEX))
 				.inputItem(Ingredient.of(LATEX))
@@ -168,14 +175,20 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 		MachineRecipeBuilder.extracting()
 				.unlockedBy("has_item", has(RUBBERWOOD_LOG))
 				.inputItem(Ingredient.of(RUBBERWOOD_LOG))
-				.outputItem(new ItemStack(RUBBER))
-				.save(consumer, extractingLoc("rubber_from_log"));
+				.outputItem(new ItemStack(LATEX))
+				.save(consumer, extractingLoc("latex_from_log"));
 
 		MachineRecipeBuilder.extracting()
 				.unlockedBy("has_item", has(RUBBERWOOD_SAPLING))
 				.inputItem(Ingredient.of(RUBBERWOOD_SAPLING))
-				.outputItem(new ItemStack(RUBBER))
-				.save(consumer, extractingLoc("rubber_from_sapling"));
+				.outputItem(new ItemStack(LATEX))
+				.save(consumer, extractingLoc("latex_from_sapling"));
+
+		MachineRecipeBuilder.extracting()
+				.unlockedBy("has_item", has(RUBBERWOOD_LEAVES))
+				.inputItem(Ingredient.of(RUBBERWOOD_LEAVES))
+				.outputItem(new ItemStack(LATEX))
+				.save(consumer, extractingLoc("latex_from_leaves"));
 
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(IRON_INGOT))

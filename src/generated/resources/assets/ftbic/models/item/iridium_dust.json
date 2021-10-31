@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "ftbic:item/raw_iridium"
+		"layer0": "ftbic:item/iridium_dust"
 	}
 }

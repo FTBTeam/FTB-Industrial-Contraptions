@@ -67,18 +67,6 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("compressor"));
 
-		ShapedRecipeBuilder.shaped(ELECTROLYZER)
-				.unlockedBy("has_item", has(MACHINE_BLOCK))
-				.group(MODID + ":electrolyzer")
-				.pattern("W W")
-				.pattern("WCW")
-				.pattern("EME")
-				.define('W', COPPER_CABLE)
-				.define('E', EMPTY_CELL)
-				.define('M', MACHINE_BLOCK)
-				.define('C', ELECTRONIC_CIRCUIT)
-				.save(consumer, shapedLoc("electrolyzer"));
-
 		ShapedRecipeBuilder.shaped(RECYCLER)
 				.unlockedBy("has_item", has(COMPRESSOR))
 				.group(MODID + ":recycler")

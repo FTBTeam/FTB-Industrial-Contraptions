@@ -25,11 +25,5 @@ public interface FTBICRecipes {
 	Supplier<MachineRecipeSerializer> MACERATING = machine("macerating", Function.identity());
 	Supplier<MachineRecipeSerializer> EXTRACTING = machine("extracting", Function.identity());
 	Supplier<MachineRecipeSerializer> COMPRESSING = machine("compressing", Function.identity());
-	Supplier<MachineRecipeSerializer> ELECTROLYZING = machine("electrolyzing", Function.identity());
-	Supplier<MachineRecipeSerializer> RECYCLING = machine("recycling", Function.identity());
-	Supplier<MachineRecipeSerializer> CANNING = machine("canning", s -> {
-		s.jeiPowerX = 11;
-		s.jeiArrowX = 30;
-		return s;
-	});
+	Supplier<MachineRecipeSerializer> CANNING = machine("canning", MachineRecipeSerializer::twoInputs);
 }

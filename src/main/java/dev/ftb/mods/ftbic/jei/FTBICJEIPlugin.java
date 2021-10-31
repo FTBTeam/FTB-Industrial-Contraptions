@@ -38,8 +38,6 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.MACERATOR.item.get()), FTBICRecipes.MACERATING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.EXTRACTOR.item.get()), FTBICRecipes.EXTRACTING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.COMPRESSOR.item.get()), FTBICRecipes.COMPRESSING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ELECTROLYZER.item.get()), FTBICRecipes.ELECTROLYZING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.RECYCLER.item.get()), FTBICRecipes.RECYCLING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.CANNING_MACHINE.item.get()), FTBICRecipes.CANNING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ROTARY_MACERATOR.item.get()), FTBICRecipes.MACERATING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.VACUUM_EXTRACTOR.item.get()), FTBICRecipes.EXTRACTING.get().getRegistryName());
@@ -56,8 +54,6 @@ public class FTBICJEIPlugin implements IModPlugin {
 		addMachineRecipe(r, FTBICRecipes.MACERATING);
 		addMachineRecipe(r, FTBICRecipes.EXTRACTING);
 		addMachineRecipe(r, FTBICRecipes.COMPRESSING);
-		addMachineRecipe(r, FTBICRecipes.ELECTROLYZING);
-		addMachineRecipe(r, FTBICRecipes.RECYCLING);
 		addMachineRecipe(r, FTBICRecipes.CANNING);
 	}
 
@@ -66,8 +62,6 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.MACERATING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.MACERATOR));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.EXTRACTING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.EXTRACTOR));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.COMPRESSING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.COMPRESSOR));
-		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.ELECTROLYZING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.ELECTROLYZER));
-		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.RECYCLING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.RECYCLER));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.CANNING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.CANNING_MACHINE));
 	}
 }

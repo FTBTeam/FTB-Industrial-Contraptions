@@ -72,6 +72,18 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SILICON).get(), 3))
 				.save(consumer, extractingLoc("silicon"));
 
+		MachineRecipeBuilder.extracting()
+				.unlockedBy("has_item", has(Items.MAGMA_CREAM))
+				.inputItem(Ingredient.of(Items.MAGMA_CREAM))
+				.outputItem(new ItemStack(Items.SLIME_BALL))
+				.save(consumer, extractingLoc("slime_ball"));
+
+		MachineRecipeBuilder.extracting()
+				.unlockedBy("has_item", has(Items.SUGAR_CANE))
+				.inputItem(Ingredient.of(Items.SUGAR_CANE))
+				.outputItem(new ItemStack(Items.SUGAR, 2))
+				.save(consumer, extractingLoc("sugar"));
+
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(WATER_CELL))
 				.inputItem(Ingredient.of(WATER_CELL))
@@ -89,5 +101,11 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.inputItem(Ingredient.of(GRAPHENE))
 				.outputItem(new ItemStack(Items.DIAMOND))
 				.save(consumer, compressingLoc("diamond"));
+
+		MachineRecipeBuilder.compressing()
+				.unlockedBy("has_item", has(Items.SUGAR_CANE))
+				.inputItem(Ingredient.of(Items.SUGAR_CANE))
+				.outputItem(new ItemStack(Items.PAPER, 5))
+				.save(consumer, compressingLoc("paper"));
 	}
 }

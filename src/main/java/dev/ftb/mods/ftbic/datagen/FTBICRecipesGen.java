@@ -54,6 +54,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item TREE_TAP = MyrtreesItems.TREE_TAP.get();
 	public static final Item RUBBERWOOD_LOG = MyrtreesItems.RUBBERWOOD_LOG.get();
 	public static final Item RUBBERWOOD_SAPLING = MyrtreesItems.RUBBERWOOD_SAPLING.get();
+	public static final Item RUBBERWOOD_LEAVES = MyrtreesItems.RUBBERWOOD_LEAVES.get();
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
 	public static final Item REINFORCED_STONE = FTBICItems.REINFORCED_STONE.get();
@@ -76,7 +77,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item COAL_BALL = FTBICItems.COAL_BALL.item.get();
 	public static final Item COMPRESSED_COAL_BALL = FTBICItems.COMPRESSED_COAL_BALL.item.get();
 	public static final Item GRAPHENE = FTBICItems.GRAPHENE.item.get();
-	public static final Item RAW_IRIDIUM = FTBICItems.RAW_IRIDIUM.item.get();
+	public static final Item IRIDIUM_DUST = FTBICItems.IRIDIUM_DUST.item.get();
 	public static final Item IRIDIUM_PLATE = FTBICItems.IRIDIUM_PLATE.item.get();
 	public static final Item SCRAP = FTBICItems.SCRAP.item.get();
 	public static final Item SCRAP_BOX = FTBICItems.SCRAP_BOX.item.get();
@@ -125,7 +126,6 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item MACERATOR = FTBICElectricBlocks.MACERATOR.item.get();
 	public static final Item EXTRACTOR = FTBICElectricBlocks.EXTRACTOR.item.get();
 	public static final Item COMPRESSOR = FTBICElectricBlocks.COMPRESSOR.item.get();
-	public static final Item ELECTROLYZER = FTBICElectricBlocks.ELECTROLYZER.item.get();
 	public static final Item RECYCLER = FTBICElectricBlocks.RECYCLER.item.get();
 	public static final Item CANNING_MACHINE = FTBICElectricBlocks.CANNING_MACHINE.item.get();
 	public static final Item INDUCTION_FURNACE = FTBICElectricBlocks.INDUCTION_FURNACE.item.get();

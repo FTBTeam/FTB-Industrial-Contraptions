@@ -1,8 +1,0 @@
-{
-	"parent": "ftbic:block/orientable_2d",
-	"textures": {
-		"side": "ftbic:block/electric/dark/electrolyzer_side_off",
-		"front": "ftbic:block/electric/dark/electrolyzer_side_off",
-		"top": "ftbic:block/electric/dark/top"
-	}
-}

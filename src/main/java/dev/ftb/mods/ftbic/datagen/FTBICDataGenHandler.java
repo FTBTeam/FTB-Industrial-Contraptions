@@ -148,8 +148,6 @@ public class FTBICDataGenHandler {
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".extracting", "Extracting");
 			add("recipe." + FTBIC.MOD_ID + ".compressing", "Compressing");
-			add("recipe." + FTBIC.MOD_ID + ".electrolyzing", "Electrolyzing");
-			add("recipe." + FTBIC.MOD_ID + ".recycling", "Recycling");
 			add("recipe." + FTBIC.MOD_ID + ".canning", "Canning");
 		}
 	}
@@ -188,7 +186,6 @@ public class FTBICDataGenHandler {
 			makeThemedElectric("extractor_top", false, false);
 			makeThemedElectricOnOff("compressor_front", true, false);
 			makeThemedElectric("compressor_top", false, false);
-			makeThemedElectricOnOff("electrolyzer_side", true, false);
 			makeThemedElectricOnOff("recycler_front", true, false);
 			makeThemedElectric("recycler_top", false, false);
 			makeThemedElectricOnOff("canning_machine_front", true, false);
@@ -335,8 +332,6 @@ public class FTBICDataGenHandler {
 			electric("extractor_on", "extractor_front_on", "side", "extractor_top");
 			electric("compressor_off", "compressor_front_off", "side", "compressor_top");
 			electric("compressor_on", "compressor_front_on", "side", "compressor_top");
-			electric("electrolyzer_off", "electrolyzer_side_off", "electrolyzer_side_off", "top");
-			electric("electrolyzer_on", "electrolyzer_side_on", "electrolyzer_side_on", "top");
 			electric("recycler_off", "recycler_front_off", "side", "recycler_top");
 			electric("recycler_on", "recycler_front_on", "side", "recycler_top");
 			electric("canning_machine_off", "canning_machine_front_off", "side", "top");

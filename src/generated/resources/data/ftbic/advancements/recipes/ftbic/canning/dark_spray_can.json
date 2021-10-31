@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:shaped/electrolyzer"
+			"ftbic:canning/dark_spray_can"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:machine_block"
+						"item": "ftbic:empty_cell"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:shaped/electrolyzer"
+				"recipe": "ftbic:canning/dark_spray_can"
 			}
 		}
 	},
