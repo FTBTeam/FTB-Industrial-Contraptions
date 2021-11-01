@@ -145,6 +145,11 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.CANNED_FOOD, "Canned Food");
 			addItem(FTBICItems.DARK_SPRAY_PAINT_CAN, "Spray Paint Can (Dark)");
 			addItem(FTBICItems.LIGHT_SPRAY_PAINT_CAN, "Spray Paint Can (Light)");
+			addItem(FTBICItems.OVERCLOCKER_UPGRADE, "Overclocker Upgrade");
+			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy_storage Upgrade");
+			addItem(FTBICItems.TRANSFORMER_UPGRADE, "Transformer Upgrade");
+			addItem(FTBICItems.EJECTOR_UPGRADE, "Ejector Upgrade");
+			addItem(FTBICItems.INDUCTION_UPGRADE, "Induction Upgrade");
 
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".extracting", "Extracting");
@@ -198,14 +203,6 @@ public class FTBICDataGenHandler {
 			makeThemedElectricOnOff("recycler_front", BASIC_SIDE);
 			makeThemedElectric("recycler_top", BASIC_TOP);
 			makeThemedElectricOnOff("canning_machine_front", BASIC_SIDE);
-
-			makeThemedElectricOnOff("induction_furnace_front", ADVANCED_SIDE);
-			makeThemedElectric("rotary_macerator_front", ADVANCED_SIDE);
-			makeThemedElectricOnOff("rotary_macerator_top", ADVANCED_TOP);
-			makeThemedElectricOnOff("vacuum_extractor_front", ADVANCED_SIDE);
-			makeThemedElectric("vacuum_extractor_top", ADVANCED_TOP);
-			makeThemedElectricOnOff("singularity_compressor_front", ADVANCED_SIDE);
-			makeThemedElectric("singularity_compressor_top", ADVANCED_TOP);
 			makeThemedElectricOnOff("antimatter_fabricator_front", ADVANCED_SIDE);
 			makeThemedElectric("antimatter_fabricator_side", ADVANCED_SIDE);
 
@@ -372,15 +369,6 @@ public class FTBICDataGenHandler {
 			electric("recycler_on", "recycler_front_on", "basic_side", "recycler_top");
 			electric("canning_machine_off", "canning_machine_front_off", "basic_side", "basic_top");
 			electric("canning_machine_on", "canning_machine_front_on", "basic_side", "basic_top");
-
-			electric("induction_furnace_off", "induction_furnace_front_off", "advanced_side", "advanced_top");
-			electric("induction_furnace_on", "induction_furnace_front_on", "advanced_side", "advanced_top");
-			electric("rotary_macerator_off", "rotary_macerator_front", "advanced_side", "rotary_macerator_top_off");
-			electric("rotary_macerator_on", "rotary_macerator_front", "advanced_side", "rotary_macerator_top_on");
-			electric("vacuum_extractor_off", "vacuum_extractor_front_off", "advanced_side", "vacuum_extractor_top");
-			electric("vacuum_extractor_on", "vacuum_extractor_front_on", "advanced_side", "vacuum_extractor_top");
-			electric("singularity_compressor_off", "singularity_compressor_front_off", "advanced_side", "singularity_compressor_top");
-			electric("singularity_compressor_on", "singularity_compressor_front_on", "advanced_side", "singularity_compressor_top");
 			electric("antimatter_fabricator_off", "antimatter_fabricator_front_off", "antimatter_fabricator_side", "advanced_top");
 			electric("antimatter_fabricator_on", "antimatter_fabricator_front_on", "antimatter_fabricator_side", "advanced_top");
 
@@ -527,6 +515,11 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.CANNED_FOOD);
 			basicItem(FTBICItems.DARK_SPRAY_PAINT_CAN);
 			basicItem(FTBICItems.LIGHT_SPRAY_PAINT_CAN);
+			basicItem(FTBICItems.OVERCLOCKER_UPGRADE);
+			basicItem(FTBICItems.ENERGY_STORAGE_UPGRADE);
+			basicItem(FTBICItems.TRANSFORMER_UPGRADE);
+			basicItem(FTBICItems.EJECTOR_UPGRADE);
+			basicItem(FTBICItems.INDUCTION_UPGRADE);
 		}
 	}
 

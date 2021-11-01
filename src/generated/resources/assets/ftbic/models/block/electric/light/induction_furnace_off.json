@@ -1,8 +1,0 @@
-{
-	"parent": "ftbic:block/orientable_2d",
-	"textures": {
-		"side": "ftbic:block/electric/light/advanced_side",
-		"front": "ftbic:block/electric/light/induction_furnace_front_off",
-		"top": "ftbic:block/electric/light/advanced_top"
-	}
-}

@@ -4,11 +4,11 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 
-public class MaceratorBlockEntity extends SimpleRecipeMachineBlockEntity {
+public class MaceratorBlockEntity extends MachineBlockEntity {
 	public MaceratorBlockEntity() {
-		super(FTBICElectricBlocks.MACERATOR.blockEntity.get());
+		super(FTBICElectricBlocks.MACERATOR.blockEntity.get(), 1, 1);
 		energyCapacity = 12000;
-		energyUse = 20;
+		baseEnergyUse = 20;
 	}
 
 	@Override

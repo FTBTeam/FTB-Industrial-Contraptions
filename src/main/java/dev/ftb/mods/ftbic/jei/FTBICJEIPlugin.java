@@ -34,14 +34,10 @@ public class FTBICJEIPlugin implements IModPlugin {
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration r) {
 		r.addRecipeCatalyst(new ItemStack(FTBICItems.IRON_FURNACE.get()), VanillaRecipeCategoryUid.FURNACE);
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ELECTRIC_FURNACE.item.get()), VanillaRecipeCategoryUid.FURNACE);
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.INDUCTION_FURNACE.item.get()), VanillaRecipeCategoryUid.FURNACE);
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.MACERATOR.item.get()), FTBICRecipes.MACERATING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.EXTRACTOR.item.get()), FTBICRecipes.EXTRACTING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.COMPRESSOR.item.get()), FTBICRecipes.COMPRESSING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.CANNING_MACHINE.item.get()), FTBICRecipes.CANNING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ROTARY_MACERATOR.item.get()), FTBICRecipes.MACERATING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.VACUUM_EXTRACTOR.item.get()), FTBICRecipes.EXTRACTING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.SINGULARITY_COMPRESSOR.item.get()), FTBICRecipes.COMPRESSING.get().getRegistryName());
 	}
 
 	private void addMachineRecipe(IRecipeRegistration r, Supplier<MachineRecipeSerializer> supplier) {

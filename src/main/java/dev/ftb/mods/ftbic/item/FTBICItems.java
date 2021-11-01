@@ -58,15 +58,11 @@ public interface FTBICItems {
 	MaterialItem IRIDIUM_ALLOY = material("iridium_alloy");
 	MaterialItem SCRAP = material("scrap");
 	MaterialItem SCRAP_BOX = material("scrap_box");
-	MaterialItem OVERCLOCKER_UPGRADE = material("overclocker_upgrade");
-	MaterialItem ENERGY_STORAGE_UPGRADE = material("energy_storage_upgrade");
-	MaterialItem TRANSFORMER_UPGRADE = material("transformer_upgrade");
-	MaterialItem EJECTOR_UPGRADE = material("ejector_upgrade");
 	MaterialItem ELECTRONIC_CIRCUIT = material("electronic_circuit");
 	MaterialItem ADVANCED_CIRCUIT = material("advanced_circuit");
 	MaterialItem IRIDIUM_CIRCUIT = material("iridium_circuit");
-	MaterialItem RAW_CARBON_FIBRE = material("raw_carbon_fibre");
-	MaterialItem RAW_CARBON_MESH = material("raw_carbon_mesh");
+	MaterialItem CARBON_FIBERS = material("carbon_fibers");
+	MaterialItem CARBON_FIBER_MESH = material("carbon_fiber_mesh");
 	MaterialItem CARBON_PLATE = material("carbon_plate");
 	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
 	MaterialItem FUSE = material("fuse");
@@ -91,4 +87,9 @@ public interface FTBICItems {
 	Supplier<Item> CANNED_FOOD = REGISTRY.register("canned_food", CannedFoodItem::new);
 	Supplier<Item> DARK_SPRAY_PAINT_CAN = REGISTRY.register("dark_spray_paint_can", () -> new SprayPaintCanItem(true));
 	Supplier<Item> LIGHT_SPRAY_PAINT_CAN = REGISTRY.register("light_spray_paint_can", () -> new SprayPaintCanItem(false));
+	Supplier<Item> OVERCLOCKER_UPGRADE = REGISTRY.register("overclocker_upgrade", UpgradeItem::new);
+	Supplier<Item> ENERGY_STORAGE_UPGRADE = REGISTRY.register("energy_storage_upgrade", UpgradeItem::new);
+	Supplier<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", UpgradeItem::new);
+	Supplier<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", UpgradeItem::new);
+	Supplier<Item> INDUCTION_UPGRADE = REGISTRY.register("induction_upgrade", UpgradeItem::new);
 }

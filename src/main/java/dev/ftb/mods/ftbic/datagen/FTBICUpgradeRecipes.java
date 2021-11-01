@@ -57,5 +57,17 @@ public class FTBICUpgradeRecipes extends FTBICRecipesGen {
 				.define('P', Items.PISTON)
 				.define('T', TIN_INGOT)
 				.save(consumer, shapedLoc("ejector_upgrade"));
+
+		ShapedRecipeBuilder.shaped(INDUCTION_UPGRADE)
+				.unlockedBy("has_item", has(COPPER_WIRE))
+				.group(MODID + ":induction_upgrade")
+				.pattern("WOW")
+				.pattern("WAW")
+				.pattern("WCW")
+				.define('W', COPPER_WIRE)
+				.define('O', OVERCLOCKER_UPGRADE)
+				.define('A', ADVANCED_MACHINE_BLOCK)
+				.define('C', ADVANCED_CIRCUIT)
+				.save(consumer, shapedLoc("induction_upgrade"));
 	}
 }

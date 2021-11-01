@@ -170,6 +170,20 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.define('D', DIAMOND)
 				.save(consumer, shapedLoc("iridium_alloy"));
 
+		ShapedRecipeBuilder.shaped(CARBON_FIBERS)
+				.unlockedBy("has_item", has(COAL_DUST))
+				.group(MODID + ":carbon_fibers")
+				.pattern("DD")
+				.pattern("DD")
+				.define('D', COAL_DUST)
+				.save(consumer, shapedLoc("carbon_fibers"));
+
+		ShapelessRecipeBuilder.shapeless(CARBON_FIBER_MESH)
+				.unlockedBy("has_item", has(CARBON_FIBERS))
+				.group(MODID + ":carbon_fiber_mesh")
+				.requires(CARBON_FIBERS, 2)
+				.save(consumer, shapedLoc("carbon_fiber_mesh"));
+
 		MachineRecipeBuilder.extracting()
 				.unlockedBy("has_item", has(LATEX))
 				.inputItem(Ingredient.of(LATEX))
@@ -207,8 +221,8 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, compressingLoc("advanced_alloy"));
 
 		MachineRecipeBuilder.compressing()
-				.unlockedBy("has_item", has(RAW_CARBON_MESH))
-				.inputItem(Ingredient.of(RAW_CARBON_MESH))
+				.unlockedBy("has_item", has(CARBON_FIBER_MESH))
+				.inputItem(Ingredient.of(CARBON_FIBER_MESH))
 				.outputItem(new ItemStack(CARBON_PLATE))
 				.save(consumer, compressingLoc("carbon_plate"));
 

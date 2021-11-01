@@ -88,50 +88,6 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("canning_machine"));
 
-		ShapedRecipeBuilder.shaped(INDUCTION_FURNACE)
-				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
-				.group(MODID + ":induction_furnace")
-				.pattern("CCC")
-				.pattern("CFC")
-				.pattern("CMC")
-				.define('F', ELECTRIC_FURNACE)
-				.define('M', ADVANCED_MACHINE_BLOCK)
-				.define('C', COPPER_INGOT)
-				.save(consumer, shapedLoc("induction_furnace"));
-
-		ShapedRecipeBuilder.shaped(ROTARY_MACERATOR)
-				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
-				.group(MODID + ":rotary_macerator")
-				.pattern("CCC")
-				.pattern("CFC")
-				.pattern("CMC")
-				.define('F', MACERATOR)
-				.define('M', ADVANCED_MACHINE_BLOCK)
-				.define('C', INDUSTRIAL_GRADE_METAL)
-				.save(consumer, shapedLoc("rotary_macerator"));
-
-		ShapedRecipeBuilder.shaped(VACUUM_EXTRACTOR)
-				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
-				.group(MODID + ":vacuum_extractor")
-				.pattern("CCC")
-				.pattern("CFC")
-				.pattern("CMC")
-				.define('F', EXTRACTOR)
-				.define('M', ADVANCED_MACHINE_BLOCK)
-				.define('C', ALUMINUM_INGOT)
-				.save(consumer, shapedLoc("vacuum_extractor"));
-
-		ShapedRecipeBuilder.shaped(SINGULARITY_COMPRESSOR)
-				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
-				.group(MODID + ":singularity_compressor")
-				.pattern("CCC")
-				.pattern("CFC")
-				.pattern("CMC")
-				.define('F', COMPRESSOR)
-				.define('M', ADVANCED_MACHINE_BLOCK)
-				.define('C', OBSIDIAN)
-				.save(consumer, shapedLoc("singularity_compressor"));
-
 		ShapedRecipeBuilder.shaped(ANTIMATTER_FABRICATOR)
 				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
 				.group(MODID + ":antimatter_fabricator")

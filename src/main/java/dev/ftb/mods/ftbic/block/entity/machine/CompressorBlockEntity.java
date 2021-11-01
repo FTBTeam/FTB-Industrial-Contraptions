@@ -4,11 +4,11 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 
-public class CompressorBlockEntity extends SimpleRecipeMachineBlockEntity {
+public class CompressorBlockEntity extends MachineBlockEntity {
 	public CompressorBlockEntity() {
-		super(FTBICElectricBlocks.COMPRESSOR.blockEntity.get());
+		super(FTBICElectricBlocks.COMPRESSOR.blockEntity.get(), 1, 1);
 		energyCapacity = 8000;
-		energyUse = 20;
+		baseEnergyUse = 20;
 	}
 
 	@Override

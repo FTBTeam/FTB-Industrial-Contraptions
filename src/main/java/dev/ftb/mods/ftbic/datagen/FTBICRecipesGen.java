@@ -81,15 +81,11 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item IRIDIUM_ALLOY = FTBICItems.IRIDIUM_ALLOY.item.get();
 	public static final Item SCRAP = FTBICItems.SCRAP.item.get();
 	public static final Item SCRAP_BOX = FTBICItems.SCRAP_BOX.item.get();
-	public static final Item OVERCLOCKER_UPGRADE = FTBICItems.OVERCLOCKER_UPGRADE.item.get();
-	public static final Item ENERGY_STORAGE_UPGRADE = FTBICItems.ENERGY_STORAGE_UPGRADE.item.get();
-	public static final Item TRANSFORMER_UPGRADE = FTBICItems.TRANSFORMER_UPGRADE.item.get();
-	public static final Item EJECTOR_UPGRADE = FTBICItems.EJECTOR_UPGRADE.item.get();
 	public static final Item ELECTRONIC_CIRCUIT = FTBICItems.ELECTRONIC_CIRCUIT.item.get();
 	public static final Item ADVANCED_CIRCUIT = FTBICItems.ADVANCED_CIRCUIT.item.get();
 	public static final Item IRIDIUM_CIRCUIT = FTBICItems.IRIDIUM_CIRCUIT.item.get();
-	public static final Item RAW_CARBON_FIBRE = FTBICItems.RAW_CARBON_FIBRE.item.get();
-	public static final Item RAW_CARBON_MESH = FTBICItems.RAW_CARBON_MESH.item.get();
+	public static final Item CARBON_FIBERS = FTBICItems.CARBON_FIBERS.item.get();
+	public static final Item CARBON_FIBER_MESH = FTBICItems.CARBON_FIBER_MESH.item.get();
 	public static final Item CARBON_PLATE = FTBICItems.CARBON_PLATE.item.get();
 	public static final Item ENERGY_CRYSTAL = FTBICItems.ENERGY_CRYSTAL.item.get();
 	public static final Item FUSE = FTBICItems.FUSE.item.get();
@@ -114,6 +110,11 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item CANNED_FOOD = FTBICItems.CANNED_FOOD.get();
 	public static final Item DARK_SPRAY_CAN = FTBICItems.DARK_SPRAY_PAINT_CAN.get();
 	public static final Item LIGHT_SPRAY_CAN = FTBICItems.LIGHT_SPRAY_PAINT_CAN.get();
+	public static final Item OVERCLOCKER_UPGRADE = FTBICItems.OVERCLOCKER_UPGRADE.get();
+	public static final Item ENERGY_STORAGE_UPGRADE = FTBICItems.ENERGY_STORAGE_UPGRADE.get();
+	public static final Item TRANSFORMER_UPGRADE = FTBICItems.TRANSFORMER_UPGRADE.get();
+	public static final Item EJECTOR_UPGRADE = FTBICItems.EJECTOR_UPGRADE.get();
+	public static final Item INDUCTION_UPGRADE = FTBICItems.INDUCTION_UPGRADE.get();
 
 	public static final Item BASIC_GENERATOR = FTBICElectricBlocks.BASIC_GENERATOR.item.get();
 	public static final Item GEOTHERMAL_GENERATOR = FTBICElectricBlocks.GEOTHERMAL_GENERATOR.item.get();
@@ -128,10 +129,6 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item COMPRESSOR = FTBICElectricBlocks.COMPRESSOR.item.get();
 	public static final Item RECYCLER = FTBICElectricBlocks.RECYCLER.item.get();
 	public static final Item CANNING_MACHINE = FTBICElectricBlocks.CANNING_MACHINE.item.get();
-	public static final Item INDUCTION_FURNACE = FTBICElectricBlocks.INDUCTION_FURNACE.item.get();
-	public static final Item ROTARY_MACERATOR = FTBICElectricBlocks.ROTARY_MACERATOR.item.get();
-	public static final Item VACUUM_EXTRACTOR = FTBICElectricBlocks.VACUUM_EXTRACTOR.item.get();
-	public static final Item SINGULARITY_COMPRESSOR = FTBICElectricBlocks.SINGULARITY_COMPRESSOR.item.get();
 	public static final Item ANTIMATTER_FABRICATOR = FTBICElectricBlocks.ANTIMATTER_FABRICATOR.item.get();
 	public static final Item LV_BATTERY_BOX = FTBICElectricBlocks.LV_BATTERY_BOX.item.get();
 	public static final Item MV_BATTERY_BOX = FTBICElectricBlocks.MV_BATTERY_BOX.item.get();

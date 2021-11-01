@@ -18,11 +18,13 @@ public class RecipeCache implements Recipe<NoContainer> {
 	public static final ResourceLocation ID = new ResourceLocation(FTBIC.MOD_ID, "recipe_cache");
 
 	private final Map<Item, Integer> basicGeneratorFuel = new HashMap<>();
-	private final Map<Item, MachineProcessingResult> furnaceRecipes = new HashMap<>();
-	public final MachineRecipeResults macerating = new MachineRecipeResults(FTBICRecipes.MACERATING);
-	public final MachineRecipeResults extracting = new MachineRecipeResults(FTBICRecipes.EXTRACTING);
-	public final MachineRecipeResults compressing = new MachineRecipeResults(FTBICRecipes.COMPRESSING);
-	public final DualMachineRecipeResults canning = new DualMachineRecipeResults(FTBICRecipes.CANNING);
+	public final MachineRecipeResults smelting = new CookingRecipeResults(RecipeType.SMELTING);
+	public final MachineRecipeResults macerating = new FTBICMachineRecipeResults(FTBICRecipes.MACERATING);
+	public final MachineRecipeResults extracting = new FTBICMachineRecipeResults(FTBICRecipes.EXTRACTING);
+	public final MachineRecipeResults compressing = new FTBICMachineRecipeResults(FTBICRecipes.COMPRESSING);
+	public final MachineRecipeResults canning = new FTBICDualMachineRecipeResults(FTBICRecipes.CANNING);
+	public final MachineRecipeResults recycling = new RecyclingRecipeResults();
+	public final MachineRecipeResults antimatterFabricator = new AntimatterFabricatorRecipeResults();
 
 	@Nullable
 	public static RecipeCache get(Level level) {

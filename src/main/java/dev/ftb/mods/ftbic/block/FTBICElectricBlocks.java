@@ -12,12 +12,8 @@ import dev.ftb.mods.ftbic.block.entity.machine.CanningMachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CompressorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ElectricFurnaceBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ExtractorBlockEntity;
-import dev.ftb.mods.ftbic.block.entity.machine.InductionFurnaceBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MaceratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.RecyclerBlockEntity;
-import dev.ftb.mods.ftbic.block.entity.machine.RotaryMaceratorBlockEntity;
-import dev.ftb.mods.ftbic.block.entity.machine.SingularityCompressorBlockEntity;
-import dev.ftb.mods.ftbic.block.entity.machine.VacuumExtractorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.HVBatteryBoxBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.HVTransformerBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.LVBatteryBoxBlockEntity;
@@ -53,10 +49,6 @@ public interface FTBICElectricBlocks {
 	ElectricBlockInstance COMPRESSOR = register("compressor", CompressorBlockEntity::new).onOffBurnt();
 	ElectricBlockInstance RECYCLER = register("recycler", RecyclerBlockEntity::new).onOffBurnt().advanced();
 	ElectricBlockInstance CANNING_MACHINE = register("canning_machine", CanningMachineBlockEntity::new).onOffBurnt();
-	ElectricBlockInstance INDUCTION_FURNACE = register("induction_furnace", InductionFurnaceBlockEntity::new).onOffBurnt().advanced();
-	ElectricBlockInstance ROTARY_MACERATOR = register("rotary_macerator", RotaryMaceratorBlockEntity::new).onOffBurnt().advanced();
-	ElectricBlockInstance VACUUM_EXTRACTOR = register("vacuum_extractor", VacuumExtractorBlockEntity::new).onOffBurnt().advanced();
-	ElectricBlockInstance SINGULARITY_COMPRESSOR = register("singularity_compressor", SingularityCompressorBlockEntity::new).onOffBurnt().advanced();
 	ElectricBlockInstance ANTIMATTER_FABRICATOR = register("antimatter_fabricator", AntimatterFabricatorBlockEntity::new).advanced();
 
 	ElectricBlockInstance LV_BATTERY_BOX = register("lv_battery_box", LVBatteryBoxBlockEntity::new).name("LV Battery Box").rotate3D().offBurnt();
