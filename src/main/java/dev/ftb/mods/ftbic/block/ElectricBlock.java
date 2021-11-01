@@ -118,11 +118,17 @@ public class ElectricBlock extends Block implements SprayPaintable {
 	@Override
 	@Deprecated
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
-		super.onRemove(state, level, pos, state1, b);
-
 		if (!level.isClientSide() && !state.getBlock().is(state1.getBlock())) {
 			ElectricBlockEntity.electricNetworkUpdated(level, pos);
+
+			BlockEntity entity = level.getBlockEntity(pos);
+
+			if (entity instanceof ElectricBlockEntity) {
+				((ElectricBlockEntity) entity).onBroken(level, pos);
+			}
 		}
+
+		super.onRemove(state, level, pos, state1, b);
 	}
 
 	@Override

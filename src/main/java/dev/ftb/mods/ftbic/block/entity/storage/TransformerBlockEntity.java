@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class TransformerBlockEntity extends GeneratorBlockEntity {
 	public TransformerBlockEntity(BlockEntityType<?> type) {
-		super(type);
+		super(type, 0, 0);
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import dev.ftb.mods.ftbic.util.PowerTier;
 
 public class InductionFurnaceBlockEntity extends MachineBlockEntity {
 	public InductionFurnaceBlockEntity() {
-		super(FTBICElectricBlocks.INDUCTION_FURNACE.blockEntity.get());
+		super(FTBICElectricBlocks.INDUCTION_FURNACE.blockEntity.get(), 2, 2);
 		inputPowerTier = PowerTier.MV;
 	}
 }

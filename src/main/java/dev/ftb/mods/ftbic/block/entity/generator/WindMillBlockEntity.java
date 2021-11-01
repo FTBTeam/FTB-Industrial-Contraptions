@@ -4,6 +4,6 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 
 public class WindMillBlockEntity extends GeneratorBlockEntity {
 	public WindMillBlockEntity() {
-		super(FTBICElectricBlocks.WIND_MILL.blockEntity.get());
+		super(FTBICElectricBlocks.WIND_MILL.blockEntity.get(), 1, 0);
 	}
 }

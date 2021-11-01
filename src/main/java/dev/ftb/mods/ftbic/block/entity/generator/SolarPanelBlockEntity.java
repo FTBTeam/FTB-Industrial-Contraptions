@@ -6,7 +6,7 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 	public int solarOutput;
 
 	public SolarPanelBlockEntity(BlockEntityType<?> type) {
-		super(type);
+		super(type, 0, 0);
 		solarOutput = 0;
 	}
 

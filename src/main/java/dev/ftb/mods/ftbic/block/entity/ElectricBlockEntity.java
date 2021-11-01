@@ -8,24 +8,33 @@ import dev.ftb.mods.ftbic.util.TieredEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, TieredEnergyStorage {
+public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, TieredEnergyStorage, IItemHandlerModifiable {
 	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
@@ -43,19 +52,57 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public int energyAdded = 0;
 	public PowerTier outputPowerTier = null;
 	public PowerTier inputPowerTier = null;
+	public final ItemStack[] inputItems;
+	public final ItemStack[] outputItems;
 	private LazyOptional<?> thisOptional = null;
 	public ElectricBlockState changeState = null;
 
-	public ElectricBlockEntity(BlockEntityType<?> type) {
+	public ElectricBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
 		super(type);
+		inputItems = new ItemStack[inItems];
+		outputItems = new ItemStack[outItems];
+		Arrays.fill(inputItems, ItemStack.EMPTY);
+		Arrays.fill(outputItems, ItemStack.EMPTY);
+
+		if (inputItems.length + outputItems.length > 127) {
+			throw new RuntimeException("Internal inventory of " + type.getRegistryName() + " too large!");
+		}
 	}
 
 	public void writeData(CompoundTag tag) {
 		tag.putInt("Energy", energy);
+
+		if (inputItems.length + outputItems.length > 0) {
+			ListTag inv = new ListTag();
+
+			for (int slot = 0; slot < inputItems.length + outputItems.length; slot++) {
+				ItemStack stack = getStackInSlot(slot);
+
+				if (!stack.isEmpty()) {
+					CompoundTag tag1 = stack.serializeNBT();
+					tag1.putByte("Slot", (byte) slot);
+					inv.add(tag1);
+				}
+			}
+
+			tag.put("Inventory", inv);
+		}
 	}
 
 	public void readData(CompoundTag tag) {
 		energy = tag.getInt("Energy");
+
+		if (inputItems.length + outputItems.length > 0) {
+			Arrays.fill(inputItems, ItemStack.EMPTY);
+			Arrays.fill(outputItems, ItemStack.EMPTY);
+
+			ListTag inv = tag.getList("Inventory", Constants.NBT.TAG_COMPOUND);
+
+			for (int i = 0; i < inv.size(); i++) {
+				CompoundTag tag1 = inv.getCompound(i);
+				setStackInSlot(tag1.getByte("Slot"), ItemStack.of(tag1));
+			}
+		}
 	}
 
 	@Override
@@ -93,6 +140,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	@Override
 	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
 		if (cap == CapabilityEnergy.ENERGY) {
+			return getThisOptional().cast();
+		} else if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && (inputItems.length + outputItems.length) > 0) {
 			return getThisOptional().cast();
 		}
 
@@ -215,5 +264,124 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	@Nullable
 	public RecipeCache getRecipeCache() {
 		return level == null ? null : RecipeCache.get(level);
+	}
+
+	@Override
+	public int getSlots() {
+		return inputItems.length + outputItems.length;
+	}
+
+	@NotNull
+	@Override
+	public ItemStack getStackInSlot(int slot) {
+		if (slot < 0 || slot >= inputItems.length + outputItems.length) {
+			throw new RuntimeException("Slot " + slot + " not in valid range - [0," + (inputItems.length + outputItems.length) + ")");
+		} else if (slot >= inputItems.length) {
+			return outputItems[slot - inputItems.length];
+		} else {
+			return inputItems[slot];
+		}
+	}
+
+	@Override
+	public void setStackInSlot(int slot, ItemStack stack) {
+		if (slot < 0 || slot >= inputItems.length + outputItems.length) {
+			throw new RuntimeException("Slot " + slot + " not in valid range - [0," + (inputItems.length + outputItems.length) + ")");
+		} else if (slot >= inputItems.length) {
+			outputItems[slot - inputItems.length] = stack;
+		} else {
+			inputItems[slot] = stack;
+		}
+	}
+
+	@NotNull
+	@Override
+	public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+		if (slot >= inputItems.length || stack.isEmpty() || !isItemValid(slot, stack)) {
+			return stack;
+		}
+
+		ItemStack existing = inputItems[slot];
+		int limit = Math.min(this.getSlotLimit(slot), stack.getMaxStackSize());
+
+		if (!existing.isEmpty()) {
+			if (!ItemHandlerHelper.canItemStacksStack(stack, existing)) {
+				return stack;
+			}
+
+			limit -= existing.getCount();
+		}
+
+		if (limit <= 0) {
+			return stack;
+		}
+
+		boolean reachedLimit = stack.getCount() > limit;
+
+		if (!simulate) {
+			if (existing.isEmpty()) {
+				inputItems[slot] = reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack;
+			} else {
+				existing.grow(reachedLimit ? limit : stack.getCount());
+			}
+
+			setChanged();
+		}
+
+		return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
+	}
+
+	@NotNull
+	@Override
+	public ItemStack extractItem(int slot, int amount, boolean simulate) {
+		if (slot < inputItems.length || amount <= 0) {
+			return ItemStack.EMPTY;
+		}
+
+		slot -= inputItems.length;
+		ItemStack existing = outputItems[slot];
+
+		if (existing.isEmpty()) {
+			return ItemStack.EMPTY;
+		}
+
+		int toExtract = Math.min(amount, existing.getMaxStackSize());
+
+		if (existing.getCount() <= toExtract) {
+			if (!simulate) {
+				outputItems[slot] = ItemStack.EMPTY;
+				setChanged();
+				return existing;
+			} else {
+				return existing.copy();
+			}
+		} else {
+			if (!simulate) {
+				outputItems[slot] = ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract);
+				setChanged();
+			}
+
+			return ItemHandlerHelper.copyStackWithSize(existing, toExtract);
+		}
+	}
+
+	@Override
+	public int getSlotLimit(int slot) {
+		return 64;
+	}
+
+	@Override
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+		return slot < inputItems.length;
+	}
+
+	public void onBroken(Level level, BlockPos pos) {
+		for (ItemStack stack : inputItems) {
+			Block.popResource(level, pos, stack);
+		}
+
+		for (ItemStack stack : outputItems) {
+			Block.popResource(level, pos, stack);
+		}
 	}
 }

@@ -2,10 +2,10 @@ package dev.ftb.mods.ftbic.util;
 
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 
-public class CachedItemProcessingResult {
-	public static final CachedItemProcessingResult NONE = new CachedItemProcessingResult() {
+public class MachineProcessingResult {
+	public static final MachineProcessingResult NONE = new MachineProcessingResult() {
 		@Override
-		public boolean hasResult() {
+		public boolean exists() {
 			return false;
 		}
 	};
@@ -15,14 +15,14 @@ public class CachedItemProcessingResult {
 	public final int time;
 	public final int[] consume;
 
-	private CachedItemProcessingResult() {
+	private MachineProcessingResult() {
 		result = null;
 		extra = new StackWithChance[0];
 		time = 0;
 		consume = new int[0];
 	}
 
-	public CachedItemProcessingResult(MachineRecipe recipe) {
+	public MachineProcessingResult(MachineRecipe recipe) {
 		result = recipe.outputItems.get(0);
 
 		if (recipe.outputItems.size() > 1) {
@@ -39,7 +39,7 @@ public class CachedItemProcessingResult {
 		consume = new int[recipe.inputItems.size()];
 	}
 
-	public boolean hasResult() {
+	public boolean exists() {
 		return true;
 	}
 }

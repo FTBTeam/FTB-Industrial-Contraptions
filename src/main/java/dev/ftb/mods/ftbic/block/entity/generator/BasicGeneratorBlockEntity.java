@@ -14,7 +14,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int fuelTicks = 0;
 
 	public BasicGeneratorBlockEntity() {
-		super(FTBICElectricBlocks.BASIC_GENERATOR.blockEntity.get());
+		super(FTBICElectricBlocks.BASIC_GENERATOR.blockEntity.get(), 1, 0);
 		energyCapacity = 16000;
 	}
 

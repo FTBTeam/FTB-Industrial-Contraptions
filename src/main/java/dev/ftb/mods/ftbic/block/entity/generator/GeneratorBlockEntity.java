@@ -28,8 +28,8 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	private long currentElectricNetwork = -1L;
 	private CachedEnergyStorage[] connectedEnergyBlocks;
 
-	public GeneratorBlockEntity(BlockEntityType<?> type) {
-		super(type);
+	public GeneratorBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
+		super(type, inItems, outItems);
 		outputPowerTier = PowerTier.LV;
 	}
 

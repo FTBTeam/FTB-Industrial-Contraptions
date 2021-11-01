@@ -20,7 +20,7 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity impleme
 	private int prevFluidAmount = -1;
 
 	public GeothermalGeneratorBlockEntity() {
-		super(FTBICElectricBlocks.GEOTHERMAL_GENERATOR.blockEntity.get());
+		super(FTBICElectricBlocks.GEOTHERMAL_GENERATOR.blockEntity.get(), 1, 1);
 		energyCapacity = 24000;
 	}
 
