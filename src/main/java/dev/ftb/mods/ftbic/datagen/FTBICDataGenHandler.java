@@ -260,6 +260,18 @@ public class FTBICDataGenHandler {
 					.end()
 			;
 
+			withExistingParent("block/machine_block", "block/cube_all")
+					.texture("all", modLoc("block/electric/light/basic_side"))
+					.texture("top", modLoc("block/electric/light/basic_top"))
+					.texture("bottom", modLoc("block/electric/light/basic_top"))
+			;
+
+			withExistingParent("block/advanced_machine_block", "block/cube_all")
+					.texture("all", modLoc("block/electric/light/advanced_side"))
+					.texture("top", modLoc("block/electric/light/advanced_top"))
+					.texture("bottom", modLoc("block/electric/light/advanced_top"))
+			;
+
 			withExistingParent("block/orientable_2d", "block/block")
 					.texture("particle", "#side")
 					.transforms()
@@ -391,8 +403,8 @@ public class FTBICDataGenHandler {
 			simpleBlock(FTBICBlocks.RUBBER_SHEET.get(), models().getExistingFile(modLoc("block/rubber_sheet")));
 			simpleBlock(FTBICBlocks.REINFORCED_STONE.get());
 			simpleBlock(FTBICBlocks.REINFORCED_GLASS.get());
-			simpleBlock(FTBICBlocks.MACHINE_BLOCK.get());
-			simpleBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get());
+			simpleBlock(FTBICBlocks.MACHINE_BLOCK.get(), models().getExistingFile(modLoc("block/machine_block")));
+			simpleBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get(), models().getExistingFile(modLoc("block/advanced_machine_block")));
 
 			getVariantBuilder(FTBICBlocks.IRON_FURNACE.get()).forAllStatesExcept(state -> {
 				boolean lit = state.getValue(BlockStateProperties.LIT);
