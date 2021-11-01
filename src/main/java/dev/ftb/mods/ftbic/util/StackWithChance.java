@@ -19,7 +19,7 @@ public class StackWithChance {
 	public StackWithChance(JsonElement element) {
 		JsonObject json = element.getAsJsonObject();
 		stack = CraftingHelper.getItemStack(json, true);
-		chance = json.has("chance") ? json.get("chance").getAsInt() : 1D;
+		chance = json.has("chance") ? json.get("chance").getAsDouble() : 1D;
 	}
 
 	public StackWithChance(FriendlyByteBuf buf) {

@@ -10,7 +10,8 @@
 	],
 	"outputItems": [
 		{
-			"item": "myrtrees:latex"
+			"item": "myrtrees:latex",
+			"chance": 0.2
 		}
 	]
 }

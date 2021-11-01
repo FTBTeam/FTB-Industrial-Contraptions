@@ -193,19 +193,19 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 		MachineRecipeBuilder.extracting()
 				.unlockedBy("has_item", has(RUBBERWOOD_LOG))
 				.inputItem(Ingredient.of(RUBBERWOOD_LOG))
-				.outputItem(new ItemStack(LATEX))
+				.outputItem(new ItemStack(LATEX), 0.2D)
 				.save(consumer, extractingLoc("latex_from_log"));
 
 		MachineRecipeBuilder.extracting()
 				.unlockedBy("has_item", has(RUBBERWOOD_SAPLING))
 				.inputItem(Ingredient.of(RUBBERWOOD_SAPLING))
-				.outputItem(new ItemStack(LATEX))
+				.outputItem(new ItemStack(LATEX), 0.1D)
 				.save(consumer, extractingLoc("latex_from_sapling"));
 
 		MachineRecipeBuilder.extracting()
 				.unlockedBy("has_item", has(RUBBERWOOD_LEAVES))
 				.inputItem(Ingredient.of(RUBBERWOOD_LEAVES))
-				.outputItem(new ItemStack(LATEX))
+				.outputItem(new ItemStack(LATEX), 0.1D)
 				.save(consumer, extractingLoc("latex_from_leaves"));
 
 		MachineRecipeBuilder.compressing()

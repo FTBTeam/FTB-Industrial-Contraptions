@@ -16,7 +16,9 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -124,6 +126,15 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 		itemStacks.set(ingredients);
 		fluidStacks.set(ingredients);
 
-		// fluidStacks.addTooltipCallback((idx, input, stack, tooltip) -> tooltip.set(0, new TranslatableComponent("ftblibrary.mb", stack.getAmount(), stack.getDisplayName())));
+		itemStacks.addTooltipCallback((idx, input, stack, tooltip) -> {
+			if (!input) {
+				double chance = recipe.outputItems.get(idx - recipe.inputItems.size()).chance;
+
+				if (chance < 1D) {
+					String s = String.valueOf(chance * 100D);
+					tooltip.add(new TextComponent("Chance: " + (s.endsWith(".0") ? s.substring(0, s.length() - 2) : s) + "%").withStyle(ChatFormatting.GRAY));
+				}
+			}
+		});
 	}
 }
