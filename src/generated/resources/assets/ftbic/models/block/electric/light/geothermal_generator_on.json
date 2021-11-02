@@ -3,6 +3,7 @@
 	"textures": {
 		"side": "ftbic:block/electric/light/basic_side",
 		"front": "ftbic:block/electric/light/geothermal_generator_front_on",
-		"top": "ftbic:block/electric/light/basic_top"
+		"top": "ftbic:block/electric/light/basic_top",
+		"bottom": "ftbic:block/electric/light/basic_bottom"
 	}
 }

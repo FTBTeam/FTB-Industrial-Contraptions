@@ -3,6 +3,7 @@
 	"textures": {
 		"side": "ftbic:block/electric/dark/basic_side",
 		"front": "ftbic:block/electric/dark/macerator_front",
-		"top": "ftbic:block/electric/dark/macerator_top_on"
+		"top": "ftbic:block/electric/dark/basic_bottom",
+		"bottom": "ftbic:block/electric/dark/basic_bottom"
 	}
 }

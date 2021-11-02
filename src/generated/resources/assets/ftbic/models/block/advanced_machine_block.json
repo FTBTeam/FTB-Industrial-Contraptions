@@ -3,6 +3,6 @@
 	"textures": {
 		"all": "ftbic:block/electric/light/advanced_side",
 		"top": "ftbic:block/electric/light/advanced_top",
-		"bottom": "ftbic:block/electric/light/advanced_top"
+		"bottom": "ftbic:block/electric/light/advanced_bottom"
 	}
 }

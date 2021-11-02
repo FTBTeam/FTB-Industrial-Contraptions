@@ -3,6 +3,7 @@
 	"textures": {
 		"side": "ftbic:block/electric/dark/nuclear_reactor_side_on",
 		"front": "ftbic:block/electric/dark/nuclear_reactor_side_on",
-		"top": "ftbic:block/electric/dark/advanced_top"
+		"top": "ftbic:block/electric/dark/advanced_bottom",
+		"bottom": "ftbic:block/electric/dark/advanced_bottom"
 	}
 }
