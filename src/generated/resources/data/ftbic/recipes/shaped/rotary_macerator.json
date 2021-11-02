@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:rotary_macerator",
+	"pattern": [
+		"CCC",
+		"CFC",
+		"WMW"
+	],
+	"key": {
+		"F": {
+			"item": "ftbic:macerator"
+		},
+		"M": {
+			"item": "ftbic:advanced_machine_block"
+		},
+		"C": {
+			"item": "ftbic:industrial_grade_metal"
+		},
+		"W": {
+			"item": "ftbic:copper_coil"
+		}
+	},
+	"result": {
+		"item": "ftbic:rotary_macerator"
+	}
+}

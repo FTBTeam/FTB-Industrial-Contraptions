@@ -56,6 +56,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item RUBBERWOOD_LOG = MyrtreesItems.RUBBERWOOD_LOG.get();
 	public static final Item RUBBERWOOD_SAPLING = MyrtreesItems.RUBBERWOOD_SAPLING.get();
 	public static final Item RUBBERWOOD_LEAVES = MyrtreesItems.RUBBERWOOD_LEAVES.get();
+	public static final Tag<Item> IRON_ROD = ItemTags.bind("forge:rods/iron");
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
 	public static final Item REINFORCED_STONE = FTBICItems.REINFORCED_STONE.get();
@@ -91,6 +92,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item FUSE = FTBICItems.FUSE.item.get();
 	public static final Item EMPTY_CAN = FTBICItems.EMPTY_CAN.item.get();
 	public static final Item ANTIMATTER = FTBICItems.ANTIMATTER.item.get();
+	public static final Item COPPER_COIL = FTBICItems.COPPER_COIL.item.get();
 
 	public static final Item SINGLE_USE_BATTERY = FTBICItems.SINGLE_USE_BATTERY.get();
 	public static final Item BATTERY = FTBICItems.BATTERY.get();
@@ -114,7 +116,6 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item ENERGY_STORAGE_UPGRADE = FTBICItems.ENERGY_STORAGE_UPGRADE.get();
 	public static final Item TRANSFORMER_UPGRADE = FTBICItems.TRANSFORMER_UPGRADE.get();
 	public static final Item EJECTOR_UPGRADE = FTBICItems.EJECTOR_UPGRADE.get();
-	public static final Item INDUCTION_UPGRADE = FTBICItems.INDUCTION_UPGRADE.get();
 
 	public static final Item BASIC_GENERATOR = FTBICElectricBlocks.BASIC_GENERATOR.item.get();
 	public static final Item GEOTHERMAL_GENERATOR = FTBICElectricBlocks.GEOTHERMAL_GENERATOR.item.get();
@@ -130,6 +131,10 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item RECYCLER = FTBICElectricBlocks.RECYCLER.item.get();
 	public static final Item CANNING_MACHINE = FTBICElectricBlocks.CANNING_MACHINE.item.get();
 	public static final Item ANTIMATTER_FABRICATOR = FTBICElectricBlocks.ANTIMATTER_FABRICATOR.item.get();
+	public static final Item INDUCTION_FURNACE = FTBICElectricBlocks.INDUCTION_FURNACE.item.get();
+	public static final Item ROTARY_MACERATOR = FTBICElectricBlocks.ROTARY_MACERATOR.item.get();
+	public static final Item CENTRIFUGE_EXTRACTOR = FTBICElectricBlocks.CENTRIFUGE_EXTRACTOR.item.get();
+	public static final Item SINGULARITY_COMPRESSOR = FTBICElectricBlocks.SINGULARITY_COMPRESSOR.item.get();
 	public static final Item LV_BATTERY_BOX = FTBICElectricBlocks.LV_BATTERY_BOX.item.get();
 	public static final Item MV_BATTERY_BOX = FTBICElectricBlocks.MV_BATTERY_BOX.item.get();
 	public static final Item HV_BATTERY_BOX = FTBICElectricBlocks.HV_BATTERY_BOX.item.get();

@@ -68,6 +68,7 @@ public interface FTBICItems {
 	MaterialItem FUSE = material("fuse");
 	MaterialItem EMPTY_CAN = material("empty_can");
 	MaterialItem ANTIMATTER = material("antimatter");
+	MaterialItem COPPER_COIL = material("copper_coil");
 
 	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, PowerTier.LV, FTBICConfig.SINGLE_USE_BATTERY_CAPACITY));
 	Supplier<Item> BATTERY = REGISTRY.register("battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));
@@ -91,5 +92,4 @@ public interface FTBICItems {
 	Supplier<Item> ENERGY_STORAGE_UPGRADE = REGISTRY.register("energy_storage_upgrade", UpgradeItem::new);
 	Supplier<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", UpgradeItem::new);
 	Supplier<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", UpgradeItem::new);
-	Supplier<Item> INDUCTION_UPGRADE = REGISTRY.register("induction_upgrade", UpgradeItem::new);
 }

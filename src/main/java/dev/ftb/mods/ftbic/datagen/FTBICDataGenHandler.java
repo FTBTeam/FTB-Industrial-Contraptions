@@ -149,7 +149,6 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy_storage Upgrade");
 			addItem(FTBICItems.TRANSFORMER_UPGRADE, "Transformer Upgrade");
 			addItem(FTBICItems.EJECTOR_UPGRADE, "Ejector Upgrade");
-			addItem(FTBICItems.INDUCTION_UPGRADE, "Induction Upgrade");
 
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".extracting", "Extracting");
@@ -171,16 +170,24 @@ public class FTBICDataGenHandler {
 			super(g, mod, efh);
 		}
 
-		private void makeThemedElectric(String path, int texture) {
+		private void makeThemedElectric(String path, int texture, String source) {
 			TextureData lightBase = load(modLoc("block/electric/light/" + TEMPLATES[texture]));
 			TextureData darkBase = load(modLoc("block/electric/dark/" + TEMPLATES[texture]));
-			make(modLoc("block/electric/light/" + path), lightBase.combine(load(modLoc("block/electric/light/template/" + path))));
-			make(modLoc("block/electric/dark/" + path), darkBase.combine(load(modLoc("block/electric/dark/template/" + path))));
+			make(modLoc("block/electric/light/" + path), lightBase.combine(load(modLoc("block/electric/light/template/" + source))));
+			make(modLoc("block/electric/dark/" + path), darkBase.combine(load(modLoc("block/electric/dark/template/" + source))));
+		}
+
+		private void makeThemedElectric(String path, int texture) {
+			makeThemedElectric(path, texture, path);
+		}
+
+		private void makeThemedElectricOnOff(String path, int texture, String source) {
+			makeThemedElectric(path + "_on", texture, source + "_on");
+			makeThemedElectric(path + "_off", texture, source + "_off");
 		}
 
 		private void makeThemedElectricOnOff(String path, int texture) {
-			makeThemedElectric(path + "_on", texture);
-			makeThemedElectric(path + "_off", texture);
+			makeThemedElectricOnOff(path, texture, path);
 		}
 
 		@Override
@@ -205,6 +212,15 @@ public class FTBICDataGenHandler {
 			makeThemedElectricOnOff("canning_machine_front", BASIC_SIDE);
 			makeThemedElectricOnOff("antimatter_fabricator_front", ADVANCED_SIDE);
 			makeThemedElectric("antimatter_fabricator_side", ADVANCED_SIDE);
+			makeThemedElectricOnOff("electric_furnace_front", BASIC_SIDE);
+
+			makeThemedElectricOnOff("induction_furnace_front", ADVANCED_SIDE, "electric_furnace_front");
+			makeThemedElectric("rotary_macerator_front", ADVANCED_SIDE, "macerator_front");
+			makeThemedElectricOnOff("rotary_macerator_top", ADVANCED_TOP, "macerator_top");
+			makeThemedElectricOnOff("centrifuge_extractor_front", ADVANCED_SIDE, "extractor_front");
+			makeThemedElectric("centrifuge_extractor_top", ADVANCED_TOP, "extractor_top");
+			makeThemedElectricOnOff("singularity_compressor_front", ADVANCED_SIDE, "compressor_front");
+			makeThemedElectric("singularity_compressor_top", ADVANCED_TOP, "compressor_top");
 
 			makeThemedElectric("lv_battery_box_in", WOOD);
 			makeThemedElectric("lv_battery_box_out", WOOD);
@@ -372,6 +388,15 @@ public class FTBICDataGenHandler {
 			electric("antimatter_fabricator_off", "antimatter_fabricator_front_off", "antimatter_fabricator_side", "advanced_top");
 			electric("antimatter_fabricator_on", "antimatter_fabricator_front_on", "antimatter_fabricator_side", "advanced_top");
 
+			electric("induction_furnace_off", "induction_furnace_front_off", "advanced_side", "advanced_top");
+			electric("induction_furnace_on", "induction_furnace_front_on", "advanced_side", "advanced_top");
+			electric("rotary_macerator_off", "rotary_macerator_front", "advanced_side", "rotary_macerator_top_off");
+			electric("rotary_macerator_on", "rotary_macerator_front", "advanced_side", "rotary_macerator_top_on");
+			electric("centrifuge_extractor_off", "centrifuge_extractor_front_off", "advanced_side", "centrifuge_extractor_top");
+			electric("centrifuge_extractor_on", "centrifuge_extractor_front_on", "advanced_side", "centrifuge_extractor_top");
+			electric("singularity_compressor_off", "singularity_compressor_front_off", "advanced_side", "singularity_compressor_top");
+			electric("singularity_compressor_on", "singularity_compressor_front_on", "advanced_side", "singularity_compressor_top");
+
 			electric3d("lv_battery_box", "lv_battery_box_out", "lv_battery_box_in");
 			electric3d("mv_battery_box", "mv_battery_box_out", "mv_battery_box_in");
 			electric3d("hv_battery_box", "hv_battery_box_out", "hv_battery_box_in");
@@ -519,7 +544,6 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.ENERGY_STORAGE_UPGRADE);
 			basicItem(FTBICItems.TRANSFORMER_UPGRADE);
 			basicItem(FTBICItems.EJECTOR_UPGRADE);
-			basicItem(FTBICItems.INDUCTION_UPGRADE);
 		}
 	}
 

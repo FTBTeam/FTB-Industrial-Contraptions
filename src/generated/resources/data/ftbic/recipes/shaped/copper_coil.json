@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:copper_coil",
+	"pattern": [
+		"WWW",
+		"WRW",
+		"WWW"
+	],
+	"key": {
+		"W": {
+			"item": "ftbic:copper_wire"
+		},
+		"R": {
+			"tag": "forge:rods/iron"
+		}
+	},
+	"result": {
+		"item": "ftbic:copper_coil"
+	}
+}

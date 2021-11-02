@@ -71,7 +71,10 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity {
 			player.displayClientMessage(new TextComponent("Energy: " + FTBICUtils.formatPower(energy, energyCapacity)), false);
 
 			MachineProcessingResult result = getResult(new ItemStack[]{player.getItemInHand(hand)});
-			player.displayClientMessage(new TextComponent("Result: ").append(result.result.stack.getHoverName()), false);
+
+			if (result.exists()) {
+				player.displayClientMessage(new TextComponent("Result: ").append(result.result.stack.getHoverName()), false);
+			}
 		}
 
 		return InteractionResult.SUCCESS;

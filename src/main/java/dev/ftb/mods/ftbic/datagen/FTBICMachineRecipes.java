@@ -99,5 +99,53 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('C', IRIDIUM_CIRCUIT)
 				.define('E', Items.NETHER_STAR)
 				.save(consumer, shapedLoc("antimatter_fabricator"));
+
+		ShapedRecipeBuilder.shaped(INDUCTION_FURNACE)
+				.unlockedBy("has_item", has(COPPER_COIL))
+				.group(MODID + ":induction_furnace")
+				.pattern("CCC")
+				.pattern("CFC")
+				.pattern("WMW")
+				.define('F', ELECTRIC_FURNACE)
+				.define('M', ADVANCED_MACHINE_BLOCK)
+				.define('C', COPPER_INGOT)
+				.define('W', COPPER_COIL)
+				.save(consumer, shapedLoc("induction_furnace"));
+
+		ShapedRecipeBuilder.shaped(ROTARY_MACERATOR)
+				.unlockedBy("has_item", has(COPPER_COIL))
+				.group(MODID + ":rotary_macerator")
+				.pattern("CCC")
+				.pattern("CFC")
+				.pattern("WMW")
+				.define('F', MACERATOR)
+				.define('M', ADVANCED_MACHINE_BLOCK)
+				.define('C', INDUSTRIAL_GRADE_METAL)
+				.define('W', COPPER_COIL)
+				.save(consumer, shapedLoc("rotary_macerator"));
+
+		ShapedRecipeBuilder.shaped(CENTRIFUGE_EXTRACTOR)
+				.unlockedBy("has_item", has(COPPER_COIL))
+				.group(MODID + ":centrifuge_extractor")
+				.pattern("CCC")
+				.pattern("CFC")
+				.pattern("WMW")
+				.define('F', EXTRACTOR)
+				.define('M', ADVANCED_MACHINE_BLOCK)
+				.define('C', EMPTY_CELL)
+				.define('W', COPPER_COIL)
+				.save(consumer, shapedLoc("centrifuge_extractor"));
+
+		ShapedRecipeBuilder.shaped(SINGULARITY_COMPRESSOR)
+				.unlockedBy("has_item", has(COPPER_COIL))
+				.group(MODID + ":singularity_compressor")
+				.pattern("CCC")
+				.pattern("CFC")
+				.pattern("WMW")
+				.define('F', COMPRESSOR)
+				.define('M', ADVANCED_MACHINE_BLOCK)
+				.define('C', OBSIDIAN)
+				.define('W', COPPER_COIL)
+				.save(consumer, shapedLoc("singularity_compressor"));
 	}
 }

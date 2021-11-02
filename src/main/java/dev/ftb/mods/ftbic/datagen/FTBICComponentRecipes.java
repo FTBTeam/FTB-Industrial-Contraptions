@@ -123,23 +123,25 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 		ShapedRecipeBuilder.shaped(ADVANCED_MACHINE_BLOCK)
 				.unlockedBy("has_item", has(MACHINE_BLOCK))
 				.group(MODID + ":advanced_machine_block")
-				.pattern(" C ")
+				.pattern("WCW")
 				.pattern("AMA")
-				.pattern(" C ")
+				.pattern("WCW")
 				.define('M', MACHINE_BLOCK)
 				.define('C', CARBON_PLATE)
 				.define('A', ADVANCED_ALLOY)
+				.define('W', COPPER_COIL)
 				.save(consumer, shapedLoc("advanced_machine_block_h"));
 
 		ShapedRecipeBuilder.shaped(ADVANCED_MACHINE_BLOCK)
 				.unlockedBy("has_item", has(MACHINE_BLOCK))
 				.group(MODID + ":advanced_machine_block")
-				.pattern(" A ")
+				.pattern("WAW")
 				.pattern("CMC")
-				.pattern(" A ")
+				.pattern("WAW")
 				.define('M', MACHINE_BLOCK)
 				.define('C', CARBON_PLATE)
 				.define('A', ADVANCED_ALLOY)
+				.define('W', COPPER_COIL)
 				.save(consumer, shapedLoc("advanced_machine_block_v"));
 
 		ShapedRecipeBuilder.shaped(EMPTY_CELL, 4)
@@ -183,6 +185,16 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.group(MODID + ":carbon_fiber_mesh")
 				.requires(CARBON_FIBERS, 2)
 				.save(consumer, shapedLoc("carbon_fiber_mesh"));
+
+		ShapedRecipeBuilder.shaped(COPPER_COIL)
+				.unlockedBy("has_item", has(COPPER_WIRE))
+				.group(MODID + ":copper_coil")
+				.pattern("WWW")
+				.pattern("WRW")
+				.pattern("WWW")
+				.define('W', COPPER_WIRE)
+				.define('R', IRON_ROD)
+				.save(consumer, shapedLoc("copper_coil"));
 
 		MachineRecipeBuilder.extracting()
 				.unlockedBy("has_item", has(LATEX))

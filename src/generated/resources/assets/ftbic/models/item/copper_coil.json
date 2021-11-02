@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "ftbic:item/induction_upgrade"
+		"layer0": "ftbic:item/copper_coil"
 	}
 }

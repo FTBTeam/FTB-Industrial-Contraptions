@@ -2,9 +2,9 @@
 	"type": "minecraft:crafting_shaped",
 	"group": "ftbic:advanced_machine_block",
 	"pattern": [
-		" C ",
+		"WCW",
 		"AMA",
-		" C "
+		"WCW"
 	],
 	"key": {
 		"M": {
@@ -15,6 +15,9 @@
 		},
 		"A": {
 			"item": "ftbic:advanced_alloy"
+		},
+		"W": {
+			"item": "ftbic:copper_coil"
 		}
 	},
 	"result": {

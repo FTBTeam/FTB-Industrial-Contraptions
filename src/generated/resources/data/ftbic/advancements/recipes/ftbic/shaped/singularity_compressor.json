@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:shaped/induction_upgrade"
+			"ftbic:shaped/singularity_compressor"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:copper_wire"
+						"item": "ftbic:copper_coil"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:shaped/induction_upgrade"
+				"recipe": "ftbic:shaped/singularity_compressor"
 			}
 		}
 	},
