@@ -40,16 +40,16 @@ public interface FTBICItems {
 	Supplier<BlockItem> MACHINE_BLOCK = blockItem("machine_block", FTBICBlocks.MACHINE_BLOCK);
 	Supplier<BlockItem> ADVANCED_MACHINE_BLOCK = blockItem("advanced_machine_block", FTBICBlocks.ADVANCED_MACHINE_BLOCK);
 	Supplier<BlockItem> IRON_FURNACE = blockItem("iron_furnace", FTBICBlocks.IRON_FURNACE);
-	Supplier<BlockItem> COPPER_WIRE = blockItem("copper_wire", FTBICBlocks.COPPER_WIRE);
 	Supplier<BlockItem> COPPER_CABLE = blockItem("copper_cable", FTBICBlocks.COPPER_CABLE);
-	Supplier<BlockItem> GOLD_WIRE = blockItem("gold_wire", FTBICBlocks.GOLD_WIRE);
 	Supplier<BlockItem> GOLD_CABLE = blockItem("gold_cable", FTBICBlocks.GOLD_CABLE);
-	Supplier<BlockItem> ALUMINUM_WIRE = blockItem("aluminum_wire", FTBICBlocks.ALUMINUM_WIRE);
 	Supplier<BlockItem> ALUMINUM_CABLE = blockItem("aluminum_cable", FTBICBlocks.ALUMINUM_CABLE);
 	Supplier<BlockItem> GLASS_CABLE = blockItem("glass_cable", FTBICBlocks.GLASS_CABLE);
 
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");
+	MaterialItem COPPER_WIRE = material("copper_wire");
+	MaterialItem GOLD_WIRE = material("gold_wire");
+	MaterialItem ALUMINUM_WIRE = material("aluminum_wire");
 	MaterialItem MIXED_METAL_INGOT = material("mixed_metal_ingot");
 	MaterialItem ADVANCED_ALLOY = material("advanced_alloy");
 	MaterialItem COAL_BALL = material("coal_ball");

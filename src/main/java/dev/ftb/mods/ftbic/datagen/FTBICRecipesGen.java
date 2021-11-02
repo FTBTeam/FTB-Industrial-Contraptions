@@ -64,16 +64,16 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item MACHINE_BLOCK = FTBICItems.MACHINE_BLOCK.get();
 	public static final Item ADVANCED_MACHINE_BLOCK = FTBICItems.ADVANCED_MACHINE_BLOCK.get();
 	public static final Item IRON_FURNACE = FTBICItems.IRON_FURNACE.get();
-	public static final Item COPPER_WIRE = FTBICItems.COPPER_WIRE.get();
 	public static final Item COPPER_CABLE = FTBICItems.COPPER_CABLE.get();
-	public static final Item GOLD_WIRE = FTBICItems.GOLD_WIRE.get();
 	public static final Item GOLD_CABLE = FTBICItems.GOLD_CABLE.get();
-	public static final Item ALUMINUM_WIRE = FTBICItems.ALUMINUM_WIRE.get();
 	public static final Item ALUMINUM_CABLE = FTBICItems.ALUMINUM_CABLE.get();
 	public static final Item GLASS_CABLE = FTBICItems.GLASS_CABLE.get();
 
 	public static final Item INDUSTRIAL_GRADE_METAL = FTBICItems.INDUSTRIAL_GRADE_METAL.item.get();
 	public static final Item RUBBER = FTBICItems.RUBBER.item.get();
+	public static final Item COPPER_WIRE = FTBICItems.COPPER_WIRE.item.get();
+	public static final Item GOLD_WIRE = FTBICItems.GOLD_WIRE.item.get();
+	public static final Item ALUMINUM_WIRE = FTBICItems.ALUMINUM_WIRE.item.get();
 	public static final Item MIXED_METAL_INGOT = FTBICItems.MIXED_METAL_INGOT.item.get();
 	public static final Item ADVANCED_ALLOY = FTBICItems.ADVANCED_ALLOY.item.get();
 	public static final Item COAL_BALL = FTBICItems.COAL_BALL.item.get();

@@ -111,11 +111,8 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.MACHINE_BLOCK, "Machine Block");
 			addBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK, "Advanced Machine Block");
 			addBlock(FTBICBlocks.IRON_FURNACE, "Iron Furnace");
-			addBlock(FTBICBlocks.COPPER_WIRE, "Copper Wire");
 			addBlock(FTBICBlocks.COPPER_CABLE, "Copper Cable");
-			addBlock(FTBICBlocks.GOLD_WIRE, "Gold Wire");
 			addBlock(FTBICBlocks.GOLD_CABLE, "Gold Cable");
-			addBlock(FTBICBlocks.ALUMINUM_WIRE, "Aluminum Wire");
 			addBlock(FTBICBlocks.ALUMINUM_CABLE, "Aluminum Cable");
 			addBlock(FTBICBlocks.GLASS_CABLE, "Glass Cable");
 

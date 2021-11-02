@@ -35,7 +35,6 @@ public class CableBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	public final PowerTier tier;
-	public final int electrocute;
 	public final int border;
 	public final VoxelShape shapeCenter;
 	public final VoxelShape shapeD;
@@ -46,10 +45,9 @@ public class CableBlock extends Block implements SimpleWaterloggedBlock {
 	public final VoxelShape shapeE;
 	public final VoxelShape[] shapes;
 
-	public CableBlock(PowerTier _tier, int _electrocute, int _border, SoundType soundType) {
+	public CableBlock(PowerTier _tier, int _border, SoundType soundType) {
 		super(Properties.of(Material.METAL).strength(0.9F).sound(soundType));
 		tier = _tier;
-		electrocute = _electrocute;
 		border = _border;
 		int B0 = border;
 		int B1 = 16 - border;

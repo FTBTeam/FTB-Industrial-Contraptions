@@ -24,12 +24,9 @@ public interface FTBICBlocks {
 	Supplier<Block> MACHINE_BLOCK = REGISTRY.register("machine_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(5F, 6F).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops()));
 	Supplier<Block> ADVANCED_MACHINE_BLOCK = REGISTRY.register("advanced_machine_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(5F, 6F).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops()));
 	Supplier<Block> IRON_FURNACE = REGISTRY.register("iron_furnace", IronFurnaceBlock::new);
-	Supplier<Block> COPPER_WIRE = REGISTRY.register("copper_wire", () -> new CableBlock(PowerTier.LV, 1, 6, SoundType.METAL));
-	Supplier<Block> COPPER_CABLE = REGISTRY.register("copper_cable", () -> new CableBlock(PowerTier.LV, 0, 5, SoundType.WOOL));
-	Supplier<Block> GOLD_WIRE = REGISTRY.register("gold_wire", () -> new CableBlock(PowerTier.MV, 3, 7, SoundType.METAL));
-	Supplier<Block> GOLD_CABLE = REGISTRY.register("gold_cable", () -> new CableBlock(PowerTier.MV, 0, 6, SoundType.WOOL));
-	Supplier<Block> ALUMINUM_WIRE = REGISTRY.register("aluminum_wire", () -> new CableBlock(PowerTier.HV, 10, 5, SoundType.METAL));
-	Supplier<Block> ALUMINUM_CABLE = REGISTRY.register("aluminum_cable", () -> new CableBlock(PowerTier.HV, 0, 4, SoundType.WOOL));
-	Supplier<Block> GLASS_CABLE = REGISTRY.register("glass_cable", () -> new CableBlock(PowerTier.EV, 0, 6, SoundType.GLASS));
-	List<Supplier<Block>> CABLES = Arrays.asList(COPPER_WIRE, COPPER_CABLE, GOLD_WIRE, GOLD_CABLE, ALUMINUM_WIRE, ALUMINUM_CABLE, GLASS_CABLE);
+	Supplier<Block> COPPER_CABLE = REGISTRY.register("copper_cable", () -> new CableBlock(PowerTier.LV, 5, SoundType.WOOL));
+	Supplier<Block> GOLD_CABLE = REGISTRY.register("gold_cable", () -> new CableBlock(PowerTier.MV, 6, SoundType.WOOL));
+	Supplier<Block> ALUMINUM_CABLE = REGISTRY.register("aluminum_cable", () -> new CableBlock(PowerTier.HV, 4, SoundType.WOOL));
+	Supplier<Block> GLASS_CABLE = REGISTRY.register("glass_cable", () -> new CableBlock(PowerTier.EV, 6, SoundType.GLASS));
+	List<Supplier<Block>> CABLES = Arrays.asList(COPPER_CABLE, GOLD_CABLE, ALUMINUM_CABLE, GLASS_CABLE);
 }
