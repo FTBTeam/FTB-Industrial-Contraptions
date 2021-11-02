@@ -10,20 +10,20 @@ public class MachineProcessingResult {
 		}
 	};
 
-	public final StackWithChance result;
+	public final StackWithChance output;
 	public final StackWithChance[] extra;
 	public final int time;
 	public final int[] consume;
 
 	private MachineProcessingResult() {
-		result = null;
+		output = StackWithChance.EMPTY;
 		extra = new StackWithChance[0];
 		time = 0;
 		consume = new int[0];
 	}
 
 	public MachineProcessingResult(MachineRecipe recipe) {
-		result = recipe.outputItems.get(0);
+		output = recipe.outputItems.get(0);
 
 		if (recipe.outputItems.size() > 1) {
 			extra = new StackWithChance[recipe.outputItems.size() - 1];
@@ -40,7 +40,7 @@ public class MachineProcessingResult {
 	}
 
 	public MachineProcessingResult(StackWithChance _result, int _time) {
-		result = _result;
+		output = _result;
 		extra = NONE.extra;
 		time = _time;
 		consume = new int[1];

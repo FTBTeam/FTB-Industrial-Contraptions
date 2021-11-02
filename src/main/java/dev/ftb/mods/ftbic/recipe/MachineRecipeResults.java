@@ -10,8 +10,8 @@ import java.util.Map;
 public abstract class MachineRecipeResults {
 	private final Map<Object, MachineProcessingResult> cache = new HashMap<>();
 
-	public MachineProcessingResult getResult(Level level, ItemStack[] inputs) {
-		if (inputs.length != getRequiredItems()) {
+	public MachineProcessingResult getResult(Level level, ItemStack[] inputs, boolean checkCount) {
+		if (inputs.length < getRequiredItems()) {
 			return MachineProcessingResult.NONE;
 		}
 
@@ -21,6 +21,18 @@ public abstract class MachineRecipeResults {
 		if (result == null) {
 			result = createResult(level, inputs);
 			cache.put(key, result);
+		}
+
+		if (inputs.length < result.consume.length) {
+			return MachineProcessingResult.NONE;
+		}
+
+		if (checkCount) {
+			for (int i = 0; i < result.consume.length; i++) {
+				if (inputs[i].getCount() < result.consume[i]) {
+					return MachineProcessingResult.NONE;
+				}
+			}
 		}
 
 		return result;
@@ -37,6 +49,6 @@ public abstract class MachineRecipeResults {
 	public abstract MachineProcessingResult createResult(Level level, ItemStack[] inputs);
 
 	public boolean canInsert(Level level, int slot, ItemStack item) {
-		return slot == 0 && getResult(level, new ItemStack[]{item}).exists();
+		return slot == 0 && getResult(level, new ItemStack[]{item}, false).exists();
 	}
 }

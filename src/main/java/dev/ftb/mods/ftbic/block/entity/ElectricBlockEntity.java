@@ -159,10 +159,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			}
 
 			if (energy < energyCapacity) {
-				energy += Math.min(energyAdded, energyCapacity - energy);
+				int e = Math.min(energyAdded, energyCapacity - energy);
 
-				if (energy == energyCapacity) {
-					setChanged();
+				if (e > 0) {
+					energy += e;
+					energyChanged(energy - e);
 				}
 			}
 
@@ -171,10 +172,13 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	protected void handleChanges() {
-		if (changeState != null) {
-			level.setBlock(worldPosition, getBlockState().setValue(((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.stateProperty, changeState), 3);
+		if (changeState != null && level.getGameTime() % 8L == (hashCode() & 7L)) {
+			if (getBlockState().getValue(((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.stateProperty) != changeState) {
+				level.setBlock(worldPosition, getBlockState().setValue(((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.stateProperty, changeState), 3);
+				setChanged();
+			}
+
 			changeState = null;
-			setChanged();
 		}
 
 		if (changed) {
@@ -219,7 +223,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 		if (!simulate) {
 			energy -= energyExtracted;
-			setChanged();
+			energyChanged(energy + energyExtracted);
 		}
 
 		return energyExtracted;
@@ -288,9 +292,13 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		if (slot < 0 || slot >= inputItems.length + outputItems.length) {
 			throw new RuntimeException("Slot " + slot + " not in valid range - [0," + (inputItems.length + outputItems.length) + ")");
 		} else if (slot >= inputItems.length) {
+			int c = outputItems[slot - inputItems.length].getCount();
 			outputItems[slot - inputItems.length] = stack;
+			inventoryChanged(slot, c);
 		} else {
+			int c = inputItems[slot].getCount();
 			inputItems[slot] = stack;
+			inventoryChanged(slot, c);
 		}
 	}
 
@@ -319,13 +327,15 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		boolean reachedLimit = stack.getCount() > limit;
 
 		if (!simulate) {
+			int c = inputItems[slot].getCount();
+
 			if (existing.isEmpty()) {
 				inputItems[slot] = reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack;
 			} else {
 				existing.grow(reachedLimit ? limit : stack.getCount());
 			}
 
-			setChanged();
+			inventoryChanged(slot, c);
 		}
 
 		return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
@@ -350,7 +360,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		if (existing.getCount() <= toExtract) {
 			if (!simulate) {
 				outputItems[slot] = ItemStack.EMPTY;
-				setChanged();
+				inventoryChanged(slot, existing.getCount());
 				return existing;
 			} else {
 				return existing.copy();
@@ -358,10 +368,20 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		} else {
 			if (!simulate) {
 				outputItems[slot] = ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract);
-				setChanged();
+				inventoryChanged(slot, existing.getCount());
 			}
 
 			return ItemHandlerHelper.copyStackWithSize(existing, toExtract);
+		}
+	}
+
+	public void inventoryChanged(int slot, int prevCount) {
+		setChanged();
+	}
+
+	public void energyChanged(int prev) {
+		if (energy == 0 || prev == 0 || energy == energyCapacity) {
+			setChanged();
 		}
 	}
 

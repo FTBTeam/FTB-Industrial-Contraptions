@@ -7,5 +7,6 @@ public class HVSolarPanelBlockEntity extends SolarPanelBlockEntity {
 	public HVSolarPanelBlockEntity() {
 		super(FTBICElectricBlocks.HV_SOLAR_PANEL.blockEntity.get());
 		solarOutput = FTBICConfig.HV_SOLAR_PANEL_GENERATION;
+		energyCapacity = solarOutput * 4;
 	}
 }

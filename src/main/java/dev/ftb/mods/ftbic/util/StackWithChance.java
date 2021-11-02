@@ -8,6 +8,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
 public class StackWithChance {
+	public static final StackWithChance EMPTY = new StackWithChance(ItemStack.EMPTY, 0D);
+
 	public final ItemStack stack;
 	public final double chance;
 

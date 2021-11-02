@@ -15,4 +15,8 @@ public class CanningMachineBlockEntity extends MachineBlockEntity {
 	public MachineRecipeResults getRecipes(RecipeCache cache) {
 		return cache.canning;
 	}
+
+	@Override
+	public void shiftInputs() {
+	}
 }
