@@ -57,6 +57,12 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item RUBBERWOOD_SAPLING = MyrtreesItems.RUBBERWOOD_SAPLING.get();
 	public static final Item RUBBERWOOD_LEAVES = MyrtreesItems.RUBBERWOOD_LEAVES.get();
 	public static final Tag<Item> IRON_ROD = ItemTags.bind("forge:rods/iron");
+	public static final Tag<Item> IRON_DUST = ItemTags.bind("forge:dusts/iron");
+	public static final Tag<Item> STEEL_DUST = ItemTags.bind("forge:dusts/steel");
+	public static final Tag<Item> LEAD_DUST = ItemTags.bind("forge:dusts/lead");
+	public static final Tag<Item> BRONZE_DUST = ItemTags.bind("forge:dusts/bronze");
+	public static final Tag<Item> TIN_DUST = ItemTags.bind("forge:dusts/tin");
+	public static final Tag<Item> ALUMINUM_DUST = ItemTags.bind("forge:dusts/aluminum");
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
 	public static final Item REINFORCED_STONE = FTBICItems.REINFORCED_STONE.get();
@@ -74,7 +80,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item COPPER_WIRE = FTBICItems.COPPER_WIRE.item.get();
 	public static final Item GOLD_WIRE = FTBICItems.GOLD_WIRE.item.get();
 	public static final Item ALUMINUM_WIRE = FTBICItems.ALUMINUM_WIRE.item.get();
-	public static final Item MIXED_METAL_INGOT = FTBICItems.MIXED_METAL_INGOT.item.get();
+	public static final Item MIXED_METAL_BLEND = FTBICItems.MIXED_METAL_BLEND.item.get();
 	public static final Item ADVANCED_ALLOY = FTBICItems.ADVANCED_ALLOY.item.get();
 	public static final Item COAL_BALL = FTBICItems.COAL_BALL.item.get();
 	public static final Item COMPRESSED_COAL_BALL = FTBICItems.COMPRESSED_COAL_BALL.item.get();
@@ -110,6 +116,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item DUAL_URANIUM_FUEL_ROD = FTBICItems.DUAL_URANIUM_FUEL_ROD.get();
 	public static final Item QUAD_URANIUM_FUEL_ROD = FTBICItems.QUAD_URANIUM_FUEL_ROD.get();
 	public static final Item CANNED_FOOD = FTBICItems.CANNED_FOOD.get();
+	public static final Item PROTEIN_BAR = FTBICItems.PROTEIN_BAR.get();
 	public static final Item DARK_SPRAY_CAN = FTBICItems.DARK_SPRAY_PAINT_CAN.get();
 	public static final Item LIGHT_SPRAY_CAN = FTBICItems.LIGHT_SPRAY_PAINT_CAN.get();
 	public static final Item OVERCLOCKER_UPGRADE = FTBICItems.OVERCLOCKER_UPGRADE.get();
@@ -160,6 +167,10 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 
 	public static ResourceLocation campfireCookingLoc(String s) {
 		return modLoc("campfire_cooking/" + s);
+	}
+
+	public static ResourceLocation smokingLoc(String s) {
+		return modLoc("smoking/" + s);
 	}
 
 	public static ResourceLocation shapedLoc(String s) {

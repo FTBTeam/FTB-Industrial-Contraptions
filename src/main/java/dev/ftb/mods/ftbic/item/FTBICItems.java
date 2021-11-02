@@ -50,7 +50,7 @@ public interface FTBICItems {
 	MaterialItem COPPER_WIRE = material("copper_wire");
 	MaterialItem GOLD_WIRE = material("gold_wire");
 	MaterialItem ALUMINUM_WIRE = material("aluminum_wire");
-	MaterialItem MIXED_METAL_INGOT = material("mixed_metal_ingot");
+	MaterialItem MIXED_METAL_BLEND = material("mixed_metal_blend");
 	MaterialItem ADVANCED_ALLOY = material("advanced_alloy");
 	MaterialItem COAL_BALL = material("coal_ball");
 	MaterialItem COMPRESSED_COAL_BALL = material("compressed_coal_ball");
@@ -86,6 +86,7 @@ public interface FTBICItems {
 	Supplier<Item> DUAL_URANIUM_FUEL_ROD = REGISTRY.register("dual_uranium_fuel_rod", () -> new FuelRodItem(20_000));
 	Supplier<Item> QUAD_URANIUM_FUEL_ROD = REGISTRY.register("quad_uranium_fuel_rod", () -> new FuelRodItem(40_000));
 	Supplier<Item> CANNED_FOOD = REGISTRY.register("canned_food", CannedFoodItem::new);
+	Supplier<Item> PROTEIN_BAR = REGISTRY.register("protein_bar", ProteinBarItem::new);
 	Supplier<Item> DARK_SPRAY_PAINT_CAN = REGISTRY.register("dark_spray_paint_can", () -> new SprayPaintCanItem(true));
 	Supplier<Item> LIGHT_SPRAY_PAINT_CAN = REGISTRY.register("light_spray_paint_can", () -> new SprayPaintCanItem(false));
 	Supplier<Item> OVERCLOCKER_UPGRADE = REGISTRY.register("overclocker_upgrade", UpgradeItem::new);

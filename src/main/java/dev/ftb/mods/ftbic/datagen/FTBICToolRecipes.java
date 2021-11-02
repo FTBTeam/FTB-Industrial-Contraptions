@@ -1,6 +1,5 @@
 package dev.ftb.mods.ftbic.datagen;
 
-import dev.ftb.mods.ftbic.item.FTBICItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.food.FoodProperties;
@@ -22,7 +21,7 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 		for (Item item : ForgeRegistries.ITEMS) {
 			FoodProperties f = item.getFoodProperties();
 
-			if (f != null && f.getEffects().isEmpty() && item != FTBICItems.CANNED_FOOD.get()) {
+			if (f != null && f.getEffects().isEmpty() && item != CANNED_FOOD && item != PROTEIN_BAR) {
 				int cans = (f.getNutrition() + (f.isMeat() ? 8 : 3)) / 4;
 
 				if (cans > 0) {
@@ -49,5 +48,11 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 				.inputItem(Ingredient.of(Tags.Items.DYES_BLACK))
 				.outputItem(new ItemStack(DARK_SPRAY_CAN))
 				.save(consumer, canningLoc("dark_spray_can"));
+
+		MachineRecipeBuilder.compressing()
+				.unlockedBy("has_item", has(CANNED_FOOD))
+				.inputItem(Ingredient.of(CANNED_FOOD))
+				.outputItem(new ItemStack(PROTEIN_BAR))
+				.save(consumer, compressingLoc("protein_bar"));
 	}
 }

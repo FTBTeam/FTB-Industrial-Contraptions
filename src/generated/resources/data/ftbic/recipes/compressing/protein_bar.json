@@ -3,14 +3,14 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"item": "ftbic:mixed_metal_ingot"
+				"item": "ftbic:canned_food"
 			},
 			"count": 1
 		}
 	],
 	"outputItems": [
 		{
-			"item": "ftbic:advanced_alloy"
+			"item": "ftbic:protein_bar"
 		}
 	]
 }

@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:compressing/advanced_alloy"
+			"ftbic:compressing/protein_bar"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:mixed_metal_ingot"
+						"item": "ftbic:canned_food"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:compressing/advanced_alloy"
+				"recipe": "ftbic:compressing/protein_bar"
 			}
 		}
 	},

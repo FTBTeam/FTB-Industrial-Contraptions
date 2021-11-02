@@ -1,24 +1,67 @@
 {
-	"type": "minecraft:crafting_shaped",
+	"type": "minecraft:crafting_shapeless",
 	"group": "ftbic:mixed_metal_ingot",
-	"pattern": [
-		"MMM",
-		"CCC",
-		"TTT"
+	"ingredients": [
+		[
+			{
+				"tag": "forge:dusts/iron"
+			},
+			{
+				"tag": "forge:dusts/lead"
+			}
+		],
+		[
+			{
+				"tag": "forge:dusts/iron"
+			},
+			{
+				"tag": "forge:dusts/lead"
+			}
+		],
+		[
+			{
+				"tag": "forge:dusts/iron"
+			},
+			{
+				"tag": "forge:dusts/lead"
+			}
+		],
+		{
+			"tag": "forge:dusts/bronze"
+		},
+		{
+			"tag": "forge:dusts/bronze"
+		},
+		{
+			"tag": "forge:dusts/bronze"
+		},
+		[
+			{
+				"tag": "forge:dusts/tin"
+			},
+			{
+				"tag": "forge:dusts/aluminum"
+			}
+		],
+		[
+			{
+				"tag": "forge:dusts/tin"
+			},
+			{
+				"tag": "forge:dusts/aluminum"
+			}
+		],
+		[
+			{
+				"tag": "forge:dusts/tin"
+			},
+			{
+				"tag": "forge:dusts/aluminum"
+			}
+		]
 	],
-	"key": {
-		"M": {
-			"item": "ftbic:industrial_grade_metal"
-		},
-		"C": {
-			"tag": "forge:ingots/copper"
-		},
-		"T": {
-			"tag": "forge:ingots/tin"
-		}
-	},
 	"result": {
-		"item": "ftbic:mixed_metal_ingot",
+		"item": "ftbic:mixed_metal_blend",
 		"count": 3
 	}
 }

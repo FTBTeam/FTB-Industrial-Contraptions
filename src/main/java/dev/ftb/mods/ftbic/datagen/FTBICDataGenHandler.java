@@ -140,6 +140,7 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.DUAL_URANIUM_FUEL_ROD, "Dual Uranium Fuel Cell");
 			addItem(FTBICItems.QUAD_URANIUM_FUEL_ROD, "Quad Uranium Fuel Cell");
 			addItem(FTBICItems.CANNED_FOOD, "Canned Food");
+			addItem(FTBICItems.PROTEIN_BAR, "Feed The Beast™ Protein Bar");
 			addItem(FTBICItems.DARK_SPRAY_PAINT_CAN, "Spray Paint Can (Dark)");
 			addItem(FTBICItems.LIGHT_SPRAY_PAINT_CAN, "Spray Paint Can (Light)");
 			addItem(FTBICItems.OVERCLOCKER_UPGRADE, "Overclocker Upgrade");
@@ -547,6 +548,7 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.DUAL_URANIUM_FUEL_ROD);
 			basicItem(FTBICItems.QUAD_URANIUM_FUEL_ROD);
 			basicItem(FTBICItems.CANNED_FOOD);
+			basicItem(FTBICItems.PROTEIN_BAR);
 			basicItem(FTBICItems.DARK_SPRAY_PAINT_CAN);
 			basicItem(FTBICItems.LIGHT_SPRAY_PAINT_CAN);
 			basicItem(FTBICItems.OVERCLOCKER_UPGRADE);
