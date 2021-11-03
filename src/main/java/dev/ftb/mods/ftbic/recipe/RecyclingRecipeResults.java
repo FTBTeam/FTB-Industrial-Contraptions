@@ -10,6 +10,6 @@ public class RecyclingRecipeResults extends MachineRecipeResults {
 	@Override
 	public MachineProcessingResult createResult(Level level, ItemStack[] inputs) {
 		// TODO: Add support for custom scrap items or chances
-		return new MachineProcessingResult(new StackWithChance(new ItemStack(FTBICItems.SCRAP.item.get()), 0.1D), 40);
+		return new MachineProcessingResult(new StackWithChance(new ItemStack(FTBICItems.SCRAP.item.get()), 0.1D), 1D);
 	}
 }

@@ -1,5 +1,9 @@
 package dev.ftb.mods.ftbic;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class FTBICConfig {
 	public static String ENERGY_FORMAT_1 = "%,d FE";
 	public static String ENERGY_FORMAT_2 = "%,d / %,d FE";
@@ -28,4 +32,61 @@ public class FTBICConfig {
 	public static int LV_SOLAR_PANEL_GENERATION = 4;
 	public static int MV_SOLAR_PANEL_GENERATION = 32;
 	public static int HV_SOLAR_PANEL_GENERATION = 256;
+
+	public static final List<String> MOD_MATERIAL_PRIORITY = new ArrayList<>(Arrays.asList(
+			"minecraft",
+			"emendatusenigmatica",
+			"thermal",
+			"mekanism",
+			"immersiveengineering"
+	));
+
+	public static final List<String> AUTO_INGOTS = new ArrayList<>(Arrays.asList(
+			"iron",
+			"gold",
+			"netherite",
+			"copper",
+			"aluminum",
+			"silver",
+			"lead",
+			"nickel",
+			"uranium",
+			"osmium",
+			"tin",
+			"zinc",
+			"cobalt",
+			"bronze",
+			"brass",
+			"constantan",
+			"electrum",
+			"steel",
+			"invar",
+			"signalum",
+			"lumium",
+			"enderium",
+			"tungsten"
+	));
+
+	public static final List<String> AUTO_GEMS = new ArrayList<>(Arrays.asList(
+			"lapis",
+			"diamond",
+			"emerald",
+			"quartz",
+			"prismarine",
+			"certus_quartz",
+			"charged_certus_quartz",
+			"fluix",
+			"fluorite",
+			"bitumen",
+			"cinnabar",
+			"apatite",
+			"sulfur",
+			"potassium_nitrate",
+			"mana",
+			"dimensional",
+			"silicon",
+			"ruby",
+			"sapphire",
+			"peridot"
+	));
 }

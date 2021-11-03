@@ -19,11 +19,12 @@ public class MachineRecipe implements Recipe<NoContainer> {
 	public List<FluidStack> inputFluids;
 	public List<StackWithChance> outputItems;
 	public List<FluidStack> outputFluids;
-	public int processingTime;
+	public double processingTime;
 
 	public MachineRecipe(MachineRecipeSerializer s, ResourceLocation i) {
 		serializer = s;
 		id = i;
+		processingTime = 1D;
 	}
 
 	@Override

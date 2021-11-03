@@ -35,7 +35,7 @@ public class CookingRecipeResults extends MachineRecipeResults {
 	public MachineProcessingResult createResult(Level level, ItemStack[] inputs) {
 		for (AbstractCookingRecipe recipe : getAllRecipes(level)) {
 			if (recipe.getIngredients().get(0).test(inputs[0])) {
-				return new MachineProcessingResult(new StackWithChance(recipe.getResultItem(), 1D), recipe.getCookingTime() / 2);
+				return new MachineProcessingResult(new StackWithChance(recipe.getResultItem(), 1D), recipe.getCookingTime() / 200D);
 			}
 		}
 

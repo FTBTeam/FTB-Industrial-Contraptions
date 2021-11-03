@@ -12,13 +12,13 @@ public class MachineProcessingResult {
 
 	public final StackWithChance output;
 	public final StackWithChance[] extra;
-	public final int time;
+	public final double time;
 	public final int[] consume;
 
 	private MachineProcessingResult() {
 		output = StackWithChance.EMPTY;
 		extra = new StackWithChance[0];
-		time = 0;
+		time = 1D;
 		consume = new int[0];
 	}
 
@@ -39,7 +39,7 @@ public class MachineProcessingResult {
 		consume = new int[recipe.inputItems.size()];
 	}
 
-	public MachineProcessingResult(StackWithChance _result, int _time) {
+	public MachineProcessingResult(StackWithChance _result, double _time) {
 		output = _result;
 		extra = NONE.extra;
 		time = _time;

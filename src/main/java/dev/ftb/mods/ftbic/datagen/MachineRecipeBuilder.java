@@ -90,7 +90,7 @@ public class MachineRecipeBuilder {
 		return this;
 	}
 
-	public MachineRecipeBuilder processingTime(int t) {
+	public MachineRecipeBuilder processingTime(double t) {
 		recipe.processingTime = t;
 		return this;
 	}
@@ -123,6 +123,10 @@ public class MachineRecipeBuilder {
 			FTBICUtils.listToJson(builder.recipe.inputFluids, json, "inputFluids", FTBICUtils::fluidToJson);
 			FTBICUtils.listToJson(builder.recipe.outputItems, json, "outputItems", StackWithChance::toJson);
 			FTBICUtils.listToJson(builder.recipe.outputFluids, json, "outputFluids", FTBICUtils::fluidToJson);
+
+			if (builder.recipe.processingTime != 1D) {
+				json.addProperty("processingTime", builder.recipe.processingTime);
+			}
 		}
 
 		@Override

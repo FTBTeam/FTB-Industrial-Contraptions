@@ -39,12 +39,7 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 		recipe.inputFluids = FTBICUtils.listFromJson(json, "inputFluids", FTBICUtils::fluidFromJson);
 		recipe.outputItems = FTBICUtils.listFromJson(json, "outputItems", StackWithChance::new);
 		recipe.outputFluids = FTBICUtils.listFromJson(json, "outputFluids", FTBICUtils::fluidFromJson);
-		recipe.processingTime = json.has("processingTime") ? json.get("processingTime").getAsInt() : 0;
-
-		if (recipe.processingTime == 0) {
-			recipe.processingTime = 200;
-		}
-
+		recipe.processingTime = json.has("processingTime") ? json.get("processingTime").getAsDouble() : 1D;
 		return recipe;
 	}
 
@@ -56,7 +51,7 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 		recipe.inputFluids = FTBICUtils.listFromNet(buf, FluidStack::readFromPacket);
 		recipe.outputItems = FTBICUtils.listFromNet(buf, StackWithChance::new);
 		recipe.outputFluids = FTBICUtils.listFromNet(buf, FluidStack::readFromPacket);
-		recipe.processingTime = buf.readVarInt();
+		recipe.processingTime = buf.readDouble();
 		return recipe;
 	}
 
@@ -66,6 +61,6 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 		FTBICUtils.listToNet(recipe.inputFluids, buf, FluidStack::writeToPacket);
 		FTBICUtils.listToNet(recipe.outputItems, buf, StackWithChance::write);
 		FTBICUtils.listToNet(recipe.outputFluids, buf, FluidStack::writeToPacket);
-		buf.writeVarInt(recipe.processingTime);
+		buf.writeDouble(recipe.processingTime);
 	}
 }

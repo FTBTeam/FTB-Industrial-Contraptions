@@ -10,6 +10,7 @@ import dev.ftb.mods.ftbic.util.PowerTier;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -43,6 +44,10 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity {
 		lastMaxProgress = 0;
 		acceleration = 0;
 		checkProcessing = true;
+	}
+
+	public double getBaseRecipeTime() {
+		return 200D;
 	}
 
 	@Override
@@ -157,7 +162,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity {
 			MachineProcessingResult result = getResult(inputItems, true);
 
 			if (result.exists() && getOutput(result, true) != null) {
-				lastMaxProgress = result.time;
+				lastMaxProgress = Mth.ceil(result.time * getBaseRecipeTime());
 				progress = lastMaxProgress;
 				changeState = ElectricBlockState.ON;
 				setChanged();
