@@ -6,6 +6,9 @@ import com.google.gson.JsonObject;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
@@ -18,6 +21,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class FTBICUtils {
+	public static final Tag.Named<Item> UNCANNABLE_FOOD = ItemTags.createOptional(new ResourceLocation("ftbic:uncannable_food"));
+
 	public static String formatPower(int power) {
 		return String.format(FTBICConfig.ENERGY_FORMAT_1, power);
 	}

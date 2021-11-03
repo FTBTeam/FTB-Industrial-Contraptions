@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbic.recipe;
 
 import dev.ftb.mods.ftbic.FTBIC;
-import dev.ftb.mods.ftbic.util.MachineProcessingResult;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,13 +17,13 @@ public class RecipeCache implements Recipe<NoContainer> {
 	public static final ResourceLocation ID = new ResourceLocation(FTBIC.MOD_ID, "recipe_cache");
 
 	private final Map<Item, Integer> basicGeneratorFuel = new HashMap<>();
-	public final MachineRecipeResults smelting = new CookingRecipeResults(RecipeType.SMELTING);
-	public final MachineRecipeResults macerating = new FTBICMachineRecipeResults(FTBICRecipes.MACERATING);
-	public final MachineRecipeResults extracting = new FTBICMachineRecipeResults(FTBICRecipes.EXTRACTING);
-	public final MachineRecipeResults compressing = new FTBICMachineRecipeResults(FTBICRecipes.COMPRESSING);
-	public final MachineRecipeResults canning = new FTBICDualMachineRecipeResults(FTBICRecipes.CANNING);
-	public final MachineRecipeResults recycling = new RecyclingRecipeResults();
-	public final MachineRecipeResults antimatterFabricator = new AntimatterFabricatorRecipeResults();
+	public final CookingRecipeResults smelting = new CookingRecipeResults(RecipeType.SMELTING);
+	public final SimpleMachineRecipeResults macerating = new SimpleMachineRecipeResults(FTBICRecipes.MACERATING);
+	public final SimpleMachineRecipeResults extracting = new SimpleMachineRecipeResults(FTBICRecipes.EXTRACTING);
+	public final SimpleMachineRecipeResults compressing = new SimpleMachineRecipeResults(FTBICRecipes.COMPRESSING);
+	public final CanningMachineRecipeResults canning = new CanningMachineRecipeResults();
+	public final RecyclingRecipeResults recycling = new RecyclingRecipeResults();
+	public final AntimatterFabricatorRecipeResults antimatterFabricator = new AntimatterFabricatorRecipeResults();
 
 	@Nullable
 	public static RecipeCache get(Level level) {
@@ -86,9 +85,5 @@ public class RecipeCache implements Recipe<NoContainer> {
 
 		basicGeneratorFuel.put(item, 0);
 		return 0;
-	}
-
-	public MachineProcessingResult getFurnaceResult(Level level, Item item) {
-		return MachineProcessingResult.NONE;
 	}
 }

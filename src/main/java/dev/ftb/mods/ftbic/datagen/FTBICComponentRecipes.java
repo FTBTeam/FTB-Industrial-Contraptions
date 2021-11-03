@@ -166,7 +166,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.define('T', TIN_INGOT)
 				.save(consumer, shapedLoc("empty_cell"));
 
-		ShapedRecipeBuilder.shaped(EMPTY_CAN, 5)
+		ShapedRecipeBuilder.shaped(EMPTY_CAN, 10)
 				.unlockedBy("has_item", has(TIN_INGOT))
 				.group(MODID + ":empty_can")
 				.pattern("T T")

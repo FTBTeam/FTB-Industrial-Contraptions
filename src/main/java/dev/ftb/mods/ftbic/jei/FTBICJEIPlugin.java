@@ -4,7 +4,7 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
-import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
+import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
@@ -15,8 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
-import java.util.function.Supplier;
 
 /**
  * @author LatvianModder
@@ -44,17 +42,20 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.SINGULARITY_COMPRESSOR.item.get()), FTBICRecipes.COMPRESSING.get().getRegistryName());
 	}
 
-	private void addMachineRecipe(IRecipeRegistration r, Supplier<MachineRecipeSerializer> supplier) {
-		Level level = Minecraft.getInstance().level;
-		r.addRecipes(level.getRecipeManager().getAllRecipesFor(supplier.get().recipeType), supplier.get().getRegistryName());
-	}
-
 	@Override
 	public void registerRecipes(IRecipeRegistration r) {
-		addMachineRecipe(r, FTBICRecipes.MACERATING);
-		addMachineRecipe(r, FTBICRecipes.EXTRACTING);
-		addMachineRecipe(r, FTBICRecipes.COMPRESSING);
-		addMachineRecipe(r, FTBICRecipes.CANNING);
+		Level level = Minecraft.getInstance().level;
+		RecipeCache cache = level == null ? null : RecipeCache.get(Minecraft.getInstance().level);
+
+		if (cache == null) {
+			FTBIC.LOGGER.error("Recipe cache not found for JEI plugin!");
+			return;
+		}
+
+		r.addRecipes(cache.macerating.getAllRecipes(level), FTBICRecipes.MACERATING.get().getRegistryName());
+		r.addRecipes(cache.compressing.getAllRecipes(level), FTBICRecipes.COMPRESSING.get().getRegistryName());
+		r.addRecipes(cache.extracting.getAllRecipes(level), FTBICRecipes.EXTRACTING.get().getRegistryName());
+		r.addRecipes(cache.canning.getAllRecipes(level), FTBICRecipes.CANNING.get().getRegistryName());
 	}
 
 	@Override
