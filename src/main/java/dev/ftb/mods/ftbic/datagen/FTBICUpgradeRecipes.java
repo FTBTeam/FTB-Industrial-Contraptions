@@ -3,7 +3,6 @@ package dev.ftb.mods.ftbic.datagen;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
@@ -49,12 +48,12 @@ public class FTBICUpgradeRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("transformer_upgrade"));
 
 		ShapedRecipeBuilder.shaped(EJECTOR_UPGRADE)
-				.unlockedBy("has_item", has(Items.PISTON))
+				.unlockedBy("has_item", has(PISTON))
 				.group(MODID + ":ejector_upgrade")
 				.pattern("T T")
 				.pattern(" P ")
 				.pattern("T T")
-				.define('P', Items.PISTON)
+				.define('P', PISTON)
 				.define('T', TIN_INGOT)
 				.save(consumer, shapedLoc("ejector_upgrade"));
 	}

@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import com.ridanisaurus.emendatusenigmatica.registries.ItemHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -87,6 +88,27 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('M', MACHINE_BLOCK)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("canning_machine"));
+
+		ShapedRecipeBuilder.shaped(ROLLER)
+				.unlockedBy("has_item", has(MACHINE_BLOCK))
+				.group(MODID + ":roller")
+				.pattern("HCH")
+				.pattern("PMP")
+				.define('H', ItemHandler.ENIGMATIC_HAMMER.get())
+				.define('P', PISTON)
+				.define('M', MACHINE_BLOCK)
+				.define('C', ELECTRONIC_CIRCUIT)
+				.save(consumer, shapedLoc("roller"));
+
+		ShapedRecipeBuilder.shaped(EXTRUDER)
+				.unlockedBy("has_item", has(MACHINE_BLOCK))
+				.group(MODID + ":extruder")
+				.pattern("SCS")
+				.pattern("SMS")
+				.define('S', IRON_ROD)
+				.define('M', MACHINE_BLOCK)
+				.define('C', ELECTRONIC_CIRCUIT)
+				.save(consumer, shapedLoc("extruder"));
 
 		ShapedRecipeBuilder.shaped(ANTIMATTER_FABRICATOR)
 				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))

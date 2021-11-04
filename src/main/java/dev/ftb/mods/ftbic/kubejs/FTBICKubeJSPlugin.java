@@ -11,5 +11,7 @@ public class FTBICKubeJSPlugin extends KubeJSPlugin {
 		event.register(FTBICRecipes.EXTRACTING.get().getRegistryName(), MachineRecipeJS::new);
 		event.register(FTBICRecipes.COMPRESSING.get().getRegistryName(), MachineRecipeJS::new);
 		event.register(FTBICRecipes.CANNING.get().getRegistryName(), MachineRecipeJS::new);
+		event.register(FTBICRecipes.ROLLING.get().getRegistryName(), MachineRecipeJS::new);
+		event.register(FTBICRecipes.EXTRUDING.get().getRegistryName(), MachineRecipeJS::new);
 	}
 }

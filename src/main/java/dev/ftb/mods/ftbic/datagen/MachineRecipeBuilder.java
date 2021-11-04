@@ -57,6 +57,14 @@ public class MachineRecipeBuilder {
 		return machine(FTBICRecipes.CANNING);
 	}
 
+	public static MachineRecipeBuilder rolling() {
+		return machine(FTBICRecipes.ROLLING);
+	}
+
+	public static MachineRecipeBuilder extruding() {
+		return machine(FTBICRecipes.EXTRUDING);
+	}
+
 	public MachineRecipeBuilder unlockedBy(String string, CriterionTriggerInstance arg) {
 		advancement.addCriterion(string, arg);
 		return this;

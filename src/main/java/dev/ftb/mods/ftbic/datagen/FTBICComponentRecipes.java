@@ -234,13 +234,11 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(LATEX), 0.1D)
 				.save(consumer, extractingLoc("latex_from_leaves"));
 
-		/*
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(IRON_INGOT))
 				.inputItem(Ingredient.of(IRON_INGOT), 3)
 				.outputItem(new ItemStack(INDUSTRIAL_GRADE_METAL, 3))
 				.save(consumer, compressingLoc("industrial_grade_metal"));
-		 */
 
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(CARBON_FIBER_MESH))

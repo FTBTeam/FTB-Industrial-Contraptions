@@ -9,6 +9,7 @@
 	"block.ftbic.copper_cable": "Copper Cable",
 	"block.ftbic.electric_furnace": "Electric Furnace",
 	"block.ftbic.extractor": "Extractor",
+	"block.ftbic.extruder": "Extruder",
 	"block.ftbic.geothermal_generator": "Geothermal Generator",
 	"block.ftbic.glass_cable": "Glass Cable",
 	"block.ftbic.gold_cable": "Gold Cable",
@@ -29,6 +30,7 @@
 	"block.ftbic.recycler": "Recycler",
 	"block.ftbic.reinforced_glass": "Reinforced Glass",
 	"block.ftbic.reinforced_stone": "Reinforced Stone",
+	"block.ftbic.roller": "Roller",
 	"block.ftbic.rotary_macerator": "Rotary Macerator",
 	"block.ftbic.rubber_sheet": "Rubber Sheet",
 	"block.ftbic.singularity_compressor": "Singularity Compressor",
@@ -84,5 +86,7 @@
 	"recipe.ftbic.canning": "Canning",
 	"recipe.ftbic.compressing": "Compressing",
 	"recipe.ftbic.extracting": "Extracting",
-	"recipe.ftbic.macerating": "Macerating"
+	"recipe.ftbic.extruding": "Extruding",
+	"recipe.ftbic.macerating": "Macerating",
+	"recipe.ftbic.rolling": "Rolling"
 }

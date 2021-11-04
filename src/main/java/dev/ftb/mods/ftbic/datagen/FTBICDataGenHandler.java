@@ -153,6 +153,8 @@ public class FTBICDataGenHandler {
 			add("recipe." + FTBIC.MOD_ID + ".extracting", "Extracting");
 			add("recipe." + FTBIC.MOD_ID + ".compressing", "Compressing");
 			add("recipe." + FTBIC.MOD_ID + ".canning", "Canning");
+			add("recipe." + FTBIC.MOD_ID + ".rolling", "Rolling");
+			add("recipe." + FTBIC.MOD_ID + ".extruding", "Extruding");
 		}
 	}
 
@@ -223,9 +225,10 @@ public class FTBICDataGenHandler {
 			makeThemedElectricOnOff("recycler_front", BASIC_SIDE);
 			makeThemedElectric("recycler_top", BASIC_TOP);
 			makeThemedElectricOnOff("canning_machine_front", BASIC_SIDE);
+			makeThemedElectricOnOff("roller_front", BASIC_SIDE);
+			makeThemedElectricOnOff("extruder_front", BASIC_SIDE);
 			makeThemedElectricOnOff("antimatter_fabricator_front", ADVANCED_SIDE);
 			makeThemedElectric("antimatter_fabricator_side", ADVANCED_SIDE);
-			makeThemedElectricOnOff("electric_furnace_front", BASIC_SIDE);
 
 			makeThemedElectricOnOff("induction_furnace_front", ADVANCED_SIDE, "electric_furnace_front");
 			makeThemedElectric("rotary_macerator_front", ADVANCED_SIDE, "macerator_front");
@@ -396,6 +399,10 @@ public class FTBICDataGenHandler {
 			electric("recycler_on", "recycler_front_on", "basic_side", "recycler_top", "basic_bottom");
 			electric("canning_machine_off", "canning_machine_front_off", "basic_side", "basic_top", "basic_bottom");
 			electric("canning_machine_on", "canning_machine_front_on", "basic_side", "basic_top", "basic_bottom");
+			electric("roller_off", "roller_front_off", "basic_side", "basic_top", "basic_bottom");
+			electric("roller_on", "roller_front_on", "basic_side", "basic_top", "basic_bottom");
+			electric("extruder_off", "extruder_front_off", "basic_side", "basic_top", "basic_bottom");
+			electric("extruder_on", "extruder_front_on", "basic_side", "basic_top", "basic_bottom");
 			electric("antimatter_fabricator_off", "antimatter_fabricator_front_off", "antimatter_fabricator_side", "advanced_top", "advanced_bottom");
 			electric("antimatter_fabricator_on", "antimatter_fabricator_front_on", "antimatter_fabricator_side", "advanced_top", "advanced_bottom");
 
