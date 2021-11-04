@@ -1,9 +1,0 @@
-{
-	"parent": "ftbic:block/orientable_2d",
-	"textures": {
-		"side": "ftbic:block/electric/light/advanced_side",
-		"front": "ftbic:block/electric/light/singularity_compressor_front_on",
-		"top": "ftbic:block/electric/light/singularity_compressor_top",
-		"bottom": "ftbic:block/electric/light/advanced_bottom"
-	}
-}

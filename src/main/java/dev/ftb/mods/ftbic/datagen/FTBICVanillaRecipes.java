@@ -93,29 +93,31 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(Items.COAL, 2))
 				.save(consumer, maceratingLoc("coal_from_ore"));
 
-		MachineRecipeBuilder.extracting()
+		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(GRAVEL))
 				.inputItem(Ingredient.of(GRAVEL))
 				.outputItem(new ItemStack(Items.FLINT))
-				.save(consumer, extractingLoc("flint"));
+				.save(consumer, separatingLoc("flint"));
 
-		MachineRecipeBuilder.extracting()
+		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(QUARTZ))
 				.inputItem(Ingredient.of(QUARTZ))
 				.outputItem(new ItemStack(SILICON_ITEM, 3))
-				.save(consumer, extractingLoc("silicon"));
+				.save(consumer, separatingLoc("silicon"));
 
-		MachineRecipeBuilder.extracting()
+		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(Items.MAGMA_CREAM))
 				.inputItem(Ingredient.of(Items.MAGMA_CREAM))
 				.outputItem(new ItemStack(Items.SLIME_BALL))
-				.save(consumer, extractingLoc("slime_ball"));
+				.outputItem(new ItemStack(Items.BLAZE_POWDER), 0.25D)
+				.save(consumer, separatingLoc("slime_ball"));
 
-		MachineRecipeBuilder.extracting()
+		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(Items.SUGAR_CANE))
 				.inputItem(Ingredient.of(Items.SUGAR_CANE))
 				.outputItem(new ItemStack(Items.SUGAR, 2))
-				.save(consumer, extractingLoc("sugar"));
+				.outputItem(new ItemStack(Items.PAPER), 0.5D)
+				.save(consumer, separatingLoc("sugar"));
 
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(WATER_CELL))

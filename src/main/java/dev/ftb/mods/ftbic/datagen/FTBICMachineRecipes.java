@@ -25,7 +25,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('F', Items.FURNACE)
 				.save(consumer, shapedLoc("iron_furnace"));
 
-		ShapedRecipeBuilder.shaped(ELECTRIC_FURNACE)
+		ShapedRecipeBuilder.shaped(POWERED_FURNACE)
 				.unlockedBy("has_item", has(IRON_FURNACE))
 				.group(MODID + ":electric_furnace")
 				.pattern(" C ")
@@ -47,7 +47,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("macerator"));
 
-		ShapedRecipeBuilder.shaped(EXTRACTOR)
+		ShapedRecipeBuilder.shaped(CENTRIFUGE)
 				.unlockedBy("has_item", has(MACHINE_BLOCK))
 				.group(MODID + ":extractor")
 				.pattern("TMT")
@@ -68,7 +68,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("compressor"));
 
-		ShapedRecipeBuilder.shaped(RECYCLER)
+		ShapedRecipeBuilder.shaped(REPROCESSOR)
 				.unlockedBy("has_item", has(COMPRESSOR))
 				.group(MODID + ":recycler")
 				.pattern("MDM")
@@ -128,7 +128,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.pattern("CCC")
 				.pattern("CFC")
 				.pattern("WMW")
-				.define('F', ELECTRIC_FURNACE)
+				.define('F', POWERED_FURNACE)
 				.define('M', ADVANCED_MACHINE_BLOCK)
 				.define('C', COPPER_INGOT)
 				.define('W', COPPER_COIL)
@@ -152,7 +152,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.pattern("CCC")
 				.pattern("CFC")
 				.pattern("WMW")
-				.define('F', EXTRACTOR)
+				.define('F', CENTRIFUGE)
 				.define('M', ADVANCED_MACHINE_BLOCK)
 				.define('C', EMPTY_CELL)
 				.define('W', COPPER_COIL)

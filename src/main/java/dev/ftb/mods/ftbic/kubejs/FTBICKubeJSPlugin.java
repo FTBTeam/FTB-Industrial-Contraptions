@@ -8,7 +8,7 @@ public class FTBICKubeJSPlugin extends KubeJSPlugin {
 	@Override
 	public void addRecipes(RegisterRecipeHandlersEvent event) {
 		event.register(FTBICRecipes.MACERATING.get().getRegistryName(), MachineRecipeJS::new);
-		event.register(FTBICRecipes.EXTRACTING.get().getRegistryName(), MachineRecipeJS::new);
+		event.register(FTBICRecipes.SEPARATING.get().getRegistryName(), MachineRecipeJS::new);
 		event.register(FTBICRecipes.COMPRESSING.get().getRegistryName(), MachineRecipeJS::new);
 		event.register(FTBICRecipes.CANNING.get().getRegistryName(), MachineRecipeJS::new);
 		event.register(FTBICRecipes.ROLLING.get().getRegistryName(), MachineRecipeJS::new);

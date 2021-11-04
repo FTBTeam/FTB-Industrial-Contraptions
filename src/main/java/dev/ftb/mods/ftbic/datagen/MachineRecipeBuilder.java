@@ -45,8 +45,8 @@ public class MachineRecipeBuilder {
 		return machine(FTBICRecipes.MACERATING);
 	}
 
-	public static MachineRecipeBuilder extracting() {
-		return machine(FTBICRecipes.EXTRACTING);
+	public static MachineRecipeBuilder separating() {
+		return machine(FTBICRecipes.SEPARATING);
 	}
 
 	public static MachineRecipeBuilder compressing() {

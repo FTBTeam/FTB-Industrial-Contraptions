@@ -19,12 +19,12 @@ public class RecipeCache implements Recipe<NoContainer> {
 	private final Map<Item, Integer> basicGeneratorFuel = new HashMap<>();
 	public final CookingRecipeResults smelting = new CookingRecipeResults(RecipeType.SMELTING);
 	public final MaceratingRecipeResults macerating = new MaceratingRecipeResults();
-	public final ExtractingRecipeResults extracting = new ExtractingRecipeResults();
+	public final SeparatingRecipeResults separating = new SeparatingRecipeResults();
 	public final CompressingRecipeResults compressing = new CompressingRecipeResults();
 	public final RollingRecipeResults rolling = new RollingRecipeResults();
 	public final ExtrudingRecipeResults extruding = new ExtrudingRecipeResults();
 	public final CanningMachineRecipeResults canning = new CanningMachineRecipeResults();
-	public final RecyclingRecipeResults recycling = new RecyclingRecipeResults();
+	public final ReprocessingRecipeResults reprocessing = new ReprocessingRecipeResults();
 	public final AntimatterFabricatorRecipeResults antimatterFabricator = new AntimatterFabricatorRecipeResults();
 
 	@Nullable

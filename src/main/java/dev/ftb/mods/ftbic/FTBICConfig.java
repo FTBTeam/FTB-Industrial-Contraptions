@@ -11,8 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FTBICConfig {
-	public static String ENERGY_FORMAT_1 = "%,d FE";
-	public static String ENERGY_FORMAT_2 = "%,d / %,d FE";
+	public static String ENERGY_FORMAT_1 = "%,d PU";
+	public static String ENERGY_FORMAT_2 = "%,d / %,d PU";
 
 	public static int LV_TRANSFER_RATE = 320;
 	public static int MV_TRANSFER_RATE = 1280;

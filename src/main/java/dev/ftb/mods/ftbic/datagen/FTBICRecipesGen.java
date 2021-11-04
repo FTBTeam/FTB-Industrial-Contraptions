@@ -144,19 +144,19 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item MV_SOLAR_PANEL = FTBICElectricBlocks.MV_SOLAR_PANEL.item.get();
 	public static final Item HV_SOLAR_PANEL = FTBICElectricBlocks.HV_SOLAR_PANEL.item.get();
 	public static final Item NUCLEAR_REACTOR = FTBICElectricBlocks.NUCLEAR_REACTOR.item.get();
-	public static final Item ELECTRIC_FURNACE = FTBICElectricBlocks.ELECTRIC_FURNACE.item.get();
+	public static final Item POWERED_FURNACE = FTBICElectricBlocks.POWERED_FURNACE.item.get();
 	public static final Item MACERATOR = FTBICElectricBlocks.MACERATOR.item.get();
-	public static final Item EXTRACTOR = FTBICElectricBlocks.EXTRACTOR.item.get();
+	public static final Item CENTRIFUGE = FTBICElectricBlocks.CENTRIFUGE.item.get();
 	public static final Item COMPRESSOR = FTBICElectricBlocks.COMPRESSOR.item.get();
-	public static final Item RECYCLER = FTBICElectricBlocks.RECYCLER.item.get();
+	public static final Item REPROCESSOR = FTBICElectricBlocks.REPROCESSOR.item.get();
 	public static final Item CANNING_MACHINE = FTBICElectricBlocks.CANNING_MACHINE.item.get();
 	public static final Item ROLLER = FTBICElectricBlocks.ROLLER.item.get();
 	public static final Item EXTRUDER = FTBICElectricBlocks.EXTRUDER.item.get();
-	public static final Item ANTIMATTER_FABRICATOR = FTBICElectricBlocks.ANTIMATTER_FABRICATOR.item.get();
-	public static final Item INDUCTION_FURNACE = FTBICElectricBlocks.INDUCTION_FURNACE.item.get();
-	public static final Item ROTARY_MACERATOR = FTBICElectricBlocks.ROTARY_MACERATOR.item.get();
-	public static final Item CENTRIFUGE_EXTRACTOR = FTBICElectricBlocks.CENTRIFUGE_EXTRACTOR.item.get();
-	public static final Item SINGULARITY_COMPRESSOR = FTBICElectricBlocks.SINGULARITY_COMPRESSOR.item.get();
+	public static final Item ANTIMATTER_FABRICATOR = FTBICElectricBlocks.ANTIMATTER_CONSTRUCTOR.item.get();
+	public static final Item INDUCTION_FURNACE = FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.item.get();
+	public static final Item ROTARY_MACERATOR = FTBICElectricBlocks.ADVANCED_MACERATOR.item.get();
+	public static final Item CENTRIFUGE_EXTRACTOR = FTBICElectricBlocks.ADVANCED_CENTRIFUGE.item.get();
+	public static final Item SINGULARITY_COMPRESSOR = FTBICElectricBlocks.ADVANCED_COMPRESSOR.item.get();
 	public static final Item LV_BATTERY_BOX = FTBICElectricBlocks.LV_BATTERY_BOX.item.get();
 	public static final Item MV_BATTERY_BOX = FTBICElectricBlocks.MV_BATTERY_BOX.item.get();
 	public static final Item HV_BATTERY_BOX = FTBICElectricBlocks.HV_BATTERY_BOX.item.get();
@@ -204,24 +204,24 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 		return modLoc("macerating/" + s);
 	}
 
-	public static ResourceLocation extractingLoc(String s) {
-		return modLoc("extracting/" + s);
+	public static ResourceLocation separatingLoc(String s) {
+		return modLoc("separating/" + s);
 	}
 
 	public static ResourceLocation compressingLoc(String s) {
 		return modLoc("compressing/" + s);
 	}
 
-	public static ResourceLocation electrolyzingLoc(String s) {
-		return modLoc("electrolyzing/" + s);
-	}
-
-	public static ResourceLocation recyclingLoc(String s) {
-		return modLoc("recycling/" + s);
-	}
-
 	public static ResourceLocation canningLoc(String s) {
 		return modLoc("canning/" + s);
+	}
+
+	public static ResourceLocation rollingLoc(String s) {
+		return modLoc("rolling/" + s);
+	}
+
+	public static ResourceLocation extrudingLoc(String s) {
+		return modLoc("extruding/" + s);
 	}
 
 	@Override

@@ -8,7 +8,7 @@
 	],
 	"key": {
 		"F": {
-			"item": "ftbic:extractor"
+			"item": "ftbic:centrifuge"
 		},
 		"M": {
 			"item": "ftbic:advanced_machine_block"
@@ -21,6 +21,6 @@
 		}
 	},
 	"result": {
-		"item": "ftbic:centrifuge_extractor"
+		"item": "ftbic:advanced_centrifuge"
 	}
 }

@@ -210,29 +210,29 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.define('R', IRON_ROD)
 				.save(consumer, shapedLoc("copper_coil"));
 
-		MachineRecipeBuilder.extracting()
+		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(LATEX))
 				.inputItem(Ingredient.of(LATEX))
 				.outputItem(new ItemStack(RUBBER, 3))
-				.save(consumer, extractingLoc("rubber_from_latex"));
+				.save(consumer, separatingLoc("rubber_from_latex"));
 
-		MachineRecipeBuilder.extracting()
+		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(RUBBERWOOD_LOG))
 				.inputItem(Ingredient.of(RUBBERWOOD_LOG))
 				.outputItem(new ItemStack(LATEX), 0.2D)
-				.save(consumer, extractingLoc("latex_from_log"));
+				.save(consumer, separatingLoc("latex_from_log"));
 
-		MachineRecipeBuilder.extracting()
+		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(RUBBERWOOD_SAPLING))
 				.inputItem(Ingredient.of(RUBBERWOOD_SAPLING))
 				.outputItem(new ItemStack(LATEX), 0.1D)
-				.save(consumer, extractingLoc("latex_from_sapling"));
+				.save(consumer, separatingLoc("latex_from_sapling"));
 
-		MachineRecipeBuilder.extracting()
+		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(RUBBERWOOD_LEAVES))
 				.inputItem(Ingredient.of(RUBBERWOOD_LEAVES))
 				.outputItem(new ItemStack(LATEX), 0.1D)
-				.save(consumer, extractingLoc("latex_from_leaves"));
+				.save(consumer, separatingLoc("latex_from_leaves"));
 
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(IRON_INGOT))

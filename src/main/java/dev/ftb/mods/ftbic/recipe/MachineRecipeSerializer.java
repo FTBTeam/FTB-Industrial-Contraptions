@@ -15,20 +15,32 @@ import org.jetbrains.annotations.Nullable;
 
 public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<MachineRecipe> {
 	public final RecipeType<MachineRecipe> recipeType;
-	public int jeiWidth = 82;
-	public int jeiHeight = 54;
-	public int jeiPowerX = 2;
-	public int jeiPowerY = 20;
-	public int jeiArrowX = 24;
-	public int jeiArrowY = 18;
+	public int guiWidth = 82;
+	public int guiHeight = 54;
+	public int powerX = 2;
+	public int powerY = 20;
+	public int arrowX = 24;
+	public int arrowY = 18;
+	public int batteryX = 0;
+	public int batteryY = 36;
+	public int outputX = 56;
+	public int outputY = 14;
+	public boolean extraOutput = false;
 
 	public MachineRecipeSerializer(String id) {
 		recipeType = RecipeType.register(FTBIC.MOD_ID + ":" + id);
 	}
 
 	public MachineRecipeSerializer twoInputs() {
-		jeiPowerX = 11;
-		jeiArrowX = 30;
+		powerX = 11;
+		arrowX = 30;
+		batteryX = 8;
+		return this;
+	}
+
+	public MachineRecipeSerializer extraOutput() {
+		extraOutput = true;
+		guiWidth = 103;
 		return this;
 	}
 

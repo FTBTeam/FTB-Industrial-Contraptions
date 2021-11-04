@@ -112,11 +112,11 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.define('A', COPPER_PLATE)
 				.save(consumer, shapedLoc("quad_uranium_fuel_rod_from_dual"));
 
-		MachineRecipeBuilder.extracting()
+		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(WATER_CELL))
 				.inputItem(Ingredient.of(WATER_CELL))
 				.outputItem(new ItemStack(COOLANT_10K))
-				.save(consumer, extractingLoc("coolant_10k"));
+				.save(consumer, separatingLoc("coolant_10k"));
 
 		MachineRecipeBuilder.canning()
 				.unlockedBy("has_item", has(URANIUM_DUST))

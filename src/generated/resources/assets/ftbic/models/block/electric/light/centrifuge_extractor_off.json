@@ -1,9 +1,0 @@
-{
-	"parent": "ftbic:block/orientable_2d",
-	"textures": {
-		"side": "ftbic:block/electric/light/advanced_side",
-		"front": "ftbic:block/electric/light/centrifuge_extractor_front_off",
-		"top": "ftbic:block/electric/light/centrifuge_extractor_top",
-		"bottom": "ftbic:block/electric/light/advanced_bottom"
-	}
-}

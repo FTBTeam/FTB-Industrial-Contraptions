@@ -8,7 +8,7 @@
 	],
 	"key": {
 		"F": {
-			"item": "ftbic:electric_furnace"
+			"item": "ftbic:powered_furnace"
 		},
 		"M": {
 			"item": "ftbic:advanced_machine_block"
@@ -21,6 +21,6 @@
 		}
 	},
 	"result": {
-		"item": "ftbic:induction_furnace"
+		"item": "ftbic:advanced_powered_furnace"
 	}
 }

@@ -1,0 +1,16 @@
+{
+	"type": "ftbic:separating",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "ftbic:water_cell"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:coolant_10k"
+		}
+	]
+}

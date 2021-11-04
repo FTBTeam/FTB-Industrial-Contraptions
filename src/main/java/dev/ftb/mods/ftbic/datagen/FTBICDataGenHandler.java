@@ -150,7 +150,7 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.EJECTOR_UPGRADE, "Ejector Upgrade");
 
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
-			add("recipe." + FTBIC.MOD_ID + ".extracting", "Extracting");
+			add("recipe." + FTBIC.MOD_ID + ".separating", "Separating");
 			add("recipe." + FTBIC.MOD_ID + ".compressing", "Compressing");
 			add("recipe." + FTBIC.MOD_ID + ".canning", "Canning");
 			add("recipe." + FTBIC.MOD_ID + ".rolling", "Rolling");
@@ -215,28 +215,28 @@ public class FTBICDataGenHandler {
 			makeThemedElectric("hv_solar_panel_top", ADVANCED_TOP);
 			makeThemedElectricOnOff("nuclear_reactor_side", ADVANCED_SIDE);
 
-			makeThemedElectricOnOff("electric_furnace_front", BASIC_SIDE);
+			makeThemedElectricOnOff("powered_furnace_front", BASIC_SIDE);
 			makeThemedElectric("macerator_front", BASIC_SIDE);
 			makeThemedElectricOnOff("macerator_top", BASIC_TOP);
-			makeThemedElectricOnOff("extractor_front", BASIC_SIDE);
-			makeThemedElectric("extractor_top", BASIC_TOP);
+			makeThemedElectricOnOff("centrifuge_front", BASIC_SIDE);
+			makeThemedElectric("centrifuge_top", BASIC_TOP);
 			makeThemedElectricOnOff("compressor_front", BASIC_SIDE);
 			makeThemedElectric("compressor_top", BASIC_TOP);
-			makeThemedElectricOnOff("recycler_front", BASIC_SIDE);
-			makeThemedElectric("recycler_top", BASIC_TOP);
+			makeThemedElectricOnOff("reprocessor_front", BASIC_SIDE);
+			makeThemedElectric("reprocessor_top", BASIC_TOP);
 			makeThemedElectricOnOff("canning_machine_front", BASIC_SIDE);
 			makeThemedElectricOnOff("roller_front", BASIC_SIDE);
 			makeThemedElectricOnOff("extruder_front", BASIC_SIDE);
-			makeThemedElectricOnOff("antimatter_fabricator_front", ADVANCED_SIDE);
-			makeThemedElectric("antimatter_fabricator_side", ADVANCED_SIDE);
+			makeThemedElectricOnOff("antimatter_constructor_front", ADVANCED_SIDE);
+			makeThemedElectric("antimatter_constructor_side", ADVANCED_SIDE);
 
-			makeThemedElectricOnOff("induction_furnace_front", ADVANCED_SIDE, "electric_furnace_front");
-			makeThemedElectric("rotary_macerator_front", ADVANCED_SIDE, "macerator_front");
-			makeThemedElectricOnOff("rotary_macerator_top", ADVANCED_TOP, "macerator_top");
-			makeThemedElectricOnOff("centrifuge_extractor_front", ADVANCED_SIDE, "extractor_front");
-			makeThemedElectric("centrifuge_extractor_top", ADVANCED_TOP, "extractor_top");
-			makeThemedElectricOnOff("singularity_compressor_front", ADVANCED_SIDE, "compressor_front");
-			makeThemedElectric("singularity_compressor_top", ADVANCED_TOP, "compressor_top");
+			makeThemedElectricOnOff("advanced_powered_furnace_front", ADVANCED_SIDE, "powered_furnace_front");
+			makeThemedElectric("advanced_macerator_front", ADVANCED_SIDE, "macerator_front");
+			makeThemedElectricOnOff("advanced_macerator_top", ADVANCED_TOP, "macerator_top");
+			makeThemedElectricOnOff("advanced_centrifuge_front", ADVANCED_SIDE, "centrifuge_front");
+			makeThemedElectric("advanced_centrifuge_top", ADVANCED_TOP, "centrifuge_top");
+			makeThemedElectricOnOff("advanced_compressor_front", ADVANCED_SIDE, "compressor_front");
+			makeThemedElectric("advanced_compressor_top", ADVANCED_TOP, "compressor_top");
 
 			makeThemedElectric("lv_battery_box_in", WOOD_UNIVERSAL);
 			makeThemedElectric("lv_battery_box_out", WOOD_UNIVERSAL);
@@ -256,6 +256,13 @@ public class FTBICDataGenHandler {
 	}
 
 	private static class ICBlockModels extends BlockModelProvider {
+		public static final String BASIC_TOP = "basic_top";
+		public static final String BASIC_BOTTOM = "basic_bottom";
+		public static final String BASIC_SIDE = "basic_side";
+		public static final String ADVANCED_TOP = "advanced_top";
+		public static final String ADVANCED_BOTTOM = "advanced_bottom";
+		public static final String ADVANCED_SIDE = "advanced_side";
+
 		public ICBlockModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
 			super(generator, modid, existingFileHelper);
 		}
@@ -376,44 +383,44 @@ public class FTBICDataGenHandler {
 			orientable("block/iron_furnace_off", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_off"), modLoc("block/iron_furnace_side"));
 			orientable("block/iron_furnace_on", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_on"), modLoc("block/iron_furnace_side"));
 
-			electric("basic_generator_off", "basic_generator_front_off", "basic_side", "basic_top", "basic_bottom");
-			electric("basic_generator_on", "basic_generator_front_on", "basic_side", "basic_top", "basic_bottom");
-			electric("geothermal_generator_off", "geothermal_generator_front_off", "basic_side", "basic_top", "basic_bottom");
-			electric("geothermal_generator_on", "geothermal_generator_front_on", "basic_side", "basic_top", "basic_bottom");
-			electric("wind_mill", "wind_mill_front", "basic_side", "basic_top", "basic_bottom");
-			electric("lv_solar_panel", "basic_side", "basic_side", "lv_solar_panel_top", "basic_bottom");
-			electric("mv_solar_panel", "basic_side", "basic_side", "mv_solar_panel_top", "basic_bottom");
-			electric("hv_solar_panel", "advanced_side", "advanced_side", "hv_solar_panel_top", "advanced_bottom");
-			electric("nuclear_reactor_off", "nuclear_reactor_side_off", "nuclear_reactor_side_off", "advanced_top", "advanced_bottom");
-			electric("nuclear_reactor_on", "nuclear_reactor_side_on", "nuclear_reactor_side_on", "advanced_top", "advanced_bottom");
+			electric("basic_generator_off", "basic_generator_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("basic_generator_on", "basic_generator_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("geothermal_generator_off", "geothermal_generator_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("geothermal_generator_on", "geothermal_generator_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("wind_mill", "wind_mill_front", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("lv_solar_panel", BASIC_SIDE, BASIC_SIDE, "lv_solar_panel_top", BASIC_BOTTOM);
+			electric("mv_solar_panel", BASIC_SIDE, BASIC_SIDE, "mv_solar_panel_top", BASIC_BOTTOM);
+			electric("hv_solar_panel", ADVANCED_SIDE, ADVANCED_SIDE, "hv_solar_panel_top", ADVANCED_BOTTOM);
+			electric("nuclear_reactor_off", "nuclear_reactor_side_off", "nuclear_reactor_side_off", ADVANCED_TOP, ADVANCED_BOTTOM);
+			electric("nuclear_reactor_on", "nuclear_reactor_side_on", "nuclear_reactor_side_on", ADVANCED_TOP, ADVANCED_BOTTOM);
 
-			electric("electric_furnace_off", "electric_furnace_front_off", "basic_side", "basic_top", "basic_bottom");
-			electric("electric_furnace_on", "electric_furnace_front_on", "basic_side", "basic_top", "basic_bottom");
-			electric("macerator_off", "macerator_front", "basic_side", "macerator_top_off", "basic_bottom");
-			electric("macerator_on", "macerator_front", "basic_side", "macerator_top_on", "basic_bottom");
-			electric("extractor_off", "extractor_front_off", "basic_side", "extractor_top", "basic_bottom");
-			electric("extractor_on", "extractor_front_on", "basic_side", "extractor_top", "basic_bottom");
-			electric("compressor_off", "compressor_front_off", "basic_side", "compressor_top", "basic_bottom");
-			electric("compressor_on", "compressor_front_on", "basic_side", "compressor_top", "basic_bottom");
-			electric("recycler_off", "recycler_front_off", "basic_side", "recycler_top", "basic_bottom");
-			electric("recycler_on", "recycler_front_on", "basic_side", "recycler_top", "basic_bottom");
-			electric("canning_machine_off", "canning_machine_front_off", "basic_side", "basic_top", "basic_bottom");
-			electric("canning_machine_on", "canning_machine_front_on", "basic_side", "basic_top", "basic_bottom");
-			electric("roller_off", "roller_front_off", "basic_side", "basic_top", "basic_bottom");
-			electric("roller_on", "roller_front_on", "basic_side", "basic_top", "basic_bottom");
-			electric("extruder_off", "extruder_front_off", "basic_side", "basic_top", "basic_bottom");
-			electric("extruder_on", "extruder_front_on", "basic_side", "basic_top", "basic_bottom");
-			electric("antimatter_fabricator_off", "antimatter_fabricator_front_off", "antimatter_fabricator_side", "advanced_top", "advanced_bottom");
-			electric("antimatter_fabricator_on", "antimatter_fabricator_front_on", "antimatter_fabricator_side", "advanced_top", "advanced_bottom");
+			electric("powered_furnace_off", "powered_furnace_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("powered_furnace_on", "powered_furnace_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("macerator_off", "macerator_front", BASIC_SIDE, "macerator_top_off", BASIC_BOTTOM);
+			electric("macerator_on", "macerator_front", BASIC_SIDE, "macerator_top_on", BASIC_BOTTOM);
+			electric("centrifuge_off", "centrifuge_front_off", BASIC_SIDE, "centrifuge_top", BASIC_BOTTOM);
+			electric("centrifuge_on", "centrifuge_front_on", BASIC_SIDE, "centrifuge_top", BASIC_BOTTOM);
+			electric("compressor_off", "compressor_front_off", BASIC_SIDE, "compressor_top", BASIC_BOTTOM);
+			electric("compressor_on", "compressor_front_on", BASIC_SIDE, "compressor_top", BASIC_BOTTOM);
+			electric("reprocessor_off", "reprocessor_front_off", BASIC_SIDE, "reprocessor_top", BASIC_BOTTOM);
+			electric("reprocessor_on", "reprocessor_front_on", BASIC_SIDE, "reprocessor_top", BASIC_BOTTOM);
+			electric("canning_machine_off", "canning_machine_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("canning_machine_on", "canning_machine_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("roller_off", "roller_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("roller_on", "roller_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("extruder_off", "extruder_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("extruder_on", "extruder_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
+			electric("antimatter_constructor_off", "antimatter_constructor_front_off", "antimatter_constructor_side", ADVANCED_TOP, ADVANCED_BOTTOM);
+			electric("antimatter_constructor_on", "antimatter_constructor_front_on", "antimatter_constructor_side", ADVANCED_TOP, ADVANCED_BOTTOM);
 
-			electric("induction_furnace_off", "induction_furnace_front_off", "advanced_side", "advanced_top", "advanced_bottom");
-			electric("induction_furnace_on", "induction_furnace_front_on", "advanced_side", "advanced_top", "advanced_bottom");
-			electric("rotary_macerator_off", "rotary_macerator_front", "advanced_side", "rotary_macerator_top_off", "advanced_bottom");
-			electric("rotary_macerator_on", "rotary_macerator_front", "advanced_side", "rotary_macerator_top_on", "advanced_bottom");
-			electric("centrifuge_extractor_off", "centrifuge_extractor_front_off", "advanced_side", "centrifuge_extractor_top", "advanced_bottom");
-			electric("centrifuge_extractor_on", "centrifuge_extractor_front_on", "advanced_side", "centrifuge_extractor_top", "advanced_bottom");
-			electric("singularity_compressor_off", "singularity_compressor_front_off", "advanced_side", "singularity_compressor_top", "advanced_bottom");
-			electric("singularity_compressor_on", "singularity_compressor_front_on", "advanced_side", "singularity_compressor_top", "advanced_bottom");
+			electric("advanced_powered_furnace_off", "advanced_powered_furnace_front_off", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
+			electric("advanced_powered_furnace_on", "advanced_powered_furnace_front_on", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
+			electric("advanced_macerator_off", "advanced_macerator_front", ADVANCED_SIDE, "advanced_macerator_top_off", ADVANCED_BOTTOM);
+			electric("advanced_macerator_on", "advanced_macerator_front", ADVANCED_SIDE, "advanced_macerator_top_on", ADVANCED_BOTTOM);
+			electric("advanced_centrifuge_off", "advanced_centrifuge_front_off", ADVANCED_SIDE, "advanced_centrifuge_top", ADVANCED_BOTTOM);
+			electric("advanced_centrifuge_on", "advanced_centrifuge_front_on", ADVANCED_SIDE, "advanced_centrifuge_top", ADVANCED_BOTTOM);
+			electric("advanced_compressor_off", "advanced_compressor_front_off", ADVANCED_SIDE, "advanced_compressor_top", ADVANCED_BOTTOM);
+			electric("advanced_compressor_on", "advanced_compressor_front_on", ADVANCED_SIDE, "advanced_compressor_top", ADVANCED_BOTTOM);
 
 			electric3d("lv_battery_box", "lv_battery_box_out", "lv_battery_box_in");
 			electric3d("mv_battery_box", "mv_battery_box_out", "mv_battery_box_in");

@@ -1,0 +1,9 @@
+{
+	"parent": "ftbic:block/orientable_2d",
+	"textures": {
+		"side": "ftbic:block/electric/dark/antimatter_constructor_side",
+		"front": "ftbic:block/electric/dark/antimatter_constructor_front_on",
+		"top": "ftbic:block/electric/dark/advanced_bottom",
+		"bottom": "ftbic:block/electric/dark/advanced_bottom"
+	}
+}
