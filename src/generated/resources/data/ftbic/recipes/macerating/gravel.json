@@ -3,14 +3,14 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"tag": "forge:gravel"
+				"tag": "forge:cobblestone"
 			},
 			"count": 1
 		}
 	],
 	"outputItems": [
 		{
-			"item": "minecraft:sand"
+			"item": "minecraft:gravel"
 		}
 	]
 }

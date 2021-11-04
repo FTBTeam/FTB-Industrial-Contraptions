@@ -1,5 +1,11 @@
 package dev.ftb.mods.ftbic;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +39,14 @@ public class FTBICConfig {
 	public static int MV_SOLAR_PANEL_GENERATION = 32;
 	public static int HV_SOLAR_PANEL_GENERATION = 256;
 
+	public static boolean ADD_DUST_FROM_ORE_RECIPES = true;
+	public static boolean ADD_DUST_FROM_MATERIAL_RECIPES = true;
+	public static boolean ADD_GEM_FROM_ORE_RECIPES = true;
+	public static boolean ADD_ROD_RECIPES = true;
+	public static boolean ADD_PLATE_RECIPES = true;
+	public static boolean ADD_GEAR_RECIPES = true;
+	public static boolean ADD_CANNED_FOOD_RECIPES = true;
+
 	public static final List<String> MOD_MATERIAL_PRIORITY = new ArrayList<>(Arrays.asList(
 			"minecraft",
 			"emendatusenigmatica",
@@ -41,7 +55,7 @@ public class FTBICConfig {
 			"immersiveengineering"
 	));
 
-	public static final List<String> AUTO_INGOTS = new ArrayList<>(Arrays.asList(
+	public static final List<String> AUTO_METALS = new ArrayList<>(Arrays.asList(
 			"iron",
 			"gold",
 			"netherite",
@@ -64,10 +78,12 @@ public class FTBICConfig {
 			"signalum",
 			"lumium",
 			"enderium",
-			"tungsten"
+			"tungsten",
+			"lithium"
 	));
 
 	public static final List<String> AUTO_GEMS = new ArrayList<>(Arrays.asList(
+			"redstone",
 			"lapis",
 			"diamond",
 			"emerald",
@@ -89,4 +105,35 @@ public class FTBICConfig {
 			"sapphire",
 			"peridot"
 	));
+
+	private static int getOrder(@Nullable ResourceLocation id) {
+		int i = id == null ? -1 : MOD_MATERIAL_PRIORITY.indexOf(id.getNamespace());
+		return i == -1 ? MOD_MATERIAL_PRIORITY.size() : i;
+	}
+
+	public static Item getItemFromTag(Tag<Item> tag) {
+		List<Item> items = tag.getValues();
+
+		if (items.isEmpty()) {
+			return Items.AIR;
+		} else if (items.size() == 1) {
+			return items.get(0);
+		}
+
+		int order = Integer.MAX_VALUE;
+		Item current = null;
+
+		for (Item item : items) {
+			int o = getOrder(item.getRegistryName());
+
+			if (o == 0) {
+				return item;
+			} else if (current == null || o < order) {
+				current = item;
+				order = o;
+			}
+		}
+
+		return current;
+	}
 }

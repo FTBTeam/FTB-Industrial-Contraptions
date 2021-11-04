@@ -3,14 +3,14 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"tag": "forge:gravel"
+				"tag": "forge:ender_pearls"
 			},
 			"count": 1
 		}
 	],
 	"outputItems": [
 		{
-			"item": "minecraft:sand"
+			"item": "emendatusenigmatica:ender_dust"
 		}
 	]
 }

@@ -3,14 +3,14 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"tag": "forge:gravel"
+				"tag": "forge:obsidian"
 			},
 			"count": 1
 		}
 	],
 	"outputItems": [
 		{
-			"item": "minecraft:sand"
+			"item": "emendatusenigmatica:obsidian_dust"
 		}
 	]
 }

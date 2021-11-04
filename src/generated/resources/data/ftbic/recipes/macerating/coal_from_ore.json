@@ -3,14 +3,15 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"tag": "forge:gravel"
+				"tag": "forge:ores/coal"
 			},
 			"count": 1
 		}
 	],
 	"outputItems": [
 		{
-			"item": "minecraft:flint"
+			"item": "minecraft:coal",
+			"count": 2
 		}
 	]
 }

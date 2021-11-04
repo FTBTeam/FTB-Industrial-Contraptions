@@ -121,16 +121,17 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.pattern("MMM")
 				.pattern("GGG")
 				.define('G', GLASS)
-				.define('M', Ingredient.merge(Arrays.asList(Ingredient.of(IRON_INGOT), Ingredient.of(COPPER_INGOT), Ingredient.of(TIN_INGOT))))
+				.define('M', INDUSTRIAL_GRADE_METAL)
 				.save(consumer, shapedLoc("fuse"));
 
 		ShapedRecipeBuilder.shaped(MACHINE_BLOCK)
 				.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
 				.group(MODID + ":machine_block")
 				.pattern("MMM")
-				.pattern("M M")
+				.pattern("MFM")
 				.pattern("MMM")
 				.define('M', INDUSTRIAL_GRADE_METAL)
+				.define('F', FUSE)
 				.save(consumer, shapedLoc("machine_block"));
 
 		ShapedRecipeBuilder.shaped(ADVANCED_MACHINE_BLOCK)
@@ -233,11 +234,13 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(LATEX), 0.1D)
 				.save(consumer, extractingLoc("latex_from_leaves"));
 
+		/*
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(IRON_INGOT))
 				.inputItem(Ingredient.of(IRON_INGOT), 3)
 				.outputItem(new ItemStack(INDUSTRIAL_GRADE_METAL, 3))
 				.save(consumer, compressingLoc("industrial_grade_metal"));
+		 */
 
 		MachineRecipeBuilder.compressing()
 				.unlockedBy("has_item", has(CARBON_FIBER_MESH))

@@ -3,14 +3,14 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"tag": "forge:gravel"
+				"item": "minecraft:charcoal"
 			},
 			"count": 1
 		}
 	],
 	"outputItems": [
 		{
-			"item": "minecraft:sand"
+			"item": "emendatusenigmatica:charcoal_dust"
 		}
 	]
 }

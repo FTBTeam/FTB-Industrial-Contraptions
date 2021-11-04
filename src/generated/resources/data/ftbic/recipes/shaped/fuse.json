@@ -10,17 +10,9 @@
 		"G": {
 			"tag": "forge:glass/colorless"
 		},
-		"M": [
-			{
-				"tag": "forge:ingots/iron"
-			},
-			{
-				"tag": "forge:ingots/copper"
-			},
-			{
-				"tag": "forge:ingots/tin"
-			}
-		]
+		"M": {
+			"item": "ftbic:industrial_grade_metal"
+		}
 	},
 	"result": {
 		"item": "ftbic:fuse",

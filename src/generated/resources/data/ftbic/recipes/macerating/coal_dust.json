@@ -3,7 +3,7 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"tag": "minecraft:coals"
+				"item": "minecraft:coal"
 			},
 			"count": 1
 		}

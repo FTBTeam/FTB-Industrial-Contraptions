@@ -1,8 +1,5 @@
 package dev.ftb.mods.ftbic.datagen;
 
-import com.ridanisaurus.emendatusenigmatica.registries.ItemHandler;
-import com.ridanisaurus.emendatusenigmatica.util.Materials;
-import com.ridanisaurus.emendatusenigmatica.util.ProcessedMaterials;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;
@@ -31,16 +28,10 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.save(consumer, maceratingLoc("bone_meal"));
 
 		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(COAL))
-				.inputItem(Ingredient.of(COAL))
-				.outputItem(new ItemStack(ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.COAL).get()))
-				.save(consumer, maceratingLoc("coal_dust"));
-
-		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", has(COBBLESTONE))
 				.inputItem(Ingredient.of(COBBLESTONE))
-				.outputItem(new ItemStack(Items.SAND))
-				.save(consumer, maceratingLoc("sand"));
+				.outputItem(new ItemStack(Items.GRAVEL))
+				.save(consumer, maceratingLoc("gravel"));
 
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", has(STONE))
@@ -51,8 +42,8 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", has(GRAVEL))
 				.inputItem(Ingredient.of(GRAVEL))
-				.outputItem(new ItemStack(Items.FLINT))
-				.save(consumer, maceratingLoc("flint"));
+				.outputItem(new ItemStack(Items.SAND))
+				.save(consumer, maceratingLoc("sand"));
 
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", has(Items.SNOW_BLOCK))
@@ -66,10 +57,52 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(Items.STRING, 4))
 				.save(consumer, maceratingLoc("string"));
 
+		MachineRecipeBuilder.macerating()
+				.unlockedBy("has_item", has(OBSIDIAN))
+				.inputItem(Ingredient.of(OBSIDIAN))
+				.outputItem(new ItemStack(OBSIDIAN_DUST_ITEM))
+				.save(consumer, maceratingLoc("obsidian_dust"));
+
+		MachineRecipeBuilder.macerating()
+				.unlockedBy("has_item", has(ENDER_PEARL))
+				.inputItem(Ingredient.of(ENDER_PEARL))
+				.outputItem(new ItemStack(ENDER_DUST_ITEM))
+				.save(consumer, maceratingLoc("ender_dust"));
+
+		MachineRecipeBuilder.macerating()
+				.unlockedBy("has_item", has(PLANKS))
+				.inputItem(Ingredient.of(PLANKS))
+				.outputItem(new ItemStack(SAWDUST_ITEM))
+				.save(consumer, maceratingLoc("sawdust"));
+
+		MachineRecipeBuilder.macerating()
+				.unlockedBy("has_item", has(Items.COAL))
+				.inputItem(Ingredient.of(Items.COAL))
+				.outputItem(new ItemStack(COAL_DUST_ITEM))
+				.save(consumer, maceratingLoc("coal_dust"));
+
+		MachineRecipeBuilder.macerating()
+				.unlockedBy("has_item", has(Items.CHARCOAL))
+				.inputItem(Ingredient.of(Items.CHARCOAL))
+				.outputItem(new ItemStack(CHARCOAL_DUST_ITEM))
+				.save(consumer, maceratingLoc("charcoal_dust"));
+
+		MachineRecipeBuilder.macerating()
+				.unlockedBy("has_item", has(COAL_ORE))
+				.inputItem(Ingredient.of(COAL_ORE))
+				.outputItem(new ItemStack(Items.COAL, 2))
+				.save(consumer, maceratingLoc("coal_from_ore"));
+
+		MachineRecipeBuilder.extracting()
+				.unlockedBy("has_item", has(GRAVEL))
+				.inputItem(Ingredient.of(GRAVEL))
+				.outputItem(new ItemStack(Items.FLINT))
+				.save(consumer, extractingLoc("flint"));
+
 		MachineRecipeBuilder.extracting()
 				.unlockedBy("has_item", has(QUARTZ))
 				.inputItem(Ingredient.of(QUARTZ))
-				.outputItem(new ItemStack(ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SILICON).get(), 3))
+				.outputItem(new ItemStack(SILICON_ITEM, 3))
 				.save(consumer, extractingLoc("silicon"));
 
 		MachineRecipeBuilder.extracting()

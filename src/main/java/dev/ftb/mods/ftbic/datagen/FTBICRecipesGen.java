@@ -1,5 +1,8 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import com.ridanisaurus.emendatusenigmatica.registries.ItemHandler;
+import com.ridanisaurus.emendatusenigmatica.util.Materials;
+import com.ridanisaurus.emendatusenigmatica.util.ProcessedMaterials;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
@@ -39,7 +42,9 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item CACTUS = Items.CACTUS;
 	public static final Tag<Item> COBBLESTONE = Tags.Items.COBBLESTONE;
 	public static final Item SMOOTH_STONE = Items.SMOOTH_STONE;
-	public static final Item OBSIDIAN = Items.OBSIDIAN;
+	public static final Tag<Item> OBSIDIAN = Tags.Items.OBSIDIAN;
+	public static final Tag<Item> ENDER_PEARL = Tags.Items.ENDER_PEARLS;
+	public static final Tag<Item> COAL_ORE = Tags.Items.ORES_COAL;
 	public static final Item FLINT = Items.FLINT;
 	public static final Tag<Item> STONE = Tags.Items.STONE;
 	public static final Tag<Item> GRAVEL = Tags.Items.GRAVEL;
@@ -63,6 +68,13 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> BRONZE_DUST = ItemTags.bind("forge:dusts/bronze");
 	public static final Tag<Item> TIN_DUST = ItemTags.bind("forge:dusts/tin");
 	public static final Tag<Item> ALUMINUM_DUST = ItemTags.bind("forge:dusts/aluminum");
+
+	public static final Item SILICON_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SILICON).get();
+	public static final Item OBSIDIAN_DUST_ITEM = ItemHandler.DUST_OBSIDIAN.get();
+	public static final Item ENDER_DUST_ITEM = ItemHandler.DUST_ENDER.get();
+	public static final Item SAWDUST_ITEM = ItemHandler.DUST_WOOD.get();
+	public static final Item COAL_DUST_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.COAL).get();
+	public static final Item CHARCOAL_DUST_ITEM = ItemHandler.DUST_CHARCOAL.get();
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
 	public static final Item REINFORCED_STONE = FTBICItems.REINFORCED_STONE.get();

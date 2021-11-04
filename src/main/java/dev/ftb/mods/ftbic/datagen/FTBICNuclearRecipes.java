@@ -120,7 +120,7 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 
 		MachineRecipeBuilder.canning()
 				.unlockedBy("has_item", has(URANIUM_DUST))
-				.inputItem(Ingredient.of(EMPTY_CELL))
+				.inputItem(Ingredient.of(WATER_CELL))
 				.inputItem(Ingredient.of(URANIUM_DUST))
 				.outputItem(new ItemStack(URANIUM_FUEL_ROD))
 				.save(consumer, canningLoc("uranium_fuel_rod"));

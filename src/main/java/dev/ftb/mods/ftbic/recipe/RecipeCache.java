@@ -18,9 +18,9 @@ public class RecipeCache implements Recipe<NoContainer> {
 
 	private final Map<Item, Integer> basicGeneratorFuel = new HashMap<>();
 	public final CookingRecipeResults smelting = new CookingRecipeResults(RecipeType.SMELTING);
-	public final SimpleMachineRecipeResults macerating = new SimpleMachineRecipeResults(FTBICRecipes.MACERATING);
-	public final SimpleMachineRecipeResults extracting = new SimpleMachineRecipeResults(FTBICRecipes.EXTRACTING);
-	public final SimpleMachineRecipeResults compressing = new SimpleMachineRecipeResults(FTBICRecipes.COMPRESSING);
+	public final MaceratingRecipeResults macerating = new MaceratingRecipeResults();
+	public final SimpleMachineRecipeResults extracting = new ExtractingRecipeResults();
+	public final SimpleMachineRecipeResults compressing = new CompressingRecipeResults();
 	public final CanningMachineRecipeResults canning = new CanningMachineRecipeResults();
 	public final RecyclingRecipeResults recycling = new RecyclingRecipeResults();
 	public final AntimatterFabricatorRecipeResults antimatterFabricator = new AntimatterFabricatorRecipeResults();

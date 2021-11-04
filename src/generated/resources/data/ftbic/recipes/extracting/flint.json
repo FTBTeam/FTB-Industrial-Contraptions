@@ -1,5 +1,5 @@
 {
-	"type": "ftbic:macerating",
+	"type": "ftbic:extracting",
 	"inputItems": [
 		{
 			"ingredient": {
@@ -10,7 +10,7 @@
 	],
 	"outputItems": [
 		{
-			"item": "minecraft:sand"
+			"item": "minecraft:flint"
 		}
 	]
 }

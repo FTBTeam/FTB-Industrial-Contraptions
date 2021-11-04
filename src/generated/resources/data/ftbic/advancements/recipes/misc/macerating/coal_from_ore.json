@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:compressing/industrial_grade_metal"
+			"ftbic:macerating/coal_from_ore"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"tag": "forge:ingots/iron"
+						"tag": "forge:ores/coal"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:compressing/industrial_grade_metal"
+				"recipe": "ftbic:macerating/coal_from_ore"
 			}
 		}
 	},

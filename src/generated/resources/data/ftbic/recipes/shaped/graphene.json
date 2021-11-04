@@ -11,7 +11,7 @@
 			"item": "ftbic:compressed_coal_ball"
 		},
 		"O": {
-			"item": "minecraft:obsidian"
+			"tag": "forge:obsidian"
 		}
 	},
 	"result": {

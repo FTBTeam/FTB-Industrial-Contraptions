@@ -14,7 +14,7 @@
 			"item": "ftbic:advanced_machine_block"
 		},
 		"C": {
-			"item": "minecraft:obsidian"
+			"tag": "forge:obsidian"
 		},
 		"W": {
 			"item": "ftbic:copper_coil"

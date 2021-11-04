@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MachineRecipe implements Recipe<NoContainer> {
@@ -24,6 +25,10 @@ public class MachineRecipe implements Recipe<NoContainer> {
 	public MachineRecipe(MachineRecipeSerializer s, ResourceLocation i) {
 		serializer = s;
 		id = i;
+		inputItems = new ArrayList<>(1);
+		inputFluids = new ArrayList<>(0);
+		outputItems = new ArrayList<>(1);
+		outputFluids = new ArrayList<>(0);
 		processingTime = 1D;
 	}
 

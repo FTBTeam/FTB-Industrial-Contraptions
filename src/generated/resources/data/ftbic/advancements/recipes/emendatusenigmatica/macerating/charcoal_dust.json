@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:macerating/sand"
+			"ftbic:macerating/charcoal_dust"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"tag": "forge:gravel"
+						"item": "minecraft:charcoal"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:macerating/sand"
+				"recipe": "ftbic:macerating/charcoal_dust"
 			}
 		}
 	},

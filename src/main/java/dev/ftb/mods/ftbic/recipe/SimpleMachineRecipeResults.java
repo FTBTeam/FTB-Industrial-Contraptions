@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class SimpleMachineRecipeResults extends MachineRecipeResults {
-	private final Supplier<MachineRecipeSerializer> recipeSerializer;
+	public final Supplier<MachineRecipeSerializer> recipeSerializer;
 	private List<MachineRecipe> allRecipes;
 	private Set<Item> validItems;
 
@@ -25,9 +25,14 @@ public class SimpleMachineRecipeResults extends MachineRecipeResults {
 	public List<MachineRecipe> getAllRecipes(Level level) {
 		if (allRecipes == null) {
 			allRecipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(recipeSerializer.get().recipeType));
+			addAdditionalRecipes(level, allRecipes);
+			allRecipes.removeIf(r -> r.inputItems.size() != 1 || r.outputItems.size() < 1);
 		}
 
 		return allRecipes;
+	}
+
+	protected void addAdditionalRecipes(Level level, List<MachineRecipe> list) {
 	}
 
 	@Override

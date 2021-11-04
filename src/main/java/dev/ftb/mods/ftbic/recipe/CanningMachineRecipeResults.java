@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.recipe;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
@@ -17,7 +18,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,22 +40,23 @@ public class CanningMachineRecipeResults extends MachineRecipeResults {
 		if (allRecipes == null) {
 			allRecipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(FTBICRecipes.CANNING.get().recipeType));
 
-			Ingredient canIngredient = Ingredient.of(FTBICItems.EMPTY_CAN.item.get());
+			if (FTBICConfig.ADD_CANNED_FOOD_RECIPES) {
+				Ingredient canIngredient = Ingredient.of(FTBICItems.EMPTY_CAN.item.get());
 
-			for (Item item : ForgeRegistries.ITEMS) {
-				FoodProperties f = item.getFoodProperties();
+				for (Item item : ForgeRegistries.ITEMS) {
+					FoodProperties f = item.getFoodProperties();
 
-				if (f != null && f.getNutrition() > 1 && f.getEffects().isEmpty() && !FTBICUtils.UNCANNABLE_FOOD.contains(item)) {
-					int cans = (f.getNutrition() + (f.isMeat() ? 8 : 3)) / 4;
+					if (f != null && f.getNutrition() > 1 && f.getEffects().isEmpty() && !FTBICUtils.UNCANNABLE_FOOD.contains(item)) {
+						int cans = (f.getNutrition() + (f.isMeat() ? 8 : 3)) / 4;
 
-					if (cans > 0) {
-						ResourceLocation id = item.getRegistryName();
-						MachineRecipe recipe = new MachineRecipe(FTBICRecipes.CANNING.get(), new ResourceLocation(FTBIC.MOD_ID, "canning/generated/" + id.getNamespace() + "/" + id.getPath()));
-						recipe.inputItems = Arrays.asList(new IngredientWithCount(canIngredient, cans), new IngredientWithCount(Ingredient.of(item), 1));
-						recipe.inputFluids = Collections.emptyList();
-						recipe.outputItems = Collections.singletonList(new StackWithChance(new ItemStack(FTBICItems.CANNED_FOOD.get(), cans), 1D));
-						recipe.outputFluids = Collections.emptyList();
-						allRecipes.add(recipe);
+						if (cans > 0) {
+							ResourceLocation id = item.getRegistryName();
+							MachineRecipe recipe = new MachineRecipe(FTBICRecipes.CANNING.get(), new ResourceLocation(FTBIC.MOD_ID, "canning/generated/canned_food/" + id.getNamespace() + "/" + id.getPath()));
+							recipe.inputItems.add(new IngredientWithCount(canIngredient, cans));
+							recipe.inputItems.add(new IngredientWithCount(Ingredient.of(item), 1));
+							recipe.outputItems.add(new StackWithChance(new ItemStack(FTBICItems.CANNED_FOOD.get(), cans), 1D));
+							allRecipes.add(recipe);
+						}
 					}
 				}
 			}
