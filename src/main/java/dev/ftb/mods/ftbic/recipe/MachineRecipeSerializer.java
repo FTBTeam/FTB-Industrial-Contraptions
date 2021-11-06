@@ -19,13 +19,14 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 	public int guiHeight = 54;
 	public int powerX = 2;
 	public int powerY = 20;
-	public int arrowX = 24;
-	public int arrowY = 18;
+	public int progressX = 24;
+	public int progressY = 18;
 	public int batteryX = 0;
 	public int batteryY = 36;
 	public int outputX = 56;
 	public int outputY = 14;
-	public boolean extraOutput = false;
+	public int inputSlots = 1;
+	public int outputSlots = 1;
 
 	public MachineRecipeSerializer(String id) {
 		recipeType = RecipeType.register(FTBIC.MOD_ID + ":" + id);
@@ -33,13 +34,14 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 
 	public MachineRecipeSerializer twoInputs() {
 		powerX = 11;
-		arrowX = 30;
+		progressX = 30;
 		batteryX = 8;
+		inputSlots = 2;
 		return this;
 	}
 
 	public MachineRecipeSerializer extraOutput() {
-		extraOutput = true;
+		outputSlots = 2;
 		guiWidth = 103;
 		return this;
 	}
@@ -47,6 +49,7 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 	@Override
 	public MachineRecipe fromJson(ResourceLocation id, JsonObject json) {
 		MachineRecipe recipe = new MachineRecipe(this, id);
+		recipe.realRecipe = true;
 		recipe.inputItems = FTBICUtils.listFromJson(json, "inputItems", IngredientWithCount::new);
 		recipe.inputFluids = FTBICUtils.listFromJson(json, "inputFluids", FTBICUtils::fluidFromJson);
 		recipe.outputItems = FTBICUtils.listFromJson(json, "outputItems", StackWithChance::new);
@@ -59,6 +62,7 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 	@Override
 	public MachineRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
 		MachineRecipe recipe = new MachineRecipe(this, id);
+		recipe.realRecipe = true;
 		recipe.inputItems = FTBICUtils.listFromNet(buf, IngredientWithCount::new);
 		recipe.inputFluids = FTBICUtils.listFromNet(buf, FluidStack::readFromPacket);
 		recipe.outputItems = FTBICUtils.listFromNet(buf, StackWithChance::new);

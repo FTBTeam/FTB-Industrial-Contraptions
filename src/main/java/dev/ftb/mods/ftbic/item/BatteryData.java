@@ -60,12 +60,12 @@ public class BatteryData implements ICapabilityProvider, IEnergyStorage {
 	}
 
 	public void setEnergyStored(int energy) {
-		item.getOrCreateTag().putInt("Energy", energy);
+		BatteryItem.setEnergy(item, energy);
 	}
 
 	@Override
 	public int getEnergyStored() {
-		return batteryItem.batteryType.creative ? batteryItem.capacity / 2 : item.getOrCreateTag().getInt("Energy");
+		return batteryItem.batteryType.creative ? batteryItem.capacity / 2 : BatteryItem.getEnergy(item);
 	}
 
 	@Override

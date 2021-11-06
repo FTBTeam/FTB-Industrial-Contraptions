@@ -6,7 +6,7 @@ import dev.ftb.mods.ftbic.recipe.RecipeCache;
 
 public class MaceratorBlockEntity extends MachineBlockEntity {
 	public MaceratorBlockEntity() {
-		super(FTBICElectricBlocks.MACERATOR.blockEntity.get(), 1, 1);
+		super(FTBICElectricBlocks.MACERATOR.blockEntity.get(), 1, 2);
 		energyCapacity = 12000;
 		baseEnergyUse = 20;
 	}

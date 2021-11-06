@@ -34,6 +34,7 @@ public class MachineRecipeBuilder {
 	public static MachineRecipeBuilder machine(Supplier<MachineRecipeSerializer> type) {
 		MachineRecipeBuilder builder = new MachineRecipeBuilder();
 		builder.recipe = new MachineRecipe(type.get(), DUMMY_ID);
+		builder.recipe.realRecipe = true;
 		builder.recipe.inputItems = new ArrayList<>(1);
 		builder.recipe.inputFluids = new ArrayList<>(0);
 		builder.recipe.outputItems = new ArrayList<>(1);

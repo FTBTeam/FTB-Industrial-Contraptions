@@ -17,7 +17,7 @@ public class RecipeCache implements Recipe<NoContainer> {
 	public static final ResourceLocation ID = new ResourceLocation(FTBIC.MOD_ID, "recipe_cache");
 
 	private final Map<Item, Integer> basicGeneratorFuel = new HashMap<>();
-	public final CookingRecipeResults smelting = new CookingRecipeResults(RecipeType.SMELTING);
+	public final CookingRecipeResults smelting = new CookingRecipeResults(FTBICRecipes.SMELTING, "smelting", RecipeType.SMELTING);
 	public final MaceratingRecipeResults macerating = new MaceratingRecipeResults();
 	public final SeparatingRecipeResults separating = new SeparatingRecipeResults();
 	public final CompressingRecipeResults compressing = new CompressingRecipeResults();

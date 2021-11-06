@@ -44,6 +44,14 @@ public class BatteryItem extends Item {
 		return new BatteryData(this, stack);
 	}
 
+	public static int getEnergy(ItemStack stack) {
+		return stack.hasTag() ? stack.getTag().getInt("Energy") : 0;
+	}
+
+	public static void setEnergy(ItemStack stack, int energy) {
+		stack.getOrCreateTag().putInt("Energy", energy);
+	}
+
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 		return true;
@@ -51,7 +59,7 @@ public class BatteryItem extends Item {
 
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack) {
-		return batteryType.creative ? 0.5D : stack.hasTag() ? (1D - stack.getTag().getInt("Energy") / (double) capacity) : 1D;
+		return batteryType.creative ? 0.5D : 1D - getEnergy(stack) / (double) capacity;
 	}
 
 	@Override
@@ -63,7 +71,7 @@ public class BatteryItem extends Item {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
 		if (!batteryType.creative) {
-			list.add(new TextComponent(FTBICUtils.formatPower((stack.hasTag() ? stack.getTag().getInt("Energy") : 0), capacity)).withStyle(ChatFormatting.GRAY));
+			list.add(new TextComponent(FTBICUtils.formatPower(getEnergy(stack), capacity)).withStyle(ChatFormatting.GRAY));
 		}
 	}
 }

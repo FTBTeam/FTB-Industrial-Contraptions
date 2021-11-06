@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
+import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.UpgradeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -7,9 +8,9 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class UpgradeInventory extends ItemStackHandler {
-	public final MachineBlockEntity entity;
+	public final ElectricBlockEntity entity;
 
-	public UpgradeInventory(MachineBlockEntity e) {
+	public UpgradeInventory(ElectricBlockEntity e) {
 		super(4);
 		entity = e;
 	}

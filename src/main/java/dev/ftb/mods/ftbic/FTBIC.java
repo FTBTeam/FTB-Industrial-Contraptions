@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbic.block.entity.FTBICBlockEntities;
 import dev.ftb.mods.ftbic.client.FTBICClient;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
+import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,6 +38,7 @@ public class FTBIC {
 		FTBICItems.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICBlockEntities.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICRecipes.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
+		FTBICMenus.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICElectricBlocks.init();
 		PROXY.init();
 	}

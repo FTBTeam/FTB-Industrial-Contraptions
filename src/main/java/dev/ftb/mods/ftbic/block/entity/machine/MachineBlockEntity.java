@@ -2,21 +2,32 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.item.BatteryItem;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
+import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
-import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
+import dev.ftb.mods.ftbic.screen.MachineMenu;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
 import dev.ftb.mods.ftbic.util.PowerTier;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -26,8 +37,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class MachineBlockEntity extends ElectricBlockEntity {
+public abstract class MachineBlockEntity extends ElectricBlockEntity implements ContainerData {
 	public final UpgradeInventory upgradeInventory;
+	public final BatteryInventory batteryInventory;
 	public int baseEnergyUse;
 	public int progress;
 	public int lastMaxProgress;
@@ -37,6 +49,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity {
 	public MachineBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
 		super(type, inItems, outItems);
 		upgradeInventory = new UpgradeInventory(this);
+		batteryInventory = new BatteryInventory(this);
 		inputPowerTier = PowerTier.LV;
 		energyCapacity = 8000;
 		baseEnergyUse = 20;
@@ -60,7 +73,11 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity {
 			tag.putInt("Acceleration", acceleration);
 		}
 
-		tag.put("Upgrades", upgradeInventory.serializeNBT().getCompound("Items"));
+		tag.put("Upgrades", upgradeInventory.serializeNBT().getList("Items", Constants.NBT.TAG_COMPOUND));
+
+		if (!batteryInventory.getStackInSlot(0).isEmpty()) {
+			tag.put("Battery", batteryInventory.getStackInSlot(0).serializeNBT());
+		}
 	}
 
 	@Override
@@ -71,8 +88,14 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity {
 		acceleration = tag.getInt("Acceleration");
 
 		CompoundTag tag1 = new CompoundTag();
-		tag1.put("Items", tag.getCompound("Upgrades"));
+		tag1.put("Items", tag.getList("Upgrades", Constants.NBT.TAG_COMPOUND));
 		upgradeInventory.deserializeNBT(tag1);
+
+		if (tag.contains("Battery")) {
+			batteryInventory.setStackInSlot(0, ItemStack.of(tag.getCompound("Battery")));
+		} else {
+			batteryInventory.setStackInSlot(0, ItemStack.EMPTY);
+		}
 	}
 
 	@Override
@@ -89,24 +112,50 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity {
 		Random random = level != null ? level.random : new Random();
 
 		if (simulate || random.nextDouble() < result.output.chance) {
-			if (!ItemHandlerHelper.insertItemStacked(output, result.output.stack, false).isEmpty()) {
+			if (!ItemHandlerHelper.insertItemStacked(output, result.output.stack.copy(), false).isEmpty()) {
 				return null;
 			}
 		}
 
 		for (int i = 0; i < result.extra.length; i++) {
 			if (result.extra[i].chance >= 1D) {
-				if (!ItemHandlerHelper.insertItemStacked(output, result.extra[i].stack, false).isEmpty()) {
+				if (!ItemHandlerHelper.insertItemStacked(output, result.extra[i].stack.copy(), false).isEmpty()) {
 					return null;
 				}
 			} else if (!simulate && random.nextDouble() < result.extra[i].chance) {
-				if (!ItemHandlerHelper.insertItemStacked(output, result.extra[i].stack, false).isEmpty()) {
+				if (!ItemHandlerHelper.insertItemStacked(output, result.extra[i].stack.copy(), false).isEmpty()) {
 					return null;
 				}
 			}
 		}
 
 		return output;
+	}
+
+	@Override
+	protected void handleEnergyInput() {
+		if (!level.isClientSide() && energy < energyCapacity) {
+			ItemStack battery = batteryInventory.getStackInSlot(0);
+
+			if (!battery.isEmpty() && battery.getItem() instanceof BatteryItem) {
+				BatteryItem item = (BatteryItem) battery.getItem();
+				int be = BatteryItem.getEnergy(battery);
+				int e = Math.min(energyCapacity - energy, Math.min(item.tier.batteryTransferRate, be));
+
+				if (e > 0) {
+					BatteryItem.setEnergy(battery, be - e);
+					energyAdded += e;
+
+					if (be - e == 0 && item.batteryType.singleUse) {
+						battery.shrink(1);
+					}
+
+					setChanged();
+				}
+			}
+		}
+
+		super.handleEnergyInput();
 	}
 
 	public void handleProcessing() {
@@ -233,18 +282,67 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity {
 		return cache != null && getRecipes(cache).canInsert(level, slot, stack);
 	}
 
+	@Nullable
+	public MachineRecipeSerializer getRecipeSerializer() {
+		RecipeCache cache = getRecipeCache();
+		MachineRecipeResults results = cache == null ? null : getRecipes(cache);
+		return results instanceof SimpleMachineRecipeResults ? ((SimpleMachineRecipeResults) results).recipeSerializer.get() : null;
+	}
+
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			player.displayClientMessage(new TextComponent("Energy: " + FTBICUtils.formatPower(energy, energyCapacity)), false);
+			MachineRecipeSerializer serializer = getRecipeSerializer();
 
-			MachineProcessingResult result = getResult(new ItemStack[]{player.getItemInHand(hand)}, true);
+			if (serializer != null) {
+				NetworkHooks.openGui((ServerPlayer) player, new MenuProvider() {
+					@Override
+					public Component getDisplayName() {
+						return getBlockState().getBlock().getName();
+					}
 
-			if (result.exists()) {
-				player.displayClientMessage(new TextComponent("Result: ").append(result.output.stack.getHoverName()), false);
+					@Override
+					public AbstractContainerMenu createMenu(int id, Inventory playerInv, Player player1) {
+						return new MachineMenu(id, playerInv, MachineBlockEntity.this, MachineBlockEntity.this, serializer);
+					}
+				}, this::writeMenu);
 			}
 		}
 
 		return InteractionResult.SUCCESS;
+	}
+
+	private void writeMenu(FriendlyByteBuf buf) {
+		buf.writeBlockPos(worldPosition);
+		buf.writeResourceLocation(getRecipeSerializer().getRegistryName());
+	}
+
+	@Override
+	public int get(int id) {
+		switch (id) {
+			case 0:
+				return progress;
+			case 1:
+				return lastMaxProgress;
+			case 2:
+				return energy;
+			case 3:
+				return energyCapacity;
+			case 4:
+				return progress > 0 ? baseEnergyUse : 0;
+			case 5:
+				return acceleration;
+			default:
+				return 0;
+		}
+	}
+
+	@Override
+	public void set(int id, int value) {
+	}
+
+	@Override
+	public int getCount() {
+		return 6;
 	}
 }

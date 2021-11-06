@@ -16,6 +16,7 @@ import java.util.List;
 public class MachineRecipe implements Recipe<NoContainer> {
 	public final MachineRecipeSerializer serializer;
 	public final ResourceLocation id;
+	public boolean realRecipe;
 	public List<IngredientWithCount> inputItems;
 	public List<FluidStack> inputFluids;
 	public List<StackWithChance> outputItems;
@@ -25,6 +26,7 @@ public class MachineRecipe implements Recipe<NoContainer> {
 	public MachineRecipe(MachineRecipeSerializer s, ResourceLocation i) {
 		serializer = s;
 		id = i;
+		realRecipe = false;
 		inputItems = new ArrayList<>(1);
 		inputFluids = new ArrayList<>(0);
 		outputItems = new ArrayList<>(1);

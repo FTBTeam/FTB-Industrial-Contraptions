@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
+import dev.ftb.mods.ftbic.screen.MachineScreen;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -31,8 +32,6 @@ import java.util.stream.Collectors;
  * @author LatvianModder
  */
 public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
-	public static final ResourceLocation BASE = new ResourceLocation(FTBIC.MOD_ID, "textures/gui/base.png");
-
 	public final MachineRecipeSerializer serializer;
 	public final String titleKey;
 	public final ElectricBlockInstance electricBlockInstance;
@@ -50,10 +49,10 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 		icon = guiHelper.createDrawableIngredient(new ItemStack(item.item.get()));
 		arrowOff = guiHelper.drawableBuilder(progressTexture, 0, 0, 24, 17).setTextureSize(32, 64).build();
 		arrowOn = guiHelper.drawableBuilder(progressTexture, 0, 18, 24, 17).setTextureSize(32, 64).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
-		powerOff = guiHelper.drawableBuilder(BASE, 0, 240, 14, 14).setTextureSize(256, 256).build();
-		powerOn = guiHelper.drawableBuilder(BASE, 16, 240, 14, 14).setTextureSize(256, 256).buildAnimated(84, IDrawableAnimated.StartDirection.TOP, true);
-		slot = guiHelper.drawableBuilder(BASE, 0, 167, 18, 18).setTextureSize(256, 256).build();
-		largeSlot = (serializer.extraOutput ? guiHelper.drawableBuilder(BASE, 0, 213, 47, 26) : guiHelper.drawableBuilder(BASE, 0, 186, 26, 26)).setTextureSize(256, 256).build();
+		powerOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 240, 14, 14).setTextureSize(256, 256).build();
+		powerOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 16, 240, 14, 14).setTextureSize(256, 256).buildAnimated(84, IDrawableAnimated.StartDirection.TOP, true);
+		slot = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 167, 18, 18).setTextureSize(256, 256).build();
+		largeSlot = (serializer.outputSlots > 1 ? guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 213, 47, 26) : guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 186, 26, 26)).setTextureSize(256, 256).build();
 	}
 
 	@Override
@@ -83,12 +82,12 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 
 	@Override
 	public void draw(MachineRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
-		arrowOff.draw(matrixStack, serializer.arrowX, serializer.arrowY);
-		arrowOn.draw(matrixStack, serializer.arrowX, serializer.arrowY);
+		arrowOff.draw(matrixStack, serializer.progressX, serializer.progressY);
+		arrowOn.draw(matrixStack, serializer.progressX, serializer.progressY);
 		powerOff.draw(matrixStack, serializer.powerX, serializer.powerY);
 		powerOn.draw(matrixStack, serializer.powerX, serializer.powerY);
 
-		for (int i = 0; i < recipe.inputItems.size(); i++) {
+		for (int i = 0; i < serializer.inputSlots; i++) {
 			slot.draw(matrixStack, i * 18, 0);
 		}
 
