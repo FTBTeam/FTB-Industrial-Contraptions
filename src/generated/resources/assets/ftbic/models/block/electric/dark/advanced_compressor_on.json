@@ -3,7 +3,7 @@
 	"textures": {
 		"side": "ftbic:block/electric/dark/advanced_side",
 		"front": "ftbic:block/electric/dark/advanced_compressor_front_on",
-		"top": "ftbic:block/electric/dark/advanced_bottom",
+		"top": "ftbic:block/electric/dark/advanced_compressor_top",
 		"bottom": "ftbic:block/electric/dark/advanced_bottom"
 	}
 }

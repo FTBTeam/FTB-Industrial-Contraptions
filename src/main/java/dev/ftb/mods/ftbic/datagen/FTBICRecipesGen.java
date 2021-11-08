@@ -67,6 +67,8 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> STEEL_DUST = ItemTags.bind("forge:dusts/steel");
 	public static final Tag<Item> LEAD_DUST = ItemTags.bind("forge:dusts/lead");
 	public static final Tag<Item> BRONZE_DUST = ItemTags.bind("forge:dusts/bronze");
+	public static final Tag<Item> ELECTRUM_DUST = ItemTags.bind("forge:dusts/electrum");
+	public static final Tag<Item> CONSTANTAN_DUST = ItemTags.bind("forge:dusts/constantan");
 	public static final Tag<Item> TIN_DUST = ItemTags.bind("forge:dusts/tin");
 	public static final Tag<Item> ALUMINUM_DUST = ItemTags.bind("forge:dusts/aluminum");
 

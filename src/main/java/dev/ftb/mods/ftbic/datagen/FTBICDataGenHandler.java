@@ -81,7 +81,6 @@ public class FTBICDataGenHandler {
 			gen.addProvider(blockTags);
 			gen.addProvider(new ICItemTags(gen, blockTags, MODID, efh));
 			gen.addProvider(new FTBICComponentRecipes(gen));
-			gen.addProvider(new FTBICCircuitRecipes(gen));
 			gen.addProvider(new FTBICUpgradeRecipes(gen));
 			gen.addProvider(new FTBICCableRecipes(gen));
 			gen.addProvider(new FTBICBatteryRecipes(gen));
@@ -269,7 +268,7 @@ public class FTBICDataGenHandler {
 
 		private void electric(String id, String front, String side, String top, String bottom) {
 			withExistingParent("block/electric/light/" + id, modLoc("block/orientable_2d")).texture("side", modLoc("block/electric/light/" + side)).texture("front", modLoc("block/electric/light/" + front)).texture("top", modLoc("block/electric/light/" + top)).texture("bottom", modLoc("block/electric/light/" + bottom));
-			withExistingParent("block/electric/dark/" + id, modLoc("block/orientable_2d")).texture("side", modLoc("block/electric/dark/" + side)).texture("front", modLoc("block/electric/dark/" + front)).texture("top", modLoc("block/electric/dark/" + bottom)).texture("bottom", modLoc("block/electric/dark/" + bottom));
+			withExistingParent("block/electric/dark/" + id, modLoc("block/orientable_2d")).texture("side", modLoc("block/electric/dark/" + side)).texture("front", modLoc("block/electric/dark/" + front)).texture("top", modLoc("block/electric/dark/" + top)).texture("bottom", modLoc("block/electric/dark/" + bottom));
 		}
 
 		private void electric3d(String id, String front, String side) {

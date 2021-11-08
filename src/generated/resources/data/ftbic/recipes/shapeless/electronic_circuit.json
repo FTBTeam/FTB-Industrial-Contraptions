@@ -1,0 +1,36 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"group": "ftbic:electronic_circuit",
+	"ingredients": [
+		{
+			"item": "ftbic:copper_cable"
+		},
+		{
+			"item": "ftbic:copper_cable"
+		},
+		{
+			"item": "ftbic:copper_cable"
+		},
+		{
+			"tag": "forge:dusts/redstone"
+		},
+		{
+			"item": "ftbic:industrial_grade_metal"
+		},
+		{
+			"tag": "forge:dusts/redstone"
+		},
+		{
+			"item": "ftbic:copper_cable"
+		},
+		{
+			"item": "ftbic:copper_cable"
+		},
+		{
+			"item": "ftbic:copper_cable"
+		}
+	],
+	"result": {
+		"item": "ftbic:electronic_circuit"
+	}
+}

@@ -3,7 +3,7 @@
 	"textures": {
 		"side": "ftbic:block/electric/dark/basic_side",
 		"front": "ftbic:block/electric/dark/wind_mill_front",
-		"top": "ftbic:block/electric/dark/basic_bottom",
+		"top": "ftbic:block/electric/dark/basic_top",
 		"bottom": "ftbic:block/electric/dark/basic_bottom"
 	}
 }

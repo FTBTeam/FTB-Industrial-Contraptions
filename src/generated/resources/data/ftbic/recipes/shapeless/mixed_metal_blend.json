@@ -1,6 +1,6 @@
 {
 	"type": "minecraft:crafting_shapeless",
-	"group": "ftbic:mixed_metal_ingot",
+	"group": "ftbic:mixed_metal_blend",
 	"ingredients": [
 		[
 			{
@@ -26,15 +26,39 @@
 				"tag": "forge:dusts/lead"
 			}
 		],
-		{
-			"tag": "forge:dusts/bronze"
-		},
-		{
-			"tag": "forge:dusts/bronze"
-		},
-		{
-			"tag": "forge:dusts/bronze"
-		},
+		[
+			{
+				"tag": "forge:dusts/bronze"
+			},
+			{
+				"tag": "forge:dusts/electrum"
+			},
+			{
+				"tag": "forge:dusts/constantan"
+			}
+		],
+		[
+			{
+				"tag": "forge:dusts/bronze"
+			},
+			{
+				"tag": "forge:dusts/electrum"
+			},
+			{
+				"tag": "forge:dusts/constantan"
+			}
+		],
+		[
+			{
+				"tag": "forge:dusts/bronze"
+			},
+			{
+				"tag": "forge:dusts/electrum"
+			},
+			{
+				"tag": "forge:dusts/constantan"
+			}
+		],
 		[
 			{
 				"tag": "forge:dusts/tin"

@@ -49,11 +49,11 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 
 		ShapelessRecipeBuilder.shapeless(MIXED_METAL_BLEND, 3)
 				.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
-				.group(MODID + ":mixed_metal_ingot")
+				.group(MODID + ":mixed_metal_blend")
 				.requires(Ingredient.merge(Arrays.asList(Ingredient.of(IRON_DUST), Ingredient.of(LEAD_DUST))), 3)
-				.requires(Ingredient.merge(Arrays.asList(Ingredient.of(BRONZE_DUST))), 3)
+				.requires(Ingredient.merge(Arrays.asList(Ingredient.of(BRONZE_DUST), Ingredient.of(ELECTRUM_DUST), Ingredient.of(CONSTANTAN_DUST))), 3)
 				.requires(Ingredient.merge(Arrays.asList(Ingredient.of(TIN_DUST), Ingredient.of(ALUMINUM_DUST))), 3)
-				.save(consumer, shapedLoc("mixed_metal_ingot"));
+				.save(consumer, shapelessLoc("mixed_metal_blend"));
 
 		ShapedRecipeBuilder.shaped(RUBBER_SHEET)
 				.unlockedBy("has_item", has(RUBBER))
@@ -114,6 +114,48 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.requires(SCRAP_BOX)
 				.save(consumer, shapelessLoc("scrap"));
 
+		ShapelessRecipeBuilder.shapeless(ELECTRONIC_CIRCUIT)
+				.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
+				.group(MODID + ":electronic_circuit")
+				.requires(COPPER_CABLE)
+				.requires(COPPER_CABLE)
+				.requires(COPPER_CABLE)
+				.requires(REDSTONE)
+				.requires(INDUSTRIAL_GRADE_METAL)
+				.requires(REDSTONE)
+				.requires(COPPER_CABLE)
+				.requires(COPPER_CABLE)
+				.requires(COPPER_CABLE)
+				.save(consumer, shapelessLoc("electronic_circuit"));
+
+		ShapelessRecipeBuilder.shapeless(ELECTRONIC_CIRCUIT)
+				.unlockedBy("has_item", has(ELECTRONIC_CIRCUIT))
+				.group(MODID + ":advanced_circuit")
+				.requires(REDSTONE)
+				.requires(GLOWSTONE)
+				.requires(REDSTONE)
+				.requires(SILICON)
+				.requires(ELECTRONIC_CIRCUIT)
+				.requires(SILICON)
+				.requires(REDSTONE)
+				.requires(GLOWSTONE)
+				.requires(REDSTONE)
+				.save(consumer, shapelessLoc("advanced_circuit"));
+
+		ShapelessRecipeBuilder.shapeless(IRIDIUM_CIRCUIT, 2)
+				.unlockedBy("has_item", has(ADVANCED_CIRCUIT))
+				.group(MODID + ":iridium_circuit")
+				.requires(ADVANCED_ALLOY)
+				.requires(GRAPHENE)
+				.requires(ADVANCED_ALLOY)
+				.requires(ADVANCED_CIRCUIT)
+				.requires(IRIDIUM_ALLOY)
+				.requires(ADVANCED_CIRCUIT)
+				.requires(ADVANCED_ALLOY)
+				.requires(GRAPHENE)
+				.requires(ADVANCED_ALLOY)
+				.save(consumer, shapelessLoc("iridium_circuit"));
+
 		ShapedRecipeBuilder.shaped(FUSE, 24)
 				.unlockedBy("has_item", has(GLASS))
 				.group(MODID + ":fuse")
@@ -134,29 +176,19 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.define('F', FUSE)
 				.save(consumer, shapedLoc("machine_block"));
 
-		ShapedRecipeBuilder.shaped(ADVANCED_MACHINE_BLOCK)
+		ShapelessRecipeBuilder.shapeless(ADVANCED_MACHINE_BLOCK)
 				.unlockedBy("has_item", has(MACHINE_BLOCK))
 				.group(MODID + ":advanced_machine_block")
-				.pattern("WCW")
-				.pattern("AMA")
-				.pattern("WCW")
-				.define('M', MACHINE_BLOCK)
-				.define('C', CARBON_PLATE)
-				.define('A', ADVANCED_ALLOY)
-				.define('W', COPPER_COIL)
-				.save(consumer, shapedLoc("advanced_machine_block_h"));
-
-		ShapedRecipeBuilder.shaped(ADVANCED_MACHINE_BLOCK)
-				.unlockedBy("has_item", has(MACHINE_BLOCK))
-				.group(MODID + ":advanced_machine_block")
-				.pattern("WAW")
-				.pattern("CMC")
-				.pattern("WAW")
-				.define('M', MACHINE_BLOCK)
-				.define('C', CARBON_PLATE)
-				.define('A', ADVANCED_ALLOY)
-				.define('W', COPPER_COIL)
-				.save(consumer, shapedLoc("advanced_machine_block_v"));
+				.requires(COPPER_COIL)
+				.requires(CARBON_PLATE)
+				.requires(COPPER_COIL)
+				.requires(ADVANCED_ALLOY)
+				.requires(MACHINE_BLOCK)
+				.requires(ADVANCED_ALLOY)
+				.requires(COPPER_COIL)
+				.requires(CARBON_PLATE)
+				.requires(COPPER_COIL)
+				.save(consumer, shapelessLoc("advanced_machine_block"));
 
 		ShapedRecipeBuilder.shaped(EMPTY_CELL, 4)
 				.unlockedBy("has_item", has(TIN_INGOT))
@@ -197,8 +229,8 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 		ShapelessRecipeBuilder.shapeless(CARBON_FIBER_MESH)
 				.unlockedBy("has_item", has(CARBON_FIBERS))
 				.group(MODID + ":carbon_fiber_mesh")
-				.requires(CARBON_FIBERS, 2)
-				.save(consumer, shapedLoc("carbon_fiber_mesh"));
+				.requires(CARBON_FIBERS, 4)
+				.save(consumer, shapelessLoc("carbon_fiber_mesh"));
 
 		ShapedRecipeBuilder.shaped(COPPER_COIL)
 				.unlockedBy("has_item", has(COPPER_WIRE))
