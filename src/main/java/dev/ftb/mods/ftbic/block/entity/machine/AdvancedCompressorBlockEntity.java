@@ -8,14 +8,15 @@ import dev.ftb.mods.ftbic.util.PowerTier;
 public class AdvancedCompressorBlockEntity extends MachineBlockEntity {
 	public AdvancedCompressorBlockEntity() {
 		super(FTBICElectricBlocks.ADVANCED_COMPRESSOR.blockEntity.get(), 2, 2);
-		inputPowerTier = PowerTier.MV;
-		energyCapacity = 8000;
-		baseEnergyUse = 20;
 	}
 
 	@Override
-	public boolean shouldAccelerate() {
-		return true;
+	public void initProperties() {
+		super.initProperties();
+		inputPowerTier = PowerTier.MV;
+		energyCapacity = 8000;
+		energyUse = 20;
+		shouldAccelerate = true;
 	}
 
 	@Override

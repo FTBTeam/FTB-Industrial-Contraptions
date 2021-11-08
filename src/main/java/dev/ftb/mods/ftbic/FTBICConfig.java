@@ -39,6 +39,13 @@ public class FTBICConfig {
 	public static int MV_SOLAR_PANEL_GENERATION = 32;
 	public static int HV_SOLAR_PANEL_GENERATION = 256;
 
+	public static double MACHINE_RECIPE_BASE_TICKS = 200D;
+
+	public static int UPGRADE_LIMIT_PER_SLOT = 4;
+	public static double OVERCLOCKER_SPEED = 1.45D;
+	public static double OVERCLOCKER_ENERGY_USE = 1.6D;
+	public static double STORAGE_UPGRADE = 10000D;
+
 	public static boolean ADD_DUST_FROM_ORE_RECIPES = true;
 	public static boolean ADD_DUST_FROM_MATERIAL_RECIPES = true;
 	public static boolean ADD_GEM_FROM_ORE_RECIPES = true;
@@ -78,6 +85,8 @@ public class FTBICConfig {
 			"signalum",
 			"lumium",
 			"enderium",
+			"iridium",
+			"cast_iron",
 			"tungsten",
 			"lithium"
 	));

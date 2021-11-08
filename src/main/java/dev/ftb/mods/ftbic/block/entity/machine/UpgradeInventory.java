@@ -9,15 +9,21 @@ import org.jetbrains.annotations.NotNull;
 
 public class UpgradeInventory extends ItemStackHandler {
 	public final ElectricBlockEntity entity;
+	public final int limit;
 
-	public UpgradeInventory(ElectricBlockEntity e) {
-		super(4);
+	public UpgradeInventory(ElectricBlockEntity e, int slots, int stackLimit) {
+		super(slots);
 		entity = e;
+		limit = stackLimit;
 	}
 
 	@Override
 	protected void onContentsChanged(int slot) {
-		entity.setChanged();
+		if (entity.hasLevel() && !entity.getLevel().isClientSide()) {
+			entity.initProperties();
+			entity.upgradesChanged();
+			entity.setChanged();
+		}
 	}
 
 	@Override
@@ -27,28 +33,20 @@ public class UpgradeInventory extends ItemStackHandler {
 
 	@Override
 	public int getSlotLimit(int slot) {
-		return 1;
+		return limit;
 	}
 
-	public int count(Item item) {
+	public int countUpgrades(Item item) {
 		int count = 0;
 
 		for (int i = 0; i < getSlots(); i++) {
-			if (getStackInSlot(i).getItem() == item) {
-				count++;
+			ItemStack stack = getStackInSlot(i);
+
+			if (stack.getItem() == item) {
+				count += stack.getCount();
 			}
 		}
 
 		return count;
-	}
-
-	public boolean contains(Item item) {
-		for (int i = 0; i < getSlots(); i++) {
-			if (getStackInSlot(i).getItem() == item) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 }

@@ -46,19 +46,23 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		return ELECTRIC_NETWORK_CHANGES.get();
 	}
 
-	private boolean changed = false;
-	public int energy = 0;
-	public int energyCapacity = 40000;
-	public int energyAdded = 0;
-	public PowerTier outputPowerTier = null;
-	public PowerTier inputPowerTier = null;
+	private boolean changed;
+	public int energy;
+	public int energyAdded;
 	public final ItemStack[] inputItems;
 	public final ItemStack[] outputItems;
-	private LazyOptional<?> thisOptional = null;
-	public ElectricBlockState changeState = null;
+	private LazyOptional<?> thisOptional;
+	public ElectricBlockState changeState;
+
+	public int energyCapacity;
+	public PowerTier outputPowerTier;
+	public PowerTier inputPowerTier;
 
 	public ElectricBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
 		super(type);
+		changed = false;
+		energy = 0;
+		energyAdded = 0;
 		inputItems = new ItemStack[inItems];
 		outputItems = new ItemStack[outItems];
 		Arrays.fill(inputItems, ItemStack.EMPTY);
@@ -67,6 +71,9 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		if (inputItems.length + outputItems.length > 127) {
 			throw new RuntimeException("Internal inventory of " + type.getRegistryName() + " too large!");
 		}
+
+		thisOptional = null;
+		changeState = null;
 	}
 
 	public void writeData(CompoundTag tag) {
@@ -109,6 +116,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public void load(BlockState state, CompoundTag tag) {
 		super.load(state, tag);
 		readData(tag);
+		initProperties();
+		upgradesChanged();
 	}
 
 	@Override
@@ -116,6 +125,18 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		super.save(tag);
 		writeData(tag);
 		return tag;
+	}
+
+	@Override
+	public void onLoad() {
+		if (level != null && !level.isClientSide()) {
+			initProperties();
+			upgradesChanged();
+		} else if (level != null) {
+			level.tickableBlockEntities.remove(this);
+		}
+
+		super.onLoad();
 	}
 
 	public LazyOptional<?> getThisOptional() {
@@ -278,8 +299,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	@NotNull
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		if (slot < 0 || slot >= inputItems.length + outputItems.length) {
-			throw new RuntimeException("Slot " + slot + " not in valid range - [0," + (inputItems.length + outputItems.length) + ")");
+		if (slot < 0 || slot >= getSlots()) {
+			throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
 		} else if (slot >= inputItems.length) {
 			return outputItems[slot - inputItems.length];
 		} else {
@@ -289,16 +310,16 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
-		if (slot < 0 || slot >= inputItems.length + outputItems.length) {
-			throw new RuntimeException("Slot " + slot + " not in valid range - [0," + (inputItems.length + outputItems.length) + ")");
+		if (slot < 0 || slot >= getSlots()) {
+			throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
 		} else if (slot >= inputItems.length) {
-			int c = outputItems[slot - inputItems.length].getCount();
+			ItemStack prev = outputItems[slot - inputItems.length];
 			outputItems[slot - inputItems.length] = stack;
-			inventoryChanged(slot, c);
+			inventoryChanged(slot, prev);
 		} else {
-			int c = inputItems[slot].getCount();
+			ItemStack prev = inputItems[slot];
 			inputItems[slot] = stack;
-			inventoryChanged(slot, c);
+			inventoryChanged(slot, prev);
 		}
 	}
 
@@ -327,15 +348,15 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		boolean reachedLimit = stack.getCount() > limit;
 
 		if (!simulate) {
-			int c = inputItems[slot].getCount();
-
 			if (existing.isEmpty()) {
+				ItemStack prev = inputItems[slot];
 				inputItems[slot] = reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack;
+				inventoryChanged(slot, prev);
 			} else {
+				ItemStack prev = existing.copy();
 				existing.grow(reachedLimit ? limit : stack.getCount());
+				inventoryChanged(slot, prev);
 			}
-
-			inventoryChanged(slot, c);
 		}
 
 		return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
@@ -360,7 +381,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		if (existing.getCount() <= toExtract) {
 			if (!simulate) {
 				outputItems[slot] = ItemStack.EMPTY;
-				inventoryChanged(slot, existing.getCount());
+				inventoryChanged(slot, existing);
 				return existing;
 			} else {
 				return existing.copy();
@@ -368,14 +389,14 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		} else {
 			if (!simulate) {
 				outputItems[slot] = ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract);
-				inventoryChanged(slot, existing.getCount());
+				inventoryChanged(slot, existing);
 			}
 
 			return ItemHandlerHelper.copyStackWithSize(existing, toExtract);
 		}
 	}
 
-	public void inventoryChanged(int slot, int prevCount) {
+	public void inventoryChanged(int slot, @Nullable ItemStack prev) {
 		setChanged();
 	}
 
@@ -403,5 +424,17 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		for (ItemStack stack : outputItems) {
 			Block.popResource(level, pos, stack);
 		}
+	}
+
+	public void initProperties() {
+		energyCapacity = 40000;
+		outputPowerTier = null;
+		inputPowerTier = null;
+	}
+
+	/**
+	 * In every instance initProperties() should be called first
+	 */
+	public void upgradesChanged() {
 	}
 }

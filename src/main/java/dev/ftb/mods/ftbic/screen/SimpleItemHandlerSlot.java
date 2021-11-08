@@ -1,12 +1,11 @@
 package dev.ftb.mods.ftbic.screen;
 
+import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.SlotItemHandler;
-
-import javax.annotation.Nonnull;
 
 public class SimpleItemHandlerSlot extends SlotItemHandler {
 	public SimpleItemHandlerSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
@@ -19,12 +18,17 @@ public class SimpleItemHandlerSlot extends SlotItemHandler {
 	}
 
 	@Override
-	@Nonnull
 	public ItemStack remove(int amount) {
-		ItemStack stack = this.getItem();
+		ItemStack stack = getItem();
+		ItemStack prev = stack.copy();
 		int possible = Math.min(amount, stack.getCount());
 		ItemStack returned = ItemHandlerHelper.copyStackWithSize(stack, possible);
 		stack.shrink(possible);
+
+		if (getItemHandler() instanceof ElectricBlockEntity) {
+			((ElectricBlockEntity) getItemHandler()).inventoryChanged(getSlotIndex(), prev);
+		}
+
 		return returned;
 	}
 }

@@ -19,4 +19,15 @@ public enum PowerTier {
 		transferRate = t;
 		batteryTransferRate = (int) (transferRate * FTBICConfig.BATTERY_TRANSFER_EFFICIENCY);
 	}
+
+	public PowerTier up() {
+		switch (this) {
+			case LV:
+				return MV;
+			case MV:
+				return HV;
+			default:
+				return EV;
+		}
+	}
 }

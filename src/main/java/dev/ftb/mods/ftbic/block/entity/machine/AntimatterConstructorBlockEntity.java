@@ -8,6 +8,11 @@ import dev.ftb.mods.ftbic.util.PowerTier;
 public class AntimatterConstructorBlockEntity extends MachineBlockEntity {
 	public AntimatterConstructorBlockEntity() {
 		super(FTBICElectricBlocks.ANTIMATTER_CONSTRUCTOR.blockEntity.get(), 1, 1);
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
 		inputPowerTier = PowerTier.EV;
 	}
 

@@ -7,6 +7,11 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 
 	public SolarPanelBlockEntity(BlockEntityType<?> type) {
 		super(type, 0, 0);
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
 		solarOutput = 0;
 	}
 

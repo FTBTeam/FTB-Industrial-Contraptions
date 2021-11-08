@@ -6,4 +6,9 @@ public class WindMillBlockEntity extends GeneratorBlockEntity {
 	public WindMillBlockEntity() {
 		super(FTBICElectricBlocks.WIND_MILL.blockEntity.get(), 1, 0);
 	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
+	}
 }

@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	public BatteryBoxBlockEntity(BlockEntityType<?> type) {
-		super(type, 1, 1);
+		super(type, 0, 0);
 	}
 
 	@Override

@@ -11,6 +11,11 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
+	public void initProperties() {
+		super.initProperties();
+	}
+
+	@Override
 	public int getSlotLimit(int slot) {
 		return 1;
 	}

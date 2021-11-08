@@ -21,6 +21,11 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity impleme
 
 	public GeothermalGeneratorBlockEntity() {
 		super(FTBICElectricBlocks.GEOTHERMAL_GENERATOR.blockEntity.get(), 1, 1);
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
 		energyCapacity = 24000;
 	}
 

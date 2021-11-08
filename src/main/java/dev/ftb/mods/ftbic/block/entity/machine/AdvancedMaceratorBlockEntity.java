@@ -8,14 +8,15 @@ import dev.ftb.mods.ftbic.util.PowerTier;
 public class AdvancedMaceratorBlockEntity extends MachineBlockEntity {
 	public AdvancedMaceratorBlockEntity() {
 		super(FTBICElectricBlocks.ADVANCED_MACERATOR.blockEntity.get(), 2, 2);
-		inputPowerTier = PowerTier.MV;
-		energyCapacity = 12000;
-		baseEnergyUse = 20;
 	}
 
 	@Override
-	public boolean shouldAccelerate() {
-		return true;
+	public void initProperties() {
+		super.initProperties();
+		inputPowerTier = PowerTier.MV;
+		energyCapacity = 12000;
+		energyUse = 20;
+		shouldAccelerate = true;
 	}
 
 	@Override

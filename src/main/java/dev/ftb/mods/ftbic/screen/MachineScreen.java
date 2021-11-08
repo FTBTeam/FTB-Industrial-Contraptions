@@ -40,22 +40,20 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 
 		blit(poseStack, wx + menu.serializer.progressX, wy + menu.serializer.progressY, getBlitOffset(), 0, 0, 24, 17, 64, 32);
 
-		int p = menu.getProgress();
+		int p = menu.getProgressBar();
 
 		if (p > 0) {
-			int p1 = p * 24 / menu.getMaxProgress();
-			blit(poseStack, wx + menu.serializer.progressX, wy + menu.serializer.progressY, getBlitOffset(), 0, 18, 24 - p1, 17, 64, 32);
+			blit(poseStack, wx + menu.serializer.progressX, wy + menu.serializer.progressY, getBlitOffset(), 0, 18, p, 17, 64, 32);
 		}
 
 		minecraft.getTextureManager().bind(BASE_TEXTURE);
 
 		blit(poseStack, wx + menu.serializer.powerX, wy + menu.serializer.powerY, 0, 240, 14, 14);
 
-		int e = menu.getEnergy();
+		int e = menu.getEnergyBar();
 
 		if (e > 0) {
-			int e1 = menu.getEnergy() * 14 / menu.getEnergyCapacity();
-			blit(poseStack, wx + menu.serializer.powerX, wy + menu.serializer.powerY + (14 - e1), 16, 240 + (14 - e1), 14, e1);
+			blit(poseStack, wx + menu.serializer.powerX, wy + menu.serializer.powerY + (14 - e), 16, 240 + (14 - e), 14, e);
 		}
 
 		for (int i = 0; i < menu.entity.inputItems.length; i++) {

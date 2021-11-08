@@ -8,14 +8,15 @@ import dev.ftb.mods.ftbic.util.PowerTier;
 public class AdvancedPoweredFurnaceBlockEntity extends MachineBlockEntity {
 	public AdvancedPoweredFurnaceBlockEntity() {
 		super(FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.blockEntity.get(), 2, 2);
-		inputPowerTier = PowerTier.MV;
-		energyCapacity = 4160;
-		baseEnergyUse = 30;
 	}
 
 	@Override
-	public boolean shouldAccelerate() {
-		return true;
+	public void initProperties() {
+		super.initProperties();
+		inputPowerTier = PowerTier.MV;
+		energyCapacity = 4160;
+		energyUse = 30;
+		shouldAccelerate = true;
 	}
 
 	@Override

@@ -15,6 +15,11 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 
 	public BasicGeneratorBlockEntity() {
 		super(FTBICElectricBlocks.BASIC_GENERATOR.blockEntity.get(), 1, 0);
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
 		energyCapacity = 16000;
 	}
 

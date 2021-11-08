@@ -14,6 +14,10 @@ public class BatteryInventory extends ItemStackHandler {
 		entity = e;
 	}
 
+	public void loadItem(ItemStack stack) {
+		stacks.set(0, stack);
+	}
+
 	@Override
 	protected void onContentsChanged(int slot) {
 		entity.setChanged();

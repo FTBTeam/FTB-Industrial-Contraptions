@@ -7,6 +7,11 @@ import dev.ftb.mods.ftbic.util.PowerTier;
 public class MVBatteryBoxBlockEntity extends BatteryBoxBlockEntity {
 	public MVBatteryBoxBlockEntity() {
 		super(FTBICElectricBlocks.MV_BATTERY_BOX.blockEntity.get());
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
 		inputPowerTier = PowerTier.MV;
 		outputPowerTier = PowerTier.HV;
 		energyCapacity = FTBICConfig.MV_BATTERY_BOX_CAPACITY;

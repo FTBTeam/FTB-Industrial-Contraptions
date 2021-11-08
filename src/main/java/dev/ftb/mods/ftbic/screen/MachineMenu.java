@@ -28,6 +28,12 @@ public class MachineMenu extends AbstractContainerMenu {
 		int wx = 78 - (serializer.guiWidth / 2);
 		int wy = 16;
 
+		for (int y = 0; y < 4; y++) {
+			addSlot(new SimpleItemHandlerSlot(entity.upgradeInventory, y, 152, 8 + y * 18));
+		}
+
+		addSlot(new SimpleItemHandlerSlot(entity.batteryInventory, 0, wx + 1 + serializer.batteryX, wy + 1 + serializer.batteryY));
+
 		for (int x = 0; x < entity.inputItems.length; x++) {
 			addSlot(new SimpleItemHandlerSlot(entity, x, wx + 1 + x * 18, wy + 1));
 		}
@@ -35,12 +41,6 @@ public class MachineMenu extends AbstractContainerMenu {
 		for (int x = 0; x < entity.outputItems.length; x++) {
 			addSlot(new SimpleItemHandlerSlot(entity, entity.inputItems.length + x, wx + serializer.outputX + 5 + x * 25, wy + serializer.outputY + 5));
 		}
-
-		for (int y = 0; y < 4; y++) {
-			addSlot(new SimpleItemHandlerSlot(entity.upgradeInventory, y, 152, 8 + y * 18));
-		}
-
-		addSlot(new SimpleItemHandlerSlot(entity.batteryInventory, 0, wx + 1 + serializer.batteryX, wy + 1 + serializer.batteryY));
 
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 9; x++) {
@@ -56,12 +56,35 @@ public class MachineMenu extends AbstractContainerMenu {
 	}
 
 	public MachineMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-		this(id, playerInv, (MachineBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(6), (MachineRecipeSerializer) ForgeRegistries.RECIPE_SERIALIZERS.getValue(buf.readResourceLocation()));
+		this(id, playerInv, (MachineBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(3), (MachineRecipeSerializer) ForgeRegistries.RECIPE_SERIALIZERS.getValue(buf.readResourceLocation()));
 	}
 
 	@Override
 	public ItemStack quickMoveStack(Player player, int slotId) {
-		return ItemStack.EMPTY;
+		ItemStack stack = ItemStack.EMPTY;
+		Slot slot = slots.get(slotId);
+
+		if (slot != null && slot.hasItem()) {
+			ItemStack stack2 = slot.getItem();
+			stack = stack2.copy();
+			int slotCount = entity.inputItems.length + entity.outputItems.length + 5;
+
+			if (slotId < slotCount) {
+				if (!moveItemStackTo(stack2, slotCount, slots.size(), true)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (!moveItemStackTo(stack2, 0, slotCount, false)) {
+				return ItemStack.EMPTY;
+			}
+
+			if (stack2.isEmpty()) {
+				slot.set(ItemStack.EMPTY);
+			} else {
+				slot.setChanged();
+			}
+		}
+
+		return stack;
 	}
 
 	@Override
@@ -79,27 +102,15 @@ public class MachineMenu extends AbstractContainerMenu {
 		return false;
 	}
 
-	public int getProgress() {
+	public int getProgressBar() {
 		return containerData.get(0);
 	}
 
-	public int getMaxProgress() {
+	public int getEnergyBar() {
 		return containerData.get(1);
 	}
 
-	public int getEnergy() {
-		return containerData.get(2);
-	}
-
-	public int getEnergyCapacity() {
-		return containerData.get(3);
-	}
-
-	public int getEnergyUse() {
-		return containerData.get(4);
-	}
-
 	public int getAcceleration() {
-		return containerData.get(5);
+		return containerData.get(2);
 	}
 }

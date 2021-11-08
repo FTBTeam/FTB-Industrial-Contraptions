@@ -28,6 +28,7 @@ public class CookingRecipeResults extends SimpleMachineRecipeResults {
 			MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, type + "/generated/" + id.getNamespace() + "/" + id.getPath()));
 			recipe.inputItems.add(new IngredientWithCount(cookingRecipe.getIngredients().get(0), 1));
 			recipe.outputItems.add(new StackWithChance(cookingRecipe.getResultItem(), 1D));
+			recipe.processingTime = cookingRecipe.getCookingTime() / 400D;
 			list.add(recipe);
 		}
 	}

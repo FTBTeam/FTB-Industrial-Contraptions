@@ -1,8 +1,11 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.BatteryItem;
+import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
@@ -10,6 +13,8 @@ import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.screen.MachineMenu;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
 import dev.ftb.mods.ftbic.util.PowerTier;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -24,10 +29,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -38,36 +49,33 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class MachineBlockEntity extends ElectricBlockEntity implements ContainerData {
-	public final UpgradeInventory upgradeInventory;
-	public final BatteryInventory batteryInventory;
-	public int baseEnergyUse;
-	public int progress;
-	public int lastMaxProgress;
+	public UpgradeInventory upgradeInventory;
+	public BatteryInventory batteryInventory;
+	public double progress;
+	public double maxProgress;
 	public int acceleration;
 	private boolean checkProcessing;
 
+	public boolean shouldAccelerate;
+	public double energyUse;
+	public double progressSpeed;
+	public boolean autoEject;
+
 	public MachineBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
 		super(type, inItems, outItems);
-		upgradeInventory = new UpgradeInventory(this);
+		upgradeInventory = new UpgradeInventory(this, 4, FTBICConfig.UPGRADE_LIMIT_PER_SLOT);
 		batteryInventory = new BatteryInventory(this);
-		inputPowerTier = PowerTier.LV;
-		energyCapacity = 8000;
-		baseEnergyUse = 20;
 		progress = 0;
-		lastMaxProgress = 0;
+		maxProgress = 0D;
 		acceleration = 0;
 		checkProcessing = true;
-	}
-
-	public double getBaseRecipeTime() {
-		return 200D;
 	}
 
 	@Override
 	public void writeData(CompoundTag tag) {
 		super.writeData(tag);
-		tag.putInt("LastMaxProgress", lastMaxProgress);
-		tag.putInt("Progress", progress);
+		tag.putDouble("MaxProgress", maxProgress);
+		tag.putDouble("Progress", progress);
 
 		if (acceleration > 0) {
 			tag.putInt("Acceleration", acceleration);
@@ -83,8 +91,8 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	@Override
 	public void readData(CompoundTag tag) {
 		super.readData(tag);
-		lastMaxProgress = tag.getInt("LastMaxProgress");
-		progress = tag.getInt("Progress");
+		maxProgress = tag.getDouble("MaxProgress");
+		progress = tag.getDouble("Progress");
 		acceleration = tag.getInt("Acceleration");
 
 		CompoundTag tag1 = new CompoundTag();
@@ -92,9 +100,9 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 		upgradeInventory.deserializeNBT(tag1);
 
 		if (tag.contains("Battery")) {
-			batteryInventory.setStackInSlot(0, ItemStack.of(tag.getCompound("Battery")));
+			batteryInventory.loadItem(ItemStack.of(tag.getCompound("Battery")));
 		} else {
-			batteryInventory.setStackInSlot(0, ItemStack.EMPTY);
+			batteryInventory.loadItem(ItemStack.EMPTY);
 		}
 	}
 
@@ -109,6 +117,11 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	private ItemStackHandler getOutput(MachineProcessingResult result, boolean simulate) {
 		// Best way to check if output inventory fits all items is to just copy the current output array and try to insert all items
 		ItemStackHandler output = new ItemStackHandler(NonNullList.withSize(outputItems.length, ItemStack.EMPTY));
+
+		for (int i = 0; i < outputItems.length; i++) {
+			output.setStackInSlot(i, outputItems[i].copy());
+		}
+
 		Random random = level != null ? level.random : new Random();
 
 		if (simulate || random.nextDouble() < result.output.chance) {
@@ -159,23 +172,26 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	}
 
 	public void handleProcessing() {
-		if (progress > 0) {
-			if (energy >= baseEnergyUse) {
-				progress--;
-				energy -= baseEnergyUse;
+		if (maxProgress > 0D && progress < maxProgress) {
+			int eu = Mth.ceil(energyUse);
+
+			if (eu > 0 && energy >= eu) {
+				progress += progressSpeed;
+				energy -= eu;
 				changeState = ElectricBlockState.ON;
 
-				if (energy < baseEnergyUse) {
+				if (energy < eu) {
 					changeState = ElectricBlockState.OFF;
 					setChanged();
 				}
 
-				if (shouldAccelerate()) {
+				if (shouldAccelerate) {
 					acceleration++;
 				}
 			}
 
-			if (progress == 0) {
+			if (progress >= maxProgress) {
+				progress = 0D;
 				setChanged();
 				shiftInputs();
 				MachineProcessingResult result = getResult(inputItems, true);
@@ -197,6 +213,28 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 						}
 
 						shiftInputs();
+
+						if (autoEject) {
+							Direction[] directions = getEjectDirections();
+
+							for (int i = 0; i < outputItems.length; i++) {
+								if (!outputItems[i].isEmpty()) {
+									for (Direction direction : directions) {
+										BlockEntity entity = level.getBlockEntity(worldPosition.relative(direction));
+										IItemHandler itemHandler = entity == null ? null : entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction.getOpposite()).orElse(null);
+
+										if (itemHandler != null) {
+											outputItems[i] = ItemHandlerHelper.insertItemStacked(itemHandler, outputItems[i].copy(), false);
+
+											if (outputItems[i].isEmpty()) {
+												outputItems[i] = ItemStack.EMPTY;
+												break;
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 
@@ -205,14 +243,19 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 			}
 		}
 
-		if (progress == 0 && checkProcessing) {
+		if (checkProcessing) {
 			checkProcessing = false;
 
 			MachineProcessingResult result = getResult(inputItems, true);
+			boolean hasResult = result.exists() && getOutput(result, true) != null;
 
-			if (result.exists() && getOutput(result, true) != null) {
-				lastMaxProgress = Mth.ceil(result.time * getBaseRecipeTime());
-				progress = lastMaxProgress;
+			if (!hasResult) {
+				progress = 0D;
+				maxProgress = 0D;
+				changeState = ElectricBlockState.OFF;
+				setChanged();
+			} else if (progress == 0D) {
+				maxProgress = result.time * FTBICConfig.MACHINE_RECIPE_BASE_TICKS;
 				changeState = ElectricBlockState.ON;
 				setChanged();
 			}
@@ -227,24 +270,33 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 		}
 	}
 
-	public boolean shouldAccelerate() {
-		return false;
+	private Direction[] getEjectDirections() {
+		if (((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.facingProperty != BlockStateProperties.HORIZONTAL_FACING) {
+			return Direction.values();
+		}
+
+		Direction rot = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+		Direction[] values = new Direction[6];
+		values[0] = Direction.DOWN;
+		values[1] = rot.getCounterClockWise();
+		values[2] = rot.getOpposite();
+		values[3] = rot.getClockWise();
+		values[4] = rot;
+		values[5] = Direction.UP;
+		return values;
 	}
 
 	@Override
-	public void inventoryChanged(int slot, int prevCount) {
-		super.inventoryChanged(slot, prevCount);
-
-		if (slot < inputItems.length || outputItems[slot - inputItems.length].getCount() < prevCount) {
-			checkProcessing = true;
-		}
+	public void inventoryChanged(int slot, @Nullable ItemStack prev) {
+		super.inventoryChanged(slot, prev);
+		checkProcessing = true;
 	}
 
 	@Override
 	public void energyChanged(int prev) {
 		super.energyChanged(prev);
 
-		if (prev < baseEnergyUse && energy >= baseEnergyUse) {
+		if (energyUse != 0 && prev < energyUse && energy >= energyUse) {
 			checkProcessing = true;
 		}
 	}
@@ -318,19 +370,27 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	}
 
 	@Override
+	public void onBroken(Level level, BlockPos pos) {
+		super.onBroken(level, pos);
+
+		for (int i = 0; i < upgradeInventory.getSlots(); i++) {
+			Block.popResource(level, pos, upgradeInventory.getStackInSlot(i));
+		}
+
+		Block.popResource(level, pos, batteryInventory.getStackInSlot(0));
+	}
+
+	@Override
 	public int get(int id) {
 		switch (id) {
 			case 0:
-				return progress;
+				// getProgressBar()
+				return energyUse == 0 ? 0 : Mth.clamp(Mth.ceil(progress * 24D / maxProgress), 0, 24);
 			case 1:
-				return lastMaxProgress;
+				// getEnergyBar()
+				return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 14D / (double) energyCapacity), 0, 14);
 			case 2:
-				return energy;
-			case 3:
-				return energyCapacity;
-			case 4:
-				return progress > 0 ? baseEnergyUse : 0;
-			case 5:
+				// getAcceleration()
 				return acceleration;
 			default:
 				return 0;
@@ -343,6 +403,43 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 
 	@Override
 	public int getCount() {
-		return 6;
+		return 3;
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
+		inputPowerTier = PowerTier.LV;
+		energyCapacity = 8000;
+		energyUse = 20;
+		progressSpeed = 1D;
+		autoEject = false;
+		shouldAccelerate = false;
+	}
+
+	@Override
+	public void upgradesChanged() {
+		super.upgradesChanged();
+
+		int overclockers = upgradeInventory.countUpgrades(FTBICItems.OVERCLOCKER_UPGRADE.get());
+
+		for (int i = 0; i < overclockers; i++) {
+			energyUse *= FTBICConfig.OVERCLOCKER_ENERGY_USE;
+			progressSpeed *= FTBICConfig.OVERCLOCKER_SPEED;
+		}
+
+		int transformers = upgradeInventory.countUpgrades(FTBICItems.TRANSFORMER_UPGRADE.get());
+
+		while (transformers > 0) {
+			transformers--;
+			inputPowerTier = inputPowerTier.up();
+
+			if (inputPowerTier == PowerTier.EV) {
+				break;
+			}
+		}
+
+		energyCapacity += upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.STORAGE_UPGRADE;
+		autoEject = upgradeInventory.countUpgrades(FTBICItems.EJECTOR_UPGRADE.get()) > 0;
 	}
 }

@@ -8,9 +8,14 @@ import dev.ftb.mods.ftbic.util.PowerTier;
 public class ReprocessorBlockEntity extends MachineBlockEntity {
 	public ReprocessorBlockEntity() {
 		super(FTBICElectricBlocks.REPROCESSOR.blockEntity.get(), 1, 1);
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
 		inputPowerTier = PowerTier.MV;
 		energyCapacity = 40000;
-		baseEnergyUse = 80;
+		energyUse = 80;
 	}
 
 	@Override

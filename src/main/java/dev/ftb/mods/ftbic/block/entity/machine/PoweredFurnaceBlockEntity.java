@@ -7,8 +7,13 @@ import dev.ftb.mods.ftbic.recipe.RecipeCache;
 public class PoweredFurnaceBlockEntity extends MachineBlockEntity {
 	public PoweredFurnaceBlockEntity() {
 		super(FTBICElectricBlocks.POWERED_FURNACE.blockEntity.get(), 1, 1);
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
 		energyCapacity = 4160;
-		baseEnergyUse = 30;
+		energyUse = 30;
 	}
 
 	@Override

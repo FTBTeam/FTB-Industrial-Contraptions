@@ -30,6 +30,11 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 	public GeneratorBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
 		super(type, inItems, outItems);
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
 		outputPowerTier = PowerTier.LV;
 	}
 
