@@ -3,7 +3,7 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
-import dev.ftb.mods.ftbic.util.PowerTier;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 
 public class AntimatterConstructorBlockEntity extends MachineBlockEntity {
 	public AntimatterConstructorBlockEntity() {
@@ -13,7 +13,7 @@ public class AntimatterConstructorBlockEntity extends MachineBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		inputPowerTier = PowerTier.EV;
+		inputEnergyTier = EnergyTier.EV;
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
-import dev.ftb.mods.ftbic.util.PowerTier;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -34,7 +34,7 @@ public class CableBlock extends Block implements SimpleWaterloggedBlock {
 		}
 	}
 
-	public final PowerTier tier;
+	public final EnergyTier tier;
 	public final int border;
 	public final VoxelShape shapeCenter;
 	public final VoxelShape shapeD;
@@ -45,7 +45,7 @@ public class CableBlock extends Block implements SimpleWaterloggedBlock {
 	public final VoxelShape shapeE;
 	public final VoxelShape[] shapes;
 
-	public CableBlock(PowerTier _tier, int _border, SoundType soundType) {
+	public CableBlock(EnergyTier _tier, int _border, SoundType soundType) {
 		super(Properties.of(Material.METAL).strength(0.9F).sound(soundType));
 		tier = _tier;
 		border = _border;

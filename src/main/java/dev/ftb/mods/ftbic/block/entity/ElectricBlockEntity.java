@@ -3,7 +3,7 @@ package dev.ftb.mods.ftbic.block.entity;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
-import dev.ftb.mods.ftbic.util.PowerTier;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.TieredEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -55,8 +55,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public ElectricBlockState changeState;
 
 	public int energyCapacity;
-	public PowerTier outputPowerTier;
-	public PowerTier inputPowerTier;
+	public EnergyTier outputEnergyTier;
+	public EnergyTier inputEnergyTier;
 
 	public ElectricBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
 		super(type);
@@ -174,8 +174,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			return;
 		}
 
-		if (inputPowerTier != null && energyAdded > 0) {
-			if (energyAdded > inputPowerTier.transferRate) {
+		if (inputEnergyTier != null && energyAdded > 0) {
+			if (energyAdded > inputEnergyTier.transferRate) {
 				// TODO: Burn the machine if config is enabled
 			}
 
@@ -262,12 +262,12 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public boolean canExtract() {
-		return outputPowerTier != null;
+		return outputEnergyTier != null;
 	}
 
 	@Override
 	public boolean canReceive() {
-		return inputPowerTier != null;
+		return inputEnergyTier != null;
 	}
 
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
@@ -276,14 +276,14 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	@Nullable
-	public final PowerTier getInputPowerTier() {
-		return inputPowerTier;
+	public final EnergyTier getInputPowerTier() {
+		return inputEnergyTier;
 	}
 
 	@Nullable
 	@Override
-	public PowerTier getOutputPowerTier() {
-		return outputPowerTier;
+	public EnergyTier getOutputPowerTier() {
+		return outputEnergyTier;
 	}
 
 	@Nullable
@@ -428,8 +428,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	public void initProperties() {
 		energyCapacity = 40000;
-		outputPowerTier = null;
-		inputPowerTier = null;
+		outputEnergyTier = null;
+		inputEnergyTier = null;
 	}
 
 	/**

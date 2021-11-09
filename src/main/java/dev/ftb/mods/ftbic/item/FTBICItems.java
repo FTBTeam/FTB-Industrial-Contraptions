@@ -3,7 +3,7 @@ package dev.ftb.mods.ftbic.item;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
-import dev.ftb.mods.ftbic.util.PowerTier;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -70,12 +70,12 @@ public interface FTBICItems {
 	MaterialItem ANTIMATTER = material("antimatter");
 	MaterialItem COPPER_COIL = material("copper_coil");
 
-	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, PowerTier.LV, FTBICConfig.SINGLE_USE_BATTERY_CAPACITY));
-	Supplier<Item> BATTERY = REGISTRY.register("battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));
-	Supplier<Item> CRYSTAL_BATTERY = REGISTRY.register("crystal_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.MV, FTBICConfig.MV_BATTERY_CAPACITY));
-	Supplier<Item> GRAPHENE_BATTERY = REGISTRY.register("graphene_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.HV, FTBICConfig.HV_BATTERY_CAPACITY));
-	Supplier<Item> IRIDIUM_BATTERY = REGISTRY.register("iridium_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, PowerTier.EV, FTBICConfig.EV_BATTERY_CAPACITY));
-	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, PowerTier.EV, Integer.MAX_VALUE));
+	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, EnergyTier.LV, FTBICConfig.SINGLE_USE_BATTERY_CAPACITY));
+	Supplier<Item> BATTERY = REGISTRY.register("battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));
+	Supplier<Item> CRYSTAL_BATTERY = REGISTRY.register("crystal_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.MV, FTBICConfig.MV_BATTERY_CAPACITY));
+	Supplier<Item> GRAPHENE_BATTERY = REGISTRY.register("graphene_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.HV, FTBICConfig.HV_BATTERY_CAPACITY));
+	Supplier<Item> IRIDIUM_BATTERY = REGISTRY.register("iridium_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.EV, FTBICConfig.EV_BATTERY_CAPACITY));
+	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, EnergyTier.EV, Integer.MAX_VALUE));
 	Supplier<Item> EMPTY_CELL = REGISTRY.register("empty_cell", () -> new CellItem(Fluids.EMPTY));
 	Supplier<Item> WATER_CELL = REGISTRY.register("water_cell", () -> new CellItem(Fluids.WATER));
 	Supplier<Item> LAVA_CELL = REGISTRY.register("lava_cell", () -> new CellItem(Fluids.LAVA));

@@ -5,7 +5,7 @@ import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
-import dev.ftb.mods.ftbic.util.PowerTier;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 
 public class CanningMachineBlockEntity extends MachineBlockEntity {
 	public CanningMachineBlockEntity() {
@@ -15,7 +15,7 @@ public class CanningMachineBlockEntity extends MachineBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		inputPowerTier = PowerTier.MV;
+		inputEnergyTier = EnergyTier.MV;
 		energyCapacity = 8000;
 		energyUse = 10;
 	}

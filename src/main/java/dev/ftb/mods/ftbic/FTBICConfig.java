@@ -11,14 +11,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FTBICConfig {
-	public static String ENERGY_FORMAT_1 = "%,d PU";
-	public static String ENERGY_FORMAT_2 = "%,d / %,d PU";
+	public static String ENERGY_FORMAT_1 = "%,f PU";
+	public static String ENERGY_FORMAT_2 = "%,f / %,f PU";
 
 	public static int LV_TRANSFER_RATE = 320;
 	public static int MV_TRANSFER_RATE = 1280;
 	public static int HV_TRANSFER_RATE = 40960;
 	public static int EV_TRANSFER_RATE = 163840;
-	public static double BATTERY_TRANSFER_EFFICIENCY = 0.1D;
+	public static double ITEM_TRANSFER_EFFICIENCY = 0.1D;
 
 	public static int SINGLE_USE_BATTERY_CAPACITY = 24_000;
 	public static int LV_BATTERY_CAPACITY = 40_000;

@@ -3,8 +3,8 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.block.CableBlock;
 import dev.ftb.mods.ftbic.block.entity.CachedEnergyStorage;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
-import dev.ftb.mods.ftbic.util.PowerTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.TextComponent;
@@ -35,7 +35,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		outputPowerTier = PowerTier.LV;
+		outputEnergyTier = EnergyTier.LV;
 	}
 
 	public void handleEnergyOutput() {
@@ -43,7 +43,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 
-		int tenergy = Math.min(energy, outputPowerTier.transferRate);
+		int tenergy = Math.min(energy, outputEnergyTier.transferRate);
 
 		if (tenergy <= 0) {
 			return;

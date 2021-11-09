@@ -2,7 +2,7 @@ package dev.ftb.mods.ftbic.block.entity.storage;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
-import dev.ftb.mods.ftbic.util.PowerTier;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 
 public class HVBatteryBoxBlockEntity extends BatteryBoxBlockEntity {
 	public HVBatteryBoxBlockEntity() {
@@ -12,8 +12,8 @@ public class HVBatteryBoxBlockEntity extends BatteryBoxBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		inputPowerTier = PowerTier.HV;
-		outputPowerTier = PowerTier.EV;
+		inputEnergyTier = EnergyTier.HV;
+		outputEnergyTier = EnergyTier.EV;
 		energyCapacity = FTBICConfig.HV_BATTERY_BOX_CAPACITY;
 	}
 }

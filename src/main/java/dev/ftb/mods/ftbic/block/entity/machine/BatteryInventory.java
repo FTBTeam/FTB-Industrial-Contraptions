@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
-import dev.ftb.mods.ftbic.item.BatteryItem;
+import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +25,7 @@ public class BatteryInventory extends ItemStackHandler {
 
 	@Override
 	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-		return stack.getItem() instanceof BatteryItem;
+		return stack.getItem() instanceof EnergyItemHandler && ((EnergyItemHandler) stack.getItem()).canExtractEnergy();
 	}
 
 	@Override

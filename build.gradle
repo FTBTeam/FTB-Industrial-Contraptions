@@ -75,7 +75,7 @@ dependencies {
 	modImplementation "me.shedaniel:architectury-forge:${rootProject.architectury_version}"
 	// modCompileOnly "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
 	modImplementation "me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}"
-	// modImplementation "curse.maven:jei-238222:${jei_file}"
+	modCompileOnly "curse.maven:jei-238222:${jei_file}"
 	modImplementation "curse.maven:emendatus-enigmatica-399630:${rootProject.emendatus_enigmatica_file}"
 	modImplementation "io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}"
 	modImplementation "dev.latvian.mods:rhino-forge:${rootProject.rhino_version}"

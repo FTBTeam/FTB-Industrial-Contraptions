@@ -4,15 +4,15 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
-import dev.ftb.mods.ftbic.item.BatteryItem;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.screen.MachineMenu;
+import dev.ftb.mods.ftbic.util.EnergyItemHandler;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
-import dev.ftb.mods.ftbic.util.PowerTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -150,17 +150,15 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 		if (!level.isClientSide() && energy < energyCapacity) {
 			ItemStack battery = batteryInventory.getStackInSlot(0);
 
-			if (!battery.isEmpty() && battery.getItem() instanceof BatteryItem) {
-				BatteryItem item = (BatteryItem) battery.getItem();
-				int be = BatteryItem.getEnergy(battery);
-				int e = Math.min(energyCapacity - energy, Math.min(item.tier.batteryTransferRate, be));
+			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
+				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
+				double e = item.extractEnergy(battery, energyCapacity - energy, false);
 
 				if (e > 0) {
-					BatteryItem.setEnergy(battery, be - e);
 					energyAdded += e;
 
-					if (be - e == 0 && item.batteryType.singleUse) {
-						battery.shrink(1);
+					if (battery.isEmpty()) {
+						batteryInventory.setStackInSlot(0, ItemStack.EMPTY);
 					}
 
 					setChanged();
@@ -409,7 +407,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		inputPowerTier = PowerTier.LV;
+		inputEnergyTier = EnergyTier.LV;
 		energyCapacity = 8000;
 		energyUse = 20;
 		progressSpeed = 1D;
@@ -432,9 +430,9 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 
 		while (transformers > 0) {
 			transformers--;
-			inputPowerTier = inputPowerTier.up();
+			inputEnergyTier = inputEnergyTier.up();
 
-			if (inputPowerTier == PowerTier.EV) {
+			if (inputEnergyTier == EnergyTier.EV) {
 				break;
 			}
 		}

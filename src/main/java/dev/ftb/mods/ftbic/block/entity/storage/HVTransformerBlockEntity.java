@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbic.block.entity.storage;
 
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
-import dev.ftb.mods.ftbic.util.PowerTier;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 
 public class HVTransformerBlockEntity extends TransformerBlockEntity {
 	public HVTransformerBlockEntity() {
@@ -11,8 +11,8 @@ public class HVTransformerBlockEntity extends TransformerBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		inputPowerTier = PowerTier.EV;
-		outputPowerTier = PowerTier.HV;
-		energyCapacity = PowerTier.EV.transferRate;
+		inputEnergyTier = EnergyTier.EV;
+		outputEnergyTier = EnergyTier.HV;
+		energyCapacity = EnergyTier.EV.transferRate;
 	}
 }

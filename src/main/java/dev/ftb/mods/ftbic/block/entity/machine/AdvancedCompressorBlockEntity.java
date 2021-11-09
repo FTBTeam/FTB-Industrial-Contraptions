@@ -3,7 +3,7 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
-import dev.ftb.mods.ftbic.util.PowerTier;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 
 public class AdvancedCompressorBlockEntity extends MachineBlockEntity {
 	public AdvancedCompressorBlockEntity() {
@@ -13,7 +13,7 @@ public class AdvancedCompressorBlockEntity extends MachineBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		inputPowerTier = PowerTier.MV;
+		inputEnergyTier = EnergyTier.MV;
 		energyCapacity = 8000;
 		energyUse = 20;
 		shouldAccelerate = true;

@@ -5,12 +5,12 @@ import org.jetbrains.annotations.Nullable;
 
 public interface TieredEnergyStorage extends IEnergyStorage {
 	@Nullable
-	default PowerTier getInputPowerTier() {
+	default EnergyTier getInputPowerTier() {
 		return null;
 	}
 
 	@Nullable
-	default PowerTier getOutputPowerTier() {
+	default EnergyTier getOutputPowerTier() {
 		return null;
 	}
 }

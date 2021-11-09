@@ -23,12 +23,12 @@ import java.util.function.Function;
 public class FTBICUtils {
 	public static final Tag.Named<Item> UNCANNABLE_FOOD = ItemTags.createOptional(new ResourceLocation("ftbic:uncannable_food"));
 
-	public static String formatPower(int power) {
-		return String.format(FTBICConfig.ENERGY_FORMAT_1, power);
+	public static String formatPower(double energy) {
+		return String.format(FTBICConfig.ENERGY_FORMAT_1, energy);
 	}
 
-	public static String formatPower(int power, int cap) {
-		return String.format(FTBICConfig.ENERGY_FORMAT_2, power, cap);
+	public static String formatPower(double energy, double cap) {
+		return String.format(FTBICConfig.ENERGY_FORMAT_2, energy, cap);
 	}
 
 	public static <T> List<T> listFromJson(JsonObject json, String key, Function<JsonElement, T> function) {
