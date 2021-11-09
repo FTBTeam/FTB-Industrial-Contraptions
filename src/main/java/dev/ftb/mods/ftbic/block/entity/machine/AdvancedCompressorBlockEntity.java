@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
@@ -14,8 +15,8 @@ public class AdvancedCompressorBlockEntity extends MachineBlockEntity {
 	public void initProperties() {
 		super.initProperties();
 		inputEnergyTier = EnergyTier.MV;
-		energyCapacity = 8000;
-		energyUse = 20;
+		energyCapacity = FTBICConfig.ADVANCED_COMPRESSOR_CAPACITY;
+		energyUse = FTBICConfig.ADVANCED_COMPRESSOR_USE;
 		shouldAccelerate = true;
 	}
 

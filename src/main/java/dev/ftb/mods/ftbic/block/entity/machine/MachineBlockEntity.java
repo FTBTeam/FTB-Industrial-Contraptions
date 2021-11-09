@@ -386,7 +386,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 				return energyUse == 0 ? 0 : Mth.clamp(Mth.ceil(progress * 24D / maxProgress), 0, 24);
 			case 1:
 				// getEnergyBar()
-				return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 14D / (double) energyCapacity), 0, 14);
+				return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 14D / energyCapacity), 0, 14);
 			case 2:
 				// getAcceleration()
 				return acceleration;
@@ -408,8 +408,8 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	public void initProperties() {
 		super.initProperties();
 		inputEnergyTier = EnergyTier.LV;
-		energyCapacity = 8000;
-		energyUse = 20;
+		energyCapacity = FTBICConfig.MACERATOR_CAPACITY;
+		energyUse = FTBICConfig.MACERATOR_USE;
 		progressSpeed = 1D;
 		autoEject = false;
 		shouldAccelerate = false;

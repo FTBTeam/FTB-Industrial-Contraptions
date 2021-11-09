@@ -8,7 +8,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int fuelTicks = 0;
@@ -20,7 +22,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		energyCapacity = 16000;
+		energyCapacity = FTBICConfig.BASIC_GENERATOR_CAPACITY;
 	}
 
 	@Override
@@ -33,6 +35,16 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	public void readData(CompoundTag tag) {
 		super.readData(tag);
 		fuelTicks = tag.getInt("FuelTicks");
+	}
+
+	@Override
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+		if (slot == 0) {
+			RecipeCache recipeCache = getRecipeCache();
+			return recipeCache != null && recipeCache.getBasicGeneratorFuelTicks(level, stack) > 0;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -57,7 +69,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 			RecipeCache recipeCache = getRecipeCache();
 
 			if (recipeCache != null) {
-				int fuel = recipeCache.getBasicGeneratorFuelTicks(level, player.getItemInHand(hand).getItem());
+				int fuel = recipeCache.getBasicGeneratorFuelTicks(level, player.getItemInHand(hand));
 
 				if (fuel > 0) {
 					if (!player.isCrouching()) {

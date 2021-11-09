@@ -53,11 +53,15 @@ public class MachineScreen extends AbstractContainerScreen<MachineMenu> {
 		int e = menu.getEnergyBar();
 
 		if (e > 0) {
-			blit(poseStack, wx + menu.serializer.powerX, wy + menu.serializer.powerY + (14 - e), 16, 240 + (14 - e), 14, e);
+			blit(poseStack, wx + menu.serializer.powerX, wy + menu.serializer.powerY + (14 - e), 15, 240 + (14 - e), 14, e);
 		}
 
 		for (int i = 0; i < menu.entity.inputItems.length; i++) {
 			blit(poseStack, wx + i * 18, wy, 0, 167, 18, 18);
+		}
+
+		for (int i = 0; i < menu.entity.upgradeInventory.getSlots(); i++) {
+			blit(poseStack, x + 151, y + 7 + i * 18, 0, 167, 18, 18);
 		}
 
 		blit(poseStack, wx + menu.serializer.batteryX, wy + menu.serializer.batteryY, 0, 167, 18, 18);

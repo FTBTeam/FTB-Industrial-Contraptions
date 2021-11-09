@@ -50,7 +50,7 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 		arrowOff = guiHelper.drawableBuilder(progressTexture, 0, 0, 24, 17).setTextureSize(32, 64).build();
 		arrowOn = guiHelper.drawableBuilder(progressTexture, 0, 18, 24, 17).setTextureSize(32, 64).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
 		powerOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 240, 14, 14).setTextureSize(256, 256).build();
-		powerOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 16, 240, 14, 14).setTextureSize(256, 256).buildAnimated(84, IDrawableAnimated.StartDirection.TOP, true);
+		powerOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 15, 240, 14, 14).setTextureSize(256, 256).buildAnimated(84, IDrawableAnimated.StartDirection.TOP, true);
 		slot = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 167, 18, 18).setTextureSize(256, 256).build();
 		largeSlot = (serializer.outputSlots > 1 ? guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 213, 47, 26) : guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 186, 26, 26)).setTextureSize(256, 256).build();
 	}

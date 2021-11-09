@@ -11,7 +11,7 @@ public class LVSolarPanelBlockEntity extends SolarPanelBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		solarOutput = FTBICConfig.LV_SOLAR_PANEL_GENERATION;
-		energyCapacity = solarOutput * 4;
+		solarOutput = FTBICConfig.LV_SOLAR_PANEL_OUTPUT;
+		energyCapacity = solarOutput * 60;
 	}
 }

@@ -69,23 +69,21 @@ public class RecipeCache implements Recipe<NoContainer> {
 		return FTBICRecipes.RECIPE_CACHE_TYPE;
 	}
 
-	public int getBasicGeneratorFuelTicks(Level level, Item item) {
-		Integer fuel = basicGeneratorFuel.get(item);
+	public int getBasicGeneratorFuelTicks(Level level, ItemStack item) {
+		Integer fuel = basicGeneratorFuel.get(item.getItem());
 
 		if (fuel != null) {
 			return fuel;
 		}
 
-		ItemStack itemStack = new ItemStack(item);
-
 		for (BasicGeneratorFuelRecipe recipe : level.getRecipeManager().getAllRecipesFor(FTBICRecipes.BASIC_GENERATOR_FUEL_TYPE)) {
-			if (recipe.ingredient.test(itemStack)) {
-				basicGeneratorFuel.put(item, recipe.ticks);
+			if (recipe.ingredient.test(item)) {
+				basicGeneratorFuel.put(item.getItem(), recipe.ticks);
 				return recipe.ticks;
 			}
 		}
 
-		basicGeneratorFuel.put(item, 0);
+		basicGeneratorFuel.put(item.getItem(), 0);
 		return 0;
 	}
 }

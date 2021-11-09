@@ -11,7 +11,7 @@ public class HVSolarPanelBlockEntity extends SolarPanelBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		solarOutput = FTBICConfig.HV_SOLAR_PANEL_GENERATION;
-		energyCapacity = solarOutput * 4;
+		solarOutput = FTBICConfig.HV_SOLAR_PANEL_OUTPUT;
+		energyCapacity = solarOutput * 60;
 	}
 }

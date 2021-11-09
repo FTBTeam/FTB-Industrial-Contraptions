@@ -16,37 +16,68 @@ import java.util.List;
 public class FTBICConfig {
 	public static Component ENERGY_FORMAT = new TextComponent("⚡").withStyle(ChatFormatting.BOLD);
 
-	public static double LV_TRANSFER_RATE = 320;
-	public static double MV_TRANSFER_RATE = 1280;
-	public static double HV_TRANSFER_RATE = 40960;
-	public static double EV_TRANSFER_RATE = 163840;
-	public static double ITEM_TRANSFER_EFFICIENCY = 0.1D;
+	public static double LV_TRANSFER_RATE = 32;
+	public static double MV_TRANSFER_RATE = 128;
+	public static double HV_TRANSFER_RATE = 4096;
+	public static double EV_TRANSFER_RATE = 16384;
+	public static double ITEM_TRANSFER_EFFICIENCY = 0.1;
 
-	public static double SINGLE_USE_BATTERY_CAPACITY = 24_000;
-	public static double LV_BATTERY_CAPACITY = 40_000;
-	public static double MV_BATTERY_CAPACITY = 400_000;
-	public static double HV_BATTERY_CAPACITY = 4_000_000;
-	public static double EV_BATTERY_CAPACITY = 1_000_000_000;
+	public static double SINGLE_USE_BATTERY_CAPACITY = 2_400;
+	public static double LV_BATTERY_CAPACITY = 4_000;
+	public static double MV_BATTERY_CAPACITY = 40_000;
+	public static double HV_BATTERY_CAPACITY = 400_000;
+	public static double EV_BATTERY_CAPACITY = 100_000_000;
 
-	public static double LV_BATTERY_BOX_CAPACITY = 400_000;
-	public static double MV_BATTERY_BOX_CAPACITY = 3_000_000;
-	public static double HV_BATTERY_BOX_CAPACITY = 40_000_000;
+	public static double LV_BATTERY_BOX_CAPACITY = 40_000;
+	public static double MV_BATTERY_BOX_CAPACITY = 300_000;
+	public static double HV_BATTERY_BOX_CAPACITY = 4_000_000;
 
 	public static int IRON_FURNACE_ITEMS_PER_COAL = 12;
-	public static double BASIC_GENERATOR_OUTPUT = 100;
+
+	public static double BASIC_GENERATOR_CAPACITY = 1600;
+	public static double BASIC_GENERATOR_OUTPUT = 1;
 	public static int GEOTHERMAL_GENERATOR_LAVA_TANK = 8000;
-	public static double GEOTHERMAL_GENERATOR_OUTPUT = 100;
+	public static double GEOTHERMAL_GENERATOR_CAPACITY = 2400;
+	public static double GEOTHERMAL_GENERATOR_OUTPUT = 1;
+	public static double WIND_MILL_MIN_OUTPUT = 4;
+	public static double WIND_MILL_MAX_OUTPUT = 20;
+	public static double LV_SOLAR_PANEL_OUTPUT = 2;
+	public static double MV_SOLAR_PANEL_OUTPUT = 16;
+	public static double HV_SOLAR_PANEL_OUTPUT = 128;
 
-	public static double LV_SOLAR_PANEL_GENERATION = 4;
-	public static double MV_SOLAR_PANEL_GENERATION = 32;
-	public static double HV_SOLAR_PANEL_GENERATION = 256;
+	public static double MACHINE_RECIPE_BASE_TICKS = 200;
 
-	public static double MACHINE_RECIPE_BASE_TICKS = 200D;
+	public static double POWERED_FURNACE_CAPACITY = 416;
+	public static double POWERED_FURNACE_USE = 3;
+	public static double MACERATOR_CAPACITY = 1200;
+	public static double MACERATOR_USE = 2;
+	public static double CENTRIFUGE_CAPACITY = 800;
+	public static double CENTRIFUGE_USE = 2;
+	public static double COMPRESSOR_CAPACITY = 800;
+	public static double COMPRESSOR_USE = 2;
+	public static double REPROCESSOR_CAPACITY = 4000;
+	public static double REPROCESSOR_USE = 8;
+	public static double CANNING_MACHINE_CAPACITY = 800;
+	public static double CANNING_MACHINE_USE = 1;
+	public static double ROLLER_CAPACITY = 800;
+	public static double ROLLER_USE = 2;
+	public static double EXTRUDER_CAPACITY = 800;
+	public static double EXTRUDER_USE = 2;
+	public static double ANTIMATTER_CONSTRUCTOR_CAPACITY = 12000;
+	public static double ANTIMATTER_CONSTRUCTOR_USE = 20;
+	public static double ADVANCED_POWERED_FURNACE_CAPACITY = 416;
+	public static double ADVANCED_POWERED_FURNACE_USE = 3;
+	public static double ADVANCED_MACERATOR_CAPACITY = 1200;
+	public static double ADVANCED_MACERATOR_USE = 2;
+	public static double ADVANCED_CENTRIFUGE_CAPACITY = 800;
+	public static double ADVANCED_CENTRIFUGE_USE = 2;
+	public static double ADVANCED_COMPRESSOR_CAPACITY = 800;
+	public static double ADVANCED_COMPRESSOR_USE = 2;
 
 	public static int UPGRADE_LIMIT_PER_SLOT = 4;
-	public static double OVERCLOCKER_SPEED = 1.45D;
-	public static double OVERCLOCKER_ENERGY_USE = 1.6D;
-	public static double STORAGE_UPGRADE = 10000D;
+	public static double OVERCLOCKER_SPEED = 1.45;
+	public static double OVERCLOCKER_ENERGY_USE = 1.6;
+	public static double STORAGE_UPGRADE = 1000;
 
 	public static boolean ADD_DUST_FROM_ORE_RECIPES = true;
 	public static boolean ADD_DUST_FROM_MATERIAL_RECIPES = true;
