@@ -212,7 +212,7 @@ public class FTBICDataGenHandler {
 			makeThemedElectric("lv_solar_panel_top", BASIC_TOP);
 			makeThemedElectric("mv_solar_panel_top", BASIC_TOP);
 			makeThemedElectric("hv_solar_panel_top", ADVANCED_TOP);
-			makeThemedElectricOnOff("nuclear_reactor_side", ADVANCED_SIDE);
+			makeThemedElectricOnOff("nuclear_reactor_front", ADVANCED_SIDE);
 
 			makeThemedElectricOnOff("powered_furnace_front", BASIC_SIDE);
 			makeThemedElectric("macerator_front", BASIC_SIDE);
@@ -390,8 +390,8 @@ public class FTBICDataGenHandler {
 			electric("lv_solar_panel", BASIC_SIDE, BASIC_SIDE, "lv_solar_panel_top", BASIC_BOTTOM);
 			electric("mv_solar_panel", BASIC_SIDE, BASIC_SIDE, "mv_solar_panel_top", BASIC_BOTTOM);
 			electric("hv_solar_panel", ADVANCED_SIDE, ADVANCED_SIDE, "hv_solar_panel_top", ADVANCED_BOTTOM);
-			electric("nuclear_reactor_off", "nuclear_reactor_side_off", "nuclear_reactor_side_off", ADVANCED_TOP, ADVANCED_BOTTOM);
-			electric("nuclear_reactor_on", "nuclear_reactor_side_on", "nuclear_reactor_side_on", ADVANCED_TOP, ADVANCED_BOTTOM);
+			electric("nuclear_reactor_off", "nuclear_reactor_front_off", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
+			electric("nuclear_reactor_on", "nuclear_reactor_front_on", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
 
 			electric("powered_furnace_off", "powered_furnace_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
 			electric("powered_furnace_on", "powered_furnace_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
