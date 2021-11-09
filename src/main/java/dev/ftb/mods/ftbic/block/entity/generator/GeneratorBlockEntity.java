@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.block.CableBlock;
 import dev.ftb.mods.ftbic.block.entity.CachedEnergyStorage;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
@@ -15,8 +16,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -43,9 +42,9 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 
-		int tenergy = Math.min(energy, outputEnergyTier.transferRate);
+		double tenergy = Math.min(energy, outputEnergyTier.transferRate);
 
-		if (tenergy <= 0) {
+		if (tenergy <= 0D) {
 			return;
 		}
 
@@ -61,17 +60,17 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			}
 		}
 
-		if (tenergy >= validBlocks && validBlocks > 0) {
-			int e = tenergy / validBlocks;
+		if (validBlocks > 0) {
+			double e = tenergy / (double) validBlocks;
 
 			for (CachedEnergyStorage storage : blocks) {
 				if (storage.isInvalid() || !storage.shouldReceiveEnergy()) {
 					continue;
 				}
 
-				int a = storage.energyStorage.receiveEnergy(e, false);
+				double a = storage.energyHandler.insertEnergy(e, false);
 
-				if (a > 0) {
+				if (a > 0D) {
 					energy -= a;
 					setChanged();
 				}
@@ -102,7 +101,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		return true;
 	}
 
-	public boolean isValidConnectedBlock(IEnergyStorage storage) {
+	public boolean isValidConnectedBlock(EnergyHandler storage) {
 		return true;
 	}
 
@@ -145,13 +144,13 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 					}
 				} else if (state.hasTileEntity()) {
 					BlockEntity entity = level.getBlockEntity(ptr);
-					IEnergyStorage storage = entity instanceof IEnergyStorage ? (IEnergyStorage) entity : entity == null ? null : entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+					EnergyHandler handler = entity instanceof EnergyHandler ? (EnergyHandler) entity : null; // entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
 
-					if (storage != null && storage != this && storage.canReceive() && isValidConnectedBlock(storage)) {
+					if (handler != null && handler != this && handler.getInputEnergyTier() != null && isValidConnectedBlock(handler)) {
 						CachedEnergyStorage s = new CachedEnergyStorage();
 						s.distance = 1D;
 						s.blockEntity = entity;
-						s.energyStorage = storage;
+						s.energyHandler = handler;
 						set.add(s);
 					}
 				}
@@ -165,14 +164,9 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	}
 
 	@Override
-	public boolean canExtract() {
-		return true;
-	}
-
-	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			player.displayClientMessage(new TextComponent("Energy: " + FTBICUtils.formatPower(energy, energyCapacity)), false);
+			player.displayClientMessage(new TextComponent("Energy: ").append(FTBICUtils.formatEnergy(energy, energyCapacity)), false);
 
 			if (player.isCrouching()) {
 				player.displayClientMessage(new TextComponent("Connected machines: " + Arrays.toString(getConnectedEnergyBlocks())), false);

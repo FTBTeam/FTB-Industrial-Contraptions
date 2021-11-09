@@ -1,5 +1,8 @@
 package dev.ftb.mods.ftbic;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
@@ -11,33 +14,32 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FTBICConfig {
-	public static String ENERGY_FORMAT_1 = "%,f PU";
-	public static String ENERGY_FORMAT_2 = "%,f / %,f PU";
+	public static Component ENERGY_FORMAT = new TextComponent("⚡").withStyle(ChatFormatting.BOLD);
 
-	public static int LV_TRANSFER_RATE = 320;
-	public static int MV_TRANSFER_RATE = 1280;
-	public static int HV_TRANSFER_RATE = 40960;
-	public static int EV_TRANSFER_RATE = 163840;
+	public static double LV_TRANSFER_RATE = 320;
+	public static double MV_TRANSFER_RATE = 1280;
+	public static double HV_TRANSFER_RATE = 40960;
+	public static double EV_TRANSFER_RATE = 163840;
 	public static double ITEM_TRANSFER_EFFICIENCY = 0.1D;
 
-	public static int SINGLE_USE_BATTERY_CAPACITY = 24_000;
-	public static int LV_BATTERY_CAPACITY = 40_000;
-	public static int MV_BATTERY_CAPACITY = 400_000;
-	public static int HV_BATTERY_CAPACITY = 4_000_000;
-	public static int EV_BATTERY_CAPACITY = 1_000_000_000;
+	public static double SINGLE_USE_BATTERY_CAPACITY = 24_000;
+	public static double LV_BATTERY_CAPACITY = 40_000;
+	public static double MV_BATTERY_CAPACITY = 400_000;
+	public static double HV_BATTERY_CAPACITY = 4_000_000;
+	public static double EV_BATTERY_CAPACITY = 1_000_000_000;
 
-	public static int LV_BATTERY_BOX_CAPACITY = 400_000;
-	public static int MV_BATTERY_BOX_CAPACITY = 3_000_000;
-	public static int HV_BATTERY_BOX_CAPACITY = 40_000_000;
+	public static double LV_BATTERY_BOX_CAPACITY = 400_000;
+	public static double MV_BATTERY_BOX_CAPACITY = 3_000_000;
+	public static double HV_BATTERY_BOX_CAPACITY = 40_000_000;
 
 	public static int IRON_FURNACE_ITEMS_PER_COAL = 12;
-	public static int BASIC_GENERATOR_OUTPUT = 100;
+	public static double BASIC_GENERATOR_OUTPUT = 100;
 	public static int GEOTHERMAL_GENERATOR_LAVA_TANK = 8000;
-	public static int GEOTHERMAL_GENERATOR_OUTPUT = 100;
+	public static double GEOTHERMAL_GENERATOR_OUTPUT = 100;
 
-	public static int LV_SOLAR_PANEL_GENERATION = 4;
-	public static int MV_SOLAR_PANEL_GENERATION = 32;
-	public static int HV_SOLAR_PANEL_GENERATION = 256;
+	public static double LV_SOLAR_PANEL_GENERATION = 4;
+	public static double MV_SOLAR_PANEL_GENERATION = 32;
+	public static double HV_SOLAR_PANEL_GENERATION = 256;
 
 	public static double MACHINE_RECIPE_BASE_TICKS = 200D;
 

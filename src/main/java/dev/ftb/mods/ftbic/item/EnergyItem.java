@@ -7,7 +7,6 @@ import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -21,9 +20,9 @@ import java.util.List;
 
 public class EnergyItem extends Item implements EnergyItemHandler {
 	public final EnergyTier tier;
-	public final int capacity;
+	public final double capacity;
 
-	public EnergyItem(EnergyTier t, int cap) {
+	public EnergyItem(EnergyTier t, double cap) {
 		super(new Properties().stacksTo(1).tab(FTBIC.TAB));
 		tier = t;
 		capacity = cap;
@@ -36,7 +35,7 @@ public class EnergyItem extends Item implements EnergyItemHandler {
 			CompoundTag t = stack.getOrCreateTag();
 
 			if (!t.contains("Energy")) {
-				t.putInt("Energy", capacity);
+				t.putDouble("Energy", capacity);
 			}
 		}
 
@@ -55,7 +54,7 @@ public class EnergyItem extends Item implements EnergyItemHandler {
 
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack) {
-		return 1D - getEnergy(stack) / (double) capacity;
+		return 1D - getEnergy(stack) / capacity;
 	}
 
 	@Override
@@ -67,7 +66,7 @@ public class EnergyItem extends Item implements EnergyItemHandler {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
 		if (!isCreativeEnergyItem()) {
-			list.add(new TextComponent(FTBICUtils.formatPower(getEnergy(stack), capacity)).withStyle(ChatFormatting.GRAY));
+			list.add(FTBICUtils.formatEnergy(getEnergy(stack), capacity).withStyle(ChatFormatting.GRAY));
 		}
 	}
 }

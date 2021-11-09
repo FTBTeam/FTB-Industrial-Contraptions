@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +24,6 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.energy.CapabilityEnergy;
 
 public class CableBlock extends Block implements SimpleWaterloggedBlock {
 	public static final BooleanProperty[] CONNECTION = new BooleanProperty[6];
@@ -151,7 +151,8 @@ public class CableBlock extends Block implements SimpleWaterloggedBlock {
 			return true;
 		} else if (!state.isAir()) {
 			BlockEntity t = world.getBlockEntity(pos);
-			return t != null && t.getCapability(CapabilityEnergy.ENERGY, face).isPresent();
+			//return t != null && t.getCapability(CapabilityEnergy.ENERGY, face).isPresent();
+			return t instanceof EnergyHandler;
 		}
 
 		return false;

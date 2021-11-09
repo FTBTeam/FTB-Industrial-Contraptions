@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 public class BatteryItem extends EnergyItem {
 	public final BatteryType batteryType;
 
-	public BatteryItem(BatteryType b, EnergyTier t, int cap) {
+	public BatteryItem(BatteryType b, EnergyTier t, double cap) {
 		super(t, cap);
 		batteryType = b;
 	}

@@ -15,6 +15,15 @@ public interface EnergyItemHandler {
 	}
 
 	default void setEnergy(ItemStack stack, double energy) {
+		double prev = getEnergy(stack);
+
+		if (prev != energy) {
+			setEnergyRaw(stack, energy);
+			energyChanged(stack, prev);
+		}
+	}
+
+	default void setEnergyRaw(ItemStack stack, double energy) {
 		if (!isCreativeEnergyItem()) {
 			stack.addTagElement("Energy", DoubleTag.valueOf(energy));
 		}
@@ -31,7 +40,8 @@ public interface EnergyItemHandler {
 		double energyReceived = Math.min(getEnergyCapacity(stack) - energy, Math.min(getEnergyTier().itemTransferRate, maxInsert));
 
 		if (!simulate && energyReceived > 0D) {
-			setEnergy(stack, energy + energyReceived);
+			setEnergyRaw(stack, energy + energyReceived);
+			energyChanged(stack, energy);
 		}
 
 		return energyReceived;
@@ -48,7 +58,8 @@ public interface EnergyItemHandler {
 		double energyExtracted = Math.min(energy, Math.min(getEnergyTier().itemTransferRate, maxExtract));
 
 		if (!simulate && energyExtracted > 0D) {
-			setEnergy(stack, energy - energyExtracted);
+			setEnergyRaw(stack, energy - energyExtracted);
+			energyChanged(stack, energy);
 		}
 
 		return energyExtracted;
@@ -64,5 +75,8 @@ public interface EnergyItemHandler {
 
 	default boolean isCreativeEnergyItem() {
 		return false;
+	}
+
+	default void energyChanged(ItemStack stack, double prevEnergy) {
 	}
 }

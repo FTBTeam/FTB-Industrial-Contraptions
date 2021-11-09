@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
@@ -23,12 +24,16 @@ import java.util.function.Function;
 public class FTBICUtils {
 	public static final Tag.Named<Item> UNCANNABLE_FOOD = ItemTags.createOptional(new ResourceLocation("ftbic:uncannable_food"));
 
-	public static String formatPower(double energy) {
-		return String.format(FTBICConfig.ENERGY_FORMAT_1, energy);
+	public static String formatEnergyValue(double energy) {
+		return String.format("%,d", (long) energy);
 	}
 
-	public static String formatPower(double energy, double cap) {
-		return String.format(FTBICConfig.ENERGY_FORMAT_2, energy, cap);
+	public static TextComponent formatEnergy(double energy) {
+		return (TextComponent) new TextComponent("").append(formatEnergyValue(energy) + " ").append(FTBICConfig.ENERGY_FORMAT);
+	}
+
+	public static TextComponent formatEnergy(double energy, double cap) {
+		return (TextComponent) new TextComponent("").append(formatEnergyValue(energy) + " / " + formatEnergyValue(cap) + " ").append(FTBICConfig.ENERGY_FORMAT);
 	}
 
 	public static <T> List<T> listFromJson(JsonObject json, String key, Function<JsonElement, T> function) {

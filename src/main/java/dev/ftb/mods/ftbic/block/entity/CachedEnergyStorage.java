@@ -1,14 +1,14 @@
 package dev.ftb.mods.ftbic.block.entity;
 
+import dev.ftb.mods.ftbic.util.EnergyHandler;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.energy.IEnergyStorage;
 
 public class CachedEnergyStorage {
 	public static final CachedEnergyStorage[] EMPTY = new CachedEnergyStorage[0];
 
 	public double distance;
 	public BlockEntity blockEntity;
-	public IEnergyStorage energyStorage;
+	public EnergyHandler energyHandler;
 
 	public int hashCode() {
 		return blockEntity.hashCode();
@@ -29,6 +29,6 @@ public class CachedEnergyStorage {
 	}
 
 	public boolean shouldReceiveEnergy() {
-		return energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored();
+		return energyHandler.getEnergy() < energyHandler.getEnergyCapacity();
 	}
 }

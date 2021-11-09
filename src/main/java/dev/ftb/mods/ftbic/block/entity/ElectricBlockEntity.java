@@ -3,8 +3,8 @@ package dev.ftb.mods.ftbic.block.entity;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
+import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
-import dev.ftb.mods.ftbic.util.TieredEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -24,7 +24,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -34,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, TieredEnergyStorage, IItemHandlerModifiable {
+public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, EnergyHandler, IItemHandlerModifiable {
 	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
@@ -47,14 +46,14 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	private boolean changed;
-	public int energy;
-	public int energyAdded;
+	public double energy;
+	public double energyAdded;
 	public final ItemStack[] inputItems;
 	public final ItemStack[] outputItems;
 	private LazyOptional<?> thisOptional;
 	public ElectricBlockState changeState;
 
-	public int energyCapacity;
+	public double energyCapacity;
 	public EnergyTier outputEnergyTier;
 	public EnergyTier inputEnergyTier;
 
@@ -77,7 +76,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	public void writeData(CompoundTag tag) {
-		tag.putInt("Energy", energy);
+		tag.putDouble("Energy", energy);
 
 		if (inputItems.length + outputItems.length > 0) {
 			ListTag inv = new ListTag();
@@ -97,7 +96,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	public void readData(CompoundTag tag) {
-		energy = tag.getInt("Energy");
+		energy = tag.getDouble("Energy");
 
 		if (inputItems.length + outputItems.length > 0) {
 			Arrays.fill(inputItems, ItemStack.EMPTY);
@@ -160,9 +159,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	@NotNull
 	@Override
 	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-		if (cap == CapabilityEnergy.ENERGY) {
-			return getThisOptional().cast();
-		} else if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && (inputItems.length + outputItems.length) > 0) {
+		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && (inputItems.length + outputItems.length) > 0) {
 			return getThisOptional().cast();
 		}
 
@@ -180,9 +177,9 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			}
 
 			if (energy < energyCapacity) {
-				int e = Math.min(energyAdded, energyCapacity - energy);
+				double e = Math.min(energyAdded, energyCapacity - energy);
 
-				if (e > 0) {
+				if (e > 0D) {
 					energy += e;
 					energyChanged(energy - e);
 				}
@@ -220,12 +217,12 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	@Override
-	public int receiveEnergy(int maxReceive, boolean simulate) {
-		if (!canReceive()) {
+	public double insertEnergy(double maxInsert, boolean simulate) {
+		if (getInputEnergyTier() == null) {
 			return 0;
 		}
 
-		int energyReceived = Math.min(energyCapacity - energy, maxReceive);
+		double energyReceived = Math.min(energyCapacity - energy, maxInsert);
 
 		if (!simulate) {
 			energyAdded += energyReceived;
@@ -235,39 +232,18 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	@Override
-	public int extractEnergy(int maxExtract, boolean simulate) {
-		if (!canExtract()) {
-			return 0;
-		}
-
-		int energyExtracted = Math.min(energy, maxExtract);
-
-		if (!simulate) {
-			energy -= energyExtracted;
-			energyChanged(energy + energyExtracted);
-		}
-
-		return energyExtracted;
-	}
-
-	@Override
-	public int getEnergyStored() {
-		return energy;
-	}
-
-	@Override
-	public int getMaxEnergyStored() {
+	public final double getEnergyCapacity() {
 		return energyCapacity;
 	}
 
 	@Override
-	public boolean canExtract() {
-		return outputEnergyTier != null;
+	public final double getEnergy() {
+		return energy;
 	}
 
 	@Override
-	public boolean canReceive() {
-		return inputEnergyTier != null;
+	public final void setEnergyRaw(double e) {
+		energy = e;
 	}
 
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
@@ -276,13 +252,13 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	@Nullable
-	public final EnergyTier getInputPowerTier() {
+	public final EnergyTier getInputEnergyTier() {
 		return inputEnergyTier;
 	}
 
 	@Nullable
 	@Override
-	public EnergyTier getOutputPowerTier() {
+	public EnergyTier getOutputEnergyTier() {
 		return outputEnergyTier;
 	}
 

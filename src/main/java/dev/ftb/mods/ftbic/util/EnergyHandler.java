@@ -17,7 +17,16 @@ public interface EnergyHandler {
 
 	double getEnergy();
 
-	void setEnergy(double energy);
+	default void setEnergy(double energy) {
+		double prev = getEnergy();
+
+		if (prev != energy) {
+			setEnergyRaw(energy);
+			energyChanged(prev);
+		}
+	}
+
+	void setEnergyRaw(double energy);
 
 	default double insertEnergy(double maxInsert, boolean simulate) {
 		EnergyTier tier = getInputEnergyTier();
@@ -30,7 +39,8 @@ public interface EnergyHandler {
 		double energyReceived = Math.min(getEnergyCapacity() - energy, Math.min(tier.itemTransferRate, maxInsert));
 
 		if (!simulate && energyReceived > 0D) {
-			setEnergy(energy + energyReceived);
+			setEnergyRaw(energy + energyReceived);
+			energyChanged(energy);
 		}
 
 		return energyReceived;
@@ -47,9 +57,13 @@ public interface EnergyHandler {
 		double energyExtracted = Math.min(energy, Math.min(tier.itemTransferRate, maxExtract));
 
 		if (!simulate && energyExtracted > 0D) {
-			setEnergy(energy - energyExtracted);
+			setEnergyRaw(energy - energyExtracted);
+			energyChanged(energy);
 		}
 
 		return energyExtracted;
+	}
+
+	default void energyChanged(double prevEnergy) {
 	}
 }
