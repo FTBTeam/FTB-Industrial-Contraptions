@@ -34,16 +34,21 @@ public class FTBICConfig {
 
 	public static int IRON_FURNACE_ITEMS_PER_COAL = 12;
 
-	public static double BASIC_GENERATOR_CAPACITY = 1600;
-	public static double BASIC_GENERATOR_OUTPUT = 1;
+	public static double BASIC_GENERATOR_CAPACITY = 4000;
+	public static double BASIC_GENERATOR_OUTPUT = 10;
 	public static int GEOTHERMAL_GENERATOR_LAVA_TANK = 8000;
 	public static double GEOTHERMAL_GENERATOR_CAPACITY = 2400;
-	public static double GEOTHERMAL_GENERATOR_OUTPUT = 1;
-	public static double WIND_MILL_MIN_OUTPUT = 4;
-	public static double WIND_MILL_MAX_OUTPUT = 20;
-	public static double LV_SOLAR_PANEL_OUTPUT = 2;
-	public static double MV_SOLAR_PANEL_OUTPUT = 16;
-	public static double HV_SOLAR_PANEL_OUTPUT = 128;
+	public static double GEOTHERMAL_GENERATOR_OUTPUT = 20;
+	public static double WIND_MILL_MIN_OUTPUT = 0.3;
+	public static double WIND_MILL_MAX_OUTPUT = 6.5;
+	public static int WIND_MILL_MIN_Y = 64;
+	public static int WIND_MILL_MAX_Y = 250;
+	public static double WIND_MILL_RAIN_MODIFIER = 1.2;
+	public static double WIND_MILL_THUNDER_MODIFIER = 1.5;
+	public static double LV_SOLAR_PANEL_OUTPUT = 1;
+	public static double MV_SOLAR_PANEL_OUTPUT = 8;
+	public static double HV_SOLAR_PANEL_OUTPUT = 64;
+	public static double EV_SOLAR_PANEL_OUTPUT = 256;
 
 	public static double MACHINE_RECIPE_BASE_TICKS = 200;
 

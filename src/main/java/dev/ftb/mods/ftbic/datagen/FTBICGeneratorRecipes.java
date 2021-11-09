@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.datagen;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
@@ -82,5 +83,17 @@ public class FTBICGeneratorRecipes extends FTBICRecipesGen {
 				.define('A', ADVANCED_MACHINE_BLOCK)
 				.define('C', IRIDIUM_CIRCUIT)
 				.save(consumer, shapedLoc("hv_solar_panel"));
+
+		ShapedRecipeBuilder.shaped(EV_SOLAR_PANEL)
+				.unlockedBy("has_item", has(HV_SOLAR_PANEL))
+				.group(MODID + ":ev_solar_panel")
+				.pattern("SAS")
+				.pattern("SCS")
+				.pattern("SNS")
+				.define('S', HV_SOLAR_PANEL)
+				.define('A', ANTIMATTER)
+				.define('C', COOLANT_60K)
+				.define('N', Items.NETHERITE_BLOCK)
+				.save(consumer, shapedLoc("ev_solar_panel"));
 	}
 }

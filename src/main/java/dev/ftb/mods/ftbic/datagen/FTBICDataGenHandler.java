@@ -154,6 +154,8 @@ public class FTBICDataGenHandler {
 			add("recipe." + FTBIC.MOD_ID + ".canning", "Canning");
 			add("recipe." + FTBIC.MOD_ID + ".rolling", "Rolling");
 			add("recipe." + FTBIC.MOD_ID + ".extruding", "Extruding");
+
+			add("ftbic.output", "Output: %s");
 		}
 	}
 
@@ -212,6 +214,7 @@ public class FTBICDataGenHandler {
 			makeThemedElectric("lv_solar_panel_top", BASIC_TOP);
 			makeThemedElectric("mv_solar_panel_top", BASIC_TOP);
 			makeThemedElectric("hv_solar_panel_top", ADVANCED_TOP);
+			makeThemedElectric("ev_solar_panel_top", ADVANCED_TOP);
 			makeThemedElectricOnOff("nuclear_reactor_front", ADVANCED_SIDE);
 
 			makeThemedElectricOnOff("powered_furnace_front", BASIC_SIDE);
@@ -390,6 +393,7 @@ public class FTBICDataGenHandler {
 			electric("lv_solar_panel", BASIC_SIDE, BASIC_SIDE, "lv_solar_panel_top", BASIC_BOTTOM);
 			electric("mv_solar_panel", BASIC_SIDE, BASIC_SIDE, "mv_solar_panel_top", BASIC_BOTTOM);
 			electric("hv_solar_panel", ADVANCED_SIDE, ADVANCED_SIDE, "hv_solar_panel_top", ADVANCED_BOTTOM);
+			electric("ev_solar_panel", ADVANCED_SIDE, ADVANCED_SIDE, "ev_solar_panel_top", ADVANCED_BOTTOM);
 			electric("nuclear_reactor_off", "nuclear_reactor_front_off", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
 			electric("nuclear_reactor_on", "nuclear_reactor_front_on", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
 

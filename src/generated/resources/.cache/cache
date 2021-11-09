@@ -10,6 +10,7 @@ fd76828bd6553476e9902a9d909666ab62f8fba9 assets/ftbic/blockstates/basic_generato
 8266c7493bceeeca797d37772d81087ce5448a5d assets/ftbic/blockstates/centrifuge.json
 44aeff1312ff5cc8fa30166ed1a0312ae8d9ddab assets/ftbic/blockstates/compressor.json
 7880da0e5c7d20e5331ee2cb39f19ce612768224 assets/ftbic/blockstates/copper_cable.json
+bfc0434c85cdbae33faae2a310f0b61c193f9c23 assets/ftbic/blockstates/ev_solar_panel.json
 2844de9531687da80f38714a6b11f888c9255a3e assets/ftbic/blockstates/extruder.json
 b9055306d97cb6c05aff00415f7dee481d6100b9 assets/ftbic/blockstates/geothermal_generator.json
 3c5baceb9e33c6cf9d0ea9155b77cc35b038699c assets/ftbic/blockstates/glass_cable.json
@@ -34,7 +35,7 @@ ed1e379681b7c961e99d9107a099af03ab0baed5 assets/ftbic/blockstates/reinforced_sto
 a06f3f057c49f855428c4b9f04ad7abaf052e547 assets/ftbic/blockstates/roller.json
 6e4255852359a733ca3abdc8a8d7287b8dd39ca1 assets/ftbic/blockstates/rubber_sheet.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-743feaad14b2bfee13fcb11d8707860934a0e454 assets/ftbic/lang/en_us.json
+97c7ca168a80474daf8a4cad8179c8dd7d98e2a7 assets/ftbic/lang/en_us.json
 32a8fcccb6a46281b355b13187ab3268564e23ca assets/ftbic/models/block/advanced_machine_block.json
 07639236919b9e54cbbe36c2b2a72de20d4c4802 assets/ftbic/models/block/aluminum_cable_base.json
 95aaf3441e53f9a7c31fd7f07b9a273475c6c461 assets/ftbic/models/block/aluminum_cable_connection.json
@@ -58,6 +59,7 @@ fb9a42a78ff49677931e2493f215327885d4ff65 assets/ftbic/models/block/electric/dark
 bcd7b5814a56dd13621058265c709f8eb81bda75 assets/ftbic/models/block/electric/dark/centrifuge_on.json
 66004c7d64c511ad45531c0bf64c15f6fbb41e17 assets/ftbic/models/block/electric/dark/compressor_off.json
 5150dc490e73203d8777922e07021c48c1c9c5a1 assets/ftbic/models/block/electric/dark/compressor_on.json
+6748a1639541fb98e0fecc676af2d1be89c7c067 assets/ftbic/models/block/electric/dark/ev_solar_panel.json
 33254d83ab920075724ef52bebbb057941ad76c8 assets/ftbic/models/block/electric/dark/extruder_off.json
 c37d11997fa327fb3b2ebc653e63d7bca2bdacf0 assets/ftbic/models/block/electric/dark/extruder_on.json
 fc9db13d9c74f1d19f63247460037c241e6f05f3 assets/ftbic/models/block/electric/dark/geothermal_generator_off.json
@@ -100,6 +102,7 @@ a1b3c3e14517ab299dc47d038ef2b5fcc42c3d6b assets/ftbic/models/block/electric/ligh
 63e96c1e6cef1ac21d896f31a8fb9a9083669e8d assets/ftbic/models/block/electric/light/centrifuge_on.json
 be17f00445586456af2ad8620a110fb1120b720e assets/ftbic/models/block/electric/light/compressor_off.json
 7eefa36539cd9b9dfed5fd9fa07d4d437198012b assets/ftbic/models/block/electric/light/compressor_on.json
+eec2d84b65f49b677998e4dbc174671737b5b22f assets/ftbic/models/block/electric/light/ev_solar_panel.json
 2c02e99fcf3659fff8d3a37ed2c70708c9fa836e assets/ftbic/models/block/electric/light/extruder_off.json
 2f728da49507a7d62766e7eaa930dfd057e4b62d assets/ftbic/models/block/electric/light/extruder_on.json
 002054e077c285cb8d893c2c700d15dcdce1bdc0 assets/ftbic/models/block/electric/light/geothermal_generator_off.json
@@ -174,6 +177,7 @@ b12b0c5ec3ad9e38492dc8a90b67db345cf8c7d2 assets/ftbic/models/item/empty_can.json
 e5cf3f8f288a7c1de22ae4cbd5a0466757069bbd assets/ftbic/models/item/empty_cell.json
 cff9e351905af6a57b3391223348b752b05ad69d assets/ftbic/models/item/energy_crystal.json
 2e7ef82c3670511765fd0107b2e6bdda048951a8 assets/ftbic/models/item/energy_storage_upgrade.json
+a47388b6a5acaa2f2e46ce518e55e0ae436a96c1 assets/ftbic/models/item/ev_solar_panel.json
 2f871a28c6e52643848fe0d4e5619af059a9f24f assets/ftbic/models/item/extruder.json
 c270b3a608bb907da4d09059f059bd956e0cffe1 assets/ftbic/models/item/fuse.json
 cc417949525be6eba72b12ece12729188c2363e1 assets/ftbic/models/item/geothermal_generator.json
@@ -243,6 +247,7 @@ b24685989202777e06aacb85171da6cf4fd1ce2b assets/ftbic/textures/block/electric/da
 932c81342ca7a250a85aa81b578584ffb7ff4173 assets/ftbic/textures/block/electric/dark/compressor_front_off.png
 0d540c07471524e89134c25564c91404026061c3 assets/ftbic/textures/block/electric/dark/compressor_front_on.png
 589b4bdec8b1a96fca919fd8394e950b0ad280a4 assets/ftbic/textures/block/electric/dark/compressor_top.png
+a0e00bb7fbeede0428230f8b4feba35584cd2486 assets/ftbic/textures/block/electric/dark/ev_solar_panel_top.png
 23fad93796f900b84ddea23b0e99fc06c4c423a3 assets/ftbic/textures/block/electric/dark/extruder_front_off.png
 14c532730585a8336451e99b116382c5b546e135 assets/ftbic/textures/block/electric/dark/extruder_front_on.png
 9028b4d82b869506944fdd35c63db71457d9624d assets/ftbic/textures/block/electric/dark/geothermal_generator_front_off.png
@@ -299,6 +304,7 @@ cddde6f17d29f7dd83926a11268c5f0f6b438063 assets/ftbic/textures/block/electric/li
 6096405af3dacde5c103002548a859d30bded455 assets/ftbic/textures/block/electric/light/compressor_front_off.png
 25be72b8eb71b2bc0bcfcaee4267cb004d9cb299 assets/ftbic/textures/block/electric/light/compressor_front_on.png
 cb3c8260b5947cc5772dbccc04fad85dcbbd609c assets/ftbic/textures/block/electric/light/compressor_top.png
+d270b590efe1ff4238efcfc4a047fdc362753298 assets/ftbic/textures/block/electric/light/ev_solar_panel_top.png
 531495c68e021b0d6c572a7c70063a8a59e3670a assets/ftbic/textures/block/electric/light/extruder_front_off.png
 9ab0fea7ba88572c0622992b33732182b9e48001 assets/ftbic/textures/block/electric/light/extruder_front_on.png
 ebdea0a320c0525aa2bbe7ba622d9c1eb57e143e assets/ftbic/textures/block/electric/light/geothermal_generator_front_off.png
@@ -393,6 +399,7 @@ d1ddd2396a23f1d93946269ff359cc06cb58e215 data/ftbic/advancements/recipes/ftbic/s
 a45748ce8f0d7acefb8b945e14e275f9596e79dd data/ftbic/advancements/recipes/ftbic/shaped/empty_cell.json
 05438077b2a74e7c8c96c73b22ce829d7423567b data/ftbic/advancements/recipes/ftbic/shaped/energy_crystal.json
 82fc7290963df0e2bd94a987ec7cce40058ceb02 data/ftbic/advancements/recipes/ftbic/shaped/energy_storage_upgrade.json
+aa4dd61a1ec4e9a8d017dd740d26bbb8a5db113a data/ftbic/advancements/recipes/ftbic/shaped/ev_solar_panel.json
 b388b6df62bec4f96cb68ef7714c5cbe6f5929aa data/ftbic/advancements/recipes/ftbic/shaped/extractor.json
 9d6506eaba01abc7921fd576e006af461fa4cf92 data/ftbic/advancements/recipes/ftbic/shaped/extruder.json
 39c30c19d42c5dda6888dbf4eae8703e08c06721 data/ftbic/advancements/recipes/ftbic/shaped/fuse.json
@@ -483,6 +490,7 @@ cb9ad75ea317227706d25816bfdcf10f3437b9e1 data/ftbic/loot_tables/blocks/antimatte
 95f4a142c4f090f09841d7be94abef05b6fb5f71 data/ftbic/loot_tables/blocks/centrifuge.json
 9d8ada1f2543b46fa8a180a3dac466b33b224315 data/ftbic/loot_tables/blocks/compressor.json
 573b79c94aee36a0a5150360bdc69624bdb0f131 data/ftbic/loot_tables/blocks/copper_cable.json
+eae01d57d03154de45ab80edd6154850e49a48fc data/ftbic/loot_tables/blocks/ev_solar_panel.json
 48e8acd3f9d0e1a5f8e2704ff6fa3f5a53c4ca42 data/ftbic/loot_tables/blocks/extruder.json
 4641a20967bb4aa093bbe5ae08f4a67c7730d77f data/ftbic/loot_tables/blocks/geothermal_generator.json
 c7fb691bcc898de8a138b44386a973b48b4cdb88 data/ftbic/loot_tables/blocks/glass_cable.json
@@ -573,7 +581,7 @@ eff1641636aa86f420f0aca1547b53feb1192b29 data/ftbic/recipes/shaped/antimatter/re
 458479c9df894b0142a0257b79cfcb51a286b1d3 data/ftbic/recipes/shaped/antimatter/wool.json
 a04673ef8492575bbdab8403699f9fc2a482a78e data/ftbic/recipes/shaped/antimatter_fabricator.json
 18482038f9ddb24db4a727c69844298c24de55ef data/ftbic/recipes/shaped/basic_generator.json
-81698cab5f2ca86e0516d8d20c2d2fb4ff48fea1 data/ftbic/recipes/shaped/battery.json
+7bad917a58253ebab5b0dcab21d7d81b03c4e176 data/ftbic/recipes/shaped/battery.json
 36ebcf067ef7053f7352ebaf068df52d987161ed data/ftbic/recipes/shaped/canning_machine.json
 af9fd86a040bf1b1c45f87d898d43234da2a55e6 data/ftbic/recipes/shaped/carbon_fibers.json
 1613999ccabd9f37f18216488e3b5df3a57fa267 data/ftbic/recipes/shaped/centrifuge_extractor.json
@@ -592,6 +600,7 @@ fe7f03251333341630f6f2bb0eb9e923f4a5eaf6 data/ftbic/recipes/shaped/electric_furn
 05deb33477fc6fb1faf12d6852b9301f5759e5dc data/ftbic/recipes/shaped/empty_cell.json
 4066cf5831a779dd4d8402afe9b2e0f938bfe244 data/ftbic/recipes/shaped/energy_crystal.json
 bd3ff3ae9d3712bfa26878271bcb1d9515752b5e data/ftbic/recipes/shaped/energy_storage_upgrade.json
+cced1f8cd01b4714ca0de0922d9639aed1f4677a data/ftbic/recipes/shaped/ev_solar_panel.json
 f2132a0effdc8f9533ab0b90da6b325ae8e044b7 data/ftbic/recipes/shaped/extractor.json
 e75d5063e0aec60a18ff6f4209e79600a98f4425 data/ftbic/recipes/shaped/extruder.json
 3a958d1b5b9c1a70cbe1b232369be2bc15f46a6a data/ftbic/recipes/shaped/fuse.json

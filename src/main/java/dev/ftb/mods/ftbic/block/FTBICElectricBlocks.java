@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.generator.BasicGeneratorBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.generator.EVSolarPanelBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.GeothermalGeneratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.HVSolarPanelBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.LVSolarPanelBlockEntity;
@@ -47,6 +48,7 @@ public interface FTBICElectricBlocks {
 	ElectricBlockInstance LV_SOLAR_PANEL = register("lv_solar_panel", LVSolarPanelBlockEntity::new).name("LV Solar Panel").noRotation().noState();
 	ElectricBlockInstance MV_SOLAR_PANEL = register("mv_solar_panel", MVSolarPanelBlockEntity::new).name("MV Solar Panel").noRotation().noState();
 	ElectricBlockInstance HV_SOLAR_PANEL = register("hv_solar_panel", HVSolarPanelBlockEntity::new).advanced().name("HV Solar Panel").noRotation().noState();
+	ElectricBlockInstance EV_SOLAR_PANEL = register("ev_solar_panel", EVSolarPanelBlockEntity::new).advanced().name("EV Solar Panel").noRotation().noState();
 	ElectricBlockInstance NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorBlockEntity::new).advanced();
 
 	ElectricBlockInstance POWERED_FURNACE = register("powered_furnace", PoweredFurnaceBlockEntity::new).onOffBurnt();

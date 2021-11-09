@@ -76,8 +76,19 @@ public class RollingRecipeResults extends SimpleMachineRecipeResults {
 		for (String s : FTBICConfig.AUTO_GEMS) {
 			Tag<Item> gemTag = SerializationTags.getInstance().getItems().getTag(new ResourceLocation("forge:gems/" + s));
 			Tag<Item> gearTag = SerializationTags.getInstance().getItems().getTag(new ResourceLocation("forge:gears/" + s));
+			Tag<Item> plateTag = SerializationTags.getInstance().getItems().getTag(new ResourceLocation("forge:plates/" + s));
 
-			if (gearTag != null && gemTag != null && FTBICConfig.ADD_GEAR_RECIPES) {
+			if (gearTag != null && plateTag != null && FTBICConfig.ADD_GEAR_RECIPES) {
+				Item item = FTBICConfig.getItemFromTag(gearTag);
+				ResourceLocation id = item == Items.AIR ? null : item.getRegistryName();
+
+				if (id != null) {
+					MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "rolling/generated/gear_from_gems/" + id.getNamespace() + "/" + id.getPath()));
+					recipe.inputItems.add(new IngredientWithCount(Ingredient.of(plateTag), 4));
+					recipe.outputItems.add(new StackWithChance(new ItemStack(item), 1D));
+					list.add(recipe);
+				}
+			} else if (gearTag != null && gemTag != null && FTBICConfig.ADD_GEAR_RECIPES) {
 				Item item = FTBICConfig.getItemFromTag(gearTag);
 				ResourceLocation id = item == Items.AIR ? null : item.getRegistryName();
 

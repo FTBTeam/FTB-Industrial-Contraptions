@@ -145,6 +145,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item LV_SOLAR_PANEL = FTBICElectricBlocks.LV_SOLAR_PANEL.item.get();
 	public static final Item MV_SOLAR_PANEL = FTBICElectricBlocks.MV_SOLAR_PANEL.item.get();
 	public static final Item HV_SOLAR_PANEL = FTBICElectricBlocks.HV_SOLAR_PANEL.item.get();
+	public static final Item EV_SOLAR_PANEL = FTBICElectricBlocks.EV_SOLAR_PANEL.item.get();
 	public static final Item NUCLEAR_REACTOR = FTBICElectricBlocks.NUCLEAR_REACTOR.item.get();
 	public static final Item POWERED_FURNACE = FTBICElectricBlocks.POWERED_FURNACE.item.get();
 	public static final Item MACERATOR = FTBICElectricBlocks.MACERATOR.item.get();
