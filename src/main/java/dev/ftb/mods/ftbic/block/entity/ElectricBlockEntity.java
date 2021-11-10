@@ -16,6 +16,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -282,7 +283,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		NetworkHooks.openGui(player, new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
-				return getBlockState().getBlock().getName();
+				return new TranslatableComponent(getBlockState().getBlock().getDescriptionId());
 			}
 
 			@Override
