@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.FTBICCommon;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.screen.BasicGeneratorScreen;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
+import dev.ftb.mods.ftbic.screen.GeothermalGeneratorScreen;
 import dev.ftb.mods.ftbic.screen.MachineScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -23,5 +24,6 @@ public class FTBICClient extends FTBICCommon {
 
 		MenuScreens.register(FTBICMenus.MACHINE.get(), MachineScreen::new);
 		MenuScreens.register(FTBICMenus.BASIC_GENERATOR.get(), BasicGeneratorScreen::new);
+		MenuScreens.register(FTBICMenus.GEOTHERMAL_GENERATOR.get(), GeothermalGeneratorScreen::new);
 	}
 }

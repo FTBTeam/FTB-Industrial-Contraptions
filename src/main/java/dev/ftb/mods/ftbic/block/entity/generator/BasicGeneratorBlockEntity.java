@@ -107,7 +107,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int get(int id) {
 		switch (id) {
 			case 0:
-				// getProgressBar()
+				// getFuelBar()
 				return fuelTicks == 0 ? 0 : Mth.clamp(Mth.ceil(fuelTicks * 14D / maxFuelTicks), 0, 14);
 			case 1:
 				// getEnergyBar()

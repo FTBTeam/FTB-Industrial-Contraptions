@@ -37,7 +37,7 @@ public class FTBICConfig {
 
 	public static double BASIC_GENERATOR_CAPACITY = 4000;
 	public static double BASIC_GENERATOR_OUTPUT = 10;
-	public static int GEOTHERMAL_GENERATOR_LAVA_TANK = 8_000;
+	public static int GEOTHERMAL_GENERATOR_TANK_SIZE = 8_000;
 	public static double GEOTHERMAL_GENERATOR_CAPACITY = 2_400;
 	public static double GEOTHERMAL_GENERATOR_OUTPUT = 20;
 	public static double WIND_MILL_MIN_OUTPUT = 0.3;

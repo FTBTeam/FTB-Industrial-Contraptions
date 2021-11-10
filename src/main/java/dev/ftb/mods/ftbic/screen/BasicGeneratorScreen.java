@@ -14,9 +14,9 @@ public class BasicGeneratorScreen extends ElectricBlockScreen<BasicGeneratorMenu
 		super.renderBg(poseStack, delta, mouseX, mouseY);
 
 		drawFuel(poseStack, leftPos + 63, topPos + 27, menu.getFuelBar());
-		drawSlot(poseStack, leftPos + 61, topPos + 43);
-
 		drawEnergy(poseStack, leftPos + 99, topPos + 27, menu.getEnergyBar());
+
+		drawSlot(poseStack, leftPos + 61, topPos + 43);
 		drawSlot(poseStack, leftPos + 97, topPos + 43);
 	}
 }

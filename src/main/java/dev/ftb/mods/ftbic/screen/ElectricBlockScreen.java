@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbic.FTBIC;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraftforge.fluids.FluidStack;
@@ -81,7 +82,12 @@ public class ElectricBlockScreen<T extends AbstractContainerMenu> extends Abstra
 
 		// render fluid here properly
 
-		fillGradient(poseStack, x, y, 18, 54, 0xFFFF0000, 0xFF000000);
+		double d = fluid.getAmount() / (double) capacity;
+		int h = Mth.ceil(d * 52);
+
+		if (h > 0) {
+			fillGradient(poseStack, x + 1, y + 1 + (52 - h), x + 17, y + 53, 0xFFFFB600, 0xFFD84C45);
+		}
 
 		minecraft.getTextureManager().bind(BASE_TEXTURE);
 		blit(poseStack, x, y, 67, 167, 18, 54);
