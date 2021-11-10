@@ -32,6 +32,7 @@ public class FTBICConfig {
 	public static double MV_BATTERY_BOX_CAPACITY = 300_000;
 	public static double HV_BATTERY_BOX_CAPACITY = 4_000_000;
 
+	public static int STATE_UPDATE_TICKS = 16;
 	public static int IRON_FURNACE_ITEMS_PER_COAL = 12;
 
 	public static double BASIC_GENERATOR_CAPACITY = 4000;

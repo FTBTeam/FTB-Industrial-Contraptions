@@ -8,10 +8,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class BatteryInventory extends ItemStackHandler {
 	public final ElectricBlockEntity entity;
+	public final boolean charge;
 
-	public BatteryInventory(ElectricBlockEntity e) {
+	public BatteryInventory(ElectricBlockEntity e, boolean c) {
 		super(1);
 		entity = e;
+		charge = c;
 	}
 
 	public void loadItem(ItemStack stack) {
@@ -25,7 +27,7 @@ public class BatteryInventory extends ItemStackHandler {
 
 	@Override
 	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-		return stack.getItem() instanceof EnergyItemHandler && ((EnergyItemHandler) stack.getItem()).canExtractEnergy();
+		return stack.getItem() instanceof EnergyItemHandler && (charge ? ((EnergyItemHandler) stack.getItem()).canInsertEnergy() : ((EnergyItemHandler) stack.getItem()).canExtractEnergy());
 	}
 
 	@Override

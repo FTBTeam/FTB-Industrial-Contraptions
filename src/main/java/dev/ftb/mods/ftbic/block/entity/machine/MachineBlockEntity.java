@@ -18,15 +18,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -36,7 +32,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -49,8 +44,8 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class MachineBlockEntity extends ElectricBlockEntity implements ContainerData {
-	public UpgradeInventory upgradeInventory;
-	public BatteryInventory batteryInventory;
+	public final UpgradeInventory upgradeInventory;
+	public final BatteryInventory batteryInventory;
 	public double progress;
 	public double maxProgress;
 	public int acceleration;
@@ -64,7 +59,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	public MachineBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
 		super(type, inItems, outItems);
 		upgradeInventory = new UpgradeInventory(this, 4, FTBICConfig.UPGRADE_LIMIT_PER_SLOT);
-		batteryInventory = new BatteryInventory(this);
+		batteryInventory = new BatteryInventory(this, false);
 		progress = 0;
 		maxProgress = 0D;
 		acceleration = 0;
@@ -179,7 +174,6 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 				changeState = ElectricBlockState.ON;
 
 				if (energy < eu) {
-					changeState = ElectricBlockState.OFF;
 					setChanged();
 				}
 
@@ -237,7 +231,6 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 				}
 
 				checkProcessing = true;
-				changeState = ElectricBlockState.OFF;
 			}
 		}
 
@@ -250,7 +243,6 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 			if (!hasResult) {
 				progress = 0D;
 				maxProgress = 0D;
-				changeState = ElectricBlockState.OFF;
 				setChanged();
 			} else if (progress == 0D) {
 				maxProgress = result.time * FTBICConfig.MACHINE_RECIPE_BASE_TICKS;
@@ -345,24 +337,15 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 			MachineRecipeSerializer serializer = getRecipeSerializer();
 
 			if (serializer != null) {
-				NetworkHooks.openGui((ServerPlayer) player, new MenuProvider() {
-					@Override
-					public Component getDisplayName() {
-						return getBlockState().getBlock().getName();
-					}
-
-					@Override
-					public AbstractContainerMenu createMenu(int id, Inventory playerInv, Player player1) {
-						return new MachineMenu(id, playerInv, MachineBlockEntity.this, MachineBlockEntity.this, serializer);
-					}
-				}, this::writeMenu);
+				openMenu((ServerPlayer) player, (id, inventory) -> new MachineMenu(id, inventory, this, this, serializer));
 			}
 		}
 
 		return InteractionResult.SUCCESS;
 	}
 
-	private void writeMenu(FriendlyByteBuf buf) {
+	@Override
+	public void writeMenu(FriendlyByteBuf buf) {
 		buf.writeBlockPos(worldPosition);
 		buf.writeResourceLocation(getRecipeSerializer().getRegistryName());
 	}
@@ -376,6 +359,11 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 		}
 
 		Block.popResource(level, pos, batteryInventory.getStackInSlot(0));
+	}
+
+	@Override
+	public int getCount() {
+		return 3;
 	}
 
 	@Override
@@ -393,15 +381,6 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 			default:
 				return 0;
 		}
-	}
-
-	@Override
-	public void set(int id, int value) {
-	}
-
-	@Override
-	public int getCount() {
-		return 3;
 	}
 
 	@Override

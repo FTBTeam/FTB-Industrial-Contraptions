@@ -4,7 +4,10 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
+import dev.ftb.mods.ftbic.screen.BasicGeneratorMenu;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -14,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int fuelTicks = 0;
+	public int maxFuelTicks = 0;
 
 	public BasicGeneratorBlockEntity() {
 		super(FTBICElectricBlocks.BASIC_GENERATOR.blockEntity.get(), 1, 0);
@@ -29,12 +33,14 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	public void writeData(CompoundTag tag) {
 		super.writeData(tag);
 		tag.putInt("FuelTicks", fuelTicks);
+		tag.putInt("MaxFuelTicks", maxFuelTicks);
 	}
 
 	@Override
 	public void readData(CompoundTag tag) {
 		super.readData(tag);
 		fuelTicks = tag.getInt("FuelTicks");
+		maxFuelTicks = tag.getInt("MaxFuelTicks");
 	}
 
 	@Override
@@ -61,29 +67,53 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 				setChanged();
 			}
 		}
+
+		if (fuelTicks == 0 && energy < energyCapacity && !inputItems[0].isEmpty()) {
+			RecipeCache recipeCache = getRecipeCache();
+
+			if (recipeCache != null) {
+				maxFuelTicks = recipeCache.getBasicGeneratorFuelTicks(level, inputItems[0]);
+				fuelTicks = maxFuelTicks;
+
+				if (maxFuelTicks > 0) {
+					if (inputItems[0].getCount() == 1) {
+						inputItems[0] = inputItems[0].getContainerItem();
+					} else {
+						inputItems[0].shrink(1);
+					}
+
+					changeState = ElectricBlockState.ON;
+					setChanged();
+				}
+			}
+		}
 	}
 
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			RecipeCache recipeCache = getRecipeCache();
-
-			if (recipeCache != null) {
-				int fuel = recipeCache.getBasicGeneratorFuelTicks(level, player.getItemInHand(hand));
-
-				if (fuel > 0) {
-					if (!player.isCrouching()) {
-						player.getItemInHand(hand).shrink(1);
-					}
-
-					fuelTicks += fuel;
-					changeState = ElectricBlockState.ON;
-					setChanged();
-					return InteractionResult.SUCCESS;
-				}
-			}
+			openMenu((ServerPlayer) player, (id, inventory) -> new BasicGeneratorMenu(id, inventory, this, this));
 		}
 
-		return super.rightClick(player, hand, hit);
+		return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	public int getCount() {
+		return 2;
+	}
+
+	@Override
+	public int get(int id) {
+		switch (id) {
+			case 0:
+				// getProgressBar()
+				return fuelTicks == 0 ? 0 : Mth.clamp(Mth.ceil(fuelTicks * 14D / maxFuelTicks), 0, 14);
+			case 1:
+				// getEnergyBar()
+				return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 14D / energyCapacity), 0, 14);
+			default:
+				return 0;
+		}
 	}
 }

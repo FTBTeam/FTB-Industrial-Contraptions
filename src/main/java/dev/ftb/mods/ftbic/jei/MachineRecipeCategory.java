@@ -84,8 +84,8 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 	public void draw(MachineRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
 		arrowOff.draw(matrixStack, serializer.progressX, serializer.progressY);
 		arrowOn.draw(matrixStack, serializer.progressX, serializer.progressY);
-		powerOff.draw(matrixStack, serializer.powerX, serializer.powerY);
-		powerOn.draw(matrixStack, serializer.powerX, serializer.powerY);
+		powerOff.draw(matrixStack, serializer.energyX, serializer.energyY);
+		powerOn.draw(matrixStack, serializer.energyX, serializer.energyY);
 
 		for (int i = 0; i < serializer.inputSlots; i++) {
 			slot.draw(matrixStack, i * 18, 0);

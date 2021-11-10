@@ -17,8 +17,8 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 	public final RecipeType<MachineRecipe> recipeType;
 	public int guiWidth = 82;
 	public int guiHeight = 54;
-	public int powerX = 2;
-	public int powerY = 20;
+	public int energyX = 2;
+	public int energyY = 20;
 	public int progressX = 24;
 	public int progressY = 18;
 	public int batteryX = 0;
@@ -33,7 +33,7 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 	}
 
 	public MachineRecipeSerializer twoInputs() {
-		powerX = 11;
+		energyX = 11;
 		progressX = 30;
 		batteryX = 8;
 		inputSlots = 2;

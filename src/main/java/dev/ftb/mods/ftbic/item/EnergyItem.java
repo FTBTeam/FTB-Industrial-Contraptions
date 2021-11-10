@@ -5,7 +5,6 @@ import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +12,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -28,20 +26,6 @@ public class EnergyItem extends Item implements EnergyItemHandler {
 		capacity = cap;
 	}
 
-	@Nullable
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-		if (!isCreativeEnergyItem()) {
-			CompoundTag t = stack.getOrCreateTag();
-
-			if (!t.contains("Energy")) {
-				t.putDouble("Energy", capacity);
-			}
-		}
-
-		return null;
-	}
-
 	@Override
 	public double getEnergyCapacity(ItemStack stack) {
 		return capacity;
@@ -49,7 +33,7 @@ public class EnergyItem extends Item implements EnergyItemHandler {
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
-		return true;
+		return stack.hasTag() && stack.getTag().contains("Energy");
 	}
 
 	@Override

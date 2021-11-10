@@ -52,6 +52,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> WOOL = ItemTags.WOOL;
 	public static final Tag<Item> SLIMEBALL = Tags.Items.SLIMEBALLS;
 	public static final Tag<Item> SILICON = ItemTags.bind("forge:silicon");
+	public static final Tag<Item> SULFUR = ItemTags.bind("forge:gems/sulfur");
 	public static final Tag<Item> SULFUR_DUST = ItemTags.bind("forge:dusts/sulfur");
 	public static final Tag<Item> BITUMEN = ItemTags.bind("forge:bitumen");
 	public static final Tag<Item> URANIUM_DUST = ItemTags.bind("forge:dusts/uranium");
@@ -74,6 +75,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> ALUMINUM_DUST = ItemTags.bind("forge:dusts/aluminum");
 
 	public static final Item SILICON_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SILICON).get();
+	public static final Item SULFUR_DUST_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.SULFUR).get();
 	public static final Item OBSIDIAN_DUST_ITEM = ItemHandler.DUST_OBSIDIAN.get();
 	public static final Item ENDER_DUST_ITEM = ItemHandler.DUST_ENDER.get();
 	public static final Item SAWDUST_ITEM = ItemHandler.DUST_WOOD.get();

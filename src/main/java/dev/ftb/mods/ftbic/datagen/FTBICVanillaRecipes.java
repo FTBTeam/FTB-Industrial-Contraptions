@@ -1,7 +1,9 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import com.ridanisaurus.emendatusenigmatica.registries.ItemHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -15,6 +17,13 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
+		ShapelessRecipeBuilder.shapeless(SULFUR_DUST_ITEM)
+				.unlockedBy("has_item", has(SULFUR))
+				.group(MODID + ":sulfur")
+				.requires(SULFUR)
+				.requires(ItemHandler.ENIGMATIC_HAMMER.get())
+				.save(consumer, shapelessLoc("sulfur_from_hammer"));
+
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", has(BLAZE_ROD))
 				.inputItem(Ingredient.of(BLAZE_ROD))

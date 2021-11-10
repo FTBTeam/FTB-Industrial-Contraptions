@@ -19,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int fluidAmount = 0;
-	private int prevFluidAmount = -1;
 	private LazyOptional<GeothermalGeneratorTank> tankOptional;
 
 	public GeothermalGeneratorBlockEntity() {
@@ -72,16 +71,7 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 		if (energy < energyCapacity && fluidAmount > 0) {
 			energy += Math.min(FTBICConfig.GEOTHERMAL_GENERATOR_OUTPUT, energyCapacity - energy);
 			fluidAmount--;
-		}
-
-		if (prevFluidAmount != fluidAmount) {
-			if (prevFluidAmount == 0) {
-				changeState = ElectricBlockState.ON;
-			} else if (fluidAmount == 0) {
-				changeState = ElectricBlockState.OFF;
-			}
-
-			prevFluidAmount = fluidAmount;
+			changeState = ElectricBlockState.ON;
 		}
 	}
 
@@ -91,6 +81,6 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 			return InteractionResult.SUCCESS;
 		}
 
-		return InteractionResult.PASS;
+		return InteractionResult.SUCCESS;
 	}
 }

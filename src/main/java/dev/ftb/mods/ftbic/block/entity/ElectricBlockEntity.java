@@ -1,17 +1,26 @@
 package dev.ftb.mods.ftbic.block.entity;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
+import dev.ftb.mods.ftbic.util.OpenMenuFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -24,6 +33,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -33,7 +43,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, EnergyHandler, IItemHandlerModifiable {
+public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, EnergyHandler, IItemHandlerModifiable, ContainerData {
 	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
@@ -52,6 +62,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public final ItemStack[] outputItems;
 	private LazyOptional<?> thisOptional;
 	public ElectricBlockState changeState;
+	private int changeStateTicks;
 
 	public double energyCapacity;
 	public EnergyTier outputEnergyTier;
@@ -190,13 +201,18 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	protected void handleChanges() {
-		if (changeState != null && level.getGameTime() % 8L == (hashCode() & 7L)) {
+		if (changeStateTicks > 0) {
+			changeStateTicks--;
+		}
+
+		if (changeState != null && changeStateTicks <= 0) {
 			if (getBlockState().getValue(((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.stateProperty) != changeState) {
 				level.setBlock(worldPosition, getBlockState().setValue(((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.stateProperty, changeState), 3);
 				setChanged();
 			}
 
 			changeState = null;
+			changeStateTicks = FTBICConfig.STATE_UPDATE_TICKS;
 		}
 
 		if (changed) {
@@ -207,6 +223,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public void tick() {
+		changeState = ElectricBlockState.OFF;
 		handleEnergyInput();
 		handleChanges();
 	}
@@ -248,6 +265,24 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		return InteractionResult.PASS;
+	}
+
+	public void openMenu(ServerPlayer player, OpenMenuFactory openMenuFactory) {
+		NetworkHooks.openGui(player, new MenuProvider() {
+			@Override
+			public Component getDisplayName() {
+				return getBlockState().getBlock().getName();
+			}
+
+			@Override
+			public AbstractContainerMenu createMenu(int id, Inventory playerInv, Player player1) {
+				return openMenuFactory.create(id, playerInv);
+			}
+		}, this::writeMenu);
+	}
+
+	public void writeMenu(FriendlyByteBuf buf) {
+		buf.writeBlockPos(worldPosition);
 	}
 
 	@Override
@@ -412,5 +447,19 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	 * In every instance initProperties() should be called first
 	 */
 	public void upgradesChanged() {
+	}
+
+	@Override
+	public int getCount() {
+		return 0;
+	}
+
+	@Override
+	public int get(int id) {
+		return 0;
+	}
+
+	@Override
+	public void set(int id, int value) {
 	}
 }
