@@ -2,17 +2,20 @@ package dev.ftb.mods.ftbic.block.entity;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
+import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.OpenMenuFactory;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -206,9 +209,13 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		}
 
 		if (changeState != null && changeStateTicks <= 0) {
-			if (getBlockState().getValue(((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.stateProperty) != changeState) {
-				level.setBlock(worldPosition, getBlockState().setValue(((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.stateProperty, changeState), 3);
-				setChanged();
+			ElectricBlockInstance ebi = ((ElectricBlock) getBlockState().getBlock()).electricBlockInstance;
+
+			if (ebi.stateProperty != null) {
+				if (getBlockState().getValue(ebi.stateProperty) != changeState) {
+					level.setBlock(worldPosition, getBlockState().setValue(ebi.stateProperty, changeState), 3);
+					setChanged();
+				}
 			}
 
 			changeState = null;
@@ -264,7 +271,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		return InteractionResult.PASS;
+		if (!level.isClientSide()) {
+			player.sendMessage(new TextComponent("No GUI yet!"), Util.NIL_UUID);
+		}
+
+		return InteractionResult.SUCCESS;
 	}
 
 	public void openMenu(ServerPlayer player, OpenMenuFactory openMenuFactory) {

@@ -19,4 +19,5 @@ public interface FTBICMenus {
 	Supplier<MenuType<MachineMenu>> MACHINE = register("machine", MachineMenu::new);
 	Supplier<MenuType<BasicGeneratorMenu>> BASIC_GENERATOR = register("basic_generator", BasicGeneratorMenu::new);
 	Supplier<MenuType<GeothermalGeneratorMenu>> GEOTHERMAL_GENERATOR = register("geothermal_generator", GeothermalGeneratorMenu::new);
+	Supplier<MenuType<SolarPanelMenu>> SOLAR_PANEL = register("solar_panel", SolarPanelMenu::new);
 }
