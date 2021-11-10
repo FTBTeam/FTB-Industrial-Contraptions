@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:separating/silicon"
+			"ftbic:separating/silicon_from_sand"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"tag": "forge:gems/quartz"
+						"tag": "minecraft:sand"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:separating/silicon"
+				"recipe": "ftbic:separating/silicon_from_sand"
 			}
 		}
 	},

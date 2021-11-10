@@ -103,7 +103,20 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(QUARTZ))
 				.inputItem(Ingredient.of(QUARTZ))
 				.outputItem(new ItemStack(SILICON_ITEM, 3))
-				.save(consumer, separatingLoc("silicon"));
+				.save(consumer, separatingLoc("silicon_from_quartz"));
+
+		MachineRecipeBuilder.separating()
+				.unlockedBy("has_item", has(SAND))
+				.inputItem(Ingredient.of(SAND))
+				.outputItem(new ItemStack(SILICON_ITEM), 0.1)
+				.save(consumer, separatingLoc("silicon_from_sand"));
+
+		MachineRecipeBuilder.separating()
+				.unlockedBy("has_item", has(Items.SEA_PICKLE))
+				.inputItem(Ingredient.of(Items.SEA_PICKLE))
+				.outputItem(new ItemStack(Items.SEAGRASS), 0.5)
+				.outputItem(new ItemStack(Items.GLOWSTONE_DUST), 0.03)
+				.save(consumer, separatingLoc("glowstone_dust"));
 
 		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(Items.MAGMA_CREAM))

@@ -18,8 +18,8 @@ public class FTBICConfig {
 
 	public static double LV_TRANSFER_RATE = 32;
 	public static double MV_TRANSFER_RATE = 128;
-	public static double HV_TRANSFER_RATE = 4096;
-	public static double EV_TRANSFER_RATE = 16384;
+	public static double HV_TRANSFER_RATE = 4_096;
+	public static double EV_TRANSFER_RATE = 16_384;
 	public static double ITEM_TRANSFER_EFFICIENCY = 0.1;
 
 	public static double SINGLE_USE_BATTERY_CAPACITY = 2_400;
@@ -36,8 +36,8 @@ public class FTBICConfig {
 
 	public static double BASIC_GENERATOR_CAPACITY = 4000;
 	public static double BASIC_GENERATOR_OUTPUT = 10;
-	public static int GEOTHERMAL_GENERATOR_LAVA_TANK = 8000;
-	public static double GEOTHERMAL_GENERATOR_CAPACITY = 2400;
+	public static int GEOTHERMAL_GENERATOR_LAVA_TANK = 8_000;
+	public static double GEOTHERMAL_GENERATOR_CAPACITY = 2_400;
 	public static double GEOTHERMAL_GENERATOR_OUTPUT = 20;
 	public static double WIND_MILL_MIN_OUTPUT = 0.3;
 	public static double WIND_MILL_MAX_OUTPUT = 6.5;
@@ -60,7 +60,7 @@ public class FTBICConfig {
 	public static double CENTRIFUGE_USE = 2;
 	public static double COMPRESSOR_CAPACITY = 800;
 	public static double COMPRESSOR_USE = 2;
-	public static double REPROCESSOR_CAPACITY = 4000;
+	public static double REPROCESSOR_CAPACITY = 4_000;
 	public static double REPROCESSOR_USE = 8;
 	public static double CANNING_MACHINE_CAPACITY = 800;
 	public static double CANNING_MACHINE_USE = 1;
@@ -68,21 +68,21 @@ public class FTBICConfig {
 	public static double ROLLER_USE = 2;
 	public static double EXTRUDER_CAPACITY = 800;
 	public static double EXTRUDER_USE = 2;
-	public static double ANTIMATTER_CONSTRUCTOR_CAPACITY = 12000;
+	public static double ANTIMATTER_CONSTRUCTOR_CAPACITY = 1_000_000;
 	public static double ANTIMATTER_CONSTRUCTOR_USE = 20;
-	public static double ADVANCED_POWERED_FURNACE_CAPACITY = 416;
-	public static double ADVANCED_POWERED_FURNACE_USE = 3;
-	public static double ADVANCED_MACERATOR_CAPACITY = 1200;
-	public static double ADVANCED_MACERATOR_USE = 2;
-	public static double ADVANCED_CENTRIFUGE_CAPACITY = 800;
-	public static double ADVANCED_CENTRIFUGE_USE = 2;
-	public static double ADVANCED_COMPRESSOR_CAPACITY = 800;
-	public static double ADVANCED_COMPRESSOR_USE = 2;
+	public static double ADVANCED_POWERED_FURNACE_CAPACITY = 10_000;
+	public static double ADVANCED_POWERED_FURNACE_USE = 16;
+	public static double ADVANCED_MACERATOR_CAPACITY = 10_000;
+	public static double ADVANCED_MACERATOR_USE = 16;
+	public static double ADVANCED_CENTRIFUGE_CAPACITY = 10_000;
+	public static double ADVANCED_CENTRIFUGE_USE = 16;
+	public static double ADVANCED_COMPRESSOR_CAPACITY = 10_000;
+	public static double ADVANCED_COMPRESSOR_USE = 16;
 
 	public static int UPGRADE_LIMIT_PER_SLOT = 4;
 	public static double OVERCLOCKER_SPEED = 1.45;
 	public static double OVERCLOCKER_ENERGY_USE = 1.6;
-	public static double STORAGE_UPGRADE = 1000;
+	public static double STORAGE_UPGRADE = 10_000;
 
 	public static boolean ADD_DUST_FROM_ORE_RECIPES = true;
 	public static boolean ADD_DUST_FROM_MATERIAL_RECIPES = true;

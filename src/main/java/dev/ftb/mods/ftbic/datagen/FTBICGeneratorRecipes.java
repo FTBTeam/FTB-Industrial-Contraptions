@@ -52,10 +52,11 @@ public class FTBICGeneratorRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(BASIC_GENERATOR))
 				.group(MODID + ":lv_solar_panel")
 				.pattern("LLL")
-				.pattern("DDD")
+				.pattern("DSD")
 				.pattern("CGC")
 				.define('L', GLASS)
 				.define('D', COAL_DUST)
+				.define('S', SILICON)
 				.define('G', BASIC_GENERATOR)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("lv_solar_panel"));

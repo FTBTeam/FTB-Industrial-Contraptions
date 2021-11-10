@@ -1,0 +1,17 @@
+{
+	"type": "ftbic:separating",
+	"inputItems": [
+		{
+			"ingredient": {
+				"tag": "minecraft:sand"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "emendatusenigmatica:silicon_gem",
+			"chance": 0.1
+		}
+	]
+}

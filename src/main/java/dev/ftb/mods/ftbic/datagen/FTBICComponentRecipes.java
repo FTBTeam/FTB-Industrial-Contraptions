@@ -95,11 +95,12 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(DIAMOND))
 				.group(MODID + ":energy_crystal")
 				.pattern("RQR")
-				.pattern("QDQ")
+				.pattern("SDS")
 				.pattern("RQR")
 				.define('R', REDSTONE)
 				.define('D', DIAMOND)
 				.define('Q', SILICON)
+				.define('S', SULFUR_DUST)
 				.save(consumer, shapedLoc("energy_crystal"));
 
 		ShapelessRecipeBuilder.shapeless(RUBBER, 3)
@@ -128,7 +129,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.requires(COPPER_CABLE)
 				.save(consumer, shapelessLoc("electronic_circuit"));
 
-		ShapelessRecipeBuilder.shapeless(ELECTRONIC_CIRCUIT)
+		ShapelessRecipeBuilder.shapeless(ADVANCED_CIRCUIT)
 				.unlockedBy("has_item", has(ELECTRONIC_CIRCUIT))
 				.group(MODID + ":advanced_circuit")
 				.requires(REDSTONE)

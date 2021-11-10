@@ -11,14 +11,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int fluidAmount = 0;
 	private int prevFluidAmount = -1;
-	private LazyOptional<?> tankOptional;
+	private LazyOptional<GeothermalGeneratorTank> tankOptional;
 
 	public GeothermalGeneratorBlockEntity() {
 		super(FTBICElectricBlocks.GEOTHERMAL_GENERATOR.blockEntity.get(), 1, 1);
@@ -85,6 +87,10 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		return super.rightClick(player, hand, hit);
+		if (FluidUtil.interactWithFluidHandler(player, hand, (IFluidHandler) getTankOptional().orElse(null))) {
+			return InteractionResult.SUCCESS;
+		}
+
+		return InteractionResult.PASS;
 	}
 }

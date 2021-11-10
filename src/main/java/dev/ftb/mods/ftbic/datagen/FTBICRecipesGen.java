@@ -27,6 +27,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> COAL = ItemTags.COALS;
 	public static final Tag<Item> DIAMOND = Tags.Items.GEMS_DIAMOND;
 	public static final Tag<Item> QUARTZ = Tags.Items.GEMS_QUARTZ;
+	public static final Tag<Item> SAND = ItemTags.SAND;
 	public static final Tag<Item> IRON_INGOT = Tags.Items.INGOTS_IRON;
 	public static final Tag<Item> GOLD_INGOT = Tags.Items.INGOTS_GOLD;
 	public static final Tag<Item> COPPER_INGOT = ItemTags.bind("forge:ingots/copper");
@@ -51,7 +52,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> WOOL = ItemTags.WOOL;
 	public static final Tag<Item> SLIMEBALL = Tags.Items.SLIMEBALLS;
 	public static final Tag<Item> SILICON = ItemTags.bind("forge:silicon");
-	public static final Tag<Item> SULFUR = ItemTags.bind("forge:gems/sulfur");
+	public static final Tag<Item> SULFUR_DUST = ItemTags.bind("forge:dusts/sulfur");
 	public static final Tag<Item> BITUMEN = ItemTags.bind("forge:bitumen");
 	public static final Tag<Item> URANIUM_DUST = ItemTags.bind("forge:dusts/uranium");
 	public static final Tag<Item> IRIDIUM_INGOT = ItemTags.bind("forge:ingots/iridium");

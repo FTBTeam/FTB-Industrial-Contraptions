@@ -23,6 +23,7 @@ import java.util.function.Function;
 
 public class FTBICUtils {
 	public static final Tag.Named<Item> UNCANNABLE_FOOD = ItemTags.createOptional(new ResourceLocation("ftbic:uncannable_food"));
+	public static final Tag.Named<Item> NO_AUTO_RECIPE = ItemTags.createOptional(new ResourceLocation("ftbic:no_auto_recipe"));
 
 	public static String formatEnergyValue(double energy) {
 		return String.format("%,d", (long) energy);

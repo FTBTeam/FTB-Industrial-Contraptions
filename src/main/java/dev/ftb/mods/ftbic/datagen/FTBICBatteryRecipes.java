@@ -35,7 +35,7 @@ public class FTBICBatteryRecipes extends FTBICRecipesGen {
 				.define('C', COPPER_CABLE)
 				.define('T', TIN_INGOT)
 				.define('R', REDSTONE)
-				.define('S', SULFUR)
+				.define('S', SULFUR_DUST)
 				.save(consumer, shapedLoc("battery"));
 
 		UpgradeRecipeBuilder.smithing(Ingredient.of(BATTERY), Ingredient.of(ENERGY_CRYSTAL), CRYSTAL_BATTERY)

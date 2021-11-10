@@ -7,7 +7,7 @@ import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class GeothermalGeneratorTank implements IFluidTank {
+public class GeothermalGeneratorTank implements IFluidHandler, IFluidTank {
 	public final GeothermalGeneratorBlockEntity generator;
 
 	public GeothermalGeneratorTank(GeothermalGeneratorBlockEntity g) {
@@ -33,6 +33,27 @@ public class GeothermalGeneratorTank implements IFluidTank {
 	@Override
 	public boolean isFluidValid(FluidStack fluidStack) {
 		return fluidStack.getFluid() == Fluids.LAVA;
+	}
+
+	@Override
+	public int getTanks() {
+		return 1;
+	}
+
+	@NotNull
+	@Override
+	public FluidStack getFluidInTank(int i) {
+		return getFluid();
+	}
+
+	@Override
+	public int getTankCapacity(int i) {
+		return FTBICConfig.GEOTHERMAL_GENERATOR_LAVA_TANK;
+	}
+
+	@Override
+	public boolean isFluidValid(int i, @NotNull FluidStack fluidStack) {
+		return isFluidValid(fluidStack);
 	}
 
 	@Override

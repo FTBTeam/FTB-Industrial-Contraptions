@@ -144,7 +144,7 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.DARK_SPRAY_PAINT_CAN, "Spray Paint Can (Dark)");
 			addItem(FTBICItems.LIGHT_SPRAY_PAINT_CAN, "Spray Paint Can (Light)");
 			addItem(FTBICItems.OVERCLOCKER_UPGRADE, "Overclocker Upgrade");
-			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy_storage Upgrade");
+			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy Storage Upgrade");
 			addItem(FTBICItems.TRANSFORMER_UPGRADE, "Transformer Upgrade");
 			addItem(FTBICItems.EJECTOR_UPGRADE, "Ejector Upgrade");
 

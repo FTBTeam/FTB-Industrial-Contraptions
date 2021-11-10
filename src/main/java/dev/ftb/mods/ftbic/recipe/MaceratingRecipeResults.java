@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.recipe;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +32,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 				Item item = FTBICConfig.getItemFromTag(dustTag);
 				ResourceLocation id = item == Items.AIR ? null : item.getRegistryName();
 
-				if (id != null) {
+				if (id != null && !FTBICUtils.NO_AUTO_RECIPE.contains(item)) {
 					MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "macerating/generated/dust_from_metal_ore/" + id.getNamespace() + "/" + id.getPath()));
 					recipe.inputItems.add(new IngredientWithCount(Ingredient.of(oreTag), 1));
 					recipe.outputItems.add(new StackWithChance(new ItemStack(item, 2), 1D));
@@ -43,7 +44,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 				Item item = FTBICConfig.getItemFromTag(dustTag);
 				ResourceLocation id = item == Items.AIR ? null : item.getRegistryName();
 
-				if (id != null) {
+				if (id != null && !FTBICUtils.NO_AUTO_RECIPE.contains(item)) {
 					MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "macerating/generated/dust_from_metal/" + id.getNamespace() + "/" + id.getPath()));
 					recipe.inputItems.add(new IngredientWithCount(Ingredient.of(ingotTag), 1));
 					recipe.outputItems.add(new StackWithChance(new ItemStack(item, 1), 1D));
@@ -61,7 +62,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 				Item item = FTBICConfig.getItemFromTag(gemTag);
 				ResourceLocation id = item == Items.AIR ? null : item.getRegistryName();
 
-				if (id != null) {
+				if (id != null && !FTBICUtils.NO_AUTO_RECIPE.contains(item)) {
 					MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "macerating/generated/gem_from_ore/" + id.getNamespace() + "/" + id.getPath()));
 					recipe.inputItems.add(new IngredientWithCount(Ingredient.of(oreTag), 1));
 					recipe.outputItems.add(new StackWithChance(new ItemStack(item, 2), 1D));
@@ -71,7 +72,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 				Item item = FTBICConfig.getItemFromTag(dustTag);
 				ResourceLocation id = item == Items.AIR ? null : item.getRegistryName();
 
-				if (id != null) {
+				if (id != null && !FTBICUtils.NO_AUTO_RECIPE.contains(item)) {
 					MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "macerating/generated/dust_from_gem_ore/" + id.getNamespace() + "/" + id.getPath()));
 					recipe.inputItems.add(new IngredientWithCount(Ingredient.of(oreTag), 1));
 					recipe.outputItems.add(new StackWithChance(new ItemStack(item, 2), 1D));
@@ -83,7 +84,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 				Item item = FTBICConfig.getItemFromTag(dustTag);
 				ResourceLocation id = item == Items.AIR ? null : item.getRegistryName();
 
-				if (id != null) {
+				if (id != null && !FTBICUtils.NO_AUTO_RECIPE.contains(item)) {
 					MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "macerating/generated/dust_from_gem/" + id.getNamespace() + "/" + id.getPath()));
 					recipe.inputItems.add(new IngredientWithCount(Ingredient.of(gemTag), 1));
 					recipe.outputItems.add(new StackWithChance(new ItemStack(item, 1), 1D));

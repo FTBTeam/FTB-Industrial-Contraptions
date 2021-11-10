@@ -3,7 +3,7 @@
 	"group": "ftbic:energy_crystal",
 	"pattern": [
 		"RQR",
-		"QDQ",
+		"SDS",
 		"RQR"
 	],
 	"key": {
@@ -15,6 +15,9 @@
 		},
 		"Q": {
 			"tag": "forge:silicon"
+		},
+		"S": {
+			"tag": "forge:dusts/sulfur"
 		}
 	},
 	"result": {

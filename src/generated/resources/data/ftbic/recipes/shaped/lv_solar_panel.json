@@ -3,7 +3,7 @@
 	"group": "ftbic:lv_solar_panel",
 	"pattern": [
 		"LLL",
-		"DDD",
+		"DSD",
 		"CGC"
 	],
 	"key": {
@@ -12,6 +12,9 @@
 		},
 		"D": {
 			"tag": "forge:dusts/coal"
+		},
+		"S": {
+			"tag": "forge:silicon"
 		},
 		"G": {
 			"item": "ftbic:basic_generator"

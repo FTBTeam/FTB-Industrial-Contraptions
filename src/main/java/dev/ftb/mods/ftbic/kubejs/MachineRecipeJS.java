@@ -52,7 +52,7 @@ public class MachineRecipeJS extends RecipeJS {
 		FTBICUtils.listToJson(outputFluids, json, "outputFluids", FluidStackJS::toJson);
 	}
 
-	public MachineRecipeJS processingTime(int p) {
+	public MachineRecipeJS processingTime(double p) {
 		json.addProperty("processingTime", p);
 		save();
 		return this;
