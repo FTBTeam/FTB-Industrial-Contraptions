@@ -16,11 +16,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class EnergyItem extends Item implements EnergyItemHandler {
+public class ElectricItem extends Item implements EnergyItemHandler {
 	public final EnergyTier tier;
 	public final double capacity;
 
-	public EnergyItem(EnergyTier t, double cap) {
+	public ElectricItem(EnergyTier t, double cap) {
 		super(new Properties().stacksTo(1).tab(FTBIC.TAB));
 		tier = t;
 		capacity = cap;
@@ -32,25 +32,10 @@ public class EnergyItem extends Item implements EnergyItemHandler {
 	}
 
 	@Override
-	public boolean showDurabilityBar(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().contains("Energy");
-	}
-
-	@Override
-	public double getDurabilityForDisplay(ItemStack stack) {
-		return 1D - getEnergy(stack) / capacity;
-	}
-
-	@Override
-	public int getRGBDurabilityForDisplay(ItemStack stack) {
-		return 0xFFFF0000;
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
 		if (!isCreativeEnergyItem()) {
-			list.add(FTBICUtils.formatEnergy(getEnergy(stack), capacity).withStyle(ChatFormatting.GRAY));
+			list.add(FTBICUtils.formatEnergy(getEnergy(stack), getEnergyCapacity(stack)).withStyle(ChatFormatting.GRAY));
 		}
 	}
 }

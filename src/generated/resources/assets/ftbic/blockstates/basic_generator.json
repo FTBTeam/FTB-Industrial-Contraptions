@@ -1,62 +1,62 @@
 {
 	"variants": {
-		"dark=false,facing=north,state=off": {
+		"active=false,dark=false,facing=north": {
 			"model": "ftbic:block/electric/light/basic_generator_off"
 		},
-		"dark=true,facing=north,state=off": {
-			"model": "ftbic:block/electric/dark/basic_generator_off"
-		},
-		"dark=false,facing=south,state=off": {
-			"model": "ftbic:block/electric/light/basic_generator_off",
-			"y": 180
-		},
-		"dark=true,facing=south,state=off": {
-			"model": "ftbic:block/electric/dark/basic_generator_off",
-			"y": 180
-		},
-		"dark=false,facing=west,state=off": {
-			"model": "ftbic:block/electric/light/basic_generator_off",
-			"y": 270
-		},
-		"dark=true,facing=west,state=off": {
-			"model": "ftbic:block/electric/dark/basic_generator_off",
-			"y": 270
-		},
-		"dark=false,facing=east,state=off": {
-			"model": "ftbic:block/electric/light/basic_generator_off",
-			"y": 90
-		},
-		"dark=true,facing=east,state=off": {
-			"model": "ftbic:block/electric/dark/basic_generator_off",
-			"y": 90
-		},
-		"dark=false,facing=north,state=on": {
+		"active=true,dark=false,facing=north": {
 			"model": "ftbic:block/electric/light/basic_generator_on"
 		},
-		"dark=true,facing=north,state=on": {
+		"active=false,dark=true,facing=north": {
+			"model": "ftbic:block/electric/dark/basic_generator_off"
+		},
+		"active=true,dark=true,facing=north": {
 			"model": "ftbic:block/electric/dark/basic_generator_on"
 		},
-		"dark=false,facing=south,state=on": {
+		"active=false,dark=false,facing=south": {
+			"model": "ftbic:block/electric/light/basic_generator_off",
+			"y": 180
+		},
+		"active=true,dark=false,facing=south": {
 			"model": "ftbic:block/electric/light/basic_generator_on",
 			"y": 180
 		},
-		"dark=true,facing=south,state=on": {
+		"active=false,dark=true,facing=south": {
+			"model": "ftbic:block/electric/dark/basic_generator_off",
+			"y": 180
+		},
+		"active=true,dark=true,facing=south": {
 			"model": "ftbic:block/electric/dark/basic_generator_on",
 			"y": 180
 		},
-		"dark=false,facing=west,state=on": {
+		"active=false,dark=false,facing=west": {
+			"model": "ftbic:block/electric/light/basic_generator_off",
+			"y": 270
+		},
+		"active=true,dark=false,facing=west": {
 			"model": "ftbic:block/electric/light/basic_generator_on",
 			"y": 270
 		},
-		"dark=true,facing=west,state=on": {
+		"active=false,dark=true,facing=west": {
+			"model": "ftbic:block/electric/dark/basic_generator_off",
+			"y": 270
+		},
+		"active=true,dark=true,facing=west": {
 			"model": "ftbic:block/electric/dark/basic_generator_on",
 			"y": 270
 		},
-		"dark=false,facing=east,state=on": {
+		"active=false,dark=false,facing=east": {
+			"model": "ftbic:block/electric/light/basic_generator_off",
+			"y": 90
+		},
+		"active=true,dark=false,facing=east": {
 			"model": "ftbic:block/electric/light/basic_generator_on",
 			"y": 90
 		},
-		"dark=true,facing=east,state=on": {
+		"active=false,dark=true,facing=east": {
+			"model": "ftbic:block/electric/dark/basic_generator_off",
+			"y": 90
+		},
+		"active=true,dark=true,facing=east": {
 			"model": "ftbic:block/electric/dark/basic_generator_on",
 			"y": 90
 		}

@@ -13,11 +13,7 @@
 				{
 					"condition": "minecraft:inverted",
 					"term": {
-						"condition": "minecraft:block_state_property",
-						"block": "ftbic:advanced_centrifuge",
-						"properties": {
-							"state": "burnt"
-						}
+						"condition": "ftbic:burnt_block"
 					}
 				}
 			]
@@ -32,11 +28,7 @@
 			],
 			"conditions": [
 				{
-					"condition": "minecraft:block_state_property",
-					"block": "ftbic:advanced_centrifuge",
-					"properties": {
-						"state": "burnt"
-					}
+					"condition": "ftbic:burnt_block"
 				}
 			]
 		}

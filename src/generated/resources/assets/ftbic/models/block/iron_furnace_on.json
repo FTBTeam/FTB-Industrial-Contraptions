@@ -3,6 +3,6 @@
 	"textures": {
 		"side": "ftbic:block/iron_furnace_side",
 		"front": "ftbic:block/iron_furnace_front_on",
-		"top": "ftbic:block/iron_furnace_side"
+		"top": "ftbic:block/iron_furnace_top"
 	}
 }

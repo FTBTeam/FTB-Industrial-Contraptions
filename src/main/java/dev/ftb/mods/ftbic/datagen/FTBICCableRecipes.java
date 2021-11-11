@@ -104,5 +104,13 @@ public class FTBICCableRecipes extends FTBICRecipesGen {
 				.define('G', GLASS)
 				.define('C', ENERGY_CRYSTAL)
 				.save(consumer, shapedLoc("glass_cable"));
+
+		// Burnt cable
+
+		ShapelessRecipeBuilder.shapeless(SCRAP)
+				.unlockedBy("has_item", has(BURNT_CABLE))
+				.group(MODID + ":scrap")
+				.requires(BURNT_CABLE)
+				.save(consumer, shapelessLoc("scrap_from_burnt_cable"));
 	}
 }

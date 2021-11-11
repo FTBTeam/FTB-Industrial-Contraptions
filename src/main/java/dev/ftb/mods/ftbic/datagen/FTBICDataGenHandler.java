@@ -4,16 +4,18 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.block.BaseCableBlock;
 import dev.ftb.mods.ftbic.block.CableBlock;
+import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
-import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.SprayPaintable;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
+import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
@@ -33,8 +35,6 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -115,6 +115,7 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.GOLD_CABLE, "Gold Cable");
 			addBlock(FTBICBlocks.ALUMINUM_CABLE, "Aluminum Cable");
 			addBlock(FTBICBlocks.GLASS_CABLE, "Glass Cable");
+			addBlock(FTBICBlocks.BURNT_CABLE, "Burnt Cable");
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -147,6 +148,14 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy Storage Upgrade");
 			addItem(FTBICItems.TRANSFORMER_UPGRADE, "Transformer Upgrade");
 			addItem(FTBICItems.EJECTOR_UPGRADE, "Ejector Upgrade");
+			addItem(FTBICItems.CARBON_HELMET, "Carbon Helmet");
+			addItem(FTBICItems.CARBON_CHESTPLATE, "Carbon Chestplate");
+			addItem(FTBICItems.CARBON_LEGGINGS, "Carbon Leggings");
+			addItem(FTBICItems.CARBON_BOOTS, "Carbon Boots");
+			addItem(FTBICItems.QUANTUM_HELMET, "Quantum Helmet");
+			addItem(FTBICItems.QUANTUM_CHESTPLATE, "Quantum Chestplate");
+			addItem(FTBICItems.QUANTUM_LEGGINGS, "Quantum Leggings");
+			addItem(FTBICItems.QUANTUM_BOOTS, "Quantum Boots");
 
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".separating", "Separating");
@@ -351,7 +360,7 @@ public class FTBICDataGenHandler {
 			;
 
 			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
-				CableBlock block = (CableBlock) cable.get();
+				BaseCableBlock block = (BaseCableBlock) cable.get();
 				String id = block.getRegistryName().getPath();
 
 				withExistingParent("block/" + id + "_base", "block/block")
@@ -458,7 +467,7 @@ public class FTBICDataGenHandler {
 			});
 
 			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
-				CableBlock block = (CableBlock) cable.get();
+				BaseCableBlock block = (BaseCableBlock) cable.get();
 				String id = block.getRegistryName().getPath();
 				// simpleBlock(cable.get(), models().getExistingFile(modLoc("block/" + id + "_base")));
 
@@ -476,15 +485,14 @@ public class FTBICDataGenHandler {
 				if (!machine.noModel) {
 					List<Property<?>> ignoredProperties = new ArrayList<>();
 
-					if (machine.stateProperty == ElectricBlockState.OFF_BURNT) {
-						ignoredProperties.add(ElectricBlockState.OFF_BURNT);
-					}
+					// if (machine.stateProperty == ElectricBlockState.OFF_BURNT) {
+					// 	ignoredProperties.add(ElectricBlockState.OFF_BURNT);
+					// }
 
 					getVariantBuilder(machine.block.get()).forAllStatesExcept(state -> {
-						boolean hasOnState = machine.hasOnState();
-						boolean on = hasOnState && state.getValue(machine.stateProperty) == ElectricBlockState.ON;
+						boolean on = machine.canBeActive && state.getValue(ElectricBlock.ACTIVE);
 						boolean dark = state.getValue(SprayPaintable.DARK);
-						ModelFile modelFile = models().getExistingFile(modLoc("block/electric/" + (dark ? "dark" : "light") + "/" + machine.id + (hasOnState ? (on ? "_on" : "_off") : "")));
+						ModelFile modelFile = models().getExistingFile(modLoc("block/electric/" + (dark ? "dark" : "light") + "/" + machine.id + (machine.canBeActive ? (on ? "_on" : "_off") : "")));
 
 						if (machine.facingProperty == null) {
 							return ConfiguredModel.builder()
@@ -536,13 +544,13 @@ public class FTBICDataGenHandler {
 			basicBlockItem(FTBICBlocks.ADVANCED_MACHINE_BLOCK);
 			withExistingParent(FTBICBlocks.IRON_FURNACE.get().getRegistryName().getPath(), modLoc("block/iron_furnace_off"));
 
-			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
-				basicItem(() -> cable.get().asItem());
-			}
+			//for (Supplier<Block> cable : FTBICBlocks.CABLES) {
+			//	basicItem(() -> cable.get().asItem());
+			//}
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
-					withExistingParent(machine.id, modLoc("block/electric/light/" + machine.id + (machine.hasOnState() ? "_off" : "")));
+					withExistingParent(machine.id, modLoc("block/electric/light/" + machine.id + (machine.canBeActive ? "_off" : "")));
 				}
 			}
 
@@ -573,6 +581,14 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.ENERGY_STORAGE_UPGRADE);
 			basicItem(FTBICItems.TRANSFORMER_UPGRADE);
 			basicItem(FTBICItems.EJECTOR_UPGRADE);
+			basicItem(FTBICItems.CARBON_HELMET);
+			basicItem(FTBICItems.CARBON_CHESTPLATE);
+			basicItem(FTBICItems.CARBON_LEGGINGS);
+			basicItem(FTBICItems.CARBON_BOOTS);
+			basicItem(FTBICItems.QUANTUM_HELMET);
+			basicItem(FTBICItems.QUANTUM_CHESTPLATE);
+			basicItem(FTBICItems.QUANTUM_LEGGINGS);
+			basicItem(FTBICItems.QUANTUM_BOOTS);
 		}
 	}
 
@@ -629,15 +645,17 @@ public class FTBICDataGenHandler {
 			}
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
-				if (machine.stateProperty == ElectricBlockState.ON_OFF_BURNT) {
+				if (machine.canBurn) {
+					BlockPredicate.Builder.block();
+
 					add(machine.block.get(), LootTable.lootTable()
 							.withPool(LootPool.lootPool()
-									.when(InvertedLootItemCondition.invert(LootItemBlockStatePropertyCondition.hasBlockStateProperties(machine.block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(machine.stateProperty, ElectricBlockState.BURNT))))
+									.when(new BurntBlockCondition.Builder().invert())
 									.setRolls(ConstantIntValue.exactly(1))
 									.add(LootItem.lootTableItem(machine.item.get()))
 							)
 							.withPool(LootPool.lootPool()
-									.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(machine.block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(machine.stateProperty, ElectricBlockState.BURNT)))
+									.when(new BurntBlockCondition.Builder())
 									.setRolls(ConstantIntValue.exactly(1))
 									.add(LootItem.lootTableItem(machine.advanced ? FTBICItems.ADVANCED_MACHINE_BLOCK.get() : FTBICItems.MACHINE_BLOCK.get()))
 							)

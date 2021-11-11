@@ -2,8 +2,9 @@ package dev.ftb.mods.ftbic.util;
 
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.extensions.IForgeItem;
 
-public interface EnergyItemHandler {
+public interface EnergyItemHandler extends IForgeItem {
 	default EnergyTier getEnergyTier() {
 		return EnergyTier.LV;
 	}
@@ -78,5 +79,20 @@ public interface EnergyItemHandler {
 	}
 
 	default void energyChanged(ItemStack stack, double prevEnergy) {
+	}
+
+	@Override
+	default boolean showDurabilityBar(ItemStack stack) {
+		return stack.hasTag() && stack.getTag().contains("Energy");
+	}
+
+	@Override
+	default double getDurabilityForDisplay(ItemStack stack) {
+		return 1D - getEnergy(stack) / getEnergyCapacity(stack);
+	}
+
+	@Override
+	default int getRGBDurabilityForDisplay(ItemStack stack) {
+		return 0xFFFF0000;
 	}
 }

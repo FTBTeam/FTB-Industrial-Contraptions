@@ -92,6 +92,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item GOLD_CABLE = FTBICItems.GOLD_CABLE.get();
 	public static final Item ALUMINUM_CABLE = FTBICItems.ALUMINUM_CABLE.get();
 	public static final Item GLASS_CABLE = FTBICItems.GLASS_CABLE.get();
+	public static final Item BURNT_CABLE = FTBICItems.BURNT_CABLE.get();
 
 	public static final Item INDUSTRIAL_GRADE_METAL = FTBICItems.INDUSTRIAL_GRADE_METAL.item.get();
 	public static final Item RUBBER = FTBICItems.RUBBER.item.get();
@@ -141,6 +142,14 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item ENERGY_STORAGE_UPGRADE = FTBICItems.ENERGY_STORAGE_UPGRADE.get();
 	public static final Item TRANSFORMER_UPGRADE = FTBICItems.TRANSFORMER_UPGRADE.get();
 	public static final Item EJECTOR_UPGRADE = FTBICItems.EJECTOR_UPGRADE.get();
+	public static final Item CARBON_HELMET = FTBICItems.CARBON_HELMET.get();
+	public static final Item CARBON_CHESTPLATE = FTBICItems.CARBON_CHESTPLATE.get();
+	public static final Item CARBON_LEGGINGS = FTBICItems.CARBON_LEGGINGS.get();
+	public static final Item CARBON_BOOTS = FTBICItems.CARBON_BOOTS.get();
+	public static final Item QUANTUM_HELMET = FTBICItems.QUANTUM_HELMET.get();
+	public static final Item QUANTUM_CHESTPLATE = FTBICItems.QUANTUM_CHESTPLATE.get();
+	public static final Item QUANTUM_LEGGINGS = FTBICItems.QUANTUM_LEGGINGS.get();
+	public static final Item QUANTUM_BOOTS = FTBICItems.QUANTUM_BOOTS.get();
 
 	public static final Item BASIC_GENERATOR = FTBICElectricBlocks.BASIC_GENERATOR.item.get();
 	public static final Item GEOTHERMAL_GENERATOR = FTBICElectricBlocks.GEOTHERMAL_GENERATOR.item.get();

@@ -28,6 +28,11 @@ public class FTBICConfig {
 	public static double HV_BATTERY_CAPACITY = 400_000;
 	public static double EV_BATTERY_CAPACITY = 100_000_000;
 
+	public static double CARBON_ARMOR_CAPACITY = 1_000_000;
+	public static double QUANTUM_ARMOR_CAPACITY = 100_000_000;
+	public static double ARMOR_DAMAGE_ENERGY = 1_000;
+	public static double ARMOR_FLIGHT_ENERGY = 25;
+
 	public static double LV_BATTERY_BOX_CAPACITY = 40_000;
 	public static double MV_BATTERY_BOX_CAPACITY = 300_000;
 	public static double HV_BATTERY_BOX_CAPACITY = 4_000_000;

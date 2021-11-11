@@ -3,7 +3,6 @@ package dev.ftb.mods.ftbic.block.entity;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
-import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
@@ -13,10 +12,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -65,8 +66,9 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public final ItemStack[] inputItems;
 	public final ItemStack[] outputItems;
 	private LazyOptional<?> thisOptional;
-	public ElectricBlockState changeState;
+	public boolean active;
 	private int changeStateTicks;
+	private boolean burnt;
 
 	public double energyCapacity;
 	public EnergyTier outputEnergyTier;
@@ -87,7 +89,9 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		}
 
 		thisOptional = null;
-		changeState = null;
+		active = false;
+		changeStateTicks = 0;
+		burnt = false;
 	}
 
 	public void writeData(CompoundTag tag) {
@@ -108,6 +112,10 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 			tag.put("Inventory", inv);
 		}
+
+		if (burnt) {
+			tag.putBoolean("Burnt", true);
+		}
 	}
 
 	public void readData(CompoundTag tag) {
@@ -124,6 +132,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 				setStackInSlot(tag1.getByte("Slot"), ItemStack.of(tag1));
 			}
 		}
+
+		burnt = tag.getBoolean("Burnt");
 	}
 
 	@Override
@@ -139,6 +149,39 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		super.save(tag);
 		writeData(tag);
 		return tag;
+	}
+
+	@Override
+	public void handleUpdateTag(BlockState state, CompoundTag tag) {
+		burnt = tag.getBoolean("Burnt");
+	}
+
+	@Override
+	public CompoundTag getUpdateTag() {
+		CompoundTag tag = super.getUpdateTag();
+
+		if (burnt) {
+			tag.putBoolean("Burnt", true);
+		}
+
+		return tag;
+	}
+
+	@Override
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+		burnt = pkt.getTag().getBoolean("Burnt");
+	}
+
+	@Nullable
+	@Override
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		CompoundTag tag = new CompoundTag();
+
+		if (burnt) {
+			tag.putBoolean("Burnt", true);
+		}
+
+		return new ClientboundBlockEntityDataPacket(worldPosition, 0, tag);
 	}
 
 	@Override
@@ -182,16 +225,14 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	protected void handleEnergyInput() {
-		if (level.isClientSide()) {
+		if (isBurnt() || level.isClientSide()) {
 			return;
 		}
 
 		if (inputEnergyTier != null && energyAdded > 0) {
 			if (energyAdded > inputEnergyTier.transferRate) {
-				// TODO: Burn the machine if config is enabled
-			}
-
-			if (energy < energyCapacity) {
+				setBurnt(true);
+			} else if (energy < energyCapacity) {
 				double e = Math.min(energyAdded, energyCapacity - energy);
 
 				if (e > 0D) {
@@ -209,17 +250,14 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			changeStateTicks--;
 		}
 
-		if (changeState != null && changeStateTicks <= 0) {
+		if (changeStateTicks <= 0 && !isBurnt()) {
 			ElectricBlockInstance ebi = ((ElectricBlock) getBlockState().getBlock()).electricBlockInstance;
 
-			if (ebi.stateProperty != null) {
-				if (getBlockState().getValue(ebi.stateProperty) != changeState) {
-					level.setBlock(worldPosition, getBlockState().setValue(ebi.stateProperty, changeState), 3);
-					setChanged();
-				}
+			if (ebi.canBeActive && getBlockState().getValue(ElectricBlock.ACTIVE) != active) {
+				level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, active), 3);
+				setChanged();
 			}
 
-			changeState = null;
 			changeStateTicks = FTBICConfig.STATE_UPDATE_TICKS;
 		}
 
@@ -231,7 +269,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public void tick() {
-		changeState = ElectricBlockState.OFF;
+		active = false;
 		handleEnergyInput();
 		handleChanges();
 	}
@@ -473,5 +511,20 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public void set(int id, int value) {
+	}
+
+	@Override
+	public final void setBurnt(boolean b) {
+		if (burnt != b && !level.isClientSide() && ((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.canBurn) {
+			burnt = b;
+			setChanged();
+			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
+			electricNetworkUpdated(level, worldPosition);
+		}
+	}
+
+	@Override
+	public final boolean isBurnt() {
+		return burnt;
 	}
 }

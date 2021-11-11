@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.Nullable;
 
-public class BatteryItem extends EnergyItem {
+public class BatteryItem extends ElectricItem {
 	public final BatteryType batteryType;
 
 	public BatteryItem(BatteryType b, EnergyTier t, double cap) {

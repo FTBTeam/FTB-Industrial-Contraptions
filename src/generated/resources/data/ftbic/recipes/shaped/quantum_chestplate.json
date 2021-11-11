@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:quantum_chestplate",
+	"pattern": [
+		"MAM",
+		"IBI",
+		"IEI"
+	],
+	"key": {
+		"A": {
+			"item": "ftbic:carbon_chestplate"
+		},
+		"I": {
+			"item": "ftbic:iridium_alloy"
+		},
+		"B": {
+			"item": "ftbic:iridium_battery"
+		},
+		"M": {
+			"item": "ftbic:advanced_machine_block"
+		},
+		"E": {
+			"item": "minecraft:elytra"
+		}
+	},
+	"result": {
+		"item": "ftbic:quantum_chestplate"
+	}
+}

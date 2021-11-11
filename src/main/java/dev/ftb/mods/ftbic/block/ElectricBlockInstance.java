@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 import java.util.Arrays;
 import java.util.function.Supplier;
@@ -22,7 +21,8 @@ public class ElectricBlockInstance {
 	public boolean advanced = false;
 	public DirectionProperty facingProperty = BlockStateProperties.HORIZONTAL_FACING;
 	public boolean noModel = false;
-	public EnumProperty<ElectricBlockState> stateProperty = ElectricBlockState.ON_OFF;
+	public boolean canBeActive = true;
+	public boolean canBurn = false;
 	public final Supplier<Block> block;
 	public final Supplier<BlockItem> item;
 	public final Supplier<BlockEntityType<?>> blockEntity;
@@ -68,22 +68,13 @@ public class ElectricBlockInstance {
 		return this;
 	}
 
-	public ElectricBlockInstance noState() {
-		stateProperty = null;
+	public ElectricBlockInstance cantBeActive() {
+		canBeActive = false;
 		return this;
 	}
 
-	public ElectricBlockInstance onOffBurnt() {
-		stateProperty = ElectricBlockState.ON_OFF_BURNT;
+	public ElectricBlockInstance canBurn() {
+		canBurn = true;
 		return this;
-	}
-
-	public ElectricBlockInstance offBurnt() {
-		stateProperty = ElectricBlockState.OFF_BURNT;
-		return this;
-	}
-
-	public boolean hasOnState() {
-		return stateProperty == ElectricBlockState.ON_OFF || stateProperty == ElectricBlockState.ON_OFF_BURNT;
 	}
 }

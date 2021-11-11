@@ -3,7 +3,9 @@ package dev.ftb.mods.ftbic.util;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -11,6 +13,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,8 +25,10 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class FTBICUtils {
-	public static final Tag.Named<Item> UNCANNABLE_FOOD = ItemTags.createOptional(new ResourceLocation("ftbic:uncannable_food"));
-	public static final Tag.Named<Item> NO_AUTO_RECIPE = ItemTags.createOptional(new ResourceLocation("ftbic:no_auto_recipe"));
+	public static final Tag.Named<Item> UNCANNABLE_FOOD = ItemTags.createOptional(new ResourceLocation(FTBIC.MOD_ID, "uncannable_food"));
+	public static final Tag.Named<Item> NO_AUTO_RECIPE = ItemTags.createOptional(new ResourceLocation(FTBIC.MOD_ID, "no_auto_recipe"));
+
+	public static final LootItemConditionType BURNT_BLOCK = Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(FTBIC.MOD_ID, "burnt_block"), new LootItemConditionType(new BurntBlockCondition.Serializer()));
 
 	public static void init() {
 	}

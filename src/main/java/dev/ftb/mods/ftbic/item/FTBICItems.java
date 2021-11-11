@@ -4,6 +4,8 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.util.EnergyTier;
+import dev.ftb.mods.ftbic.util.FTBICArmorMaterial;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -44,6 +46,7 @@ public interface FTBICItems {
 	Supplier<BlockItem> GOLD_CABLE = blockItem("gold_cable", FTBICBlocks.GOLD_CABLE);
 	Supplier<BlockItem> ALUMINUM_CABLE = blockItem("aluminum_cable", FTBICBlocks.ALUMINUM_CABLE);
 	Supplier<BlockItem> GLASS_CABLE = blockItem("glass_cable", FTBICBlocks.GLASS_CABLE);
+	Supplier<BlockItem> BURNT_CABLE = blockItem("burnt_cable", FTBICBlocks.BURNT_CABLE);
 
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");
@@ -93,4 +96,12 @@ public interface FTBICItems {
 	Supplier<Item> ENERGY_STORAGE_UPGRADE = REGISTRY.register("energy_storage_upgrade", UpgradeItem::new);
 	Supplier<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", UpgradeItem::new);
 	Supplier<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", UpgradeItem::new);
+	Supplier<Item> CARBON_HELMET = REGISTRY.register("carbon_helmet", () -> new SpecialArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.HEAD));
+	Supplier<Item> CARBON_CHESTPLATE = REGISTRY.register("carbon_chestplate", () -> new SpecialArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.CHEST));
+	Supplier<Item> CARBON_LEGGINGS = REGISTRY.register("carbon_leggings", () -> new SpecialArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.LEGS));
+	Supplier<Item> CARBON_BOOTS = REGISTRY.register("carbon_boots", () -> new SpecialArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.FEET));
+	Supplier<Item> QUANTUM_HELMET = REGISTRY.register("quantum_helmet", () -> new SpecialArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.HEAD));
+	Supplier<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", () -> new SpecialArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.CHEST));
+	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", () -> new SpecialArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
+	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new SpecialArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.FEET));
 }

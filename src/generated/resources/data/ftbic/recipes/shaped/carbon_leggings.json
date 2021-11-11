@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:carbon_leggings",
+	"pattern": [
+		"CEC",
+		"C C",
+		"C C"
+	],
+	"key": {
+		"C": {
+			"item": "ftbic:carbon_plate"
+		},
+		"E": {
+			"item": "ftbic:energy_crystal"
+		}
+	},
+	"result": {
+		"item": "ftbic:carbon_leggings"
+	}
+}

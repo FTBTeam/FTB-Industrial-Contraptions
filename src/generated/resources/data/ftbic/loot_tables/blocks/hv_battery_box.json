@@ -11,7 +11,24 @@
 			],
 			"conditions": [
 				{
-					"condition": "minecraft:survives_explosion"
+					"condition": "minecraft:inverted",
+					"term": {
+						"condition": "ftbic:burnt_block"
+					}
+				}
+			]
+		},
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "ftbic:advanced_machine_block"
+				}
+			],
+			"conditions": [
+				{
+					"condition": "ftbic:burnt_block"
 				}
 			]
 		}

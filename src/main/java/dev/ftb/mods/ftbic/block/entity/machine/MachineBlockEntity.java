@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
-import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
@@ -13,11 +12,13 @@ import dev.ftb.mods.ftbic.screen.MachineMenu;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -142,7 +143,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 
 	@Override
 	protected void handleEnergyInput() {
-		if (!level.isClientSide() && energy < energyCapacity) {
+		if (!isBurnt() && !level.isClientSide() && energy < energyCapacity) {
 			ItemStack battery = batteryInventory.getStackInSlot(0);
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
@@ -165,13 +166,17 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	}
 
 	public void handleProcessing() {
+		if (isBurnt() || level.isClientSide()) {
+			return;
+		}
+
 		if (maxProgress > 0D && progress < maxProgress) {
 			int eu = Mth.ceil(energyUse);
 
 			if (eu > 0 && energy >= eu) {
 				progress += progressSpeed;
 				energy -= eu;
-				changeState = ElectricBlockState.ON;
+				active = true;
 
 				if (energy < eu) {
 					setChanged();
@@ -246,7 +251,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 				setChanged();
 			} else if (progress == 0D) {
 				maxProgress = result.time * FTBICConfig.MACHINE_RECIPE_BASE_TICKS;
-				changeState = ElectricBlockState.ON;
+				active = true;
 				setChanged();
 			}
 		}
@@ -338,6 +343,8 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 
 			if (serializer != null) {
 				openMenu((ServerPlayer) player, (id, inventory) -> new MachineMenu(id, inventory, this, this, serializer));
+			} else {
+				player.sendMessage(new TextComponent("No GUI yet!"), Util.NIL_UUID);
 			}
 		}
 

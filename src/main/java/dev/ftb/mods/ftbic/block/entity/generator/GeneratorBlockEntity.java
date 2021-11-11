@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbic.block.entity.generator;
 
+import dev.ftb.mods.ftbic.block.BurntCableBlock;
 import dev.ftb.mods.ftbic.block.CableBlock;
-import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.entity.CachedEnergyStorage;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.BatteryInventory;
@@ -71,7 +71,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 				if (e > 0) {
 					energy -= e;
-					changeState = ElectricBlockState.ON;
+					active = true;
 					setChanged();
 				}
 			}
@@ -107,7 +107,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 				if (a > 0D) {
 					energy -= a;
-					changeState = ElectricBlockState.ON;
+					active = true;
 					setChanged();
 				}
 
@@ -123,7 +123,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 	@Override
 	public void tick() {
-		changeState = ElectricBlockState.OFF;
+		active = false;
 		handleEnergyInput();
 
 		if (!level.isClientSide()) {
@@ -170,6 +170,13 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 						}
 					}
 				} else if (state.getBlock() instanceof CableBlock) {
+					CableBlock cableBlock = (CableBlock) state.getBlock();
+
+					if (cableBlock.tier.itemTransferRate < outputEnergyTier.transferRate) {
+						level.setBlock(ptr, BurntCableBlock.getBurntCable(state), 3);
+						continue;
+					}
+
 					for (Direction dir : directions) {
 						if (state.getValue(CableBlock.CONNECTION[dir.get3DDataValue()])) {
 							BlockPos offset = ptr.relative(dir);
@@ -183,7 +190,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 					BlockEntity entity = level.getBlockEntity(ptr);
 					EnergyHandler handler = entity instanceof EnergyHandler ? (EnergyHandler) entity : null; // entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
 
-					if (handler != null && handler != this && handler.getInputEnergyTier() != null && isValidConnectedBlock(handler)) {
+					if (handler != null && handler != this && handler.getInputEnergyTier() != null && !handler.isBurnt() && isValidConnectedBlock(handler)) {
 						CachedEnergyStorage s = new CachedEnergyStorage();
 						s.distance = 1D;
 						s.blockEntity = entity;
@@ -199,19 +206,4 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 		return connectedEnergyBlocks;
 	}
-
-	/*
-	@Override
-	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!level.isClientSide()) {
-			player.displayClientMessage(new TextComponent("Energy: ").append(FTBICUtils.formatEnergy(energy, energyCapacity)), false);
-
-			if (player.isCrouching()) {
-				player.displayClientMessage(new TextComponent("Connected machines: " + Arrays.toString(getConnectedEnergyBlocks())), false);
-			}
-		}
-
-		return InteractionResult.SUCCESS;
-	}
-	*/
 }

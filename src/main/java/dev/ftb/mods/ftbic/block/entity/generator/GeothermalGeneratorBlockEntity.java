@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbic.block.entity.generator;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
-import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.screen.GeothermalGeneratorMenu;
 import net.minecraft.core.Direction;
@@ -74,7 +73,7 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 		if (energy < energyCapacity && fluidAmount > 0) {
 			energy += Math.min(FTBICConfig.GEOTHERMAL_GENERATOR_OUTPUT, energyCapacity - energy);
 			fluidAmount--;
-			changeState = ElectricBlockState.ON;
+			active = true;
 		}
 	}
 

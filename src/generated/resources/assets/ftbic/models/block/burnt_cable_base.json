@@ -1,0 +1,41 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"texture": "ftbic:block/burnt_cable",
+		"particle": "ftbic:block/burnt_cable"
+	},
+	"elements": [
+		{
+			"from": [
+				6,
+				6,
+				6
+			],
+			"to": [
+				10,
+				10,
+				10
+			],
+			"faces": {
+				"down": {
+					"texture": "#texture"
+				},
+				"up": {
+					"texture": "#texture"
+				},
+				"north": {
+					"texture": "#texture"
+				},
+				"south": {
+					"texture": "#texture"
+				},
+				"west": {
+					"texture": "#texture"
+				},
+				"east": {
+					"texture": "#texture"
+				}
+			}
+		}
+	]
+}

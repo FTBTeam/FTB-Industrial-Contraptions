@@ -66,4 +66,11 @@ public interface EnergyHandler {
 
 	default void energyChanged(double prevEnergy) {
 	}
+
+	default void setBurnt(boolean burnt) {
+	}
+
+	default boolean isBurnt() {
+		return false;
+	}
 }

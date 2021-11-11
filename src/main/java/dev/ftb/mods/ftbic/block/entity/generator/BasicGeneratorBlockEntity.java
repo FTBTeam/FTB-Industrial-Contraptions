@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbic.block.entity.generator;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
-import dev.ftb.mods.ftbic.block.ElectricBlockState;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.screen.BasicGeneratorMenu;
@@ -63,7 +62,6 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 			}
 
 			if (fuelTicks == 0) {
-				changeState = ElectricBlockState.OFF;
 				setChanged();
 			}
 		}
@@ -82,7 +80,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 						inputItems[0].shrink(1);
 					}
 
-					changeState = ElectricBlockState.ON;
+					active = true;
 					setChanged();
 				}
 			}
