@@ -105,6 +105,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 				} else if (storage.origin.cableTier != null && storage.origin.cableTier.transferRate < e) {
 					level.setBlock(storage.origin.cablePos, BurntCableBlock.getBurntCable(level.getBlockState(storage.origin.cablePos)), 3);
 					level.levelEvent(1502, storage.origin.cablePos, 0);
+					storage.origin.cableBurnt = true;
 					continue;
 				}
 

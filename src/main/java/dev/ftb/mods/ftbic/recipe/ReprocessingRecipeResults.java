@@ -5,7 +5,7 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -33,7 +33,7 @@ public class ReprocessingRecipeResults extends SimpleMachineRecipeResults {
 		list.add(recipe);
 
 		ItemStack stack = new ItemStack(Items.SNOW_BLOCK);
-		stack.setHoverName(new TextComponent("Any Item"));
+		stack.setHoverName(new TranslatableComponent("ftbic.any_item"));
 
 		MachineRecipe recipeForJEI = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "reprocessing/generated/scrap_jei"));
 		recipeForJEI.inputItems.add(new IngredientWithCount(Ingredient.of(stack), 1));

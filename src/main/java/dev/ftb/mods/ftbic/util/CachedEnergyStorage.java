@@ -20,7 +20,7 @@ public class CachedEnergyStorage {
 	}
 
 	public boolean isInvalid() {
-		return blockEntity.isRemoved();
+		return origin.cableBurnt || blockEntity.isRemoved();
 	}
 
 	@Override

@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -213,7 +212,7 @@ public class ElectricBlock extends Block implements SprayPaintable {
 
 					return InteractionResult.sidedSuccess(level.isClientSide());
 				} else if (!level.isClientSide()) {
-					player.sendMessage(new TextComponent("Right-click with a Fuse on this machine to repair it!"), Util.NIL_UUID);
+					player.sendMessage(new TranslatableComponent("ftbic.fuse_info"), Util.NIL_UUID);
 				}
 
 				return InteractionResult.SUCCESS;

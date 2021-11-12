@@ -164,6 +164,8 @@ public class FTBICDataGenHandler {
 			add("ftbic.max_energy_output", "Max Energy Output: %s");
 			add("ftbic.energy_usage", "Energy Usage: %s");
 			add("ftbic.max_input", "Max Input: %s");
+			add("ftbic.fuse_info", "Right-click with a Fuse on this machine to repair it!");
+			add("ftbic.any_item", "Any Item");
 		}
 	}
 
