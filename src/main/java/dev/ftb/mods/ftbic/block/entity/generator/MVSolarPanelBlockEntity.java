@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
-import dev.ftb.mods.ftbic.util.EnergyTier;
 
 public class MVSolarPanelBlockEntity extends SolarPanelBlockEntity {
 	public MVSolarPanelBlockEntity() {
@@ -12,8 +11,7 @@ public class MVSolarPanelBlockEntity extends SolarPanelBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		outputEnergyTier = EnergyTier.MV;
-		solarOutput = FTBICConfig.MV_SOLAR_PANEL_OUTPUT;
-		energyCapacity = solarOutput * 60;
+		maxEnergyOutput = FTBICConfig.MV_SOLAR_PANEL_OUTPUT;
+		energyCapacity = maxEnergyOutput * 60;
 	}
 }

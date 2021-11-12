@@ -13,7 +13,7 @@ public class HVBatteryBoxBlockEntity extends BatteryBoxBlockEntity {
 	public void initProperties() {
 		super.initProperties();
 		inputEnergyTier = EnergyTier.HV;
-		outputEnergyTier = EnergyTier.EV;
+		maxEnergyOutput = EnergyTier.HV.transferRate;
 		energyCapacity = FTBICConfig.HV_BATTERY_BOX_CAPACITY;
 	}
 }

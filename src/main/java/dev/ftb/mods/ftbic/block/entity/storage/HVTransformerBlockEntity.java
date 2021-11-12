@@ -12,7 +12,7 @@ public class HVTransformerBlockEntity extends TransformerBlockEntity {
 	public void initProperties() {
 		super.initProperties();
 		inputEnergyTier = EnergyTier.EV;
-		outputEnergyTier = EnergyTier.HV;
+		maxEnergyOutput = EnergyTier.HV.transferRate;
 		energyCapacity = EnergyTier.EV.transferRate;
 	}
 }

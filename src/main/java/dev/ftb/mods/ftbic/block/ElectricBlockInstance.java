@@ -26,6 +26,10 @@ public class ElectricBlockInstance {
 	public final Supplier<Block> block;
 	public final Supplier<BlockItem> item;
 	public final Supplier<BlockEntityType<?>> blockEntity;
+	public double energyOutput = 0D;
+	public double maxEnergyOutput = 0D;
+	public double energyUsage = 0D;
+	public double maxInput = 0D;
 
 	public ElectricBlockInstance(String i, Supplier<BlockEntity> blockEntitySupplier) {
 		id = i;
@@ -75,6 +79,26 @@ public class ElectricBlockInstance {
 
 	public ElectricBlockInstance canBurn() {
 		canBurn = true;
+		return this;
+	}
+
+	public ElectricBlockInstance energyOutput(double d) {
+		energyOutput = d;
+		return this;
+	}
+
+	public ElectricBlockInstance maxEnergyOutput(double d) {
+		maxEnergyOutput = d;
+		return this;
+	}
+
+	public ElectricBlockInstance energyUsage(double d) {
+		energyUsage = d;
+		return this;
+	}
+
+	public ElectricBlockInstance maxInput(double d) {
+		maxInput = d;
 		return this;
 	}
 }

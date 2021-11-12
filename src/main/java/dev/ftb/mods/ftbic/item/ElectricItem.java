@@ -4,7 +4,6 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,7 +34,7 @@ public class ElectricItem extends Item implements EnergyItemHandler {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
 		if (!isCreativeEnergyItem()) {
-			list.add(FTBICUtils.formatEnergy(stack, this).withStyle(ChatFormatting.GRAY));
+			list.add(FTBICUtils.energyTooltip(stack, this));
 		}
 	}
 }

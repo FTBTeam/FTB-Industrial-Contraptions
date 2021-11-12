@@ -12,7 +12,7 @@ public class LVTransformerBlockEntity extends TransformerBlockEntity {
 	public void initProperties() {
 		super.initProperties();
 		inputEnergyTier = EnergyTier.MV;
-		outputEnergyTier = EnergyTier.LV;
+		maxEnergyOutput = EnergyTier.LV.transferRate;
 		energyCapacity = EnergyTier.MV.transferRate;
 	}
 }

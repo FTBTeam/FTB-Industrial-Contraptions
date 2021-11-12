@@ -8,7 +8,6 @@ import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICArmorMaterial;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -79,7 +78,7 @@ public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-		list.add(FTBICUtils.formatEnergy(stack, this).withStyle(ChatFormatting.GRAY));
+		list.add(FTBICUtils.energyTooltip(stack, this));
 	}
 
 	@Override
@@ -97,12 +96,14 @@ public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 			double d = 0.92D;
 			Vec3 m = entity.getDeltaMovement();
 			entity.setDeltaMovement(m.multiply(d, d, d));
+			damageEnergyItem(stack, FTBICConfig.ARMOR_FLIGHT_STOP);
 		} else if (flightTicks >= 5 && entity.isSprinting()) {
 			Vec3 v = entity.getLookAngle();
 			double d0 = 1.5D;
 			double d1 = 0.1D;
 			Vec3 m = entity.getDeltaMovement();
 			entity.setDeltaMovement(m.add(v.x * d1 + (v.x * d0 - m.x) * 0.5D, v.y * d1 + (v.y * d0 - m.y) * 0.5D, v.z * d1 + (v.z * d0 - m.z) * 0.5D));
+			damageEnergyItem(stack, FTBICConfig.ARMOR_FLIGHT_BOOST);
 		}
 
 		return true;

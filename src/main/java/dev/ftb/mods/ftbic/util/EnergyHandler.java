@@ -8,11 +8,6 @@ public interface EnergyHandler {
 		return null;
 	}
 
-	@Nullable
-	default EnergyTier getOutputEnergyTier() {
-		return null;
-	}
-
 	double getEnergyCapacity();
 
 	double getEnergy();
@@ -44,24 +39,6 @@ public interface EnergyHandler {
 		}
 
 		return energyReceived;
-	}
-
-	default double extractEnergy(double maxExtract, boolean simulate) {
-		EnergyTier tier = getOutputEnergyTier();
-
-		if (tier == null) {
-			return 0;
-		}
-
-		double energy = getEnergy();
-		double energyExtracted = Math.min(energy, Math.min(tier.itemTransferRate, maxExtract));
-
-		if (!simulate && energyExtracted > 0D) {
-			setEnergyRaw(energy - energyExtracted);
-			energyChanged(energy);
-		}
-
-		return energyExtracted;
 	}
 
 	default void energyChanged(double prevEnergy) {

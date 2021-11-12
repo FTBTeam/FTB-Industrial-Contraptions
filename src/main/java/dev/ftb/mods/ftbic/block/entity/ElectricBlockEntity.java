@@ -71,7 +71,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	private boolean burnt;
 
 	public double energyCapacity;
-	public EnergyTier outputEnergyTier;
+	public double maxEnergyOutput;
 	public EnergyTier inputEnergyTier;
 
 	public ElectricBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
@@ -285,13 +285,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			return 0;
 		}
 
-		double energyReceived = Math.min(energyCapacity - energy, maxInsert);
-
 		if (!simulate) {
-			energyAdded += energyReceived;
+			energyAdded += maxInsert;
 		}
 
-		return energyReceived;
+		return maxInsert;
 	}
 
 	@Override
@@ -339,12 +337,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	@Nullable
 	public final EnergyTier getInputEnergyTier() {
 		return inputEnergyTier;
-	}
-
-	@Nullable
-	@Override
-	public EnergyTier getOutputEnergyTier() {
-		return outputEnergyTier;
 	}
 
 	@Nullable
@@ -489,7 +481,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	public void initProperties() {
 		energyCapacity = 40000;
-		outputEnergyTier = null;
+		maxEnergyOutput = 0D;
 		inputEnergyTier = null;
 	}
 
@@ -515,14 +507,22 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public final void setBurnt(boolean b) {
-		if (burnt != b && !level.isClientSide() && ((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.canBurn) {
-			burnt = b;
-			setChanged();
-			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
-			electricNetworkUpdated(level, worldPosition);
+		if (burnt != b && !level.isClientSide()) {
+			ElectricBlockInstance ebi = ((ElectricBlock) getBlockState().getBlock()).electricBlockInstance;
 
-			if (burnt) {
-				level.levelEvent(1502, worldPosition, 0);
+			if (ebi.canBurn) {
+				burnt = b;
+				setChanged();
+				level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
+				electricNetworkUpdated(level, worldPosition);
+
+				if (burnt) {
+					level.levelEvent(1502, worldPosition, 0);
+
+					if (ebi.canBeActive) {
+						level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, false), 3);
+					}
+				}
 			}
 		}
 	}

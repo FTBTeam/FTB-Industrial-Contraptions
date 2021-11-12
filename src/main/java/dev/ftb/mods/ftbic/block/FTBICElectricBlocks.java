@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.generator.BasicGeneratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.EVSolarPanelBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.GeothermalGeneratorBlockEntity;
@@ -42,35 +43,173 @@ public interface FTBICElectricBlocks {
 		return instance;
 	}
 
-	ElectricBlockInstance BASIC_GENERATOR = register("basic_generator", BasicGeneratorBlockEntity::new);
-	ElectricBlockInstance GEOTHERMAL_GENERATOR = register("geothermal_generator", GeothermalGeneratorBlockEntity::new);
-	ElectricBlockInstance WIND_MILL = register("wind_mill", WindMillBlockEntity::new).cantBeActive();
-	ElectricBlockInstance LV_SOLAR_PANEL = register("lv_solar_panel", LVSolarPanelBlockEntity::new).name("LV Solar Panel").noRotation().cantBeActive();
-	ElectricBlockInstance MV_SOLAR_PANEL = register("mv_solar_panel", MVSolarPanelBlockEntity::new).name("MV Solar Panel").noRotation().cantBeActive();
-	ElectricBlockInstance HV_SOLAR_PANEL = register("hv_solar_panel", HVSolarPanelBlockEntity::new).advanced().name("HV Solar Panel").noRotation().cantBeActive();
-	ElectricBlockInstance EV_SOLAR_PANEL = register("ev_solar_panel", EVSolarPanelBlockEntity::new).advanced().name("EV Solar Panel").noRotation().cantBeActive();
-	ElectricBlockInstance NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorBlockEntity::new).advanced();
+	// Generators //
 
-	ElectricBlockInstance POWERED_FURNACE = register("powered_furnace", PoweredFurnaceBlockEntity::new).canBurn();
-	ElectricBlockInstance MACERATOR = register("macerator", MaceratorBlockEntity::new).canBurn();
-	ElectricBlockInstance CENTRIFUGE = register("centrifuge", CentrifugeBlockEntity::new).canBurn();
-	ElectricBlockInstance COMPRESSOR = register("compressor", CompressorBlockEntity::new).canBurn();
-	ElectricBlockInstance REPROCESSOR = register("reprocessor", ReprocessorBlockEntity::new).advanced().canBurn();
-	ElectricBlockInstance CANNING_MACHINE = register("canning_machine", CanningMachineBlockEntity::new).canBurn();
-	ElectricBlockInstance ROLLER = register("roller", RollerBlockEntity::new).canBurn();
-	ElectricBlockInstance EXTRUDER = register("extruder", ExtruderBlockEntity::new).canBurn();
-	ElectricBlockInstance ANTIMATTER_CONSTRUCTOR = register("antimatter_constructor", AntimatterConstructorBlockEntity::new).advanced();
-	ElectricBlockInstance ADVANCED_POWERED_FURNACE = register("advanced_powered_furnace", AdvancedPoweredFurnaceBlockEntity::new).advanced().canBurn();
-	ElectricBlockInstance ADVANCED_MACERATOR = register("advanced_macerator", AdvancedMaceratorBlockEntity::new).advanced().canBurn();
-	ElectricBlockInstance ADVANCED_CENTRIFUGE = register("advanced_centrifuge", AdvancedCentrifugeBlockEntity::new).advanced().canBurn();
-	ElectricBlockInstance ADVANCED_COMPRESSOR = register("advanced_compressor", AdvancedCompressorBlockEntity::new).advanced().canBurn();
+	ElectricBlockInstance BASIC_GENERATOR = register("basic_generator", BasicGeneratorBlockEntity::new)
+			.energyOutput(FTBICConfig.BASIC_GENERATOR_OUTPUT);
 
-	ElectricBlockInstance LV_BATTERY_BOX = register("lv_battery_box", LVBatteryBoxBlockEntity::new).name("LV Battery Box").rotate3D().cantBeActive().canBurn();
-	ElectricBlockInstance MV_BATTERY_BOX = register("mv_battery_box", MVBatteryBoxBlockEntity::new).name("MV Battery Box").rotate3D().cantBeActive().canBurn();
-	ElectricBlockInstance HV_BATTERY_BOX = register("hv_battery_box", HVBatteryBoxBlockEntity::new).name("HV Battery Box").advanced().rotate3D().cantBeActive().canBurn();
-	ElectricBlockInstance LV_TRANSFORMER = register("lv_transformer", LVTransformerBlockEntity::new).name("LV Transformer").rotate3D().cantBeActive().canBurn();
-	ElectricBlockInstance MV_TRANSFORMER = register("mv_transformer", MVTransformerBlockEntity::new).name("MV Transformer").rotate3D().cantBeActive().canBurn();
-	ElectricBlockInstance HV_TRANSFORMER = register("hv_transformer", HVTransformerBlockEntity::new).name("HV Transformer").advanced().rotate3D().cantBeActive().canBurn();
+	ElectricBlockInstance GEOTHERMAL_GENERATOR = register("geothermal_generator", GeothermalGeneratorBlockEntity::new)
+			.energyOutput(FTBICConfig.GEOTHERMAL_GENERATOR_OUTPUT);
+
+	ElectricBlockInstance WIND_MILL = register("wind_mill", WindMillBlockEntity::new)
+			.cantBeActive()
+			.maxEnergyOutput(FTBICConfig.WIND_MILL_MAX_OUTPUT);
+
+	ElectricBlockInstance LV_SOLAR_PANEL = register("lv_solar_panel", LVSolarPanelBlockEntity::new)
+			.name("LV Solar Panel")
+			.noRotation()
+			.cantBeActive()
+			.maxEnergyOutput(FTBICConfig.LV_SOLAR_PANEL_OUTPUT);
+
+	ElectricBlockInstance MV_SOLAR_PANEL = register("mv_solar_panel", MVSolarPanelBlockEntity::new)
+			.name("MV Solar Panel")
+			.noRotation()
+			.cantBeActive()
+			.maxEnergyOutput(FTBICConfig.MV_SOLAR_PANEL_OUTPUT);
+
+	ElectricBlockInstance HV_SOLAR_PANEL = register("hv_solar_panel", HVSolarPanelBlockEntity::new)
+			.advanced()
+			.name("HV Solar Panel")
+			.noRotation()
+			.cantBeActive()
+			.maxEnergyOutput(FTBICConfig.HV_SOLAR_PANEL_OUTPUT);
+
+	ElectricBlockInstance EV_SOLAR_PANEL = register("ev_solar_panel", EVSolarPanelBlockEntity::new)
+			.advanced()
+			.name("EV Solar Panel")
+			.noRotation()
+			.cantBeActive()
+			.maxEnergyOutput(FTBICConfig.EV_SOLAR_PANEL_OUTPUT);
+
+	ElectricBlockInstance NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorBlockEntity::new)
+			.advanced();
+
+	// Machines //
+
+	ElectricBlockInstance POWERED_FURNACE = register("powered_furnace", PoweredFurnaceBlockEntity::new)
+			.canBurn()
+			.maxInput(FTBICConfig.LV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.POWERED_FURNACE_USE);
+
+	ElectricBlockInstance MACERATOR = register("macerator", MaceratorBlockEntity::new)
+			.canBurn()
+			.maxInput(FTBICConfig.LV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.MACERATOR_USE);
+
+	ElectricBlockInstance CENTRIFUGE = register("centrifuge", CentrifugeBlockEntity::new)
+			.canBurn()
+			.maxInput(FTBICConfig.LV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.CENTRIFUGE_USE);
+
+	ElectricBlockInstance COMPRESSOR = register("compressor", CompressorBlockEntity::new)
+			.canBurn()
+			.maxInput(FTBICConfig.LV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.COMPRESSOR_USE);
+
+	ElectricBlockInstance REPROCESSOR = register("reprocessor", ReprocessorBlockEntity::new)
+			.advanced()
+			.canBurn()
+			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.REPROCESSOR_USE);
+
+	ElectricBlockInstance CANNING_MACHINE = register("canning_machine", CanningMachineBlockEntity::new)
+			.canBurn()
+			.maxInput(FTBICConfig.LV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.CANNING_MACHINE_USE);
+
+	ElectricBlockInstance ROLLER = register("roller", RollerBlockEntity::new)
+			.canBurn()
+			.maxInput(FTBICConfig.LV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.ROLLER_USE);
+
+	ElectricBlockInstance EXTRUDER = register("extruder", ExtruderBlockEntity::new)
+			.canBurn()
+			.maxInput(FTBICConfig.LV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.EXTRUDER_USE);
+
+	ElectricBlockInstance ANTIMATTER_CONSTRUCTOR = register("antimatter_constructor", AntimatterConstructorBlockEntity::new)
+			.advanced()
+			.maxInput(FTBICConfig.EV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.ANTIMATTER_CONSTRUCTOR_USE);
+
+	ElectricBlockInstance ADVANCED_POWERED_FURNACE = register("advanced_powered_furnace", AdvancedPoweredFurnaceBlockEntity::new)
+			.advanced()
+			.canBurn()
+			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.ADVANCED_POWERED_FURNACE_USE);
+
+	ElectricBlockInstance ADVANCED_MACERATOR = register("advanced_macerator", AdvancedMaceratorBlockEntity::new)
+			.advanced()
+			.canBurn()
+			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.ADVANCED_MACERATOR_USE);
+
+	ElectricBlockInstance ADVANCED_CENTRIFUGE = register("advanced_centrifuge", AdvancedCentrifugeBlockEntity::new)
+			.advanced()
+			.canBurn()
+			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.ADVANCED_CENTRIFUGE_USE);
+
+	ElectricBlockInstance ADVANCED_COMPRESSOR = register("advanced_compressor", AdvancedCompressorBlockEntity::new)
+			.advanced()
+			.canBurn()
+			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.ADVANCED_COMPRESSOR_USE);
+
+
+	// Battery Boxes //
+
+	ElectricBlockInstance LV_BATTERY_BOX = register("lv_battery_box", LVBatteryBoxBlockEntity::new)
+			.name("LV Battery Box")
+			.rotate3D()
+			.cantBeActive()
+			.canBurn()
+			.maxInput(FTBICConfig.LV_TRANSFER_RATE)
+			.energyOutput(FTBICConfig.LV_TRANSFER_RATE);
+
+	ElectricBlockInstance MV_BATTERY_BOX = register("mv_battery_box", MVBatteryBoxBlockEntity::new)
+			.name("MV Battery Box")
+			.rotate3D()
+			.cantBeActive()
+			.canBurn()
+			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
+			.energyOutput(FTBICConfig.MV_TRANSFER_RATE);
+
+	ElectricBlockInstance HV_BATTERY_BOX = register("hv_battery_box", HVBatteryBoxBlockEntity::new)
+			.advanced()
+			.name("HV Battery Box")
+			.rotate3D()
+			.cantBeActive()
+			.canBurn()
+			.maxInput(FTBICConfig.HV_TRANSFER_RATE)
+			.energyOutput(FTBICConfig.HV_TRANSFER_RATE);
+
+	// Transformers //
+
+	ElectricBlockInstance LV_TRANSFORMER = register("lv_transformer", LVTransformerBlockEntity::new)
+			.name("LV Transformer")
+			.rotate3D()
+			.cantBeActive()
+			.canBurn()
+			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
+			.energyOutput(FTBICConfig.LV_TRANSFER_RATE);
+
+	ElectricBlockInstance MV_TRANSFORMER = register("mv_transformer", MVTransformerBlockEntity::new)
+			.name("MV Transformer")
+			.rotate3D()
+			.cantBeActive()
+			.canBurn()
+			.maxInput(FTBICConfig.HV_TRANSFER_RATE)
+			.energyOutput(FTBICConfig.MV_TRANSFER_RATE);
+
+	ElectricBlockInstance HV_TRANSFORMER = register("hv_transformer", HVTransformerBlockEntity::new)
+			.advanced()
+			.name("HV Transformer")
+			.rotate3D()
+			.cantBeActive()
+			.canBurn()
+			.maxInput(FTBICConfig.EV_TRANSFER_RATE)
+			.energyOutput(FTBICConfig.HV_TRANSFER_RATE);
 
 	static void init() {
 	}

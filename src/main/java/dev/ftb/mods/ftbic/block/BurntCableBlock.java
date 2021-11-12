@@ -17,6 +17,10 @@ public class BurntCableBlock extends BaseCableBlock {
 	}
 
 	public static BlockState getBurntCable(BlockState state) {
+		if (!(state.getBlock() instanceof BaseCableBlock)) {
+			return FTBICBlocks.BURNT_CABLE.get().defaultBlockState();
+		}
+
 		return FTBICBlocks.BURNT_CABLE.get().defaultBlockState()
 				.setValue(CONNECTION[0], state.getValue(CONNECTION[0]))
 				.setValue(CONNECTION[1], state.getValue(CONNECTION[1]))

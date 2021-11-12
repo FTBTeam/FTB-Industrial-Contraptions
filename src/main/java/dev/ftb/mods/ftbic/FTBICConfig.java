@@ -18,8 +18,9 @@ public class FTBICConfig {
 
 	public static double LV_TRANSFER_RATE = 32;
 	public static double MV_TRANSFER_RATE = 128;
-	public static double HV_TRANSFER_RATE = 4_096;
-	public static double EV_TRANSFER_RATE = 16_384;
+	public static double HV_TRANSFER_RATE = 512;
+	public static double EV_TRANSFER_RATE = 2_048;
+	public static double XV_TRANSFER_RATE = 8_192;
 	public static double ITEM_TRANSFER_EFFICIENCY = 0.1;
 
 	public static double SINGLE_USE_BATTERY_CAPACITY = 2_400;
@@ -28,10 +29,12 @@ public class FTBICConfig {
 	public static double HV_BATTERY_CAPACITY = 400_000;
 	public static double EV_BATTERY_CAPACITY = 10_000_000;
 
-	public static double CARBON_ARMOR_CAPACITY = 500_000;
-	public static double QUANTUM_ARMOR_CAPACITY = 15_000_000;
-	public static double ARMOR_DAMAGE_ENERGY = 1_000;
+	public static double CARBON_ARMOR_CAPACITY = 1_000_000;
+	public static double QUANTUM_ARMOR_CAPACITY = 10_000_000;
+	public static double ARMOR_DAMAGE_ENERGY = 5_000;
 	public static double ARMOR_FLIGHT_ENERGY = 25;
+	public static double ARMOR_FLIGHT_BOOST = 25;
+	public static double ARMOR_FLIGHT_STOP = 5;
 
 	public static double LV_BATTERY_BOX_CAPACITY = 40_000;
 	public static double MV_BATTERY_BOX_CAPACITY = 300_000;
@@ -39,6 +42,7 @@ public class FTBICConfig {
 
 	public static int STATE_UPDATE_TICKS = 16;
 	public static int IRON_FURNACE_ITEMS_PER_COAL = 12;
+	public static int MAX_CABLE_LENGTH = 300;
 
 	public static double BASIC_GENERATOR_CAPACITY = 4000;
 	public static double BASIC_GENERATOR_OUTPUT = 10;

@@ -160,7 +160,10 @@ public class FTBICDataGenHandler {
 			add("recipe." + FTBIC.MOD_ID + ".extruding", "Extruding");
 			add("recipe." + FTBIC.MOD_ID + ".reconstructing", "Reconstructing");
 
-			add("ftbic.output", "Output: %s");
+			add("ftbic.energy_output", "Energy Output: %s");
+			add("ftbic.max_energy_output", "Max Energy Output: %s");
+			add("ftbic.energy_usage", "Energy Usage: %s");
+			add("ftbic.max_input", "Max Input: %s");
 		}
 	}
 

@@ -5,8 +5,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -31,6 +34,8 @@ public class FTBICUtils {
 
 	public static final LootItemConditionType BURNT_BLOCK = Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(FTBIC.MOD_ID, "burnt_block"), new LootItemConditionType(new BurntBlockCondition.Serializer()));
 
+	public static final Direction[] DIRECTIONS = Direction.values();
+
 	public static void init() {
 	}
 
@@ -42,12 +47,8 @@ public class FTBICUtils {
 		return (TextComponent) new TextComponent("").append(formatEnergyValue(energy) + " ").append(FTBICConfig.ENERGY_FORMAT);
 	}
 
-	public static TextComponent formatEnergy(double energy, double cap) {
-		return (TextComponent) new TextComponent("").append(formatEnergyValue(energy) + " / " + formatEnergyValue(cap) + " ").append(FTBICConfig.ENERGY_FORMAT);
-	}
-
-	public static TextComponent formatEnergy(ItemStack stack, EnergyItemHandler itemHandler) {
-		return formatEnergy(itemHandler.getEnergy(stack), itemHandler.getEnergyCapacity(stack));
+	public static Component energyTooltip(ItemStack stack, EnergyItemHandler itemHandler) {
+		return new TextComponent("").append(formatEnergy(itemHandler.getEnergy(stack)).withStyle(ChatFormatting.GRAY)).append(" / ").append(formatEnergy(itemHandler.getEnergyCapacity(stack)).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY);
 	}
 
 	public static <T> List<T> listFromJson(JsonObject json, String key, Function<JsonElement, T> function) {

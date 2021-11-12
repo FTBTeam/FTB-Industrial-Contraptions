@@ -1,13 +1,16 @@
 package dev.ftb.mods.ftbic.block.entity.generator;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.BurntCableBlock;
 import dev.ftb.mods.ftbic.block.CableBlock;
-import dev.ftb.mods.ftbic.block.entity.CachedEnergyStorage;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.BatteryInventory;
+import dev.ftb.mods.ftbic.util.CachedEnergyStorage;
+import dev.ftb.mods.ftbic.util.CachedEnergyStorageOrigin;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -16,8 +19,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		outputEnergyTier = EnergyTier.LV;
+		maxEnergyOutput = EnergyTier.LV.transferRate;
 	}
 
 	@Override
@@ -77,7 +78,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			}
 		}
 
-		double tenergy = Math.min(energy, outputEnergyTier.transferRate);
+		double tenergy = Math.min(energy, maxEnergyOutput);
 
 		if (tenergy <= 0D) {
 			return;
@@ -101,9 +102,13 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			for (CachedEnergyStorage storage : blocks) {
 				if (storage.isInvalid() || !storage.shouldReceiveEnergy()) {
 					continue;
+				} else if (storage.origin.cableTier != null && storage.origin.cableTier.transferRate < e) {
+					level.setBlock(storage.origin.cablePos, BurntCableBlock.getBurntCable(level.getBlockState(storage.origin.cablePos)), 3);
+					level.levelEvent(1502, storage.origin.cablePos, 0);
+					continue;
 				}
 
-				double a = storage.energyHandler.insertEnergy(e, false);
+				double a = storage.energyHandler.insertEnergy(Math.min(e, energy), false);
 
 				if (a > 0D) {
 					energy -= a;
@@ -134,7 +139,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		handleChanges();
 	}
 
-	public boolean isValidLookupSide(Direction direction) {
+	public boolean isValidEnergyOutputSide(Direction direction) {
 		return true;
 	}
 
@@ -143,60 +148,22 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	}
 
 	public CachedEnergyStorage[] getConnectedEnergyBlocks() {
+		if (level == null || level.isClientSide()) {
+			return CachedEnergyStorage.EMPTY;
+		}
+
 		long currentId = getCurrentElectricNetwork(level, getBlockPos());
 
 		if (connectedEnergyBlocks == null || currentElectricNetwork == -1L || currentElectricNetwork != currentId) {
 			Set<CachedEnergyStorage> set = new HashSet<>();
-
-			Direction[] directions = Direction.values();
-
 			Set<BlockPos> traversed = new HashSet<>();
-			Deque<BlockPos> openSet = new ArrayDeque<>();
-			openSet.add(worldPosition);
 			traversed.add(worldPosition);
 
-			while (!openSet.isEmpty()) {
-				BlockPos ptr = openSet.pop();
-				BlockState state = level.getBlockState(ptr);
-
-				if (ptr == worldPosition) {
-					for (Direction dir : directions) {
-						if (isValidLookupSide(dir)) {
-							BlockPos offset = ptr.relative(dir);
-
-							if (traversed.add(offset)) {
-								openSet.add(offset);
-							}
-						}
-					}
-				} else if (state.getBlock() instanceof CableBlock) {
-					CableBlock cableBlock = (CableBlock) state.getBlock();
-
-					if (cableBlock.tier.itemTransferRate < outputEnergyTier.transferRate) {
-						level.setBlock(ptr, BurntCableBlock.getBurntCable(state), 3);
-						continue;
-					}
-
-					for (Direction dir : directions) {
-						if (state.getValue(CableBlock.CONNECTION[dir.get3DDataValue()])) {
-							BlockPos offset = ptr.relative(dir);
-
-							if (traversed.add(offset)) {
-								openSet.add(offset);
-							}
-						}
-					}
-				} else if (state.hasTileEntity()) {
-					BlockEntity entity = level.getBlockEntity(ptr);
-					EnergyHandler handler = entity instanceof EnergyHandler ? (EnergyHandler) entity : null; // entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-
-					if (handler != null && handler != this && handler.getInputEnergyTier() != null && !handler.isBurnt() && isValidConnectedBlock(handler)) {
-						CachedEnergyStorage s = new CachedEnergyStorage();
-						s.distance = 1D;
-						s.blockEntity = entity;
-						s.energyHandler = handler;
-						set.add(s);
-					}
+			for (Direction direction : FTBICUtils.DIRECTIONS) {
+				if (isValidEnergyOutputSide(direction)) {
+					CachedEnergyStorageOrigin origin = new CachedEnergyStorageOrigin();
+					origin.direction = direction;
+					find(traversed, set, origin, 0, worldPosition, direction);
 				}
 			}
 
@@ -205,5 +172,46 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		}
 
 		return connectedEnergyBlocks;
+	}
+
+	private void find(Set<BlockPos> traversed, Set<CachedEnergyStorage> set, CachedEnergyStorageOrigin origin, int distance, BlockPos currentPos, Direction direction) {
+		if (level == null || distance > FTBICConfig.MAX_CABLE_LENGTH) {
+			return;
+		}
+
+		BlockPos pos = currentPos.relative(direction);
+
+		if (!traversed.add(pos)) {
+			return;
+		}
+
+		BlockState state = level.getBlockState(pos);
+
+		if (state.getBlock() instanceof CableBlock) {
+			CableBlock cableBlock = (CableBlock) state.getBlock();
+
+			if (origin.cableTier == null || cableBlock.tier.itemTransferRate < origin.cableTier.itemTransferRate) {
+				origin.cableTier = cableBlock.tier;
+				origin.cablePos = pos;
+			}
+
+			for (Direction dir : FTBICUtils.DIRECTIONS) {
+				if (state.getValue(CableBlock.CONNECTION[dir.get3DDataValue()])) {
+					find(traversed, set, origin, distance + 1, pos, dir);
+				}
+			}
+		} else if (state.hasTileEntity()) {
+			BlockEntity entity = level.getBlockEntity(pos);
+			EnergyHandler handler = entity instanceof EnergyHandler ? (EnergyHandler) entity : null; // entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+
+			if (handler != null && handler != this && handler.getInputEnergyTier() != null && !handler.isBurnt() && isValidConnectedBlock(handler)) {
+				CachedEnergyStorage s = new CachedEnergyStorage();
+				s.origin = origin;
+				s.distance = distance;
+				s.blockEntity = entity;
+				s.energyHandler = handler;
+				set.add(s);
+			}
+		}
 	}
 }

@@ -31,6 +31,7 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 	public void initProperties() {
 		super.initProperties();
 		energyCapacity = FTBICConfig.GEOTHERMAL_GENERATOR_CAPACITY;
+		maxEnergyOutput = FTBICConfig.GEOTHERMAL_GENERATOR_OUTPUT;
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public void handleGeneration() {
 		if (energy < energyCapacity && fluidAmount > 0) {
-			energy += Math.min(FTBICConfig.GEOTHERMAL_GENERATOR_OUTPUT, energyCapacity - energy);
+			energy += Math.min(energyCapacity - energy, maxEnergyOutput);
 			fluidAmount--;
 			active = true;
 		}

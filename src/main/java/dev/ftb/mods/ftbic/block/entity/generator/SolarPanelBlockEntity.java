@@ -10,8 +10,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class SolarPanelBlockEntity extends GeneratorBlockEntity {
-	public double solarOutput;
-
 	public SolarPanelBlockEntity(BlockEntityType<?> type) {
 		super(type, 0, 0);
 	}
@@ -19,13 +17,12 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		solarOutput = 0D;
 	}
 
 	@Override
 	public void handleGeneration() {
 		if (energy < energyCapacity && level.isDay() && level.canSeeSky(worldPosition.above())) {
-			energy += Math.min(energyCapacity - energy, solarOutput);
+			energy += Math.min(energyCapacity - energy, maxEnergyOutput);
 
 			if (energy >= energyCapacity) {
 				setChanged();

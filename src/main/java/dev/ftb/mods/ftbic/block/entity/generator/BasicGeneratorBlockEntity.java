@@ -26,6 +26,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	public void initProperties() {
 		super.initProperties();
 		energyCapacity = FTBICConfig.BASIC_GENERATOR_CAPACITY;
+		maxEnergyOutput = FTBICConfig.BASIC_GENERATOR_OUTPUT;
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 			fuelTicks--;
 
 			if (energy < energyCapacity) {
-				energy += Math.min(energyCapacity - energy, FTBICConfig.BASIC_GENERATOR_OUTPUT);
+				energy += Math.min(energyCapacity - energy, maxEnergyOutput);
 			}
 
 			if (fuelTicks == 0) {

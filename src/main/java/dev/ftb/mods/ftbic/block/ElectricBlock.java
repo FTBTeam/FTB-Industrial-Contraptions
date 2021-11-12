@@ -2,16 +2,22 @@ package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -31,6 +37,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Random;
 
 public class ElectricBlock extends Block implements SprayPaintable {
@@ -103,7 +110,7 @@ public class ElectricBlock extends Block implements SprayPaintable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, Random r) {
 		if (electricBlockInstance.canBurn) {
 			BlockEntity entity = level.getBlockEntity(pos);
 
@@ -111,11 +118,41 @@ public class ElectricBlock extends Block implements SprayPaintable {
 				ElectricBlockEntity electricBlockEntity = (ElectricBlockEntity) entity;
 
 				if (electricBlockEntity.isBurnt()) {
-					for (int i = 0; i < 5; i++) {
-						level.addParticle(ParticleTypes.SMOKE, pos.getX() + random.nextFloat(), pos.getY() + 1D, pos.getZ() + random.nextFloat(), 0D, 0D, 0D);
+					double x = pos.getX();
+					double y = pos.getY();
+					double z = pos.getZ();
+
+					if (r.nextInt(10) == 0) {
+						level.playLocalSound(x + 0.5D, y + 0.5D, z + 0.5D, SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS, 1.0F + r.nextFloat(), r.nextFloat() * 0.7F + 0.3F, false);
 					}
 
-					level.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5D, pos.getY() + 1D, pos.getZ() + 0.5D, 0D, 0D, 0D);
+					for (int i = 0; i < 5; i++) {
+						level.addParticle(ParticleTypes.SMOKE, x + r.nextFloat(), y + 1D, z + r.nextFloat(), 0D, 0D, 0D);
+
+						level.addParticle(ParticleTypes.SMOKE, x, y + 0.05D + r.nextFloat(), z + r.nextFloat(), 0D, 0D, 0D);
+						level.addParticle(ParticleTypes.SMOKE, x + 1D, y + 0.05D + r.nextFloat(), z + r.nextFloat(), 0D, 0D, 0D);
+						level.addParticle(ParticleTypes.SMOKE, x + r.nextFloat(), y + 0.05D + r.nextFloat(), z, 0D, 0D, 0D);
+						level.addParticle(ParticleTypes.SMOKE, x + r.nextFloat(), y + 0.05D + r.nextFloat(), z + 1D, 0D, 0D, 0D);
+
+						if (r.nextInt(5) == 0) {
+							level.addParticle(ParticleTypes.FLAME, x, y + 0.05D + r.nextFloat(), z + r.nextFloat(), 0D, 0D, 0D);
+						}
+
+						if (r.nextInt(5) == 0) {
+							level.addParticle(ParticleTypes.FLAME, x + 1D, y + 0.05D + r.nextFloat(), z + r.nextFloat(), 0D, 0D, 0D);
+						}
+
+						if (r.nextInt(5) == 0) {
+							level.addParticle(ParticleTypes.FLAME, x + r.nextFloat(), y + 0.05D + r.nextFloat(), z, 0D, 0D, 0D);
+						}
+
+						if (r.nextInt(5) == 0) {
+							level.addParticle(ParticleTypes.FLAME, x + r.nextFloat(), y + 0.05D + r.nextFloat(), z + 1D, 0D, 0D, 0D);
+						}
+					}
+
+					level.addParticle(ParticleTypes.FLAME, x + r.nextFloat(), y + 1.1D, z + r.nextFloat(), 0D, 0D, 0D);
+					level.addParticle(ParticleTypes.LARGE_SMOKE, x + 0.5D, y + 1D, z + 0.5D, 0D, 0D, 0D);
 				}
 			}
 		}
@@ -186,5 +223,25 @@ public class ElectricBlock extends Block implements SprayPaintable {
 		}
 
 		return InteractionResult.PASS;
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> list, TooltipFlag flag) {
+		if (electricBlockInstance.energyOutput > 0D) {
+			list.add(new TranslatableComponent("ftbic.energy_output", FTBICUtils.formatEnergy(electricBlockInstance.energyOutput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		}
+
+		if (electricBlockInstance.maxEnergyOutput > 0D) {
+			list.add(new TranslatableComponent("ftbic.max_energy_output", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyOutput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		}
+
+		if (electricBlockInstance.energyUsage > 0D) {
+			list.add(new TranslatableComponent("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		}
+
+		if (electricBlockInstance.maxInput > 0D) {
+			list.add(new TranslatableComponent("ftbic.max_input", FTBICUtils.formatEnergy(electricBlockInstance.maxInput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		}
 	}
 }

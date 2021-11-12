@@ -1,12 +1,12 @@
-package dev.ftb.mods.ftbic.block.entity;
+package dev.ftb.mods.ftbic.util;
 
-import dev.ftb.mods.ftbic.util.EnergyHandler;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class CachedEnergyStorage {
 	public static final CachedEnergyStorage[] EMPTY = new CachedEnergyStorage[0];
 
-	public double distance;
+	public CachedEnergyStorageOrigin origin;
+	public int distance;
 	public BlockEntity blockEntity;
 	public EnergyHandler energyHandler;
 
