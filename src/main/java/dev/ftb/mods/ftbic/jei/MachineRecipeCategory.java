@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
@@ -21,6 +22,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -48,7 +50,7 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 		background = guiHelper.createBlankDrawable(serializer.guiWidth, serializer.guiHeight);
 		icon = guiHelper.createDrawableIngredient(new ItemStack(item.item.get()));
 		arrowOff = guiHelper.drawableBuilder(progressTexture, 0, 0, 24, 17).setTextureSize(32, 64).build();
-		arrowOn = guiHelper.drawableBuilder(progressTexture, 0, 18, 24, 17).setTextureSize(32, 64).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
+		arrowOn = guiHelper.drawableBuilder(progressTexture, 0, 18, 24, 17).setTextureSize(32, 64).buildAnimated(Mth.ceil(FTBICConfig.MACHINE_RECIPE_BASE_TICKS), IDrawableAnimated.StartDirection.LEFT, false);
 		powerOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 240, 14, 14).setTextureSize(256, 256).build();
 		powerOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 15, 240, 14, 14).setTextureSize(256, 256).buildAnimated(84, IDrawableAnimated.StartDirection.TOP, true);
 		slot = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 167, 18, 18).setTextureSize(256, 256).build();

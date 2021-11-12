@@ -154,6 +154,7 @@ public class FTBICDataGenHandler {
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".separating", "Separating");
 			add("recipe." + FTBIC.MOD_ID + ".compressing", "Compressing");
+			add("recipe." + FTBIC.MOD_ID + ".reprocessing", "Reprocessing");
 			add("recipe." + FTBIC.MOD_ID + ".canning", "Canning");
 			add("recipe." + FTBIC.MOD_ID + ".rolling", "Rolling");
 			add("recipe." + FTBIC.MOD_ID + ".extruding", "Extruding");

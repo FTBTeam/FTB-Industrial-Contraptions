@@ -23,8 +23,8 @@ public class RecipeCache implements Recipe<NoContainer> {
 	public final CompressingRecipeResults compressing = new CompressingRecipeResults();
 	public final RollingRecipeResults rolling = new RollingRecipeResults();
 	public final ExtrudingRecipeResults extruding = new ExtrudingRecipeResults();
-	public final CanningMachineRecipeResults canning = new CanningMachineRecipeResults();
 	public final ReprocessingRecipeResults reprocessing = new ReprocessingRecipeResults();
+	public final CanningMachineRecipeResults canning = new CanningMachineRecipeResults();
 	public final ReconstructingRecipeResults reconstructing = new ReconstructingRecipeResults();
 
 	@Nullable

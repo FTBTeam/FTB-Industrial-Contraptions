@@ -45,7 +45,7 @@ public class CableBlock extends BaseCableBlock {
 
 	private boolean canCableConnectFrom(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
 		if (state.getBlock() instanceof CableBlock) {
-			return ((CableBlock) state.getBlock()).tier == tier;
+			return state.getBlock() == this;
 		} else if (state.getBlock() instanceof ElectricBlock) {
 			return true;
 		} else if (!state.isAir()) {

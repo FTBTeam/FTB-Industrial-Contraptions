@@ -108,6 +108,11 @@ public class MachineRecipeBuilder {
 		return this;
 	}
 
+	public MachineRecipeBuilder hideFromJEI() {
+		recipe.hideFromJEI = true;
+		return this;
+	}
+
 	public void save(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
 		advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
 		ItemStack result = recipe.getResultItem();

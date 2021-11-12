@@ -22,6 +22,7 @@ public class MachineRecipe implements Recipe<NoContainer> {
 	public List<StackWithChance> outputItems;
 	public List<FluidStack> outputFluids;
 	public double processingTime;
+	public boolean hideFromJEI;
 
 	public MachineRecipe(MachineRecipeSerializer s, ResourceLocation i) {
 		serializer = s;
@@ -32,6 +33,7 @@ public class MachineRecipe implements Recipe<NoContainer> {
 		outputItems = new ArrayList<>(1);
 		outputFluids = new ArrayList<>(0);
 		processingTime = 1D;
+		hideFromJEI = false;
 	}
 
 	@Override
@@ -67,5 +69,13 @@ public class MachineRecipe implements Recipe<NoContainer> {
 	@Override
 	public RecipeType<?> getType() {
 		return serializer.recipeType;
+	}
+
+	public boolean isVisibleJEI() {
+		return !hideFromJEI;
+	}
+
+	public boolean isRealAndVisibleJEI() {
+		return realRecipe && !hideFromJEI;
 	}
 }

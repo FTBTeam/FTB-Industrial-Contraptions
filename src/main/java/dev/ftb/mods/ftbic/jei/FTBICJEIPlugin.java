@@ -16,8 +16,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import java.util.stream.Collectors;
-
 /**
  * @author LatvianModder
  */
@@ -38,6 +36,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.MACERATOR.item.get()), FTBICRecipes.MACERATING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.CENTRIFUGE.item.get()), FTBICRecipes.SEPARATING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.COMPRESSOR.item.get()), FTBICRecipes.COMPRESSING.get().getRegistryName());
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.REPROCESSOR.item.get()), FTBICRecipes.REPROCESSING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.CANNING_MACHINE.item.get()), FTBICRecipes.CANNING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ROLLER.item.get()), FTBICRecipes.ROLLING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.EXTRUDER.item.get()), FTBICRecipes.EXTRUDING.get().getRegistryName());
@@ -59,14 +58,15 @@ public class FTBICJEIPlugin implements IModPlugin {
 			return;
 		}
 
-		r.addRecipes(cache.smelting.getAllRecipes(level).stream().filter(recipe -> recipe.realRecipe).collect(Collectors.toList()), FTBICRecipes.SMELTING.get().getRegistryName());
-		r.addRecipes(cache.macerating.getAllRecipes(level), FTBICRecipes.MACERATING.get().getRegistryName());
-		r.addRecipes(cache.compressing.getAllRecipes(level), FTBICRecipes.COMPRESSING.get().getRegistryName());
-		r.addRecipes(cache.separating.getAllRecipes(level), FTBICRecipes.SEPARATING.get().getRegistryName());
-		r.addRecipes(cache.canning.getAllRecipes(level), FTBICRecipes.CANNING.get().getRegistryName());
-		r.addRecipes(cache.rolling.getAllRecipes(level), FTBICRecipes.ROLLING.get().getRegistryName());
-		r.addRecipes(cache.extruding.getAllRecipes(level), FTBICRecipes.EXTRUDING.get().getRegistryName());
-		r.addRecipes(cache.reconstructing.getAllRecipes(level), FTBICRecipes.RECONSTRUCTING.get().getRegistryName());
+		r.addRecipes(cache.smelting.getAllRealAndVisibleRecipes(level), FTBICRecipes.SMELTING.get().getRegistryName());
+		r.addRecipes(cache.macerating.getAllVisibleRecipes(level), FTBICRecipes.MACERATING.get().getRegistryName());
+		r.addRecipes(cache.compressing.getAllVisibleRecipes(level), FTBICRecipes.COMPRESSING.get().getRegistryName());
+		r.addRecipes(cache.separating.getAllVisibleRecipes(level), FTBICRecipes.SEPARATING.get().getRegistryName());
+		r.addRecipes(cache.reprocessing.getAllVisibleRecipes(level), FTBICRecipes.REPROCESSING.get().getRegistryName());
+		r.addRecipes(cache.canning.getAllVisibleRecipes(level), FTBICRecipes.CANNING.get().getRegistryName());
+		r.addRecipes(cache.rolling.getAllVisibleRecipes(level), FTBICRecipes.ROLLING.get().getRegistryName());
+		r.addRecipes(cache.extruding.getAllVisibleRecipes(level), FTBICRecipes.EXTRUDING.get().getRegistryName());
+		r.addRecipes(cache.reconstructing.getAllVisibleRecipes(level), FTBICRecipes.RECONSTRUCTING.get().getRegistryName());
 	}
 
 	@Override
@@ -75,6 +75,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.MACERATING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.MACERATOR));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.SEPARATING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.CENTRIFUGE));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.COMPRESSING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.COMPRESSOR));
+		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.REPROCESSING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.REPROCESSOR));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.CANNING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.CANNING_MACHINE));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.ROLLING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.ROLLER));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.EXTRUDING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.EXTRUDER));

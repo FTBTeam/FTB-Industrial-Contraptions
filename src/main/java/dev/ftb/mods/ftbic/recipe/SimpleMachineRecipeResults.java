@@ -22,6 +22,7 @@ public class SimpleMachineRecipeResults extends MachineRecipeResults {
 		recipeSerializer = s;
 	}
 
+	@Override
 	public List<MachineRecipe> getAllRecipes(Level level) {
 		if (allRecipes == null) {
 			allRecipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(recipeSerializer.get().recipeType));

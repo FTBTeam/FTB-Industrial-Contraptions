@@ -36,6 +36,7 @@ public class CanningMachineRecipeResults extends MachineRecipeResults {
 		return new ItemPair(inputs[0].getItem(), inputs[1].getItem());
 	}
 
+	@Override
 	public List<MachineRecipe> getAllRecipes(Level level) {
 		if (allRecipes == null) {
 			allRecipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(FTBICRecipes.CANNING.get().recipeType));

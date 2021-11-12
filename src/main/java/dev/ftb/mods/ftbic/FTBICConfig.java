@@ -97,6 +97,7 @@ public class FTBICConfig {
 	public static boolean ADD_PLATE_RECIPES = true;
 	public static boolean ADD_GEAR_RECIPES = true;
 	public static boolean ADD_CANNED_FOOD_RECIPES = true;
+	public static double SCRAP_CHANCE = 0.25;
 
 	public static final List<String> MOD_MATERIAL_PRIORITY = new ArrayList<>(Arrays.asList(
 			"minecraft",
