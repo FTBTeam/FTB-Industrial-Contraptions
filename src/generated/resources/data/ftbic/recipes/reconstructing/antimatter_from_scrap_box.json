@@ -1,0 +1,17 @@
+{
+	"type": "ftbic:reconstructing",
+	"inputItems": [
+		{
+			"ingredient": {
+				"item": "ftbic:scrap_box"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:antimatter"
+		}
+	],
+	"processingTime": 0.5555555555555556
+}

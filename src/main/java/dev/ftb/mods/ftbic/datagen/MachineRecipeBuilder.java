@@ -66,6 +66,10 @@ public class MachineRecipeBuilder {
 		return machine(FTBICRecipes.EXTRUDING);
 	}
 
+	public static MachineRecipeBuilder reconstructing() {
+		return machine(FTBICRecipes.RECONSTRUCTING);
+	}
+
 	public MachineRecipeBuilder unlockedBy(String string, CriterionTriggerInstance arg) {
 		advancement.addCriterion(string, arg);
 		return this;

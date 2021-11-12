@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -43,6 +44,10 @@ public class FTBICUtils {
 
 	public static TextComponent formatEnergy(double energy, double cap) {
 		return (TextComponent) new TextComponent("").append(formatEnergyValue(energy) + " / " + formatEnergyValue(cap) + " ").append(FTBICConfig.ENERGY_FORMAT);
+	}
+
+	public static TextComponent formatEnergy(ItemStack stack, EnergyItemHandler itemHandler) {
+		return formatEnergy(itemHandler.getEnergy(stack), itemHandler.getEnergyCapacity(stack));
 	}
 
 	public static <T> List<T> listFromJson(JsonObject json, String key, Function<JsonElement, T> function) {

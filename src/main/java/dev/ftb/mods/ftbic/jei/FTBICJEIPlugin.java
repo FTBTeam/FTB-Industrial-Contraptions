@@ -41,6 +41,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.CANNING_MACHINE.item.get()), FTBICRecipes.CANNING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ROLLER.item.get()), FTBICRecipes.ROLLING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.EXTRUDER.item.get()), FTBICRecipes.EXTRUDING.get().getRegistryName());
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ANTIMATTER_CONSTRUCTOR.item.get()), FTBICRecipes.RECONSTRUCTING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.item.get()), FTBICRecipes.SMELTING.get().getRegistryName());
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.item.get()), VanillaRecipeCategoryUid.FURNACE);
 		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_MACERATOR.item.get()), FTBICRecipes.MACERATING.get().getRegistryName());
@@ -65,6 +66,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipes(cache.canning.getAllRecipes(level), FTBICRecipes.CANNING.get().getRegistryName());
 		r.addRecipes(cache.rolling.getAllRecipes(level), FTBICRecipes.ROLLING.get().getRegistryName());
 		r.addRecipes(cache.extruding.getAllRecipes(level), FTBICRecipes.EXTRUDING.get().getRegistryName());
+		r.addRecipes(cache.reconstructing.getAllRecipes(level), FTBICRecipes.RECONSTRUCTING.get().getRegistryName());
 	}
 
 	@Override
@@ -76,5 +78,6 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.CANNING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.CANNING_MACHINE));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.ROLLING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.ROLLER));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.EXTRUDING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.EXTRUDER));
+		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.RECONSTRUCTING, r.getJeiHelpers().getGuiHelper(), FTBICElectricBlocks.ANTIMATTER_CONSTRUCTOR));
 	}
 }

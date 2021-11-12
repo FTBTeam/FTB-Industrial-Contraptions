@@ -4,14 +4,18 @@ import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.FTBICBlockEntities;
 import dev.ftb.mods.ftbic.client.FTBICClient;
+import dev.ftb.mods.ftbic.item.EnergyArmorItem;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -19,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(FTBIC.MOD_ID)
+@Mod.EventBusSubscriber(modid = FTBIC.MOD_ID)
 public class FTBIC {
 	public static final String MOD_ID = "ftbic";
 	public static final String MOD_NAME = "FTB Industrial Contraptions";
@@ -43,5 +48,18 @@ public class FTBIC {
 		FTBICElectricBlocks.init();
 		FTBICUtils.init();
 		PROXY.init();
+	}
+
+	@SubscribeEvent
+	public static void playerDamage(LivingDamageEvent event) {
+		if (!event.getSource().isBypassInvul()) {
+			ItemStack stack = event.getEntityLiving().getItemBySlot(EquipmentSlot.CHEST);
+
+			if (stack.getItem() instanceof EnergyArmorItem && ((EnergyArmorItem) stack.getItem()).getEnergy(stack) > 0D) {
+				((EnergyArmorItem) stack.getItem()).damageEnergyItem(stack, FTBICConfig.ARMOR_DAMAGE_ENERGY * event.getAmount());
+				event.setAmount(0F);
+				event.setCanceled(true);
+			}
+		}
 	}
 }

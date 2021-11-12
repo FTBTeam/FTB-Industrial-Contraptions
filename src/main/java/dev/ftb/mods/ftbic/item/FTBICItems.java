@@ -96,12 +96,6 @@ public interface FTBICItems {
 	Supplier<Item> ENERGY_STORAGE_UPGRADE = REGISTRY.register("energy_storage_upgrade", UpgradeItem::new);
 	Supplier<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", UpgradeItem::new);
 	Supplier<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", UpgradeItem::new);
-	Supplier<Item> CARBON_HELMET = REGISTRY.register("carbon_helmet", () -> new SpecialArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.HEAD));
-	Supplier<Item> CARBON_CHESTPLATE = REGISTRY.register("carbon_chestplate", () -> new SpecialArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.CHEST));
-	Supplier<Item> CARBON_LEGGINGS = REGISTRY.register("carbon_leggings", () -> new SpecialArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.LEGS));
-	Supplier<Item> CARBON_BOOTS = REGISTRY.register("carbon_boots", () -> new SpecialArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.FEET));
-	Supplier<Item> QUANTUM_HELMET = REGISTRY.register("quantum_helmet", () -> new SpecialArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.HEAD));
-	Supplier<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", () -> new SpecialArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.CHEST));
-	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", () -> new SpecialArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
-	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new SpecialArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.FEET));
+	Supplier<Item> CARBON_CHESTPLATE = REGISTRY.register("carbon_chestplate", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.CHEST));
+	Supplier<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", () -> new EnergyArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.CHEST));
 }

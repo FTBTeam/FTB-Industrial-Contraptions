@@ -284,5 +284,19 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.inputItem(Ingredient.of(COAL_BALL))
 				.outputItem(new ItemStack(COMPRESSED_COAL_BALL))
 				.save(consumer, compressingLoc("compressed_coal_ball"));
+
+		MachineRecipeBuilder.reconstructing()
+				.unlockedBy("has_item", has(SCRAP))
+				.inputItem(Ingredient.of(SCRAP))
+				.outputItem(new ItemStack(ANTIMATTER))
+				.processingTime(5D)
+				.save(consumer, reconstructingLoc("antimatter_from_scrap"));
+
+		MachineRecipeBuilder.reconstructing()
+				.unlockedBy("has_item", has(SCRAP_BOX))
+				.inputItem(Ingredient.of(SCRAP_BOX))
+				.outputItem(new ItemStack(ANTIMATTER))
+				.processingTime(5D / 9D)
+				.save(consumer, reconstructingLoc("antimatter_from_scrap_box"));
 	}
 }

@@ -21,6 +21,6 @@ public class AntimatterConstructorBlockEntity extends MachineBlockEntity {
 
 	@Override
 	public MachineRecipeResults getRecipes(RecipeCache cache) {
-		return cache.antimatterFabricator;
+		return cache.reconstructing;
 	}
 }

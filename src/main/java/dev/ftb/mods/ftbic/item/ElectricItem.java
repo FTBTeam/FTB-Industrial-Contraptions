@@ -35,7 +35,7 @@ public class ElectricItem extends Item implements EnergyItemHandler {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
 		if (!isCreativeEnergyItem()) {
-			list.add(FTBICUtils.formatEnergy(getEnergy(stack), getEnergyCapacity(stack)).withStyle(ChatFormatting.GRAY));
+			list.add(FTBICUtils.formatEnergy(stack, this).withStyle(ChatFormatting.GRAY));
 		}
 	}
 }

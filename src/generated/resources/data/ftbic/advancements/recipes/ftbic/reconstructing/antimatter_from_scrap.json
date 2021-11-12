@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:shaped/carbon_leggings"
+			"ftbic:reconstructing/antimatter_from_scrap"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:carbon_plate"
+						"item": "ftbic:scrap"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:shaped/carbon_leggings"
+				"recipe": "ftbic:reconstructing/antimatter_from_scrap"
 			}
 		}
 	},

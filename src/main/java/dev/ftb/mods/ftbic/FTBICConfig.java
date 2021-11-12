@@ -26,10 +26,10 @@ public class FTBICConfig {
 	public static double LV_BATTERY_CAPACITY = 4_000;
 	public static double MV_BATTERY_CAPACITY = 40_000;
 	public static double HV_BATTERY_CAPACITY = 400_000;
-	public static double EV_BATTERY_CAPACITY = 100_000_000;
+	public static double EV_BATTERY_CAPACITY = 10_000_000;
 
-	public static double CARBON_ARMOR_CAPACITY = 1_000_000;
-	public static double QUANTUM_ARMOR_CAPACITY = 100_000_000;
+	public static double CARBON_ARMOR_CAPACITY = 500_000;
+	public static double QUANTUM_ARMOR_CAPACITY = 15_000_000;
 	public static double ARMOR_DAMAGE_ENERGY = 1_000;
 	public static double ARMOR_FLIGHT_ENERGY = 25;
 
@@ -74,8 +74,8 @@ public class FTBICConfig {
 	public static double ROLLER_USE = 2;
 	public static double EXTRUDER_CAPACITY = 800;
 	public static double EXTRUDER_USE = 2;
-	public static double ANTIMATTER_CONSTRUCTOR_CAPACITY = 1_000_000;
-	public static double ANTIMATTER_CONSTRUCTOR_USE = 20;
+	public static double ANTIMATTER_CONSTRUCTOR_CAPACITY = 500_000;
+	public static double ANTIMATTER_CONSTRUCTOR_USE = 1_000;
 	public static double ADVANCED_POWERED_FURNACE_CAPACITY = 10_000;
 	public static double ADVANCED_POWERED_FURNACE_USE = 16;
 	public static double ADVANCED_MACERATOR_CAPACITY = 10_000;

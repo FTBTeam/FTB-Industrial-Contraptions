@@ -148,14 +148,8 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy Storage Upgrade");
 			addItem(FTBICItems.TRANSFORMER_UPGRADE, "Transformer Upgrade");
 			addItem(FTBICItems.EJECTOR_UPGRADE, "Ejector Upgrade");
-			addItem(FTBICItems.CARBON_HELMET, "Carbon Helmet");
 			addItem(FTBICItems.CARBON_CHESTPLATE, "Carbon Chestplate");
-			addItem(FTBICItems.CARBON_LEGGINGS, "Carbon Leggings");
-			addItem(FTBICItems.CARBON_BOOTS, "Carbon Boots");
-			addItem(FTBICItems.QUANTUM_HELMET, "Quantum Helmet");
 			addItem(FTBICItems.QUANTUM_CHESTPLATE, "Quantum Chestplate");
-			addItem(FTBICItems.QUANTUM_LEGGINGS, "Quantum Leggings");
-			addItem(FTBICItems.QUANTUM_BOOTS, "Quantum Boots");
 
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".separating", "Separating");
@@ -163,6 +157,7 @@ public class FTBICDataGenHandler {
 			add("recipe." + FTBIC.MOD_ID + ".canning", "Canning");
 			add("recipe." + FTBIC.MOD_ID + ".rolling", "Rolling");
 			add("recipe." + FTBIC.MOD_ID + ".extruding", "Extruding");
+			add("recipe." + FTBIC.MOD_ID + ".reconstructing", "Reconstructing");
 
 			add("ftbic.output", "Output: %s");
 		}
@@ -581,14 +576,8 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.ENERGY_STORAGE_UPGRADE);
 			basicItem(FTBICItems.TRANSFORMER_UPGRADE);
 			basicItem(FTBICItems.EJECTOR_UPGRADE);
-			basicItem(FTBICItems.CARBON_HELMET);
 			basicItem(FTBICItems.CARBON_CHESTPLATE);
-			basicItem(FTBICItems.CARBON_LEGGINGS);
-			basicItem(FTBICItems.CARBON_BOOTS);
-			basicItem(FTBICItems.QUANTUM_HELMET);
 			basicItem(FTBICItems.QUANTUM_CHESTPLATE);
-			basicItem(FTBICItems.QUANTUM_LEGGINGS);
-			basicItem(FTBICItems.QUANTUM_BOOTS);
 		}
 	}
 

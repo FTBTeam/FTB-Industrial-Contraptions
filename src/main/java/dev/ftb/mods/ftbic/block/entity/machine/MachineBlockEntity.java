@@ -249,7 +249,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 				progress = 0D;
 				maxProgress = 0D;
 				setChanged();
-			} else if (progress == 0D) {
+			} else if (progress <= 0D) {
 				maxProgress = result.time * FTBICConfig.MACHINE_RECIPE_BASE_TICKS;
 				active = true;
 				setChanged();
