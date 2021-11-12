@@ -520,6 +520,10 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			setChanged();
 			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
 			electricNetworkUpdated(level, worldPosition);
+
+			if (burnt) {
+				level.levelEvent(1502, worldPosition, 0);
+			}
 		}
 	}
 

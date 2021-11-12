@@ -71,7 +71,7 @@ public class ElectricBlockMenu<E extends ElectricBlockEntity> extends AbstractCo
 
 	@Override
 	public boolean stillValid(Player player) {
-		return !entity.isRemoved();
+		return !entity.isRemoved() && !entity.isBurnt();
 	}
 
 	@Override

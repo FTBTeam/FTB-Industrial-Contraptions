@@ -7,6 +7,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -164,12 +166,17 @@ public class ElectricBlock extends Block implements SprayPaintable {
 			ElectricBlockEntity electricBlockEntity = (ElectricBlockEntity) entity;
 
 			if (electricBlockEntity.isBurnt()) {
-				if (!level.isClientSide()) {
-					if (player.getItemInHand(hand).getItem() == FTBICItems.FUSE.item.get()) {
-						electricBlockEntity.setBurnt(false);
-					} else {
-						player.sendMessage(new TextComponent("You must insert a Fuse into this machine to repair it!"), Util.NIL_UUID);
+				if (player.getItemInHand(hand).getItem() == FTBICItems.FUSE.item.get()) {
+					electricBlockEntity.setBurnt(false);
+					level.playSound(player, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 0.3F, 0.6F);
+
+					if (!level.isClientSide()) {
+						player.getItemInHand(hand).shrink(1);
 					}
+
+					return InteractionResult.sidedSuccess(level.isClientSide());
+				} else if (!level.isClientSide()) {
+					player.sendMessage(new TextComponent("Right-click with a Fuse on this machine to repair it!"), Util.NIL_UUID);
 				}
 
 				return InteractionResult.SUCCESS;
