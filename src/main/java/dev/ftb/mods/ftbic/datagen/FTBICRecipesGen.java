@@ -75,7 +75,6 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> ALUMINUM_DUST = ItemTags.bind("forge:dusts/aluminum");
 
 	public static final Item SILICON_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SILICON).get();
-	public static final Item SULFUR_DUST_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.SULFUR).get();
 	public static final Item OBSIDIAN_DUST_ITEM = ItemHandler.DUST_OBSIDIAN.get();
 	public static final Item ENDER_DUST_ITEM = ItemHandler.DUST_ENDER.get();
 	public static final Item SAWDUST_ITEM = ItemHandler.DUST_WOOD.get();
