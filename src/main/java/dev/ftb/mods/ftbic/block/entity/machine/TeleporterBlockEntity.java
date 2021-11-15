@@ -9,11 +9,17 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class TeleporterBlockEntity extends ElectricBlockEntity {
 	public BlockPos linkedPos;
 	public ResourceKey<Level> linkedLevel;
+	public byte[] preview;
 
 	public TeleporterBlockEntity() {
 		super(FTBICElectricBlocks.TELEPORTER.blockEntity.get(), 0, 0);
@@ -22,7 +28,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		inputEnergyTier = EnergyTier.XV;
+		inputEnergyTier = EnergyTier.IV;
 		energyCapacity = FTBICConfig.TELEPORTER_CAPACITY;
 	}
 
@@ -35,6 +41,10 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 			tag.putInt("LinkedY", linkedPos.getY());
 			tag.putInt("LinkedZ", linkedPos.getZ());
 			tag.putString("LinkedLevel", linkedLevel.location().toString());
+		}
+
+		if (preview != null) {
+			tag.putByteArray("Preview", preview);
 		}
 	}
 
@@ -49,17 +59,32 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 			linkedPos = new BlockPos(tag.getInt("LinkedX"), tag.getInt("LinkedY"), tag.getInt("LinkedZ"));
 			linkedLevel = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(tag.getString("LinkedLevel")));
 		}
+
+		preview = tag.contains("Preview") ? tag.getByteArray("Preview") : null;
 	}
 
 	@Override
 	public void writeNetData(CompoundTag tag) {
 		super.writeNetData(tag);
-		// write the preview
+
+		if (preview != null) {
+			tag.putByteArray("Preview", preview);
+		}
 	}
 
 	@Override
 	public void readNetData(CompoundTag tag) {
 		super.readNetData(tag);
-		// read the preview
+		preview = tag.contains("Preview") ? tag.getByteArray("Preview") : null;
+	}
+
+	@Override
+	public void stepOn(ServerPlayer player) {
+		active = true;
+	}
+
+	@Override
+	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
+		return InteractionResult.SUCCESS;
 	}
 }

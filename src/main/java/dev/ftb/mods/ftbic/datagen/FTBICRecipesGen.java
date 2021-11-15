@@ -34,6 +34,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> COPPER_PLATE = ItemTags.bind("forge:plates/copper");
 	public static final Tag<Item> TIN_INGOT = ItemTags.bind("forge:ingots/tin");
 	public static final Tag<Item> ALUMINUM_INGOT = ItemTags.bind("forge:ingots/aluminum");
+	public static final Tag<Item> ENDERIUM_INGOT = ItemTags.bind("forge:ingots/enderium");
 	public static final Tag<Item> COAL_DUST = ItemTags.bind("forge:dusts/coal");
 	public static final Tag<Item> PLANKS = ItemTags.PLANKS;
 	public static final Tag<Item> LOGS_THAT_BURN = ItemTags.LOGS_THAT_BURN;
@@ -91,6 +92,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item COPPER_CABLE = FTBICItems.COPPER_CABLE.get();
 	public static final Item GOLD_CABLE = FTBICItems.GOLD_CABLE.get();
 	public static final Item ALUMINUM_CABLE = FTBICItems.ALUMINUM_CABLE.get();
+	public static final Item ENDERIUM_CABLE = FTBICItems.ENDERIUM_CABLE.get();
 	public static final Item GLASS_CABLE = FTBICItems.GLASS_CABLE.get();
 	public static final Item BURNT_CABLE = FTBICItems.BURNT_CABLE.get();
 
@@ -100,6 +102,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item COPPER_WIRE = FTBICItems.COPPER_WIRE.item.get();
 	public static final Item GOLD_WIRE = FTBICItems.GOLD_WIRE.item.get();
 	public static final Item ALUMINUM_WIRE = FTBICItems.ALUMINUM_WIRE.item.get();
+	public static final Item ENDERIUM_WIRE = FTBICItems.ENDERIUM_WIRE.item.get();
 	public static final Item COPPER_COIL = FTBICItems.COPPER_COIL.item.get();
 	public static final Item MIXED_METAL_BLEND = FTBICItems.MIXED_METAL_BLEND.item.get();
 	public static final Item ADVANCED_ALLOY = FTBICItems.ADVANCED_ALLOY.item.get();

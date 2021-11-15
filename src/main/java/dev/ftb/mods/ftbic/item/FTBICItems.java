@@ -45,6 +45,7 @@ public interface FTBICItems {
 	Supplier<BlockItem> COPPER_CABLE = blockItem("copper_cable", FTBICBlocks.COPPER_CABLE);
 	Supplier<BlockItem> GOLD_CABLE = blockItem("gold_cable", FTBICBlocks.GOLD_CABLE);
 	Supplier<BlockItem> ALUMINUM_CABLE = blockItem("aluminum_cable", FTBICBlocks.ALUMINUM_CABLE);
+	Supplier<BlockItem> ENDERIUM_CABLE = blockItem("enderium_cable", FTBICBlocks.ENDERIUM_CABLE);
 	Supplier<BlockItem> GLASS_CABLE = blockItem("glass_cable", FTBICBlocks.GLASS_CABLE);
 	Supplier<BlockItem> BURNT_CABLE = blockItem("burnt_cable", FTBICBlocks.BURNT_CABLE);
 
@@ -54,6 +55,7 @@ public interface FTBICItems {
 	MaterialItem COPPER_WIRE = material("copper_wire");
 	MaterialItem GOLD_WIRE = material("gold_wire");
 	MaterialItem ALUMINUM_WIRE = material("aluminum_wire");
+	MaterialItem ENDERIUM_WIRE = material("enderium_wire");
 	MaterialItem COPPER_COIL = material("copper_coil");
 	MaterialItem MIXED_METAL_BLEND = material("mixed_metal_blend");
 	MaterialItem ADVANCED_ALLOY = material("advanced_alloy");

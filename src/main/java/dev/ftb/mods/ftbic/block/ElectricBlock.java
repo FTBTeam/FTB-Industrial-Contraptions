@@ -10,10 +10,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -110,17 +112,17 @@ public class ElectricBlock extends Block implements SprayPaintable {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState state, Level level, BlockPos pos, Random r) {
-		if (electricBlockInstance.canBurn) {
+		boolean active = electricBlockInstance.canBeActive && state.getValue(ACTIVE);
+		if (active || electricBlockInstance.canBurn) {
 			BlockEntity entity = level.getBlockEntity(pos);
 
 			if (entity instanceof ElectricBlockEntity) {
 				ElectricBlockEntity electricBlockEntity = (ElectricBlockEntity) entity;
+				double x = pos.getX();
+				double y = pos.getY();
+				double z = pos.getZ();
 
 				if (electricBlockEntity.isBurnt()) {
-					double x = pos.getX();
-					double y = pos.getY();
-					double z = pos.getZ();
-
 					if (r.nextInt(10) == 0) {
 						level.playLocalSound(x + 0.5D, y + 0.5D, z + 0.5D, SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS, 1.0F + r.nextFloat(), r.nextFloat() * 0.7F + 0.3F, false);
 					}
@@ -152,6 +154,8 @@ public class ElectricBlock extends Block implements SprayPaintable {
 
 					level.addParticle(ParticleTypes.FLAME, x + r.nextFloat(), y + 1.1D, z + r.nextFloat(), 0D, 0D, 0D);
 					level.addParticle(ParticleTypes.LARGE_SMOKE, x + 0.5D, y + 1D, z + 0.5D, 0D, 0D, 0D);
+				} else if (active) {
+					electricBlockEntity.spawnActiveParticles(level, x, y, z, state, r);
 				}
 			}
 		}
@@ -241,6 +245,17 @@ public class ElectricBlock extends Block implements SprayPaintable {
 
 		if (electricBlockInstance.maxInput > 0D) {
 			list.add(new TranslatableComponent("ftbic.max_input", FTBICUtils.formatEnergy(electricBlockInstance.maxInput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		}
+	}
+
+	@Override
+	public void stepOn(Level level, BlockPos pos, Entity entity) {
+		if (entity instanceof ServerPlayer) {
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+
+			if (blockEntity instanceof ElectricBlockEntity) {
+				((ElectricBlockEntity) blockEntity).stepOn((ServerPlayer) entity);
+			}
 		}
 	}
 }

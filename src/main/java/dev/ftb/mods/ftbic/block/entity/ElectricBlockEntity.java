@@ -46,6 +46,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, EnergyHandler, IItemHandlerModifiable, ContainerData {
@@ -252,26 +253,27 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			changeStateTicks--;
 		}
 
-		if (changeStateTicks <= 0 && !isBurnt()) {
-			ElectricBlockInstance ebi = ((ElectricBlock) getBlockState().getBlock()).electricBlockInstance;
+		if (changeStateTicks <= 0) {
+			if (!isBurnt()) {
+				ElectricBlockInstance ebi = ((ElectricBlock) getBlockState().getBlock()).electricBlockInstance;
 
-			if (ebi.canBeActive && getBlockState().getValue(ElectricBlock.ACTIVE) != active) {
-				level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, active), 3);
-				setChanged();
+				if (ebi.canBeActive && getBlockState().getValue(ElectricBlock.ACTIVE) != active) {
+					level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, active), 3);
+					setChanged();
+				}
+
+				changeStateTicks = FTBICConfig.STATE_UPDATE_TICKS;
+				active = false;
 			}
 
-			changeStateTicks = FTBICConfig.STATE_UPDATE_TICKS;
-		}
-
-		if (changed) {
-			changed = false;
-			level.blockEntityChanged(worldPosition, this);
+			if (changed) {
+				setChangedNow();
+			}
 		}
 	}
 
 	@Override
 	public void tick() {
-		active = false;
 		handleEnergyInput();
 		handleChanges();
 	}
@@ -279,6 +281,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	@Override
 	public void setChanged() {
 		changed = true;
+	}
+
+	public void setChangedNow() {
+		changed = false;
+		level.blockEntityChanged(worldPosition, this);
 	}
 
 	@Override
@@ -532,5 +539,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	@Override
 	public final boolean isBurnt() {
 		return burnt;
+	}
+
+	public void stepOn(ServerPlayer player) {
+	}
+
+	public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, Random r) {
 	}
 }

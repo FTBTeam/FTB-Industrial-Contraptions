@@ -129,7 +129,6 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 	@Override
 	public void tick() {
-		active = false;
 		handleEnergyInput();
 
 		if (!level.isClientSide()) {

@@ -36,7 +36,7 @@ public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("mv_battery_box"));
 
 		ShapedRecipeBuilder.shaped(HV_BATTERY_BOX)
-				.unlockedBy("has_item", has(GRAPHENE_BATTERY))
+				.unlockedBy("has_item", has(ENERGY_CRYSTAL))
 				.group(MODID + ":hv_battery_box")
 				.pattern("GCG")
 				.pattern("EXE")
@@ -47,6 +47,19 @@ public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 				.define('X', MV_BATTERY_BOX)
 				.define('M', ADVANCED_MACHINE_BLOCK)
 				.save(consumer, shapedLoc("hv_battery_box"));
+
+		ShapedRecipeBuilder.shaped(EV_BATTERY_BOX)
+				.unlockedBy("has_item", has(ANTIMATTER_CRYSTAL))
+				.group(MODID + ":ev_battery_box")
+				.pattern("GCG")
+				.pattern("EXE")
+				.pattern("GMG")
+				.define('C', IRIDIUM_CIRCUIT)
+				.define('G', ADVANCED_ALLOY)
+				.define('E', ANTIMATTER_CRYSTAL)
+				.define('X', HV_BATTERY_BOX)
+				.define('M', ADVANCED_MACHINE_BLOCK)
+				.save(consumer, shapedLoc("ev_battery_box"));
 
 		ShapedRecipeBuilder.shaped(LV_TRANSFORMER)
 				.unlockedBy("has_item", has(COPPER_CABLE))
@@ -80,5 +93,17 @@ public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 				.define('E', ENERGY_CRYSTAL)
 				.define('T', MV_TRANSFORMER)
 				.save(consumer, shapedLoc("hv_transformer"));
+
+		ShapedRecipeBuilder.shaped(EV_TRANSFORMER)
+				.unlockedBy("has_item", has(HV_TRANSFORMER))
+				.group(MODID + ":ev_transformer")
+				.pattern(" W ")
+				.pattern("CTE")
+				.pattern(" W ")
+				.define('W', ENDERIUM_CABLE)
+				.define('C', ADVANCED_CIRCUIT)
+				.define('E', ADVANCED_ALLOY)
+				.define('T', HV_TRANSFORMER)
+				.save(consumer, shapedLoc("ev_transformer"));
 	}
 }

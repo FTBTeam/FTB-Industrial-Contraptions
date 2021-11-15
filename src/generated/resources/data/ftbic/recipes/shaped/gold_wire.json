@@ -1,6 +1,6 @@
 {
 	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:cable",
+	"group": "ftbic:gold_wire",
 	"pattern": [
 		"MMM"
 	],

@@ -7,7 +7,7 @@ public enum EnergyTier {
 	MV("mv", 2, FTBICConfig.MV_TRANSFER_RATE),
 	HV("hv", 3, FTBICConfig.HV_TRANSFER_RATE),
 	EV("ev", 4, FTBICConfig.EV_TRANSFER_RATE),
-	XV("xv", 4, FTBICConfig.XV_TRANSFER_RATE);
+	IV("xv", 4, FTBICConfig.IV_TRANSFER_RATE);
 
 	public static final EnergyTier[] VALUES = values();
 

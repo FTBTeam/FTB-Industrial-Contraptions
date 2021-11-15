@@ -1,6 +1,6 @@
 {
 	"type": "minecraft:crafting_shapeless",
-	"group": "ftbic:cable",
+	"group": "ftbic:copper_cable",
 	"ingredients": [
 		{
 			"item": "ftbic:copper_wire"

@@ -20,7 +20,7 @@ public class FTBICConfig {
 	public static double MV_TRANSFER_RATE = 128;
 	public static double HV_TRANSFER_RATE = 512;
 	public static double EV_TRANSFER_RATE = 2_048;
-	public static double XV_TRANSFER_RATE = 8_192;
+	public static double IV_TRANSFER_RATE = 8_192;
 	public static double ITEM_TRANSFER_EFFICIENCY = 0.1;
 
 	public static double SINGLE_USE_BATTERY_CAPACITY = 2_400;
@@ -41,7 +41,7 @@ public class FTBICConfig {
 	public static double HV_BATTERY_BOX_CAPACITY = 4_000_000;
 	public static double EV_BATTERY_BOX_CAPACITY = 40_000_000;
 
-	public static int STATE_UPDATE_TICKS = 16;
+	public static int STATE_UPDATE_TICKS = 6;
 	public static int IRON_FURNACE_ITEMS_PER_COAL = 12;
 	public static int MAX_CABLE_LENGTH = 300;
 
@@ -90,6 +90,7 @@ public class FTBICConfig {
 	public static double ADVANCED_COMPRESSOR_CAPACITY = 10_000;
 	public static double ADVANCED_COMPRESSOR_USE = 16;
 	public static double TELEPORTER_CAPACITY = 10_000_000;
+	public static double TELEPORTER_USE = 10_000;
 	public static double CHARGE_PAD_CAPACITY = 1_000_000;
 
 	public static int UPGRADE_LIMIT_PER_SLOT = 4;

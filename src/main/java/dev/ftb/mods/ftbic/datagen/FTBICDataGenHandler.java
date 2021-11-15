@@ -114,6 +114,7 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.COPPER_CABLE, "Copper Cable");
 			addBlock(FTBICBlocks.GOLD_CABLE, "Gold Cable");
 			addBlock(FTBICBlocks.ALUMINUM_CABLE, "Aluminum Cable");
+			addBlock(FTBICBlocks.ENDERIUM_CABLE, "Enderium Cable");
 			addBlock(FTBICBlocks.GLASS_CABLE, "Glass Cable");
 			addBlock(FTBICBlocks.BURNT_CABLE, "Burnt Cable");
 

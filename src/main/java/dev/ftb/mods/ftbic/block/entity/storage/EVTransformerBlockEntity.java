@@ -11,8 +11,8 @@ public class EVTransformerBlockEntity extends TransformerBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		inputEnergyTier = EnergyTier.XV;
+		inputEnergyTier = EnergyTier.IV;
 		maxEnergyOutput = EnergyTier.EV.transferRate;
-		energyCapacity = EnergyTier.XV.transferRate;
+		energyCapacity = EnergyTier.IV.transferRate;
 	}
 }

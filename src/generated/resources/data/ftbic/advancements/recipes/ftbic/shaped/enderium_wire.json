@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:shaped/hv_battery_box"
+			"ftbic:shaped/enderium_wire"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:energy_crystal"
+						"tag": "forge:ingots/enderium"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:shaped/hv_battery_box"
+				"recipe": "ftbic:shaped/enderium_wire"
 			}
 		}
 	},

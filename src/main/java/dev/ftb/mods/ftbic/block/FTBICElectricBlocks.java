@@ -162,11 +162,11 @@ public interface FTBICElectricBlocks {
 
 	ElectricBlockInstance TELEPORTER = register("teleporter", TeleporterBlockEntity::new)
 			.advanced()
-			.maxInput(FTBICConfig.XV_TRANSFER_RATE);
+			.maxInput(FTBICConfig.IV_TRANSFER_RATE);
 
 	ElectricBlockInstance CHARGE_PAD = register("charge_pad", ChargePadBlockEntity::new)
 			.advanced()
-			.maxInput(FTBICConfig.XV_TRANSFER_RATE);
+			.maxInput(FTBICConfig.IV_TRANSFER_RATE);
 
 	// Battery Boxes //
 
@@ -237,7 +237,7 @@ public interface FTBICElectricBlocks {
 			.rotate3D()
 			.cantBeActive()
 			.canBurn()
-			.maxInput(FTBICConfig.XV_TRANSFER_RATE)
+			.maxInput(FTBICConfig.IV_TRANSFER_RATE)
 			.energyOutput(FTBICConfig.EV_TRANSFER_RATE);
 
 	static void init() {

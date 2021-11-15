@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:ev_transformer",
+	"pattern": [
+		" W ",
+		"CTE",
+		" W "
+	],
+	"key": {
+		"W": {
+			"item": "ftbic:enderium_cable"
+		},
+		"C": {
+			"item": "ftbic:advanced_circuit"
+		},
+		"E": {
+			"item": "ftbic:advanced_alloy"
+		},
+		"T": {
+			"item": "ftbic:hv_transformer"
+		}
+	},
+	"result": {
+		"item": "ftbic:ev_transformer"
+	}
+}
