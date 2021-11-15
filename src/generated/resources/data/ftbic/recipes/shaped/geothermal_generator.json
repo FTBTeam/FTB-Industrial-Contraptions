@@ -11,7 +11,7 @@
 			"tag": "forge:glass/colorless"
 		},
 		"C": {
-			"item": "ftbic:empty_cell"
+			"item": "ftbic:fluid_cell"
 		},
 		"M": {
 			"item": "ftbic:industrial_grade_metal"

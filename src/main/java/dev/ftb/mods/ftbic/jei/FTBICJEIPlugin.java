@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.jei;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.item.FluidCellItem;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import mezz.jei.api.IModPlugin;
@@ -11,6 +12,7 @@ import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +28,11 @@ public class FTBICJEIPlugin implements IModPlugin {
 	@Override
 	public ResourceLocation getPluginUid() {
 		return ID;
+	}
+
+	@Override
+	public void registerItemSubtypes(ISubtypeRegistration r) {
+		r.registerSubtypeInterpreter(FTBICItems.FLUID_CELL.get(), FluidCellItem::getSubtype);
 	}
 
 	@Override

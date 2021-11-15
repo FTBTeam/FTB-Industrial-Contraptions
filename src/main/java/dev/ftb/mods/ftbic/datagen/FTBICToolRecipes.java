@@ -18,15 +18,15 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
 		MachineRecipeBuilder.canning()
-				.unlockedBy("has_item", has(EMPTY_CELL))
-				.inputItem(Ingredient.of(EMPTY_CELL))
+				.unlockedBy("has_item", has(FLUID_CELL))
+				.inputItem(Ingredient.of(FLUID_CELL))
 				.inputItem(Ingredient.of(Tags.Items.DYES_WHITE))
 				.outputItem(new ItemStack(LIGHT_SPRAY_CAN))
 				.save(consumer, canningLoc("light_spray_can"));
 
 		MachineRecipeBuilder.canning()
-				.unlockedBy("has_item", has(EMPTY_CELL))
-				.inputItem(Ingredient.of(EMPTY_CELL))
+				.unlockedBy("has_item", has(FLUID_CELL))
+				.inputItem(Ingredient.of(FLUID_CELL))
 				.inputItem(Ingredient.of(Tags.Items.DYES_BLACK))
 				.outputItem(new ItemStack(DARK_SPRAY_CAN))
 				.save(consumer, canningLoc("dark_spray_can"));

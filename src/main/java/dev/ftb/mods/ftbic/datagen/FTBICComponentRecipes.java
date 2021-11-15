@@ -192,14 +192,14 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.requires(COPPER_COIL)
 				.save(consumer, shapelessLoc("advanced_machine_block"));
 
-		ShapedRecipeBuilder.shaped(EMPTY_CELL, 4)
+		ShapedRecipeBuilder.shaped(FLUID_CELL, 4)
 				.unlockedBy("has_item", has(TIN_INGOT))
-				.group(MODID + ":empty_cell")
+				.group(MODID + ":fluid_cell")
 				.pattern(" T ")
 				.pattern("T T")
 				.pattern(" T ")
 				.define('T', TIN_INGOT)
-				.save(consumer, shapedLoc("empty_cell"));
+				.save(consumer, shapedLoc("fluid_cell"));
 
 		ShapedRecipeBuilder.shaped(ANTIMATTER_CRYSTAL)
 				.unlockedBy("has_item", has(ANTIMATTER))

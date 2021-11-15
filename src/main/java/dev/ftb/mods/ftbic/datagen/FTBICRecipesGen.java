@@ -129,9 +129,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item GRAPHENE_BATTERY = FTBICItems.GRAPHENE_BATTERY.get();
 	public static final Item IRIDIUM_BATTERY = FTBICItems.IRIDIUM_BATTERY.get();
 	public static final Item CREATIVE_BATTERY = FTBICItems.CREATIVE_BATTERY.get();
-	public static final Item EMPTY_CELL = FTBICItems.EMPTY_CELL.get();
-	public static final Item WATER_CELL = FTBICItems.WATER_CELL.get();
-	public static final Item LAVA_CELL = FTBICItems.LAVA_CELL.get();
+	public static final Item FLUID_CELL = FTBICItems.FLUID_CELL.get();
 	public static final Item COOLANT_10K = FTBICItems.COOLANT_10K.get();
 	public static final Item COOLANT_30K = FTBICItems.COOLANT_30K.get();
 	public static final Item COOLANT_60K = FTBICItems.COOLANT_60K.get();

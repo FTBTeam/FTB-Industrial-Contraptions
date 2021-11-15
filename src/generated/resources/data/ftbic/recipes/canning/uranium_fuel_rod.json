@@ -3,7 +3,10 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"item": "ftbic:water_cell"
+				"type": "forge:nbt",
+				"item": "ftbic:fluid_cell",
+				"count": 1,
+				"nbt": "{Fluid:\"minecraft:water\"}"
 			},
 			"count": 1
 		},

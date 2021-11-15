@@ -9,7 +9,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -82,9 +81,7 @@ public interface FTBICItems {
 	Supplier<Item> GRAPHENE_BATTERY = REGISTRY.register("graphene_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.HV, FTBICConfig.HV_BATTERY_CAPACITY));
 	Supplier<Item> IRIDIUM_BATTERY = REGISTRY.register("iridium_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.EV, FTBICConfig.EV_BATTERY_CAPACITY));
 	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, EnergyTier.EV, Integer.MAX_VALUE));
-	Supplier<Item> EMPTY_CELL = REGISTRY.register("empty_cell", () -> new CellItem(Fluids.EMPTY));
-	Supplier<Item> WATER_CELL = REGISTRY.register("water_cell", () -> new CellItem(Fluids.WATER));
-	Supplier<Item> LAVA_CELL = REGISTRY.register("lava_cell", () -> new CellItem(Fluids.LAVA));
+	Supplier<Item> FLUID_CELL = REGISTRY.register("fluid_cell", FluidCellItem::new);
 	Supplier<Item> COOLANT_10K = REGISTRY.register("coolant_10k", () -> new CoolantItem(10_000));
 	Supplier<Item> COOLANT_30K = REGISTRY.register("coolant_30k", () -> new CoolantItem(30_000));
 	Supplier<Item> COOLANT_60K = REGISTRY.register("coolant_60k", () -> new CoolantItem(60_000));
@@ -99,6 +96,12 @@ public interface FTBICItems {
 	Supplier<Item> ENERGY_STORAGE_UPGRADE = REGISTRY.register("energy_storage_upgrade", UpgradeItem::new);
 	Supplier<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", UpgradeItem::new);
 	Supplier<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", UpgradeItem::new);
+	Supplier<Item> CARBON_HELMET = REGISTRY.register("carbon_helmet", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.HEAD));
 	Supplier<Item> CARBON_CHESTPLATE = REGISTRY.register("carbon_chestplate", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.CHEST));
+	Supplier<Item> CARBON_LEGGINGS = REGISTRY.register("carbon_leggings", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.LEGS));
+	Supplier<Item> CARBON_BOOTS = REGISTRY.register("carbon_boots", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.FEET));
+	Supplier<Item> QUANTUM_HELMET = REGISTRY.register("quantum_helmet", () -> new EnergyArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.HEAD));
 	Supplier<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", () -> new EnergyArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.CHEST));
+	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", () -> new EnergyArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
+	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new EnergyArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.FEET));
 }

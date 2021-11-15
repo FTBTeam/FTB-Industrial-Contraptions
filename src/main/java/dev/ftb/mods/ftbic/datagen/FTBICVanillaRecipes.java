@@ -1,10 +1,12 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import dev.ftb.mods.ftbic.item.FluidCellItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.function.Consumer;
 
@@ -133,8 +135,8 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.save(consumer, separatingLoc("sugar"));
 
 		MachineRecipeBuilder.compressing()
-				.unlockedBy("has_item", has(WATER_CELL))
-				.inputItem(Ingredient.of(WATER_CELL))
+				.unlockedBy("has_item", has(FLUID_CELL))
+				.inputItem(new NBTIngredientExt(FluidCellItem.setFluid(new ItemStack(FLUID_CELL), Fluids.WATER)))
 				.outputItem(new ItemStack(Items.SNOWBALL))
 				.save(consumer, compressingLoc("snowball"));
 

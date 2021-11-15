@@ -14,7 +14,7 @@
 			"item": "ftbic:advanced_machine_block"
 		},
 		"C": {
-			"item": "ftbic:empty_cell"
+			"item": "ftbic:fluid_cell"
 		},
 		"W": {
 			"item": "ftbic:copper_coil"

@@ -32,7 +32,7 @@ public class FTBICGeneratorRecipes extends FTBICRecipesGen {
 				.pattern("LCL")
 				.pattern("MGM")
 				.define('L', GLASS)
-				.define('C', EMPTY_CELL)
+				.define('C', FLUID_CELL)
 				.define('M', INDUSTRIAL_GRADE_METAL)
 				.define('G', BASIC_GENERATOR)
 				.save(consumer, shapedLoc("geothermal_generator"));

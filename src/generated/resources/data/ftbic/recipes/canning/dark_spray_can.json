@@ -3,7 +3,7 @@
 	"inputItems": [
 		{
 			"ingredient": {
-				"item": "ftbic:empty_cell"
+				"item": "ftbic:fluid_cell"
 			},
 			"count": 1
 		},

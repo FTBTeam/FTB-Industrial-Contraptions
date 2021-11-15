@@ -154,7 +154,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.pattern("WMW")
 				.define('F', CENTRIFUGE)
 				.define('M', ADVANCED_MACHINE_BLOCK)
-				.define('C', EMPTY_CELL)
+				.define('C', FLUID_CELL)
 				.define('W', COPPER_COIL)
 				.save(consumer, shapedLoc("centrifuge_extractor"));
 

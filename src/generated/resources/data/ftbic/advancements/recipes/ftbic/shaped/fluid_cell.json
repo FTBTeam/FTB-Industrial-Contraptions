@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:shaped/empty_cell"
+			"ftbic:shaped/fluid_cell"
 		]
 	},
 	"criteria": {
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:shaped/empty_cell"
+				"recipe": "ftbic:shaped/fluid_cell"
 			}
 		}
 	},

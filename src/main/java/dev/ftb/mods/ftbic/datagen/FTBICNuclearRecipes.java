@@ -1,10 +1,12 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import dev.ftb.mods.ftbic.item.FluidCellItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.function.Consumer;
 
@@ -49,13 +51,13 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("nuclear_reactor"));
 
 		ShapedRecipeBuilder.shaped(COOLANT_10K)
-				.unlockedBy("has_item", has(WATER_CELL))
+				.unlockedBy("has_item", has(FLUID_CELL))
 				.group(MODID + ":coolant_10k")
 				.pattern(" T ")
 				.pattern("TCT")
 				.pattern(" T ")
 				.define('T', TIN_INGOT)
-				.define('C', WATER_CELL)
+				.define('C', new NBTIngredientExt(FluidCellItem.setFluid(new ItemStack(FLUID_CELL), Fluids.WATER)))
 				.save(consumer, shapedLoc("coolant_10k"));
 
 		ShapedRecipeBuilder.shaped(COOLANT_30K)
@@ -113,14 +115,14 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("quad_uranium_fuel_rod_from_dual"));
 
 		MachineRecipeBuilder.separating()
-				.unlockedBy("has_item", has(WATER_CELL))
-				.inputItem(Ingredient.of(WATER_CELL))
+				.unlockedBy("has_item", has(FLUID_CELL))
+				.inputItem(new NBTIngredientExt(FluidCellItem.setFluid(new ItemStack(FLUID_CELL), Fluids.WATER)))
 				.outputItem(new ItemStack(COOLANT_10K))
 				.save(consumer, separatingLoc("coolant_10k"));
 
 		MachineRecipeBuilder.canning()
 				.unlockedBy("has_item", has(URANIUM_DUST))
-				.inputItem(Ingredient.of(WATER_CELL))
+				.inputItem(new NBTIngredientExt(FluidCellItem.setFluid(new ItemStack(FLUID_CELL), Fluids.WATER)))
 				.inputItem(Ingredient.of(URANIUM_DUST))
 				.outputItem(new ItemStack(URANIUM_FUEL_ROD))
 				.save(consumer, canningLoc("uranium_fuel_rod"));

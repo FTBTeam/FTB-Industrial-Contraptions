@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.fluids.FluidAttributes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -97,6 +98,8 @@ public class FTBICConfig {
 	public static double OVERCLOCKER_SPEED = 1.45;
 	public static double OVERCLOCKER_ENERGY_USE = 1.6;
 	public static double STORAGE_UPGRADE = 10_000;
+	public static int FLUID_CELL_CAPACITY = FluidAttributes.BUCKET_VOLUME;
+	public static boolean ADD_ALL_FLUID_CELLS = false;
 
 	public static boolean ADD_DUST_FROM_ORE_RECIPES = true;
 	public static boolean ADD_DUST_FROM_MATERIAL_RECIPES = true;

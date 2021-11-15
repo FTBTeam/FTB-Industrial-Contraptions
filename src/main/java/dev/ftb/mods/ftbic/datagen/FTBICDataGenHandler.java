@@ -132,9 +132,7 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.GRAPHENE_BATTERY, "Graphene Battery");
 			addItem(FTBICItems.IRIDIUM_BATTERY, "Iridium Battery");
 			addItem(FTBICItems.CREATIVE_BATTERY, "Creative Battery");
-			addItem(FTBICItems.EMPTY_CELL, "Empty Cell");
-			addItem(FTBICItems.WATER_CELL, "Water Cell");
-			addItem(FTBICItems.LAVA_CELL, "Lava Cell");
+			addItem(FTBICItems.FLUID_CELL, "Fluid Cell");
 			addItem(FTBICItems.COOLANT_10K, "10k Coolant Cell");
 			addItem(FTBICItems.COOLANT_30K, "30k Coolant Cell");
 			addItem(FTBICItems.COOLANT_60K, "60k Coolant Cell");
@@ -584,9 +582,6 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.GRAPHENE_BATTERY);
 			basicItem(FTBICItems.IRIDIUM_BATTERY);
 			basicItem(FTBICItems.CREATIVE_BATTERY);
-			basicItem(FTBICItems.EMPTY_CELL);
-			basicItem(FTBICItems.WATER_CELL);
-			basicItem(FTBICItems.LAVA_CELL);
 			basicItem(FTBICItems.COOLANT_10K);
 			basicItem(FTBICItems.COOLANT_30K);
 			basicItem(FTBICItems.COOLANT_60K);
