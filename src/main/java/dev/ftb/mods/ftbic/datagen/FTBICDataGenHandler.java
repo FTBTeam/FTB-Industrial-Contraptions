@@ -249,6 +249,8 @@ public class FTBICDataGenHandler {
 			makeThemedElectric("advanced_centrifuge_top", ADVANCED_TOP, "centrifuge_top");
 			makeThemedElectricOnOff("advanced_compressor_front", ADVANCED_SIDE, "compressor_front");
 			makeThemedElectric("advanced_compressor_top", ADVANCED_TOP, "compressor_top");
+			makeThemedElectricOnOff("teleporter_top", ADVANCED_TOP, "teleporter_top");
+			makeThemedElectricOnOff("charge_pad_top", BASIC_TOP, "charge_pad_top");
 
 			makeThemedElectric("lv_battery_box_in", WOOD_UNIVERSAL);
 			makeThemedElectric("lv_battery_box_out", WOOD_UNIVERSAL);
@@ -264,6 +266,11 @@ public class FTBICDataGenHandler {
 			makeThemedElectric("hv_battery_box_out", ADVANCED_UNIVERSAL);
 			makeThemedElectric("hv_transformer_in", ADVANCED_UNIVERSAL);
 			makeThemedElectric("hv_transformer_out", ADVANCED_UNIVERSAL);
+
+			makeThemedElectric("ev_battery_box_in", ADVANCED_UNIVERSAL);
+			makeThemedElectric("ev_battery_box_out", ADVANCED_UNIVERSAL);
+			makeThemedElectric("ev_transformer_in", ADVANCED_UNIVERSAL);
+			makeThemedElectric("ev_transformer_out", ADVANCED_UNIVERSAL);
 		}
 	}
 
@@ -434,13 +441,19 @@ public class FTBICDataGenHandler {
 			electric("advanced_centrifuge_on", "advanced_centrifuge_front_on", ADVANCED_SIDE, "advanced_centrifuge_top", ADVANCED_BOTTOM);
 			electric("advanced_compressor_off", "advanced_compressor_front_off", ADVANCED_SIDE, "advanced_compressor_top", ADVANCED_BOTTOM);
 			electric("advanced_compressor_on", "advanced_compressor_front_on", ADVANCED_SIDE, "advanced_compressor_top", ADVANCED_BOTTOM);
+			electric("teleporter_off", ADVANCED_SIDE, ADVANCED_SIDE, "teleporter_top_off", ADVANCED_BOTTOM);
+			electric("teleporter_on", ADVANCED_SIDE, ADVANCED_SIDE, "teleporter_top_on", ADVANCED_BOTTOM);
+			electric("charge_pad_off", ADVANCED_SIDE, BASIC_SIDE, "charge_pad_top_off", BASIC_BOTTOM);
+			electric("charge_pad_on", ADVANCED_SIDE, BASIC_SIDE, "charge_pad_top_on", BASIC_BOTTOM);
 
 			electric3d("lv_battery_box", "lv_battery_box_out", "lv_battery_box_in");
-			electric3d("mv_battery_box", "mv_battery_box_out", "mv_battery_box_in");
-			electric3d("hv_battery_box", "hv_battery_box_out", "hv_battery_box_in");
 			electric3d("lv_transformer", "lv_transformer_in", "lv_transformer_out");
+			electric3d("mv_battery_box", "mv_battery_box_out", "mv_battery_box_in");
 			electric3d("mv_transformer", "mv_transformer_in", "mv_transformer_out");
+			electric3d("hv_battery_box", "hv_battery_box_out", "hv_battery_box_in");
 			electric3d("hv_transformer", "hv_transformer_in", "hv_transformer_out");
+			electric3d("ev_battery_box", "ev_battery_box_out", "ev_battery_box_in");
+			electric3d("ev_transformer", "ev_transformer_in", "ev_transformer_out");
 		}
 	}
 
@@ -529,6 +542,11 @@ public class FTBICDataGenHandler {
 		private void basicItem(Supplier<? extends Item> item) {
 			String id = item.get().getRegistryName().getPath();
 			singleTexture(id, mcLoc("item/generated"), "layer0", modLoc("item/" + id));
+		}
+
+		private void handheldItem(Supplier<? extends Item> item) {
+			String id = item.get().getRegistryName().getPath();
+			singleTexture(id, mcLoc("item/handheld"), "layer0", modLoc("item/" + id));
 		}
 
 		private void basicBlockItem(Supplier<Block> block) {

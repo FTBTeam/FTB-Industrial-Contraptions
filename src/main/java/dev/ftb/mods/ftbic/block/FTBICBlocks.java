@@ -27,7 +27,7 @@ public interface FTBICBlocks {
 	Supplier<Block> COPPER_CABLE = REGISTRY.register("copper_cable", () -> new CableBlock(EnergyTier.LV, 5, SoundType.WOOL));
 	Supplier<Block> GOLD_CABLE = REGISTRY.register("gold_cable", () -> new CableBlock(EnergyTier.MV, 6, SoundType.WOOL));
 	Supplier<Block> ALUMINUM_CABLE = REGISTRY.register("aluminum_cable", () -> new CableBlock(EnergyTier.HV, 4, SoundType.WOOL));
-	Supplier<Block> GLASS_CABLE = REGISTRY.register("glass_cable", () -> new CableBlock(EnergyTier.EV, 6, SoundType.GLASS));
+	Supplier<Block> GLASS_CABLE = REGISTRY.register("glass_cable", () -> new CableBlock(EnergyTier.XV, 6, SoundType.GLASS));
 	Supplier<Block> BURNT_CABLE = REGISTRY.register("burnt_cable", BurntCableBlock::new);
 	List<Supplier<Block>> CABLES = Arrays.asList(COPPER_CABLE, GOLD_CABLE, ALUMINUM_CABLE, GLASS_CABLE, BURNT_CABLE);
 }

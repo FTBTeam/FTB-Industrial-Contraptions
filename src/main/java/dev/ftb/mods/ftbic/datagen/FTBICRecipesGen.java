@@ -96,28 +96,29 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 
 	public static final Item INDUSTRIAL_GRADE_METAL = FTBICItems.INDUSTRIAL_GRADE_METAL.item.get();
 	public static final Item RUBBER = FTBICItems.RUBBER.item.get();
+	public static final Item FUSE = FTBICItems.FUSE.item.get();
 	public static final Item COPPER_WIRE = FTBICItems.COPPER_WIRE.item.get();
 	public static final Item GOLD_WIRE = FTBICItems.GOLD_WIRE.item.get();
 	public static final Item ALUMINUM_WIRE = FTBICItems.ALUMINUM_WIRE.item.get();
+	public static final Item COPPER_COIL = FTBICItems.COPPER_COIL.item.get();
 	public static final Item MIXED_METAL_BLEND = FTBICItems.MIXED_METAL_BLEND.item.get();
 	public static final Item ADVANCED_ALLOY = FTBICItems.ADVANCED_ALLOY.item.get();
+	public static final Item IRIDIUM_ALLOY = FTBICItems.IRIDIUM_ALLOY.item.get();
 	public static final Item COAL_BALL = FTBICItems.COAL_BALL.item.get();
 	public static final Item COMPRESSED_COAL_BALL = FTBICItems.COMPRESSED_COAL_BALL.item.get();
 	public static final Item GRAPHENE = FTBICItems.GRAPHENE.item.get();
-	public static final Item IRIDIUM_ALLOY = FTBICItems.IRIDIUM_ALLOY.item.get();
+	public static final Item CARBON_FIBERS = FTBICItems.CARBON_FIBERS.item.get();
+	public static final Item CARBON_FIBER_MESH = FTBICItems.CARBON_FIBER_MESH.item.get();
+	public static final Item CARBON_PLATE = FTBICItems.CARBON_PLATE.item.get();
 	public static final Item SCRAP = FTBICItems.SCRAP.item.get();
 	public static final Item SCRAP_BOX = FTBICItems.SCRAP_BOX.item.get();
 	public static final Item ELECTRONIC_CIRCUIT = FTBICItems.ELECTRONIC_CIRCUIT.item.get();
 	public static final Item ADVANCED_CIRCUIT = FTBICItems.ADVANCED_CIRCUIT.item.get();
 	public static final Item IRIDIUM_CIRCUIT = FTBICItems.IRIDIUM_CIRCUIT.item.get();
-	public static final Item CARBON_FIBERS = FTBICItems.CARBON_FIBERS.item.get();
-	public static final Item CARBON_FIBER_MESH = FTBICItems.CARBON_FIBER_MESH.item.get();
-	public static final Item CARBON_PLATE = FTBICItems.CARBON_PLATE.item.get();
-	public static final Item ENERGY_CRYSTAL = FTBICItems.ENERGY_CRYSTAL.item.get();
-	public static final Item FUSE = FTBICItems.FUSE.item.get();
 	public static final Item EMPTY_CAN = FTBICItems.EMPTY_CAN.item.get();
 	public static final Item ANTIMATTER = FTBICItems.ANTIMATTER.item.get();
-	public static final Item COPPER_COIL = FTBICItems.COPPER_COIL.item.get();
+	public static final Item ANTIMATTER_CRYSTAL = FTBICItems.ANTIMATTER_CRYSTAL.item.get();
+	public static final Item ENERGY_CRYSTAL = FTBICItems.ENERGY_CRYSTAL.item.get();
 
 	public static final Item SINGLE_USE_BATTERY = FTBICItems.SINGLE_USE_BATTERY.get();
 	public static final Item BATTERY = FTBICItems.BATTERY.get();
@@ -166,12 +167,16 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item ROTARY_MACERATOR = FTBICElectricBlocks.ADVANCED_MACERATOR.item.get();
 	public static final Item CENTRIFUGE_EXTRACTOR = FTBICElectricBlocks.ADVANCED_CENTRIFUGE.item.get();
 	public static final Item SINGULARITY_COMPRESSOR = FTBICElectricBlocks.ADVANCED_COMPRESSOR.item.get();
+	public static final Item TELEPORTER = FTBICElectricBlocks.TELEPORTER.item.get();
+	public static final Item CHARGE_PAD = FTBICElectricBlocks.CHARGE_PAD.item.get();
 	public static final Item LV_BATTERY_BOX = FTBICElectricBlocks.LV_BATTERY_BOX.item.get();
 	public static final Item MV_BATTERY_BOX = FTBICElectricBlocks.MV_BATTERY_BOX.item.get();
 	public static final Item HV_BATTERY_BOX = FTBICElectricBlocks.HV_BATTERY_BOX.item.get();
+	public static final Item EV_BATTERY_BOX = FTBICElectricBlocks.EV_BATTERY_BOX.item.get();
 	public static final Item LV_TRANSFORMER = FTBICElectricBlocks.LV_TRANSFORMER.item.get();
 	public static final Item MV_TRANSFORMER = FTBICElectricBlocks.MV_TRANSFORMER.item.get();
 	public static final Item HV_TRANSFORMER = FTBICElectricBlocks.HV_TRANSFORMER.item.get();
+	public static final Item EV_TRANSFORMER = FTBICElectricBlocks.EV_TRANSFORMER.item.get();
 
 	public FTBICRecipesGen(DataGenerator generator) {
 		super(generator);

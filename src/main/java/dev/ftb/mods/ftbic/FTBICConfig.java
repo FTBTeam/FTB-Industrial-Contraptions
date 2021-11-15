@@ -37,8 +37,9 @@ public class FTBICConfig {
 	public static double ARMOR_FLIGHT_STOP = 5;
 
 	public static double LV_BATTERY_BOX_CAPACITY = 40_000;
-	public static double MV_BATTERY_BOX_CAPACITY = 300_000;
+	public static double MV_BATTERY_BOX_CAPACITY = 400_000;
 	public static double HV_BATTERY_BOX_CAPACITY = 4_000_000;
+	public static double EV_BATTERY_BOX_CAPACITY = 40_000_000;
 
 	public static int STATE_UPDATE_TICKS = 16;
 	public static int IRON_FURNACE_ITEMS_PER_COAL = 12;
@@ -88,6 +89,8 @@ public class FTBICConfig {
 	public static double ADVANCED_CENTRIFUGE_USE = 16;
 	public static double ADVANCED_COMPRESSOR_CAPACITY = 10_000;
 	public static double ADVANCED_COMPRESSOR_USE = 16;
+	public static double TELEPORTER_CAPACITY = 10_000_000;
+	public static double CHARGE_PAD_CAPACITY = 1_000_000;
 
 	public static int UPGRADE_LIMIT_PER_SLOT = 4;
 	public static double OVERCLOCKER_SPEED = 1.45;

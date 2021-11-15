@@ -136,6 +136,16 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		burnt = tag.getBoolean("Burnt");
 	}
 
+	public void writeNetData(CompoundTag tag) {
+		if (burnt) {
+			tag.putBoolean("Burnt", true);
+		}
+	}
+
+	public void readNetData(CompoundTag tag) {
+		burnt = tag.getBoolean("Burnt");
+	}
+
 	@Override
 	public void load(BlockState state, CompoundTag tag) {
 		super.load(state, tag);
@@ -153,34 +163,26 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public void handleUpdateTag(BlockState state, CompoundTag tag) {
-		burnt = tag.getBoolean("Burnt");
+		readNetData(tag);
 	}
 
 	@Override
 	public CompoundTag getUpdateTag() {
 		CompoundTag tag = super.getUpdateTag();
-
-		if (burnt) {
-			tag.putBoolean("Burnt", true);
-		}
-
+		writeNetData(tag);
 		return tag;
 	}
 
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		burnt = pkt.getTag().getBoolean("Burnt");
+		readNetData(pkt.getTag());
 	}
 
 	@Nullable
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
 		CompoundTag tag = new CompoundTag();
-
-		if (burnt) {
-			tag.putBoolean("Burnt", true);
-		}
-
+		writeNetData(tag);
 		return new ClientboundBlockEntityDataPacket(worldPosition, 0, tag);
 	}
 

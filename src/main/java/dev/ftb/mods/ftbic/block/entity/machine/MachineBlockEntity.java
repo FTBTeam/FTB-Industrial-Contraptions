@@ -417,10 +417,6 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 		while (transformers > 0) {
 			transformers--;
 			inputEnergyTier = inputEnergyTier.up();
-
-			if (inputEnergyTier == EnergyTier.EV) {
-				break;
-			}
 		}
 
 		energyCapacity += upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.STORAGE_UPGRADE;

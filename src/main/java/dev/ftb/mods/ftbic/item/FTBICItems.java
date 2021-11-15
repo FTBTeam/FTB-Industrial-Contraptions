@@ -50,28 +50,29 @@ public interface FTBICItems {
 
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");
+	MaterialItem FUSE = material("fuse");
 	MaterialItem COPPER_WIRE = material("copper_wire");
 	MaterialItem GOLD_WIRE = material("gold_wire");
 	MaterialItem ALUMINUM_WIRE = material("aluminum_wire");
+	MaterialItem COPPER_COIL = material("copper_coil");
 	MaterialItem MIXED_METAL_BLEND = material("mixed_metal_blend");
 	MaterialItem ADVANCED_ALLOY = material("advanced_alloy");
+	MaterialItem IRIDIUM_ALLOY = material("iridium_alloy");
 	MaterialItem COAL_BALL = material("coal_ball");
 	MaterialItem COMPRESSED_COAL_BALL = material("compressed_coal_ball");
 	MaterialItem GRAPHENE = material("graphene");
-	MaterialItem IRIDIUM_ALLOY = material("iridium_alloy");
+	MaterialItem CARBON_FIBERS = material("carbon_fibers");
+	MaterialItem CARBON_FIBER_MESH = material("carbon_fiber_mesh");
+	MaterialItem CARBON_PLATE = material("carbon_plate");
 	MaterialItem SCRAP = material("scrap");
 	MaterialItem SCRAP_BOX = material("scrap_box");
 	MaterialItem ELECTRONIC_CIRCUIT = material("electronic_circuit");
 	MaterialItem ADVANCED_CIRCUIT = material("advanced_circuit");
 	MaterialItem IRIDIUM_CIRCUIT = material("iridium_circuit");
-	MaterialItem CARBON_FIBERS = material("carbon_fibers");
-	MaterialItem CARBON_FIBER_MESH = material("carbon_fiber_mesh");
-	MaterialItem CARBON_PLATE = material("carbon_plate");
-	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
-	MaterialItem FUSE = material("fuse");
 	MaterialItem EMPTY_CAN = material("empty_can");
 	MaterialItem ANTIMATTER = material("antimatter");
-	MaterialItem COPPER_COIL = material("copper_coil");
+	MaterialItem ANTIMATTER_CRYSTAL = material("antimatter_crystal");
+	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
 
 	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, EnergyTier.LV, FTBICConfig.SINGLE_USE_BATTERY_CAPACITY));
 	Supplier<Item> BATTERY = REGISTRY.register("battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));

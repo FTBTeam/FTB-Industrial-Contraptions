@@ -16,12 +16,16 @@ import dev.ftb.mods.ftbic.block.entity.machine.AdvancedPoweredFurnaceBlockEntity
 import dev.ftb.mods.ftbic.block.entity.machine.AntimatterConstructorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CanningMachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CentrifugeBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.ChargePadBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CompressorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ExtruderBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MaceratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PoweredFurnaceBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ReprocessorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.RollerBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.storage.EVBatteryBoxBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.storage.EVTransformerBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.HVBatteryBoxBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.HVTransformerBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.LVBatteryBoxBlockEntity;
@@ -156,6 +160,13 @@ public interface FTBICElectricBlocks {
 			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.ADVANCED_COMPRESSOR_USE);
 
+	ElectricBlockInstance TELEPORTER = register("teleporter", TeleporterBlockEntity::new)
+			.advanced()
+			.maxInput(FTBICConfig.XV_TRANSFER_RATE);
+
+	ElectricBlockInstance CHARGE_PAD = register("charge_pad", ChargePadBlockEntity::new)
+			.advanced()
+			.maxInput(FTBICConfig.XV_TRANSFER_RATE);
 
 	// Battery Boxes //
 
@@ -184,6 +195,15 @@ public interface FTBICElectricBlocks {
 			.maxInput(FTBICConfig.HV_TRANSFER_RATE)
 			.energyOutput(FTBICConfig.HV_TRANSFER_RATE);
 
+	ElectricBlockInstance EV_BATTERY_BOX = register("ev_battery_box", EVBatteryBoxBlockEntity::new)
+			.advanced()
+			.name("EV Battery Box")
+			.rotate3D()
+			.cantBeActive()
+			.canBurn()
+			.maxInput(FTBICConfig.EV_TRANSFER_RATE)
+			.energyOutput(FTBICConfig.EV_TRANSFER_RATE);
+
 	// Transformers //
 
 	ElectricBlockInstance LV_TRANSFORMER = register("lv_transformer", LVTransformerBlockEntity::new)
@@ -210,6 +230,15 @@ public interface FTBICElectricBlocks {
 			.canBurn()
 			.maxInput(FTBICConfig.EV_TRANSFER_RATE)
 			.energyOutput(FTBICConfig.HV_TRANSFER_RATE);
+
+	ElectricBlockInstance EV_TRANSFORMER = register("ev_transformer", EVTransformerBlockEntity::new)
+			.advanced()
+			.name("EV Transformer")
+			.rotate3D()
+			.cantBeActive()
+			.canBurn()
+			.maxInput(FTBICConfig.XV_TRANSFER_RATE)
+			.energyOutput(FTBICConfig.EV_TRANSFER_RATE);
 
 	static void init() {
 	}

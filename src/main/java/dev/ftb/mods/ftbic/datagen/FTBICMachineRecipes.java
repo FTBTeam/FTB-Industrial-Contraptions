@@ -169,5 +169,28 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('C', OBSIDIAN)
 				.define('W', COPPER_COIL)
 				.save(consumer, shapedLoc("singularity_compressor"));
+
+		ShapedRecipeBuilder.shaped(CHARGE_PAD)
+				.unlockedBy("has_item", has(COPPER_COIL))
+				.group(MODID + ":charge_pad")
+				.pattern("WWW")
+				.pattern("CMC")
+				.define('M', MACHINE_BLOCK)
+				.define('C', ADVANCED_CIRCUIT)
+				.define('W', COPPER_COIL)
+				.save(consumer, shapedLoc("charge_pad"));
+
+		ShapedRecipeBuilder.shaped(TELEPORTER)
+				.unlockedBy("has_item", has(ANTIMATTER_CRYSTAL))
+				.group(MODID + ":teleporter")
+				.pattern("CEC")
+				.pattern("CSC")
+				.pattern("WMW")
+				.define('E', ENDER_PEARL)
+				.define('S', ANTIMATTER_CRYSTAL)
+				.define('M', ADVANCED_MACHINE_BLOCK)
+				.define('C', IRIDIUM_CIRCUIT)
+				.define('W', COPPER_COIL)
+				.save(consumer, shapedLoc("teleporter"));
 	}
 }

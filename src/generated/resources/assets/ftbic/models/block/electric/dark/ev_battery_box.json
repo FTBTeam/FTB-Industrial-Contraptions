@@ -1,0 +1,7 @@
+{
+	"parent": "ftbic:block/orientable_3d",
+	"textures": {
+		"side": "ftbic:block/electric/dark/ev_battery_box_in",
+		"front": "ftbic:block/electric/dark/ev_battery_box_out"
+	}
+}

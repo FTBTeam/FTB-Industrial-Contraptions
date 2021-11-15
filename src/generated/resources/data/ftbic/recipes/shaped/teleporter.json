@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:teleporter",
+	"pattern": [
+		"CEC",
+		"CSC",
+		"WMW"
+	],
+	"key": {
+		"E": {
+			"tag": "forge:ender_pearls"
+		},
+		"S": {
+			"item": "ftbic:antimatter_crystal"
+		},
+		"M": {
+			"item": "ftbic:advanced_machine_block"
+		},
+		"C": {
+			"item": "ftbic:iridium_circuit"
+		},
+		"W": {
+			"item": "ftbic:copper_coil"
+		}
+	},
+	"result": {
+		"item": "ftbic:teleporter"
+	}
+}

@@ -6,6 +6,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -199,6 +200,17 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.pattern(" T ")
 				.define('T', TIN_INGOT)
 				.save(consumer, shapedLoc("empty_cell"));
+
+		ShapedRecipeBuilder.shaped(ANTIMATTER_CRYSTAL)
+				.unlockedBy("has_item", has(ANTIMATTER))
+				.group(MODID + ":antimatter_crystal")
+				.pattern("AAC")
+				.pattern("ANA")
+				.pattern("CAA")
+				.define('A', ANTIMATTER)
+				.define('C', ENERGY_CRYSTAL)
+				.define('N', Items.NETHER_STAR)
+				.save(consumer, shapedLoc("antimatter_crystal"));
 
 		ShapedRecipeBuilder.shaped(EMPTY_CAN, 10)
 				.unlockedBy("has_item", has(TIN_INGOT))
