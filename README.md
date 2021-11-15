@@ -1,3 +1,1 @@
-# FTB IC
-
-## Industrial Contraptions
+# FTB Industrial Contraptions
