@@ -7,7 +7,6 @@ import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.OpenMenuFactory;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -15,10 +14,10 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -189,8 +188,9 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public void onLoad() {
+		initProperties();
+
 		if (level != null && !level.isClientSide()) {
-			initProperties();
 			upgradesChanged();
 		} else if (level != null) {
 			level.tickableBlockEntities.remove(this);
@@ -317,10 +317,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!level.isClientSide()) {
-			player.sendMessage(new TextComponent("No GUI yet!"), Util.NIL_UUID);
-		}
-
 		return InteractionResult.SUCCESS;
 	}
 
@@ -502,11 +498,15 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public int getCount() {
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public int get(int id) {
+		if (id == 0) {
+			return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 30000D / energyCapacity), 0, 30000);
+		}
+
 		return 0;
 	}
 

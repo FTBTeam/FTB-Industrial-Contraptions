@@ -23,10 +23,6 @@ public class GeothermalGeneratorMenu extends ElectricBlockMenu<GeothermalGenerat
 	}
 
 	public int getFluidAmount() {
-		return containerData.get(0);
-	}
-
-	public int getEnergyBar() {
 		return containerData.get(1);
 	}
 }

@@ -3,16 +3,25 @@ package dev.ftb.mods.ftbic.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
+import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraftforge.fluids.FluidStack;
 
-public class ElectricBlockScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
+import java.util.Collections;
+
+public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends AbstractContainerScreen<T> {
 	public static final ResourceLocation BASE_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/gui/base.png");
+	public int energyX = -1;
+	public int energyY = -1;
 
 	public ElectricBlockScreen(T m, Inventory inv, Component c) {
 		super(m, inv, c);
@@ -23,6 +32,23 @@ public class ElectricBlockScreen<T extends AbstractContainerMenu> extends Abstra
 		renderBackground(poseStack);
 		super.render(poseStack, mouseX, mouseY, delta);
 		renderTooltip(poseStack, mouseX, mouseY);
+	}
+
+	@Override
+	protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
+		super.renderTooltip(poseStack, mouseX, mouseY);
+
+		if (energyX != -1 && energyY != -1 && mouseX >= leftPos + energyX && mouseY >= topPos + energyY && mouseX < leftPos + energyX + 14 && mouseY < topPos + energyY + 14 && menu.player.inventory.getCarried().isEmpty()) {
+			double capacity = menu.entity.energyCapacity;
+
+			if (menu.entity instanceof MachineBlockEntity) {
+				capacity += ((MachineBlockEntity) menu.entity).upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.STORAGE_UPGRADE;
+			}
+
+			double energy = menu.getEnergyBar() * capacity / 30000;
+
+			renderWrappedToolTip(poseStack, Collections.singletonList(new TextComponent("").append(FTBICUtils.formatEnergy(energy).withStyle(ChatFormatting.GRAY)).append(" / ").append(FTBICUtils.formatEnergy(capacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY)), mouseX, mouseY, font);
+		}
 	}
 
 	public void drawProgressBar(PoseStack poseStack, int x, int y, int progress) {
@@ -101,5 +127,10 @@ public class ElectricBlockScreen<T extends AbstractContainerMenu> extends Abstra
 		int x = leftPos;
 		int y = topPos;
 		blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
+
+		if (energyX != -1 && energyY != -1) {
+			int e = menu.getEnergyBar() * 14 / 30000;
+			drawEnergy(poseStack, leftPos + energyX, topPos + energyY, e);
+		}
 	}
 }

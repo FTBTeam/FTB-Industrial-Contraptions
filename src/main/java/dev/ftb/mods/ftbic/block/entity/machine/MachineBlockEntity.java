@@ -148,7 +148,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
 				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double e = item.extractEnergy(battery, energyCapacity - energy, false);
+				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, inputEnergyTier.transferRate), false);
 
 				if (e > 0) {
 					energyAdded += e;
@@ -376,17 +376,14 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	@Override
 	public int get(int id) {
 		switch (id) {
-			case 0:
+			case 1:
 				// getProgressBar()
 				return energyUse == 0 ? 0 : Mth.clamp(Mth.ceil(progress * 24D / maxProgress), 0, 24);
-			case 1:
-				// getEnergyBar()
-				return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 14D / energyCapacity), 0, 14);
 			case 2:
 				// getAcceleration()
 				return acceleration;
 			default:
-				return 0;
+				return super.get(id);
 		}
 	}
 

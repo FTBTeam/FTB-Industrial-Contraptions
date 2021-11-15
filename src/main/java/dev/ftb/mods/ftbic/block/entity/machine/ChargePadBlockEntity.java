@@ -7,13 +7,9 @@ import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -67,10 +63,5 @@ public class ChargePadBlockEntity extends ElectricBlockEntity {
 		for (int i = 0; i < 5; i++) {
 			level.addParticle(new DustParticleOptions(1F, 0F, 0F, 1F), x + r.nextFloat(), y + 1F + r.nextFloat() * 2F, z + r.nextFloat(), 0D, 0D, 0D);
 		}
-	}
-
-	@Override
-	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		return InteractionResult.SUCCESS;
 	}
 }

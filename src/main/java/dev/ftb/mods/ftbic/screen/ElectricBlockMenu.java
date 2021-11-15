@@ -83,4 +83,8 @@ public class ElectricBlockMenu<E extends ElectricBlockEntity> extends AbstractCo
 	public boolean clickMenuButton(Player player, int button) {
 		return false;
 	}
+
+	public int getEnergyBar() {
+		return containerData.get(0);
+	}
 }

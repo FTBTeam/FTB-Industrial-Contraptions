@@ -104,15 +104,11 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public int get(int id) {
-		switch (id) {
-			case 0:
-				// getFuelBar()
-				return fuelTicks == 0 ? 0 : Mth.clamp(Mth.ceil(fuelTicks * 14D / maxFuelTicks), 0, 14);
-			case 1:
-				// getEnergyBar()
-				return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 14D / energyCapacity), 0, 14);
-			default:
-				return 0;
+		if (id == 1) {
+			// getFuelBar()
+			return fuelTicks == 0 ? 0 : Mth.clamp(Mth.ceil(fuelTicks * 14D / maxFuelTicks), 0, 14);
 		}
+
+		return super.get(id);
 	}
 }

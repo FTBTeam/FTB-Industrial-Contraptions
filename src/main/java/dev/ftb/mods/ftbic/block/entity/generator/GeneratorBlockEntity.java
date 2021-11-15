@@ -11,13 +11,19 @@ import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -68,7 +74,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
 				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double e = item.insertEnergy(battery, energy, false);
+				double e = item.insertEnergy(battery, Math.min(energy, maxEnergyOutput), false);
 
 				if (e > 0) {
 					energy -= e;
@@ -213,5 +219,14 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 				set.add(s);
 			}
 		}
+	}
+
+	@Override
+	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
+		if (!level.isClientSide()) {
+			player.sendMessage(new TextComponent("No GUI yet!"), Util.NIL_UUID);
+		}
+
+		return InteractionResult.SUCCESS;
 	}
 }

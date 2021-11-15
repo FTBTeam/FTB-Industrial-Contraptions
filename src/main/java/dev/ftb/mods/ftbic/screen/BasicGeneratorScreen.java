@@ -7,6 +7,8 @@ import net.minecraft.world.entity.player.Inventory;
 public class BasicGeneratorScreen extends ElectricBlockScreen<BasicGeneratorMenu> {
 	public BasicGeneratorScreen(BasicGeneratorMenu m, Inventory inv, Component c) {
 		super(m, inv, c);
+		energyX = 99;
+		energyY = 27;
 	}
 
 	@Override
@@ -14,7 +16,6 @@ public class BasicGeneratorScreen extends ElectricBlockScreen<BasicGeneratorMenu
 		super.renderBg(poseStack, delta, mouseX, mouseY);
 
 		drawFuel(poseStack, leftPos + 63, topPos + 27, menu.getFuelBar());
-		drawEnergy(poseStack, leftPos + 99, topPos + 27, menu.getEnergyBar());
 
 		drawSlot(poseStack, leftPos + 61, topPos + 43);
 		drawSlot(poseStack, leftPos + 97, topPos + 43);

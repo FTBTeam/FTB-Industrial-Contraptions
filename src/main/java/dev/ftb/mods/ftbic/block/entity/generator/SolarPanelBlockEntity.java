@@ -48,11 +48,11 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 	public int get(int id) {
 		switch (id) {
 			case 0:
-				// getLightValue()
-				return level.isDay() && level.canSeeSky(worldPosition.above()) ? 14 : 0;
-			case 1:
 				// getEnergyBar()
 				return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 14D / energyCapacity), 0, 14);
+			case 1:
+				// getLightValue()
+				return level.isDay() && level.canSeeSky(worldPosition.above()) ? 14 : 0;
 			default:
 				return 0;
 		}

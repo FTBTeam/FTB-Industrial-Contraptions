@@ -6,7 +6,6 @@ import dev.ftb.mods.ftbic.screen.GeothermalGeneratorMenu;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -96,15 +95,11 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public int get(int id) {
-		switch (id) {
-			case 0:
-				// getFluidAmount()
-				return fluidAmount;
-			case 1:
-				// getEnergyBar()
-				return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 14D / energyCapacity), 0, 14);
-			default:
-				return 0;
+		if (id == 1) {
+			// getFluidAmount()
+			return fluidAmount;
 		}
+
+		return super.get(id);
 	}
 }

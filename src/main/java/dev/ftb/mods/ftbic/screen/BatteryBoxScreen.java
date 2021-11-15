@@ -4,19 +4,18 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-public class SolarPanelScreen extends ElectricBlockScreen<SolarPanelMenu> {
-	public SolarPanelScreen(SolarPanelMenu m, Inventory inv, Component c) {
+public class BatteryBoxScreen extends ElectricBlockScreen<BatteryBoxMenu> {
+	public BatteryBoxScreen(BatteryBoxMenu m, Inventory inv, Component c) {
 		super(m, inv, c);
-		energyX = 99;
-		energyY = 27;
+		energyX = 81;
+		energyY = 36;
 	}
 
 	@Override
 	protected void renderBg(PoseStack poseStack, float delta, int mouseX, int mouseY) {
 		super.renderBg(poseStack, delta, mouseX, mouseY);
 
-		drawSun(poseStack, leftPos + 63, topPos + 36, menu.getLightValue());
-
-		drawSlot(poseStack, leftPos + 97, topPos + 43);
+		drawSlot(poseStack, leftPos + 52, topPos + 34);
+		drawSlot(poseStack, leftPos + 108, topPos + 34);
 	}
 }

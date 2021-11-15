@@ -46,10 +46,6 @@ public class MachineMenu extends ElectricBlockMenu<MachineBlockEntity> {
 	}
 
 	public int getProgressBar() {
-		return containerData.get(0);
-	}
-
-	public int getEnergyBar() {
 		return containerData.get(1);
 	}
 

@@ -17,18 +17,20 @@ public class MachineScreen extends ElectricBlockScreen<MachineMenu> {
 
 	@Override
 	protected void renderBg(PoseStack poseStack, float delta, int mouseX, int mouseY) {
-		super.renderBg(poseStack, delta, mouseX, mouseY);
-
 		MachineRecipeSerializer s = menu.serializer;
 
 		int wx = leftPos + 78 - (s.guiWidth / 2);
 		int wy = topPos + 16;
+
+		energyX = wx - leftPos + s.energyX;
+		energyY = wy - topPos + s.energyY;
+
+		super.renderBg(poseStack, delta, mouseX, mouseY);
+
 		minecraft.getTextureManager().bind(progressTexture);
 		drawProgressBar(poseStack, wx + s.progressX, wy + s.progressY, menu.getProgressBar());
 
 		minecraft.getTextureManager().bind(BASE_TEXTURE);
-
-		drawEnergy(poseStack, wx + s.energyX, wy + s.energyY, menu.getEnergyBar());
 
 		for (int i = 0; i < menu.entity.inputItems.length; i++) {
 			drawSlot(poseStack, wx + i * 18, wy);

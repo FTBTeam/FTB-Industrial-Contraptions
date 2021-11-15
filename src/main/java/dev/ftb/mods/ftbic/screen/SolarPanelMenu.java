@@ -22,10 +22,6 @@ public class SolarPanelMenu extends ElectricBlockMenu<SolarPanelBlockEntity> {
 	}
 
 	public int getLightValue() {
-		return containerData.get(0);
-	}
-
-	public int getEnergyBar() {
 		return containerData.get(1);
 	}
 }

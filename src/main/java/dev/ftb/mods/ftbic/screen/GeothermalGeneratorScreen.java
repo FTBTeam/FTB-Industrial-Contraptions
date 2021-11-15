@@ -10,6 +10,8 @@ import net.minecraftforge.fluids.FluidStack;
 public class GeothermalGeneratorScreen extends ElectricBlockScreen<GeothermalGeneratorMenu> {
 	public GeothermalGeneratorScreen(GeothermalGeneratorMenu m, Inventory inv, Component c) {
 		super(m, inv, c);
+		energyX = 63;
+		energyY = 36;
 	}
 
 	@Override
@@ -17,7 +19,6 @@ public class GeothermalGeneratorScreen extends ElectricBlockScreen<GeothermalGen
 		super.renderBg(poseStack, delta, mouseX, mouseY);
 
 		drawTank(poseStack, leftPos + 97, topPos + 16, new FluidStack(Fluids.LAVA, menu.getFluidAmount()), FTBICConfig.GEOTHERMAL_GENERATOR_TANK_SIZE);
-		drawEnergy(poseStack, leftPos + 63, topPos + 36, menu.getEnergyBar());
 
 		drawSlot(poseStack, leftPos + 61, topPos + 16);
 		drawSlot(poseStack, leftPos + 61, topPos + 52);
