@@ -3,13 +3,13 @@
 	"group": "ftbic:electronic_circuit",
 	"ingredients": [
 		{
-			"item": "ftbic:copper_cable"
+			"item": "ftbic:lv_cable"
 		},
 		{
-			"item": "ftbic:copper_cable"
+			"item": "ftbic:lv_cable"
 		},
 		{
-			"item": "ftbic:copper_cable"
+			"item": "ftbic:lv_cable"
 		},
 		{
 			"tag": "forge:dusts/redstone"
@@ -21,13 +21,13 @@
 			"tag": "forge:dusts/redstone"
 		},
 		{
-			"item": "ftbic:copper_cable"
+			"item": "ftbic:lv_cable"
 		},
 		{
-			"item": "ftbic:copper_cable"
+			"item": "ftbic:lv_cable"
 		},
 		{
-			"item": "ftbic:copper_cable"
+			"item": "ftbic:lv_cable"
 		}
 	],
 	"result": {

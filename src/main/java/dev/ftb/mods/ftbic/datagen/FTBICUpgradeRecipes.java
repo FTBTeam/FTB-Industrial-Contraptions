@@ -19,7 +19,7 @@ public class FTBICUpgradeRecipes extends FTBICRecipesGen {
 				.pattern("UUU")
 				.pattern("WCW")
 				.define('U', COOLANT_10K)
-				.define('W', COPPER_CABLE)
+				.define('W', LV_CABLE)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("overclocker_upgrade"));
 
@@ -30,7 +30,7 @@ public class FTBICUpgradeRecipes extends FTBICRecipesGen {
 				.pattern("WBW")
 				.pattern("PCP")
 				.define('P', PLANKS)
-				.define('W', COPPER_CABLE)
+				.define('W', LV_CABLE)
 				.define('B', BATTERY)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("energy_storage_upgrade"));
@@ -42,7 +42,7 @@ public class FTBICUpgradeRecipes extends FTBICRecipesGen {
 				.pattern("WTW")
 				.pattern("GCG")
 				.define('G', GLASS)
-				.define('W', GOLD_CABLE)
+				.define('W', MV_CABLE)
 				.define('T', MV_TRANSFORMER)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("transformer_upgrade"));

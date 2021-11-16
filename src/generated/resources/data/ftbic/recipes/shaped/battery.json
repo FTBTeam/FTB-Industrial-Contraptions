@@ -8,7 +8,7 @@
 	],
 	"key": {
 		"C": {
-			"item": "ftbic:copper_cable"
+			"item": "ftbic:lv_cable"
 		},
 		"T": {
 			"tag": "forge:ingots/tin"

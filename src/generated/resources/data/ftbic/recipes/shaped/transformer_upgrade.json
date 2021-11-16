@@ -11,7 +11,7 @@
 			"tag": "forge:glass/colorless"
 		},
 		"W": {
-			"item": "ftbic:gold_cable"
+			"item": "ftbic:mv_cable"
 		},
 		"T": {
 			"item": "ftbic:mv_transformer"

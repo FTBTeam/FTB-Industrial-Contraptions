@@ -24,11 +24,11 @@ public interface FTBICBlocks {
 	Supplier<Block> MACHINE_BLOCK = REGISTRY.register("machine_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(5F, 6F).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops()));
 	Supplier<Block> ADVANCED_MACHINE_BLOCK = REGISTRY.register("advanced_machine_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(5F, 6F).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops()));
 	Supplier<Block> IRON_FURNACE = REGISTRY.register("iron_furnace", IronFurnaceBlock::new);
-	Supplier<Block> COPPER_CABLE = REGISTRY.register("copper_cable", () -> new CableBlock(EnergyTier.LV, 5, SoundType.WOOL));
-	Supplier<Block> GOLD_CABLE = REGISTRY.register("gold_cable", () -> new CableBlock(EnergyTier.MV, 6, SoundType.WOOL));
-	Supplier<Block> ALUMINUM_CABLE = REGISTRY.register("aluminum_cable", () -> new CableBlock(EnergyTier.HV, 4, SoundType.WOOL));
-	Supplier<Block> ENDERIUM_CABLE = REGISTRY.register("enderium_cable", () -> new CableBlock(EnergyTier.EV, 4, SoundType.WOOL));
-	Supplier<Block> GLASS_CABLE = REGISTRY.register("glass_cable", () -> new CableBlock(EnergyTier.IV, 6, SoundType.GLASS));
+	Supplier<Block> LV_CABLE = REGISTRY.register("lv_cable", () -> new CableBlock(EnergyTier.LV, 5, SoundType.WOOL));
+	Supplier<Block> MV_CABLE = REGISTRY.register("mv_cable", () -> new CableBlock(EnergyTier.MV, 4, SoundType.WOOL));
+	Supplier<Block> HV_CABLE = REGISTRY.register("hv_cable", () -> new CableBlock(EnergyTier.HV, 6, SoundType.WOOL));
+	Supplier<Block> EV_CABLE = REGISTRY.register("ev_cable", () -> new CableBlock(EnergyTier.EV, 4, SoundType.WOOL));
+	Supplier<Block> IV_CABLE = REGISTRY.register("iv_cable", () -> new CableBlock(EnergyTier.IV, 6, SoundType.GLASS));
 	Supplier<Block> BURNT_CABLE = REGISTRY.register("burnt_cable", BurntCableBlock::new);
-	List<Supplier<Block>> CABLES = Arrays.asList(COPPER_CABLE, GOLD_CABLE, ALUMINUM_CABLE, ENDERIUM_CABLE, GLASS_CABLE, BURNT_CABLE);
+	List<Supplier<Block>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE, BURNT_CABLE);
 }

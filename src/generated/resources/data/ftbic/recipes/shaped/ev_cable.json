@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:ev_cable",
+	"pattern": [
+		"RRR",
+		"MMM",
+		"RRR"
+	],
+	"key": {
+		"R": {
+			"item": "ftbic:rubber"
+		},
+		"M": {
+			"tag": "forge:ingots/enderium"
+		}
+	},
+	"result": {
+		"item": "ftbic:ev_cable",
+		"count": 6
+	}
+}

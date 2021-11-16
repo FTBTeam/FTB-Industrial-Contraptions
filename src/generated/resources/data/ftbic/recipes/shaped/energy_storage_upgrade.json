@@ -11,7 +11,7 @@
 			"tag": "minecraft:planks"
 		},
 		"W": {
-			"item": "ftbic:copper_cable"
+			"item": "ftbic:lv_cable"
 		},
 		"B": {
 			"item": "ftbic:battery"

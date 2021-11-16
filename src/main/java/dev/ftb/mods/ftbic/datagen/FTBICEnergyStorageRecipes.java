@@ -19,7 +19,7 @@ public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 				.pattern("PWP")
 				.pattern("BBB")
 				.pattern("PPP")
-				.define('W', COPPER_CABLE)
+				.define('W', LV_CABLE)
 				.define('B', BATTERY)
 				.define('P', PLANKS)
 				.save(consumer, shapedLoc("lv_battery_box"));
@@ -30,7 +30,7 @@ public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 				.pattern("WBW")
 				.pattern("BMB")
 				.pattern("WBW")
-				.define('W', GOLD_CABLE)
+				.define('W', MV_CABLE)
 				.define('B', ENERGY_CRYSTAL)
 				.define('M', MACHINE_BLOCK)
 				.save(consumer, shapedLoc("mv_battery_box"));
@@ -62,23 +62,23 @@ public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("ev_battery_box"));
 
 		ShapedRecipeBuilder.shaped(LV_TRANSFORMER)
-				.unlockedBy("has_item", has(COPPER_CABLE))
+				.unlockedBy("has_item", has(LV_CABLE))
 				.group(MODID + ":lv_transformer")
 				.pattern("PWP")
 				.pattern("CCC")
 				.pattern("PWP")
-				.define('W', COPPER_CABLE)
+				.define('W', LV_CABLE)
 				.define('C', COPPER_INGOT)
 				.define('P', PLANKS)
 				.save(consumer, shapedLoc("lv_transformer"));
 
 		ShapedRecipeBuilder.shaped(MV_TRANSFORMER)
-				.unlockedBy("has_item", has(GOLD_CABLE))
+				.unlockedBy("has_item", has(MV_CABLE))
 				.group(MODID + ":mv_transformer")
 				.pattern("W")
 				.pattern("M")
 				.pattern("W")
-				.define('W', GOLD_CABLE)
+				.define('W', MV_CABLE)
 				.define('M', MACHINE_BLOCK)
 				.save(consumer, shapedLoc("mv_transformer"));
 
@@ -88,7 +88,7 @@ public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 				.pattern(" W ")
 				.pattern("CTE")
 				.pattern(" W ")
-				.define('W', ALUMINUM_CABLE)
+				.define('W', HV_CABLE)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.define('E', ENERGY_CRYSTAL)
 				.define('T', MV_TRANSFORMER)
@@ -100,7 +100,7 @@ public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 				.pattern(" W ")
 				.pattern("CTE")
 				.pattern(" W ")
-				.define('W', ENDERIUM_CABLE)
+				.define('W', EV_CABLE)
 				.define('C', ADVANCED_CIRCUIT)
 				.define('E', ADVANCED_ALLOY)
 				.define('T', HV_TRANSFORMER)

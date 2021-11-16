@@ -37,7 +37,6 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(PROTEIN_BAR))
 				.save(consumer, compressingLoc("protein_bar"));
 
-		/*
 		ShapedRecipeBuilder.shaped(CARBON_HELMET)
 				.unlockedBy("has_item", has(CARBON_PLATE))
 				.group(MODID + ":carbon_helmet")
@@ -47,7 +46,6 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 				.define('E', ENERGY_CRYSTAL)
 				.define('G', GLASS)
 				.save(consumer, shapedLoc("carbon_helmet"));
-		 */
 
 		ShapedRecipeBuilder.shaped(CARBON_CHESTPLATE)
 				.unlockedBy("has_item", has(CARBON_PLATE))
@@ -60,7 +58,6 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 				.define('P', Items.NETHERITE_CHESTPLATE)
 				.save(consumer, shapedLoc("carbon_chestplate"));
 
-		/*
 		ShapedRecipeBuilder.shaped(CARBON_LEGGINGS)
 				.unlockedBy("has_item", has(CARBON_PLATE))
 				.group(MODID + ":carbon_leggings")
@@ -92,13 +89,12 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 				.define('C', IRIDIUM_CIRCUIT)
 				.define('G', REINFORCED_GLASS)
 				.save(consumer, shapedLoc("quantum_helmet"));
-		 */
 
 		ShapedRecipeBuilder.shaped(QUANTUM_CHESTPLATE)
 				.unlockedBy("has_item", has(IRIDIUM_BATTERY))
 				.group(MODID + ":quantum_chestplate")
-				.pattern("MNM")
-				.pattern("BAB")
+				.pattern("MBM")
+				.pattern("NAN")
 				.pattern("IEI")
 				.define('A', CARBON_CHESTPLATE)
 				.define('I', IRIDIUM_ALLOY)
@@ -108,7 +104,6 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 				.define('N', ANTIMATTER)
 				.save(consumer, shapedLoc("quantum_chestplate"));
 
-		/*
 		ShapedRecipeBuilder.shaped(QUANTUM_LEGGINGS)
 				.unlockedBy("has_item", has(IRIDIUM_BATTERY))
 				.group(MODID + ":quantum_leggings")
@@ -132,6 +127,5 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 				.define('B', IRIDIUM_BATTERY)
 				.define('L', Items.LEATHER_BOOTS)
 				.save(consumer, shapedLoc("quantum_boots"));
-		 */
 	}
 }

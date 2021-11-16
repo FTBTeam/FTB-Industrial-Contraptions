@@ -21,7 +21,7 @@ public class FTBICBatteryRecipes extends FTBICRecipesGen {
 				.pattern("C")
 				.pattern("R")
 				.pattern("O")
-				.define('C', COPPER_CABLE)
+				.define('C', LV_CABLE)
 				.define('O', COAL)
 				.define('R', REDSTONE)
 				.save(consumer, shapedLoc("single_use_battery"));
@@ -32,7 +32,7 @@ public class FTBICBatteryRecipes extends FTBICRecipesGen {
 				.pattern(" C ")
 				.pattern("TRT")
 				.pattern("TST")
-				.define('C', COPPER_CABLE)
+				.define('C', LV_CABLE)
 				.define('T', TIN_INGOT)
 				.define('R', REDSTONE)
 				.define('S', SULFUR_DUST)

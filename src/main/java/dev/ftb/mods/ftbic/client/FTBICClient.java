@@ -22,7 +22,7 @@ public class FTBICClient extends FTBICCommon {
 
 	private void setup(FMLClientSetupEvent event) {
 		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.REINFORCED_GLASS.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.GLASS_CABLE.get(), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.IV_CABLE.get(), RenderType.cutout());
 
 		MenuScreens.register(FTBICMenus.MACHINE.get(), MachineScreen::new);
 		MenuScreens.register(FTBICMenus.BASIC_GENERATOR.get(), BasicGeneratorScreen::new);

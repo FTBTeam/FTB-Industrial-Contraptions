@@ -1,0 +1,17 @@
+{
+	"type": "ftbic:extruding",
+	"inputItems": [
+		{
+			"ingredient": {
+				"tag": "forge:plates/gold"
+			},
+			"count": 1
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:gold_wire",
+			"count": 2
+		}
+	]
+}

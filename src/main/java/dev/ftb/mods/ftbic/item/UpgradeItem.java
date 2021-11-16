@@ -4,7 +4,7 @@ import dev.ftb.mods.ftbic.FTBIC;
 import net.minecraft.world.item.Item;
 
 public class UpgradeItem extends Item {
-	public UpgradeItem() {
-		super(new Properties().tab(FTBIC.TAB));
+	public UpgradeItem(int stack) {
+		super(new Properties().stacksTo(stack).tab(FTBIC.TAB));
 	}
 }

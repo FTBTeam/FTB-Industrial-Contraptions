@@ -15,7 +15,6 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
 import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
-import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
@@ -111,11 +110,11 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.MACHINE_BLOCK, "Machine Block");
 			addBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK, "Advanced Machine Block");
 			addBlock(FTBICBlocks.IRON_FURNACE, "Iron Furnace");
-			addBlock(FTBICBlocks.COPPER_CABLE, "Copper Cable");
-			addBlock(FTBICBlocks.GOLD_CABLE, "Gold Cable");
-			addBlock(FTBICBlocks.ALUMINUM_CABLE, "Aluminum Cable");
-			addBlock(FTBICBlocks.ENDERIUM_CABLE, "Enderium Cable");
-			addBlock(FTBICBlocks.GLASS_CABLE, "Glass Cable");
+			addBlock(FTBICBlocks.LV_CABLE, "LV Cable");
+			addBlock(FTBICBlocks.MV_CABLE, "MV Cable");
+			addBlock(FTBICBlocks.HV_CABLE, "HV Cable");
+			addBlock(FTBICBlocks.EV_CABLE, "EV Cable");
+			addBlock(FTBICBlocks.IV_CABLE, "IV Cable");
 			addBlock(FTBICBlocks.BURNT_CABLE, "Burnt Cable");
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
@@ -147,8 +146,14 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy Storage Upgrade");
 			addItem(FTBICItems.TRANSFORMER_UPGRADE, "Transformer Upgrade");
 			addItem(FTBICItems.EJECTOR_UPGRADE, "Ejector Upgrade");
+			addItem(FTBICItems.CARBON_HELMET, "Carbon Helmet");
 			addItem(FTBICItems.CARBON_CHESTPLATE, "Carbon Chestplate");
+			addItem(FTBICItems.CARBON_LEGGINGS, "Carbon Leggings");
+			addItem(FTBICItems.CARBON_BOOTS, "Carbon Boots");
+			addItem(FTBICItems.QUANTUM_HELMET, "Quantum Helmet");
 			addItem(FTBICItems.QUANTUM_CHESTPLATE, "Quantum Chestplate");
+			addItem(FTBICItems.QUANTUM_LEGGINGS, "Quantum Leggings");
+			addItem(FTBICItems.QUANTUM_BOOTS, "Quantum Boots");
 
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".separating", "Separating");
@@ -562,9 +567,69 @@ public class FTBICDataGenHandler {
 			basicBlockItem(FTBICBlocks.ADVANCED_MACHINE_BLOCK);
 			withExistingParent(FTBICBlocks.IRON_FURNACE.get().getRegistryName().getPath(), modLoc("block/iron_furnace_off"));
 
-			//for (Supplier<Block> cable : FTBICBlocks.CABLES) {
-			//	basicItem(() -> cable.get().asItem());
-			//}
+			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
+				String id = cable.get().getRegistryName().getPath();
+				int b0 = ((BaseCableBlock) cable.get()).border;
+				int b1 = 16 - b0;
+
+				withExistingParent("item/" + id, "block/block")
+						.texture("particle", modLoc("block/" + id))
+						.texture("cable", modLoc("block/" + id))
+						.transforms()
+						.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+						.rotation(75F, 45F, 0F)
+						.translation(0F, 1.5F, 0F)
+						.scale(0.375F, 0.375F, 0.375F)
+						.end()
+						.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+						.rotation(75F, 45F, 0F)
+						.translation(0F, 1.5F, 0F)
+						.scale(0.375F, 0.375F, 0.375F)
+						.end()
+						.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+						.rotation(0F, 45F, 0F)
+						.scale(0.4F, 0.4F, 0.4F)
+						.end()
+						.transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
+						.rotation(0F, 225F, 0F)
+						.scale(0.4F, 0.4F, 0.4F)
+						.end()
+						.transform(ModelBuilder.Perspective.GROUND)
+						.translation(0F, 3F, 0F)
+						.scale(0.25F, 0.25F, 0.25F)
+						.end()
+						.transform(ModelBuilder.Perspective.GUI)
+						.rotation(45F, 45F, 90F)
+						.translation(1.75F, 1F, 0F)
+						.scale(0.625F, 0.625F, 0.625F)
+						.end()
+						.transform(ModelBuilder.Perspective.FIXED)
+						.translation(0F, -1.5F, 0F)
+						.scale(0.5F, 0.5F, 0.5F)
+						.end()
+						.end()
+						.element()
+						.from(b0, 0, b0)
+						.to(b1, b1, b1)
+						.face(Direction.NORTH).texture("#cable").uvs(b0, b0, b1, 16).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+						.face(Direction.EAST).texture("#cable").uvs(b0, b0, b1, 16).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+						.face(Direction.SOUTH).texture("#cable").uvs(b0, b0, b1, 16).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+						.face(Direction.WEST).texture("#cable").uvs(b0, b0, b1, 16).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+						.face(Direction.UP).texture("#cable").uvs(b0, b0, b1, b1).end()
+						.face(Direction.DOWN).texture("#cable").uvs(b0, b0, b1, b1).end()
+						.end()
+						.element()
+						.from(b0, b1, b0)
+						.to(b1, b1 * 2, b1)
+						.face(Direction.NORTH).texture("#cable").uvs(b1, 16, b0, b0).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+						.face(Direction.EAST).texture("#cable").uvs(b1, 16, b0, b0).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+						.face(Direction.SOUTH).texture("#cable").uvs(b1, 16, b0, b0).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+						.face(Direction.WEST).texture("#cable").uvs(b1, 16, b0, b0).rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+						.face(Direction.UP).texture("#cable").uvs(b1, b1, b0, b0).end()
+						.face(Direction.DOWN).texture("#cable").uvs(b1, b1, b0, b0).end()
+						.end()
+				;
+			}
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
@@ -596,8 +661,14 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.ENERGY_STORAGE_UPGRADE);
 			basicItem(FTBICItems.TRANSFORMER_UPGRADE);
 			basicItem(FTBICItems.EJECTOR_UPGRADE);
+			basicItem(FTBICItems.CARBON_HELMET);
 			basicItem(FTBICItems.CARBON_CHESTPLATE);
+			basicItem(FTBICItems.CARBON_LEGGINGS);
+			basicItem(FTBICItems.CARBON_BOOTS);
+			basicItem(FTBICItems.QUANTUM_HELMET);
 			basicItem(FTBICItems.QUANTUM_CHESTPLATE);
+			basicItem(FTBICItems.QUANTUM_LEGGINGS);
+			basicItem(FTBICItems.QUANTUM_BOOTS);
 		}
 	}
 
@@ -655,8 +726,6 @@ public class FTBICDataGenHandler {
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (machine.canBurn) {
-					BlockPredicate.Builder.block();
-
 					add(machine.block.get(), LootTable.lootTable()
 							.withPool(LootPool.lootPool()
 									.when(new BurntBlockCondition.Builder().invert())

@@ -41,11 +41,11 @@ public interface FTBICItems {
 	Supplier<BlockItem> MACHINE_BLOCK = blockItem("machine_block", FTBICBlocks.MACHINE_BLOCK);
 	Supplier<BlockItem> ADVANCED_MACHINE_BLOCK = blockItem("advanced_machine_block", FTBICBlocks.ADVANCED_MACHINE_BLOCK);
 	Supplier<BlockItem> IRON_FURNACE = blockItem("iron_furnace", FTBICBlocks.IRON_FURNACE);
-	Supplier<BlockItem> COPPER_CABLE = blockItem("copper_cable", FTBICBlocks.COPPER_CABLE);
-	Supplier<BlockItem> GOLD_CABLE = blockItem("gold_cable", FTBICBlocks.GOLD_CABLE);
-	Supplier<BlockItem> ALUMINUM_CABLE = blockItem("aluminum_cable", FTBICBlocks.ALUMINUM_CABLE);
-	Supplier<BlockItem> ENDERIUM_CABLE = blockItem("enderium_cable", FTBICBlocks.ENDERIUM_CABLE);
-	Supplier<BlockItem> GLASS_CABLE = blockItem("glass_cable", FTBICBlocks.GLASS_CABLE);
+	Supplier<BlockItem> LV_CABLE = blockItem("lv_cable", FTBICBlocks.LV_CABLE);
+	Supplier<BlockItem> MV_CABLE = blockItem("mv_cable", FTBICBlocks.MV_CABLE);
+	Supplier<BlockItem> HV_CABLE = blockItem("hv_cable", FTBICBlocks.HV_CABLE);
+	Supplier<BlockItem> EV_CABLE = blockItem("ev_cable", FTBICBlocks.EV_CABLE);
+	Supplier<BlockItem> IV_CABLE = blockItem("iv_cable", FTBICBlocks.IV_CABLE);
 	Supplier<BlockItem> BURNT_CABLE = blockItem("burnt_cable", FTBICBlocks.BURNT_CABLE);
 
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
@@ -92,10 +92,10 @@ public interface FTBICItems {
 	Supplier<Item> PROTEIN_BAR = REGISTRY.register("protein_bar", ProteinBarItem::new);
 	Supplier<Item> DARK_SPRAY_PAINT_CAN = REGISTRY.register("dark_spray_paint_can", () -> new SprayPaintCanItem(true));
 	Supplier<Item> LIGHT_SPRAY_PAINT_CAN = REGISTRY.register("light_spray_paint_can", () -> new SprayPaintCanItem(false));
-	Supplier<Item> OVERCLOCKER_UPGRADE = REGISTRY.register("overclocker_upgrade", UpgradeItem::new);
-	Supplier<Item> ENERGY_STORAGE_UPGRADE = REGISTRY.register("energy_storage_upgrade", UpgradeItem::new);
-	Supplier<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", UpgradeItem::new);
-	Supplier<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", UpgradeItem::new);
+	Supplier<Item> OVERCLOCKER_UPGRADE = REGISTRY.register("overclocker_upgrade", () -> new UpgradeItem(16));
+	Supplier<Item> ENERGY_STORAGE_UPGRADE = REGISTRY.register("energy_storage_upgrade", () -> new UpgradeItem(8));
+	Supplier<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", () -> new UpgradeItem(4));
+	Supplier<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", () -> new UpgradeItem(1));
 	Supplier<Item> CARBON_HELMET = REGISTRY.register("carbon_helmet", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.HEAD));
 	Supplier<Item> CARBON_CHESTPLATE = REGISTRY.register("carbon_chestplate", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.CHEST));
 	Supplier<Item> CARBON_LEGGINGS = REGISTRY.register("carbon_leggings", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.LEGS));

@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:hv_cable",
+	"pattern": [
+		"RRR",
+		"MMM",
+		"RRR"
+	],
+	"key": {
+		"R": {
+			"item": "ftbic:rubber"
+		},
+		"M": {
+			"tag": "forge:ingots/gold"
+		}
+	},
+	"result": {
+		"item": "ftbic:hv_cable",
+		"count": 6
+	}
+}

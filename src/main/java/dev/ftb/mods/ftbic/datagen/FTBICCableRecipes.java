@@ -4,6 +4,8 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Consumer;
 
@@ -23,6 +25,13 @@ public class FTBICCableRecipes extends FTBICRecipesGen {
 				.define('M', COPPER_INGOT)
 				.save(consumer, shapedLoc("copper_wire"));
 
+		ShapedRecipeBuilder.shaped(ALUMINUM_WIRE, 6)
+				.unlockedBy("has_item", has(ALUMINUM_INGOT))
+				.group(MODID + ":aluminum_wire")
+				.pattern("MMM")
+				.define('M', ALUMINUM_INGOT)
+				.save(consumer, shapedLoc("aluminum_wire"));
+
 		ShapedRecipeBuilder.shaped(GOLD_WIRE, 6)
 				.unlockedBy("has_item", has(GOLD_INGOT))
 				.group(MODID + ":gold_wire")
@@ -30,14 +39,7 @@ public class FTBICCableRecipes extends FTBICRecipesGen {
 				.define('M', GOLD_INGOT)
 				.save(consumer, shapedLoc("gold_wire"));
 
-		ShapedRecipeBuilder.shaped(ALUMINUM_WIRE, 3)
-				.unlockedBy("has_item", has(ALUMINUM_INGOT))
-				.group(MODID + ":aluminum_wire")
-				.pattern("MMM")
-				.define('M', ALUMINUM_INGOT)
-				.save(consumer, shapedLoc("aluminum_wire"));
-
-		ShapedRecipeBuilder.shaped(ENDERIUM_WIRE, 3)
+		ShapedRecipeBuilder.shaped(ENDERIUM_WIRE, 6)
 				.unlockedBy("has_item", has(ENDERIUM_INGOT))
 				.group(MODID + ":enderium_wire")
 				.pattern("MMM")
@@ -46,89 +48,87 @@ public class FTBICCableRecipes extends FTBICRecipesGen {
 
 		// Cable from metal + rubber
 
-		ShapedRecipeBuilder.shaped(COPPER_CABLE, 6)
+		ShapedRecipeBuilder.shaped(LV_CABLE, 6)
 				.unlockedBy("has_item", has(RUBBER))
-				.group(MODID + ":copper_cable")
+				.group(MODID + ":lv_cable")
 				.pattern("RRR")
 				.pattern("MMM")
 				.pattern("RRR")
 				.define('R', RUBBER)
 				.define('M', COPPER_INGOT)
-				.save(consumer, shapedLoc("copper_cable"));
+				.save(consumer, shapedLoc("lv_cable"));
 
-		ShapedRecipeBuilder.shaped(GOLD_CABLE, 6)
+		ShapedRecipeBuilder.shaped(MV_CABLE, 6)
 				.unlockedBy("has_item", has(RUBBER))
-				.group(MODID + ":gold_cable")
-				.pattern("RRR")
-				.pattern("MMM")
-				.pattern("RRR")
-				.define('R', RUBBER)
-				.define('M', GOLD_INGOT)
-				.save(consumer, shapedLoc("gold_cable"));
-
-		ShapedRecipeBuilder.shaped(ALUMINUM_CABLE, 3)
-				.unlockedBy("has_item", has(RUBBER))
-				.group(MODID + ":aluminum_cable")
+				.group(MODID + ":mv_cable")
 				.pattern("RRR")
 				.pattern("MMM")
 				.pattern("RRR")
 				.define('R', RUBBER)
 				.define('M', ALUMINUM_INGOT)
-				.save(consumer, shapedLoc("aluminum_cable"));
+				.save(consumer, shapedLoc("mv_cable"));
 
-		ShapedRecipeBuilder.shaped(ENDERIUM_CABLE, 3)
+		ShapedRecipeBuilder.shaped(HV_CABLE, 6)
 				.unlockedBy("has_item", has(RUBBER))
-				.group(MODID + ":enderium_cable")
+				.group(MODID + ":hv_cable")
+				.pattern("RRR")
+				.pattern("MMM")
+				.pattern("RRR")
+				.define('R', RUBBER)
+				.define('M', GOLD_INGOT)
+				.save(consumer, shapedLoc("hv_cable"));
+
+		ShapedRecipeBuilder.shaped(EV_CABLE, 6)
+				.unlockedBy("has_item", has(RUBBER))
+				.group(MODID + ":ev_cable")
 				.pattern("RRR")
 				.pattern("MMM")
 				.pattern("RRR")
 				.define('R', RUBBER)
 				.define('M', ENDERIUM_INGOT)
-				.save(consumer, shapedLoc("enderium_cable"));
+				.save(consumer, shapedLoc("ev_cable"));
 
 		// Cable from wire + rubber
 
-		ShapelessRecipeBuilder.shapeless(COPPER_CABLE)
+		ShapelessRecipeBuilder.shapeless(LV_CABLE)
 				.unlockedBy("has_item", has(RUBBER))
-				.group(MODID + ":copper_cable")
+				.group(MODID + ":lv_cable")
 				.requires(COPPER_WIRE)
 				.requires(RUBBER)
-				.save(consumer, shapelessLoc("copper_cable"));
+				.save(consumer, shapelessLoc("lv_cable"));
 
-		ShapelessRecipeBuilder.shapeless(GOLD_CABLE)
+		ShapelessRecipeBuilder.shapeless(MV_CABLE)
 				.unlockedBy("has_item", has(RUBBER))
-				.group(MODID + ":gold_cable")
-				.requires(GOLD_WIRE)
-				.requires(RUBBER)
-				.save(consumer, shapelessLoc("gold_cable"));
-
-		ShapelessRecipeBuilder.shapeless(ALUMINUM_CABLE)
-				.unlockedBy("has_item", has(RUBBER))
-				.group(MODID + ":aluminum_cable")
+				.group(MODID + ":mv_cable")
 				.requires(ALUMINUM_WIRE)
 				.requires(RUBBER)
-				.requires(RUBBER)
-				.save(consumer, shapelessLoc("aluminum_cable"));
+				.save(consumer, shapelessLoc("mv_cable"));
 
-		ShapelessRecipeBuilder.shapeless(ENDERIUM_CABLE)
+		ShapelessRecipeBuilder.shapeless(HV_CABLE)
 				.unlockedBy("has_item", has(RUBBER))
-				.group(MODID + ":enderium_cable")
+				.group(MODID + ":hv_cable")
+				.requires(GOLD_WIRE)
+				.requires(RUBBER)
+				.save(consumer, shapelessLoc("hv_cable"));
+
+		ShapelessRecipeBuilder.shapeless(EV_CABLE)
+				.unlockedBy("has_item", has(RUBBER))
+				.group(MODID + ":ev_cable")
 				.requires(ENDERIUM_WIRE)
 				.requires(RUBBER)
-				.requires(RUBBER)
-				.save(consumer, shapelessLoc("enderium_cable"));
+				.save(consumer, shapelessLoc("ev_cable"));
 
 		// Glass cable
 
-		ShapedRecipeBuilder.shaped(GLASS_CABLE, 6)
+		ShapedRecipeBuilder.shaped(IV_CABLE, 6)
 				.unlockedBy("has_item", has(ENERGY_CRYSTAL))
-				.group(MODID + ":glass_cable")
+				.group(MODID + ":iv_cable")
 				.pattern("GGG")
 				.pattern(" C ")
 				.pattern("GGG")
 				.define('G', GLASS)
 				.define('C', ENERGY_CRYSTAL)
-				.save(consumer, shapedLoc("glass_cable"));
+				.save(consumer, shapedLoc("iv_cable"));
 
 		// Burnt cable
 
@@ -137,5 +137,31 @@ public class FTBICCableRecipes extends FTBICRecipesGen {
 				.group(MODID + ":scrap")
 				.requires(BURNT_CABLE)
 				.save(consumer, shapelessLoc("scrap_from_burnt_cable"));
+
+		// Wire extruding
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(COPPER_PLATE))
+				.inputItem(Ingredient.of(COPPER_PLATE))
+				.outputItem(new ItemStack(COPPER_WIRE, 2))
+				.save(consumer, extrudingLoc("copper_wire"));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(GOLD_PLATE))
+				.inputItem(Ingredient.of(GOLD_PLATE))
+				.outputItem(new ItemStack(GOLD_WIRE, 2))
+				.save(consumer, extrudingLoc("gold_wire"));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(ALUMINUM_PLATE))
+				.inputItem(Ingredient.of(ALUMINUM_PLATE))
+				.outputItem(new ItemStack(ALUMINUM_WIRE, 2))
+				.save(consumer, extrudingLoc("aluminum_wire"));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(ENDERIUM_PLATE))
+				.inputItem(Ingredient.of(ENDERIUM_PLATE))
+				.outputItem(new ItemStack(ENDERIUM_WIRE, 2))
+				.save(consumer, extrudingLoc("enderium_wire"));
 	}
 }
