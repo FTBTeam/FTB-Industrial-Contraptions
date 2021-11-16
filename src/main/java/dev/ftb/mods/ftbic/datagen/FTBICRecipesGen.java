@@ -127,10 +127,10 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item ENERGY_CRYSTAL = FTBICItems.ENERGY_CRYSTAL.item.get();
 
 	public static final Item SINGLE_USE_BATTERY = FTBICItems.SINGLE_USE_BATTERY.get();
-	public static final Item BATTERY = FTBICItems.BATTERY.get();
-	public static final Item CRYSTAL_BATTERY = FTBICItems.CRYSTAL_BATTERY.get();
-	public static final Item GRAPHENE_BATTERY = FTBICItems.GRAPHENE_BATTERY.get();
-	public static final Item IRIDIUM_BATTERY = FTBICItems.IRIDIUM_BATTERY.get();
+	public static final Item LV_BATTERY = FTBICItems.LV_BATTERY.get();
+	public static final Item MV_BATTERY = FTBICItems.MV_BATTERY.get();
+	public static final Item HV_BATTERY = FTBICItems.HV_BATTERY.get();
+	public static final Item EV_BATTERY = FTBICItems.EV_BATTERY.get();
 	public static final Item FLUID_CELL = FTBICItems.FLUID_CELL.get();
 	public static final Item COOLANT_10K = FTBICItems.COOLANT_10K.get();
 	public static final Item COOLANT_30K = FTBICItems.COOLANT_30K.get();
@@ -146,6 +146,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item ENERGY_STORAGE_UPGRADE = FTBICItems.ENERGY_STORAGE_UPGRADE.get();
 	public static final Item TRANSFORMER_UPGRADE = FTBICItems.TRANSFORMER_UPGRADE.get();
 	public static final Item EJECTOR_UPGRADE = FTBICItems.EJECTOR_UPGRADE.get();
+	public static final Item MECHANICAL_ELYTRA = FTBICItems.MECHANICAL_ELYTRA.get();
 	public static final Item CARBON_HELMET = FTBICItems.CARBON_HELMET.get();
 	public static final Item CARBON_CHESTPLATE = FTBICItems.CARBON_CHESTPLATE.get();
 	public static final Item CARBON_LEGGINGS = FTBICItems.CARBON_LEGGINGS.get();

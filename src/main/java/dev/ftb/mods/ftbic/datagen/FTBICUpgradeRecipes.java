@@ -31,7 +31,7 @@ public class FTBICUpgradeRecipes extends FTBICRecipesGen {
 				.pattern("PCP")
 				.define('P', PLANKS)
 				.define('W', LV_CABLE)
-				.define('B', BATTERY)
+				.define('B', LV_BATTERY)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("energy_storage_upgrade"));
 

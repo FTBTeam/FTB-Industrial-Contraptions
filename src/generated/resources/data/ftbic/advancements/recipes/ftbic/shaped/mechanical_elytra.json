@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:shaped/quantum_leggings"
+			"ftbic:shaped/mechanical_elytra"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:ev_battery"
+						"item": "ftbic:carbon_plate"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:shaped/quantum_leggings"
+				"recipe": "ftbic:shaped/mechanical_elytra"
 			}
 		}
 	},

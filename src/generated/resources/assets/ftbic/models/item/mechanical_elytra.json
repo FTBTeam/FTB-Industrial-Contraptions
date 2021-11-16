@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "ftbic:item/iridium_battery"
+		"layer0": "ftbic:item/mechanical_elytra"
 	}
 }

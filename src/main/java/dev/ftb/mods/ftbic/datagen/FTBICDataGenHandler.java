@@ -87,6 +87,7 @@ public class FTBICDataGenHandler {
 			gen.addProvider(new FTBICMachineRecipes(gen));
 			gen.addProvider(new FTBICEnergyStorageRecipes(gen));
 			gen.addProvider(new FTBICToolRecipes(gen));
+			gen.addProvider(new FTBICArmorRecipes(gen));
 			gen.addProvider(new FTBICNuclearRecipes(gen));
 			gen.addProvider(new FTBICGeneratorFuelRecipes(gen));
 			gen.addProvider(new FTBICVanillaRecipes(gen));
@@ -126,10 +127,10 @@ public class FTBICDataGenHandler {
 			}
 
 			addItem(FTBICItems.SINGLE_USE_BATTERY, "Single Use Battery");
-			addItem(FTBICItems.BATTERY, "Battery");
-			addItem(FTBICItems.CRYSTAL_BATTERY, "Crystal Battery");
-			addItem(FTBICItems.GRAPHENE_BATTERY, "Graphene Battery");
-			addItem(FTBICItems.IRIDIUM_BATTERY, "Iridium Battery");
+			addItem(FTBICItems.LV_BATTERY, "LV Battery");
+			addItem(FTBICItems.MV_BATTERY, "MV Battery");
+			addItem(FTBICItems.HV_BATTERY, "HV Battery");
+			addItem(FTBICItems.EV_BATTERY, "EV Battery");
 			addItem(FTBICItems.CREATIVE_BATTERY, "Creative Battery");
 			addItem(FTBICItems.FLUID_CELL, "Fluid Cell");
 			addItem(FTBICItems.COOLANT_10K, "10k Coolant Cell");
@@ -146,6 +147,7 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy Storage Upgrade");
 			addItem(FTBICItems.TRANSFORMER_UPGRADE, "Transformer Upgrade");
 			addItem(FTBICItems.EJECTOR_UPGRADE, "Ejector Upgrade");
+			addItem(FTBICItems.MECHANICAL_ELYTRA, "Mechanical Elytra");
 			addItem(FTBICItems.CARBON_HELMET, "Carbon Helmet");
 			addItem(FTBICItems.CARBON_CHESTPLATE, "Carbon Chestplate");
 			addItem(FTBICItems.CARBON_LEGGINGS, "Carbon Leggings");
@@ -170,6 +172,7 @@ public class FTBICDataGenHandler {
 			add("ftbic.max_input", "Max Input: %s");
 			add("ftbic.fuse_info", "Right-click with a Fuse on this machine to repair it!");
 			add("ftbic.any_item", "Any Item");
+			add("ftbic.requires_chestplate", "Requires Chestplate to function");
 		}
 	}
 
@@ -642,10 +645,10 @@ public class FTBICDataGenHandler {
 			}
 
 			basicItem(FTBICItems.SINGLE_USE_BATTERY);
-			basicItem(FTBICItems.BATTERY);
-			basicItem(FTBICItems.CRYSTAL_BATTERY);
-			basicItem(FTBICItems.GRAPHENE_BATTERY);
-			basicItem(FTBICItems.IRIDIUM_BATTERY);
+			basicItem(FTBICItems.LV_BATTERY);
+			basicItem(FTBICItems.MV_BATTERY);
+			basicItem(FTBICItems.HV_BATTERY);
+			basicItem(FTBICItems.EV_BATTERY);
 			basicItem(FTBICItems.CREATIVE_BATTERY);
 			basicItem(FTBICItems.COOLANT_10K);
 			basicItem(FTBICItems.COOLANT_30K);
@@ -661,6 +664,7 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.ENERGY_STORAGE_UPGRADE);
 			basicItem(FTBICItems.TRANSFORMER_UPGRADE);
 			basicItem(FTBICItems.EJECTOR_UPGRADE);
+			basicItem(FTBICItems.MECHANICAL_ELYTRA);
 			basicItem(FTBICItems.CARBON_HELMET);
 			basicItem(FTBICItems.CARBON_CHESTPLATE);
 			basicItem(FTBICItems.CARBON_LEGGINGS);

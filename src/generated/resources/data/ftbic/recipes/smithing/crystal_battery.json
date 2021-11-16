@@ -1,12 +1,12 @@
 {
 	"type": "minecraft:smithing",
 	"base": {
-		"item": "ftbic:battery"
+		"item": "ftbic:lv_battery"
 	},
 	"addition": {
 		"item": "ftbic:energy_crystal"
 	},
 	"result": {
-		"item": "ftbic:crystal_battery"
+		"item": "ftbic:mv_battery"
 	}
 }

@@ -26,7 +26,7 @@ public class FTBICBatteryRecipes extends FTBICRecipesGen {
 				.define('R', REDSTONE)
 				.save(consumer, shapedLoc("single_use_battery"));
 
-		ShapedRecipeBuilder.shaped(BATTERY)
+		ShapedRecipeBuilder.shaped(LV_BATTERY)
 				.unlockedBy("has_item", has(TIN_INGOT))
 				.group(MODID + ":battery")
 				.pattern(" C ")
@@ -38,15 +38,15 @@ public class FTBICBatteryRecipes extends FTBICRecipesGen {
 				.define('S', SULFUR_DUST)
 				.save(consumer, shapedLoc("battery"));
 
-		UpgradeRecipeBuilder.smithing(Ingredient.of(BATTERY), Ingredient.of(ENERGY_CRYSTAL), CRYSTAL_BATTERY)
+		UpgradeRecipeBuilder.smithing(Ingredient.of(LV_BATTERY), Ingredient.of(ENERGY_CRYSTAL), MV_BATTERY)
 				.unlocks("has_item", has(ENERGY_CRYSTAL))
 				.save(consumer, smithingLoc("crystal_battery"));
 
-		UpgradeRecipeBuilder.smithing(Ingredient.of(CRYSTAL_BATTERY), Ingredient.of(GRAPHENE), GRAPHENE_BATTERY)
+		UpgradeRecipeBuilder.smithing(Ingredient.of(MV_BATTERY), Ingredient.of(GRAPHENE), HV_BATTERY)
 				.unlocks("has_item", has(GRAPHENE))
 				.save(consumer, smithingLoc("graphene_battery"));
 
-		UpgradeRecipeBuilder.smithing(Ingredient.of(GRAPHENE_BATTERY), Ingredient.of(IRIDIUM_ALLOY), IRIDIUM_BATTERY)
+		UpgradeRecipeBuilder.smithing(Ingredient.of(HV_BATTERY), Ingredient.of(IRIDIUM_ALLOY), EV_BATTERY)
 				.unlocks("has_item", has(IRIDIUM_ALLOY))
 				.save(consumer, smithingLoc("iridium_battery"));
 	}

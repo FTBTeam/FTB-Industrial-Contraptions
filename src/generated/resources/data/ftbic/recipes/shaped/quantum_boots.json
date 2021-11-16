@@ -3,7 +3,7 @@
 	"group": "ftbic:quantum_boots",
 	"pattern": [
 		"IAI",
-		"LBL"
+		"SLS"
 	],
 	"key": {
 		"A": {
@@ -12,8 +12,8 @@
 		"I": {
 			"item": "ftbic:iridium_alloy"
 		},
-		"B": {
-			"item": "ftbic:iridium_battery"
+		"S": {
+			"item": "ftbic:reinforced_stone"
 		},
 		"L": {
 			"item": "minecraft:leather_boots"

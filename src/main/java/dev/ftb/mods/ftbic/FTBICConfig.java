@@ -22,7 +22,7 @@ public class FTBICConfig {
 	public static double HV_TRANSFER_RATE = 512;
 	public static double EV_TRANSFER_RATE = 2_048;
 	public static double IV_TRANSFER_RATE = 8_192;
-	public static double ITEM_TRANSFER_EFFICIENCY = 0.1;
+	public static double ITEM_TRANSFER_EFFICIENCY = 0.75;
 
 	public static double SINGLE_USE_BATTERY_CAPACITY = 2_400;
 	public static double LV_BATTERY_CAPACITY = 4_000;
@@ -31,11 +31,13 @@ public class FTBICConfig {
 	public static double EV_BATTERY_CAPACITY = 10_000_000;
 
 	public static double CARBON_ARMOR_CAPACITY = 1_000_000;
-	public static double QUANTUM_ARMOR_CAPACITY = 10_000_000;
+	public static double QUANTUM_ARMOR_CAPACITY = 15_000_000;
+	public static double MECHANICAL_ELYTRA_CAPACITY = 50_000;
+	public static double MECHANICAL_ELYTRA_RECHARGE = 1;
 	public static double ARMOR_DAMAGE_ENERGY = 5_000;
-	public static double ARMOR_FLIGHT_ENERGY = 25;
-	public static double ARMOR_FLIGHT_BOOST = 25;
-	public static double ARMOR_FLIGHT_STOP = 5;
+	public static double ARMOR_FLIGHT_ENERGY = 5;
+	public static double ARMOR_FLIGHT_BOOST = 50;
+	public static double ARMOR_FLIGHT_STOP = 15;
 
 	public static double LV_BATTERY_BOX_CAPACITY = 40_000;
 	public static double MV_BATTERY_BOX_CAPACITY = 400_000;

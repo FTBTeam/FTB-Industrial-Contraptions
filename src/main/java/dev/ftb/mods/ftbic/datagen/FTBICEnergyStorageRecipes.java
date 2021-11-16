@@ -14,13 +14,13 @@ public class FTBICEnergyStorageRecipes extends FTBICRecipesGen {
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
 		ShapedRecipeBuilder.shaped(LV_BATTERY_BOX)
-				.unlockedBy("has_item", has(BATTERY))
+				.unlockedBy("has_item", has(LV_BATTERY))
 				.group(MODID + ":lv_battery_box")
 				.pattern("PWP")
 				.pattern("BBB")
 				.pattern("PPP")
 				.define('W', LV_CABLE)
-				.define('B', BATTERY)
+				.define('B', LV_BATTERY)
 				.define('P', PLANKS)
 				.save(consumer, shapedLoc("lv_battery_box"));
 

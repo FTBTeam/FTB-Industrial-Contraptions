@@ -8,14 +8,15 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 
-public class FTBICArmorMaterial implements ArmorMaterial {
-	public static final FTBICArmorMaterial CARBON = new FTBICArmorMaterial(FTBIC.MOD_ID + ":carbon", FTBICConfig.CARBON_ARMOR_CAPACITY);
-	public static final FTBICArmorMaterial QUANTUM = new FTBICArmorMaterial(FTBIC.MOD_ID + ":quantum", FTBICConfig.QUANTUM_ARMOR_CAPACITY);
+public class EnergyArmorMaterial implements ArmorMaterial {
+	public static final EnergyArmorMaterial ELYTRA = new EnergyArmorMaterial(FTBIC.MOD_ID + ":elytra", FTBICConfig.MECHANICAL_ELYTRA_CAPACITY);
+	public static final EnergyArmorMaterial CARBON = new EnergyArmorMaterial(FTBIC.MOD_ID + ":carbon", FTBICConfig.CARBON_ARMOR_CAPACITY);
+	public static final EnergyArmorMaterial QUANTUM = new EnergyArmorMaterial(FTBIC.MOD_ID + ":quantum", FTBICConfig.QUANTUM_ARMOR_CAPACITY);
 
 	private final String name;
 	public final double capacity;
 
-	public FTBICArmorMaterial(String n, double c) {
+	public EnergyArmorMaterial(String n, double c) {
 		name = n;
 		capacity = c;
 	}
@@ -37,7 +38,7 @@ public class FTBICArmorMaterial implements ArmorMaterial {
 
 	@Override
 	public SoundEvent getEquipSound() {
-		return SoundEvents.ARMOR_EQUIP_NETHERITE;
+		return SoundEvents.ARMOR_EQUIP_LEATHER;
 	}
 
 	@Override

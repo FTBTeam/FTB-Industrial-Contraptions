@@ -3,7 +3,7 @@
 	"group": "ftbic:quantum_helmet",
 	"pattern": [
 		" A ",
-		"IBI",
+		"INI",
 		"CGC"
 	],
 	"key": {
@@ -13,8 +13,8 @@
 		"I": {
 			"item": "ftbic:iridium_alloy"
 		},
-		"B": {
-			"item": "ftbic:iridium_battery"
+		"N": {
+			"tag": "forge:dusts/glowstone"
 		},
 		"C": {
 			"item": "ftbic:iridium_circuit"

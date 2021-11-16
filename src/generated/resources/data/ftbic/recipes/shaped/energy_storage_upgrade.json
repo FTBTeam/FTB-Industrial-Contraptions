@@ -14,7 +14,7 @@
 			"item": "ftbic:lv_cable"
 		},
 		"B": {
-			"item": "ftbic:battery"
+			"item": "ftbic:lv_battery"
 		},
 		"C": {
 			"item": "ftbic:electronic_circuit"

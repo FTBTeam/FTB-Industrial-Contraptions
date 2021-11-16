@@ -8,12 +8,14 @@ import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -27,14 +29,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
-	public EnergyArmorItem(EnergyArmorMaterial m) {
-		super(m, EquipmentSlot.CHEST, new Properties().tab(FTBIC.TAB));
+public class MechanicalElytraItem extends ArmorItem implements EnergyItemHandler {
+	public MechanicalElytraItem() {
+		super(EnergyArmorMaterial.ELYTRA, EquipmentSlot.CHEST, new Properties().tab(FTBIC.TAB));
 	}
 
 	@Override
 	public EnergyTier getEnergyTier() {
-		return material == EnergyArmorMaterial.QUANTUM ? EnergyTier.EV : EnergyTier.HV;
+		return EnergyTier.MV;
 	}
 
 	public void damageEnergyItem(ItemStack stack, double amount) {
@@ -45,7 +47,6 @@ public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 
 	@Override
 	public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-		damageEnergyItem(stack, FTBICConfig.ARMOR_DAMAGE_ENERGY * amount);
 		return 0;
 	}
 
@@ -83,7 +84,7 @@ public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 
 	@Override
 	public boolean canElytraFly(ItemStack stack, LivingEntity entity) {
-		return material == EnergyArmorMaterial.QUANTUM && getEnergy(stack) >= FTBICConfig.ARMOR_FLIGHT_ENERGY;
+		return getEnergy(stack) >= FTBICConfig.ARMOR_FLIGHT_ENERGY;
 	}
 
 	@Override
@@ -107,5 +108,12 @@ public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 		}
 
 		return true;
+	}
+
+	@Override
+	public void onArmorTick(ItemStack stack, Level level, Player player) {
+		if (FTBICConfig.MECHANICAL_ELYTRA_RECHARGE > 0D && !level.isClientSide() && !player.isFallFlying() && level.isDay() && level.canSeeSky(new BlockPos(player.getEyePosition(1F)))) {
+			insertEnergy(stack, FTBICConfig.MECHANICAL_ELYTRA_RECHARGE, false);
+		}
 	}
 }

@@ -4,12 +4,16 @@ import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.FTBICBlockEntities;
 import dev.ftb.mods.ftbic.client.FTBICClient;
+import dev.ftb.mods.ftbic.item.DummyEnergyArmorItem;
 import dev.ftb.mods.ftbic.item.EnergyArmorItem;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -22,6 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
@@ -54,16 +59,62 @@ public class FTBIC {
 		PROXY.init();
 	}
 
+	private static boolean isDummyArmor(LivingDamageEvent event, EquipmentSlot slot, ArmorMaterial material) {
+		Item item = event.getEntityLiving().getItemBySlot(slot).getItem();
+		return item instanceof DummyEnergyArmorItem && ((DummyEnergyArmorItem) item).getMaterial() == material;
+	}
+
 	@SubscribeEvent
 	public static void playerDamage(LivingDamageEvent event) {
-		if (!event.getSource().isBypassInvul()) {
+		if (!event.getSource().isBypassInvul() && event.getEntityLiving() instanceof Player) {
 			ItemStack stack = event.getEntityLiving().getItemBySlot(EquipmentSlot.CHEST);
 
-			if (stack.getItem() instanceof EnergyArmorItem && ((EnergyArmorItem) stack.getItem()).getEnergy(stack) > 0D) {
-				((EnergyArmorItem) stack.getItem()).damageEnergyItem(stack, FTBICConfig.ARMOR_DAMAGE_ENERGY * event.getAmount());
-				event.setAmount(0F);
-				//event.setCanceled(true);
+			if (stack.getItem() instanceof EnergyArmorItem) {
+				EnergyArmorItem armorItem = (EnergyArmorItem) stack.getItem();
+
+				if (armorItem.getEnergy(stack) > 0D) {
+					float protection = 0.35F;
+
+					if (isDummyArmor(event, EquipmentSlot.HEAD, armorItem.getMaterial())) {
+						protection += 0.25F;
+					}
+
+					if (isDummyArmor(event, EquipmentSlot.LEGS, armorItem.getMaterial())) {
+						protection += 0.35F;
+					}
+
+					if (isDummyArmor(event, EquipmentSlot.FEET, armorItem.getMaterial())) {
+						protection += 0.15F;
+					}
+
+					float amountReduced = event.getAmount() * Math.min(protection, 1F);
+					double energy = FTBICConfig.ARMOR_DAMAGE_ENERGY * amountReduced;
+
+					((EnergyArmorItem) stack.getItem()).damageEnergyItem(stack, energy);
+					event.setAmount(event.getAmount() - amountReduced);
+					//event.setCanceled(true);
+
+					if (FMLLoader.isProduction() && !event.getEntityLiving().level.isClientSide()) {
+						((Player) event.getEntityLiving()).displayClientMessage(new TextComponent("Absorbed " + amountReduced + " / " + event.getAmount() + " for " + energy + " zaps"), true);
+					}
+				}
 			}
+		}
+	}
+
+	@Nullable
+	private static Item missingItem(String name) {
+		switch (name) {
+			case "battery":
+				return FTBICItems.LV_BATTERY.get();
+			case "crystal_battery":
+				return FTBICItems.MV_BATTERY.get();
+			case "graphene_battery":
+				return FTBICItems.HV_BATTERY.get();
+			case "iridium_battery":
+				return FTBICItems.EV_BATTERY.get();
+			default:
+				return null;
 		}
 	}
 
@@ -93,6 +144,12 @@ public class FTBIC {
 
 				if (block != null) {
 					mapping.remap(block.asItem());
+				} else {
+					Item item = missingItem(mapping.key.getPath());
+
+					if (item != null) {
+						mapping.remap(item);
+					}
 				}
 			}
 		}

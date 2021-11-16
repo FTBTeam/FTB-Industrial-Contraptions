@@ -3,7 +3,7 @@
 	"group": "ftbic:carbon_chestplate",
 	"pattern": [
 		"CEC",
-		"CPC",
+		"CAC",
 		"CCC"
 	],
 	"key": {
@@ -11,9 +11,9 @@
 			"item": "ftbic:carbon_plate"
 		},
 		"E": {
-			"item": "ftbic:graphene_battery"
+			"item": "ftbic:hv_battery"
 		},
-		"P": {
+		"A": {
 			"item": "minecraft:netherite_chestplate"
 		}
 	},

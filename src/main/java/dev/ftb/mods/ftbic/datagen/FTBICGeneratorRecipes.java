@@ -20,7 +20,7 @@ public class FTBICGeneratorRecipes extends FTBICRecipesGen {
 				.pattern(" B ")
 				.pattern("MMM")
 				.pattern(" F ")
-				.define('B', BATTERY)
+				.define('B', LV_BATTERY)
 				.define('M', INDUSTRIAL_GRADE_METAL)
 				.define('F', IRON_FURNACE)
 				.save(consumer, shapedLoc("basic_generator"));

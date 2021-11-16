@@ -3,7 +3,7 @@
 	"group": "ftbic:carbon_helmet",
 	"pattern": [
 		"CEC",
-		"CGC"
+		"CAC"
 	],
 	"key": {
 		"C": {
@@ -12,8 +12,8 @@
 		"E": {
 			"item": "ftbic:energy_crystal"
 		},
-		"G": {
-			"tag": "forge:glass/colorless"
+		"A": {
+			"item": "minecraft:netherite_helmet"
 		}
 	},
 	"result": {

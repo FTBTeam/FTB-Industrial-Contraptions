@@ -3,7 +3,7 @@
 	"group": "ftbic:carbon_leggings",
 	"pattern": [
 		"CEC",
-		"C C",
+		"CAC",
 		"C C"
 	],
 	"key": {
@@ -12,6 +12,9 @@
 		},
 		"E": {
 			"item": "ftbic:energy_crystal"
+		},
+		"A": {
+			"item": "minecraft:netherite_leggings"
 		}
 	},
 	"result": {

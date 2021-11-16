@@ -8,7 +8,7 @@
 	],
 	"key": {
 		"B": {
-			"item": "ftbic:battery"
+			"item": "ftbic:lv_battery"
 		},
 		"M": {
 			"item": "ftbic:industrial_grade_metal"

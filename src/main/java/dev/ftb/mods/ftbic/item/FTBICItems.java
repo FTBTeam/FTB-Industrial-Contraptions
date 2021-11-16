@@ -3,8 +3,8 @@ package dev.ftb.mods.ftbic.item;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
+import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
-import dev.ftb.mods.ftbic.util.FTBICArmorMaterial;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -76,11 +76,11 @@ public interface FTBICItems {
 	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
 
 	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, EnergyTier.LV, FTBICConfig.SINGLE_USE_BATTERY_CAPACITY));
-	Supplier<Item> BATTERY = REGISTRY.register("battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));
-	Supplier<Item> CRYSTAL_BATTERY = REGISTRY.register("crystal_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.MV, FTBICConfig.MV_BATTERY_CAPACITY));
-	Supplier<Item> GRAPHENE_BATTERY = REGISTRY.register("graphene_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.HV, FTBICConfig.HV_BATTERY_CAPACITY));
-	Supplier<Item> IRIDIUM_BATTERY = REGISTRY.register("iridium_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.EV, FTBICConfig.EV_BATTERY_CAPACITY));
-	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, EnergyTier.EV, Integer.MAX_VALUE));
+	Supplier<Item> LV_BATTERY = REGISTRY.register("lv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));
+	Supplier<Item> MV_BATTERY = REGISTRY.register("mv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.MV, FTBICConfig.MV_BATTERY_CAPACITY));
+	Supplier<Item> HV_BATTERY = REGISTRY.register("hv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.HV, FTBICConfig.HV_BATTERY_CAPACITY));
+	Supplier<Item> EV_BATTERY = REGISTRY.register("ev_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.EV, FTBICConfig.EV_BATTERY_CAPACITY));
+	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, EnergyTier.IV, Integer.MAX_VALUE));
 	Supplier<Item> FLUID_CELL = REGISTRY.register("fluid_cell", FluidCellItem::new);
 	Supplier<Item> COOLANT_10K = REGISTRY.register("coolant_10k", () -> new CoolantItem(10_000));
 	Supplier<Item> COOLANT_30K = REGISTRY.register("coolant_30k", () -> new CoolantItem(30_000));
@@ -96,12 +96,13 @@ public interface FTBICItems {
 	Supplier<Item> ENERGY_STORAGE_UPGRADE = REGISTRY.register("energy_storage_upgrade", () -> new UpgradeItem(8));
 	Supplier<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", () -> new UpgradeItem(4));
 	Supplier<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", () -> new UpgradeItem(1));
-	Supplier<Item> CARBON_HELMET = REGISTRY.register("carbon_helmet", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.HEAD));
-	Supplier<Item> CARBON_CHESTPLATE = REGISTRY.register("carbon_chestplate", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.CHEST));
-	Supplier<Item> CARBON_LEGGINGS = REGISTRY.register("carbon_leggings", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.LEGS));
-	Supplier<Item> CARBON_BOOTS = REGISTRY.register("carbon_boots", () -> new EnergyArmorItem(FTBICArmorMaterial.CARBON, EquipmentSlot.FEET));
-	Supplier<Item> QUANTUM_HELMET = REGISTRY.register("quantum_helmet", () -> new EnergyArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.HEAD));
-	Supplier<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", () -> new EnergyArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.CHEST));
-	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", () -> new EnergyArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
-	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new EnergyArmorItem(FTBICArmorMaterial.QUANTUM, EquipmentSlot.FEET));
+	Supplier<Item> MECHANICAL_ELYTRA = REGISTRY.register("mechanical_elytra", MechanicalElytraItem::new);
+	Supplier<Item> CARBON_HELMET = REGISTRY.register("carbon_helmet", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.CARBON, EquipmentSlot.HEAD));
+	Supplier<Item> CARBON_CHESTPLATE = REGISTRY.register("carbon_chestplate", () -> new EnergyArmorItem(EnergyArmorMaterial.CARBON));
+	Supplier<Item> CARBON_LEGGINGS = REGISTRY.register("carbon_leggings", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.CARBON, EquipmentSlot.LEGS));
+	Supplier<Item> CARBON_BOOTS = REGISTRY.register("carbon_boots", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.CARBON, EquipmentSlot.FEET));
+	Supplier<Item> QUANTUM_HELMET = REGISTRY.register("quantum_helmet", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.HEAD));
+	Supplier<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", () -> new EnergyArmorItem(EnergyArmorMaterial.QUANTUM));
+	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
+	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
 }

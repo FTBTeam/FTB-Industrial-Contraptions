@@ -14,13 +14,13 @@
 			"item": "ftbic:iridium_alloy"
 		},
 		"B": {
-			"item": "ftbic:iridium_battery"
+			"item": "ftbic:ev_battery"
 		},
 		"M": {
 			"item": "ftbic:advanced_machine_block"
 		},
 		"E": {
-			"item": "minecraft:elytra"
+			"item": "ftbic:mechanical_elytra"
 		},
 		"N": {
 			"item": "ftbic:antimatter"
