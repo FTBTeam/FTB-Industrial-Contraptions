@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 
 import dev.ftb.mods.ftbic.screen.SolarPanelMenu;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -46,15 +45,11 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public int get(int id) {
-		switch (id) {
-			case 0:
-				// getEnergyBar()
-				return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 14D / energyCapacity), 0, 14);
-			case 1:
-				// getLightValue()
-				return level.isDay() && level.canSeeSky(worldPosition.above()) ? 14 : 0;
-			default:
-				return 0;
+		if (id == 1) {
+			// getLightValue()
+			return level.isDay() && level.canSeeSky(worldPosition.above()) ? 14 : 0;
 		}
+
+		return super.get(id);
 	}
 }
