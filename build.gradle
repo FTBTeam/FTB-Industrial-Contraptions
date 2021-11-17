@@ -80,6 +80,7 @@ dependencies {
 	modImplementation "io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}"
 	modImplementation "dev.latvian.mods:rhino-forge:${rootProject.rhino_version}"
 	modImplementation "dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}"
+	modImplementation "curse.maven:ctm-267602:3137659"
 }
 
 processResources {
