@@ -192,5 +192,26 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('C', IRIDIUM_CIRCUIT)
 				.define('W', COPPER_COIL)
 				.save(consumer, shapedLoc("teleporter"));
+
+		ShapedRecipeBuilder.shaped(POWERED_CRAFTING_TABLE)
+				.unlockedBy("has_item", has(MACHINE_BLOCK))
+				.group(MODID + ":powered_crafting_table")
+				.pattern(" T ")
+				.pattern("CMC")
+				.define('T', Items.CRAFTING_TABLE)
+				.define('M', MACHINE_BLOCK)
+				.define('C', ELECTRONIC_CIRCUIT)
+				.save(consumer, shapedLoc("powered_crafting_table"));
+
+		ShapedRecipeBuilder.shaped(QUARRY)
+				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
+				.group(MODID + ":quarry")
+				.pattern("CMC")
+				.pattern("ADA")
+				.define('M', ADVANCED_MACHINE_BLOCK)
+				.define('C', ADVANCED_CIRCUIT)
+				.define('D', Items.DIAMOND_PICKAXE) // Replace with Diamond Drill
+				.define('A', ADVANCED_ALLOY)
+				.save(consumer, shapedLoc("quarry"));
 	}
 }

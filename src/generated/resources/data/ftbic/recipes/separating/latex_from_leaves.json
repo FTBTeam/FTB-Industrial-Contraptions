@@ -11,7 +11,11 @@
 	"outputItems": [
 		{
 			"item": "myrtrees:latex",
-			"chance": 0.1
+			"chance": 0.35
+		},
+		{
+			"item": "myrtrees:rubberwood_sapling",
+			"chance": 0.05
 		}
 	]
 }

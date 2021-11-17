@@ -155,6 +155,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item QUANTUM_CHESTPLATE = FTBICItems.QUANTUM_CHESTPLATE.get();
 	public static final Item QUANTUM_LEGGINGS = FTBICItems.QUANTUM_LEGGINGS.get();
 	public static final Item QUANTUM_BOOTS = FTBICItems.QUANTUM_BOOTS.get();
+	public static final Item LOCATION_CARD = FTBICItems.LOCATION_CARD.get();
 
 	public static final Item BASIC_GENERATOR = FTBICElectricBlocks.BASIC_GENERATOR.item.get();
 	public static final Item GEOTHERMAL_GENERATOR = FTBICElectricBlocks.GEOTHERMAL_GENERATOR.item.get();
@@ -179,6 +180,8 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item SINGULARITY_COMPRESSOR = FTBICElectricBlocks.ADVANCED_COMPRESSOR.item.get();
 	public static final Item TELEPORTER = FTBICElectricBlocks.TELEPORTER.item.get();
 	public static final Item CHARGE_PAD = FTBICElectricBlocks.CHARGE_PAD.item.get();
+	public static final Item POWERED_CRAFTING_TABLE = FTBICElectricBlocks.POWERED_CRAFTING_TABLE.item.get();
+	public static final Item QUARRY = FTBICElectricBlocks.QUARRY.item.get();
 	public static final Item LV_BATTERY_BOX = FTBICElectricBlocks.LV_BATTERY_BOX.item.get();
 	public static final Item MV_BATTERY_BOX = FTBICElectricBlocks.MV_BATTERY_BOX.item.get();
 	public static final Item HV_BATTERY_BOX = FTBICElectricBlocks.HV_BATTERY_BOX.item.get();

@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -231,6 +232,10 @@ public class ElectricBlock extends Block implements SprayPaintable {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> list, TooltipFlag flag) {
+		if (electricBlockInstance.wip) {
+			list.add(new TextComponent("WIP!").withStyle(ChatFormatting.RED));
+		}
+
 		if (electricBlockInstance.energyOutput > 0D) {
 			list.add(new TranslatableComponent("ftbic.energy_output", FTBICUtils.formatEnergy(electricBlockInstance.energyOutput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 		}
@@ -240,7 +245,11 @@ public class ElectricBlock extends Block implements SprayPaintable {
 		}
 
 		if (electricBlockInstance.energyUsage > 0D) {
-			list.add(new TranslatableComponent("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+			if (electricBlockInstance.energyUsageIsPerTick) {
+				list.add(new TranslatableComponent("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+			} else {
+				list.add(new TranslatableComponent("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+			}
 		}
 
 		if (electricBlockInstance.maxInput > 0D) {

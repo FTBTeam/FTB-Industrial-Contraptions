@@ -20,7 +20,9 @@ import dev.ftb.mods.ftbic.block.entity.machine.ChargePadBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CompressorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ExtruderBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MaceratorBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.PoweredCraftingTableBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PoweredFurnaceBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ReprocessorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.RollerBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
@@ -86,6 +88,7 @@ public interface FTBICElectricBlocks {
 			.maxEnergyOutput(FTBICConfig.EV_SOLAR_PANEL_OUTPUT);
 
 	ElectricBlockInstance NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorBlockEntity::new)
+			.wip()
 			.advanced();
 
 	// Machines //
@@ -137,24 +140,28 @@ public interface FTBICElectricBlocks {
 			.energyUsage(FTBICConfig.ANTIMATTER_CONSTRUCTOR_USE);
 
 	ElectricBlockInstance ADVANCED_POWERED_FURNACE = register("advanced_powered_furnace", AdvancedPoweredFurnaceBlockEntity::new)
+			.wip()
 			.advanced()
 			.canBurn()
 			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.ADVANCED_POWERED_FURNACE_USE);
 
 	ElectricBlockInstance ADVANCED_MACERATOR = register("advanced_macerator", AdvancedMaceratorBlockEntity::new)
+			.wip()
 			.advanced()
 			.canBurn()
 			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.ADVANCED_MACERATOR_USE);
 
 	ElectricBlockInstance ADVANCED_CENTRIFUGE = register("advanced_centrifuge", AdvancedCentrifugeBlockEntity::new)
+			.wip()
 			.advanced()
 			.canBurn()
 			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.ADVANCED_CENTRIFUGE_USE);
 
 	ElectricBlockInstance ADVANCED_COMPRESSOR = register("advanced_compressor", AdvancedCompressorBlockEntity::new)
+			.wip()
 			.advanced()
 			.canBurn()
 			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
@@ -162,11 +169,28 @@ public interface FTBICElectricBlocks {
 
 	ElectricBlockInstance TELEPORTER = register("teleporter", TeleporterBlockEntity::new)
 			.advanced()
-			.maxInput(FTBICConfig.IV_TRANSFER_RATE);
+			.maxInput(FTBICConfig.IV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.TELEPORTER_USE)
+			.energyUsageIsntPerTick();
 
 	ElectricBlockInstance CHARGE_PAD = register("charge_pad", ChargePadBlockEntity::new)
 			.advanced()
 			.maxInput(FTBICConfig.IV_TRANSFER_RATE);
+
+	ElectricBlockInstance POWERED_CRAFTING_TABLE = register("powered_crafting_table", PoweredCraftingTableBlockEntity::new)
+			.wip()
+			.noRotation()
+			.cantBeActive()
+			.canBurn()
+			.maxInput(FTBICConfig.LV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.POWERED_CRAFTING_TABLE_USE);
+
+	ElectricBlockInstance QUARRY = register("quarry", QuarryBlockEntity::new)
+			.wip()
+			.advanced()
+			.canBurn()
+			.maxInput(FTBICConfig.MV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.QUARRY_USE);
 
 	// Battery Boxes //
 

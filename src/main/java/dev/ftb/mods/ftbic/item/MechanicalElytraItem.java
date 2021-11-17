@@ -94,8 +94,10 @@ public class MechanicalElytraItem extends ArmorItem implements EnergyItemHandler
 		}
 
 		if (flightTicks >= 3 && entity.isCrouching()) {
-			double d = 0.92D;
 			Vec3 m = entity.getDeltaMovement();
+			double d = Math.max(Math.abs(m.y), Math.max(Math.abs(m.x), Math.abs(m.z)));
+			d = Math.min(d, 1D);
+			d = d * 0.91D;
 			entity.setDeltaMovement(m.multiply(d, d, d));
 			damageEnergyItem(stack, FTBICConfig.ARMOR_FLIGHT_STOP);
 		} else if (flightTicks >= 5 && entity.isSprinting()) {

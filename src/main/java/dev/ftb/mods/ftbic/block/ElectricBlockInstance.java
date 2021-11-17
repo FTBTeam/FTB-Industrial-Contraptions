@@ -29,7 +29,9 @@ public class ElectricBlockInstance {
 	public double energyOutput = 0D;
 	public double maxEnergyOutput = 0D;
 	public double energyUsage = 0D;
+	public boolean energyUsageIsPerTick = false;
 	public double maxInput = 0D;
+	public boolean wip = false;
 
 	public ElectricBlockInstance(String i, Supplier<BlockEntity> blockEntitySupplier) {
 		id = i;
@@ -99,6 +101,16 @@ public class ElectricBlockInstance {
 
 	public ElectricBlockInstance maxInput(double d) {
 		maxInput = d;
+		return this;
+	}
+
+	public ElectricBlockInstance wip() {
+		wip = true;
+		return this;
+	}
+
+	public ElectricBlockInstance energyUsageIsntPerTick() {
+		energyUsageIsPerTick = false;
 		return this;
 	}
 }

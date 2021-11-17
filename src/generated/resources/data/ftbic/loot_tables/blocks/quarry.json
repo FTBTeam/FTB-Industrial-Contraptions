@@ -1,0 +1,36 @@
+{
+	"type": "minecraft:block",
+	"pools": [
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "ftbic:quarry"
+				}
+			],
+			"conditions": [
+				{
+					"condition": "minecraft:inverted",
+					"term": {
+						"condition": "ftbic:burnt_block"
+					}
+				}
+			]
+		},
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "ftbic:advanced_machine_block"
+				}
+			],
+			"conditions": [
+				{
+					"condition": "ftbic:burnt_block"
+				}
+			]
+		}
+	]
+}

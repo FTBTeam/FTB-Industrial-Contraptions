@@ -157,5 +157,24 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.inputItem(Ingredient.of(Items.SUGAR_CANE), 3)
 				.outputItem(new ItemStack(Items.PAPER, 5))
 				.save(consumer, compressingLoc("paper"));
+
+		MachineRecipeBuilder.separating()
+				.unlockedBy("has_item", has(RUBBERWOOD_LOG))
+				.inputItem(Ingredient.of(RUBBERWOOD_LOG))
+				.outputItem(new ItemStack(LATEX), 0.1D)
+				.save(consumer, separatingLoc("latex_from_log"));
+
+		MachineRecipeBuilder.separating()
+				.unlockedBy("has_item", has(RUBBERWOOD_SAPLING))
+				.inputItem(Ingredient.of(RUBBERWOOD_SAPLING))
+				.outputItem(new ItemStack(LATEX), 1D)
+				.save(consumer, separatingLoc("latex_from_sapling"));
+
+		MachineRecipeBuilder.separating()
+				.unlockedBy("has_item", has(RUBBERWOOD_LEAVES))
+				.inputItem(Ingredient.of(RUBBERWOOD_LEAVES))
+				.outputItem(new ItemStack(LATEX), 0.35D)
+				.outputItem(new ItemStack(RUBBERWOOD_SAPLING), 0.05D)
+				.save(consumer, separatingLoc("latex_from_leaves"));
 	}
 }

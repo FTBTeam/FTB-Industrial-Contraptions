@@ -7,7 +7,7 @@ import dev.ftb.mods.ftbic.recipe.RecipeCache;
 
 public class CentrifugeBlockEntity extends MachineBlockEntity {
 	public CentrifugeBlockEntity() {
-		super(FTBICElectricBlocks.CENTRIFUGE.blockEntity.get(), 1, 1);
+		super(FTBICElectricBlocks.CENTRIFUGE.blockEntity.get(), 1, 2);
 	}
 
 	@Override

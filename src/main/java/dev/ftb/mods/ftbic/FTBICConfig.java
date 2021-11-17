@@ -95,6 +95,10 @@ public class FTBICConfig {
 	public static double TELEPORTER_CAPACITY = 10_000_000;
 	public static double TELEPORTER_USE = 10_000;
 	public static double CHARGE_PAD_CAPACITY = 1_000_000;
+	public static double POWERED_CRAFTING_TABLE_CAPACITY = 800;
+	public static double POWERED_CRAFTING_TABLE_USE = 1;
+	public static double QUARRY_CAPACITY = 10_000;
+	public static double QUARRY_USE = 3;
 
 	public static int UPGRADE_LIMIT_PER_SLOT = 4;
 	public static double OVERCLOCKER_SPEED = 1.45;

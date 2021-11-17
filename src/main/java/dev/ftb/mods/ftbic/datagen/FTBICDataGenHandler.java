@@ -156,6 +156,7 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.QUANTUM_CHESTPLATE, "Quantum Chestplate");
 			addItem(FTBICItems.QUANTUM_LEGGINGS, "Quantum Leggings");
 			addItem(FTBICItems.QUANTUM_BOOTS, "Quantum Boots");
+			addItem(FTBICItems.LOCATION_CARD, "Location Card");
 
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".separating", "Separating");
@@ -258,6 +259,8 @@ public class FTBICDataGenHandler {
 			makeThemedElectric("advanced_compressor_top", ADVANCED_TOP, "compressor_top");
 			makeThemedElectricOnOff("teleporter_top", ADVANCED_TOP, "teleporter_top");
 			makeThemedElectricOnOff("charge_pad_top", BASIC_TOP, "charge_pad_top");
+			makeThemedElectric("powered_crafting_table_top", BASIC_TOP, "powered_crafting_table_top");
+			makeThemedElectricOnOff("quarry_front", ADVANCED_SIDE);
 
 			makeThemedElectric("lv_battery_box_in", WOOD_UNIVERSAL);
 			makeThemedElectric("lv_battery_box_out", WOOD_UNIVERSAL);
@@ -452,6 +455,9 @@ public class FTBICDataGenHandler {
 			electric("teleporter_on", ADVANCED_SIDE, ADVANCED_SIDE, "teleporter_top_on", ADVANCED_BOTTOM);
 			electric("charge_pad_off", ADVANCED_SIDE, BASIC_SIDE, "charge_pad_top_off", BASIC_BOTTOM);
 			electric("charge_pad_on", ADVANCED_SIDE, BASIC_SIDE, "charge_pad_top_on", BASIC_BOTTOM);
+			electric("powered_crafting_table", BASIC_SIDE, BASIC_SIDE, "powered_crafting_table_top", BASIC_BOTTOM);
+			electric("quarry_off", "quarry_front_off", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
+			electric("quarry_on", "quarry_front_on", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
 
 			electric3d("lv_battery_box", "lv_battery_box_out", "lv_battery_box_in");
 			electric3d("lv_transformer", "lv_transformer_in", "lv_transformer_out");
@@ -673,6 +679,7 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.QUANTUM_CHESTPLATE);
 			basicItem(FTBICItems.QUANTUM_LEGGINGS);
 			basicItem(FTBICItems.QUANTUM_BOOTS);
+			basicItem(FTBICItems.LOCATION_CARD);
 		}
 	}
 
