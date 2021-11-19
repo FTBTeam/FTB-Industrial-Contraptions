@@ -1,6 +1,5 @@
 package dev.ftb.mods.ftbic.block.entity.generator;
 
-import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.screen.BasicGeneratorMenu;
@@ -19,14 +18,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int maxFuelTicks = 0;
 
 	public BasicGeneratorBlockEntity() {
-		super(FTBICElectricBlocks.BASIC_GENERATOR.blockEntity.get(), 1, 0);
-	}
-
-	@Override
-	public void initProperties() {
-		super.initProperties();
-		energyCapacity = FTBICConfig.BASIC_GENERATOR_CAPACITY;
-		maxEnergyOutput = FTBICConfig.BASIC_GENERATOR_OUTPUT;
+		super(FTBICElectricBlocks.BASIC_GENERATOR);
 	}
 
 	@Override

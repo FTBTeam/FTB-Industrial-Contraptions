@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
-import dev.ftb.mods.ftbic.block.ElectricBlock;
+import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
@@ -10,7 +10,6 @@ import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.screen.MachineMenu;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
-import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -29,7 +28,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.util.Constants;
@@ -57,8 +55,8 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	public double progressSpeed;
 	public boolean autoEject;
 
-	public MachineBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
-		super(type, inItems, outItems);
+	public MachineBlockEntity(ElectricBlockInstance type) {
+		super(type);
 		upgradeInventory = new UpgradeInventory(this, 4, FTBICConfig.UPGRADE_LIMIT_PER_SLOT);
 		batteryInventory = new BatteryInventory(this, false);
 		progress = 0;
@@ -148,7 +146,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
 				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, inputEnergyTier.transferRate), false);
+				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, maxInputEnergy), false);
 
 				if (e > 0) {
 					energyAdded += e;
@@ -266,7 +264,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	}
 
 	private Direction[] getEjectDirections() {
-		if (((ElectricBlock) getBlockState().getBlock()).electricBlockInstance.facingProperty != BlockStateProperties.HORIZONTAL_FACING) {
+		if (electricBlockInstance.facingProperty != BlockStateProperties.HORIZONTAL_FACING) {
 			return Direction.values();
 		}
 
@@ -390,9 +388,7 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		inputEnergyTier = EnergyTier.LV;
-		energyCapacity = FTBICConfig.MACERATOR_CAPACITY;
-		energyUse = FTBICConfig.MACERATOR_USE;
+		energyUse = electricBlockInstance.energyUsage;
 		progressSpeed = 1D;
 		autoEject = false;
 		shouldAccelerate = false;
@@ -413,7 +409,11 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 
 		while (transformers > 0) {
 			transformers--;
-			inputEnergyTier = inputEnergyTier.up();
+			maxInputEnergy *= 4D;
+		}
+
+		if (maxInputEnergy > FTBICConfig.IV_TRANSFER_RATE) {
+			maxInputEnergy = FTBICConfig.IV_TRANSFER_RATE;
 		}
 
 		energyCapacity += upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.STORAGE_UPGRADE;

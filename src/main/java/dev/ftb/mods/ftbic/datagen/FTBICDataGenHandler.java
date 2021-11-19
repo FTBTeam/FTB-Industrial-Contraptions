@@ -168,7 +168,7 @@ public class FTBICDataGenHandler {
 			add("recipe." + FTBIC.MOD_ID + ".reconstructing", "Reconstructing");
 
 			add("ftbic.energy_output", "Energy Output: %s");
-			add("ftbic.max_energy_output", "Max Energy Output: %s");
+			add("ftbic.energy_capacity", "Energy Capacity: %s");
 			add("ftbic.energy_usage", "Energy Usage: %s");
 			add("ftbic.max_input", "Max Input: %s");
 			add("ftbic.fuse_info", "Right-click with a Fuse on this machine to repair it!");
@@ -453,8 +453,8 @@ public class FTBICDataGenHandler {
 			electric("advanced_compressor_on", "advanced_compressor_front_on", ADVANCED_SIDE, "advanced_compressor_top", ADVANCED_BOTTOM);
 			electric("teleporter_off", ADVANCED_SIDE, ADVANCED_SIDE, "teleporter_top_off", ADVANCED_BOTTOM);
 			electric("teleporter_on", ADVANCED_SIDE, ADVANCED_SIDE, "teleporter_top_on", ADVANCED_BOTTOM);
-			electric("charge_pad_off", ADVANCED_SIDE, BASIC_SIDE, "charge_pad_top_off", BASIC_BOTTOM);
-			electric("charge_pad_on", ADVANCED_SIDE, BASIC_SIDE, "charge_pad_top_on", BASIC_BOTTOM);
+			electric("charge_pad_off", BASIC_SIDE, BASIC_SIDE, "charge_pad_top_off", BASIC_BOTTOM);
+			electric("charge_pad_on", BASIC_SIDE, BASIC_SIDE, "charge_pad_top_on", BASIC_BOTTOM);
 			electric("powered_crafting_table", BASIC_SIDE, BASIC_SIDE, "powered_crafting_table_top", BASIC_BOTTOM);
 			electric("quarry_off", "quarry_front_off", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
 			electric("quarry_on", "quarry_front_on", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);

@@ -5,7 +5,6 @@ import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
-import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.OpenMenuFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,7 +29,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -60,6 +58,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		return ELECTRIC_NETWORK_CHANGES.get();
 	}
 
+	public final ElectricBlockInstance electricBlockInstance;
 	private boolean changed;
 	public double energy;
 	public double energyAdded;
@@ -72,20 +71,21 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	public double energyCapacity;
 	public double maxEnergyOutput;
-	public EnergyTier inputEnergyTier;
+	public double maxInputEnergy;
 
-	public ElectricBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
-		super(type);
+	public ElectricBlockEntity(ElectricBlockInstance type) {
+		super(type.blockEntity.get());
+		electricBlockInstance = type;
 		changed = false;
 		energy = 0;
 		energyAdded = 0;
-		inputItems = new ItemStack[inItems];
-		outputItems = new ItemStack[outItems];
+		inputItems = new ItemStack[type.inputItemCount];
+		outputItems = new ItemStack[type.outputItemCount];
 		Arrays.fill(inputItems, ItemStack.EMPTY);
 		Arrays.fill(outputItems, ItemStack.EMPTY);
 
 		if (inputItems.length + outputItems.length > 127) {
-			throw new RuntimeException("Internal inventory of " + type.getRegistryName() + " too large!");
+			throw new RuntimeException("Internal inventory of " + getType().getRegistryName() + " too large!");
 		}
 
 		thisOptional = null;
@@ -192,11 +192,15 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 		if (level != null && !level.isClientSide()) {
 			upgradesChanged();
-		} else if (level != null) {
+		} else if (level != null && !tickClientSide()) {
 			level.tickableBlockEntities.remove(this);
 		}
 
 		super.onLoad();
+	}
+
+	public boolean tickClientSide() {
+		return false;
 	}
 
 	public LazyOptional<?> getThisOptional() {
@@ -232,8 +236,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			return;
 		}
 
-		if (inputEnergyTier != null && energyAdded > 0) {
-			if (energyAdded > inputEnergyTier.transferRate) {
+		if (maxInputEnergy > 0D && energyAdded > 0) {
+			if (energyAdded > maxInputEnergy) {
 				setBurnt(true);
 			} else if (energy < energyCapacity) {
 				double e = Math.min(energyAdded, energyCapacity - energy);
@@ -255,16 +259,15 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 		if (changeStateTicks <= 0) {
 			if (!isBurnt()) {
-				ElectricBlockInstance ebi = ((ElectricBlock) getBlockState().getBlock()).electricBlockInstance;
-
-				if (ebi.canBeActive && getBlockState().getValue(ElectricBlock.ACTIVE) != active) {
+				if (electricBlockInstance.canBeActive && getBlockState().getValue(ElectricBlock.ACTIVE) != active && !level.isClientSide()) {
 					level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, active), 3);
 					setChanged();
 				}
 
-				changeStateTicks = FTBICConfig.STATE_UPDATE_TICKS;
 				active = false;
 			}
+
+			changeStateTicks = FTBICConfig.STATE_UPDATE_TICKS;
 
 			if (changed) {
 				setChangedNow();
@@ -290,7 +293,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public double insertEnergy(double maxInsert, boolean simulate) {
-		if (getInputEnergyTier() == null) {
+		if (maxInputEnergy <= 0D) {
 			return 0;
 		}
 
@@ -339,9 +342,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	@Override
-	@Nullable
-	public final EnergyTier getInputEnergyTier() {
-		return inputEnergyTier;
+	public final double getMaxInputEnergy() {
+		return maxInputEnergy;
 	}
 
 	@Nullable
@@ -485,9 +487,9 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	public void initProperties() {
-		energyCapacity = 40000;
-		maxEnergyOutput = 0D;
-		inputEnergyTier = null;
+		energyCapacity = electricBlockInstance.energyCapacity;
+		maxEnergyOutput = electricBlockInstance.maxEnergyOutput;
+		maxInputEnergy = electricBlockInstance.maxEnergyInput;
 	}
 
 	/**
@@ -516,21 +518,17 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public final void setBurnt(boolean b) {
-		if (burnt != b && !level.isClientSide()) {
-			ElectricBlockInstance ebi = ((ElectricBlock) getBlockState().getBlock()).electricBlockInstance;
+		if (burnt != b && !level.isClientSide() && electricBlockInstance.canBurn) {
+			burnt = b;
+			setChanged();
+			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
+			electricNetworkUpdated(level, worldPosition);
 
-			if (ebi.canBurn) {
-				burnt = b;
-				setChanged();
-				level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
-				electricNetworkUpdated(level, worldPosition);
+			if (burnt) {
+				level.levelEvent(1502, worldPosition, 0);
 
-				if (burnt) {
-					level.levelEvent(1502, worldPosition, 0);
-
-					if (ebi.canBeActive) {
-						level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, false), 3);
-					}
+				if (electricBlockInstance.canBeActive) {
+					level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, false), 3);
 				}
 			}
 		}
@@ -545,5 +543,19 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, Random r) {
+	}
+
+	public Direction getFacing(Direction def) {
+		if (electricBlockInstance.facingProperty == null) {
+			return def;
+		}
+
+		BlockState state = getBlockState();
+
+		if (state.getBlock() instanceof ElectricBlock) {
+			return state.getValue(electricBlockInstance.facingProperty);
+		}
+
+		return def;
 	}
 }

@@ -8,7 +8,7 @@ cf0a51930b018631e440a96303ea753f298ec75c assets/ftbic/blockstates/antimatter_con
 252cd5da4258dd949c60bf7661849f611fba983d assets/ftbic/blockstates/burnt_cable.json
 4608bef063d1f546636a2ec0fe6417d4a19cdebb assets/ftbic/blockstates/canning_machine.json
 ea0a508a95442c64e6a5cea1c6cce66b99023afc assets/ftbic/blockstates/centrifuge.json
-f01e4270919cc0303bdece6bb89eb4759973f3de assets/ftbic/blockstates/charge_pad.json
+777cd46d17b9b76c3832242a63713f7bf1f95a4f assets/ftbic/blockstates/charge_pad.json
 faa31abbe4ebc13dbfab39728d2b987d8fd81149 assets/ftbic/blockstates/compressor.json
 0fd07e9506464868a655b5afa8c947497eb9490e assets/ftbic/blockstates/ev_battery_box.json
 cc14de8093461af5d2d4eee2a1b48df675c44188 assets/ftbic/blockstates/ev_cable.json
@@ -63,8 +63,8 @@ e81e3b0c679306e81404f81dbf29ecd2b367d83f assets/ftbic/models/block/electric/dark
 fb9a42a78ff49677931e2493f215327885d4ff65 assets/ftbic/models/block/electric/dark/canning_machine_on.json
 6d82a0445be0581cdafa619adde472063d624ead assets/ftbic/models/block/electric/dark/centrifuge_off.json
 bcd7b5814a56dd13621058265c709f8eb81bda75 assets/ftbic/models/block/electric/dark/centrifuge_on.json
-ffe5ebe0ebc94b83350e79e4a90a3a81bf21841a assets/ftbic/models/block/electric/dark/charge_pad_off.json
-8216022a5309fca4538369f1597e3b1328e981cd assets/ftbic/models/block/electric/dark/charge_pad_on.json
+99759369c00392d5696c9b8bb447e50f3e2a513e assets/ftbic/models/block/electric/dark/charge_pad_off.json
+8caaaf9e3d0e3849c5ab69f07b9b929e75f8a3e5 assets/ftbic/models/block/electric/dark/charge_pad_on.json
 66004c7d64c511ad45531c0bf64c15f6fbb41e17 assets/ftbic/models/block/electric/dark/compressor_off.json
 5150dc490e73203d8777922e07021c48c1c9c5a1 assets/ftbic/models/block/electric/dark/compressor_on.json
 170c9188199928947729f15cb22c4d2cd4a1d65a assets/ftbic/models/block/electric/dark/ev_battery_box.json
@@ -115,8 +115,8 @@ f39a9f8362f8538d31116c21994a6841a832e023 assets/ftbic/models/block/electric/ligh
 7ebaf366ba3481b4976a6e2cc772cb0514b5cdc6 assets/ftbic/models/block/electric/light/canning_machine_on.json
 a1b3c3e14517ab299dc47d038ef2b5fcc42c3d6b assets/ftbic/models/block/electric/light/centrifuge_off.json
 63e96c1e6cef1ac21d896f31a8fb9a9083669e8d assets/ftbic/models/block/electric/light/centrifuge_on.json
-9bb5593bcc5d75db5295b2259506e21aa822ac1a assets/ftbic/models/block/electric/light/charge_pad_off.json
-1ed7682d42b2640530c5909ba17d08a7bb54cab4 assets/ftbic/models/block/electric/light/charge_pad_on.json
+f1262798f6d231a315ae1048cc8030d6cc9499a9 assets/ftbic/models/block/electric/light/charge_pad_off.json
+f9d269e4673d1f249ad3a26653dd2a9e057e2cc1 assets/ftbic/models/block/electric/light/charge_pad_on.json
 be17f00445586456af2ad8620a110fb1120b720e assets/ftbic/models/block/electric/light/compressor_off.json
 7eefa36539cd9b9dfed5fd9fa07d4d437198012b assets/ftbic/models/block/electric/light/compressor_on.json
 f52102773c503e719a86babe893fc36ad736b4e5 assets/ftbic/models/block/electric/light/ev_battery_box.json
@@ -328,8 +328,8 @@ ed7c2efc7e72b0ec702f528bd91215cfe263c908 assets/ftbic/textures/block/electric/da
 eee14a1f3efef52266f35370bb987834c50d329f assets/ftbic/textures/block/electric/dark/powered_crafting_table_top.png
 7d71279ea5c2ad520b36f6c2e602d43c5947d91b assets/ftbic/textures/block/electric/dark/powered_furnace_front_off.png
 492b949137d94fc20f5f86712b3337b976ed0f34 assets/ftbic/textures/block/electric/dark/powered_furnace_front_on.png
-f6c4dd7f4e20bbbda5f7d598a8faee18872fcc49 assets/ftbic/textures/block/electric/dark/quarry_front_off.png
-9589590f52ccd871b5c4d927023563aba917e006 assets/ftbic/textures/block/electric/dark/quarry_front_on.png
+de43f196cc017256155305c6fa35df2219140a0b assets/ftbic/textures/block/electric/dark/quarry_front_off.png
+4967008e3de69da50728a632c97b15a08489cb64 assets/ftbic/textures/block/electric/dark/quarry_front_on.png
 8c507f8e5d68cc22e7e734b4e382c329c7a3a349 assets/ftbic/textures/block/electric/dark/reprocessor_front_off.png
 a5fd09a0a7e231629719367f57aba2ecdde4328a assets/ftbic/textures/block/electric/dark/reprocessor_front_on.png
 2039a219050f979d43b6568ded98c245c2f1a6e3 assets/ftbic/textures/block/electric/dark/reprocessor_top.png
@@ -396,8 +396,8 @@ bfcf07a61778379b0dd8690d4dbb16a457b4bb4b assets/ftbic/textures/block/electric/li
 f5fbe04d856bf29c6e53376a446d1cad73b33c9c assets/ftbic/textures/block/electric/light/powered_crafting_table_top.png
 33523467b7edadd1e8c6d408613cdf7334df982e assets/ftbic/textures/block/electric/light/powered_furnace_front_off.png
 531085a5d67b13663afa2ac0be2a69273f3427c5 assets/ftbic/textures/block/electric/light/powered_furnace_front_on.png
-a27b6cfd123095d4fd95fe8cd1f806baddbce687 assets/ftbic/textures/block/electric/light/quarry_front_off.png
-889cccec74a4c1ccc4722850a410e3a7275412b2 assets/ftbic/textures/block/electric/light/quarry_front_on.png
+98c818ee8eb9db359162b2f76ff9027e866c3222 assets/ftbic/textures/block/electric/light/quarry_front_off.png
+38e42b4227565ca1565c32fbf179ff41eb649cf5 assets/ftbic/textures/block/electric/light/quarry_front_on.png
 dbc5198a3505c1836b37a7c3b6d49090820d9f44 assets/ftbic/textures/block/electric/light/reprocessor_front_off.png
 0c60c496083fb4f04cd10ad7301388db3d0b3f5d assets/ftbic/textures/block/electric/light/reprocessor_front_on.png
 3a09efb52291494f360c583c7ddea180f1814b71 assets/ftbic/textures/block/electric/light/reprocessor_top.png
@@ -666,11 +666,11 @@ ee373c46f364db68df67e98a87fc3a431a52a2e0 data/ftbic/recipes/reconstructing/antim
 175a485642eb4c9b05960fa0831aad515a466104 data/ftbic/recipes/separating/flint.json
 d3ac32598ccaf4d1167725e541424a01b3136ff9 data/ftbic/recipes/separating/glowstone_dust.json
 7d3f0720b079094d3bfeb6977fde0bdc40dc7df8 data/ftbic/recipes/separating/latex_from_leaves.json
-0b2502bd2b84a7cb8ab50967325feccc4b23432b data/ftbic/recipes/separating/latex_from_log.json
+9b2d56e17ee2db0b8435be5644f65110a6773ca1 data/ftbic/recipes/separating/latex_from_log.json
 040a95ff87d2d4289cd5c0c7b62b57998b1b1adf data/ftbic/recipes/separating/latex_from_sapling.json
 b19b0d37840c2fc589aff766c980202e19aac0e7 data/ftbic/recipes/separating/rubber_from_latex.json
 f67eadc32ab28e872ee1228e2dd3f7eed0f0d294 data/ftbic/recipes/separating/silicon_from_quartz.json
-b7ecf8bca9a191896b553d9de86d1b2e4ba8aec8 data/ftbic/recipes/separating/silicon_from_sand.json
+3c814bee79ecb4efdc2cc09f9a8dc4304a16c400 data/ftbic/recipes/separating/silicon_from_sand.json
 4f79192b6c52e23e6285362643376936c80d54e2 data/ftbic/recipes/separating/slime_ball.json
 ec7f36f29276ded9482710994f38089dfd1ddbe0 data/ftbic/recipes/separating/sugar.json
 a3e036d019e53a0b2f6db58d84befecfa42e6b06 data/ftbic/recipes/shaped/aluminum_wire.json

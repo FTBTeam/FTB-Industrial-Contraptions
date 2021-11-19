@@ -5,6 +5,7 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -52,7 +53,7 @@ public class ElectricBlock extends Block implements SprayPaintable {
 		electricBlockInstance = m;
 		BlockState state = getStateDefinition().any().setValue(SprayPaintable.DARK, false);
 
-		if (electricBlockInstance.facingProperty != null) {
+		if (m.facingProperty != null) {
 			state = state.setValue(electricBlockInstance.facingProperty, Direction.SOUTH);
 		}
 
@@ -236,12 +237,8 @@ public class ElectricBlock extends Block implements SprayPaintable {
 			list.add(new TextComponent("WIP!").withStyle(ChatFormatting.RED));
 		}
 
-		if (electricBlockInstance.energyOutput > 0D) {
-			list.add(new TranslatableComponent("ftbic.energy_output", FTBICUtils.formatEnergy(electricBlockInstance.energyOutput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
-		}
-
 		if (electricBlockInstance.maxEnergyOutput > 0D) {
-			list.add(new TranslatableComponent("ftbic.max_energy_output", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyOutput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+			list.add(new TranslatableComponent("ftbic.energy_output", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyOutput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 		}
 
 		if (electricBlockInstance.energyUsage > 0D) {
@@ -252,8 +249,12 @@ public class ElectricBlock extends Block implements SprayPaintable {
 			}
 		}
 
-		if (electricBlockInstance.maxInput > 0D) {
-			list.add(new TranslatableComponent("ftbic.max_input", FTBICUtils.formatEnergy(electricBlockInstance.maxInput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		if (electricBlockInstance.maxEnergyInput > 0D) {
+			list.add(new TranslatableComponent("ftbic.max_input", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyInput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		}
+
+		if (electricBlockInstance.energyCapacity > 0D && Screen.hasShiftDown()) {
+			list.add(new TranslatableComponent("ftbic.energy_capacity", FTBICUtils.formatEnergy(electricBlockInstance.energyCapacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 		}
 	}
 

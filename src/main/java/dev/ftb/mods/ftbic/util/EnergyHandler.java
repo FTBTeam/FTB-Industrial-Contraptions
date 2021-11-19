@@ -1,11 +1,10 @@
 package dev.ftb.mods.ftbic.util;
 
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.Direction;
 
 public interface EnergyHandler {
-	@Nullable
-	default EnergyTier getInputEnergyTier() {
-		return null;
+	default double getMaxInputEnergy() {
+		return 0D;
 	}
 
 	double getEnergyCapacity();
@@ -24,14 +23,14 @@ public interface EnergyHandler {
 	void setEnergyRaw(double energy);
 
 	default double insertEnergy(double maxInsert, boolean simulate) {
-		EnergyTier tier = getInputEnergyTier();
+		double max = getMaxInputEnergy();
 
-		if (tier == null) {
+		if (max <= 0D) {
 			return 0;
 		}
 
 		double energy = getEnergy();
-		double energyReceived = Math.min(getEnergyCapacity() - energy, Math.min(tier.itemTransferRate, maxInsert));
+		double energyReceived = Math.min(getEnergyCapacity() - energy, Math.min(max, maxInsert));
 
 		if (!simulate && energyReceived > 0D) {
 			setEnergyRaw(energy + energyReceived);
@@ -49,5 +48,9 @@ public interface EnergyHandler {
 
 	default boolean isBurnt() {
 		return false;
+	}
+
+	default boolean isValidEnergyInputSide(Direction direction) {
+		return true;
 	}
 }

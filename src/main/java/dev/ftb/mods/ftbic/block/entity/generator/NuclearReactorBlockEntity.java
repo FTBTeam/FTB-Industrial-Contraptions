@@ -7,12 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public NuclearReactorBlockEntity() {
-		super(FTBICElectricBlocks.NUCLEAR_REACTOR.blockEntity.get(), 54, 0);
-	}
-
-	@Override
-	public void initProperties() {
-		super.initProperties();
+		super(FTBICElectricBlocks.NUCLEAR_REACTOR);
 	}
 
 	@Override

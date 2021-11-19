@@ -3,13 +3,13 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.BurntCableBlock;
 import dev.ftb.mods.ftbic.block.CableBlock;
+import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.BatteryInventory;
 import dev.ftb.mods.ftbic.util.CachedEnergyStorage;
 import dev.ftb.mods.ftbic.util.CachedEnergyStorageOrigin;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
-import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -21,7 +21,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
@@ -33,15 +32,9 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	private CachedEnergyStorage[] connectedEnergyBlocks;
 	public final BatteryInventory chargeBatteryInventory;
 
-	public GeneratorBlockEntity(BlockEntityType<?> type, int inItems, int outItems) {
-		super(type, inItems, outItems);
+	public GeneratorBlockEntity(ElectricBlockInstance type) {
+		super(type);
 		chargeBatteryInventory = new BatteryInventory(this, true);
-	}
-
-	@Override
-	public void initProperties() {
-		super.initProperties();
-		maxEnergyOutput = EnergyTier.LV.transferRate;
 	}
 
 	@Override
@@ -149,6 +142,11 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		return true;
 	}
 
+	@Override
+	public boolean isValidEnergyInputSide(Direction direction) {
+		return false;
+	}
+
 	public boolean isValidConnectedBlock(EnergyHandler storage) {
 		return true;
 	}
@@ -210,7 +208,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			BlockEntity entity = level.getBlockEntity(pos);
 			EnergyHandler handler = entity instanceof EnergyHandler ? (EnergyHandler) entity : null; // entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
 
-			if (handler != null && handler != this && handler.getInputEnergyTier() != null && !handler.isBurnt() && isValidConnectedBlock(handler)) {
+			if (handler != null && handler != this && handler.getMaxInputEnergy() > 0D && !handler.isBurnt() && isValidConnectedBlock(handler) && handler.isValidEnergyInputSide(direction.getOpposite())) {
 				CachedEnergyStorage s = new CachedEnergyStorage();
 				s.origin = origin;
 				s.distance = distance;

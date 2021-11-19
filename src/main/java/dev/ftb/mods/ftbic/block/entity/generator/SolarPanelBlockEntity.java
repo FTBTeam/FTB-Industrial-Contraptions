@@ -1,21 +1,16 @@
 package dev.ftb.mods.ftbic.block.entity.generator;
 
+import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.screen.SolarPanelMenu;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class SolarPanelBlockEntity extends GeneratorBlockEntity {
-	public SolarPanelBlockEntity(BlockEntityType<?> type) {
-		super(type, 0, 0);
-	}
-
-	@Override
-	public void initProperties() {
-		super.initProperties();
+	public SolarPanelBlockEntity(ElectricBlockInstance type) {
+		super(type);
 	}
 
 	@Override

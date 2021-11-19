@@ -15,14 +15,7 @@ public class WindMillBlockEntity extends GeneratorBlockEntity {
 	public double output = 0D;
 
 	public WindMillBlockEntity() {
-		super(FTBICElectricBlocks.WIND_MILL.blockEntity.get(), 0, 0);
-	}
-
-	@Override
-	public void initProperties() {
-		super.initProperties();
-		energyCapacity = 100;
-		maxEnergyOutput = FTBICConfig.WIND_MILL_MAX_OUTPUT;
+		super(FTBICElectricBlocks.WIND_MILL);
 	}
 
 	@Override

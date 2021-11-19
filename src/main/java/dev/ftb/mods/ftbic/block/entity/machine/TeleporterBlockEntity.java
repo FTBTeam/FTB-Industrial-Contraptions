@@ -4,8 +4,8 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
-import dev.ftb.mods.ftbic.util.EnergyTier;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
@@ -33,19 +33,12 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 	public int teleportCooldown;
 
 	public TeleporterBlockEntity() {
-		super(FTBICElectricBlocks.TELEPORTER.blockEntity.get(), 0, 0);
+		super(FTBICElectricBlocks.TELEPORTER);
 		linkedPos = null;
 		linkedDimension = null;
 		preview = null;
 		teleportWarmup = 0;
 		teleportCooldown = 0;
-	}
-
-	@Override
-	public void initProperties() {
-		super.initProperties();
-		inputEnergyTier = EnergyTier.IV;
-		energyCapacity = FTBICConfig.TELEPORTER_CAPACITY;
 	}
 
 	@Override
@@ -118,8 +111,9 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 			if (teleportWarmup < 10) {
 				teleportWarmup += 2;
 			} else {
+				Direction direction = getFacing(Direction.NORTH);
 				energy -= FTBICConfig.TELEPORTER_USE;
-				player.teleportTo(linkedLevel, linkedPos.getX() + 0.5D, linkedPos.getY() + 1.1D, linkedPos.getZ() + 0.5D, 1F, 0F);
+				player.teleportTo(linkedLevel, linkedPos.getX() + 0.5D, linkedPos.getY() + 1.1D, linkedPos.getZ() + 0.5D, direction.toYRot() + 90F, 0F);
 				level.playSound(null, worldPosition.getX() + 0.5D, worldPosition.getY() + 1.5D, worldPosition.getZ() + 0.5D, SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1F, 1F);
 				level.playSound(null, player.getX(), player.getEyeY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1F, 1F);
 				teleportCooldown = 20;

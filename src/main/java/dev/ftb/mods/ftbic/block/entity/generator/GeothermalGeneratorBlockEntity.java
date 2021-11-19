@@ -1,6 +1,5 @@
 package dev.ftb.mods.ftbic.block.entity.generator;
 
-import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.screen.GeothermalGeneratorMenu;
 import net.minecraft.core.Direction;
@@ -23,14 +22,7 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 	private LazyOptional<GeothermalGeneratorTank> tankOptional;
 
 	public GeothermalGeneratorBlockEntity() {
-		super(FTBICElectricBlocks.GEOTHERMAL_GENERATOR.blockEntity.get(), 1, 1);
-	}
-
-	@Override
-	public void initProperties() {
-		super.initProperties();
-		energyCapacity = FTBICConfig.GEOTHERMAL_GENERATOR_CAPACITY;
-		maxEnergyOutput = FTBICConfig.GEOTHERMAL_GENERATOR_OUTPUT;
+		super(FTBICElectricBlocks.GEOTHERMAL_GENERATOR);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block.entity.storage;
 
+import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.generator.GeneratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.BatteryInventory;
 import dev.ftb.mods.ftbic.screen.BatteryBoxMenu;
@@ -11,15 +12,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	public final BatteryInventory dischargeBatteryInventory;
 
-	public BatteryBoxBlockEntity(BlockEntityType<?> type) {
-		super(type, 0, 0);
+	public BatteryBoxBlockEntity(ElectricBlockInstance type) {
+		super(type);
 		dischargeBatteryInventory = new BatteryInventory(this, false);
 	}
 
@@ -45,7 +44,12 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public boolean isValidEnergyOutputSide(Direction direction) {
-		return direction == getBlockState().getValue(BlockStateProperties.FACING);
+		return direction == getFacing(Direction.NORTH);
+	}
+
+	@Override
+	public boolean isValidEnergyInputSide(Direction direction) {
+		return direction != getFacing(Direction.NORTH);
 	}
 
 	@Override
@@ -55,7 +59,7 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
 				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, inputEnergyTier.transferRate), false);
+				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, maxInputEnergy), false);
 
 				if (e > 0) {
 					energyAdded += e;
