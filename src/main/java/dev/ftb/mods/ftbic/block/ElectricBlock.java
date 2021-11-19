@@ -212,7 +212,7 @@ public class ElectricBlock extends Block implements SprayPaintable {
 					electricBlockEntity.setBurnt(false);
 					level.playSound(player, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 0.3F, 0.6F);
 
-					if (!level.isClientSide()) {
+					if (!level.isClientSide() && !player.isCreative()) {
 						player.getItemInHand(hand).shrink(1);
 					}
 

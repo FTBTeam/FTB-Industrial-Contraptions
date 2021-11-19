@@ -164,8 +164,8 @@ public interface FTBICElectricBlocks {
 	ElectricBlockInstance ANTIMATTER_CONSTRUCTOR = register("antimatter_constructor", AntimatterConstructorBlockEntity::new)
 			.advanced()
 			.energyCapacity(FTBICConfig.ANTIMATTER_CONSTRUCTOR_CAPACITY)
-			.maxEnergyInput(FTBICConfig.EV_TRANSFER_RATE)
-			.energyUsage(FTBICConfig.ANTIMATTER_CONSTRUCTOR_USE)
+			.maxEnergyInput(FTBICConfig.IV_TRANSFER_RATE)
+			.energyUsage(1D)
 			.io(1, 1);
 
 	ElectricBlockInstance ADVANCED_POWERED_FURNACE = register("advanced_powered_furnace", AdvancedPoweredFurnaceBlockEntity::new)
@@ -230,11 +230,10 @@ public interface FTBICElectricBlocks {
 	ElectricBlockInstance QUARRY = register("quarry", QuarryBlockEntity::new)
 			.wip()
 			.advanced()
-			.canBurn()
 			.energyCapacity(FTBICConfig.QUARRY_CAPACITY)
-			.maxEnergyInput(FTBICConfig.MV_TRANSFER_RATE)
+			.maxEnergyInput(FTBICConfig.HV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.QUARRY_USE)
-			.io(0, 24);
+			.io(0, 28);
 
 	// Battery Boxes //
 

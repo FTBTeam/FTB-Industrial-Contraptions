@@ -9,6 +9,7 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -53,11 +54,11 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 
 	public void drawProgressBar(PoseStack poseStack, int x, int y, int progress) {
 		if (progress < 24) {
-			blit(poseStack, x + progress, y, getBlitOffset(), progress, 0, 24 - progress, 17, 64, 32);
+			blit(poseStack, x + progress, y, 86 + progress, 167, 24 - progress, 17);
 		}
 
 		if (progress > 0) {
-			blit(poseStack, x, y, getBlitOffset(), 0, 18, progress, 17, 64, 32);
+			blit(poseStack, x, y, 86, 185, progress, 17);
 		}
 	}
 
@@ -106,6 +107,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 	public void drawTank(PoseStack poseStack, int x, int y, FluidStack fluid, int capacity) {
 		blit(poseStack, x, y, 48, 167, 18, 54);
 
+		minecraft.getTextureManager().bind(TextureAtlas.LOCATION_BLOCKS);
 		// render fluid here properly
 
 		double d = fluid.getAmount() / (double) capacity;

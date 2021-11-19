@@ -61,7 +61,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public final ElectricBlockInstance electricBlockInstance;
 	private boolean changed;
 	public double energy;
-	public double energyAdded;
 	public final ItemStack[] inputItems;
 	public final ItemStack[] outputItems;
 	private LazyOptional<?> thisOptional;
@@ -78,7 +77,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		electricBlockInstance = type;
 		changed = false;
 		energy = 0;
-		energyAdded = 0;
 		inputItems = new ItemStack[type.inputItemCount];
 		outputItems = new ItemStack[type.outputItemCount];
 		Arrays.fill(inputItems, ItemStack.EMPTY);
@@ -231,27 +229,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		return super.getCapability(cap, side);
 	}
 
-	protected void handleEnergyInput() {
-		if (isBurnt() || level.isClientSide()) {
-			return;
-		}
-
-		if (maxInputEnergy > 0D && energyAdded > 0) {
-			if (energyAdded > maxInputEnergy) {
-				setBurnt(true);
-			} else if (energy < energyCapacity) {
-				double e = Math.min(energyAdded, energyCapacity - energy);
-
-				if (e > 0D) {
-					energy += e;
-					energyChanged(energy - e);
-				}
-			}
-
-			energyAdded = 0;
-		}
-	}
-
 	protected void handleChanges() {
 		if (changeStateTicks > 0) {
 			changeStateTicks--;
@@ -277,7 +254,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	@Override
 	public void tick() {
-		handleEnergyInput();
 		handleChanges();
 	}
 
@@ -289,19 +265,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public void setChangedNow() {
 		changed = false;
 		level.blockEntityChanged(worldPosition, this);
-	}
-
-	@Override
-	public double insertEnergy(double maxInsert, boolean simulate) {
-		if (maxInputEnergy <= 0D) {
-			return 0;
-		}
-
-		if (!simulate) {
-			energyAdded += maxInsert;
-		}
-
-		return maxInsert;
 	}
 
 	@Override
@@ -517,8 +480,13 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	@Override
+	public final boolean canBurn() {
+		return electricBlockInstance.canBurn;
+	}
+
+	@Override
 	public final void setBurnt(boolean b) {
-		if (burnt != b && !level.isClientSide() && electricBlockInstance.canBurn) {
+		if (burnt != b && !level.isClientSide() && canBurn()) {
 			burnt = b;
 			setChanged();
 			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);

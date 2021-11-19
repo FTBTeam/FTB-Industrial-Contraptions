@@ -62,7 +62,7 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, maxInputEnergy), false);
 
 				if (e > 0) {
-					energyAdded += e;
+					energy += e;
 
 					if (battery.isEmpty()) {
 						dischargeBatteryInventory.setStackInSlot(0, ItemStack.EMPTY);

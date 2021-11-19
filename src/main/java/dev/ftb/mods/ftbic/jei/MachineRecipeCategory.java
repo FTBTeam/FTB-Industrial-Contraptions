@@ -46,11 +46,10 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 		serializer = s.get();
 		titleKey = "recipe." + FTBIC.MOD_ID + "." + serializer.getRegistryName().getPath();
 		electricBlockInstance = item;
-		ResourceLocation progressTexture = new ResourceLocation(FTBIC.MOD_ID + ":textures/gui/" + serializer.getRegistryName().getPath() + ".png");
 		background = guiHelper.createBlankDrawable(serializer.guiWidth, serializer.guiHeight);
 		icon = guiHelper.createDrawableIngredient(new ItemStack(item.item.get()));
-		arrowOff = guiHelper.drawableBuilder(progressTexture, 0, 0, 24, 17).setTextureSize(32, 64).build();
-		arrowOn = guiHelper.drawableBuilder(progressTexture, 0, 18, 24, 17).setTextureSize(32, 64).buildAnimated(Mth.ceil(FTBICConfig.MACHINE_RECIPE_BASE_TICKS), IDrawableAnimated.StartDirection.LEFT, false);
+		arrowOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 86, 167, 24, 17).setTextureSize(32, 64).build();
+		arrowOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 86, 185, 24, 17).setTextureSize(32, 64).buildAnimated(Mth.ceil(FTBICConfig.MACHINE_RECIPE_BASE_TICKS), IDrawableAnimated.StartDirection.LEFT, false);
 		powerOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 240, 14, 14).setTextureSize(256, 256).build();
 		powerOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 15, 240, 14, 14).setTextureSize(256, 256).buildAnimated(84, IDrawableAnimated.StartDirection.TOP, true);
 		slot = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 0, 167, 18, 18).setTextureSize(256, 256).build();

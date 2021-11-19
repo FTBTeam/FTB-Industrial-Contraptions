@@ -84,8 +84,7 @@ public class FTBICConfig {
 	public static double ROLLER_USE = 2;
 	public static double EXTRUDER_CAPACITY = 800;
 	public static double EXTRUDER_USE = 2;
-	public static double ANTIMATTER_CONSTRUCTOR_CAPACITY = 500_000;
-	public static double ANTIMATTER_CONSTRUCTOR_USE = 1_000;
+	public static double ANTIMATTER_CONSTRUCTOR_CAPACITY = 1_000_000;
 	public static double ADVANCED_POWERED_FURNACE_CAPACITY = 10_000;
 	public static double ADVANCED_POWERED_FURNACE_USE = 16;
 	public static double ADVANCED_MACERATOR_CAPACITY = 10_000;
@@ -101,6 +100,7 @@ public class FTBICConfig {
 	public static double POWERED_CRAFTING_TABLE_USE = 1;
 	public static double QUARRY_CAPACITY = 10_000;
 	public static double QUARRY_USE = 3;
+	public static long QUARRY_BASE_TICKS = 10;
 
 	public static int UPGRADE_LIMIT_PER_SLOT = 4;
 	public static double OVERCLOCKER_SPEED = 1.45;

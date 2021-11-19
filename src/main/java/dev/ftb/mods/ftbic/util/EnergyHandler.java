@@ -23,10 +23,19 @@ public interface EnergyHandler {
 	void setEnergyRaw(double energy);
 
 	default double insertEnergy(double maxInsert, boolean simulate) {
+		if (isBurnt()) {
+			return 0D;
+		}
+
 		double max = getMaxInputEnergy();
 
 		if (max <= 0D) {
 			return 0;
+		}
+
+		if (maxInsert > max && canBurn()) {
+			setBurnt(true);
+			return maxInsert;
 		}
 
 		double energy = getEnergy();
@@ -41,6 +50,10 @@ public interface EnergyHandler {
 	}
 
 	default void energyChanged(double prevEnergy) {
+	}
+
+	default boolean canBurn() {
+		return false;
 	}
 
 	default void setBurnt(boolean burnt) {

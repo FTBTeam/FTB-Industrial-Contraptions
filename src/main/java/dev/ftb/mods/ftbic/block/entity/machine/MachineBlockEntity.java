@@ -102,7 +102,25 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 
 	@Override
 	public void tick() {
-		handleEnergyInput();
+		if (!isBurnt() && !level.isClientSide() && energy < energyCapacity) {
+			ItemStack battery = batteryInventory.getStackInSlot(0);
+
+			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
+				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
+				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, maxInputEnergy), false);
+
+				if (e > 0) {
+					energy += e;
+
+					if (battery.isEmpty()) {
+						batteryInventory.setStackInSlot(0, ItemStack.EMPTY);
+					}
+
+					setChanged();
+				}
+			}
+		}
+
 		handleProcessing();
 		handleChanges();
 	}
@@ -137,30 +155,6 @@ public abstract class MachineBlockEntity extends ElectricBlockEntity implements 
 		}
 
 		return output;
-	}
-
-	@Override
-	protected void handleEnergyInput() {
-		if (!isBurnt() && !level.isClientSide() && energy < energyCapacity) {
-			ItemStack battery = batteryInventory.getStackInSlot(0);
-
-			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
-				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, maxInputEnergy), false);
-
-				if (e > 0) {
-					energyAdded += e;
-
-					if (battery.isEmpty()) {
-						batteryInventory.setStackInSlot(0, ItemStack.EMPTY);
-					}
-
-					setChanged();
-				}
-			}
-		}
-
-		super.handleEnergyInput();
 	}
 
 	public void handleProcessing() {

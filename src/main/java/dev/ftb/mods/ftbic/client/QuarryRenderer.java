@@ -24,14 +24,24 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 
 	@Override
 	public void render(QuarryBlockEntity entity, float delta, PoseStack stack, MultiBufferSource source, int light1, int light2) {
+		if (!entity.laserOn) {
+			return;
+		}
+
+		double x = Mth.lerp(delta, entity.prevLaserX, entity.laserX);
+		double z = Mth.lerp(delta, entity.prevLaserZ, entity.laserZ);
+
+		stack.pushPose();
+		stack.translate(x, entity.laserY, z);
 		renderBeaconBeam(stack, source, delta, 1.0F, entity.getLevel().getGameTime(), 0, 1024, new float[]{1F, 0F, 0F}, 0.2F, 0.25F);
+		stack.popPose();
 	}
 
 	public static void renderBeaconBeam(PoseStack arg, MultiBufferSource arg2, float delta, float g, long tick, int y, int height, float[] color, float h, float k) {
 		int m = y + height;
 		arg.pushPose();
 		arg.translate(0.5D, 0.0D, 0.5D);
-		float n = (float) Math.floorMod(tick, 40L) + delta;
+		float n = (float) Math.floorMod(-tick, 40L) + delta;
 		float o = height < 0 ? n : -n;
 		float p = Mth.frac(o * 0.2F - (float) Mth.floor(o * 0.1F));
 		float q = color[0];
