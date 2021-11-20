@@ -62,6 +62,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> URANIUM_DUST = ItemTags.bind("forge:dusts/uranium");
 	public static final Tag<Item> IRIDIUM_INGOT = ItemTags.bind("forge:ingots/iridium");
 	public static final Tag<Item> BLAZE_ROD = Tags.Items.RODS_BLAZE;
+	public static final Tag<Item> LAPIS = Tags.Items.GEMS_LAPIS;
 	public static final Item PISTON = Items.PISTON;
 	public static final Item LATEX = MyrtreesItems.LATEX.get();
 	public static final Item TREE_TAP = MyrtreesItems.TREE_TAP.get();
@@ -98,6 +99,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item EV_CABLE = FTBICItems.EV_CABLE.get();
 	public static final Item IV_CABLE = FTBICItems.IV_CABLE.get();
 	public static final Item BURNT_CABLE = FTBICItems.BURNT_CABLE.get();
+	public static final Item LANDMARK = FTBICItems.LANDMARK.get();
 
 	public static final Item INDUSTRIAL_GRADE_METAL = FTBICItems.INDUSTRIAL_GRADE_METAL.item.get();
 	public static final Item RUBBER = FTBICItems.RUBBER.item.get();

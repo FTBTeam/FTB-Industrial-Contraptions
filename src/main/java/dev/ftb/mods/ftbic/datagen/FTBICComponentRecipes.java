@@ -278,5 +278,12 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.inputItem(Ingredient.of(COAL_BALL))
 				.outputItem(new ItemStack(COMPRESSED_COAL_BALL))
 				.save(consumer, compressingLoc("compressed_coal_ball"));
+
+		ShapelessRecipeBuilder.shapeless(LANDMARK)
+				.unlockedBy("has_item", has(Items.REDSTONE_TORCH))
+				.group(MODID + ":landmark")
+				.requires(Items.REDSTONE_TORCH)
+				.requires(LAPIS)
+				.save(consumer, shapelessLoc("landmark"));
 	}
 }

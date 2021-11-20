@@ -47,6 +47,7 @@ public interface FTBICItems {
 	Supplier<BlockItem> EV_CABLE = blockItem("ev_cable", FTBICBlocks.EV_CABLE);
 	Supplier<BlockItem> IV_CABLE = blockItem("iv_cable", FTBICBlocks.IV_CABLE);
 	Supplier<BlockItem> BURNT_CABLE = blockItem("burnt_cable", FTBICBlocks.BURNT_CABLE);
+	Supplier<BlockItem> LANDMARK = blockItem("landmark", FTBICBlocks.LANDMARK);
 
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");

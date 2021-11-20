@@ -117,6 +117,7 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.EV_CABLE, "EV Cable");
 			addBlock(FTBICBlocks.IV_CABLE, "IV Cable");
 			addBlock(FTBICBlocks.BURNT_CABLE, "Burnt Cable");
+			addBlock(FTBICBlocks.LANDMARK, "Landmark");
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -412,6 +413,10 @@ public class FTBICDataGenHandler {
 			orientable("block/iron_furnace_off", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_off"), modLoc("block/iron_furnace_top"));
 			orientable("block/iron_furnace_on", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_on"), modLoc("block/iron_furnace_top"));
 
+			withExistingParent("block/landmark", "block/template_torch")
+					.texture("torch", modLoc("block/landmark"))
+			;
+
 			electric("basic_generator_off", "basic_generator_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
 			electric("basic_generator_on", "basic_generator_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
 			electric("geothermal_generator_off", "geothermal_generator_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
@@ -507,6 +512,8 @@ public class FTBICDataGenHandler {
 				builder.part().modelFile(models().getExistingFile(modLoc("block/" + id + "_connection"))).rotationX(90).rotationY(90).addModel().condition(CableBlock.CONNECTION[4], true).end();
 				builder.part().modelFile(models().getExistingFile(modLoc("block/" + id + "_connection"))).rotationX(90).rotationY(270).addModel().condition(CableBlock.CONNECTION[5], true).end();
 			}
+
+			simpleBlock(FTBICBlocks.LANDMARK.get(), models().getExistingFile(modLoc("block/landmark")));
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
@@ -640,6 +647,8 @@ public class FTBICDataGenHandler {
 				;
 			}
 
+			singleTexture("landmark", mcLoc("item/generated"), "layer0", modLoc("block/landmark"));
+
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
 					withExistingParent(machine.id, modLoc("block/electric/light/" + machine.id + (machine.canBeActive ? "_off" : "")));
@@ -734,6 +743,8 @@ public class FTBICDataGenHandler {
 			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
 				dropSelf(cable.get());
 			}
+
+			dropSelf(FTBICBlocks.LANDMARK.get());
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (machine.canBurn) {

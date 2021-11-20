@@ -6,7 +6,7 @@
 			"entries": [
 				{
 					"type": "minecraft:item",
-					"name": "ftbic:quarry"
+					"name": "ftbic:landmark"
 				}
 			],
 			"conditions": [

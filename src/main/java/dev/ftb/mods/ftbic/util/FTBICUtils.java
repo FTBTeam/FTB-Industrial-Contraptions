@@ -35,6 +35,7 @@ public class FTBICUtils {
 	public static final LootItemConditionType BURNT_BLOCK = Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(FTBIC.MOD_ID, "burnt_block"), new LootItemConditionType(new BurntBlockCondition.Serializer()));
 
 	public static final Direction[] DIRECTIONS = Direction.values();
+	public static final Direction[] HORIZONTAL_DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
 
 	public static void init() {
 	}

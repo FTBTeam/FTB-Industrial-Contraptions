@@ -20,7 +20,7 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 	public double laserZ = 0.5D;
 	public double prevLaserX = 0.5D;
 	public double prevLaserZ = 0.5D;
-	public boolean paused = true;
+	public boolean paused = false;
 	public long miningTick = 0L;
 	public int offsetX = 1;
 	public int offsetZ = -2;
@@ -106,26 +106,37 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 		if (!paused && level != null) {
 			Direction direction = getFacing(Direction.NORTH);
 
-			int moveTicks = (int) (FTBICConfig.QUARRY_MOVE_TICKS * 0.25D);
-			int totalTicks = (int) ((FTBICConfig.QUARRY_MINE_TICKS * 0.25D) + moveTicks);
+			int moveTicks = Math.max((int) (FTBICConfig.QUARRY_MOVE_TICKS * 0.5), 1);
+			int totalTicks = Math.max((int) (FTBICConfig.QUARRY_MINE_TICKS * 0.15), 1) + moveTicks;
 			int ltick = (int) (miningTick % (long) totalTicks);
 
-			if (ltick == moveTicks) {
+			if (ltick <= moveTicks) {
 				long s = (long) sizeX * (long) sizeZ * 2L;
-				int lpos = (int) ((miningTick / totalTicks) % s);
+				int lpos0 = (int) (((miningTick / totalTicks) - 1L) % s);
+				int lpos1 = (int) ((miningTick / totalTicks) % s);
 
-				if (lpos >= s / 2L) {
-					lpos = (int) (s - lpos - 1);
+				if (lpos0 < 0) {
+					lpos0 += s;
 				}
 
-				int row = lpos / sizeX;
-				int col = row % 2 == 0 ? (lpos % sizeX) : (sizeX - 1 - (lpos % sizeX));
-				laserX = (offsetX + col) + 0.5D;
-				laserZ = (offsetZ + row) + 0.5D;
-				laserY = level.getHeight(Heightmap.Types.MOTION_BLOCKING, worldPosition.getX() + Mth.floor(laserX), worldPosition.getZ() + Mth.floor(laserZ)) - worldPosition.getY() - 1;
-			}
+				if (lpos0 >= s / 2L) {
+					lpos0 = (int) (s - lpos0 - 1);
+				}
 
-			if (ltick == totalTicks - 1 && !level.isClientSide() && worldPosition.getY() + laserY > 0) {
+				if (lpos1 >= s / 2L) {
+					lpos1 = (int) (s - lpos1 - 1);
+				}
+
+				int row0 = lpos0 / sizeX;
+				int col0 = row0 % 2 == 0 ? (lpos0 % sizeX) : (sizeX - 1 - (lpos0 % sizeX));
+				int row1 = lpos1 / sizeX;
+				int col1 = row1 % 2 == 0 ? (lpos1 % sizeX) : (sizeX - 1 - (lpos1 % sizeX));
+				float lerp = ltick / (float) moveTicks;
+
+				laserX = (offsetX + Mth.lerp(lerp, col0, col1)) + 0.5D;
+				laserZ = (offsetZ + Mth.lerp(lerp, row0, row1)) + 0.5D;
+				laserY = getY(worldPosition.getX() + Mth.floor(laserX), worldPosition.getZ() + Mth.floor(laserZ)) - worldPosition.getY();
+			} else if (ltick == totalTicks - 1 && !level.isClientSide() && worldPosition.getY() + laserY > 0) {
 				BlockPos miningPos = worldPosition.offset(laserX, laserY, laserZ);
 
 				if (level.getBlockState(miningPos).getBlock() != Blocks.BEDROCK) {
@@ -142,6 +153,10 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 				FTBIC.PROXY.playLaserSound(level.getGameTime(), x, y, z);
 			}
 		}
+	}
+
+	private int getY(int x, int z) {
+		return level.getHeight(Heightmap.Types.OCEAN_FLOOR, x, z) - 1;
 	}
 
 	@Override
@@ -164,5 +179,8 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 	@Override
 	public boolean savePlacer() {
 		return true;
+	}
+
+	public void landmarkUpdated() {
 	}
 }
