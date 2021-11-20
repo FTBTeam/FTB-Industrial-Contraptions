@@ -34,7 +34,10 @@ public interface EnergyHandler {
 		}
 
 		if (maxInsert > max && canBurn()) {
-			setBurnt(true);
+			if (!simulate) {
+				setBurnt(true);
+			}
+
 			return maxInsert;
 		}
 

@@ -62,13 +62,46 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		}
 	}
 
-	public void drawEnergy(PoseStack poseStack, int x, int y, int energy) {
-		if (energy < 14) {
-			blit(poseStack, x, y, 0, 240, 14, 14 - energy);
-		}
+	public int getEnergyType() {
+		return 0;
+	}
 
-		if (energy > 0) {
-			blit(poseStack, x, y + (14 - energy), 15, 240 + (14 - energy), 14, energy);
+	public void drawEnergy(PoseStack poseStack, int x, int y, int energy) {
+		switch (getEnergyType()) {
+			case 1: {
+				if (energy < 14) {
+					blit(poseStack, x + energy, y, 90 + energy, 240, 14 - energy, 14);
+				}
+
+				if (energy > 0) {
+					blit(poseStack, x, y, 105, 240, energy, 14);
+				}
+
+				break;
+			}
+			case 2: {
+				if (energy < 14) {
+					blit(poseStack, x + energy, y, 120 + energy, 240, 14 - energy, 14);
+				}
+
+				if (energy > 0) {
+					blit(poseStack, x, y, 135, 240, energy, 14);
+				}
+
+				break;
+			}
+			default: {
+				if (energy < 14) {
+					blit(poseStack, x, y, 0, 240, 14, 14 - energy);
+				}
+
+				if (energy > 0) {
+					blit(poseStack, x, y + (14 - energy), 15, 240 + (14 - energy), 14, energy);
+				}
+
+				break;
+			}
+
 		}
 	}
 

@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.client;
 import dev.ftb.mods.ftbic.FTBICCommon;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.screen.AntimatterConstructorScreen;
 import dev.ftb.mods.ftbic.screen.BasicGeneratorScreen;
 import dev.ftb.mods.ftbic.screen.BatteryBoxScreen;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
@@ -36,6 +37,7 @@ public class FTBICClient extends FTBICCommon {
 		MenuScreens.register(FTBICMenus.GEOTHERMAL_GENERATOR.get(), GeothermalGeneratorScreen::new);
 		MenuScreens.register(FTBICMenus.SOLAR_PANEL.get(), SolarPanelScreen::new);
 		MenuScreens.register(FTBICMenus.BATTERY_BOX.get(), BatteryBoxScreen::new);
+		MenuScreens.register(FTBICMenus.ANTIMATTER_CONSTRUCTOR.get(), AntimatterConstructorScreen::new);
 
 		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.QUARRY.blockEntity.get(), QuarryRenderer::new);
 	}

@@ -197,4 +197,9 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 
 		return InteractionResult.SUCCESS;
 	}
+
+	@Override
+	public boolean savePlacer() {
+		return true;
+	}
 }

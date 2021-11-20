@@ -19,4 +19,9 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 		return super.isItemValid(slot, stack) && stack.getItem() instanceof ReactorItem;
 	}
+
+	@Override
+	public boolean savePlacer() {
+		return true;
+	}
 }

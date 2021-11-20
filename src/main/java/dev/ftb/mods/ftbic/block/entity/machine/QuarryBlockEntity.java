@@ -115,4 +115,9 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 	public AABB getRenderBoundingBox() {
 		return INFINITE_EXTENT_AABB;
 	}
+
+	@Override
+	public boolean savePlacer() {
+		return true;
+	}
 }

@@ -85,6 +85,7 @@ public class FTBICConfig {
 	public static double EXTRUDER_CAPACITY = 800;
 	public static double EXTRUDER_USE = 2;
 	public static double ANTIMATTER_CONSTRUCTOR_CAPACITY = 1_000_000;
+	public static double ANTIMATTER_CONSTRUCTOR_BOOST = 6;
 	public static double ADVANCED_POWERED_FURNACE_CAPACITY = 10_000;
 	public static double ADVANCED_POWERED_FURNACE_USE = 16;
 	public static double ADVANCED_MACERATOR_CAPACITY = 10_000;
@@ -116,7 +117,7 @@ public class FTBICConfig {
 	public static boolean ADD_PLATE_RECIPES = true;
 	public static boolean ADD_GEAR_RECIPES = true;
 	public static boolean ADD_CANNED_FOOD_RECIPES = true;
-	public static double SCRAP_CHANCE = 0.25;
+	public static double SCRAP_CHANCE = 0.125;
 
 	public static final List<String> MOD_MATERIAL_PRIORITY = new ArrayList<>(Arrays.asList(
 			"minecraft",

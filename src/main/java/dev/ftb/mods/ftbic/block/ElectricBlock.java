@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -78,6 +79,8 @@ public class ElectricBlock extends Block implements SprayPaintable {
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(SprayPaintable.DARK);
+
+		// Needs to call static instance because createBlockStateDefinition is called before constructor
 
 		if (ElectricBlockInstance.current.facingProperty != null) {
 			builder.add(ElectricBlockInstance.current.facingProperty);
@@ -170,6 +173,19 @@ public class ElectricBlock extends Block implements SprayPaintable {
 
 		if (!level.isClientSide() && !state.getBlock().is(state1.getBlock())) {
 			ElectricBlockEntity.electricNetworkUpdated(level, pos);
+		}
+	}
+
+	@Override
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
+		super.setPlacedBy(level, pos, state, entity, stack);
+
+		if (!level.isClientSide()) {
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+
+			if (blockEntity instanceof ElectricBlockEntity) {
+				((ElectricBlockEntity) blockEntity).onPlacedBy(entity, stack);
+			}
 		}
 	}
 

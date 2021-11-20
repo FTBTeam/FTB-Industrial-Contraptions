@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.OpenMenuFactory;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -20,6 +21,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -44,6 +46,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, EnergyHandler, IItemHandlerModifiable, ContainerData {
@@ -71,6 +74,9 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public double energyCapacity;
 	public double maxEnergyOutput;
 	public double maxInputEnergy;
+
+	public UUID placerId = Util.NIL_UUID;
+	public String placerName = "";
 
 	public ElectricBlockEntity(ElectricBlockInstance type) {
 		super(type.blockEntity.get());
@@ -114,6 +120,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		if (burnt) {
 			tag.putBoolean("Burnt", true);
 		}
+
+		if (!placerId.equals(Util.NIL_UUID)) {
+			tag.putUUID("PlacerId", placerId);
+			tag.putString("PlacerName", placerName);
+		}
 	}
 
 	public void readData(CompoundTag tag) {
@@ -132,6 +143,14 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		}
 
 		burnt = tag.getBoolean("Burnt");
+
+		if (tag.hasUUID("PlacerId")) {
+			placerId = tag.getUUID("PlacerId");
+			placerName = tag.getString("PlacerName");
+		} else {
+			placerId = Util.NIL_UUID;
+			placerName = "";
+		}
 	}
 
 	public void writeNetData(CompoundTag tag) {
@@ -525,5 +544,20 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		}
 
 		return def;
+	}
+
+	public void onPlacedBy(@Nullable LivingEntity entity, ItemStack stack) {
+		if (savePlacer()) {
+			if (entity != null) {
+				placerId = entity.getUUID();
+				placerName = entity.getScoreboardName();
+			} else {
+				level.removeBlock(worldPosition, false);
+			}
+		}
+	}
+
+	public boolean savePlacer() {
+		return false;
 	}
 }

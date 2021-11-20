@@ -25,7 +25,6 @@ public class RecipeCache implements Recipe<NoContainer> {
 	public final ExtrudingRecipeResults extruding = new ExtrudingRecipeResults();
 	public final ReprocessingRecipeResults reprocessing = new ReprocessingRecipeResults();
 	public final CanningMachineRecipeResults canning = new CanningMachineRecipeResults();
-	public final ReconstructingRecipeResults reconstructing = new ReconstructingRecipeResults();
 
 	@Nullable
 	public static RecipeCache get(Level level) {
