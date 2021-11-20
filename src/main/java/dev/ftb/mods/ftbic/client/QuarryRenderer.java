@@ -24,7 +24,7 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 
 	@Override
 	public void render(QuarryBlockEntity entity, float delta, PoseStack stack, MultiBufferSource source, int light1, int light2) {
-		if (!entity.laserOn) {
+		if (entity.paused) {
 			return;
 		}
 
@@ -40,7 +40,7 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 	public static void renderBeaconBeam(PoseStack arg, MultiBufferSource arg2, float delta, float g, long tick, int y, int height, float[] color, float h, float k) {
 		int m = y + height;
 		arg.pushPose();
-		arg.translate(0.5D, 0.0D, 0.5D);
+		// arg.translate(0.5D, 0.0D, 0.5D);
 		float n = (float) Math.floorMod(-tick, 40L) + delta;
 		float o = height < 0 ? n : -n;
 		float p = Mth.frac(o * 0.2F - (float) Mth.floor(o * 0.1F));
