@@ -114,10 +114,8 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 		super.tick();
 
 		if (!paused && level != null) {
-			Direction direction = getFacing(Direction.NORTH);
-
-			int moveTicks = Math.max((int) (FTBICConfig.QUARRY_MOVE_TICKS * 0.5), 1);
-			int totalTicks = Math.max((int) (FTBICConfig.QUARRY_MINE_TICKS * 0.15), 1) + moveTicks;
+			int moveTicks = Math.max((int) (FTBICConfig.QUARRY_MOVE_TICKS), 3);
+			int totalTicks = Math.max((int) (FTBICConfig.QUARRY_MINE_TICKS), 2) + moveTicks;
 			int ltick = (int) (miningTick % (long) totalTicks);
 
 			if (ltick <= moveTicks) {
@@ -247,6 +245,9 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 	@Override
 	public void onPlacedBy(@Nullable LivingEntity entity, ItemStack stack) {
 		super.onPlacedBy(entity, stack);
+		Direction dir = getFacing(Direction.NORTH).getOpposite();
+		laserX = dir.getStepX() + 0.5D;
+		laserZ = dir.getStepZ() + 0.5D;
 		resize();
 	}
 }

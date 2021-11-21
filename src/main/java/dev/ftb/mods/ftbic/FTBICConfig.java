@@ -101,7 +101,7 @@ public class FTBICConfig {
 	public static double POWERED_CRAFTING_TABLE_USE = 1;
 	public static double QUARRY_CAPACITY = 10_000;
 	public static double QUARRY_USE = 3;
-	public static long QUARRY_MINE_TICKS = 60;
+	public static long QUARRY_MINE_TICKS = 40;
 	public static long QUARRY_MOVE_TICKS = 10;
 
 	public static int UPGRADE_LIMIT_PER_SLOT = 4;
