@@ -508,7 +508,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		if (burnt != b && !level.isClientSide() && canBurn()) {
 			burnt = b;
 			setChanged();
-			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
+			syncBlock();
 			electricNetworkUpdated(level, worldPosition);
 
 			if (burnt) {
@@ -559,5 +559,9 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	public boolean savePlacer() {
 		return false;
+	}
+
+	public void syncBlock() {
+		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
 	}
 }

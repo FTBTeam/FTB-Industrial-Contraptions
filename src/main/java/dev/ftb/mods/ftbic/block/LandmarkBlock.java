@@ -1,7 +1,5 @@
 package dev.ftb.mods.ftbic.block;
 
-import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
-import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -10,9 +8,9 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.TorchBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -20,6 +18,10 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.Random;
 
 public class LandmarkBlock extends TorchBlock {
 	public LandmarkBlock() {
@@ -46,7 +48,7 @@ public class LandmarkBlock extends TorchBlock {
 			level.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 		}
 
-		return state;
+		return facing == Direction.DOWN && !canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState() : state;
 	}
 
 	@Override
@@ -69,38 +71,7 @@ public class LandmarkBlock extends TorchBlock {
 	}
 
 	@Override
-	@Deprecated
-	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
-		super.onPlace(state, level, pos, state1, b);
-
-		if (!state.getBlock().is(state1.getBlock())) {
-			for (Direction direction : FTBICUtils.DIRECTIONS) {
-				for (int i = 1; i < 64; i++) {
-					BlockEntity entity = level.getBlockEntity(pos.relative(direction, i));
-
-					if (entity instanceof QuarryBlockEntity) {
-						((QuarryBlockEntity) entity).landmarkUpdated();
-					}
-				}
-			}
-		}
-	}
-
-	@Override
-	@Deprecated
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
-		super.onRemove(state, level, pos, state1, b);
-
-		if (!state.getBlock().is(state1.getBlock())) {
-			for (Direction direction : FTBICUtils.DIRECTIONS) {
-				for (int i = 1; i < 64; i++) {
-					BlockEntity entity = level.getBlockEntity(pos.relative(direction, i));
-
-					if (entity instanceof QuarryBlockEntity) {
-						((QuarryBlockEntity) entity).landmarkUpdated();
-					}
-				}
-			}
-		}
+	@OnlyIn(Dist.CLIENT)
+	public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
 	}
 }

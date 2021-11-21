@@ -413,8 +413,32 @@ public class FTBICDataGenHandler {
 			orientable("block/iron_furnace_off", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_off"), modLoc("block/iron_furnace_top"));
 			orientable("block/iron_furnace_on", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_on"), modLoc("block/iron_furnace_top"));
 
-			withExistingParent("block/landmark", "block/template_torch")
+			withExistingParent("block/landmark", "block/block")
+					.texture("particle", modLoc("block/landmark"))
 					.texture("torch", modLoc("block/landmark"))
+					.texture("torch_side", modLoc("block/landmark_side"))
+					.ao(false)
+					.element()
+					.from(7, 0, 7)
+					.to(9, 9, 9)
+					.shade(false)
+					.face(Direction.DOWN).uvs(7, 13, 9, 15).texture("#torch").end()
+					.face(Direction.UP).uvs(7, 7, 9, 9).texture("#torch").end()
+					.end()
+					.element()
+					.from(7, 0, 0)
+					.to(9, 16, 16)
+					.shade(false)
+					.face(Direction.WEST).uvs(0, 0, 16, 16).texture("#torch").end()
+					.face(Direction.EAST).uvs(0, 0, 16, 16).texture("#torch").end()
+					.end()
+					.element()
+					.from(0, 0, 7)
+					.to(16, 16, 9)
+					.shade(false)
+					.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#torch_side").end()
+					.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#torch_side").end()
+					.end()
 			;
 
 			electric("basic_generator_off", "basic_generator_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);

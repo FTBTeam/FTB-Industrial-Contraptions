@@ -160,7 +160,7 @@ d649dce1e58b141d8258c6331ead82aa2fdf815f assets/ftbic/models/block/iron_furnace_
 10cfe4ddc25214c4ef7c5afcadad03209fe4bb18 assets/ftbic/models/block/iron_furnace_on.json
 c773c8cb9bef3d2a8877326925f43312cb7072f3 assets/ftbic/models/block/iv_cable_base.json
 e24ddf5cc18466f6d2fedd2afe66033a22f70974 assets/ftbic/models/block/iv_cable_connection.json
-13ad1d026b267930bd1c7768c304d0ea901ad7c8 assets/ftbic/models/block/landmark.json
+e9a9c4032caf1e7457d6ad30a045c71909cb524d assets/ftbic/models/block/landmark.json
 1391b7c66f583f86c901049a66bef95f62832097 assets/ftbic/models/block/lv_cable_base.json
 9055645a84ad20af4a4317600e4eec4d79cae6e3 assets/ftbic/models/block/lv_cable_connection.json
 09829aabc587a31bf54c049d3dc3022dc970e262 assets/ftbic/models/block/machine_block.json
@@ -301,7 +301,7 @@ b24685989202777e06aacb85171da6cf4fd1ce2b assets/ftbic/textures/block/electric/da
 589b4bdec8b1a96fca919fd8394e950b0ad280a4 assets/ftbic/textures/block/electric/dark/compressor_top.png
 65493bb2c9791b17270805bb730267823893844f assets/ftbic/textures/block/electric/dark/ev_battery_box_in.png
 c13027983e20e04c5966d4aea5fff26333194435 assets/ftbic/textures/block/electric/dark/ev_battery_box_out.png
-cf389a11489102dd33f2b0dbbef4191355e7ef5f assets/ftbic/textures/block/electric/dark/ev_solar_panel_top.png
+1eb9244499325437f6587e1253de53da637f8554 assets/ftbic/textures/block/electric/dark/ev_solar_panel_top.png
 48e536eb2c29c5a6b3e689741e9fa850f09c0347 assets/ftbic/textures/block/electric/dark/ev_transformer_in.png
 9b02e96424a3d20ea82555cf7aa4ece126444785 assets/ftbic/textures/block/electric/dark/ev_transformer_out.png
 23fad93796f900b84ddea23b0e99fc06c4c423a3 assets/ftbic/textures/block/electric/dark/extruder_front_off.png
@@ -310,12 +310,12 @@ cf389a11489102dd33f2b0dbbef4191355e7ef5f assets/ftbic/textures/block/electric/da
 a62b10d7d9c2b7432ca8ad4ec650e4d0b8af3bb2 assets/ftbic/textures/block/electric/dark/geothermal_generator_front_on.png
 65493bb2c9791b17270805bb730267823893844f assets/ftbic/textures/block/electric/dark/hv_battery_box_in.png
 2baa6730bf1fff9973cd3e0b65124cb443164fa0 assets/ftbic/textures/block/electric/dark/hv_battery_box_out.png
-3231c9eb8211bc18ab12cbd7ac0b5a21c35b0f21 assets/ftbic/textures/block/electric/dark/hv_solar_panel_top.png
+c5b8e0195f7301416be57349571afba686324eca assets/ftbic/textures/block/electric/dark/hv_solar_panel_top.png
 2c3ee1d0f6cde5fd9a03c6f9c61ac92de5d7854b assets/ftbic/textures/block/electric/dark/hv_transformer_in.png
 319bb00752cc2b5c457839f3ca47fcc840f15920 assets/ftbic/textures/block/electric/dark/hv_transformer_out.png
 98da21eb2e15b1c35a10f8ae327f4279209220a2 assets/ftbic/textures/block/electric/dark/lv_battery_box_in.png
 9957aff43ce184884820e17dac78dd75d89c9169 assets/ftbic/textures/block/electric/dark/lv_battery_box_out.png
-9e58f6621f2e1be8adb24853610ab05689f38930 assets/ftbic/textures/block/electric/dark/lv_solar_panel_top.png
+6d6bb76d0e258ec93ffe59ffa72466cd4fc5ea13 assets/ftbic/textures/block/electric/dark/lv_solar_panel_top.png
 fff283ec4ed1dee64bd222b3e09add7f58ca3fe0 assets/ftbic/textures/block/electric/dark/lv_transformer_in.png
 5664cafa13fdcb4b43e59888590a1ddc10e6150a assets/ftbic/textures/block/electric/dark/lv_transformer_out.png
 52d6b22b6ca83c551744a2822327cee36d783176 assets/ftbic/textures/block/electric/dark/macerator_front.png
@@ -323,7 +323,7 @@ e1e730d48cd185eab612568c925dc2ab183fc64e assets/ftbic/textures/block/electric/da
 8169ba67e0421ac911cdfa460f2ec9750b2edee8 assets/ftbic/textures/block/electric/dark/macerator_top_on.png
 0834fad2d669e9d8170de79e38fc49cf02fb205a assets/ftbic/textures/block/electric/dark/mv_battery_box_in.png
 15dbb1a1f4194368fbed7b82af6d3457075108b2 assets/ftbic/textures/block/electric/dark/mv_battery_box_out.png
-3c09c424ef3b4ab280b1573c64494d0b82701039 assets/ftbic/textures/block/electric/dark/mv_solar_panel_top.png
+d9b0d5c354b8307acea8def8d6e2357089d51d89 assets/ftbic/textures/block/electric/dark/mv_solar_panel_top.png
 ed7c2efc7e72b0ec702f528bd91215cfe263c908 assets/ftbic/textures/block/electric/dark/mv_transformer_in.png
 337bfcfdf3a91fcb8286474e919d92880f34e454 assets/ftbic/textures/block/electric/dark/mv_transformer_out.png
 5bca7659260bc1ef71f5cbc381130a2957aae1be assets/ftbic/textures/block/electric/dark/nuclear_reactor_front_off.png
@@ -369,7 +369,7 @@ cddde6f17d29f7dd83926a11268c5f0f6b438063 assets/ftbic/textures/block/electric/li
 cb3c8260b5947cc5772dbccc04fad85dcbbd609c assets/ftbic/textures/block/electric/light/compressor_top.png
 e680b1d3ec2ffdcc630854c558746cde0f94e623 assets/ftbic/textures/block/electric/light/ev_battery_box_in.png
 49734711379bc3068ff6d1457c641dc9b5b08235 assets/ftbic/textures/block/electric/light/ev_battery_box_out.png
-522e79762b5ec5afafe23eb62d573fc51b115307 assets/ftbic/textures/block/electric/light/ev_solar_panel_top.png
+dd6d78135e63573bd9e854834cbba223c186af6a assets/ftbic/textures/block/electric/light/ev_solar_panel_top.png
 cc8a3460c51e0071cde809f5ddc7bcb829f0585c assets/ftbic/textures/block/electric/light/ev_transformer_in.png
 228eaa4fb6c0f844a5b1ea0932e0c4aec8996f92 assets/ftbic/textures/block/electric/light/ev_transformer_out.png
 531495c68e021b0d6c572a7c70063a8a59e3670a assets/ftbic/textures/block/electric/light/extruder_front_off.png
@@ -378,12 +378,12 @@ ebdea0a320c0525aa2bbe7ba622d9c1eb57e143e assets/ftbic/textures/block/electric/li
 5ed384910d0f05b83353a6819a9cdbc6c0d284df assets/ftbic/textures/block/electric/light/geothermal_generator_front_on.png
 e680b1d3ec2ffdcc630854c558746cde0f94e623 assets/ftbic/textures/block/electric/light/hv_battery_box_in.png
 1306e43d126bf382c1dc5cadb46967a2e01569cf assets/ftbic/textures/block/electric/light/hv_battery_box_out.png
-7bdfcfd0400afb10438b9cdae8746335bfb26382 assets/ftbic/textures/block/electric/light/hv_solar_panel_top.png
+a995691873f6f8eb502bfb289839e4f607c65c99 assets/ftbic/textures/block/electric/light/hv_solar_panel_top.png
 d190c2766c8ccc55ba283977fcc7615c10013806 assets/ftbic/textures/block/electric/light/hv_transformer_in.png
 a9d626a37d9405035c39435d6bc81cc01daeef10 assets/ftbic/textures/block/electric/light/hv_transformer_out.png
 5c167f9392a2c632b5e805d3b90357ccc9d23e90 assets/ftbic/textures/block/electric/light/lv_battery_box_in.png
 9e942f4695983b3af88e913e7953e7d5380d0f8b assets/ftbic/textures/block/electric/light/lv_battery_box_out.png
-bdee00ba9e45be688f58e9ab7017b147ea64be89 assets/ftbic/textures/block/electric/light/lv_solar_panel_top.png
+9fff5607a49eb7f52cd11b0aed38dd544abae59a assets/ftbic/textures/block/electric/light/lv_solar_panel_top.png
 48c4541874e64489481e639aa822d61f18715a38 assets/ftbic/textures/block/electric/light/lv_transformer_in.png
 d09a15591044c65c4deda364e3ed2a1341318159 assets/ftbic/textures/block/electric/light/lv_transformer_out.png
 0371ffdcfaa154aa50a2a0315c1cfe5142781872 assets/ftbic/textures/block/electric/light/macerator_front.png
@@ -391,7 +391,7 @@ d09a15591044c65c4deda364e3ed2a1341318159 assets/ftbic/textures/block/electric/li
 5eff77223d1e8e72df0091e6cdb1f53b44b706ee assets/ftbic/textures/block/electric/light/macerator_top_on.png
 9c0bfc3bc046c73c1587b90ffdd93eb1830552ac assets/ftbic/textures/block/electric/light/mv_battery_box_in.png
 493a7aeee887d9a236ed1480d469226c2fad5b22 assets/ftbic/textures/block/electric/light/mv_battery_box_out.png
-692a4153403376f3cefefa04299f56a3627eedbb assets/ftbic/textures/block/electric/light/mv_solar_panel_top.png
+a5b81eea37c220da4ba9be3bf2afdbfab0da5cf4 assets/ftbic/textures/block/electric/light/mv_solar_panel_top.png
 bfcf07a61778379b0dd8690d4dbb16a457b4bb4b assets/ftbic/textures/block/electric/light/mv_transformer_in.png
 58ec8988028d6dd28676d6d175b8d2214e8f9963 assets/ftbic/textures/block/electric/light/mv_transformer_out.png
 44d42bd0afef6ddbc922c6f300c7096619c874b1 assets/ftbic/textures/block/electric/light/nuclear_reactor_front_off.png

@@ -5,66 +5,244 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
+import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
 public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 	private static final RenderType BEAM_1 = RenderType.beaconBeam(BeaconRenderer.BEAM_LOCATION, false);
 	private static final RenderType BEAM_2 = RenderType.beaconBeam(BeaconRenderer.BEAM_LOCATION, true);
+	private static final ResourceLocation QUARRY_FRAME_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_frame.png");
+	private static final ResourceLocation QUARRY_MODEL_LIGHT_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_model_light.png");
+	private static final ResourceLocation QUARRY_MODEL_DARK_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_model_dark.png");
 
-	public QuarryRenderer(BlockEntityRenderDispatcher arg) {
-		super(arg);
+	private final ModelPart quarryFrameWE;
+	private final ModelPart quarryFrameSN;
+	private final ModelPart quarryFrameW;
+	private final ModelPart quarryFrameE;
+	private final ModelPart quarryFrameS;
+	private final ModelPart quarryFrameN;
+	private final ModelPart quarryBar;
+	private final ModelPart quarryBarEnd;
+	private final ModelPart quarryHead;
+
+	private static ModelPart make(int tw, int th, int tx, int ty, float x, float y, float z, float w, float h, float d) {
+		ModelPart part = new ModelPart(tw, th, tx, ty);
+		part.addBox(x, y, z, w, h, d, 0, false);
+		return part;
+	}
+
+	public QuarryRenderer(BlockEntityRenderDispatcher dispatcher) {
+		super(dispatcher);
+
+		quarryFrameWE = make(64, 32, 0, 0, -8, -1, -1, 16, 2, 2);
+		quarryFrameSN = make(64, 32, 22, 2, -1, -1, -8, 2, 2, 16);
+		quarryFrameW = make(64, 32, 0, 10, -8, -1, -1, 7, 2, 2);
+		quarryFrameE = make(64, 32, 0, 5, 1, -1, -1, 7, 2, 2);
+		quarryFrameS = make(64, 32, 19, 5, -1, -1, 1, 2, 2, 7);
+		quarryFrameN = make(64, 32, 44, 5, -1, -1, -8, 2, 2, 7);
+		quarryBar = make(64, 16, 0, 0, -8, -1, -1, 16, 2, 2);
+		quarryBarEnd = make(64, 16, 0, 10, -1.5F, -1.5F, -1.5F, 3, 3, 3);
+		quarryHead = make(64, 16, 32, 0, -4, -4, -4, 8, 8, 8);
+	}
+
+	private int getLight(QuarryBlockEntity entity, BlockPos.MutableBlockPos pos, double x, double y, double z) {
+		Level level = entity.getLevel();
+
+		if (level == null) {
+			return 0;
+		}
+
+		pos.set(entity.getBlockPos().getX() + x, entity.getBlockPos().getY() + y, entity.getBlockPos().getZ() + z);
+
+		/*
+		int l = level.getBrightness(LightLayer.SKY, pos);
+		return l << 20 | l << 4;
+		 */
+
+		return LevelRenderer.getLightColor(level, pos);
 	}
 
 	@Override
-	public void render(QuarryBlockEntity entity, float delta, PoseStack stack, MultiBufferSource source, int light1, int light2) {
-		if (entity.paused) {
-			return;
+	public void render(QuarryBlockEntity entity, float delta, PoseStack matrices, MultiBufferSource source, int light1, int overlay) {
+		VertexConsumer frameConsumer = source.getBuffer(RenderType.entityCutout(QUARRY_FRAME_TEXTURE));
+		BlockPos.MutableBlockPos lpos = new BlockPos.MutableBlockPos();
+		float scale = 0.97F;
+
+		for (int x = 0; x < entity.sizeX; x++) {
+			matrices.pushPose();
+			matrices.translate(entity.offsetX + x + 0.5D, 0.5D, entity.offsetZ - 0.5D);
+			matrices.scale(1F, scale, scale);
+			quarryFrameWE.render(matrices, frameConsumer, getLight(entity, lpos, entity.offsetX + x, 0.5D, entity.offsetZ - 0.5D), overlay);
+			matrices.popPose();
+
+			matrices.pushPose();
+			matrices.translate(entity.offsetX + x + 0.5D, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ);
+			matrices.scale(1F, scale, scale);
+			quarryFrameWE.render(matrices, frameConsumer, getLight(entity, lpos, entity.offsetX + x, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ), overlay);
+			matrices.popPose();
 		}
 
-		double x = Mth.lerp(delta, entity.prevLaserX, entity.laserX);
-		double z = Mth.lerp(delta, entity.prevLaserZ, entity.laserZ);
+		for (int z = 0; z < entity.sizeZ; z++) {
+			matrices.pushPose();
+			matrices.translate(entity.offsetX - 0.5D, 0.5D, entity.offsetZ + z + 0.5D);
+			matrices.scale(scale, scale, 1F);
+			quarryFrameSN.render(matrices, frameConsumer, getLight(entity, lpos, entity.offsetX - 0.5D, 0.5D, entity.offsetZ + z), overlay);
+			matrices.popPose();
 
-		stack.pushPose();
-		stack.translate(x, entity.laserY, z);
-		renderBeaconBeam(stack, source, delta, 1.0F, entity.getLevel().getGameTime(), 0, 1024, new float[]{1F, 0F, 0F}, 0.2F, 0.25F);
-		stack.popPose();
+			matrices.pushPose();
+			matrices.translate(entity.offsetX + 0.5D + entity.sizeX, 0.5D, entity.offsetZ + z + 0.5D);
+			matrices.scale(scale, scale, 1F);
+			quarryFrameSN.render(matrices, frameConsumer, getLight(entity, lpos, entity.offsetX + 0.5D + entity.sizeX, 0.5D, entity.offsetZ + z), overlay);
+			matrices.popPose();
+		}
+
+		int lightNW = getLight(entity, lpos, entity.offsetX - 0.5D, 0.5D, entity.offsetZ - 0.5D);
+		int lightNE = getLight(entity, lpos, entity.offsetX + 0.5D + entity.sizeX, 0.5D, entity.offsetZ - 0.5D);
+		int lightSW = getLight(entity, lpos, entity.offsetX - 0.5D, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ);
+		int lightSE = getLight(entity, lpos, entity.offsetX + 0.5D + entity.sizeX, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ);
+
+		matrices.pushPose();
+		matrices.translate(entity.offsetX - 0.5D, 0.5D, entity.offsetZ - 0.5D);
+		quarryFrameS.render(matrices, frameConsumer, lightNW, overlay);
+		quarryFrameE.render(matrices, frameConsumer, lightNW, overlay);
+		matrices.popPose();
+
+		matrices.pushPose();
+		matrices.translate(entity.offsetX + 0.5D + entity.sizeX, 0.5D, entity.offsetZ - 0.5D);
+		quarryFrameS.render(matrices, frameConsumer, lightNE, overlay);
+		quarryFrameW.render(matrices, frameConsumer, lightNE, overlay);
+		matrices.popPose();
+
+		matrices.pushPose();
+		matrices.translate(entity.offsetX - 0.5D, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ);
+		quarryFrameN.render(matrices, frameConsumer, lightSW, overlay);
+		quarryFrameE.render(matrices, frameConsumer, lightSW, overlay);
+		matrices.popPose();
+
+		matrices.pushPose();
+		matrices.translate(entity.offsetX + 0.5D + entity.sizeX, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ);
+		quarryFrameN.render(matrices, frameConsumer, lightSE, overlay);
+		quarryFrameW.render(matrices, frameConsumer, lightSE, overlay);
+		matrices.popPose();
+
+		VertexConsumer modelConsumer = source.getBuffer(RenderType.entityCutout(entity.getBlockState().getValue(ElectricBlock.DARK) ? QUARRY_MODEL_DARK_TEXTURE : QUARRY_MODEL_LIGHT_TEXTURE));
+
+		matrices.pushPose();
+		matrices.translate(entity.offsetX - 0.5D, 0.5D, entity.offsetZ - 0.5D);
+		quarryBarEnd.render(matrices, frameConsumer, lightNW, overlay);
+		matrices.popPose();
+
+		matrices.pushPose();
+		matrices.translate(entity.offsetX + 0.5D + entity.sizeX, 0.5D, entity.offsetZ - 0.5D);
+		quarryBarEnd.render(matrices, frameConsumer, lightNE, overlay);
+		matrices.popPose();
+
+		matrices.pushPose();
+		matrices.translate(entity.offsetX - 0.5D, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ);
+		quarryBarEnd.render(matrices, frameConsumer, lightSW, overlay);
+		matrices.popPose();
+
+		matrices.pushPose();
+		matrices.translate(entity.offsetX + 0.5D + entity.sizeX, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ);
+		quarryBarEnd.render(matrices, frameConsumer, lightSE, overlay);
+		matrices.popPose();
+
+		double lx = Mth.lerp(delta, entity.prevLaserX, entity.laserX);
+		double lz = Mth.lerp(delta, entity.prevLaserZ, entity.laserZ);
+		int headLight = getLight(entity, lpos, lx, 0.5D, lz);
+
+		matrices.pushPose();
+		matrices.translate(lx, 0.5D, lz);
+		quarryHead.render(matrices, modelConsumer, headLight, overlay);
+		matrices.popPose();
+
+		quarryBar.yRot = 0F;
+
+		for (int x = 0; x <= entity.sizeX; x++) {
+			matrices.pushPose();
+			matrices.translate(entity.offsetX + x, 0.5D, lz);
+			quarryBar.render(matrices, modelConsumer, headLight, overlay);
+			matrices.popPose();
+		}
+
+		quarryBar.yRot = (float) (Math.PI / 2D);
+
+		for (int z = 0; z <= entity.sizeZ; z++) {
+			matrices.pushPose();
+			matrices.translate(lx, 0.5D, entity.offsetZ + z);
+			quarryBar.render(matrices, modelConsumer, headLight, overlay);
+			matrices.popPose();
+		}
+
+		matrices.pushPose();
+		matrices.translate(entity.offsetX - 0.5D, 0.5D, lz);
+		quarryBarEnd.render(matrices, modelConsumer, getLight(entity, lpos, entity.offsetX - 0.5D, 0.5D, lz), overlay);
+		matrices.popPose();
+
+		matrices.pushPose();
+		matrices.translate(entity.offsetX + 0.5D + entity.sizeX, 0.5D, lz);
+		quarryBarEnd.render(matrices, modelConsumer, getLight(entity, lpos, entity.offsetX + 0.5D + entity.sizeX, 0.5D, lz), overlay);
+		matrices.popPose();
+
+		matrices.pushPose();
+		matrices.translate(lx, 0.5D, entity.offsetZ - 0.5D);
+		quarryBarEnd.render(matrices, modelConsumer, getLight(entity, lpos, lx, 0.5D, entity.offsetZ - 0.5D), overlay);
+		matrices.popPose();
+
+		matrices.pushPose();
+		matrices.translate(lx, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ);
+		quarryBarEnd.render(matrices, modelConsumer, getLight(entity, lpos, lx, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ), overlay);
+		matrices.popPose();
+
+		if (!entity.paused) {
+			matrices.pushPose();
+			matrices.translate(lx, entity.laserY, lz);
+			renderBeaconBeam(matrices, source, delta, 1.0F, entity.getLevel().getGameTime(), 0, -entity.laserY, new float[]{1F, 0F, 0F}, 0.2F, 0.25F);
+			matrices.popPose();
+		}
 	}
 
-	public static void renderBeaconBeam(PoseStack arg, MultiBufferSource arg2, float delta, float g, long tick, int y, int height, float[] color, float h, float k) {
+	public static void renderBeaconBeam(PoseStack matrices, MultiBufferSource source, float delta, float g, long tick, int y, int height, float[] color, float h, float k) {
 		int m = y + height;
-		arg.pushPose();
-		// arg.translate(0.5D, 0.0D, 0.5D);
+		matrices.pushPose();
+		matrices.translate(0D, 0.5D, 0D);
 		float n = (float) Math.floorMod(-tick, 40L) + delta;
 		float o = height < 0 ? n : -n;
 		float p = Mth.frac(o * 0.2F - (float) Mth.floor(o * 0.1F));
 		float q = color[0];
 		float r = color[1];
 		float s = color[2];
-		arg.pushPose();
-		arg.mulPose(Vector3f.YP.rotationDegrees(n * 2.25F - 45.0F));
+		matrices.pushPose();
+		matrices.mulPose(Vector3f.YP.rotationDegrees(n * 2.25F - 45.0F));
 		float af;
 		float ai;
 		float aj = -h;
 		float aa = -h;
 		float ap = -1.0F + p;
 		float aq = (float) height * g * (0.5F / h) + ap;
-		renderPart(arg, arg2.getBuffer(BEAM_1), q, r, s, 1.0F, y, m, 0.0F, h, h, 0.0F, aj, 0.0F, 0.0F, aa, 0.0F, 1.0F, aq, ap);
-		arg.popPose();
+		renderPart(matrices, source.getBuffer(BEAM_1), q, r, s, 1.0F, y, m, 0.0F, h, h, 0.0F, aj, 0.0F, 0.0F, aa, 0.0F, 1.0F, aq, ap);
+		matrices.popPose();
 		af = -k;
 		float ag = -k;
 		ai = -k;
 		aj = -k;
 		ap = -1.0F + p;
 		aq = (float) height * g + ap;
-		renderPart(arg, arg2.getBuffer(BEAM_2), q, r, s, 0.125F, y, m, af, ag, k, ai, aj, k, k, k, 0.0F, 1.0F, aq, ap);
-		arg.popPose();
+		renderPart(matrices, source.getBuffer(BEAM_2), q, r, s, 0.125F, y, m, af, ag, k, ai, aj, k, k, k, 0.0F, 1.0F, aq, ap);
+		matrices.popPose();
 	}
 
 	private static void renderPart(PoseStack arg, VertexConsumer arg2, float f, float g, float h, float i, int j, int k, float l, float m, float n, float o, float p, float q, float r, float s, float t, float u, float v, float w) {

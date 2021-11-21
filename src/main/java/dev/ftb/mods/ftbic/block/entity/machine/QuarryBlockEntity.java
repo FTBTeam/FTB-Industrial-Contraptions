@@ -2,17 +2,27 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 
 public class QuarryBlockEntity extends ElectricBlockEntity {
 	public double laserX = 0.5D;
@@ -20,7 +30,7 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 	public double laserZ = 0.5D;
 	public double prevLaserX = 0.5D;
 	public double prevLaserZ = 0.5D;
-	public boolean paused = false;
+	public boolean paused = true;
 	public long miningTick = 0L;
 	public int offsetX = 1;
 	public int offsetZ = -2;
@@ -144,6 +154,8 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 				}
 			}
 
+			// TODO: Pause quarry if all blocks from previous loop have been bedrock
+
 			miningTick++;
 
 			if (level != null && level.isClientSide()) {
@@ -181,6 +193,60 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 		return true;
 	}
 
-	public void landmarkUpdated() {
+	@Override
+	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
+		if (!level.isClientSide()) {
+			paused = !paused;
+			syncBlock();
+		}
+
+		return InteractionResult.SUCCESS;
+	}
+
+	public void resize() {
+		Block landmark = FTBICBlocks.LANDMARK.get();
+		Direction front = getFacing(Direction.NORTH);
+		Direction back = front.getOpposite();
+		Direction left = front.getClockWise();
+		Direction right = front.getCounterClockWise();
+
+		int offBack = 2;
+		int offLeft = 1;
+		int offRight = 1;
+
+		for (int i = 2; i < 120; i++) {
+			BlockState state = level.getBlockState(worldPosition.relative(back, i));
+
+			if (state.getBlock() == landmark) {
+				offBack = i;
+				break;
+			}
+		}
+
+		for (int i = 2; i < 60; i++) {
+			BlockState state = level.getBlockState(worldPosition.relative(left, i));
+
+			if (state.getBlock() == landmark) {
+				offLeft = i;
+				break;
+			}
+		}
+
+		for (int i = 1; i < 60; i++) {
+			BlockState state = level.getBlockState(worldPosition.relative(right, i));
+
+			if (state.getBlock() == landmark) {
+				offRight = i;
+				break;
+			}
+		}
+
+		syncBlock();
+	}
+
+	@Override
+	public void onPlacedBy(@Nullable LivingEntity entity, ItemStack stack) {
+		super.onPlacedBy(entity, stack);
+		resize();
 	}
 }
