@@ -233,7 +233,7 @@ public interface FTBICElectricBlocks {
 			.energyCapacity(FTBICConfig.QUARRY_CAPACITY)
 			.maxEnergyInput(FTBICConfig.HV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.QUARRY_USE)
-			.io(0, 28);
+			.io(0, 18);
 
 	// Battery Boxes //
 

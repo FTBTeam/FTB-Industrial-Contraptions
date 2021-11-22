@@ -9,6 +9,7 @@ import dev.ftb.mods.ftbic.screen.BatteryBoxScreen;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.screen.GeothermalGeneratorScreen;
 import dev.ftb.mods.ftbic.screen.MachineScreen;
+import dev.ftb.mods.ftbic.screen.QuarryScreen;
 import dev.ftb.mods.ftbic.screen.SolarPanelScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -16,6 +17,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -39,12 +41,13 @@ public class FTBICClient extends FTBICCommon {
 		MenuScreens.register(FTBICMenus.SOLAR_PANEL.get(), SolarPanelScreen::new);
 		MenuScreens.register(FTBICMenus.BATTERY_BOX.get(), BatteryBoxScreen::new);
 		MenuScreens.register(FTBICMenus.ANTIMATTER_CONSTRUCTOR.get(), AntimatterConstructorScreen::new);
+		MenuScreens.register(FTBICMenus.QUARRY.get(), QuarryScreen::new);
 
 		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.QUARRY.blockEntity.get(), QuarryRenderer::new);
 	}
 
 	@Override
-	public void playLaserSound(long tick, double x, double minY, double z) {
+	public void playLaserSound(long tick, double x, double minY, double maxY, double z) {
 		boolean high = tick % 10L == 0L;
 
 		if (!high) {
@@ -57,7 +60,7 @@ public class FTBICClient extends FTBICCommon {
 			return;
 		}
 
-		double y = Math.max(minY, player.getEyeY());
+		double y = Mth.clamp(player.getEyeY(), minY, maxY);
 
 		player.level.playLocalSound(x, y, z, SoundEvents.BEACON_AMBIENT, SoundSource.BLOCKS, 1F, 0.5F, false);
 	}

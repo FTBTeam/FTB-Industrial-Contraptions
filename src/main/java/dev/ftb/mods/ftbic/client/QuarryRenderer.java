@@ -79,18 +79,15 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 	public void render(QuarryBlockEntity entity, float delta, PoseStack matrices, MultiBufferSource source, int light1, int overlay) {
 		VertexConsumer frameConsumer = source.getBuffer(RenderType.entityCutout(QUARRY_FRAME_TEXTURE));
 		BlockPos.MutableBlockPos lpos = new BlockPos.MutableBlockPos();
-		float scale = 0.97F;
 
 		for (int x = 0; x < entity.sizeX; x++) {
 			matrices.pushPose();
 			matrices.translate(entity.offsetX + x + 0.5D, 0.5D, entity.offsetZ - 0.5D);
-			matrices.scale(1F, scale, scale);
 			quarryFrameWE.render(matrices, frameConsumer, getLight(entity, lpos, entity.offsetX + x, 0.5D, entity.offsetZ - 0.5D), overlay);
 			matrices.popPose();
 
 			matrices.pushPose();
 			matrices.translate(entity.offsetX + x + 0.5D, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ);
-			matrices.scale(1F, scale, scale);
 			quarryFrameWE.render(matrices, frameConsumer, getLight(entity, lpos, entity.offsetX + x, 0.5D, entity.offsetZ + 0.5D + entity.sizeZ), overlay);
 			matrices.popPose();
 		}
@@ -98,13 +95,11 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 		for (int z = 0; z < entity.sizeZ; z++) {
 			matrices.pushPose();
 			matrices.translate(entity.offsetX - 0.5D, 0.5D, entity.offsetZ + z + 0.5D);
-			matrices.scale(scale, scale, 1F);
 			quarryFrameSN.render(matrices, frameConsumer, getLight(entity, lpos, entity.offsetX - 0.5D, 0.5D, entity.offsetZ + z), overlay);
 			matrices.popPose();
 
 			matrices.pushPose();
 			matrices.translate(entity.offsetX + 0.5D + entity.sizeX, 0.5D, entity.offsetZ + z + 0.5D);
-			matrices.scale(scale, scale, 1F);
 			quarryFrameSN.render(matrices, frameConsumer, getLight(entity, lpos, entity.offsetX + 0.5D + entity.sizeX, 0.5D, entity.offsetZ + z), overlay);
 			matrices.popPose();
 		}
@@ -220,13 +215,12 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 		matrices.pushPose();
 		matrices.translate(0D, 0.5D, 0D);
 		float n = (float) Math.floorMod(-tick, 40L) + delta;
-		float o = height < 0 ? n : -n;
-		float p = Mth.frac(o * 0.2F - (float) Mth.floor(o * 0.1F));
+		float p = Mth.frac(n * 0.2F - (float) Mth.floor(n * 0.1F));
 		float q = color[0];
 		float r = color[1];
 		float s = color[2];
 		matrices.pushPose();
-		matrices.mulPose(Vector3f.YP.rotationDegrees(n * 2.25F - 45.0F));
+		matrices.mulPose(Vector3f.YP.rotationDegrees(45.0F));
 		float af;
 		float ai;
 		float aj = -h;
@@ -245,21 +239,21 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 		matrices.popPose();
 	}
 
-	private static void renderPart(PoseStack arg, VertexConsumer arg2, float f, float g, float h, float i, int j, int k, float l, float m, float n, float o, float p, float q, float r, float s, float t, float u, float v, float w) {
-		PoseStack.Pose lv = arg.last();
-		Matrix4f lv2 = lv.pose();
-		Matrix3f lv3 = lv.normal();
-		renderQuad(lv2, lv3, arg2, f, g, h, i, j, k, l, m, n, o, t, u, v, w);
-		renderQuad(lv2, lv3, arg2, f, g, h, i, j, k, r, s, p, q, t, u, v, w);
-		renderQuad(lv2, lv3, arg2, f, g, h, i, j, k, n, o, r, s, t, u, v, w);
-		renderQuad(lv2, lv3, arg2, f, g, h, i, j, k, p, q, l, m, t, u, v, w);
+	private static void renderPart(PoseStack matrices, VertexConsumer consumer, float f, float g, float h, float i, int j, int k, float l, float m, float n, float o, float p, float q, float r, float s, float t, float u, float v, float w) {
+		PoseStack.Pose lv = matrices.last();
+		Matrix4f mp = lv.pose();
+		Matrix3f mn = lv.normal();
+		renderQuad(mp, mn, consumer, f, g, h, i, j, k, l, m, n, o, t, u, v, w);
+		renderQuad(mp, mn, consumer, f, g, h, i, j, k, r, s, p, q, t, u, v, w);
+		renderQuad(mp, mn, consumer, f, g, h, i, j, k, n, o, r, s, t, u, v, w);
+		renderQuad(mp, mn, consumer, f, g, h, i, j, k, p, q, l, m, t, u, v, w);
 	}
 
-	private static void renderQuad(Matrix4f arg, Matrix3f arg2, VertexConsumer arg3, float f, float g, float h, float i, int j, int k, float l, float m, float n, float o, float p, float q, float r, float s) {
-		addVertex(arg, arg2, arg3, f, g, h, i, k, l, m, q, r);
-		addVertex(arg, arg2, arg3, f, g, h, i, j, l, m, q, s);
-		addVertex(arg, arg2, arg3, f, g, h, i, j, n, o, p, s);
-		addVertex(arg, arg2, arg3, f, g, h, i, k, n, o, p, r);
+	private static void renderQuad(Matrix4f mp, Matrix3f mn, VertexConsumer consumer, float f, float g, float h, float i, int j, int k, float l, float m, float n, float o, float p, float q, float r, float s) {
+		addVertex(mp, mn, consumer, f, g, h, i, k, l, m, q, r);
+		addVertex(mp, mn, consumer, f, g, h, i, j, l, m, q, s);
+		addVertex(mp, mn, consumer, f, g, h, i, j, n, o, p, s);
+		addVertex(mp, mn, consumer, f, g, h, i, k, n, o, p, r);
 	}
 
 	private static void addVertex(Matrix4f arg, Matrix3f arg2, VertexConsumer arg3, float f, float g, float h, float i, int j, float k, float l, float m, float n) {

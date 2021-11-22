@@ -22,4 +22,5 @@ public interface FTBICMenus {
 	Supplier<MenuType<SolarPanelMenu>> SOLAR_PANEL = register("solar_panel", SolarPanelMenu::new);
 	Supplier<MenuType<BatteryBoxMenu>> BATTERY_BOX = register("battery_box", BatteryBoxMenu::new);
 	Supplier<MenuType<AntimatterConstructorMenu>> ANTIMATTER_CONSTRUCTOR = register("antimatter_constructor", AntimatterConstructorMenu::new);
+	Supplier<MenuType<QuarryMenu>> QUARRY = register("quarry", QuarryMenu::new);
 }

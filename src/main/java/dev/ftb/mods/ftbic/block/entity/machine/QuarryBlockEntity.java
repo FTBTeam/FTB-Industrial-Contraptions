@@ -5,26 +5,41 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.screen.QuarryMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
 public class QuarryBlockEntity extends ElectricBlockEntity {
+	private static final Predicate<ItemEntity> ITEM_ENTITY_PREDICATE = entity -> true;
+
 	public double laserX = 0.5D;
 	public int laserY = 0;
 	public double laserZ = 0.5D;
@@ -36,6 +51,7 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 	public int offsetZ = -2;
 	public int sizeX = 5;
 	public int sizeZ = 5;
+	public int seenBedrock = 0;
 
 	public QuarryBlockEntity() {
 		super(FTBICElectricBlocks.QUARRY);
@@ -57,6 +73,10 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 		tag.putByte("OffsetZ", (byte) offsetZ);
 		tag.putByte("SizeX", (byte) sizeX);
 		tag.putByte("SizeZ", (byte) sizeZ);
+
+		if (seenBedrock > 0) {
+			tag.putShort("SeenBedrock", (short) seenBedrock);
+		}
 	}
 
 	@Override
@@ -71,6 +91,7 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 		offsetZ = tag.getByte("OffsetZ");
 		sizeX = Math.max(tag.getByte("SizeX"), 1);
 		sizeZ = Math.max(tag.getByte("SizeZ"), 1);
+		seenBedrock = tag.getShort("SeenBedrock");
 	}
 
 	@Override
@@ -120,8 +141,8 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 
 			if (ltick <= moveTicks) {
 				long s = (long) sizeX * (long) sizeZ * 2L;
-				int lpos0 = (int) (((miningTick / totalTicks) - 1L) % s);
-				int lpos1 = (int) ((miningTick / totalTicks) % s);
+				int lpos0 = (int) (((miningTick / (long) totalTicks) - 1L) % s);
+				int lpos1 = (int) ((miningTick / (long) totalTicks) % s);
 
 				if (lpos0 < 0) {
 					lpos0 += s;
@@ -147,20 +168,70 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 			} else if (ltick == totalTicks - 1 && !level.isClientSide() && worldPosition.getY() + laserY > 0) {
 				BlockPos miningPos = worldPosition.offset(laserX, laserY, laserZ);
 
-				if (level.getBlockState(miningPos).getBlock() != Blocks.BEDROCK) {
-					level.removeBlock(miningPos, false);
+				if (level.isLoaded(miningPos)) {
+					BlockState state = level.getBlockState(miningPos);
+
+					if (!state.isAir() && state.getBlock() != Blocks.BEDROCK) {
+						seenBedrock = 0;
+						level.getProfiler().push("ftbic_quarry");
+						double lx = worldPosition.getX() + laserX;
+						double ly = worldPosition.getY() + laserY + 0.5D;
+						double lz = worldPosition.getZ() + laserZ;
+
+						BlockEntity minedEntity = state.hasTileEntity() ? level.getBlockEntity(miningPos) : null;
+						LootContext.Builder lootContext = new LootContext.Builder((ServerLevel) level)
+								.withRandom(level.random)
+								.withParameter(LootContextParams.ORIGIN, new Vec3(lx, ly, lz))
+								.withParameter(LootContextParams.TOOL, new ItemStack(Items.NETHERITE_PICKAXE))
+								.withParameter(LootContextParams.BLOCK_STATE, state)
+								.withOptionalParameter(LootContextParams.BLOCK_ENTITY, minedEntity);
+
+						List<ItemStack> list = new ArrayList<>(state.getDrops(lootContext));
+
+						level.removeBlock(miningPos, false);
+
+						AABB aabb = new AABB(lx - 0.7D, ly - 0.7D, lz - 0.7D, lx + 0.7D, ly + 2.7D, lz + 0.7D);
+						List<ItemEntity> itemEntities = level.getEntitiesOfClass(ItemEntity.class, aabb, ITEM_ENTITY_PREDICATE);
+
+						for (ItemEntity itemEntity : itemEntities) {
+							list.add(itemEntity.getItem());
+							itemEntity.kill();
+						}
+
+						for (ItemStack stack : list) {
+							ItemStack stack1 = addOutput(stack);
+
+							if (!stack1.isEmpty()) {
+								Block.popResource(level, worldPosition.relative(getFacing(Direction.NORTH)), stack1);
+								paused = true;
+							}
+						}
+
+						level.getProfiler().pop();
+
+						if (paused) {
+							syncBlock();
+						}
+					} else {
+						seenBedrock++;
+
+						if (seenBedrock >= sizeX * sizeZ) {
+							paused = true;
+							seenBedrock = 0;
+							syncBlock();
+						}
+					}
 				}
 			}
-
-			// TODO: Pause quarry if all blocks from previous loop have been bedrock
 
 			miningTick++;
 
 			if (level != null && level.isClientSide()) {
 				double x = worldPosition.getX() + laserX;
-				double y = worldPosition.getY() + laserY;
+				double minY = worldPosition.getY() + laserY;
+				double maxY = worldPosition.getY() + 0.5D;
 				double z = worldPosition.getZ() + laserZ;
-				FTBIC.PROXY.playLaserSound(level.getGameTime(), x, y, z);
+				FTBIC.PROXY.playLaserSound(level.getGameTime(), x, minY, maxY, z);
 			}
 		}
 	}
@@ -194,8 +265,12 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			paused = !paused;
-			syncBlock();
+			if (player.isCrouching()) {
+				paused = !paused;
+				syncBlock();
+			} else {
+				openMenu((ServerPlayer) player, (id, inventory) -> new QuarryMenu(id, inventory, this, this));
+			}
 		}
 
 		return InteractionResult.SUCCESS;
@@ -249,5 +324,19 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 		laserX = dir.getStepX() + 0.5D;
 		laserZ = dir.getStepZ() + 0.5D;
 		resize();
+	}
+
+	@Override
+	public int getCount() {
+		return 2;
+	}
+
+	@Override
+	public int get(int id) {
+		if (id == 1) {
+			return paused ? 1 : 0;
+		} else {
+			return super.get(id);
+		}
 	}
 }

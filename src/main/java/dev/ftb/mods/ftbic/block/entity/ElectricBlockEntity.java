@@ -458,6 +458,68 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		return slot < inputItems.length;
 	}
 
+	public ItemStack addOutputInSlot(int slot, ItemStack stack) {
+		if (outputItems[slot].isEmpty()) {
+			outputItems[slot] = stack;
+			return ItemStack.EMPTY;
+		}
+
+		ItemStack existing = outputItems[slot];
+
+		int limit = stack.getMaxStackSize();
+
+		if (!existing.isEmpty()) {
+			if (!ItemHandlerHelper.canItemStacksStack(stack, existing)) {
+				return stack;
+			}
+
+			limit -= existing.getCount();
+		}
+
+		if (limit <= 0) {
+			return stack;
+		}
+
+		boolean reachedLimit = stack.getCount() > limit;
+
+		if (existing.isEmpty()) {
+			outputItems[slot] = reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack;
+		} else {
+			existing.grow(reachedLimit ? limit : stack.getCount());
+		}
+
+		inventoryChanged(slot, existing);
+		return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
+	}
+
+	public ItemStack addOutput(ItemStack stack) {
+		if (stack.isEmpty()) {
+			return ItemStack.EMPTY;
+		}
+
+		for (int i = 0; i < outputItems.length; i++) {
+			if (outputItems[i].getItem() == stack.getItem()) {
+				stack = addOutputInSlot(i, stack);
+
+				if (stack.isEmpty()) {
+					return ItemStack.EMPTY;
+				}
+			}
+		}
+
+		for (int i = 0; i < outputItems.length; i++) {
+			if (outputItems[i].isEmpty()) {
+				stack = addOutputInSlot(i, stack);
+
+				if (stack.isEmpty()) {
+					return ItemStack.EMPTY;
+				}
+			}
+		}
+
+		return stack;
+	}
+
 	public void onBroken(Level level, BlockPos pos) {
 		for (ItemStack stack : inputItems) {
 			Block.popResource(level, pos, stack);
@@ -563,5 +625,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	public void syncBlock() {
 		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
+		setChanged();
 	}
 }
