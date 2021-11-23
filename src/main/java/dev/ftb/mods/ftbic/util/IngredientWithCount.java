@@ -6,6 +6,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class IngredientWithCount {
+	public static final IngredientWithCount[] EMPTY = new IngredientWithCount[0];
+
 	public final Ingredient ingredient;
 	public final int count;
 

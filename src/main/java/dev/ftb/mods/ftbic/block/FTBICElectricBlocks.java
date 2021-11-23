@@ -175,7 +175,7 @@ public interface FTBICElectricBlocks {
 			.energyCapacity(FTBICConfig.ADVANCED_POWERED_FURNACE_CAPACITY)
 			.maxEnergyInput(FTBICConfig.MV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.ADVANCED_POWERED_FURNACE_USE)
-			.io(2, 2);
+			.io(1, 1);
 
 	ElectricBlockInstance ADVANCED_MACERATOR = register("advanced_macerator", AdvancedMaceratorBlockEntity::new)
 			.wip()
@@ -184,7 +184,7 @@ public interface FTBICElectricBlocks {
 			.energyCapacity(FTBICConfig.ADVANCED_MACERATOR_CAPACITY)
 			.maxEnergyInput(FTBICConfig.MV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.ADVANCED_MACERATOR_USE)
-			.io(2, 2);
+			.io(1, 2);
 
 	ElectricBlockInstance ADVANCED_CENTRIFUGE = register("advanced_centrifuge", AdvancedCentrifugeBlockEntity::new)
 			.wip()
@@ -193,7 +193,7 @@ public interface FTBICElectricBlocks {
 			.energyCapacity(FTBICConfig.ADVANCED_CENTRIFUGE_CAPACITY)
 			.maxEnergyInput(FTBICConfig.MV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.ADVANCED_CENTRIFUGE_USE)
-			.io(2, 2);
+			.io(1, 2);
 
 	ElectricBlockInstance ADVANCED_COMPRESSOR = register("advanced_compressor", AdvancedCompressorBlockEntity::new)
 			.wip()
@@ -202,7 +202,7 @@ public interface FTBICElectricBlocks {
 			.energyCapacity(FTBICConfig.ADVANCED_COMPRESSOR_CAPACITY)
 			.maxEnergyInput(FTBICConfig.MV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.ADVANCED_COMPRESSOR_USE)
-			.io(2, 2);
+			.io(1, 1);
 
 	ElectricBlockInstance TELEPORTER = register("teleporter", TeleporterBlockEntity::new)
 			.advanced()

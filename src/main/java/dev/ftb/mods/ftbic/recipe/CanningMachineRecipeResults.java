@@ -5,7 +5,7 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
-import dev.ftb.mods.ftbic.util.ItemPair;
+import dev.ftb.mods.ftbic.util.ItemKeyPair;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
 import dev.ftb.mods.ftbic.util.StackWithChance;
 import net.minecraft.resources.ResourceLocation;
@@ -33,7 +33,7 @@ public class CanningMachineRecipeResults extends MachineRecipeResults {
 
 	@Override
 	public Object createKey(ItemStack[] inputs) {
-		return new ItemPair(inputs[0].getItem(), inputs[1].getItem());
+		return new ItemKeyPair(inputs[0], inputs[1]);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.recipe;
 
+import dev.ftb.mods.ftbic.util.ItemKey;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -13,7 +14,9 @@ public abstract class MachineRecipeResults {
 	private final Map<Object, MachineProcessingResult> cache = new HashMap<>();
 
 	public MachineProcessingResult getResult(Level level, ItemStack[] inputs, boolean checkCount) {
-		if (inputs.length < getRequiredItems()) {
+		int required = getRequiredItems();
+
+		if (inputs.length < required) {
 			return MachineProcessingResult.NONE;
 		}
 
@@ -45,7 +48,7 @@ public abstract class MachineRecipeResults {
 	}
 
 	public Object createKey(ItemStack[] inputs) {
-		return inputs[0].getItem();
+		return new ItemKey(inputs[0]);
 	}
 
 	public abstract List<MachineRecipe> getAllRecipes(Level level);

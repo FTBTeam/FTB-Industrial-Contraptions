@@ -107,6 +107,7 @@
 	"item.ftbic.scrap": "Scrap",
 	"item.ftbic.scrap_box": "Scrap Box",
 	"item.ftbic.single_use_battery": "Single Use Battery",
+	"item.ftbic.spray_paint_can.tooltip": "Right-click on a machine to change its theme",
 	"item.ftbic.transformer_upgrade": "Transformer Upgrade",
 	"item.ftbic.uranium_fuel_rod": "Uranium Fuel Cell",
 	"itemGroup.ftbic": "FTB Industrial Contraptions",

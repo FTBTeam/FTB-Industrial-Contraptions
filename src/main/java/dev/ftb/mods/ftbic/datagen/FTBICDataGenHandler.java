@@ -175,6 +175,7 @@ public class FTBICDataGenHandler {
 			add("ftbic.fuse_info", "Right-click with a Fuse on this machine to repair it!");
 			add("ftbic.any_item", "Any Item");
 			add("ftbic.requires_chestplate", "Requires Chestplate to function");
+			add("item.ftbic.spray_paint_can.tooltip", "Right-click on a machine to change its theme");
 		}
 	}
 

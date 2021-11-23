@@ -39,14 +39,6 @@ public class MachineProcessingResult {
 		consume = new int[recipe.inputItems.size()];
 	}
 
-	public MachineProcessingResult(StackWithChance _result, double _time) {
-		output = _result;
-		extra = NONE.extra;
-		time = _time;
-		consume = new int[1];
-		consume[0] = 1;
-	}
-
 	public boolean exists() {
 		return true;
 	}
