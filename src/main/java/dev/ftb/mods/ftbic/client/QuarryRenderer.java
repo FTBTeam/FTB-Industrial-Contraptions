@@ -22,8 +22,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
 public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
-	private static final RenderType BEAM_1 = RenderType.beaconBeam(BeaconRenderer.BEAM_LOCATION, false);
-	private static final RenderType BEAM_2 = RenderType.beaconBeam(BeaconRenderer.BEAM_LOCATION, true);
 	private static final ResourceLocation QUARRY_FRAME_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_frame.png");
 	private static final ResourceLocation QUARRY_MODEL_LIGHT_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_model_light.png");
 	private static final ResourceLocation QUARRY_MODEL_DARK_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_model_dark.png");
@@ -155,8 +153,9 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 		quarryBarEnd.render(matrices, frameConsumer, lightSE, overlay);
 		matrices.popPose();
 
-		double lx = Mth.lerp(delta, entity.prevLaserX, entity.laserX);
-		double lz = Mth.lerp(delta, entity.prevLaserZ, entity.laserZ);
+		float lx = Mth.lerp(delta, entity.prevLaserX, entity.laserX);
+		float ly = entity.laserY - entity.getBlockPos().getY();
+		float lz = Mth.lerp(delta, entity.prevLaserZ, entity.laserZ);
 		int headLight = getLight(entity, lpos, lx, 0.5D, lz);
 
 		matrices.pushPose();
@@ -204,16 +203,15 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 
 		if (!entity.paused) {
 			matrices.pushPose();
-			matrices.translate(lx, entity.laserY, lz);
-			renderBeaconBeam(matrices, source, delta, 1.0F, entity.getLevel().getGameTime(), 0, -entity.laserY, new float[]{1F, 0F, 0F}, 0.2F, 0.25F);
+			matrices.translate(lx, ly, lz);
+			renderBeaconBeam(matrices, source, delta, 1.0F, entity.getLevel().getGameTime(), 0, -ly + 0.5F, new float[]{1F, 0F, 0F}, 0.2F, 0.25F);
 			matrices.popPose();
 		}
 	}
 
-	public static void renderBeaconBeam(PoseStack matrices, MultiBufferSource source, float delta, float g, long tick, int y, int height, float[] color, float h, float k) {
-		int m = y + height;
+	public static void renderBeaconBeam(PoseStack matrices, MultiBufferSource source, float delta, float g, long tick, int y, float height, float[] color, float h, float k) {
+		float m = y + height;
 		matrices.pushPose();
-		matrices.translate(0D, 0.5D, 0D);
 		float n = (float) Math.floorMod(-tick, 40L) + delta;
 		float p = Mth.frac(n * 0.2F - (float) Mth.floor(n * 0.1F));
 		float q = color[0];
@@ -226,20 +224,20 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 		float aj = -h;
 		float aa = -h;
 		float ap = -1.0F + p;
-		float aq = (float) height * g * (0.5F / h) + ap;
-		renderPart(matrices, source.getBuffer(BEAM_1), q, r, s, 1.0F, y, m, 0.0F, h, h, 0.0F, aj, 0.0F, 0.0F, aa, 0.0F, 1.0F, aq, ap);
+		float aq = height * g * (0.5F / h) + ap;
+		renderPart(matrices, source.getBuffer(RenderType.beaconBeam(BeaconRenderer.BEAM_LOCATION, false)), q, r, s, 1.0F, y, m, 0.0F, h, h, 0.0F, aj, 0.0F, 0.0F, aa, 0.0F, 1.0F, aq, ap);
 		matrices.popPose();
 		af = -k;
 		float ag = -k;
 		ai = -k;
 		aj = -k;
 		ap = -1.0F + p;
-		aq = (float) height * g + ap;
-		renderPart(matrices, source.getBuffer(BEAM_2), q, r, s, 0.125F, y, m, af, ag, k, ai, aj, k, k, k, 0.0F, 1.0F, aq, ap);
+		aq = height * g + ap;
+		renderPart(matrices, source.getBuffer(RenderType.beaconBeam(BeaconRenderer.BEAM_LOCATION, true)), q, r, s, 0.125F, y, m, af, ag, k, ai, aj, k, k, k, 0.0F, 1.0F, aq, ap);
 		matrices.popPose();
 	}
 
-	private static void renderPart(PoseStack matrices, VertexConsumer consumer, float f, float g, float h, float i, int j, int k, float l, float m, float n, float o, float p, float q, float r, float s, float t, float u, float v, float w) {
+	private static void renderPart(PoseStack matrices, VertexConsumer consumer, float f, float g, float h, float i, float j, float k, float l, float m, float n, float o, float p, float q, float r, float s, float t, float u, float v, float w) {
 		PoseStack.Pose lv = matrices.last();
 		Matrix4f mp = lv.pose();
 		Matrix3f mn = lv.normal();
@@ -249,15 +247,15 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 		renderQuad(mp, mn, consumer, f, g, h, i, j, k, p, q, l, m, t, u, v, w);
 	}
 
-	private static void renderQuad(Matrix4f mp, Matrix3f mn, VertexConsumer consumer, float f, float g, float h, float i, int j, int k, float l, float m, float n, float o, float p, float q, float r, float s) {
+	private static void renderQuad(Matrix4f mp, Matrix3f mn, VertexConsumer consumer, float f, float g, float h, float i, float j, float k, float l, float m, float n, float o, float p, float q, float r, float s) {
 		addVertex(mp, mn, consumer, f, g, h, i, k, l, m, q, r);
 		addVertex(mp, mn, consumer, f, g, h, i, j, l, m, q, s);
 		addVertex(mp, mn, consumer, f, g, h, i, j, n, o, p, s);
 		addVertex(mp, mn, consumer, f, g, h, i, k, n, o, p, r);
 	}
 
-	private static void addVertex(Matrix4f arg, Matrix3f arg2, VertexConsumer arg3, float f, float g, float h, float i, int j, float k, float l, float m, float n) {
-		arg3.vertex(arg, k, (float) j, l).color(f, g, h, i).uv(m, n).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(arg2, 0.0F, 1.0F, 0.0F).endVertex();
+	private static void addVertex(Matrix4f arg, Matrix3f arg2, VertexConsumer arg3, float f, float g, float h, float i, float j, float k, float l, float m, float n) {
+		arg3.vertex(arg, k, j, l).color(f, g, h, i).uv(m, n).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(arg2, 0.0F, 1.0F, 0.0F).endVertex();
 	}
 
 	@Override

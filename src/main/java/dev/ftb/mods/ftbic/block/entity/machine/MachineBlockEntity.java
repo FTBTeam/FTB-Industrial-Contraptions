@@ -9,7 +9,6 @@ import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.screen.MachineMenu;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
 import net.minecraft.Util;
-import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,10 +19,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -144,28 +140,7 @@ public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 						}
 
 						shiftInputs();
-
-						if (autoEject) {
-							Direction[] directions = getEjectDirections();
-
-							for (int i = 0; i < outputItems.length; i++) {
-								if (!outputItems[i].isEmpty()) {
-									for (Direction direction : directions) {
-										BlockEntity entity = level.getBlockEntity(worldPosition.relative(direction));
-										IItemHandler itemHandler = entity == null ? null : entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction.getOpposite()).orElse(null);
-
-										if (itemHandler != null) {
-											outputItems[i] = ItemHandlerHelper.insertItemStacked(itemHandler, outputItems[i].copy(), false);
-
-											if (outputItems[i].isEmpty()) {
-												outputItems[i] = ItemStack.EMPTY;
-												break;
-											}
-										}
-									}
-								}
-							}
-						}
+						ejectOutputItems();
 					}
 				}
 
@@ -277,7 +252,6 @@ public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		autoEject = false;
 		shouldAccelerate = false;
 	}
 }

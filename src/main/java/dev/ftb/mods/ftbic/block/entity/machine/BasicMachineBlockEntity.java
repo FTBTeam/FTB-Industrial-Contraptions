@@ -52,26 +52,6 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 	}
 
 	@Override
-	public void writeNetData(CompoundTag tag) {
-		super.writeNetData(tag);
-
-		if (tickClientSide()) {
-			tag.put("Upgrades", upgradeInventory.serializeNBT().getList("Items", Constants.NBT.TAG_COMPOUND));
-		}
-	}
-
-	@Override
-	public void readNetData(CompoundTag tag) {
-		super.readNetData(tag);
-
-		if (tickClientSide()) {
-			CompoundTag tag1 = new CompoundTag();
-			tag1.put("Items", tag.getList("Upgrades", Constants.NBT.TAG_COMPOUND));
-			upgradeInventory.deserializeNBT(tag1);
-		}
-	}
-
-	@Override
 	public void tick() {
 		if (!isBurnt() && !level.isClientSide() && energy < energyCapacity) {
 			ItemStack battery = batteryInventory.getStackInSlot(0);
@@ -115,6 +95,7 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 		super.initProperties();
 		energyUse = electricBlockInstance.energyUsage;
 		progressSpeed = 1D;
+		autoEject = false;
 	}
 
 	@Override

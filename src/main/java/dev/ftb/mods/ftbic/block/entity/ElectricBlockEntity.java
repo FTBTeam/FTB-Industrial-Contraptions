@@ -40,6 +40,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
@@ -186,10 +187,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public void handleUpdateTag(BlockState state, CompoundTag tag) {
 		readNetData(tag);
 		initProperties();
-
-		if (tickClientSide()) {
-			upgradesChanged();
-		}
 	}
 
 	@Override
@@ -203,10 +200,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
 		readNetData(pkt.getTag());
 		initProperties();
-
-		if (tickClientSide()) {
-			upgradesChanged();
-		}
 	}
 
 	@Nullable
@@ -221,7 +214,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public void onLoad() {
 		initProperties();
 
-		if (level != null && (!level.isClientSide() || tickClientSide())) {
+		if (level != null && !level.isClientSide()) {
 			upgradesChanged();
 		}
 
@@ -569,6 +562,32 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		for (ItemStack stack : stacks) {
 			// drop items that failed to shift for some reason? but that should be impossible unless max stack size has changed for that item...
 			ItemHandlerHelper.insertItemStacked(this, stack, false);
+		}
+	}
+
+	public void ejectOutputItems() {
+		if (!autoEject) {
+			return;
+		}
+
+		Direction[] directions = null;
+
+		for (int i = 0; i < outputItems.length; i++) {
+			if (!outputItems[i].isEmpty()) {
+				for (Direction direction : (directions == null ? (directions = getEjectDirections()) : directions)) {
+					BlockEntity entity = level.getBlockEntity(worldPosition.relative(direction));
+					IItemHandler itemHandler = entity == null ? null : entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction.getOpposite()).orElse(null);
+
+					if (itemHandler != null) {
+						outputItems[i] = ItemHandlerHelper.insertItemStacked(itemHandler, outputItems[i].copy(), false);
+
+						if (outputItems[i].isEmpty()) {
+							outputItems[i] = ItemStack.EMPTY;
+							break;
+						}
+					}
+				}
+			}
 		}
 	}
 

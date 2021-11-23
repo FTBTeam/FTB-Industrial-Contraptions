@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.net.MoveLaserMessage;
 import dev.ftb.mods.ftbic.screen.QuarryMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
@@ -37,20 +38,26 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class QuarryBlockEntity extends BasicMachineBlockEntity {
+	private static final int INVALID_Y = -10000;
 	private static final Predicate<ItemEntity> ITEM_ENTITY_PREDICATE = entity -> true;
 
-	public double laserX = 0.5D;
-	public int laserY = 0;
-	public double laserZ = 0.5D;
-	public double prevLaserX = 0.5D;
-	public double prevLaserZ = 0.5D;
 	public boolean paused = true;
-	public long miningTick = 0L;
+	public long quarryTick = 0L;
+	public float laserX = 0.5F;
+	public int laserY = INVALID_Y;
+	public float laserZ = 0.5F;
 	public int offsetX = 1;
 	public int offsetZ = -2;
 	public int sizeX = 5;
 	public int sizeZ = 5;
-	public int seenBedrock = 0;
+	public int skippedBlocks = 0;
+
+	// Client side stuff
+	public float prevLaserX = 0.5F;
+	public float prevLaserZ = 0.5F;
+	public float moveLaserX = 0.5F;
+	public int moveLaserY = 0;
+	public float moveLaserZ = 0.5F;
 
 	public QuarryBlockEntity() {
 		super(FTBICElectricBlocks.QUARRY);
@@ -59,66 +66,67 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 	@Override
 	public void writeData(CompoundTag tag) {
 		super.writeData(tag);
-		tag.putDouble("LaserX", laserX);
+		tag.putFloat("LaserX", laserX);
 		tag.putInt("LaserY", laserY);
-		tag.putDouble("LaserZ", laserZ);
+		tag.putFloat("LaserZ", laserZ);
 
 		if (paused) {
 			tag.putBoolean("Paused", true);
 		}
 
-		tag.putLong("MiningTick", miningTick);
+		tag.putLong("QuarryTick", quarryTick);
 		tag.putByte("OffsetX", (byte) offsetX);
 		tag.putByte("OffsetZ", (byte) offsetZ);
 		tag.putByte("SizeX", (byte) sizeX);
 		tag.putByte("SizeZ", (byte) sizeZ);
 
-		if (seenBedrock > 0) {
-			tag.putShort("SeenBedrock", (short) seenBedrock);
+		if (skippedBlocks > 0) {
+			tag.putShort("SkippedBlocks", (short) skippedBlocks);
 		}
 	}
 
 	@Override
 	public void readData(CompoundTag tag) {
 		super.readData(tag);
-		laserX = tag.getDouble("LaserX");
+		laserX = tag.getFloat("LaserX");
 		laserY = tag.getInt("LaserY");
-		laserZ = tag.getDouble("LaserZ");
+		laserZ = tag.getFloat("LaserZ");
 		paused = tag.getBoolean("Paused");
-		miningTick = tag.getLong("MiningTick");
+		quarryTick = tag.getLong("QuarryTick");
 		offsetX = tag.getByte("OffsetX");
 		offsetZ = tag.getByte("OffsetZ");
-		sizeX = Math.max(tag.getByte("SizeX"), 1);
-		sizeZ = Math.max(tag.getByte("SizeZ"), 1);
-		seenBedrock = tag.getShort("SeenBedrock");
+		sizeX = Mth.clamp(tag.getByte("SizeX"), 1, 120);
+		sizeZ = Mth.clamp(tag.getByte("SizeZ"), 1, 120);
+		skippedBlocks = tag.getShort("SkippedBlocks");
 	}
 
 	@Override
 	public void writeNetData(CompoundTag tag) {
 		super.writeNetData(tag);
-		tag.putDouble("LaserX", laserX);
+		tag.putFloat("LaserX", laserX);
 		tag.putInt("LaserY", laserY);
-		tag.putDouble("LaserZ", laserZ);
+		tag.putFloat("LaserZ", laserZ);
 
 		if (paused) {
 			tag.putBoolean("Paused", true);
 		}
 
-		tag.putLong("MiningTick", miningTick);
+		tag.putLong("QuarryTick", quarryTick);
 		tag.putByte("OffsetX", (byte) offsetX);
 		tag.putByte("OffsetZ", (byte) offsetZ);
 		tag.putByte("SizeX", (byte) sizeX);
 		tag.putByte("SizeZ", (byte) sizeZ);
+		tag.putDouble("Speed", progressSpeed);
 	}
 
 	@Override
 	public void readNetData(CompoundTag tag) {
 		super.readNetData(tag);
-		laserX = tag.getDouble("LaserX");
-		laserY = tag.getInt("LaserY");
-		laserZ = tag.getDouble("LaserZ");
+		prevLaserX = moveLaserX = laserX = tag.getFloat("LaserX");
+		moveLaserY = laserY = tag.getInt("LaserY");
+		prevLaserZ = moveLaserZ = laserZ = tag.getFloat("LaserZ");
 		paused = tag.getBoolean("Paused");
-		miningTick = tag.getLong("MiningTick");
+		quarryTick = tag.getLong("QuarryTick");
 		offsetX = tag.getByte("OffsetX");
 		offsetZ = tag.getByte("OffsetZ");
 		sizeX = tag.getByte("SizeX");
@@ -128,18 +136,34 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 	@Override
 	public void handleProcessing() {
 		active = !paused;
-		prevLaserX = laserX;
-		prevLaserZ = laserZ;
 
-		if (!paused && level != null) {
-			int moveTicks = Math.max((int) (FTBICConfig.QUARRY_MOVE_TICKS / progressSpeed), 3);
-			int totalTicks = Math.max((int) (FTBICConfig.QUARRY_MINE_TICKS / progressSpeed), 2) + moveTicks;
-			int ltick = (int) (miningTick % (long) totalTicks);
+		if (level != null && level.isClientSide()) {
+			prevLaserX = laserX;
+			prevLaserZ = laserZ;
+
+			laserX = moveLaserX;
+			laserY = moveLaserY;
+			laserZ = moveLaserZ;
+
+			if (!paused) {
+				double x = worldPosition.getX() + laserX;
+				double minY = laserY + 0.5D;
+				double maxY = worldPosition.getY() + 0.5D;
+				double z = worldPosition.getZ() + laserZ;
+				FTBIC.PROXY.playLaserSound(level.getGameTime(), x, minY, maxY, z);
+			}
+		}
+
+		if (!paused && level != null && !level.isClientSide()) {
+			int moveTicks = Math.max((int) (FTBICConfig.QUARRY_MOVE_TICKS / progressSpeed), 1);
+			int miningTicks = Math.max((int) (FTBICConfig.QUARRY_MINE_TICKS / progressSpeed), 1);
+			int totalTicks = miningTicks + moveTicks;
+			int ltick = (int) (quarryTick % (long) totalTicks);
 
 			if (ltick <= moveTicks) {
 				long s = (long) sizeX * (long) sizeZ * 2L;
-				int lpos0 = (int) (((miningTick / (long) totalTicks) - 1L) % s);
-				int lpos1 = (int) ((miningTick / (long) totalTicks) % s);
+				int lpos0 = (int) (((quarryTick / (long) totalTicks) - 1L) % s);
+				int lpos1 = (int) ((quarryTick / (long) totalTicks) % s);
 
 				if (lpos0 < 0) {
 					lpos0 += s;
@@ -159,20 +183,32 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 				int col1 = row1 % 2 == 0 ? (lpos1 % sizeX) : (sizeX - 1 - (lpos1 % sizeX));
 				float lerp = ltick / (float) moveTicks;
 
-				laserX = (offsetX + Mth.lerp(lerp, col0, col1)) + 0.5D;
-				laserZ = (offsetZ + Mth.lerp(lerp, row0, row1)) + 0.5D;
-				laserY = getY(worldPosition.getX() + Mth.floor(laserX), worldPosition.getZ() + Mth.floor(laserZ)) - worldPosition.getY();
-			} else if (ltick == totalTicks - 1 && !level.isClientSide() && worldPosition.getY() + laserY > 0) {
-				BlockPos miningPos = worldPosition.offset(laserX, laserY, laserZ);
+				laserX = (offsetX + Mth.lerp(lerp, col0, col1)) + 0.5F;
+				laserZ = (offsetZ + Mth.lerp(lerp, row0, row1)) + 0.5F;
+				laserY = getY(worldPosition.getX() + Mth.floor(laserX), worldPosition.getZ() + Mth.floor(laserZ));
+				sendLaserMove();
+			}
 
-				if (level.isLoaded(miningPos)) {
+			if (ltick == totalTicks - 1) {
+				if (laserY == INVALID_Y) {
+					skippedBlocks++;
+
+					if (skippedBlocks >= sizeX * sizeZ * 2) {
+						paused = true;
+						skippedBlocks = 0;
+						syncBlock();
+					} else {
+						quarryTick += miningTicks - 1;
+					}
+				} else {
+					BlockPos miningPos = new BlockPos(worldPosition.getX() + laserX, laserY, worldPosition.getZ() + laserZ);
 					BlockState state = level.getBlockState(miningPos);
+					skippedBlocks = 0;
 
-					if (!state.isAir() && state.getBlock() != Blocks.BEDROCK) {
-						seenBedrock = 0;
+					if (!level.isClientSide()) {
 						level.getProfiler().push("ftbic_quarry");
 						double lx = worldPosition.getX() + laserX;
-						double ly = worldPosition.getY() + laserY + 0.5D;
+						double ly = laserY + 0.5D;
 						double lz = worldPosition.getZ() + laserZ;
 
 						BlockEntity minedEntity = state.hasTileEntity() ? level.getBlockEntity(miningPos) : null;
@@ -186,6 +222,7 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 						List<ItemStack> list = new ArrayList<>(state.getDrops(lootContext));
 
 						level.removeBlock(miningPos, false);
+						level.levelEvent(null, 2001, miningPos, Block.getId(state));
 
 						AABB aabb = new AABB(lx - 0.7D, ly - 0.7D, lz - 0.7D, lx + 0.7D, ly + 2.7D, lz + 0.7D);
 						List<ItemEntity> itemEntities = level.getEntitiesOfClass(ItemEntity.class, aabb, ITEM_ENTITY_PREDICATE);
@@ -195,13 +232,19 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 							itemEntity.kill();
 						}
 
-						for (ItemStack stack : list) {
-							ItemStack stack1 = addOutput(stack);
+						if (!list.isEmpty()) {
+							ejectOutputItems();
 
-							if (!stack1.isEmpty()) {
-								Block.popResource(level, worldPosition.relative(getFacing(Direction.NORTH)), stack1);
-								paused = true;
+							for (ItemStack stack : list) {
+								ItemStack stack1 = addOutput(stack);
+
+								if (!stack1.isEmpty()) {
+									Block.popResource(level, worldPosition.relative(getFacing(Direction.NORTH)), stack1);
+									paused = true;
+								}
 							}
+
+							ejectOutputItems();
 						}
 
 						level.getProfiler().pop();
@@ -209,37 +252,34 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 						if (paused) {
 							syncBlock();
 						}
-					} else {
-						seenBedrock++;
-
-						if (seenBedrock >= sizeX * sizeZ) {
-							paused = true;
-							seenBedrock = 0;
-							syncBlock();
-						}
 					}
 				}
 			}
 
-			miningTick++;
-
-			if (level != null && level.isClientSide()) {
-				double x = worldPosition.getX() + laserX;
-				double minY = worldPosition.getY() + laserY;
-				double maxY = worldPosition.getY() + 0.5D;
-				double z = worldPosition.getZ() + laserZ;
-				FTBIC.PROXY.playLaserSound(level.getGameTime(), x, minY, maxY, z);
-			}
+			quarryTick++;
 		}
 	}
 
-	private int getY(int x, int z) {
-		return level.getHeight(Heightmap.Types.OCEAN_FLOOR, x, z) - 1;
+	private boolean isValidBlock(BlockState state, BlockPos pos) {
+		return state.getBlock() != Blocks.BEDROCK && !state.isAir() && state.getMaterial().blocksMotion() && state.getDestroySpeed(level, pos) >= 0F;
 	}
 
-	@Override
-	public boolean tickClientSide() {
-		return true;
+	private int getY(int x, int z) {
+		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, 0, z);
+
+		for (int y = worldPosition.getY(); y >= 0; y--) {
+			pos.setY(y);
+
+			if (level.isLoaded(pos)) {
+				BlockState state = level.getBlockState(pos);
+
+				if (isValidBlock(state, pos)) {
+					return y;
+				}
+			}
+		}
+
+		return INVALID_Y;
 	}
 
 	@Override
@@ -256,6 +296,11 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 
 	@Override
 	public boolean savePlacer() {
+		return true;
+	}
+
+	@Override
+	public boolean tickClientSide() {
 		return true;
 	}
 
@@ -318,8 +363,8 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 	public void onPlacedBy(@Nullable LivingEntity entity, ItemStack stack) {
 		super.onPlacedBy(entity, stack);
 		Direction dir = getFacing(Direction.NORTH).getOpposite();
-		laserX = dir.getStepX() + 0.5D;
-		laserZ = dir.getStepZ() + 0.5D;
+		laserX = dir.getStepX() + 0.5F;
+		laserZ = dir.getStepZ() + 0.5F;
 		resize();
 	}
 
@@ -334,6 +379,21 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 			return paused ? 1 : 0;
 		} else {
 			return super.get(id);
+		}
+	}
+
+	public void moveLaser(float x, int y, float z) {
+		moveLaserX = x;
+		moveLaserY = y;
+		moveLaserZ = z;
+		// FTBIC.LOGGER.info(String.format("Moved laser %d, %d, %d to %f, %f, %f", worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), x, y, z));
+	}
+
+	private void sendLaserMove() {
+		LevelChunk chunk = level == null ? null : level.getChunkAt(worldPosition);
+
+		if (chunk != null) {
+			new MoveLaserMessage(worldPosition, laserX, laserY, laserZ).sendToChunkListeners(chunk);
 		}
 	}
 }

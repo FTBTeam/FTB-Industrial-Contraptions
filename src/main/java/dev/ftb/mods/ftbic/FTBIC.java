@@ -7,6 +7,7 @@ import dev.ftb.mods.ftbic.client.FTBICClient;
 import dev.ftb.mods.ftbic.item.DummyEnergyArmorItem;
 import dev.ftb.mods.ftbic.item.EnergyArmorItem;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.net.FTBICNet;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
@@ -56,6 +57,7 @@ public class FTBIC {
 		FTBICMenus.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICElectricBlocks.init();
 		FTBICUtils.init();
+		FTBICNet.init();
 		PROXY.init();
 	}
 
