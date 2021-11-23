@@ -20,5 +20,9 @@ public class QuarryScreen extends ElectricBlockScreen<QuarryMenu> {
 				drawSlot(poseStack, leftPos + 7 + x * 18, topPos + 16 + y * 18);
 			}
 		}
+
+		for (int i = 0; i < menu.entity.upgradeInventory.getSlots(); i++) {
+			drawSlot(poseStack, leftPos + 151, topPos + 7 + i * 18);
+		}
 	}
 }

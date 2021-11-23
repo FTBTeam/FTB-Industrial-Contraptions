@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.screen.AntimatterConstructorMenu;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -71,14 +72,8 @@ public class AntimatterConstructorBlockEntity extends ElectricBlockEntity {
 	}
 
 	private double getBoost(ItemStack item) {
-		// Make this use a recipe handler
-		if (item.getItem() == FTBICItems.SCRAP.item.get()) {
-			return 5000D;
-		} else if (item.getItem() == FTBICItems.SCRAP_BOX.item.get()) {
-			return 45000D;
-		}
-
-		return 0D;
+		RecipeCache recipeCache = getRecipeCache();
+		return recipeCache == null ? 0D : recipeCache.getAntimatterBoost(level, item);
 	}
 
 	@Override

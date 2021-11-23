@@ -257,6 +257,10 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 		return modLoc("reconstructing/" + s);
 	}
 
+	public static ResourceLocation antimatterBoostLoc(String s) {
+		return modLoc("antimatter_boost/" + s);
+	}
+
 	@Override
 	protected final void buildShapelessRecipes(Consumer<FinishedRecipe> consumer) {
 		add(consumer);

@@ -17,6 +17,7 @@ public class RecipeCache implements Recipe<NoContainer> {
 	public static final ResourceLocation ID = new ResourceLocation(FTBIC.MOD_ID, "recipe_cache");
 
 	private final Map<Item, Integer> basicGeneratorFuel = new HashMap<>();
+	private final Map<Item, Double> antimatterBoost = new HashMap<>();
 	public final CookingRecipeResults smelting = new CookingRecipeResults(FTBICRecipes.SMELTING, "smelting", RecipeType.SMELTING);
 	public final MaceratingRecipeResults macerating = new MaceratingRecipeResults();
 	public final SeparatingRecipeResults separating = new SeparatingRecipeResults();
@@ -83,6 +84,24 @@ public class RecipeCache implements Recipe<NoContainer> {
 		}
 
 		basicGeneratorFuel.put(item.getItem(), 0);
+		return 0;
+	}
+
+	public double getAntimatterBoost(Level level, ItemStack item) {
+		Double boost = antimatterBoost.get(item.getItem());
+
+		if (boost != null) {
+			return boost;
+		}
+
+		for (AntimatterBoostRecipe recipe : level.getRecipeManager().getAllRecipesFor(FTBICRecipes.ANTIMATTER_BOOST_TYPE)) {
+			if (recipe.ingredient.test(item)) {
+				antimatterBoost.put(item.getItem(), recipe.boost);
+				return recipe.boost;
+			}
+		}
+
+		antimatterBoost.put(item.getItem(), 0D);
 		return 0;
 	}
 }

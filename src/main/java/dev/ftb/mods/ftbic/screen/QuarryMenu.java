@@ -19,6 +19,10 @@ public class QuarryMenu extends ElectricBlockMenu<QuarryBlockEntity> {
 
 	@Override
 	public void addBlockSlots(@Nullable Object extra) {
+		for (int y = 0; y < entity.upgradeInventory.getSlots(); y++) {
+			addSlot(new SimpleItemHandlerSlot(entity.upgradeInventory, y, 152, 8 + y * 18));
+		}
+
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 6; x++) {
 				addSlot(new SimpleItemHandlerSlot(entity, y * 6 + x, 8 + x * 18, 17 + y * 18));

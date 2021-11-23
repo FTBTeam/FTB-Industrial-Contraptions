@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
@@ -44,7 +45,9 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
@@ -74,6 +77,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public double energyCapacity;
 	public double maxEnergyOutput;
 	public double maxInputEnergy;
+	public boolean autoEject;
 
 	public UUID placerId = Util.NIL_UUID;
 	public String placerName = "";
@@ -181,6 +185,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	@Override
 	public void handleUpdateTag(BlockState state, CompoundTag tag) {
 		readNetData(tag);
+		initProperties();
+
+		if (tickClientSide()) {
+			upgradesChanged();
+		}
 	}
 
 	@Override
@@ -193,6 +202,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
 		readNetData(pkt.getTag());
+		initProperties();
+
+		if (tickClientSide()) {
+			upgradesChanged();
+		}
 	}
 
 	@Nullable
@@ -207,9 +221,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public void onLoad() {
 		initProperties();
 
-		if (level != null && !level.isClientSide()) {
+		if (level != null && (!level.isClientSide() || tickClientSide())) {
 			upgradesChanged();
-		} else if (level != null && !tickClientSide()) {
+		}
+
+		if (level != null && level.isClientSide() && !tickClientSide()) {
 			level.tickableBlockEntities.remove(this);
 		}
 
@@ -520,6 +536,42 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		return stack;
 	}
 
+	public Direction[] getEjectDirections() {
+		if (electricBlockInstance.facingProperty != BlockStateProperties.HORIZONTAL_FACING) {
+			return Direction.values();
+		}
+
+		Direction rot = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+		Direction[] values = new Direction[6];
+		values[0] = Direction.DOWN;
+		values[1] = rot.getCounterClockWise();
+		values[2] = rot.getOpposite();
+		values[3] = rot.getClockWise();
+		values[4] = rot;
+		values[5] = Direction.UP;
+		return values;
+	}
+
+	public void shiftInputs() {
+		if (inputItems.length <= 1) {
+			return;
+		}
+
+		List<ItemStack> stacks = new ArrayList<>();
+
+		for (int i = 0; i < inputItems.length; i++) {
+			if (!inputItems[i].isEmpty()) {
+				stacks.add(inputItems[i]);
+				inputItems[i] = ItemStack.EMPTY;
+			}
+		}
+
+		for (ItemStack stack : stacks) {
+			// drop items that failed to shift for some reason? but that should be impossible unless max stack size has changed for that item...
+			ItemHandlerHelper.insertItemStacked(this, stack, false);
+		}
+	}
+
 	public void onBroken(Level level, BlockPos pos) {
 		for (ItemStack stack : inputItems) {
 			Block.popResource(level, pos, stack);
@@ -534,6 +586,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		energyCapacity = electricBlockInstance.energyCapacity;
 		maxEnergyOutput = electricBlockInstance.maxEnergyOutput;
 		maxInputEnergy = electricBlockInstance.maxEnergyInput;
+		autoEject = false;
 	}
 
 	/**

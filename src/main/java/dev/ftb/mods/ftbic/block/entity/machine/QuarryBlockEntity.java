@@ -4,7 +4,6 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
-import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.screen.QuarryMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class QuarryBlockEntity extends ElectricBlockEntity {
+public class QuarryBlockEntity extends BasicMachineBlockEntity {
 	private static final Predicate<ItemEntity> ITEM_ENTITY_PREDICATE = entity -> true;
 
 	public double laserX = 0.5D;
@@ -127,16 +126,14 @@ public class QuarryBlockEntity extends ElectricBlockEntity {
 	}
 
 	@Override
-	public void tick() {
+	public void handleProcessing() {
 		active = !paused;
 		prevLaserX = laserX;
 		prevLaserZ = laserZ;
 
-		super.tick();
-
 		if (!paused && level != null) {
-			int moveTicks = Math.max((int) (FTBICConfig.QUARRY_MOVE_TICKS), 3);
-			int totalTicks = Math.max((int) (FTBICConfig.QUARRY_MINE_TICKS), 2) + moveTicks;
+			int moveTicks = Math.max((int) (FTBICConfig.QUARRY_MOVE_TICKS / progressSpeed), 3);
+			int totalTicks = Math.max((int) (FTBICConfig.QUARRY_MINE_TICKS / progressSpeed), 2) + moveTicks;
 			int ltick = (int) (miningTick % (long) totalTicks);
 
 			if (ltick <= moveTicks) {

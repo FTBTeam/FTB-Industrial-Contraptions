@@ -22,6 +22,9 @@ public interface FTBICRecipes {
 	Supplier<BasicGeneratorFuelRecipeSerializer> BASIC_GENERATOR_FUEL = REGISTRY.register("basic_generator_fuel", BasicGeneratorFuelRecipeSerializer::new);
 	RecipeType<BasicGeneratorFuelRecipe> BASIC_GENERATOR_FUEL_TYPE = RecipeType.register(FTBIC.MOD_ID + ":basic_generator_fuel");
 
+	Supplier<AntimatterBoostRecipeSerializer> ANTIMATTER_BOOST = REGISTRY.register("antimatter_boost", AntimatterBoostRecipeSerializer::new);
+	RecipeType<AntimatterBoostRecipe> ANTIMATTER_BOOST_TYPE = RecipeType.register(FTBIC.MOD_ID + ":antimatter_boost");
+
 	Supplier<MachineRecipeSerializer> SMELTING = machine("smelting", Function.identity());
 	Supplier<MachineRecipeSerializer> MACERATING = machine("macerating", MachineRecipeSerializer::extraOutput);
 	Supplier<MachineRecipeSerializer> SEPARATING = machine("separating", MachineRecipeSerializer::extraOutput);

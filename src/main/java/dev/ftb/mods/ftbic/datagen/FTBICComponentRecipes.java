@@ -285,5 +285,13 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.requires(Items.REDSTONE_TORCH)
 				.requires(LAPIS)
 				.save(consumer, shapelessLoc("landmark"));
+
+		AntimatterBoostRecipeBuilder.make(Ingredient.of(SCRAP), 5000)
+				.unlockedBy("has_item", has(SCRAP))
+				.save(consumer, antimatterBoostLoc("scrap"));
+
+		AntimatterBoostRecipeBuilder.make(Ingredient.of(SCRAP_BOX), 45000)
+				.unlockedBy("has_item", has(SCRAP_BOX))
+				.save(consumer, antimatterBoostLoc("scrap_box"));
 	}
 }
