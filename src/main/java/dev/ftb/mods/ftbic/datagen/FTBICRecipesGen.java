@@ -25,6 +25,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> GLOWSTONE = Tags.Items.DUSTS_GLOWSTONE;
 	public static final Tag<Item> GLASS = Tags.Items.GLASS_COLORLESS;
 	public static final Tag<Item> COAL = ItemTags.COALS;
+	public static final Tag<Item> COAL_BLOCK = Tags.Items.STORAGE_BLOCKS_COAL;
 	public static final Tag<Item> DIAMOND = Tags.Items.GEMS_DIAMOND;
 	public static final Tag<Item> QUARTZ = Tags.Items.GEMS_QUARTZ;
 	public static final Tag<Item> SAND = ItemTags.SAND;

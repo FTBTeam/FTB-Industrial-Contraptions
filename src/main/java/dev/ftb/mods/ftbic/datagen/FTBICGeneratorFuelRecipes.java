@@ -22,6 +22,10 @@ public class FTBICGeneratorFuelRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(COAL))
 				.save(consumer, basicGeneratorFuelLoc("coal"));
 
+		MachineFuelRecipeBuilder.basicGenerator(Ingredient.of(COAL_BLOCK), 14400)
+				.unlockedBy("has_item", has(COAL_BLOCK))
+				.save(consumer, basicGeneratorFuelLoc("coal_block"));
+
 		MachineFuelRecipeBuilder.basicGenerator(Ingredient.of(SCRAP), 348)
 				.unlockedBy("has_item", has(SCRAP))
 				.save(consumer, basicGeneratorFuelLoc("scrap"));

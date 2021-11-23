@@ -128,6 +128,7 @@ public class FTBICConfig {
 			"immersiveengineering"
 	));
 
+	// Replace with ItemTags
 	public static final List<String> AUTO_METALS = new ArrayList<>(Arrays.asList(
 			"iron",
 			"gold",
@@ -157,6 +158,7 @@ public class FTBICConfig {
 			"lithium"
 	));
 
+	// Replace with ItemTags
 	public static final List<String> AUTO_GEMS = new ArrayList<>(Arrays.asList(
 			"redstone",
 			"lapis",
