@@ -6,7 +6,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -21,7 +20,7 @@ public class CannedFoodItem extends Item {
 
 		if (entity instanceof ServerPlayer && !((ServerPlayer) entity).isCreative()) {
 			if (is.isEmpty()) {
-				return new ItemStack(Items.GLASS_BOTTLE);
+				return new ItemStack(FTBICItems.EMPTY_CAN.item.get());
 			}
 
 			ItemHandlerHelper.giveItemToPlayer((ServerPlayer) entity, new ItemStack(FTBICItems.EMPTY_CAN.item.get()));
