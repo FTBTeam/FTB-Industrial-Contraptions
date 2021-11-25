@@ -229,7 +229,6 @@ public interface FTBICElectricBlocks {
 			.io(9, 1);
 
 	ElectricBlockInstance QUARRY = register("quarry", QuarryBlockEntity::new)
-			.wip()
 			.advanced()
 			.energyCapacity(FTBICConfig.QUARRY_CAPACITY)
 			.maxEnergyInput(FTBICConfig.HV_TRANSFER_RATE)
