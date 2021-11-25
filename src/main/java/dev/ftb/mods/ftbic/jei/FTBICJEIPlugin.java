@@ -32,7 +32,13 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistration r) {
-		r.registerSubtypeInterpreter(FTBICItems.FLUID_CELL.get(), FluidCellItem::getSubtype);
+		r.registerSubtypeInterpreter(FTBICItems.FLUID_CELL.get(), (stack, uidContext) -> FluidCellItem.getSubtype(stack));
+
+		r.useNbtForSubtypes(
+				FTBICItems.MECHANICAL_ELYTRA.get(),
+				FTBICItems.CARBON_CHESTPLATE.get(),
+				FTBICItems.QUANTUM_CHESTPLATE.get()
+		);
 	}
 
 	@Override

@@ -23,6 +23,12 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
+	public void initProperties() {
+		super.initProperties();
+		maxEnergyOutputTransfer = maxEnergyOutput;
+	}
+
+	@Override
 	public void writeData(CompoundTag tag) {
 		super.writeData(tag);
 

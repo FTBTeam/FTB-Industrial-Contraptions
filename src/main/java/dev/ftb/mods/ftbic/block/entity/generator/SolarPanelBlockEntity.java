@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block.entity.generator;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.screen.SolarPanelMenu;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,13 +15,15 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
+	public void initProperties() {
+		super.initProperties();
+		maxEnergyOutputTransfer = Math.max(FTBICConfig.LV_TRANSFER_RATE, maxEnergyOutput);
+	}
+
+	@Override
 	public void handleGeneration() {
 		if (energy < energyCapacity && level.isDay() && level.canSeeSky(worldPosition.above())) {
 			energy += Math.min(energyCapacity - energy, maxEnergyOutput);
-
-			if (energy >= energyCapacity) {
-				setChanged();
-			}
 		}
 	}
 

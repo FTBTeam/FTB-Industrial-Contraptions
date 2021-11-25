@@ -76,7 +76,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	private boolean burnt;
 
 	public double energyCapacity;
-	public double maxEnergyOutput;
 	public double maxInputEnergy;
 	public boolean autoEject;
 
@@ -603,7 +602,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	public void initProperties() {
 		energyCapacity = electricBlockInstance.energyCapacity;
-		maxEnergyOutput = electricBlockInstance.maxEnergyOutput;
 		maxInputEnergy = electricBlockInstance.maxEnergyInput;
 		autoEject = false;
 	}
@@ -685,7 +683,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			if (entity != null) {
 				placerId = entity.getUUID();
 				placerName = entity.getScoreboardName();
-			} else {
+			} else if (!level.isClientSide()) {
 				level.removeBlock(worldPosition, false);
 			}
 		}

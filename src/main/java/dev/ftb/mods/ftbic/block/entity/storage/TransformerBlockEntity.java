@@ -14,6 +14,12 @@ public class TransformerBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
+	public void initProperties() {
+		super.initProperties();
+		maxEnergyOutputTransfer = maxEnergyOutput;
+	}
+
+	@Override
 	public boolean isValidEnergyOutputSide(Direction direction) {
 		return direction != getFacing(Direction.NORTH);
 	}

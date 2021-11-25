@@ -180,12 +180,10 @@ public class ElectricBlock extends Block implements SprayPaintable {
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
 		super.setPlacedBy(level, pos, state, entity, stack);
 
-		if (!level.isClientSide()) {
-			BlockEntity blockEntity = level.getBlockEntity(pos);
+		BlockEntity blockEntity = level.getBlockEntity(pos);
 
-			if (blockEntity instanceof ElectricBlockEntity) {
-				((ElectricBlockEntity) blockEntity).onPlacedBy(entity, stack);
-			}
+		if (blockEntity instanceof ElectricBlockEntity) {
+			((ElectricBlockEntity) blockEntity).onPlacedBy(entity, stack);
 		}
 	}
 

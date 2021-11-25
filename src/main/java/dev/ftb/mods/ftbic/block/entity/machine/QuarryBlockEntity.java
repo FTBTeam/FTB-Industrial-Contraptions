@@ -362,6 +362,10 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 			}
 		}
 
+		offBack -= 1;
+		offLeft -= 1;
+		offRight -= 1;
+
 		if (back.getAxis() == Direction.Axis.X) {
 			sizeX = offBack;
 			sizeZ = (offLeft + offRight + 1);
@@ -383,7 +387,19 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 		Direction dir = getFacing(Direction.NORTH).getOpposite();
 		laserX = dir.getStepX() + 0.5F;
 		laserZ = dir.getStepZ() + 0.5F;
-		resize();
+
+		BlockEntity e = level.getBlockEntity(worldPosition.below());
+
+		if (e instanceof QuarryBlockEntity) {
+			QuarryBlockEntity q = (QuarryBlockEntity) e;
+			offsetX = q.offsetX;
+			offsetZ = q.offsetZ;
+			sizeX = q.sizeX;
+			sizeZ = q.sizeZ;
+			syncBlock();
+		} else {
+			resize();
+		}
 	}
 
 	@Override
