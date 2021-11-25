@@ -44,7 +44,7 @@ ed1e379681b7c961e99d9107a099af03ab0baed5 assets/ftbic/blockstates/reinforced_sto
 6e4255852359a733ca3abdc8a8d7287b8dd39ca1 assets/ftbic/blockstates/rubber_sheet.json
 9ced6c6ded6f3a11c0ee68f56e8b6a1dcb2e7e6a assets/ftbic/blockstates/teleporter.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-4a67d0f1b7c480027cd873aef5c51af66380d791 assets/ftbic/lang/en_us.json
+e2471185da6b552aef55b5630b416004f33639a4 assets/ftbic/lang/en_us.json
 32a8fcccb6a46281b355b13187ab3268564e23ca assets/ftbic/models/block/advanced_machine_block.json
 5c1a2f33338963a3ba598423df6e653deaf1a094 assets/ftbic/models/block/burnt_cable_base.json
 ca034027b29128742967895a6aef4eff4b32d456 assets/ftbic/models/block/burnt_cable_connection.json
@@ -234,7 +234,6 @@ fc52e7dc575a2da9f63f465cbf6ee183fdbd6c6e assets/ftbic/models/item/hv_transformer
 e36c0491c959ca056553288102890f8fdfd1a966 assets/ftbic/models/item/iv_cable.json
 e2e14ecad784d77024e5fa96b53b5fd7b8e12075 assets/ftbic/models/item/landmark.json
 509da6d131612cfd520a3b4a908e34a98897139d assets/ftbic/models/item/light_spray_paint_can.json
-7298f8ae06a72b4c68f3034bff98eca080f5b0ed assets/ftbic/models/item/location_card.json
 78dc6a68e3570446b733c1c9baec1894e4892465 assets/ftbic/models/item/lv_battery.json
 f35b38b1ce74ca4a2ecc546ce77e3fd9acc76418 assets/ftbic/models/item/lv_battery_box.json
 f072d9f32d316d8e077f180c9c0d18a8c672c054 assets/ftbic/models/item/lv_cable.json
@@ -500,7 +499,6 @@ a9da0626a9f4fd69cfee21ba1ad38c732c2e6a10 data/ftbic/advancements/recipes/ftbic/s
 b21634d73dfff53b76c6b7b39c4ff464bdeb6b7f data/ftbic/advancements/recipes/ftbic/shaped/iridium_alloy.json
 4ed2413b11d51bcdd971daa3fce1b2d5cdb236e4 data/ftbic/advancements/recipes/ftbic/shaped/iron_furnace.json
 89b245a42776bb8e5eff5874966aa3160bbf4e2f data/ftbic/advancements/recipes/ftbic/shaped/iv_cable.json
-9eaab289f21a4a22fb199ef002e3bcd4e236b1a9 data/ftbic/advancements/recipes/ftbic/shaped/location_card.json
 ed00ac44d039901ef5dcc494c2fda3b6d7b209f3 data/ftbic/advancements/recipes/ftbic/shaped/lv_battery_box.json
 ba5e03d0f217322757293540b42893982ce54e92 data/ftbic/advancements/recipes/ftbic/shaped/lv_cable.json
 167ff43dbdf556a01bccea42377e815faa94cbe0 data/ftbic/advancements/recipes/ftbic/shaped/lv_solar_panel.json
@@ -744,7 +742,6 @@ ccccc60466a07d90618792d6bd3d7ea2dde386fa data/ftbic/recipes/shaped/hv_battery_bo
 8b7cf985063f1f2cf0f29bc8ac289a8305859b76 data/ftbic/recipes/shaped/iridium_alloy.json
 0dc4dc170935f7d1734753e9d55bccfdec9e14d9 data/ftbic/recipes/shaped/iron_furnace.json
 c4be50c233ac45b55685860a0afc3ae32532ad2a data/ftbic/recipes/shaped/iv_cable.json
-39bf327b9a7fed65525384d660dbd08eb2102803 data/ftbic/recipes/shaped/location_card.json
 6b88ce45de75291b0b05c8e8cbc91e4ff8835577 data/ftbic/recipes/shaped/lv_battery_box.json
 fb4bc894eb0aa6abab2f148a31de77b28e5d230e data/ftbic/recipes/shaped/lv_cable.json
 fe958dce9e0899d9a10bf11211189ef0ab2d241b data/ftbic/recipes/shaped/lv_solar_panel.json

@@ -205,10 +205,11 @@ public interface FTBICElectricBlocks {
 			.io(1, 1);
 
 	ElectricBlockInstance TELEPORTER = register("teleporter", TeleporterBlockEntity::new)
+			.wip()
 			.advanced()
 			.energyCapacity(FTBICConfig.TELEPORTER_CAPACITY)
 			.maxEnergyInput(FTBICConfig.IV_TRANSFER_RATE)
-			.energyUsage(FTBICConfig.TELEPORTER_USE)
+			.energyUsage(FTBICConfig.TELEPORTER_MAX_USE)
 			.energyUsageIsntPerTick();
 
 	ElectricBlockInstance CHARGE_PAD = register("charge_pad", ChargePadBlockEntity::new)

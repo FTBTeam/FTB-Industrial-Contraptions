@@ -41,7 +41,7 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 	private static final int INVALID_Y = -10000;
 	private static final Predicate<ItemEntity> ITEM_ENTITY_PREDICATE = entity -> true;
 
-	public boolean paused = true;
+	public boolean paused = false;
 	public long quarryTick = 0L;
 	public float laserX = 0.5F;
 	public int laserY = INVALID_Y;
@@ -95,8 +95,8 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 		quarryTick = tag.getLong("QuarryTick");
 		offsetX = tag.getByte("OffsetX");
 		offsetZ = tag.getByte("OffsetZ");
-		sizeX = Mth.clamp(tag.getByte("SizeX"), 1, 120);
-		sizeZ = Mth.clamp(tag.getByte("SizeZ"), 1, 120);
+		sizeX = Mth.clamp(tag.getByte("SizeX"), 1, 64);
+		sizeZ = Mth.clamp(tag.getByte("SizeZ"), 1, 64);
 		skippedBlocks = tag.getShort("SkippedBlocks");
 	}
 
@@ -155,6 +155,12 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 		}
 
 		if (!paused && level != null && !level.isClientSide()) {
+			if (energy >= energyUse) {
+				energy -= energyUse;
+			} else {
+				return;
+			}
+
 			int moveTicks = Math.max((int) (FTBICConfig.QUARRY_MOVE_TICKS / progressSpeed), 1);
 			int miningTicks = Math.max((int) (FTBICConfig.QUARRY_MINE_TICKS / progressSpeed), 1);
 			int totalTicks = miningTicks + moveTicks;
@@ -329,7 +335,7 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 		int offLeft = 1;
 		int offRight = 1;
 
-		for (int i = 2; i < 120; i++) {
+		for (int i = 2; i <= 64; i++) {
 			BlockState state = level.getBlockState(worldPosition.relative(back, i));
 
 			if (state.getBlock() == landmark) {
@@ -338,7 +344,7 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 			}
 		}
 
-		for (int i = 2; i < 60; i++) {
+		for (int i = 1; i <= 64; i++) {
 			BlockState state = level.getBlockState(worldPosition.relative(left, i));
 
 			if (state.getBlock() == landmark) {
@@ -347,7 +353,7 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 			}
 		}
 
-		for (int i = 1; i < 60; i++) {
+		for (int i = 1; i <= 64; i++) {
 			BlockState state = level.getBlockState(worldPosition.relative(right, i));
 
 			if (state.getBlock() == landmark) {

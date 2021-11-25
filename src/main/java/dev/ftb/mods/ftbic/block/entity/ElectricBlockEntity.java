@@ -325,10 +325,10 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			public AbstractContainerMenu createMenu(int id, Inventory playerInv, Player player1) {
 				return openMenuFactory.create(id, playerInv);
 			}
-		}, this::writeMenu);
+		}, buf -> writeMenu(player, buf));
 	}
 
-	public void writeMenu(FriendlyByteBuf buf) {
+	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {
 		buf.writeBlockPos(worldPosition);
 	}
 

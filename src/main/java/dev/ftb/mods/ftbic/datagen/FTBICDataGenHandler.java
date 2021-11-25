@@ -157,7 +157,7 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.QUANTUM_CHESTPLATE, "Quantum Chestplate");
 			addItem(FTBICItems.QUANTUM_LEGGINGS, "Quantum Leggings");
 			addItem(FTBICItems.QUANTUM_BOOTS, "Quantum Boots");
-			addItem(FTBICItems.LOCATION_CARD, "Location Card");
+			// addItem(FTBICItems.LOCATION_CARD, "Location Card");
 
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".separating", "Separating");
@@ -176,6 +176,8 @@ public class FTBICDataGenHandler {
 			add("ftbic.any_item", "Any Item");
 			add("ftbic.requires_chestplate", "Requires Chestplate to function");
 			add("item.ftbic.spray_paint_can.tooltip", "Right-click on a machine to change its theme");
+			add("block.ftbic.teleporter.perm_error", "Only owner of this teleporter can change it's settings!");
+			add("block.ftbic.teleporter.load_error", "The destination chunk has to be loaded!");
 		}
 	}
 
@@ -713,7 +715,7 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.QUANTUM_CHESTPLATE);
 			basicItem(FTBICItems.QUANTUM_LEGGINGS);
 			basicItem(FTBICItems.QUANTUM_BOOTS);
-			basicItem(FTBICItems.LOCATION_CARD);
+			// basicItem(FTBICItems.LOCATION_CARD);
 		}
 	}
 

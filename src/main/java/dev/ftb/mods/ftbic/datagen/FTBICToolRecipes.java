@@ -3,9 +3,7 @@ package dev.ftb.mods.ftbic.datagen;
 import dev.ftb.mods.ftbic.item.FluidCellItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
@@ -39,6 +37,7 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(PROTEIN_BAR))
 				.save(consumer, compressingLoc("protein_bar"));
 
+		/*
 		ShapedRecipeBuilder.shaped(LOCATION_CARD)
 				.unlockedBy("has_item", has(ELECTRONIC_CIRCUIT))
 				.group(MODID + ":location_card")
@@ -48,5 +47,6 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 				.define('C', ELECTRONIC_CIRCUIT)
 				.define('P', Items.PAPER)
 				.save(consumer, shapedLoc("location_card"));
+		 */
 	}
 }

@@ -225,7 +225,7 @@ public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 	}
 
 	@Override
-	public void writeMenu(FriendlyByteBuf buf) {
+	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {
 		buf.writeBlockPos(worldPosition);
 		buf.writeResourceLocation(getRecipeSerializer().getRegistryName());
 	}

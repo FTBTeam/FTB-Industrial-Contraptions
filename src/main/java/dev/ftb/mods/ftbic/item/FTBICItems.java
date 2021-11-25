@@ -106,5 +106,5 @@ public interface FTBICItems {
 	Supplier<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", () -> new EnergyArmorItem(EnergyArmorMaterial.QUANTUM));
 	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
 	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
-	Supplier<Item> LOCATION_CARD = REGISTRY.register("location_card", LocationCardItem::new);
+	// Supplier<Item> LOCATION_CARD = REGISTRY.register("location_card", LocationCardItem::new);
 }

@@ -1,13 +1,12 @@
 plugins {
-	id "dev.architectury.loom" version "0.7.2-SNAPSHOT"
+	id "dev.architectury.loom" version "0.10.0-SNAPSHOT"
 	id 'maven-publish'
 	id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 apply from: 'https://files.latmod.com/public/markdown-git-changelog.gradle'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
 def ENV = System.getenv()
 version = "${mod_version}-build.${ENV.GITHUB_RUN_NUMBER ?: 9999}"
@@ -17,20 +16,20 @@ group = project.maven_group
 loom {
 	silentMojangMappingsLicense()
 
-	mixinConfigs = [
-	]
+	forge {
+		mixinConfigs = [
+		]
 
-	useFabricMixin = true
+		dataGen {
+			mod project.mod_id
+		}
 
-	dataGen {
-		mod project.mod_id
-	}
-
-	launches {
-		data {
-			arg "--existing", file("src/main/resources").absolutePath
-			arg "--assetIndex", "1.16"
-			arg "--assetsDir", (ENV.GRADLE_USER_HOME ?: "${System.getProperty("user.home")}/.gradle") + "/caches/fabric-loom/assets"
+		launches {
+			data {
+				arg "--existing", file("src/main/resources").absolutePath
+				// arg "--assetIndex", "1.16"
+				// arg "--assetsDir", (ENV.GRADLE_USER_HOME ?: "${System.getProperty("user.home")}/.gradle") + "/caches/fabric-loom/assets"
+			}
 		}
 	}
 }
@@ -72,14 +71,17 @@ dependencies {
 	minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
 	mappings minecraft.officialMojangMappings()
 	forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
-	modImplementation "me.shedaniel:architectury-forge:${rootProject.architectury_version}"
+	modImplementation("me.shedaniel:architectury-forge:${rootProject.architectury_version}")
 	// modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}") { transitive = false }
-	modCompileOnly "curse.maven:jei-238222:${jei_file}"
-	modImplementation "curse.maven:emendatus-enigmatica-399630:${rootProject.emendatus_enigmatica_file}"
-	modImplementation "io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}"
-	modImplementation "dev.latvian.mods:rhino-forge:${rootProject.rhino_version}"
+	modCompileOnly("curse.maven:jei-238222:${jei_file}")
+	modImplementation("curse.maven:emendatus-enigmatica-399630:${rootProject.emendatus_enigmatica_file}")
+	modImplementation("io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}")
+	modImplementation("dev.latvian.mods:rhino-forge:${rootProject.rhino_version}")
 	modImplementation("dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}") { transitive = false }
-	modImplementation "curse.maven:ctm-267602:3137659"
+	modRuntime("curse.maven:ctm-267602:3137659")
+	modRuntime("dev.ftb.mods:ftb-library-forge:${rootProject.ftblibrary_version}") { transitive = false }
+	modRuntime("dev.ftb.mods:ftb-teams-forge:${rootProject.ftbteams_version}") { transitive = false }
+	modRuntime("dev.ftb.mods:ftb-chunks-forge:${rootProject.ftbchunks_version}") { transitive = false }
 }
 
 processResources {
@@ -125,6 +127,7 @@ publishing {
 		mavenForge(MavenPublication) {
 			artifactId = rootProject.archivesBaseName
 			artifact(remapJar) {
+				builtBy remapJar
 				classifier null
 			}
 			artifact(sourcesJar) {
