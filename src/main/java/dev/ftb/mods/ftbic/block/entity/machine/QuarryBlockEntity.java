@@ -362,6 +362,18 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 			}
 		}
 
+		if (back.getAxis() == Direction.Axis.X) {
+			sizeX = offBack;
+			sizeZ = (offLeft + offRight + 1);
+			offsetX = back.getStepX() == 1 ? 1 : -sizeX;
+			offsetZ = -(back.getStepX() == 1 ? offLeft : offRight);
+		} else if (back.getAxis() == Direction.Axis.Z) {
+			sizeX = (offLeft + offRight + 1);
+			sizeZ = offBack;
+			offsetX = -(back.getStepZ() == 1 ? offRight : offLeft);
+			offsetZ = back.getStepZ() == 1 ? 1 : -sizeZ;
+		}
+
 		syncBlock();
 	}
 
