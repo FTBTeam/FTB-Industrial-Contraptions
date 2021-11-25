@@ -215,7 +215,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 
 	@Override
 	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {
-		buf.writeBlockPos(worldPosition);
+		super.writeMenu(player, buf);
 
 		List<TeleporterEntry> list = new ArrayList<>();
 

@@ -23,4 +23,5 @@ public interface FTBICMenus {
 	Supplier<MenuType<BatteryBoxMenu>> BATTERY_BOX = register("battery_box", BatteryBoxMenu::new);
 	Supplier<MenuType<AntimatterConstructorMenu>> ANTIMATTER_CONSTRUCTOR = register("antimatter_constructor", AntimatterConstructorMenu::new);
 	Supplier<MenuType<QuarryMenu>> QUARRY = register("quarry", QuarryMenu::new);
+	Supplier<MenuType<PoweredCraftingTableMenu>> POWERED_CRAFTING_TABLE = register("powered_crafting_table", PoweredCraftingTableMenu::new);
 }

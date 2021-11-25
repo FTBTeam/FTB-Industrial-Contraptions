@@ -9,6 +9,7 @@ public interface FTBICNet {
 
 	MessageType MOVE_LASER = NET.registerS2C("move_laser", MoveLaserMessage::new);
 	MessageType SELECT_TELEPORTER = NET.registerC2S("select_teleporter", SelectTeleporterMessage::new);
+	MessageType SELECT_CRAFTING_RECIPE = NET.registerC2S("select_crafting_recipe", SelectCraftingRecipeMessage::new);
 
 	static void init() {
 	}

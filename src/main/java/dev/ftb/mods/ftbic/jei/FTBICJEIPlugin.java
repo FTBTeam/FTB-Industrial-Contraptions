@@ -12,6 +12,7 @@ import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -32,13 +33,18 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistration r) {
-		r.registerSubtypeInterpreter(FTBICItems.FLUID_CELL.get(), (stack, uidContext) -> FluidCellItem.getSubtype(stack));
+		r.registerSubtypeInterpreter(FTBICItems.FLUID_CELL.get(), FluidCellItem::getSubtype);
 
 		r.useNbtForSubtypes(
 				FTBICItems.MECHANICAL_ELYTRA.get(),
 				FTBICItems.CARBON_CHESTPLATE.get(),
 				FTBICItems.QUANTUM_CHESTPLATE.get()
 		);
+	}
+
+	@Override
+	public void registerRecipeTransferHandlers(IRecipeTransferRegistration r) {
+		r.addRecipeTransferHandler(new PoweredCraftingTableTransferHandler(), VanillaRecipeCategoryUid.CRAFTING);
 	}
 
 	@Override
