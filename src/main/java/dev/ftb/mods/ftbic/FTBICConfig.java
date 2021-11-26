@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic;
 
+import dev.ftb.mods.ftbic.util.CraftingMaterial;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -12,7 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FTBICConfig {
 	public static Component ENERGY_FORMAT = new TextComponent("⚡").withStyle(ChatFormatting.BOLD);
@@ -132,59 +135,69 @@ public class FTBICConfig {
 	));
 
 	// Replace with ItemTags
-	public static final List<String> AUTO_METALS = new ArrayList<>(Arrays.asList(
-			"iron",
-			"gold",
-			"netherite",
-			"copper",
-			"aluminum",
-			"silver",
-			"lead",
-			"nickel",
-			"uranium",
-			"osmium",
-			"tin",
-			"zinc",
-			"cobalt",
-			"bronze",
-			"brass",
-			"constantan",
-			"electrum",
-			"steel",
-			"invar",
-			"signalum",
-			"lumium",
-			"enderium",
-			"iridium",
-			"cast_iron",
-			"tungsten",
-			"lithium"
-	));
+	public static final Map<String, CraftingMaterial> MATERIALS = new LinkedHashMap<>();
 
-	// Replace with ItemTags
-	public static final List<String> AUTO_GEMS = new ArrayList<>(Arrays.asList(
-			"redstone",
-			"lapis",
-			"diamond",
-			"emerald",
-			"quartz",
-			"prismarine",
-			"certus_quartz",
-			"charged_certus_quartz",
-			"fluix",
-			"fluorite",
-			"bitumen",
-			"cinnabar",
-			"apatite",
-			"sulfur",
-			"potassium_nitrate",
-			"mana",
-			"dimensional",
-			"silicon",
-			"ruby",
-			"sapphire",
-			"peridot"
-	));
+	public static void addMaterial(String m) {
+		MATERIALS.put(m, new CraftingMaterial(m));
+	}
+
+	public static void removeMaterial(String m) {
+		MATERIALS.remove(m);
+	}
+
+	static {
+		// Metals
+		addMaterial("iron");
+		addMaterial("gold");
+		addMaterial("netherite");
+		addMaterial("copper");
+		addMaterial("aluminum");
+		addMaterial("silver");
+		addMaterial("lead");
+		addMaterial("nickel");
+		addMaterial("uranium");
+		addMaterial("osmium");
+		addMaterial("tin");
+		addMaterial("zinc");
+		addMaterial("cobalt");
+		addMaterial("bronze");
+		addMaterial("brass");
+		addMaterial("constantan");
+		addMaterial("electrum");
+		addMaterial("steel");
+		addMaterial("invar");
+		addMaterial("signalum");
+		addMaterial("lumium");
+		addMaterial("enderium");
+		addMaterial("iridium");
+		addMaterial("cast_iron");
+		addMaterial("tungsten");
+		addMaterial("lithium");
+		addMaterial("titanium");
+		// Gems
+		addMaterial("lapis");
+		addMaterial("diamond");
+		addMaterial("emerald");
+		addMaterial("quartz");
+		addMaterial("prismarine");
+		addMaterial("certus_quartz");
+		addMaterial("charged_certus_quartz");
+		addMaterial("fluix");
+		addMaterial("fluorite");
+		addMaterial("bitumen");
+		addMaterial("cinnabar");
+		addMaterial("apatite");
+		addMaterial("sulfur");
+		addMaterial("potassium_nitrate");
+		addMaterial("mana");
+		addMaterial("dimensional");
+		addMaterial("silicon");
+		addMaterial("ruby");
+		addMaterial("sapphire");
+		addMaterial("peridot");
+		// Other
+		addMaterial("redstone");
+	}
 
 	private static int getOrder(@Nullable ResourceLocation id) {
 		int i = id == null ? -1 : MOD_MATERIAL_PRIORITY.indexOf(id.getNamespace());
@@ -215,5 +228,8 @@ public class FTBICConfig {
 		}
 
 		return current;
+	}
+
+	public static void init() {
 	}
 }
