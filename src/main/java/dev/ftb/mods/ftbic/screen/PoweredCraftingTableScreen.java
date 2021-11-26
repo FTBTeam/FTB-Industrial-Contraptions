@@ -1,14 +1,22 @@
 package dev.ftb.mods.ftbic.screen;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class PoweredCraftingTableScreen extends ElectricBlockScreen<PoweredCraftingTableMenu> {
+	private final Ingredient[] clientIngredients;
+	private final ItemStack[][] clientItemStacks;
+
 	public PoweredCraftingTableScreen(PoweredCraftingTableMenu m, Inventory inv, Component c) {
 		super(m, inv, c);
 		energyX = 16;
 		energyY = 26;
+		clientIngredients = new Ingredient[9];
+		clientItemStacks = new ItemStack[9][0];
 	}
 
 	@Override
@@ -28,5 +36,32 @@ public class PoweredCraftingTableScreen extends ElectricBlockScreen<PoweredCraft
 		}
 
 		drawLargeSlot(poseStack, leftPos + 110, topPos + 30);
+	}
+
+	@Override
+	public void renderExtra(PoseStack poseStack, int mouseX, int mouseY, float delta) {
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 3; x++) {
+				int i = x + y * 3;
+
+				if (clientIngredients[i] != menu.entity.ingredients[i]) {
+					clientIngredients[i] = menu.entity.ingredients[i];
+					clientItemStacks[i] = clientIngredients[i].getItems();
+				}
+
+				if (clientItemStacks[i].length > 0 && menu.entity.inputItems[i].isEmpty()) {
+					int ix = leftPos + 44 + x * 18;
+					int iy = topPos + 17 + y * 18;
+
+					itemRenderer.renderGuiItem(clientItemStacks[i][(int) ((System.currentTimeMillis() / 1000L) % clientItemStacks[i].length)], ix, iy);
+
+					RenderSystem.disableDepthTest();
+					RenderSystem.colorMask(true, true, true, false);
+					fillGradient(poseStack, ix, iy, ix + 16, iy + 16, 0x8B8B8B8B, 0x8B8B8B8B);
+					RenderSystem.colorMask(true, true, true, true);
+					RenderSystem.enableDepthTest();
+				}
+			}
+		}
 	}
 }

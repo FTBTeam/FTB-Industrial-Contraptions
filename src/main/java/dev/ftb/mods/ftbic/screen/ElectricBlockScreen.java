@@ -32,7 +32,11 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 	public void render(PoseStack poseStack, int mouseX, int mouseY, float delta) {
 		renderBackground(poseStack);
 		super.render(poseStack, mouseX, mouseY, delta);
+		renderExtra(poseStack, mouseX, mouseY, delta);
 		renderTooltip(poseStack, mouseX, mouseY);
+	}
+
+	protected void renderExtra(PoseStack poseStack, int mouseX, int mouseY, float delta) {
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -32,8 +33,19 @@ public class PoweredCraftingTableTransferHandler implements IRecipeTransferHandl
 				Ingredient[] in = new Ingredient[9];
 				Arrays.fill(in, Ingredient.EMPTY);
 
-				for (int i = 0; i < list.size(); i++) {
-					in[i] = list.get(i);
+				if (recipe instanceof ShapedRecipe) {
+					int w = ((ShapedRecipe) recipe).getWidth();
+					int h = ((ShapedRecipe) recipe).getHeight();
+
+					for (int y = 0; y < h; y++) {
+						for (int x = 0; x < w; x++) {
+							in[y * 3 + x] = list.get(y * w + x);
+						}
+					}
+				} else {
+					for (int i = 0; i < list.size(); i++) {
+						in[i] = list.get(i);
+					}
 				}
 
 				container.setIngredients(player, in);
