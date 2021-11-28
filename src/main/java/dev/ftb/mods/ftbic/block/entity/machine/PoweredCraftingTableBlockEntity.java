@@ -15,7 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -23,6 +22,7 @@ import java.util.Arrays;
 public class PoweredCraftingTableBlockEntity extends BasicMachineBlockEntity {
 	public final Ingredient[] ingredients;
 	private ResourceLocation matchedRecipe;
+	public double progress;
 
 	public PoweredCraftingTableBlockEntity() {
 		super(FTBICElectricBlocks.POWERED_CRAFTING_TABLE);
@@ -99,9 +99,14 @@ public class PoweredCraftingTableBlockEntity extends BasicMachineBlockEntity {
 			return;
 		}
 
-		FTBIC.LOGGER.info("Success!");
+		progress += progressSpeed;
 		energy -= energyUse;
-		setChanged();
+
+		if (progress >= 100D) {
+			progress = 0D;
+			FTBIC.LOGGER.info("Success!");
+			setChanged();
+		}
 	}
 
 	@Override
@@ -113,16 +118,17 @@ public class PoweredCraftingTableBlockEntity extends BasicMachineBlockEntity {
 		return InteractionResult.SUCCESS;
 	}
 
-	public void updateRecipe(ServerPlayer player, Ingredient[] newIngredients) {
-		for (int i = 0; i < 9; i++) {
-			ingredients[i] = newIngredients[i];
+	@Override
+	public int getCount() {
+		return 2;
+	}
 
-			if (!inputItems[i].isEmpty() && !ingredients[i].test(inputItems[i])) {
-				ItemHandlerHelper.giveItemToPlayer(player, inputItems[i].copy());
-				inputItems[i] = ItemStack.EMPTY;
-			}
+	@Override
+	public int get(int id) {
+		if (id == 1) {
+			return (int) (progress * 22D / 100D);
+		} else {
+			return super.get(id);
 		}
-
-		setChanged();
 	}
 }

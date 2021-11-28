@@ -1,0 +1,36 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"group": "ftbic:energy_crystal",
+	"ingredients": [
+		{
+			"tag": "forge:dusts/redstone"
+		},
+		{
+			"tag": "forge:dusts/glowstone"
+		},
+		{
+			"tag": "forge:dusts/redstone"
+		},
+		{
+			"tag": "forge:silicon"
+		},
+		{
+			"tag": "forge:gems/diamond"
+		},
+		{
+			"tag": "forge:silicon"
+		},
+		{
+			"tag": "forge:dusts/redstone"
+		},
+		{
+			"tag": "forge:dusts/glowstone"
+		},
+		{
+			"tag": "forge:dusts/redstone"
+		}
+	],
+	"result": {
+		"item": "ftbic:energy_crystal"
+	}
+}

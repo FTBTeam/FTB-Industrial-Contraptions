@@ -180,6 +180,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('W', COPPER_COIL)
 				.save(consumer, shapedLoc("charge_pad"));
 
+		/*
 		ShapedRecipeBuilder.shaped(TELEPORTER)
 				.unlockedBy("has_item", has(ANTIMATTER_CRYSTAL))
 				.group(MODID + ":teleporter")
@@ -192,7 +193,9 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('C', IRIDIUM_CIRCUIT)
 				.define('W', COPPER_COIL)
 				.save(consumer, shapedLoc("teleporter"));
+		 */
 
+		/*
 		ShapedRecipeBuilder.shaped(POWERED_CRAFTING_TABLE)
 				.unlockedBy("has_item", has(MACHINE_BLOCK))
 				.group(MODID + ":powered_crafting_table")
@@ -202,6 +205,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('M', MACHINE_BLOCK)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("powered_crafting_table"));
+		 */
 
 		ShapedRecipeBuilder.shaped(QUARRY)
 				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))

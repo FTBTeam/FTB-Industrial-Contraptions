@@ -31,11 +31,10 @@ public class FTBICBatteryRecipes extends FTBICRecipesGen {
 				.group(MODID + ":battery")
 				.pattern(" C ")
 				.pattern("TRT")
-				.pattern("TST")
+				.pattern("TRT")
 				.define('C', LV_CABLE)
 				.define('T', TIN_INGOT)
 				.define('R', REDSTONE)
-				.define('S', SULFUR_DUST)
 				.save(consumer, shapedLoc("battery"));
 
 		UpgradeRecipeBuilder.smithing(Ingredient.of(LV_BATTERY), Ingredient.of(ENERGY_CRYSTAL), MV_BATTERY)

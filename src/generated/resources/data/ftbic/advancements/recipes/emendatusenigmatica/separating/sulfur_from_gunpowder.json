@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:shaped/powered_crafting_table"
+			"ftbic:separating/sulfur_from_gunpowder"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:machine_block"
+						"item": "minecraft:gunpowder"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:shaped/powered_crafting_table"
+				"recipe": "ftbic:separating/sulfur_from_gunpowder"
 			}
 		}
 	},

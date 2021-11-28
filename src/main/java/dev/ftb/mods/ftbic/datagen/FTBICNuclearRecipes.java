@@ -37,6 +37,7 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.define('G', GLASS)
 				.save(consumer, shapedLoc("reinforced_glass"));
 
+		/*
 		ShapedRecipeBuilder.shaped(NUCLEAR_REACTOR)
 				.unlockedBy("has_item", has(BASIC_GENERATOR))
 				.group(MODID + ":nuclear_reactor")
@@ -49,6 +50,7 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.define('C', IRIDIUM_CIRCUIT)
 				.define('G', BASIC_GENERATOR)
 				.save(consumer, shapedLoc("nuclear_reactor"));
+		 */
 
 		ShapedRecipeBuilder.shaped(COOLANT_10K)
 				.unlockedBy("has_item", has(FLUID_CELL))

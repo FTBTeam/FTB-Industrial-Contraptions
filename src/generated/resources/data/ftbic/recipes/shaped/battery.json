@@ -4,7 +4,7 @@
 	"pattern": [
 		" C ",
 		"TRT",
-		"TST"
+		"TRT"
 	],
 	"key": {
 		"C": {
@@ -15,9 +15,6 @@
 		},
 		"R": {
 			"tag": "forge:dusts/redstone"
-		},
-		"S": {
-			"tag": "forge:dusts/sulfur"
 		}
 	},
 	"result": {

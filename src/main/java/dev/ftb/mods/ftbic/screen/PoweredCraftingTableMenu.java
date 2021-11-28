@@ -8,7 +8,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
 public class PoweredCraftingTableMenu extends ElectricBlockMenu<PoweredCraftingTableBlockEntity> {
@@ -42,11 +44,23 @@ public class PoweredCraftingTableMenu extends ElectricBlockMenu<PoweredCraftingT
 	}
 
 	public void setIngredients(Player player, Ingredient[] in) {
-		System.arraycopy(in, 0, entity.ingredients, 0, 9);
+		for (int i = 0; i < 9; i++) {
+			entity.ingredients[i] = in[i];
+
+			if (player instanceof ServerPlayer && !entity.inputItems[i].isEmpty() && !in[i].test(entity.inputItems[i])) {
+				ItemHandlerHelper.giveItemToPlayer(player, entity.inputItems[i].copy());
+				entity.inputItems[i] = ItemStack.EMPTY;
+			}
+		}
+
 		entity.setChanged();
 
 		if (!(player instanceof ServerPlayer)) {
 			new SelectCraftingRecipeMessage(in).sendToServer();
 		}
+	}
+
+	public int getProgressBar() {
+		return containerData.get(1);
 	}
 }

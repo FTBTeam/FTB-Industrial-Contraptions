@@ -177,5 +177,12 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(LATEX), 0.35)
 				.outputItem(new ItemStack(RUBBERWOOD_SAPLING), 0.05)
 				.save(consumer, separatingLoc("latex_from_leaves"));
+
+		MachineRecipeBuilder.separating()
+				.unlockedBy("has_item", has(Items.GUNPOWDER))
+				.inputItem(Ingredient.of(Items.GUNPOWDER))
+				.outputItem(new ItemStack(COAL_DUST_ITEM))
+				.outputItem(new ItemStack(SULFUR_ITEM), 0.50)
+				.save(consumer, separatingLoc("sulfur_from_gunpowder"));
 	}
 }

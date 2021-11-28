@@ -92,17 +92,19 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.define('O', OBSIDIAN)
 				.save(consumer, shapedLoc("graphene"));
 
-		ShapedRecipeBuilder.shaped(ENERGY_CRYSTAL)
+		ShapelessRecipeBuilder.shapeless(ENERGY_CRYSTAL)
 				.unlockedBy("has_item", has(DIAMOND))
 				.group(MODID + ":energy_crystal")
-				.pattern("RQR")
-				.pattern("SDS")
-				.pattern("RQR")
-				.define('R', REDSTONE)
-				.define('D', DIAMOND)
-				.define('Q', SILICON)
-				.define('S', SULFUR_DUST)
-				.save(consumer, shapedLoc("energy_crystal"));
+				.requires(REDSTONE)
+				.requires(GLOWSTONE)
+				.requires(REDSTONE)
+				.requires(SILICON)
+				.requires(DIAMOND)
+				.requires(SILICON)
+				.requires(REDSTONE)
+				.requires(GLOWSTONE)
+				.requires(REDSTONE)
+				.save(consumer, shapelessLoc("energy_crystal"));
 
 		ShapelessRecipeBuilder.shapeless(RUBBER, 3)
 				.unlockedBy("has_item", has(RUBBER))

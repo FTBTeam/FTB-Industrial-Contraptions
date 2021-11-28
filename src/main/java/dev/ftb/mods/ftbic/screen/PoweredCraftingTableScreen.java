@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.screen;
 
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
@@ -36,10 +37,15 @@ public class PoweredCraftingTableScreen extends ElectricBlockScreen<PoweredCraft
 		}
 
 		drawLargeSlot(poseStack, leftPos + 110, topPos + 30);
-	}
 
-	@Override
-	public void renderExtra(PoseStack poseStack, int mouseX, int mouseY, float delta) {
+		Lighting.setupFor3DItems();
+		RenderSystem.color4f(1F, 1F, 1F, 1F);
+		RenderSystem.enableRescaleNormal();
+		itemRenderer.blitOffset = 100.0F;
+		RenderSystem.enableDepthTest();
+		RenderSystem.disableBlend();
+		RenderSystem.enableLighting();
+
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 3; x++) {
 				int i = x + y * 3;
@@ -53,15 +59,24 @@ public class PoweredCraftingTableScreen extends ElectricBlockScreen<PoweredCraft
 					int ix = leftPos + 44 + x * 18;
 					int iy = topPos + 17 + y * 18;
 
-					itemRenderer.renderGuiItem(clientItemStacks[i][(int) ((System.currentTimeMillis() / 1000L) % clientItemStacks[i].length)], ix, iy);
+					itemRenderer.renderAndDecorateItem(clientItemStacks[i][(int) ((System.currentTimeMillis() / 1000L) % clientItemStacks[i].length)], ix, iy);
 
+					RenderSystem.disableLighting();
+					RenderSystem.enableBlend();
 					RenderSystem.disableDepthTest();
-					RenderSystem.colorMask(true, true, true, false);
+					RenderSystem.disableTexture();
 					fillGradient(poseStack, ix, iy, ix + 16, iy + 16, 0x8B8B8B8B, 0x8B8B8B8B);
-					RenderSystem.colorMask(true, true, true, true);
+					RenderSystem.enableTexture();
 					RenderSystem.enableDepthTest();
+					RenderSystem.disableBlend();
+					RenderSystem.enableLighting();
 				}
 			}
 		}
+
+		itemRenderer.blitOffset = 0.0F;
+		Lighting.turnOff();
+
+		drawProgressBar(poseStack, leftPos + 110, topPos + 58, menu.getProgressBar());
 	}
 }

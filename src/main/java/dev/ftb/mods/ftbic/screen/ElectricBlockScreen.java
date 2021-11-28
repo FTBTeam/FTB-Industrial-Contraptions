@@ -56,7 +56,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		}
 	}
 
-	public void drawProgressBar(PoseStack poseStack, int x, int y, int progress) {
+	public void drawArrow(PoseStack poseStack, int x, int y, int progress) {
 		if (progress < 24) {
 			blit(poseStack, x + progress, y, 86 + progress, 167, 24 - progress, 17);
 		}
@@ -156,6 +156,16 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 
 		minecraft.getTextureManager().bind(BASE_TEXTURE);
 		blit(poseStack, x, y, 67, 167, 18, 54);
+	}
+
+	public void drawProgressBar(PoseStack poseStack, int x, int y, int progress) {
+		if (progress < 26) {
+			blit(poseStack, x + progress, y, 86 + progress, 203, 26 - progress, 3);
+		}
+
+		if (progress > 0) {
+			blit(poseStack, x, y, 86, 207, progress, 3);
+		}
 	}
 
 	@Override

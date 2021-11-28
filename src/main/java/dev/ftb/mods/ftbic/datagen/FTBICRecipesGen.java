@@ -57,9 +57,6 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> WOOL = ItemTags.WOOL;
 	public static final Tag<Item> SLIMEBALL = Tags.Items.SLIMEBALLS;
 	public static final Tag<Item> SILICON = ItemTags.bind("forge:silicon");
-	public static final Tag<Item> SULFUR = ItemTags.bind("forge:gems/sulfur");
-	public static final Tag<Item> SULFUR_DUST = ItemTags.bind("forge:dusts/sulfur");
-	public static final Tag<Item> BITUMEN = ItemTags.bind("forge:bitumen");
 	public static final Tag<Item> URANIUM_DUST = ItemTags.bind("forge:dusts/uranium");
 	public static final Tag<Item> IRIDIUM_INGOT = ItemTags.bind("forge:ingots/iridium");
 	public static final Tag<Item> BLAZE_ROD = Tags.Items.RODS_BLAZE;
@@ -72,7 +69,6 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item RUBBERWOOD_LEAVES = MyrtreesItems.RUBBERWOOD_LEAVES.get();
 	public static final Tag<Item> IRON_ROD = ItemTags.bind("forge:rods/iron");
 	public static final Tag<Item> IRON_DUST = ItemTags.bind("forge:dusts/iron");
-	public static final Tag<Item> STEEL_DUST = ItemTags.bind("forge:dusts/steel");
 	public static final Tag<Item> LEAD_DUST = ItemTags.bind("forge:dusts/lead");
 	public static final Tag<Item> BRONZE_DUST = ItemTags.bind("forge:dusts/bronze");
 	public static final Tag<Item> ELECTRUM_DUST = ItemTags.bind("forge:dusts/electrum");
@@ -87,6 +83,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item COAL_DUST_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.COAL).get();
 	public static final Item CHARCOAL_DUST_ITEM = ItemHandler.DUST_CHARCOAL.get();
 	public static final Item URANIUM_DUST_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.URANIUM).get();
+	public static final Item SULFUR_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SULFUR).get();
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
 	public static final Item REINFORCED_STONE = FTBICItems.REINFORCED_STONE.get();

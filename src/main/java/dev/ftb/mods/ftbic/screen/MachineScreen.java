@@ -22,7 +22,7 @@ public class MachineScreen extends ElectricBlockScreen<MachineMenu> {
 
 		super.renderBg(poseStack, delta, mouseX, mouseY);
 
-		drawProgressBar(poseStack, wx + s.progressX, wy + s.progressY, menu.getProgressBar());
+		drawArrow(poseStack, wx + s.progressX, wy + s.progressY, menu.getProgressBar());
 
 		for (int i = 0; i < menu.entity.inputItems.length; i++) {
 			drawSlot(poseStack, wx + i * 18, wy);

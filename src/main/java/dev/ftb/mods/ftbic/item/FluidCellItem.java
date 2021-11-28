@@ -123,15 +123,10 @@ public class FluidCellItem extends Item {
 		if (allowdedIn(tab)) {
 			list.add(new ItemStack(this));
 
-			if (FTBICConfig.ADD_ALL_FLUID_CELLS) {
-				for (Fluid fluid : ForgeRegistries.FLUIDS) {
-					if (fluid != Fluids.EMPTY && fluid.isSource(fluid.defaultFluidState())) {
-						list.add(setFluid(new ItemStack(this), fluid));
-					}
+			for (Fluid fluid : ForgeRegistries.FLUIDS) {
+				if (fluid != Fluids.EMPTY && fluid.isSource(fluid.defaultFluidState()) && (FTBICConfig.ADD_ALL_FLUID_CELLS || !fluid.getRegistryName().getPath().contains("molten"))) {
+					list.add(setFluid(new ItemStack(this), fluid));
 				}
-			} else {
-				list.add(setFluid(new ItemStack(this), Fluids.WATER));
-				list.add(setFluid(new ItemStack(this), Fluids.LAVA));
 			}
 		}
 	}
