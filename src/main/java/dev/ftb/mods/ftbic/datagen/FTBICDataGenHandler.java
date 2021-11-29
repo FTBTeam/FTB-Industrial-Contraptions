@@ -439,30 +439,30 @@ public class FTBICDataGenHandler {
 			orientable("block/iron_furnace_on", modLoc("block/iron_furnace_side"), modLoc("block/iron_furnace_front_on"), modLoc("block/iron_furnace_top"));
 
 			withExistingParent("block/landmark", "block/block")
-					.texture("particle", modLoc("block/landmark"))
-					.texture("torch", modLoc("block/landmark"))
-					.texture("torch_side", modLoc("block/landmark_side"))
+					.texture("particle", modLoc("block/landmark_ns"))
+					.texture("landmark_ns", modLoc("block/landmark_ns"))
+					.texture("landmark_we", modLoc("block/landmark_we"))
 					.ao(false)
 					.element()
 					.from(7, 0, 7)
-					.to(9, 9, 9)
+					.to(9, 7, 9)
 					.shade(false)
-					.face(Direction.DOWN).uvs(7, 13, 9, 15).texture("#torch").end()
-					.face(Direction.UP).uvs(7, 7, 9, 9).texture("#torch").end()
+					.face(Direction.DOWN).texture("#landmark_ns").cullface(Direction.DOWN).end()
+					.face(Direction.NORTH).texture("#landmark_ns").end()
+					.face(Direction.SOUTH).texture("#landmark_ns").end()
+					.face(Direction.WEST).texture("#landmark_we").end()
+					.face(Direction.EAST).texture("#landmark_we").end()
 					.end()
 					.element()
-					.from(7, 0, 0)
-					.to(9, 16, 16)
+					.from(6.97F, 6.97F, 6.97F)
+					.to(9.03F, 9.03F, 9.03F)
 					.shade(false)
-					.face(Direction.WEST).uvs(0, 0, 16, 16).texture("#torch").end()
-					.face(Direction.EAST).uvs(0, 0, 16, 16).texture("#torch").end()
-					.end()
-					.element()
-					.from(0, 0, 7)
-					.to(16, 16, 9)
-					.shade(false)
-					.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#torch_side").end()
-					.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#torch_side").end()
+					.face(Direction.DOWN).uvs(7, 7, 9, 9).texture("#landmark_ns").end()
+					.face(Direction.UP).uvs(7, 7, 9, 9).texture("#landmark_ns").end()
+					.face(Direction.NORTH).uvs(7, 7, 9, 9).texture("#landmark_ns").end()
+					.face(Direction.SOUTH).uvs(7, 7, 9, 9).texture("#landmark_ns").end()
+					.face(Direction.WEST).uvs(7, 7, 9, 9).texture("#landmark_we").end()
+					.face(Direction.EAST).uvs(7, 7, 9, 9).texture("#landmark_we").end()
 					.end()
 			;
 
@@ -696,7 +696,7 @@ public class FTBICDataGenHandler {
 				;
 			}
 
-			singleTexture("landmark", mcLoc("item/generated"), "layer0", modLoc("block/landmark"));
+			singleTexture("landmark", mcLoc("item/generated"), "layer0", modLoc("block/landmark_ns"));
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {

@@ -160,7 +160,7 @@ d649dce1e58b141d8258c6331ead82aa2fdf815f assets/ftbic/models/block/iron_furnace_
 10cfe4ddc25214c4ef7c5afcadad03209fe4bb18 assets/ftbic/models/block/iron_furnace_on.json
 c773c8cb9bef3d2a8877326925f43312cb7072f3 assets/ftbic/models/block/iv_cable_base.json
 e24ddf5cc18466f6d2fedd2afe66033a22f70974 assets/ftbic/models/block/iv_cable_connection.json
-e9a9c4032caf1e7457d6ad30a045c71909cb524d assets/ftbic/models/block/landmark.json
+dcc1ebd430efb54adb24c00038980e4cd1036d90 assets/ftbic/models/block/landmark.json
 1391b7c66f583f86c901049a66bef95f62832097 assets/ftbic/models/block/lv_cable_base.json
 9055645a84ad20af4a4317600e4eec4d79cae6e3 assets/ftbic/models/block/lv_cable_connection.json
 09829aabc587a31bf54c049d3dc3022dc970e262 assets/ftbic/models/block/machine_block.json
@@ -240,7 +240,7 @@ fc52e7dc575a2da9f63f465cbf6ee183fdbd6c6e assets/ftbic/models/item/hv_transformer
 9f2082660cea341604b274ab9e54060d30675d22 assets/ftbic/models/item/iridium_circuit.json
 0acacfb67715a505f0b853057c46f8096bd90210 assets/ftbic/models/item/iron_furnace.json
 e36c0491c959ca056553288102890f8fdfd1a966 assets/ftbic/models/item/iv_cable.json
-e2e14ecad784d77024e5fa96b53b5fd7b8e12075 assets/ftbic/models/item/landmark.json
+2607a3571ab7b002d2a0e02e5b8a550138eba23e assets/ftbic/models/item/landmark.json
 509da6d131612cfd520a3b4a908e34a98897139d assets/ftbic/models/item/light_spray_paint_can.json
 78dc6a68e3570446b733c1c9baec1894e4892465 assets/ftbic/models/item/lv_battery.json
 f35b38b1ce74ca4a2ecc546ce77e3fd9acc76418 assets/ftbic/models/item/lv_battery_box.json
