@@ -1,4 +1,4 @@
-package dev.ftb.mods.ftbic.item;
+package dev.ftb.mods.ftbic.item.reactor;
 
 public class CoolantItem extends ReactorItem {
 	public CoolantItem(int durability) {

@@ -19,7 +19,7 @@ public class PoweredCraftingTableMenu extends ElectricBlockMenu<PoweredCraftingT
 	}
 
 	public PoweredCraftingTableMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-		this(id, playerInv, (PoweredCraftingTableBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(1));
+		this(id, playerInv, (PoweredCraftingTableBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
 
 		for (int i = 0; i < entity.ingredients.length; i++) {
 			entity.ingredients[i] = Ingredient.fromNetwork(buf);

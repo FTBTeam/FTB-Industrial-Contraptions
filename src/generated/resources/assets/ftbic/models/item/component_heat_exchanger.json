@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "ftbic:item/component_heat_exchanger"
+	}
+}

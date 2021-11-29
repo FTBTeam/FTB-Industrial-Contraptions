@@ -2,7 +2,7 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
-import dev.ftb.mods.ftbic.item.ReactorItem;
+import dev.ftb.mods.ftbic.item.reactor.ReactorItem;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 

@@ -49,11 +49,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * @author LatvianModder
@@ -101,23 +103,31 @@ public class FTBICDataGenHandler {
 			super(gen, modid, locale);
 		}
 
+		private void addBlock(Supplier<Block> block) {
+			addBlock(block, Arrays.stream(block.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")));
+		}
+
+		private void addItem(Supplier<Item> item) {
+			addItem(item, Arrays.stream(item.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")));
+		}
+
 		@Override
 		protected void addTranslations() {
 			add("itemGroup.ftbic", "FTB Industrial Contraptions");
 
-			addBlock(FTBICBlocks.RUBBER_SHEET, "Rubber Sheet");
-			addBlock(FTBICBlocks.REINFORCED_STONE, "Reinforced Stone");
-			addBlock(FTBICBlocks.REINFORCED_GLASS, "Reinforced Glass");
-			addBlock(FTBICBlocks.MACHINE_BLOCK, "Machine Block");
-			addBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK, "Advanced Machine Block");
-			addBlock(FTBICBlocks.IRON_FURNACE, "Iron Furnace");
+			addBlock(FTBICBlocks.RUBBER_SHEET);
+			addBlock(FTBICBlocks.REINFORCED_STONE);
+			addBlock(FTBICBlocks.REINFORCED_GLASS);
+			addBlock(FTBICBlocks.MACHINE_BLOCK);
+			addBlock(FTBICBlocks.ADVANCED_MACHINE_BLOCK);
+			addBlock(FTBICBlocks.IRON_FURNACE);
 			addBlock(FTBICBlocks.LV_CABLE, "LV Cable");
 			addBlock(FTBICBlocks.MV_CABLE, "MV Cable");
 			addBlock(FTBICBlocks.HV_CABLE, "HV Cable");
 			addBlock(FTBICBlocks.EV_CABLE, "EV Cable");
 			addBlock(FTBICBlocks.IV_CABLE, "IV Cable");
-			addBlock(FTBICBlocks.BURNT_CABLE, "Burnt Cable");
-			addBlock(FTBICBlocks.LANDMARK, "Landmark");
+			addBlock(FTBICBlocks.BURNT_CABLE);
+			addBlock(FTBICBlocks.LANDMARK);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -127,37 +137,49 @@ public class FTBICDataGenHandler {
 				addItem(item.item, item.name);
 			}
 
-			addItem(FTBICItems.SINGLE_USE_BATTERY, "Single Use Battery");
+			addItem(FTBICItems.SINGLE_USE_BATTERY);
 			addItem(FTBICItems.LV_BATTERY, "LV Battery");
 			addItem(FTBICItems.MV_BATTERY, "MV Battery");
 			addItem(FTBICItems.HV_BATTERY, "HV Battery");
 			addItem(FTBICItems.EV_BATTERY, "EV Battery");
-			addItem(FTBICItems.CREATIVE_BATTERY, "Creative Battery");
-			addItem(FTBICItems.FLUID_CELL, "Fluid Cell");
+			addItem(FTBICItems.CREATIVE_BATTERY);
+			addItem(FTBICItems.FLUID_CELL);
 			addItem(FTBICItems.COOLANT_10K, "10k Coolant Cell");
 			addItem(FTBICItems.COOLANT_30K, "30k Coolant Cell");
 			addItem(FTBICItems.COOLANT_60K, "60k Coolant Cell");
-			addItem(FTBICItems.URANIUM_FUEL_ROD, "Uranium Fuel Cell");
-			addItem(FTBICItems.DUAL_URANIUM_FUEL_ROD, "Dual Uranium Fuel Cell");
-			addItem(FTBICItems.QUAD_URANIUM_FUEL_ROD, "Quad Uranium Fuel Cell");
-			addItem(FTBICItems.CANNED_FOOD, "Canned Food");
+			addItem(FTBICItems.URANIUM_FUEL_ROD);
+			addItem(FTBICItems.DUAL_URANIUM_FUEL_ROD);
+			addItem(FTBICItems.QUAD_URANIUM_FUEL_ROD);
+			addItem(FTBICItems.HEAT_VENT);
+			addItem(FTBICItems.ADVANCED_HEAT_VENT);
+			addItem(FTBICItems.OVERCLOCKED_HEAT_VENT);
+			addItem(FTBICItems.REACTOR_HEAT_VENT);
+			addItem(FTBICItems.COMPONENT_HEAT_VENT);
+			addItem(FTBICItems.HEAT_EXCHANGER);
+			addItem(FTBICItems.ADVANCED_HEAT_EXCHANGER);
+			addItem(FTBICItems.REACTOR_HEAT_EXCHANGER);
+			addItem(FTBICItems.COMPONENT_HEAT_EXCHANGER);
+			addItem(FTBICItems.REACTOR_PLATING);
+			addItem(FTBICItems.CONTAINMENT_REACTOR_PLATING);
+			addItem(FTBICItems.HEAT_CAPACITY_REACTOR_PLATING, "Heat-Capacity Reactor Plating");
+			addItem(FTBICItems.CANNED_FOOD);
 			addItem(FTBICItems.PROTEIN_BAR, "Feed The Beast™ Protein Bar");
 			addItem(FTBICItems.DARK_SPRAY_PAINT_CAN, "Spray Paint Can (Dark)");
 			addItem(FTBICItems.LIGHT_SPRAY_PAINT_CAN, "Spray Paint Can (Light)");
-			addItem(FTBICItems.OVERCLOCKER_UPGRADE, "Overclocker Upgrade");
-			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE, "Energy Storage Upgrade");
-			addItem(FTBICItems.TRANSFORMER_UPGRADE, "Transformer Upgrade");
-			addItem(FTBICItems.EJECTOR_UPGRADE, "Ejector Upgrade");
-			addItem(FTBICItems.MECHANICAL_ELYTRA, "Mechanical Elytra");
-			addItem(FTBICItems.CARBON_HELMET, "Carbon Helmet");
-			addItem(FTBICItems.CARBON_CHESTPLATE, "Carbon Chestplate");
-			addItem(FTBICItems.CARBON_LEGGINGS, "Carbon Leggings");
-			addItem(FTBICItems.CARBON_BOOTS, "Carbon Boots");
-			addItem(FTBICItems.QUANTUM_HELMET, "Quantum Helmet");
-			addItem(FTBICItems.QUANTUM_CHESTPLATE, "Quantum Chestplate");
-			addItem(FTBICItems.QUANTUM_LEGGINGS, "Quantum Leggings");
-			addItem(FTBICItems.QUANTUM_BOOTS, "Quantum Boots");
-			// addItem(FTBICItems.LOCATION_CARD, "Location Card");
+			addItem(FTBICItems.OVERCLOCKER_UPGRADE);
+			addItem(FTBICItems.ENERGY_STORAGE_UPGRADE);
+			addItem(FTBICItems.TRANSFORMER_UPGRADE);
+			addItem(FTBICItems.EJECTOR_UPGRADE);
+			addItem(FTBICItems.MECHANICAL_ELYTRA);
+			addItem(FTBICItems.CARBON_HELMET);
+			addItem(FTBICItems.CARBON_CHESTPLATE);
+			addItem(FTBICItems.CARBON_LEGGINGS);
+			addItem(FTBICItems.CARBON_BOOTS);
+			addItem(FTBICItems.QUANTUM_HELMET);
+			addItem(FTBICItems.QUANTUM_CHESTPLATE);
+			addItem(FTBICItems.QUANTUM_LEGGINGS);
+			addItem(FTBICItems.QUANTUM_BOOTS);
+			// addItem(FTBICItems.LOCATION_CARD);
 
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".separating", "Separating");
@@ -698,6 +720,18 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.URANIUM_FUEL_ROD);
 			basicItem(FTBICItems.DUAL_URANIUM_FUEL_ROD);
 			basicItem(FTBICItems.QUAD_URANIUM_FUEL_ROD);
+			basicItem(FTBICItems.HEAT_VENT);
+			basicItem(FTBICItems.ADVANCED_HEAT_VENT);
+			basicItem(FTBICItems.OVERCLOCKED_HEAT_VENT);
+			basicItem(FTBICItems.REACTOR_HEAT_VENT);
+			basicItem(FTBICItems.COMPONENT_HEAT_VENT);
+			basicItem(FTBICItems.HEAT_EXCHANGER);
+			basicItem(FTBICItems.ADVANCED_HEAT_EXCHANGER);
+			basicItem(FTBICItems.REACTOR_HEAT_EXCHANGER);
+			basicItem(FTBICItems.COMPONENT_HEAT_EXCHANGER);
+			basicItem(FTBICItems.REACTOR_PLATING);
+			basicItem(FTBICItems.CONTAINMENT_REACTOR_PLATING);
+			basicItem(FTBICItems.HEAT_CAPACITY_REACTOR_PLATING);
 			basicItem(FTBICItems.CANNED_FOOD);
 			basicItem(FTBICItems.PROTEIN_BAR);
 			basicItem(FTBICItems.DARK_SPRAY_PAINT_CAN);
