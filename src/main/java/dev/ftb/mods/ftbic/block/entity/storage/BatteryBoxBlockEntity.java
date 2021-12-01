@@ -5,6 +5,7 @@ import dev.ftb.mods.ftbic.block.entity.generator.GeneratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.BatteryInventory;
 import dev.ftb.mods.ftbic.screen.BatteryBoxMenu;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,6 +13,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
@@ -46,6 +49,13 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 		} else {
 			dischargeBatteryInventory.loadItem(ItemStack.EMPTY);
 		}
+	}
+
+	@Override
+	public void onBroken(Level level, BlockPos pos) {
+		super.onBroken(level, pos);
+
+		Block.popResource(level, pos, dischargeBatteryInventory.getStackInSlot(0));
 	}
 
 	@Override

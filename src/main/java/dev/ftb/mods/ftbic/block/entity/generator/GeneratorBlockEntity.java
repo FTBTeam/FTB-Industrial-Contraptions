@@ -15,6 +15,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -58,6 +60,13 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		} else {
 			chargeBatteryInventory.loadItem(ItemStack.EMPTY);
 		}
+	}
+
+	@Override
+	public void onBroken(Level level, BlockPos pos) {
+		super.onBroken(level, pos);
+
+		Block.popResource(level, pos, chargeBatteryInventory.getStackInSlot(0));
 	}
 
 	public void handleEnergyOutput() {

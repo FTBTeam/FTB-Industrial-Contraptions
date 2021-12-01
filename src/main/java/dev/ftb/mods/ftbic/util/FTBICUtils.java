@@ -22,6 +22,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -41,6 +42,13 @@ public class FTBICUtils {
 	public static final Direction[] HORIZONTAL_DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
 
 	public static void init() {
+		if (ModList.get().isLoaded("ftbchunks")) {
+			initFTBChunks();
+		}
+	}
+
+	private static void initFTBChunks() {
+		FTBChunksIntegration.instance = new FTBChunksIntegrationImpl();
 	}
 
 	public static String formatEnergyValue(double energy) {

@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.net.MoveLaserMessage;
 import dev.ftb.mods.ftbic.screen.QuarryMenu;
+import dev.ftb.mods.ftbic.util.FTBChunksIntegration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -203,8 +204,6 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 						paused = true;
 						skippedBlocks = 0;
 						syncBlock();
-					} else {
-						quarryTick += miningTicks - 1;
 					}
 				} else {
 					BlockPos miningPos = new BlockPos(worldPosition.getX() + laserX, laserY, worldPosition.getZ() + laserZ);
@@ -272,6 +271,10 @@ public class QuarryBlockEntity extends BasicMachineBlockEntity {
 
 	private int getY(int x, int z) {
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, 0, z);
+
+		if (level instanceof ServerLevel && FTBChunksIntegration.instance.isProtected((ServerLevel) level, pos, placerId)) {
+			return INVALID_Y;
+		}
 
 		for (int y = worldPosition.getY(); y >= 0; y--) {
 			pos.setY(y);
