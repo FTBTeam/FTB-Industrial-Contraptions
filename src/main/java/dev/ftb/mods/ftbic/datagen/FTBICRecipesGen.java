@@ -186,10 +186,10 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item ROLLER = FTBICElectricBlocks.ROLLER.item.get();
 	public static final Item EXTRUDER = FTBICElectricBlocks.EXTRUDER.item.get();
 	public static final Item ANTIMATTER_FABRICATOR = FTBICElectricBlocks.ANTIMATTER_CONSTRUCTOR.item.get();
-	public static final Item INDUCTION_FURNACE = FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.item.get();
-	public static final Item ROTARY_MACERATOR = FTBICElectricBlocks.ADVANCED_MACERATOR.item.get();
-	public static final Item CENTRIFUGE_EXTRACTOR = FTBICElectricBlocks.ADVANCED_CENTRIFUGE.item.get();
-	public static final Item SINGULARITY_COMPRESSOR = FTBICElectricBlocks.ADVANCED_COMPRESSOR.item.get();
+	public static final Item ADVANCED_POWERED_FURNACE = FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.item.get();
+	public static final Item ADVANCED_MACERATOR = FTBICElectricBlocks.ADVANCED_MACERATOR.item.get();
+	public static final Item ADVANCED_CENTRIFUGE = FTBICElectricBlocks.ADVANCED_CENTRIFUGE.item.get();
+	public static final Item ADVANCED_COMPRESSOR = FTBICElectricBlocks.ADVANCED_COMPRESSOR.item.get();
 	public static final Item TELEPORTER = FTBICElectricBlocks.TELEPORTER.item.get();
 	public static final Item CHARGE_PAD = FTBICElectricBlocks.CHARGE_PAD.item.get();
 	public static final Item POWERED_CRAFTING_TABLE = FTBICElectricBlocks.POWERED_CRAFTING_TABLE.item.get();

@@ -11,7 +11,6 @@ import dev.ftb.mods.ftbic.net.FTBICNet;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
@@ -28,7 +27,6 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
@@ -102,9 +100,11 @@ public class FTBIC {
 					event.setAmount(event.getAmount() - amountReduced);
 					//event.setCanceled(true);
 
+					/*
 					if (FMLLoader.isProduction() && !event.getEntityLiving().level.isClientSide()) {
 						((Player) event.getEntityLiving()).displayClientMessage(new TextComponent("Absorbed " + amountReduced + " / " + event.getAmount() + " for " + energy + " zaps"), true);
 					}
+					 */
 				}
 			}
 		}

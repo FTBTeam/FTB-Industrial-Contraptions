@@ -109,6 +109,10 @@ public class FTBICConfig {
 	public static double QUARRY_USE = 3;
 	public static long QUARRY_MINE_TICKS = 40;
 	public static long QUARRY_MOVE_TICKS = 10;
+	public static double PUMP_CAPACITY = 10_000;
+	public static double PUMP_USE = 3;
+	public static long PUMP_MINE_TICKS = 40;
+	public static long PUMP_MOVE_TICKS = 10;
 
 	public static int UPGRADE_LIMIT_PER_SLOT = 4;
 	public static double OVERCLOCKER_SPEED = 1.45;

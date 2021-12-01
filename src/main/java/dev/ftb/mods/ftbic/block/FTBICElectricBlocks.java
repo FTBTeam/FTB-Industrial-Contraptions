@@ -22,6 +22,7 @@ import dev.ftb.mods.ftbic.block.entity.machine.ExtruderBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MaceratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PoweredCraftingTableBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PoweredFurnaceBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ReprocessorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.RollerBlockEntity;
@@ -234,6 +235,13 @@ public interface FTBICElectricBlocks {
 			.maxEnergyInput(FTBICConfig.HV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.QUARRY_USE)
 			.io(0, 18);
+
+	ElectricBlockInstance PUMP = register("pump", PumpBlockEntity::new)
+			.advanced()
+			.energyCapacity(FTBICConfig.PUMP_CAPACITY)
+			.maxEnergyInput(FTBICConfig.HV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.PUMP_USE)
+			.io(1, 1);
 
 	// Battery Boxes //
 

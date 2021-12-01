@@ -122,9 +122,10 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('E', Items.NETHER_STAR)
 				.save(consumer, shapedLoc("antimatter_fabricator"));
 
-		ShapedRecipeBuilder.shaped(INDUCTION_FURNACE)
+		/*
+		ShapedRecipeBuilder.shaped(ADVANCED_POWERED_FURNACE)
 				.unlockedBy("has_item", has(COPPER_COIL))
-				.group(MODID + ":induction_furnace")
+				.group(MODID + ":advanced_powered_furnace")
 				.pattern("CCC")
 				.pattern("CFC")
 				.pattern("WMW")
@@ -132,11 +133,11 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('M', ADVANCED_MACHINE_BLOCK)
 				.define('C', COPPER_INGOT)
 				.define('W', COPPER_COIL)
-				.save(consumer, shapedLoc("induction_furnace"));
+				.save(consumer, shapedLoc("advanced_powered_furnace"));
 
-		ShapedRecipeBuilder.shaped(ROTARY_MACERATOR)
+		ShapedRecipeBuilder.shaped(ADVANCED_MACERATOR)
 				.unlockedBy("has_item", has(COPPER_COIL))
-				.group(MODID + ":rotary_macerator")
+				.group(MODID + ":advanced_macerator")
 				.pattern("CCC")
 				.pattern("CFC")
 				.pattern("WMW")
@@ -144,11 +145,11 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('M', ADVANCED_MACHINE_BLOCK)
 				.define('C', INDUSTRIAL_GRADE_METAL)
 				.define('W', COPPER_COIL)
-				.save(consumer, shapedLoc("rotary_macerator"));
+				.save(consumer, shapedLoc("advanced_macerator"));
 
-		ShapedRecipeBuilder.shaped(CENTRIFUGE_EXTRACTOR)
+		ShapedRecipeBuilder.shaped(ADVANCED_CENTRIFUGE)
 				.unlockedBy("has_item", has(COPPER_COIL))
-				.group(MODID + ":centrifuge_extractor")
+				.group(MODID + ":advanced_centrifuge")
 				.pattern("CCC")
 				.pattern("CFC")
 				.pattern("WMW")
@@ -156,11 +157,11 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('M', ADVANCED_MACHINE_BLOCK)
 				.define('C', FLUID_CELL)
 				.define('W', COPPER_COIL)
-				.save(consumer, shapedLoc("centrifuge_extractor"));
+				.save(consumer, shapedLoc("advanced_centrifuge"));
 
-		ShapedRecipeBuilder.shaped(SINGULARITY_COMPRESSOR)
+		ShapedRecipeBuilder.shaped(ADVANCED_COMPRESSOR)
 				.unlockedBy("has_item", has(COPPER_COIL))
-				.group(MODID + ":singularity_compressor")
+				.group(MODID + ":advanced_compressor")
 				.pattern("CCC")
 				.pattern("CFC")
 				.pattern("WMW")
@@ -168,7 +169,8 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('M', ADVANCED_MACHINE_BLOCK)
 				.define('C', OBSIDIAN)
 				.define('W', COPPER_COIL)
-				.save(consumer, shapedLoc("singularity_compressor"));
+				.save(consumer, shapedLoc("advanced_compressor"));
+		*/
 
 		ShapedRecipeBuilder.shaped(CHARGE_PAD)
 				.unlockedBy("has_item", has(COPPER_COIL))

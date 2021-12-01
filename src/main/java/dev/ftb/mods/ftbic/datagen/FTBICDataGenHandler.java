@@ -93,7 +93,6 @@ public class FTBICDataGenHandler {
 			gen.addProvider(new FTBICNuclearRecipes(gen));
 			gen.addProvider(new FTBICGeneratorFuelRecipes(gen));
 			gen.addProvider(new FTBICVanillaRecipes(gen));
-			gen.addProvider(new FTBICAntimatterRecipes(gen));
 			gen.addProvider(new ICLootTableProvider(gen));
 		}
 	}
@@ -287,6 +286,7 @@ public class FTBICDataGenHandler {
 			makeThemedElectricOnOff("charge_pad_top", BASIC_TOP, "charge_pad_top");
 			makeThemedElectric("powered_crafting_table_top", BASIC_TOP, "powered_crafting_table_top");
 			makeThemedElectricOnOff("quarry_front", ADVANCED_SIDE);
+			makeThemedElectricOnOff("pump_front", ADVANCED_SIDE);
 
 			makeThemedElectric("lv_battery_box_in", WOOD_UNIVERSAL);
 			makeThemedElectric("lv_battery_box_out", WOOD_UNIVERSAL);
@@ -512,6 +512,8 @@ public class FTBICDataGenHandler {
 			electric("powered_crafting_table", BASIC_SIDE, BASIC_SIDE, "powered_crafting_table_top", BASIC_BOTTOM);
 			electric("quarry_off", "quarry_front_off", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
 			electric("quarry_on", "quarry_front_on", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
+			electric("pump_off", "pump_front_off", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
+			electric("pump_on", "pump_front_on", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
 
 			electric3d("lv_battery_box", "lv_battery_box_out", "lv_battery_box_in");
 			electric3d("lv_transformer", "lv_transformer_in", "lv_transformer_out");
