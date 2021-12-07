@@ -31,3 +31,17 @@ mandatory = true
 versionRange = "[1,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.ftbic]]
+modId = "mytrees"
+mandatory = false
+versionRange = "[1,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.ftbic]]
+modId = "emendatusenigmatica"
+mandatory = false
+versionRange = "[1,)"
+ordering = "AFTER"
+side = "BOTH"

@@ -10,6 +10,7 @@ import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.screen.GeothermalGeneratorScreen;
 import dev.ftb.mods.ftbic.screen.MachineScreen;
 import dev.ftb.mods.ftbic.screen.PoweredCraftingTableScreen;
+import dev.ftb.mods.ftbic.screen.PumpScreen;
 import dev.ftb.mods.ftbic.screen.QuarryScreen;
 import dev.ftb.mods.ftbic.screen.SolarPanelScreen;
 import net.minecraft.client.Minecraft;
@@ -42,10 +43,12 @@ public class FTBICClient extends FTBICCommon {
 		MenuScreens.register(FTBICMenus.SOLAR_PANEL.get(), SolarPanelScreen::new);
 		MenuScreens.register(FTBICMenus.BATTERY_BOX.get(), BatteryBoxScreen::new);
 		MenuScreens.register(FTBICMenus.ANTIMATTER_CONSTRUCTOR.get(), AntimatterConstructorScreen::new);
-		MenuScreens.register(FTBICMenus.QUARRY.get(), QuarryScreen::new);
 		MenuScreens.register(FTBICMenus.POWERED_CRAFTING_TABLE.get(), PoweredCraftingTableScreen::new);
+		MenuScreens.register(FTBICMenus.QUARRY.get(), QuarryScreen::new);
+		MenuScreens.register(FTBICMenus.PUMP.get(), PumpScreen::new);
 
-		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.QUARRY.blockEntity.get(), QuarryRenderer::new);
+		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.QUARRY.blockEntity.get(), DiggingBlockRenderer::new);
+		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.PUMP.blockEntity.get(), DiggingBlockRenderer::new);
 	}
 
 	@Override

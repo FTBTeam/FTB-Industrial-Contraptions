@@ -1,7 +1,12 @@
 package dev.ftb.mods.ftbic.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.math.Matrix4f;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
@@ -10,12 +15,14 @@ import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.fluids.FluidStack;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Collections;
 
@@ -158,6 +165,40 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		blit(poseStack, x, y, 67, 167, 18, 54);
 	}
 
+	public void drawFluidSlot(PoseStack poseStack, int x, int y, FluidStack fluid) {
+		drawSlot(poseStack, x, y);
+
+		if (!fluid.isEmpty()) {
+			minecraft.getTextureManager().bind(TextureAtlas.LOCATION_BLOCKS);
+
+			TextureAtlasSprite sprite = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(fluid.getFluid().getAttributes().getStillTexture(fluid));
+
+			int color = fluid.getFluid().getAttributes().getColor(fluid);
+			int r = (color >> 16) & 255;
+			int g = (color >> 8) & 255;
+			int b = (color >> 0) & 255;
+
+			float u0 = sprite.getU0();
+			float v0 = sprite.getV0();
+			float u1 = sprite.getU1();
+			float v1 = sprite.getV1();
+
+			Matrix4f m = poseStack.last().pose();
+
+			BufferBuilder lv = Tesselator.getInstance().getBuilder();
+			lv.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_COLOR_TEX);
+			lv.vertex(m, x + 1F, y + 1F, 0F).color(r, g, b, 255).uv(u0, v0).endVertex();
+			lv.vertex(m, x + 1F, y + 17F, 0F).color(r, g, b, 255).uv(u0, v1).endVertex();
+			lv.vertex(m, x + 17F, y + 17F, 0F).color(r, g, b, 255).uv(u1, v1).endVertex();
+			lv.vertex(m, x + 17F, y + 1F, 0F).color(r, g, b, 255).uv(u1, v0).endVertex();
+			lv.end();
+			RenderSystem.enableAlphaTest();
+			BufferUploader.end(lv);
+
+			minecraft.getTextureManager().bind(BASE_TEXTURE);
+		}
+	}
+
 	public void drawProgressBar(PoseStack poseStack, int x, int y, int progress) {
 		if (progress < 26) {
 			blit(poseStack, x + progress, y, 86 + progress, 203, 26 - progress, 3);
@@ -166,6 +207,32 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		if (progress > 0) {
 			blit(poseStack, x, y, 86, 207, progress, 3);
 		}
+	}
+
+	public void drawArrowDown(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 111, 186, 14, 14);
+	}
+
+	public void drawButtonPause(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 112, 167, 18, 18);
+	}
+
+	public void drawButtonStart(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 131, 167, 18, 18);
+	}
+
+	public void drawButtonFrame(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 150, 167, 18, 18);
+	}
+
+	public void drawPauseButton(PoseStack poseStack, int x, int y, int mouseX, int mouseY, boolean paused) {
+		if (paused) {
+			drawButtonStart(poseStack, x, y);
+		} else {
+			drawButtonPause(poseStack, x, y);
+		}
+
+		// drawButtonFrame(poseStack, x, y);
 	}
 
 	@Override

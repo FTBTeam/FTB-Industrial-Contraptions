@@ -32,4 +32,5 @@ public interface FTBICBlocks {
 	Supplier<Block> BURNT_CABLE = REGISTRY.register("burnt_cable", BurntCableBlock::new);
 	List<Supplier<Block>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE, BURNT_CABLE);
 	Supplier<Block> LANDMARK = REGISTRY.register("landmark", LandmarkBlock::new);
+	Supplier<Block> EXFLUID = REGISTRY.register("exfluid", ExFluidBlock::new);
 }

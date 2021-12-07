@@ -219,5 +219,18 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.define('D', Items.DIAMOND_PICKAXE) // Replace with Diamond Drill
 				.define('A', ADVANCED_ALLOY)
 				.save(consumer, shapedLoc("quarry"));
+
+		ShapedRecipeBuilder.shaped(PUMP)
+				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
+				.group(MODID + ":pump")
+				.pattern("FFF")
+				.pattern("CMC")
+				.pattern("ADA")
+				.define('M', ADVANCED_MACHINE_BLOCK)
+				.define('C', ADVANCED_CIRCUIT)
+				.define('D', Items.BUCKET)
+				.define('F', FLUID_CELL)
+				.define('A', ADVANCED_ALLOY)
+				.save(consumer, shapedLoc("pump"));
 	}
 }

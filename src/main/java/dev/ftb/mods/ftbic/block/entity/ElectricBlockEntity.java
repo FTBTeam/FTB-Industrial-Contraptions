@@ -317,7 +317,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		NetworkHooks.openGui(player, new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
-				return new TranslatableComponent(getBlockState().getBlock().getDescriptionId());
+				return createDisplayName();
 			}
 
 			@Override
@@ -325,6 +325,10 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 				return openMenuFactory.create(id, playerInv);
 			}
 		}, buf -> writeMenu(player, buf));
+	}
+
+	public Component createDisplayName() {
+		return new TranslatableComponent(getBlockState().getBlock().getDescriptionId());
 	}
 
 	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {

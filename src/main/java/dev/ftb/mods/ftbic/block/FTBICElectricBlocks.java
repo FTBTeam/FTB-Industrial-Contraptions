@@ -237,7 +237,6 @@ public interface FTBICElectricBlocks {
 			.io(0, 18);
 
 	ElectricBlockInstance PUMP = register("pump", PumpBlockEntity::new)
-			.wip()
 			.advanced()
 			.energyCapacity(FTBICConfig.PUMP_CAPACITY)
 			.maxEnergyInput(FTBICConfig.HV_TRANSFER_RATE)

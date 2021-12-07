@@ -194,6 +194,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item CHARGE_PAD = FTBICElectricBlocks.CHARGE_PAD.item.get();
 	public static final Item POWERED_CRAFTING_TABLE = FTBICElectricBlocks.POWERED_CRAFTING_TABLE.item.get();
 	public static final Item QUARRY = FTBICElectricBlocks.QUARRY.item.get();
+	public static final Item PUMP = FTBICElectricBlocks.PUMP.item.get();
 	public static final Item LV_BATTERY_BOX = FTBICElectricBlocks.LV_BATTERY_BOX.item.get();
 	public static final Item MV_BATTERY_BOX = FTBICElectricBlocks.MV_BATTERY_BOX.item.get();
 	public static final Item HV_BATTERY_BOX = FTBICElectricBlocks.HV_BATTERY_BOX.item.get();

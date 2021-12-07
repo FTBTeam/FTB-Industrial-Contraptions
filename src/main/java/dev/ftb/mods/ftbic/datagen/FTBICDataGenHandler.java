@@ -127,6 +127,7 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.IV_CABLE, "IV Cable");
 			addBlock(FTBICBlocks.BURNT_CABLE);
 			addBlock(FTBICBlocks.LANDMARK);
+			addBlock(FTBICBlocks.EXFLUID, "Ex-Fluid");
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -565,6 +566,14 @@ public class FTBICDataGenHandler {
 			}
 
 			simpleBlock(FTBICBlocks.LANDMARK.get(), models().getExistingFile(modLoc("block/landmark")));
+
+			simpleBlock(FTBICBlocks.EXFLUID.get(),
+					new ConfiguredModel(models().getExistingFile(mcLoc("block/dead_horn_coral_block"))),
+					new ConfiguredModel(models().getExistingFile(mcLoc("block/dead_fire_coral_block"))),
+					new ConfiguredModel(models().getExistingFile(mcLoc("block/dead_bubble_coral_block"))),
+					new ConfiguredModel(models().getExistingFile(mcLoc("block/dead_brain_coral_block"))),
+					new ConfiguredModel(models().getExistingFile(mcLoc("block/dead_tube_coral_block")))
+			);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {

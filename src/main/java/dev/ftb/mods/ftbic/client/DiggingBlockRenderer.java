@@ -7,7 +7,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
-import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -21,7 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
-public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
+public class DiggingBlockRenderer extends BlockEntityRenderer<DiggingBaseBlockEntity> {
 	private static final ResourceLocation QUARRY_FRAME_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_frame.png");
 	private static final ResourceLocation QUARRY_MODEL_LIGHT_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_model_light.png");
 	private static final ResourceLocation QUARRY_MODEL_DARK_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_model_dark.png");
@@ -42,7 +42,7 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 		return part;
 	}
 
-	public QuarryRenderer(BlockEntityRenderDispatcher dispatcher) {
+	public DiggingBlockRenderer(BlockEntityRenderDispatcher dispatcher) {
 		super(dispatcher);
 
 		quarryFrameWE = make(64, 32, 0, 0, -8, -1, -1, 16, 2, 2);
@@ -56,7 +56,7 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 		quarryHead = make(64, 16, 32, 0, -4, -4, -4, 8, 8, 8);
 	}
 
-	private int getLight(QuarryBlockEntity entity, BlockPos.MutableBlockPos pos, double x, double y, double z) {
+	private int getLight(DiggingBaseBlockEntity entity, BlockPos.MutableBlockPos pos, double x, double y, double z) {
 		Level level = entity.getLevel();
 
 		if (level == null) {
@@ -74,7 +74,7 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 	}
 
 	@Override
-	public void render(QuarryBlockEntity entity, float delta, PoseStack matrices, MultiBufferSource source, int light1, int overlay) {
+	public void render(DiggingBaseBlockEntity entity, float delta, PoseStack matrices, MultiBufferSource source, int light1, int overlay) {
 		VertexConsumer frameConsumer = source.getBuffer(RenderType.entityCutout(QUARRY_FRAME_TEXTURE));
 		BlockPos.MutableBlockPos lpos = new BlockPos.MutableBlockPos();
 
@@ -204,7 +204,7 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 		if (!entity.paused) {
 			matrices.pushPose();
 			matrices.translate(lx, ly, lz);
-			renderBeaconBeam(matrices, source, delta, 1.0F, entity.getLevel().getGameTime(), 0, -ly + 0.5F, new float[]{1F, 0F, 0F}, 0.2F, 0.25F);
+			renderBeaconBeam(matrices, source, delta, 1.0F, entity.getLevel().getGameTime(), 0, -ly + 0.5F, entity.getLaserColor(), 0.2F, 0.25F);
 			matrices.popPose();
 		}
 	}
@@ -259,7 +259,7 @@ public class QuarryRenderer extends BlockEntityRenderer<QuarryBlockEntity> {
 	}
 
 	@Override
-	public boolean shouldRenderOffScreen(QuarryBlockEntity arg) {
+	public boolean shouldRenderOffScreen(DiggingBaseBlockEntity entity) {
 		return true;
 	}
 }

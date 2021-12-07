@@ -1,6 +1,6 @@
 package dev.ftb.mods.ftbic.block;
 
-import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -89,8 +89,8 @@ public class LandmarkBlock extends TorchBlock {
 			for (int i = 1; i < 61; i++) {
 				BlockEntity entity = level.getBlockEntity(pos.relative(direction, i));
 
-				if (entity instanceof QuarryBlockEntity) {
-					((QuarryBlockEntity) entity).resize();
+				if (entity instanceof DiggingBaseBlockEntity) {
+					((DiggingBaseBlockEntity) entity).resize();
 				}
 			}
 		}

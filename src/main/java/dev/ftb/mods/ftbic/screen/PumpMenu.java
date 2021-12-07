@@ -1,20 +1,24 @@
 package dev.ftb.mods.ftbic.screen;
 
-import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
-public class QuarryMenu extends ElectricBlockMenu<QuarryBlockEntity> {
-	public QuarryMenu(int id, Inventory playerInv, QuarryBlockEntity r, ContainerData d) {
-		super(FTBICMenus.QUARRY.get(), id, playerInv, r, d, null);
+public class PumpMenu extends ElectricBlockMenu<PumpBlockEntity> {
+	public PumpMenu(int id, Inventory playerInv, PumpBlockEntity r, ContainerData d) {
+		super(FTBICMenus.PUMP.get(), id, playerInv, r, d, null);
 	}
 
-	public QuarryMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-		this(id, playerInv, (QuarryBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
+	public PumpMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
+		this(id, playerInv, (PumpBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
+		entity.filter = ForgeRegistries.FLUIDS.getValue(buf.readResourceLocation());
+		entity.fluidStack = FluidStack.readFromPacket(buf);
 	}
 
 	@Override
@@ -23,13 +27,10 @@ public class QuarryMenu extends ElectricBlockMenu<QuarryBlockEntity> {
 			addSlot(new SimpleItemHandlerSlot(entity.upgradeInventory, y, 152, 8 + y * 18));
 		}
 
-		addSlot(new SimpleItemHandlerSlot(entity.batteryInventory, 0, 125, 53));
+		addSlot(new SimpleItemHandlerSlot(entity.batteryInventory, 0, 107, 53));
 
-		for (int y = 0; y < 3; y++) {
-			for (int x = 0; x < 6; x++) {
-				addSlot(new SimpleItemHandlerSlot(entity, y * 6 + x, 8 + x * 18, 17 + y * 18));
-			}
-		}
+		addSlot(new SimpleItemHandlerSlot(entity, 0, 53, 17));
+		addSlot(new SimpleItemHandlerSlot(entity, 1, 53, 53));
 	}
 
 	@Override

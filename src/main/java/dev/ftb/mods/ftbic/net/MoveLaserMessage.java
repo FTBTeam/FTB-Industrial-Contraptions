@@ -1,6 +1,6 @@
 package dev.ftb.mods.ftbic.net;
 
-import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity;
 import me.shedaniel.architectury.networking.NetworkManager;
 import me.shedaniel.architectury.networking.simple.BaseS2CMessage;
 import me.shedaniel.architectury.networking.simple.MessageType;
@@ -44,8 +44,8 @@ public class MoveLaserMessage extends BaseS2CMessage {
 	public void handle(NetworkManager.PacketContext ctx) {
 		BlockEntity entity = ctx.getPlayer().level.getBlockEntity(pos);
 
-		if (entity instanceof QuarryBlockEntity) {
-			((QuarryBlockEntity) entity).moveLaser(x, y, z);
+		if (entity instanceof DiggingBaseBlockEntity) {
+			((DiggingBaseBlockEntity) entity).moveLaser(x, y, z);
 		}
 	}
 }

@@ -1,0 +1,21 @@
+{
+	"variants": {
+		"": [
+			{
+				"model": "minecraft:block/dead_horn_coral_block"
+			},
+			{
+				"model": "minecraft:block/dead_fire_coral_block"
+			},
+			{
+				"model": "minecraft:block/dead_bubble_coral_block"
+			},
+			{
+				"model": "minecraft:block/dead_brain_coral_block"
+			},
+			{
+				"model": "minecraft:block/dead_tube_coral_block"
+			}
+		]
+	}
+}
