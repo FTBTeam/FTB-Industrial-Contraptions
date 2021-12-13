@@ -19,6 +19,7 @@ import java.util.Map;
 
 public class FTBICConfig {
 	public static Component ENERGY_FORMAT = new TextComponent("⚡").withStyle(ChatFormatting.BOLD);
+	public static Component HEAT_FORMAT = new TextComponent("\uD83D\uDD25");
 
 	public static double LV_TRANSFER_RATE = 32;
 	public static double MV_TRANSFER_RATE = 128;
@@ -26,6 +27,7 @@ public class FTBICConfig {
 	public static double EV_TRANSFER_RATE = 2_048;
 	public static double IV_TRANSFER_RATE = 8_192;
 	public static double ITEM_TRANSFER_EFFICIENCY = 0.75;
+	public static double ZAP_TO_FE_CONVERSION_RATE = 4.0;
 
 	public static double SINGLE_USE_BATTERY_CAPACITY = 2_400;
 	public static double LV_BATTERY_CAPACITY = 4_000;

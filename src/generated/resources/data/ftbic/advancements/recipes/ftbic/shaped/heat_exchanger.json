@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:shaped/quad_uranium_fuel_rod_from_dual"
+			"ftbic:shaped/heat_exchanger"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:dual_uranium_fuel_rod"
+						"tag": "forge:plates/iron"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:shaped/quad_uranium_fuel_rod_from_dual"
+				"recipe": "ftbic:shaped/heat_exchanger"
 			}
 		}
 	},

@@ -6,6 +6,7 @@ import com.ridanisaurus.emendatusenigmatica.util.ProcessedMaterials;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.item.FluidCellItem;
 import io.alwa.mods.myrtrees.common.item.MyrtreesItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -14,7 +15,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
@@ -33,6 +38,9 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> GOLD_INGOT = Tags.Items.INGOTS_GOLD;
 	public static final Tag<Item> COPPER_INGOT = ItemTags.bind("forge:ingots/copper");
 	public static final Tag<Item> COPPER_PLATE = ItemTags.bind("forge:plates/copper");
+	public static final Tag<Item> LEAD_PLATE = ItemTags.bind("forge:plates/lead");
+	public static final Tag<Item> TIN_PLATE = ItemTags.bind("forge:plates/tin");
+	public static final Tag<Item> IRON_PLATE = ItemTags.bind("forge:plates/iron");
 	public static final Tag<Item> GOLD_PLATE = ItemTags.bind("forge:plates/gold");
 	public static final Tag<Item> ALUMINUM_PLATE = ItemTags.bind("forge:plates/aluminum");
 	public static final Tag<Item> ENDERIUM_PLATE = ItemTags.bind("forge:plates/enderium");
@@ -98,6 +106,8 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item IV_CABLE = FTBICItems.IV_CABLE.get();
 	public static final Item BURNT_CABLE = FTBICItems.BURNT_CABLE.get();
 	public static final Item LANDMARK = FTBICItems.LANDMARK.get();
+	public static final Item NUCLEAR_REACTOR_CHAMBER = FTBICItems.NUCLEAR_REACTOR_CHAMBER.get();
+	public static final Item NUKE = FTBICItems.NUKE.get();
 
 	public static final Item INDUSTRIAL_GRADE_METAL = FTBICItems.INDUSTRIAL_GRADE_METAL.item.get();
 	public static final Item RUBBER = FTBICItems.RUBBER.item.get();
@@ -125,6 +135,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item ANTIMATTER = FTBICItems.ANTIMATTER.item.get();
 	public static final Item ANTIMATTER_CRYSTAL = FTBICItems.ANTIMATTER_CRYSTAL.item.get();
 	public static final Item ENERGY_CRYSTAL = FTBICItems.ENERGY_CRYSTAL.item.get();
+	public static final Item DENSE_COPPER_PLATE = FTBICItems.DENSE_COPPER_PLATE.item.get();
 
 	public static final Item SINGLE_USE_BATTERY = FTBICItems.SINGLE_USE_BATTERY.get();
 	public static final Item LV_BATTERY = FTBICItems.LV_BATTERY.get();
@@ -150,6 +161,9 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item REACTOR_PLATING = FTBICItems.REACTOR_PLATING.get();
 	public static final Item CONTAINMENT_REACTOR_PLATING = FTBICItems.CONTAINMENT_REACTOR_PLATING.get();
 	public static final Item HEAT_CAPACITY_REACTOR_PLATING = FTBICItems.HEAT_CAPACITY_REACTOR_PLATING.get();
+	public static final Item NEUTRON_REFLECTOR = FTBICItems.NEUTRON_REFLECTOR.get();
+	public static final Item THICK_NEUTRON_REFLECTOR = FTBICItems.THICK_NEUTRON_REFLECTOR.get();
+	public static final Item IRIDIUM_NEUTRON_REFLECTOR = FTBICItems.IRIDIUM_NEUTRON_REFLECTOR.get();
 	public static final Item CANNED_FOOD = FTBICItems.CANNED_FOOD.get();
 	public static final Item PROTEIN_BAR = FTBICItems.PROTEIN_BAR.get();
 	public static final Item DARK_SPRAY_CAN = FTBICItems.DARK_SPRAY_PAINT_CAN.get();
@@ -278,4 +292,12 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	}
 
 	public abstract void add(Consumer<FinishedRecipe> consumer);
+
+	public Ingredient unbroken(ItemLike item) {
+		return new NBTIngredientExt(new ItemStack(item));
+	}
+
+	public Ingredient waterCell() {
+		return new NBTIngredientExt(FluidCellItem.setFluid(new ItemStack(FLUID_CELL), Fluids.WATER));
+	}
 }

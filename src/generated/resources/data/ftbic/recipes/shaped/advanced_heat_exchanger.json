@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:advanced_heat_exchanger",
+	"pattern": [
+		"WCW",
+		"VBV",
+		"WCW"
+	],
+	"key": {
+		"C": {
+			"item": "ftbic:electronic_circuit"
+		},
+		"B": {
+			"item": "ftbic:dense_copper_plate"
+		},
+		"V": {
+			"item": "ftbic:heat_exchanger"
+		},
+		"W": {
+			"item": "ftbic:iv_cable"
+		}
+	},
+	"result": {
+		"item": "ftbic:advanced_heat_exchanger"
+	}
+}

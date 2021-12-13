@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"group": "ftbic:heat_capacity_reactor_plating",
+	"ingredients": [
+		{
+			"item": "ftbic:reactor_plating"
+		},
+		{
+			"item": "ftbic:dense_copper_plate"
+		},
+		{
+			"item": "ftbic:dense_copper_plate"
+		}
+	],
+	"result": {
+		"item": "ftbic:heat_capacity_reactor_plating"
+	}
+}

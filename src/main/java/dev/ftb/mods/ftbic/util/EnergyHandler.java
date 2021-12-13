@@ -3,6 +3,10 @@ package dev.ftb.mods.ftbic.util;
 import net.minecraft.core.Direction;
 
 public interface EnergyHandler {
+	default boolean isEnergyHandlerInvalid() {
+		return false;
+	}
+
 	default double getMaxInputEnergy() {
 		return 0D;
 	}

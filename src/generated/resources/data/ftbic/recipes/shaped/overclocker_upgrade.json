@@ -7,7 +7,10 @@
 	],
 	"key": {
 		"U": {
-			"item": "ftbic:coolant_10k"
+			"type": "forge:nbt",
+			"item": "ftbic:coolant_10k",
+			"count": 1,
+			"nbt": "{Damage:0}"
 		},
 		"W": {
 			"item": "ftbic:lv_cable"

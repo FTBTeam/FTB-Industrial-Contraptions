@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"group": "ftbic:reactor_plating",
+	"ingredients": [
+		{
+			"item": "ftbic:advanced_alloy"
+		},
+		{
+			"tag": "forge:plates/lead"
+		},
+		{
+			"tag": "forge:plates/lead"
+		}
+	],
+	"result": {
+		"item": "ftbic:reactor_plating"
+	}
+}

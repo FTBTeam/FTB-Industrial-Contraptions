@@ -63,6 +63,10 @@ public class FTBICUtils {
 		return new TextComponent("").append(formatEnergy(itemHandler.getEnergy(stack)).withStyle(ChatFormatting.GRAY)).append(" / ").append(formatEnergy(itemHandler.getEnergyCapacity(stack)).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY);
 	}
 
+	public static TextComponent formatHeat(int heat) {
+		return (TextComponent) new TextComponent("").append(String.format("%,d ", heat)).append(FTBICConfig.HEAT_FORMAT);
+	}
+
 	public static <T> List<T> listFromJson(JsonObject json, String key, Function<JsonElement, T> function) {
 		if (json.has(key)) {
 			JsonArray array = json.get(key).getAsJsonArray();
@@ -142,5 +146,25 @@ public class FTBICUtils {
 		json.addProperty("fluid", stack.getFluid().getRegistryName().toString());
 		json.addProperty("amount", stack.getAmount());
 		return json;
+	}
+
+	public static int packInt(int value, int max) {
+		if (value <= 30000) {
+			return Math.max(value, 0);
+		} else if (value >= max) {
+			return 32767;
+		}
+
+		return Math.min(value, 32000);
+	}
+
+	public static int unpackInt(int value, int max) {
+		if (value <= 30000) {
+			return value;
+		} else if (value == 32767) {
+			return max;
+		}
+
+		return value;
 	}
 }

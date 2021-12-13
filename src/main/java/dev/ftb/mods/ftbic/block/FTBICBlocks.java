@@ -33,4 +33,6 @@ public interface FTBICBlocks {
 	List<Supplier<Block>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE, BURNT_CABLE);
 	Supplier<Block> LANDMARK = REGISTRY.register("landmark", LandmarkBlock::new);
 	Supplier<Block> EXFLUID = REGISTRY.register("exfluid", ExFluidBlock::new);
+	Supplier<Block> NUCLEAR_REACTOR_CHAMBER = REGISTRY.register("nuclear_reactor_chamber", NuclearReactorChamberBlock::new);
+	Supplier<Block> NUKE = REGISTRY.register("nuke", NukeBlock::new);
 }

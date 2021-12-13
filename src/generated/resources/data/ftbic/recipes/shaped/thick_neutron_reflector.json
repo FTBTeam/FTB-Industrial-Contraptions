@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:thick_neutron_reflector",
+	"pattern": [
+		"PNP",
+		"NPN",
+		"PNP"
+	],
+	"key": {
+		"N": {
+			"item": "ftbic:neutron_reflector"
+		},
+		"P": {
+			"tag": "forge:plates/copper"
+		}
+	},
+	"result": {
+		"item": "ftbic:thick_neutron_reflector"
+	}
+}

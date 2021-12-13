@@ -36,11 +36,7 @@ public class PumpMenu extends ElectricBlockMenu<PumpBlockEntity> {
 	@Override
 	public boolean clickMenuButton(Player player, int button) {
 		if (button == 0) {
-			entity.paused = true;
-			entity.syncBlock();
-			return true;
-		} else if (button == 1) {
-			entity.paused = false;
+			entity.paused = !entity.paused;
 			entity.syncBlock();
 			return true;
 		}
@@ -48,7 +44,7 @@ public class PumpMenu extends ElectricBlockMenu<PumpBlockEntity> {
 		return false;
 	}
 
-	public int getPaused() {
-		return containerData.get(1);
+	public boolean isPaused() {
+		return containerData.get(1) != 0;
 	}
 }

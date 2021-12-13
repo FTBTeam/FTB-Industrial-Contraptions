@@ -336,6 +336,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	@Override
+	public boolean isEnergyHandlerInvalid() {
+		return isBurnt() || isRemoved();
+	}
+
+	@Override
 	public final double getMaxInputEnergy() {
 		return maxInputEnergy;
 	}
@@ -700,5 +705,11 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public void syncBlock() {
 		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
 		setChanged();
+	}
+
+	public void neighborChanged(BlockPos pos1, Block block1) {
+		if (!level.getBlockState(pos1).getBlock().is(block1)) {
+			electricNetworkUpdated(level, pos1);
+		}
 	}
 }

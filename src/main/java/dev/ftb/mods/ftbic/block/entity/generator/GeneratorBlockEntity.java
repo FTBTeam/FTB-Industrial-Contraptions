@@ -11,6 +11,7 @@ import dev.ftb.mods.ftbic.util.CachedEnergyStorageOrigin;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.util.ForgeEnergyHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +20,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -157,10 +161,6 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		return false;
 	}
 
-	public boolean isValidConnectedBlock(EnergyHandler storage) {
-		return true;
-	}
-
 	public CachedEnergyStorage[] getConnectedEnergyBlocks() {
 		if (level == null || level.isClientSide()) {
 			return CachedEnergyStorage.EMPTY;
@@ -218,13 +218,27 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			BlockEntity entity = level.getBlockEntity(pos);
 			EnergyHandler handler = entity instanceof EnergyHandler ? (EnergyHandler) entity : null; // entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
 
-			if (handler != null && handler != this && handler.getMaxInputEnergy() > 0D && !handler.isBurnt() && isValidConnectedBlock(handler) && handler.isValidEnergyInputSide(direction.getOpposite())) {
-				CachedEnergyStorage s = new CachedEnergyStorage();
-				s.origin = origin;
-				s.distance = distance;
-				s.blockEntity = entity;
-				s.energyHandler = handler;
-				set.add(s);
+			if (handler != null) {
+				if (handler != this && handler.getMaxInputEnergy() > 0D && !handler.isBurnt() && handler.isValidEnergyInputSide(direction.getOpposite())) {
+					CachedEnergyStorage s = new CachedEnergyStorage();
+					s.origin = origin;
+					s.distance = distance;
+					s.blockEntity = entity;
+					s.energyHandler = handler;
+					set.add(s);
+				}
+			} else if (FTBICConfig.ZAP_TO_FE_CONVERSION_RATE > 0D) {
+				LazyOptional<IEnergyStorage> energyCap = entity.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite());
+				IEnergyStorage feStorage = energyCap.orElse(null);
+
+				if (feStorage != null && feStorage.canReceive()) {
+					CachedEnergyStorage s = new CachedEnergyStorage();
+					s.origin = origin;
+					s.distance = distance;
+					s.blockEntity = entity;
+					s.energyHandler = new ForgeEnergyHandler(energyCap, feStorage);
+					set.add(s);
+				}
 			}
 		}
 	}

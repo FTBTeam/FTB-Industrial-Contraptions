@@ -82,12 +82,13 @@ dependencies {
 	modImplementation("io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}")
 	modImplementation("dev.latvian.mods:rhino-forge:${rootProject.rhino_version}")
 	modImplementation("dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}") { transitive = false }
-	modRuntime("curse.maven:ctm-267602:3137659")
-	modRuntime("curse.maven:pipez-443900:3525428")
-	modRuntime("curse.maven:tanky-551182:3542146")
 	modImplementation("dev.ftb.mods:ftb-library-forge:${rootProject.ftblibrary_version}") { transitive = false }
 	modImplementation("dev.ftb.mods:ftb-teams-forge:${rootProject.ftbteams_version}") { transitive = false }
 	modImplementation("dev.ftb.mods:ftb-chunks-forge:${rootProject.ftbchunks_version}") { transitive = false }
+	modRuntime("curse.maven:ctm-267602:3137659")
+	modRuntime("curse.maven:pipez-443900:3525428")
+	modRuntime("curse.maven:tanky-551182:3542146")
+	modRuntime("curse.maven:refined-storage-243076:3527504")
 }
 
 processResources {

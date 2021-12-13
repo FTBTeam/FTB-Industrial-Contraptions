@@ -4,7 +4,7 @@
 	"pattern": [
 		"CBC",
 		"CSC",
-		"CLC"
+		"VLV"
 	],
 	"key": {
 		"C": {
@@ -18,6 +18,9 @@
 		},
 		"S": {
 			"item": "ftbic:lv_solar_panel"
+		},
+		"V": {
+			"item": "ftbic:heat_vent"
 		}
 	},
 	"result": {

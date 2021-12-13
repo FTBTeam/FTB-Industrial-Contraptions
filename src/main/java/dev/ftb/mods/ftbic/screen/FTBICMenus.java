@@ -20,6 +20,7 @@ public interface FTBICMenus {
 	Supplier<MenuType<BasicGeneratorMenu>> BASIC_GENERATOR = register("basic_generator", BasicGeneratorMenu::new);
 	Supplier<MenuType<GeothermalGeneratorMenu>> GEOTHERMAL_GENERATOR = register("geothermal_generator", GeothermalGeneratorMenu::new);
 	Supplier<MenuType<SolarPanelMenu>> SOLAR_PANEL = register("solar_panel", SolarPanelMenu::new);
+	Supplier<MenuType<NuclearReactorMenu>> NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorMenu::new);
 	Supplier<MenuType<BatteryBoxMenu>> BATTERY_BOX = register("battery_box", BatteryBoxMenu::new);
 	Supplier<MenuType<AntimatterConstructorMenu>> ANTIMATTER_CONSTRUCTOR = register("antimatter_constructor", AntimatterConstructorMenu::new);
 	Supplier<MenuType<PoweredCraftingTableMenu>> POWERED_CRAFTING_TABLE = register("powered_crafting_table", PoweredCraftingTableMenu::new);

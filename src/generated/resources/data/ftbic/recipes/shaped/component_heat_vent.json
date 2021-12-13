@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:component_heat_vent",
+	"pattern": [
+		"IPI",
+		"PVP",
+		"IPI"
+	],
+	"key": {
+		"I": {
+			"item": "minecraft:iron_bars"
+		},
+		"P": {
+			"tag": "forge:plates/tin"
+		},
+		"V": {
+			"item": "ftbic:heat_vent"
+		}
+	},
+	"result": {
+		"item": "ftbic:component_heat_vent"
+	}
+}

@@ -35,11 +35,7 @@ public class QuarryMenu extends ElectricBlockMenu<QuarryBlockEntity> {
 	@Override
 	public boolean clickMenuButton(Player player, int button) {
 		if (button == 0) {
-			entity.paused = true;
-			entity.syncBlock();
-			return true;
-		} else if (button == 1) {
-			entity.paused = false;
+			entity.paused = !entity.paused;
 			entity.syncBlock();
 			return true;
 		}
@@ -47,7 +43,7 @@ public class QuarryMenu extends ElectricBlockMenu<QuarryBlockEntity> {
 		return false;
 	}
 
-	public int getPaused() {
-		return containerData.get(1);
+	public boolean isPaused() {
+		return containerData.get(1) != 0;
 	}
 }

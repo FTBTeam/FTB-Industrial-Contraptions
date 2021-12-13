@@ -1,0 +1,16 @@
+{
+	"type": "ftbic:compressing",
+	"inputItems": [
+		{
+			"ingredient": {
+				"tag": "forge:plates/copper"
+			},
+			"count": 8
+		}
+	],
+	"outputItems": [
+		{
+			"item": "ftbic:dense_copper_plate"
+		}
+	]
+}

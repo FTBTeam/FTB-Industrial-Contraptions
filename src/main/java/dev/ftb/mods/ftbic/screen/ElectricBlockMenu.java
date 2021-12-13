@@ -26,17 +26,23 @@ public class ElectricBlockMenu<E extends ElectricBlockEntity> extends AbstractCo
 		addBlockSlots(extra);
 		slotCount = slots.size() - prevSlotCount;
 
+		int playerSlotOffset = getPlayerSlotOffset();
+
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 9; x++) {
-				addSlot(new Slot(playerInv, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
+				addSlot(new Slot(playerInv, x + y * 9 + 9, 8 + x * 18, playerSlotOffset + y * 18));
 			}
 		}
 
 		for (int x = 0; x < 9; x++) {
-			addSlot(new Slot(playerInv, x, 8 + x * 18, 142));
+			addSlot(new Slot(playerInv, x, 8 + x * 18, playerSlotOffset + 58));
 		}
 
 		addDataSlots(containerData);
+	}
+
+	public int getPlayerSlotOffset() {
+		return 84;
 	}
 
 	public void addBlockSlots(@Nullable Object extra) {

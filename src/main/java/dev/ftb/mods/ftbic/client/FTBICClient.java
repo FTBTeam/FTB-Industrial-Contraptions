@@ -9,6 +9,7 @@ import dev.ftb.mods.ftbic.screen.BatteryBoxScreen;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.screen.GeothermalGeneratorScreen;
 import dev.ftb.mods.ftbic.screen.MachineScreen;
+import dev.ftb.mods.ftbic.screen.NuclearReactorScreen;
 import dev.ftb.mods.ftbic.screen.PoweredCraftingTableScreen;
 import dev.ftb.mods.ftbic.screen.PumpScreen;
 import dev.ftb.mods.ftbic.screen.QuarryScreen;
@@ -41,6 +42,7 @@ public class FTBICClient extends FTBICCommon {
 		MenuScreens.register(FTBICMenus.BASIC_GENERATOR.get(), BasicGeneratorScreen::new);
 		MenuScreens.register(FTBICMenus.GEOTHERMAL_GENERATOR.get(), GeothermalGeneratorScreen::new);
 		MenuScreens.register(FTBICMenus.SOLAR_PANEL.get(), SolarPanelScreen::new);
+		MenuScreens.register(FTBICMenus.NUCLEAR_REACTOR.get(), NuclearReactorScreen::new);
 		MenuScreens.register(FTBICMenus.BATTERY_BOX.get(), BatteryBoxScreen::new);
 		MenuScreens.register(FTBICMenus.ANTIMATTER_CONSTRUCTOR.get(), AntimatterConstructorScreen::new);
 		MenuScreens.register(FTBICMenus.POWERED_CRAFTING_TABLE.get(), PoweredCraftingTableScreen::new);

@@ -18,7 +18,7 @@ public class FTBICUpgradeRecipes extends FTBICRecipesGen {
 				.group(MODID + ":overclocker_upgrade")
 				.pattern("UUU")
 				.pattern("WCW")
-				.define('U', COOLANT_10K)
+				.define('U', unbroken(COOLANT_10K))
 				.define('W', LV_CABLE)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("overclocker_upgrade"));

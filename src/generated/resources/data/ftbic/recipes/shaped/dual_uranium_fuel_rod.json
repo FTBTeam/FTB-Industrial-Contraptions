@@ -6,10 +6,13 @@
 	],
 	"key": {
 		"R": {
-			"item": "ftbic:uranium_fuel_rod"
+			"type": "forge:nbt",
+			"item": "ftbic:uranium_fuel_rod",
+			"count": 1,
+			"nbt": "{Damage:0}"
 		},
 		"M": {
-			"item": "ftbic:industrial_grade_metal"
+			"item": "ftbic:dense_copper_plate"
 		}
 	},
 	"result": {

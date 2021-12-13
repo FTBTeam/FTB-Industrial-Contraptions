@@ -128,6 +128,8 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.BURNT_CABLE);
 			addBlock(FTBICBlocks.LANDMARK);
 			addBlock(FTBICBlocks.EXFLUID, "Ex-Fluid");
+			addBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
+			addBlock(FTBICBlocks.NUKE);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -162,6 +164,9 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.REACTOR_PLATING);
 			addItem(FTBICItems.CONTAINMENT_REACTOR_PLATING);
 			addItem(FTBICItems.HEAT_CAPACITY_REACTOR_PLATING, "Heat-Capacity Reactor Plating");
+			addItem(FTBICItems.NEUTRON_REFLECTOR);
+			addItem(FTBICItems.THICK_NEUTRON_REFLECTOR);
+			addItem(FTBICItems.IRIDIUM_NEUTRON_REFLECTOR);
 			addItem(FTBICItems.CANNED_FOOD);
 			addItem(FTBICItems.PROTEIN_BAR, "Feed The Beast™ Protein Bar");
 			addItem(FTBICItems.DARK_SPRAY_PAINT_CAN, "Spray Paint Can (Dark)");
@@ -260,6 +265,7 @@ public class FTBICDataGenHandler {
 			makeThemedElectric("hv_solar_panel_top", ADVANCED_TOP);
 			makeThemedElectric("ev_solar_panel_top", ADVANCED_TOP);
 			makeThemedElectricOnOff("nuclear_reactor_front", ADVANCED_SIDE);
+			makeThemedElectric("nuclear_reactor_top", ADVANCED_TOP);
 
 			makeThemedElectricOnOff("powered_furnace_front", BASIC_SIDE);
 			makeThemedElectric("macerator_front", BASIC_SIDE);
@@ -467,6 +473,16 @@ public class FTBICDataGenHandler {
 					.end()
 			;
 
+			withExistingParent("block/nuclear_reactor_chamber", "block/cube_bottom_top")
+					.texture("top", modLoc("block/electric/light/nuclear_reactor_top"))
+					.texture("bottom", modLoc("block/electric/light/advanced_bottom"))
+					.texture("side", modLoc("block/electric/light/advanced_side"))
+			;
+
+			withExistingParent("block/nuke", "block/tnt")
+					.texture("side", modLoc("block/nuke_side"))
+			;
+
 			electric("basic_generator_off", "basic_generator_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
 			electric("basic_generator_on", "basic_generator_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
 			electric("geothermal_generator_off", "geothermal_generator_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
@@ -476,8 +492,8 @@ public class FTBICDataGenHandler {
 			electric("mv_solar_panel", BASIC_SIDE, BASIC_SIDE, "mv_solar_panel_top", BASIC_BOTTOM);
 			electric("hv_solar_panel", ADVANCED_SIDE, ADVANCED_SIDE, "hv_solar_panel_top", ADVANCED_BOTTOM);
 			electric("ev_solar_panel", ADVANCED_SIDE, ADVANCED_SIDE, "ev_solar_panel_top", ADVANCED_BOTTOM);
-			electric("nuclear_reactor_off", "nuclear_reactor_front_off", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
-			electric("nuclear_reactor_on", "nuclear_reactor_front_on", ADVANCED_SIDE, ADVANCED_TOP, ADVANCED_BOTTOM);
+			electric("nuclear_reactor_off", "nuclear_reactor_front_off", ADVANCED_SIDE, "nuclear_reactor_top", ADVANCED_BOTTOM);
+			electric("nuclear_reactor_on", "nuclear_reactor_front_on", ADVANCED_SIDE, "nuclear_reactor_top", ADVANCED_BOTTOM);
 
 			electric("powered_furnace_off", "powered_furnace_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
 			electric("powered_furnace_on", "powered_furnace_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
@@ -566,6 +582,8 @@ public class FTBICDataGenHandler {
 			}
 
 			simpleBlock(FTBICBlocks.LANDMARK.get(), models().getExistingFile(modLoc("block/landmark")));
+			directionalBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get(), models().getExistingFile(modLoc("block/nuclear_reactor_chamber")));
+			simpleBlock(FTBICBlocks.NUKE.get(), models().getExistingFile(modLoc("block/nuke")));
 
 			simpleBlock(FTBICBlocks.EXFLUID.get(),
 					new ConfiguredModel(models().getExistingFile(mcLoc("block/dead_horn_coral_block"))),
@@ -708,6 +726,8 @@ public class FTBICDataGenHandler {
 			}
 
 			singleTexture("landmark", mcLoc("item/generated"), "layer0", modLoc("block/landmark_ns"));
+			basicBlockItem(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
+			basicBlockItem(FTBICBlocks.NUKE);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
@@ -743,6 +763,9 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.REACTOR_PLATING);
 			basicItem(FTBICItems.CONTAINMENT_REACTOR_PLATING);
 			basicItem(FTBICItems.HEAT_CAPACITY_REACTOR_PLATING);
+			basicItem(FTBICItems.NEUTRON_REFLECTOR);
+			basicItem(FTBICItems.THICK_NEUTRON_REFLECTOR);
+			basicItem(FTBICItems.IRIDIUM_NEUTRON_REFLECTOR);
 			basicItem(FTBICItems.CANNED_FOOD);
 			basicItem(FTBICItems.PROTEIN_BAR);
 			basicItem(FTBICItems.DARK_SPRAY_PAINT_CAN);
@@ -817,6 +840,8 @@ public class FTBICDataGenHandler {
 			}
 
 			dropSelf(FTBICBlocks.LANDMARK.get());
+			dropSelf(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get());
+			dropSelf(FTBICBlocks.NUKE.get());
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (machine.canBurn) {

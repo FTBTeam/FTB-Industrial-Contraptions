@@ -3,12 +3,11 @@ package dev.ftb.mods.ftbic.item;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
-import dev.ftb.mods.ftbic.item.reactor.ComponentHeatExchangerItem;
-import dev.ftb.mods.ftbic.item.reactor.ComponentHeatVentItem;
 import dev.ftb.mods.ftbic.item.reactor.CoolantItem;
 import dev.ftb.mods.ftbic.item.reactor.FuelRodItem;
 import dev.ftb.mods.ftbic.item.reactor.HeatExchangerItem;
 import dev.ftb.mods.ftbic.item.reactor.HeatVentItem;
+import dev.ftb.mods.ftbic.item.reactor.NeutronReflectorItem;
 import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
@@ -55,6 +54,8 @@ public interface FTBICItems {
 	Supplier<BlockItem> IV_CABLE = blockItem("iv_cable", FTBICBlocks.IV_CABLE);
 	Supplier<BlockItem> BURNT_CABLE = blockItem("burnt_cable", FTBICBlocks.BURNT_CABLE);
 	Supplier<BlockItem> LANDMARK = blockItem("landmark", FTBICBlocks.LANDMARK);
+	Supplier<BlockItem> NUCLEAR_REACTOR_CHAMBER = blockItem("nuclear_reactor_chamber", FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
+	Supplier<BlockItem> NUKE = blockItem("nuke", FTBICBlocks.NUKE);
 
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");
@@ -82,6 +83,7 @@ public interface FTBICItems {
 	MaterialItem ANTIMATTER = material("antimatter");
 	MaterialItem ANTIMATTER_CRYSTAL = material("antimatter_crystal");
 	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
+	MaterialItem DENSE_COPPER_PLATE = material("dense_copper_plate");
 
 	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, EnergyTier.LV, FTBICConfig.SINGLE_USE_BATTERY_CAPACITY));
 	Supplier<Item> LV_BATTERY = REGISTRY.register("lv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));
@@ -93,21 +95,24 @@ public interface FTBICItems {
 	Supplier<Item> COOLANT_10K = REGISTRY.register("coolant_10k", () -> new CoolantItem(10_000));
 	Supplier<Item> COOLANT_30K = REGISTRY.register("coolant_30k", () -> new CoolantItem(30_000));
 	Supplier<Item> COOLANT_60K = REGISTRY.register("coolant_60k", () -> new CoolantItem(60_000));
-	Supplier<Item> URANIUM_FUEL_ROD = REGISTRY.register("uranium_fuel_rod", () -> new FuelRodItem(20_000, new double[]{5, 10, 15, 20, 25}, new int[]{4, 12, 24, 40, 60}));
-	Supplier<Item> DUAL_URANIUM_FUEL_ROD = REGISTRY.register("dual_uranium_fuel_rod", () -> new FuelRodItem(20_000, new double[]{20, 30, 40, 50, 60}, new int[]{24, 48, 80, 120, 168}));
-	Supplier<Item> QUAD_URANIUM_FUEL_ROD = REGISTRY.register("quad_uranium_fuel_rod", () -> new FuelRodItem(20_000, new double[]{60, 80, 100, 120, 140}, new int[]{96, 160, 240, 336, 448}));
-	Supplier<Item> HEAT_VENT = REGISTRY.register("heat_vent", () -> new HeatVentItem(1_000, 6, 0, false));
-	Supplier<Item> ADVANCED_HEAT_VENT = REGISTRY.register("advanced_heat_vent", () -> new HeatVentItem(1_000, 12, 0, false));
-	Supplier<Item> REACTOR_HEAT_VENT = REGISTRY.register("reactor_heat_vent", () -> new HeatVentItem(1_000, 5, 5, true));
-	Supplier<Item> COMPONENT_HEAT_VENT = REGISTRY.register("component_heat_vent", () -> new ComponentHeatVentItem(1_000, 4, 0));
-	Supplier<Item> OVERCLOCKED_HEAT_VENT = REGISTRY.register("overclocked_heat_vent", () -> new HeatVentItem(1_000, 20, 36, false));
-	Supplier<Item> HEAT_EXCHANGER = REGISTRY.register("heat_exchanger", () -> new HeatExchangerItem(2_500, 12, 4, false));
-	Supplier<Item> ADVANCED_HEAT_EXCHANGER = REGISTRY.register("advanced_heat_exchanger", () -> new HeatExchangerItem(10_000, 24, 8, false));
-	Supplier<Item> REACTOR_HEAT_EXCHANGER = REGISTRY.register("reactor_heat_exchanger", () -> new HeatExchangerItem(5_000, 0, 72, true));
-	Supplier<Item> COMPONENT_HEAT_EXCHANGER = REGISTRY.register("component_heat_exchanger", () -> new ComponentHeatExchangerItem(5_000, 36, 0));
-	Supplier<Item> REACTOR_PLATING = REGISTRY.register("reactor_plating", () -> new ReactorPlatingItem(1000, 0.95));
+	Supplier<Item> URANIUM_FUEL_ROD = REGISTRY.register("uranium_fuel_rod", () -> new FuelRodItem(20_000, 1, 5, 2));
+	Supplier<Item> DUAL_URANIUM_FUEL_ROD = REGISTRY.register("dual_uranium_fuel_rod", () -> new FuelRodItem(20_000, 2, 10, 4));
+	Supplier<Item> QUAD_URANIUM_FUEL_ROD = REGISTRY.register("quad_uranium_fuel_rod", () -> new FuelRodItem(20_000, 4, 20, 8));
+	Supplier<Item> HEAT_VENT = REGISTRY.register("heat_vent", () -> new HeatVentItem(1_000, 6, 0, 0));
+	Supplier<Item> ADVANCED_HEAT_VENT = REGISTRY.register("advanced_heat_vent", () -> new HeatVentItem(1_000, 12, 0, 0));
+	Supplier<Item> REACTOR_HEAT_VENT = REGISTRY.register("reactor_heat_vent", () -> new HeatVentItem(1_000, 5, 5, 0));
+	Supplier<Item> COMPONENT_HEAT_VENT = REGISTRY.register("component_heat_vent", () -> new HeatVentItem(0, 0, 0, 4));
+	Supplier<Item> OVERCLOCKED_HEAT_VENT = REGISTRY.register("overclocked_heat_vent", () -> new HeatVentItem(1_000, 20, 36, 0));
+	Supplier<Item> HEAT_EXCHANGER = REGISTRY.register("heat_exchanger", () -> new HeatExchangerItem(2_500, 12, 4));
+	Supplier<Item> ADVANCED_HEAT_EXCHANGER = REGISTRY.register("advanced_heat_exchanger", () -> new HeatExchangerItem(10_000, 24, 8));
+	Supplier<Item> REACTOR_HEAT_EXCHANGER = REGISTRY.register("reactor_heat_exchanger", () -> new HeatExchangerItem(5_000, 0, 72));
+	Supplier<Item> COMPONENT_HEAT_EXCHANGER = REGISTRY.register("component_heat_exchanger", () -> new HeatExchangerItem(5_000, 36, 0));
+	Supplier<Item> REACTOR_PLATING = REGISTRY.register("reactor_plating", () -> new ReactorPlatingItem(1_000, 0.95));
 	Supplier<Item> CONTAINMENT_REACTOR_PLATING = REGISTRY.register("containment_reactor_plating", () -> new ReactorPlatingItem(500, 0.90));
-	Supplier<Item> HEAT_CAPACITY_REACTOR_PLATING = REGISTRY.register("heat_capacity_reactor_plating", () -> new ReactorPlatingItem(1700, 0.99));
+	Supplier<Item> HEAT_CAPACITY_REACTOR_PLATING = REGISTRY.register("heat_capacity_reactor_plating", () -> new ReactorPlatingItem(1_700, 0.99));
+	Supplier<Item> NEUTRON_REFLECTOR = REGISTRY.register("neutron_reflector", () -> new NeutronReflectorItem(30_000));
+	Supplier<Item> THICK_NEUTRON_REFLECTOR = REGISTRY.register("thick_neutron_reflector", () -> new NeutronReflectorItem(120_000));
+	Supplier<Item> IRIDIUM_NEUTRON_REFLECTOR = REGISTRY.register("iridium_neutron_reflector", () -> new NeutronReflectorItem(0));
 	Supplier<Item> CANNED_FOOD = REGISTRY.register("canned_food", CannedFoodItem::new);
 	Supplier<Item> PROTEIN_BAR = REGISTRY.register("protein_bar", ProteinBarItem::new);
 	Supplier<Item> DARK_SPRAY_PAINT_CAN = REGISTRY.register("dark_spray_paint_can", () -> new SprayPaintCanItem(true));
@@ -125,5 +130,4 @@ public interface FTBICItems {
 	Supplier<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", () -> new EnergyArmorItem(EnergyArmorMaterial.QUANTUM));
 	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
 	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
-	// Supplier<Item> LOCATION_CARD = REGISTRY.register("location_card", LocationCardItem::new);
 }

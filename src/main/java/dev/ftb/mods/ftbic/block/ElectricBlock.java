@@ -208,8 +208,12 @@ public class ElectricBlock extends Block implements SprayPaintable {
 	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos pos1, boolean b) {
 		super.neighborChanged(state, level, pos, block, pos1, b);
 
-		if (!level.isClientSide() && !level.getBlockState(pos1).getBlock().is(block)) {
-			ElectricBlockEntity.electricNetworkUpdated(level, pos1);
+		if (!level.isClientSide()) {
+			BlockEntity entity = level.getBlockEntity(pos);
+
+			if (entity instanceof ElectricBlockEntity) {
+				((ElectricBlockEntity) entity).neighborChanged(pos1, block);
+			}
 		}
 	}
 

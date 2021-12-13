@@ -19,11 +19,12 @@ public class FTBICArmorRecipes extends FTBICRecipesGen {
 				.group(MODID + ":mechanical_elytra")
 				.pattern("CBC")
 				.pattern("CSC")
-				.pattern("CLC")
+				.pattern("VLV")
 				.define('C', CARBON_PLATE)
 				.define('B', MV_BATTERY)
 				.define('L', Items.ELYTRA)
 				.define('S', LV_SOLAR_PANEL)
+				.define('V', HEAT_VENT)
 				.save(consumer, shapedLoc("mechanical_elytra"));
 
 		ShapedRecipeBuilder.shaped(CARBON_HELMET)

@@ -2,7 +2,7 @@ package dev.ftb.mods.ftbic.util;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class CachedEnergyStorage {
+public final class CachedEnergyStorage {
 	public static final CachedEnergyStorage[] EMPTY = new CachedEnergyStorage[0];
 
 	public CachedEnergyStorageOrigin origin;
@@ -20,7 +20,7 @@ public class CachedEnergyStorage {
 	}
 
 	public boolean isInvalid() {
-		return origin.cableBurnt || blockEntity.isRemoved();
+		return origin.cableBurnt || energyHandler.isEnergyHandlerInvalid();
 	}
 
 	@Override

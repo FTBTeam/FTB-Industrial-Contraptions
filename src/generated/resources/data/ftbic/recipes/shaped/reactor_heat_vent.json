@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "ftbic:reactor_heat_vent",
+	"pattern": [
+		"P",
+		"V",
+		"P"
+	],
+	"key": {
+		"P": {
+			"tag": "forge:plates/lead"
+		},
+		"V": {
+			"item": "ftbic:heat_vent"
+		}
+	},
+	"result": {
+		"item": "ftbic:reactor_heat_vent"
+	}
+}

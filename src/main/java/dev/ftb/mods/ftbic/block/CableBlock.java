@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.energy.CapabilityEnergy;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -61,8 +63,7 @@ public class CableBlock extends BaseCableBlock {
 			return true;
 		} else if (!state.isAir()) {
 			BlockEntity t = world.getBlockEntity(pos);
-			//return t != null && t.getCapability(CapabilityEnergy.ENERGY, face).isPresent();
-			return t instanceof EnergyHandler;
+			return t instanceof EnergyHandler || FTBICConfig.ZAP_TO_FE_CONVERSION_RATE > 0D && t != null && t.getCapability(CapabilityEnergy.ENERGY, face).isPresent();
 		}
 
 		return false;

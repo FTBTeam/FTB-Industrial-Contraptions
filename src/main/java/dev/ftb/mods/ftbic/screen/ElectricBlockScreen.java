@@ -46,11 +46,15 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 	protected void renderExtra(PoseStack poseStack, int mouseX, int mouseY, float delta) {
 	}
 
+	public static boolean isIn(int mx, int my, int x, int y, int w, int h) {
+		return mx >= x && mx < x + w && my >= y && my < y + h;
+	}
+
 	@Override
 	protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
 		super.renderTooltip(poseStack, mouseX, mouseY);
 
-		if (energyX != -1 && energyY != -1 && mouseX >= leftPos + energyX && mouseY >= topPos + energyY && mouseX < leftPos + energyX + 14 && mouseY < topPos + energyY + 14 && menu.player.inventory.getCarried().isEmpty()) {
+		if (energyX != -1 && energyY != -1 && isIn(mouseX, mouseY, leftPos + energyX, topPos + energyY, 14, 14) && menu.player.inventory.getCarried().isEmpty()) {
 			double capacity = menu.entity.energyCapacity;
 
 			if (menu.entity instanceof MachineBlockEntity) {
@@ -65,11 +69,11 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 
 	public void drawArrow(PoseStack poseStack, int x, int y, int progress) {
 		if (progress < 24) {
-			blit(poseStack, x + progress, y, 86 + progress, 167, 24 - progress, 17);
+			blit(poseStack, x + progress, y, 87 + progress, 167, 24 - progress, 17);
 		}
 
 		if (progress > 0) {
-			blit(poseStack, x, y, 86, 185, progress, 17);
+			blit(poseStack, x, y, 87, 185, progress, 17);
 		}
 	}
 
@@ -81,33 +85,33 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		switch (getEnergyType()) {
 			case 1: {
 				if (energy < 14) {
-					blit(poseStack, x + energy, y, 90 + energy, 240, 14 - energy, 14);
+					blit(poseStack, x + energy, y, 91 + energy, 240, 14 - energy, 14);
 				}
 
 				if (energy > 0) {
-					blit(poseStack, x, y, 105, 240, energy, 14);
+					blit(poseStack, x, y, 106, 240, energy, 14);
 				}
 
 				break;
 			}
 			case 2: {
 				if (energy < 14) {
-					blit(poseStack, x + energy, y, 120 + energy, 240, 14 - energy, 14);
+					blit(poseStack, x + energy, y, 121 + energy, 240, 14 - energy, 14);
 				}
 
 				if (energy > 0) {
-					blit(poseStack, x, y, 135, 240, energy, 14);
+					blit(poseStack, x, y, 136, 240, energy, 14);
 				}
 
 				break;
 			}
 			default: {
 				if (energy < 14) {
-					blit(poseStack, x, y, 0, 240, 14, 14 - energy);
+					blit(poseStack, x, y, 1, 240, 14, 14 - energy);
 				}
 
 				if (energy > 0) {
-					blit(poseStack, x, y + (14 - energy), 15, 240 + (14 - energy), 14, energy);
+					blit(poseStack, x, y + (14 - energy), 16, 240 + (14 - energy), 14, energy);
 				}
 
 				break;
@@ -118,38 +122,42 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 
 	public void drawFuel(PoseStack poseStack, int x, int y, int fuel) {
 		if (fuel < 14) {
-			blit(poseStack, x, y, 30, 240, 14, 14 - fuel);
+			blit(poseStack, x, y, 31, 240, 14, 14 - fuel);
 		}
 
 		if (fuel > 0) {
-			blit(poseStack, x, y + (14 - fuel), 45, 240 + (14 - fuel), 14, fuel);
+			blit(poseStack, x, y + (14 - fuel), 46, 240 + (14 - fuel), 14, fuel);
 		}
 	}
 
 	public void drawSun(PoseStack poseStack, int x, int y, int fuel) {
 		if (fuel < 14) {
-			blit(poseStack, x, y, 60, 240, 14, 14 - fuel);
+			blit(poseStack, x, y, 61, 240, 14, 14 - fuel);
 		}
 
 		if (fuel > 0) {
-			blit(poseStack, x, y + (14 - fuel), 75, 240 + (14 - fuel), 14, fuel);
+			blit(poseStack, x, y + (14 - fuel), 76, 240 + (14 - fuel), 14, fuel);
 		}
 	}
 
 	public void drawSlot(PoseStack poseStack, int x, int y) {
-		blit(poseStack, x, y, 0, 167, 18, 18);
+		blit(poseStack, x, y, 1, 167, 18, 18);
+	}
+
+	public void drawLockedSlot(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 20, 167, 18, 18);
 	}
 
 	public void drawLargeSlot(PoseStack poseStack, int x, int y) {
-		blit(poseStack, x, y, 0, 186, 26, 26);
+		blit(poseStack, x, y, 1, 186, 26, 26);
 	}
 
 	public void drawCombinedSlot(PoseStack poseStack, int x, int y) {
-		blit(poseStack, x, y, 0, 213, 47, 26);
+		blit(poseStack, x, y, 1, 213, 47, 26);
 	}
 
 	public void drawTank(PoseStack poseStack, int x, int y, FluidStack fluid, int capacity) {
-		blit(poseStack, x, y, 48, 167, 18, 54);
+		blit(poseStack, x, y, 49, 167, 18, 54);
 
 		minecraft.getTextureManager().bind(TextureAtlas.LOCATION_BLOCKS);
 		// render fluid here properly
@@ -162,7 +170,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		}
 
 		minecraft.getTextureManager().bind(BASE_TEXTURE);
-		blit(poseStack, x, y, 67, 167, 18, 54);
+		blit(poseStack, x, y, 68, 167, 18, 54);
 	}
 
 	public void drawFluidSlot(PoseStack poseStack, int x, int y, FluidStack fluid) {
@@ -201,16 +209,16 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 
 	public void drawProgressBar(PoseStack poseStack, int x, int y, int progress) {
 		if (progress < 26) {
-			blit(poseStack, x + progress, y, 86 + progress, 203, 26 - progress, 3);
+			blit(poseStack, x + progress, y, 87 + progress, 203, 26 - progress, 3);
 		}
 
 		if (progress > 0) {
-			blit(poseStack, x, y, 86, 207, progress, 3);
+			blit(poseStack, x, y, 87, 207, progress, 3);
 		}
 	}
 
 	public void drawArrowDown(PoseStack poseStack, int x, int y) {
-		blit(poseStack, x, y, 111, 186, 14, 14);
+		blit(poseStack, x, y, 112, 186, 14, 14);
 	}
 
 	public void drawButtonPause(PoseStack poseStack, int x, int y) {
@@ -232,17 +240,65 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 			drawButtonPause(poseStack, x, y);
 		}
 
-		// drawButtonFrame(poseStack, x, y);
+		if (isIn(mouseX, mouseY, x, y, 18, 18)) {
+			drawButtonFrame(poseStack, x, y);
+		}
+	}
+
+	public void drawSmallButtonPause(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 114, 201, 9, 10);
+	}
+
+	public void drawSmallButtonStart(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 124, 201, 9, 10);
+	}
+
+	public void drawSmallButtonFrame(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 134, 201, 9, 10);
+	}
+
+	public void drawSmallPauseButton(PoseStack poseStack, int x, int y, int mouseX, int mouseY, boolean paused) {
+		if (paused) {
+			drawSmallButtonStart(poseStack, x, y);
+		} else {
+			drawSmallButtonPause(poseStack, x, y);
+		}
+
+		if (isIn(mouseX, mouseY, x, y, 9, 10)) {
+			drawSmallButtonFrame(poseStack, x, y);
+		}
+	}
+
+	public void drawNuclearBar(PoseStack poseStack, int x, int y, boolean active) {
+		blit(poseStack, x, y, 87, 218, 54, 10);
+
+		if (active) {
+			blit(poseStack, x, y, 87, 229, 54, 10);
+		}
+	}
+
+	public void drawHeatBar(PoseStack poseStack, int x, int y, float heat) {
+		blit(poseStack, x, y, 142, 218, 54, 10);
+
+		if (heat > 0F) {
+			blit(poseStack, x + 1, y, 143, 229, Mth.ceil(heat * 52F), 10);
+		}
+	}
+
+	public ResourceLocation getScreenTexture() {
+		return BASE_TEXTURE;
 	}
 
 	@Override
 	protected void renderBg(PoseStack poseStack, float delta, int mouseX, int mouseY) {
 		RenderSystem.color4f(1F, 1F, 1F, 1F);
 		RenderSystem.defaultBlendFunc();
-		minecraft.getTextureManager().bind(BASE_TEXTURE);
+		minecraft.getTextureManager().bind(getScreenTexture());
 		int x = leftPos;
 		int y = topPos;
 		blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
+
+		minecraft.getTextureManager().bind(BASE_TEXTURE);
 
 		if (energyX != -1 && energyY != -1) {
 			int e = menu.getEnergyBar() * 14 / 30000;

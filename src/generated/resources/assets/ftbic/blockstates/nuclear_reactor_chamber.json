@@ -1,0 +1,30 @@
+{
+	"variants": {
+		"facing=down": {
+			"model": "ftbic:block/nuclear_reactor_chamber",
+			"x": 180
+		},
+		"facing=up": {
+			"model": "ftbic:block/nuclear_reactor_chamber"
+		},
+		"facing=north": {
+			"model": "ftbic:block/nuclear_reactor_chamber",
+			"x": 90
+		},
+		"facing=south": {
+			"model": "ftbic:block/nuclear_reactor_chamber",
+			"x": 90,
+			"y": 180
+		},
+		"facing=west": {
+			"model": "ftbic:block/nuclear_reactor_chamber",
+			"x": 90,
+			"y": 270
+		},
+		"facing=east": {
+			"model": "ftbic:block/nuclear_reactor_chamber",
+			"x": 90,
+			"y": 90
+		}
+	}
+}

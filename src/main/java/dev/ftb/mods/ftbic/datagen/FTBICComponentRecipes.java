@@ -257,6 +257,13 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.define('R', IRON_ROD)
 				.save(consumer, shapedLoc("copper_coil"));
 
+		ShapelessRecipeBuilder.shapeless(LANDMARK)
+				.unlockedBy("has_item", has(Items.REDSTONE_TORCH))
+				.group(MODID + ":landmark")
+				.requires(Items.REDSTONE_TORCH)
+				.requires(LAPIS)
+				.save(consumer, shapelessLoc("landmark"));
+
 		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(LATEX))
 				.inputItem(Ingredient.of(LATEX))
@@ -281,12 +288,11 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(COMPRESSED_COAL_BALL))
 				.save(consumer, compressingLoc("compressed_coal_ball"));
 
-		ShapelessRecipeBuilder.shapeless(LANDMARK)
-				.unlockedBy("has_item", has(Items.REDSTONE_TORCH))
-				.group(MODID + ":landmark")
-				.requires(Items.REDSTONE_TORCH)
-				.requires(LAPIS)
-				.save(consumer, shapelessLoc("landmark"));
+		MachineRecipeBuilder.compressing()
+				.unlockedBy("has_item", has(COPPER_PLATE))
+				.inputItem(Ingredient.of(COPPER_PLATE), 8)
+				.outputItem(new ItemStack(DENSE_COPPER_PLATE))
+				.save(consumer, compressingLoc("dense_copper_plate"));
 
 		AntimatterBoostRecipeBuilder.make(Ingredient.of(SCRAP), 5000)
 				.unlockedBy("has_item", has(SCRAP))
