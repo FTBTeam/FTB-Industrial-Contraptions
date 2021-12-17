@@ -1,0 +1,30 @@
+{
+	"variants": {
+		"facing=down": {
+			"model": "ftbic:block/tractor_beam",
+			"x": 180
+		},
+		"facing=up": {
+			"model": "ftbic:block/tractor_beam"
+		},
+		"facing=north": {
+			"model": "ftbic:block/tractor_beam",
+			"x": 90
+		},
+		"facing=south": {
+			"model": "ftbic:block/tractor_beam",
+			"x": 90,
+			"y": 180
+		},
+		"facing=west": {
+			"model": "ftbic:block/tractor_beam",
+			"x": 90,
+			"y": 270
+		},
+		"facing=east": {
+			"model": "ftbic:block/tractor_beam",
+			"x": 90,
+			"y": 90
+		}
+	}
+}

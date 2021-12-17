@@ -37,6 +37,7 @@ public class FTBICClient extends FTBICCommon {
 		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.REINFORCED_GLASS.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.IV_CABLE.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.LANDMARK.get(), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.TRACTOR_BEAM.get(), RenderType.translucent());
 
 		MenuScreens.register(FTBICMenus.MACHINE.get(), MachineScreen::new);
 		MenuScreens.register(FTBICMenus.BASIC_GENERATOR.get(), BasicGeneratorScreen::new);

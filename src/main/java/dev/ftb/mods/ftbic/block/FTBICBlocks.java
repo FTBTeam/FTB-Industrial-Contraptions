@@ -35,4 +35,5 @@ public interface FTBICBlocks {
 	Supplier<Block> EXFLUID = REGISTRY.register("exfluid", ExFluidBlock::new);
 	Supplier<Block> NUCLEAR_REACTOR_CHAMBER = REGISTRY.register("nuclear_reactor_chamber", NuclearReactorChamberBlock::new);
 	Supplier<Block> NUKE = REGISTRY.register("nuke", NukeBlock::new);
+	Supplier<Block> TRACTOR_BEAM = REGISTRY.register("tractor_beam", TractorBeamBlock::new);
 }

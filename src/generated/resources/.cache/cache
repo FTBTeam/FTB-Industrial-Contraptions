@@ -47,8 +47,9 @@ ed1e379681b7c961e99d9107a099af03ab0baed5 assets/ftbic/blockstates/reinforced_sto
 563df92622f5cf22d1a7ce148b72fd5b1f4a7262 assets/ftbic/blockstates/roller.json
 6e4255852359a733ca3abdc8a8d7287b8dd39ca1 assets/ftbic/blockstates/rubber_sheet.json
 9ced6c6ded6f3a11c0ee68f56e8b6a1dcb2e7e6a assets/ftbic/blockstates/teleporter.json
+ef643960118fa966c93fe5c01dea6e094b563360 assets/ftbic/blockstates/tractor_beam.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-bdb5236fc48a87388f688febb5f2ff67e5f1a5b7 assets/ftbic/lang/en_us.json
+9a0e75d0c51e24297afb5bd304616f86e0cc1d5b assets/ftbic/lang/en_us.json
 32a8fcccb6a46281b355b13187ab3268564e23ca assets/ftbic/models/block/advanced_machine_block.json
 5c1a2f33338963a3ba598423df6e653deaf1a094 assets/ftbic/models/block/burnt_cable_base.json
 ca034027b29128742967895a6aef4eff4b32d456 assets/ftbic/models/block/burnt_cable_connection.json
@@ -181,6 +182,7 @@ f24fc746a796a7cba1ecda18914fc0a9d1018662 assets/ftbic/models/block/orientable_3d
 6fbdfc44895fdb49cd9e1c51a7c8596981b9987b assets/ftbic/models/block/reinforced_glass.json
 30403029622ce3dc6ae1c3e66355a343ef67fe93 assets/ftbic/models/block/reinforced_stone.json
 b6295e5ff7d7deefe9d156ca8d1c50d2e2f5231b assets/ftbic/models/block/rubber_sheet.json
+5077a215b50bb788920d0c4038e3d52b3eabe86d assets/ftbic/models/block/tractor_beam.json
 cb5e20ffdd03fb079c96e104f4f2d9ecf1c160ee assets/ftbic/models/item/advanced_alloy.json
 d50f1b0375b26c03008c1a300db4a16ba7ad57fc assets/ftbic/models/item/advanced_centrifuge.json
 3ad0e1652c9a99ca9aed7db891f00381820f622f assets/ftbic/models/item/advanced_circuit.json
@@ -298,6 +300,7 @@ be7162efec3eedcf3e64c0a9f56a413a8bea6f87 assets/ftbic/models/item/scrap.json
 a418003a2c12a10bc0fe77b0f8aed26a734e62e5 assets/ftbic/models/item/single_use_battery.json
 6f55d8c3f9d54c352bb8a6c1d7df81c3c9eef9d6 assets/ftbic/models/item/teleporter.json
 4d5620d2007d03ccd9ea0e4f504e75b941e05527 assets/ftbic/models/item/thick_neutron_reflector.json
+4745edbb837c021ea4af199a0030755ee604cc5c assets/ftbic/models/item/tractor_beam.json
 8120590296c8eb069125e5445a0008482f4593c4 assets/ftbic/models/item/transformer_upgrade.json
 aed914fc55fb093c9eeee9079b01183d073c7035 assets/ftbic/models/item/uranium_fuel_rod.json
 ddfdf478daf49f03fa0c531744ce35e890123241 assets/ftbic/models/item/wind_mill.json

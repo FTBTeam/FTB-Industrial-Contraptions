@@ -50,6 +50,7 @@
 	"block.ftbic.teleporter": "Teleporter",
 	"block.ftbic.teleporter.load_error": "The destination chunk has to be loaded!",
 	"block.ftbic.teleporter.perm_error": "Only owner of this teleporter can change it's settings!",
+	"block.ftbic.tractor_beam": "Tractor Beam",
 	"block.ftbic.wind_mill": "Wind Mill",
 	"ftbic.any_item": "Any Item",
 	"ftbic.energy_capacity": "Energy Capacity: %s",

@@ -130,6 +130,7 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.EXFLUID, "Ex-Fluid");
 			addBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			addBlock(FTBICBlocks.NUKE);
+			addBlock(FTBICBlocks.TRACTOR_BEAM);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -483,6 +484,40 @@ public class FTBICDataGenHandler {
 					.texture("side", modLoc("block/nuke_side"))
 			;
 
+			withExistingParent("block/tractor_beam", "block/block")
+					.texture("particle", modLoc("block/tractor_beam"))
+					.texture("texture", modLoc("block/tractor_beam"))
+					.ao(false)
+					.element()
+					.from(0, 0, 0)
+					.to(16, 16, 0)
+					.shade(false)
+					.face(Direction.NORTH).cullface(Direction.NORTH).texture("#texture").end()
+					.face(Direction.SOUTH).cullface(Direction.NORTH).texture("#texture").end()
+					.end()
+					.element()
+					.from(0, 0, 16)
+					.to(16, 16, 16)
+					.shade(false)
+					.face(Direction.NORTH).cullface(Direction.SOUTH).texture("#texture").end()
+					.face(Direction.SOUTH).cullface(Direction.SOUTH).texture("#texture").end()
+					.end()
+					.element()
+					.from(0, 0, 0)
+					.to(0, 16, 16)
+					.shade(false)
+					.face(Direction.WEST).cullface(Direction.WEST).texture("#texture").end()
+					.face(Direction.EAST).cullface(Direction.WEST).texture("#texture").end()
+					.end()
+					.element()
+					.from(16, 0, 0)
+					.to(16, 16, 16)
+					.shade(false)
+					.face(Direction.WEST).cullface(Direction.EAST).texture("#texture").end()
+					.face(Direction.EAST).cullface(Direction.EAST).texture("#texture").end()
+					.end()
+			;
+
 			electric("basic_generator_off", "basic_generator_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
 			electric("basic_generator_on", "basic_generator_front_on", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
 			electric("geothermal_generator_off", "geothermal_generator_front_off", BASIC_SIDE, BASIC_TOP, BASIC_BOTTOM);
@@ -584,6 +619,7 @@ public class FTBICDataGenHandler {
 			simpleBlock(FTBICBlocks.LANDMARK.get(), models().getExistingFile(modLoc("block/landmark")));
 			directionalBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get(), models().getExistingFile(modLoc("block/nuclear_reactor_chamber")));
 			simpleBlock(FTBICBlocks.NUKE.get(), models().getExistingFile(modLoc("block/nuke")));
+			directionalBlock(FTBICBlocks.TRACTOR_BEAM.get(), models().getExistingFile(modLoc("block/tractor_beam")));
 
 			simpleBlock(FTBICBlocks.EXFLUID.get(),
 					new ConfiguredModel(models().getExistingFile(mcLoc("block/dead_horn_coral_block"))),
@@ -728,6 +764,7 @@ public class FTBICDataGenHandler {
 			singleTexture("landmark", mcLoc("item/generated"), "layer0", modLoc("block/landmark_ns"));
 			basicBlockItem(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			basicBlockItem(FTBICBlocks.NUKE);
+			basicBlockItem(FTBICBlocks.TRACTOR_BEAM);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
