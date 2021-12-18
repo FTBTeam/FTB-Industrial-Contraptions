@@ -14,10 +14,12 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -33,6 +35,7 @@ import java.util.function.Function;
 
 public class FTBICUtils {
 	public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().setLenient().create();
+	public static final Tag.Named<Block> REINFORCED = BlockTags.createOptional(new ResourceLocation(FTBIC.MOD_ID, "reinforced"));
 	public static final Tag.Named<Item> UNCANNABLE_FOOD = ItemTags.createOptional(new ResourceLocation(FTBIC.MOD_ID, "uncannable_food"));
 	public static final Tag.Named<Item> NO_AUTO_RECIPE = ItemTags.createOptional(new ResourceLocation(FTBIC.MOD_ID, "no_auto_recipe"));
 

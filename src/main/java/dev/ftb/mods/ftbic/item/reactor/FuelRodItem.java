@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.item.reactor;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
@@ -55,7 +56,7 @@ public class FuelRodItem extends BaseReactorItem implements NeutronReflectingRea
 			return;
 		}
 
-		reactor.explosionStrength += getRods() * 2D;
+		reactor.explosionRadius += getRods() * FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_MULTIPLIER;
 
 		int p = pulses;
 		ItemStack[] around = new ItemStack[4];

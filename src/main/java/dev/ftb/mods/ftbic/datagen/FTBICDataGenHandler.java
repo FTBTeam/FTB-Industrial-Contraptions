@@ -25,6 +25,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -831,7 +832,16 @@ public class FTBICDataGenHandler {
 
 		@Override
 		protected void addTags() {
-			tag(BlockTags.bind(MODID + ":reinforced")).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
+			tag(FTBICUtils.REINFORCED).add(
+					FTBICBlocks.REINFORCED_STONE.get(),
+					FTBICBlocks.REINFORCED_GLASS.get(),
+					Blocks.BEDROCK,
+					Blocks.BARRIER,
+					Blocks.COMMAND_BLOCK
+			);
+
+			tag(BlockTags.DRAGON_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
+			tag(BlockTags.WITHER_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
 		}
 	}
 

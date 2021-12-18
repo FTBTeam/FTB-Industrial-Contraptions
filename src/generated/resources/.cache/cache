@@ -827,6 +827,8 @@ a7be0d4925ac3299afda79d2e4408eb799a66624 data/ftbic/recipes/smelting/industrial_
 de7832ce83bd096be21cdf87f6b19f1324f9df8a data/ftbic/recipes/smithing/graphene_battery.json
 e90a2d8edba37ca052a0f5dcff3a5ab586138fbf data/ftbic/recipes/smithing/iridium_battery.json
 52be5fa4533ce50c9d0dd004e91ca599f885f204 data/ftbic/recipes/smoking/rubber.json
-850d756c71cc30a59b4a157f688ec343c8e9a06f data/ftbic/tags/blocks/reinforced.json
+cab3f4ea716e152525da323cdbb1161f01b89059 data/ftbic/tags/blocks/reinforced.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/ftbic/tags/items/reinforced.json
 b109b9c379397e2f3eefc71bf6360fe92bf6fec6 data/ftbic/tags/items/uncannable_food.json
+850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/dragon_immune.json
+850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/wither_immune.json

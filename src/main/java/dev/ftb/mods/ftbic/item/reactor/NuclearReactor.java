@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.item.reactor;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class NuclearReactor {
 	public int heat;
 
 	public int maxHeat;
-	public double explosionStrength;
+	public double explosionRadius;
 	public double explosionModifier;
 
 	public NuclearReactor(ItemStack[] is) {
@@ -74,7 +75,7 @@ public class NuclearReactor {
 	public void tick() {
 		energyOutput = 0D;
 		maxHeat = 10000;
-		explosionStrength = 10D;
+		explosionRadius = FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS;
 		explosionModifier = 1D;
 
 		for (int x = 0; x < 9; x++) {
@@ -105,6 +106,7 @@ public class NuclearReactor {
 			heat = 0;
 		}
 
-		explosionStrength *= explosionModifier;
+		explosionRadius *= explosionModifier;
+		explosionRadius = Math.min(explosionRadius, FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_LIMIT);
 	}
 }

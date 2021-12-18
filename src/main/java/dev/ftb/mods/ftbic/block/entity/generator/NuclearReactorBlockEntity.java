@@ -7,9 +7,11 @@ import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 import dev.ftb.mods.ftbic.item.reactor.ReactorItem;
 import dev.ftb.mods.ftbic.screen.NuclearReactorMenu;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.util.NukeExplosion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -17,8 +19,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -32,6 +32,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 
 	public int timeUntilNextCycle;
 	public final NuclearReactor reactor;
+	public int simulateTicks = 0;
 
 	public NuclearReactorBlockEntity() {
 		super(FTBICElectricBlocks.NUCLEAR_REACTOR);
@@ -52,6 +53,10 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		tag.putByte("Chambers", (byte) reactor.chambers);
 		tag.putDouble("EnergyOutput", reactor.energyOutput);
 		tag.putInt("Heat", reactor.heat);
+
+		if (simulateTicks > 0) {
+			tag.putInt("SimulateTicks", simulateTicks);
+		}
 	}
 
 	@Override
@@ -62,6 +67,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		reactor.chambers = Mth.clamp(tag.getByte("Chambers"), 0, 6);
 		reactor.energyOutput = tag.getDouble("EnergyOutput");
 		reactor.heat = tag.getInt("Heat");
+		simulateTicks = tag.getInt("SimulateTicks");
 	}
 
 	@Override
@@ -122,6 +128,11 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 			handleReactor();
 		}
 
+		if (simulateTicks > 0) {
+			handleReactor();
+			simulateTicks--;
+		}
+
 		if (reactor.energyOutput > 0) {
 			active = true;
 		}
@@ -141,12 +152,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 
 		if (h >= 1F) {
 			if (!level.isClientSide()) {
-				boolean b = level.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS);
-				level.getGameRules().getRule(GameRules.RULE_DOBLOCKDROPS).set(false, level.getServer());
-				level.removeBlock(worldPosition, false);
-				// replace with nuke
-				level.explode(null, worldPosition.getX() + 0.5D, worldPosition.getY() + 0.5D, worldPosition.getZ() + 0.5D, (float) reactor.explosionStrength, Explosion.BlockInteraction.DESTROY);
-				level.getGameRules().getRule(GameRules.RULE_DOBLOCKDROPS).set(b, level.getServer());
+				NukeExplosion.create((ServerLevel) level, worldPosition, reactor.explosionRadius, placerId, placerName);
 			}
 		}
 		// other reactor big bads
