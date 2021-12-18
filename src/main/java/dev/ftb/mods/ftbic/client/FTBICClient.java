@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.client;
 import dev.ftb.mods.ftbic.FTBICCommon;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.entity.FTBICEntities;
 import dev.ftb.mods.ftbic.screen.AntimatterConstructorScreen;
 import dev.ftb.mods.ftbic.screen.BasicGeneratorScreen;
 import dev.ftb.mods.ftbic.screen.BatteryBoxScreen;
@@ -18,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -52,6 +54,9 @@ public class FTBICClient extends FTBICCommon {
 
 		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.QUARRY.blockEntity.get(), DiggingBlockRenderer::new);
 		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.PUMP.blockEntity.get(), DiggingBlockRenderer::new);
+
+		EntityRenderDispatcher entityRenderDispatcher = event.getMinecraftSupplier().get().getEntityRenderDispatcher();
+		entityRenderDispatcher.register(FTBICEntities.NUKE_ARROW.get(), new NukeArrowRenderer(entityRenderDispatcher));
 	}
 
 	@Override
