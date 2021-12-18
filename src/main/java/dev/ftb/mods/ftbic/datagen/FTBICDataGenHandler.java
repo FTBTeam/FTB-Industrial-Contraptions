@@ -186,7 +186,7 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.QUANTUM_CHESTPLATE);
 			addItem(FTBICItems.QUANTUM_LEGGINGS);
 			addItem(FTBICItems.QUANTUM_BOOTS);
-			// addItem(FTBICItems.LOCATION_CARD);
+			addItem(FTBICItems.NUKE_ARROW);
 
 			add("recipe." + FTBIC.MOD_ID + ".macerating", "Macerating");
 			add("recipe." + FTBIC.MOD_ID + ".separating", "Separating");
@@ -821,7 +821,7 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.QUANTUM_CHESTPLATE);
 			basicItem(FTBICItems.QUANTUM_LEGGINGS);
 			basicItem(FTBICItems.QUANTUM_BOOTS);
-			// basicItem(FTBICItems.LOCATION_CARD);
+			basicItem(FTBICItems.NUKE_ARROW);
 		}
 	}
 
@@ -852,8 +852,8 @@ public class FTBICDataGenHandler {
 
 		@Override
 		protected void addTags() {
-			tag(ItemTags.bind(MODID + ":reinforced")).add(FTBICItems.REINFORCED_STONE.get(), FTBICItems.REINFORCED_GLASS.get());
 			tag(FTBICUtils.UNCANNABLE_FOOD).add(FTBICItems.CANNED_FOOD.get(), FTBICItems.PROTEIN_BAR.get());
+			tag(ItemTags.ARROWS).add(FTBICItems.NUKE_ARROW.get());
 		}
 	}
 

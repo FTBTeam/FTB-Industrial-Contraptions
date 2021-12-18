@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
@@ -24,6 +25,7 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -104,6 +106,10 @@ public class NukeExplosion {
 			return distance(thread) - o.distance(thread);
 		}
 
+		public double group(NukeThread thread, double group) {
+			return Math.sqrt(distance(thread)) / group;
+		}
+
 		public void execute(NukeThread thread) {
 		}
 	}
@@ -126,7 +132,7 @@ public class NukeExplosion {
 
 		@Override
 		public int getOrder() {
-			return (flags != 2 || neighborUpdates != 0) ? 0 : 1;
+			return state.getBlock() instanceof FireBlock ? 2 : (flags != 2 || neighborUpdates != 0) ? 0 : 1;
 		}
 
 		@Override
@@ -160,6 +166,11 @@ public class NukeExplosion {
 			int y1 = pos.getY() - thread.pos.getY();
 			int y2 = o.pos.getY() - thread.pos.getY();
 			return i == 0 ? (y1 - y2) : i;
+		}
+
+		@Override
+		public double group(NukeThread thread, double group) {
+			return Math.sqrt(horizontalDistance(thread)) / group;
 		}
 
 		@Override
@@ -205,10 +216,7 @@ public class NukeExplosion {
 					if (task.getOrder() > highestOrder) {
 						lowPriority.add(task);
 					} else {
-						int x = pos.getX() - task.pos.getX();
-						int y = pos.getY() - task.pos.getY();
-						int z = pos.getZ() - task.pos.getZ();
-						lists.get(Mth.clamp(Mth.floor(Math.sqrt(x * x + y * y + z * z) / group), 0, lists.size() - 1)).add(task);
+						lists.get(Mth.clamp(Mth.floor(task.group(this, group)), 0, lists.size() - 1)).add(task);
 					}
 				}
 
@@ -330,7 +338,6 @@ public class NukeExplosion {
 		BlockState air = Blocks.AIR.defaultBlockState();
 		BlockState podzol = Blocks.PODZOL.defaultBlockState();
 		BlockState coarseDirt = Blocks.COARSE_DIRT.defaultBlockState();
-		BlockState magma = Blocks.MAGMA_BLOCK.defaultBlockState();
 		BlockState fire = Blocks.FIRE.defaultBlockState();
 		BlockState cobble = Blocks.COBBLESTONE.defaultBlockState();
 		BlockState exfluid = FTBICBlocks.EXFLUID.get().defaultBlockState();
@@ -365,11 +372,12 @@ public class NukeExplosion {
 					tasks.add(new BlockModification(p, coarseDirt));
 					tasks.add(new LightUpdate(p, state, coarseDirt, oldLight, oldOpacity));
 				} else if (state.getMaterial() == Material.STONE) {
-					if (level.random.nextInt(20) == 0) {
-						tasks.add(new BlockModification(p, magma));
-						tasks.add(new LightUpdate(p, state, magma, oldLight, oldOpacity));
+					if (level.random.nextInt(10) == 0) {
+						BlockState burnt = getBurntBlock(level.random);
+						tasks.add(new BlockModification(p, burnt));
+						tasks.add(new LightUpdate(p, state, burnt, oldLight, oldOpacity));
 
-						if (level.random.nextInt(5) == 0) {
+						if (level.random.nextInt(8) == 0) {
 							BlockPos above = p.above();
 
 							if (blocks.getOrDefault(above, BlockType.NONE).isInside()) {
@@ -419,5 +427,16 @@ public class NukeExplosion {
 		}
 
 		thread.start();
+	}
+
+	private static BlockState getBurntBlock(Random random) {
+		switch (random.nextInt(3)) {
+			case 0:
+				return Blocks.MAGMA_BLOCK.defaultBlockState();
+			case 1:
+				return Blocks.BASALT.defaultBlockState();
+			default:
+				return Blocks.BLACKSTONE.defaultBlockState();
+		}
 	}
 }
