@@ -9,6 +9,8 @@ import net.minecraft.util.Mth;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.imageio.ImageIO;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,9 +39,52 @@ public abstract class CombinedTextureProvider implements DataProvider {
 			pixels = new float[w * h * 4];
 		}
 
+		public TextureData(BufferedImage image) {
+			width = image.getWidth();
+			height = image.getHeight();
+			pixels = new float[width * height * 4];
+
+			for (int y = 0; y < height; y++) {
+				for (int x = 0; x < width; x++) {
+					int i = (x + y * width) * 4;
+					int col = image.getRGB(x, y);
+					pixels[i] = ((col >> 24) & 0xFF) / 255F;
+					pixels[i + 1] = ((col >> 16) & 0xFF) / 255F;
+					pixels[i + 2] = ((col >> 8) & 0xFF) / 255F;
+					pixels[i + 3] = ((col >> 0) & 0xFF) / 255F;
+				}
+			}
+		}
+
+		public BufferedImage createBufferedImage() {
+			BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+			for (int y = 0; y < height; y++) {
+				for (int x = 0; x < width; x++) {
+					int i = (x + y * width) * 4;
+					int a = Mth.clamp((int) (pixels[i] * 255F), 0, 255);
+					int r = Mth.clamp((int) (pixels[i + 1] * 255F), 0, 255);
+					int g = Mth.clamp((int) (pixels[i + 2] * 255F), 0, 255);
+					int b = Mth.clamp((int) (pixels[i + 3] * 255F), 0, 255);
+					image.setRGB(x, y, (a << 24) | (r << 16) | (g << 8) | b);
+				}
+			}
+
+			return image;
+		}
+
 		public TextureData combine(TextureData data) {
 			if (width != data.width || height != data.height) {
-				throw new IllegalArgumentException("Width or height didn't match source texture!");
+				BufferedImage dst = new BufferedImage(Math.max(width, data.width), Math.max(height, data.height), BufferedImage.TYPE_INT_ARGB);
+				BufferedImage src1 = createBufferedImage();
+				BufferedImage src2 = data.createBufferedImage();
+
+				Graphics2D g = (Graphics2D) dst.getGraphics();
+				g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+				g.drawImage(src1, 0, 0, dst.getWidth(), dst.getHeight(), null);
+				g.drawImage(src2, 0, 0, dst.getWidth(), dst.getHeight(), null);
+
+				return new TextureData(dst);
 			}
 
 			TextureData d = new TextureData(width, height);
@@ -77,21 +122,7 @@ public abstract class CombinedTextureProvider implements DataProvider {
 	public TextureData load(ResourceLocation id) {
 		return textureCache.computeIfAbsent(id, id0 -> {
 			try (InputStream stream = existingFileHelper.getResource(id0, PackType.CLIENT_RESOURCES, ".png", "textures").getInputStream()) {
-				BufferedImage img = ImageIO.read(stream);
-				TextureData data = new TextureData(img.getWidth(), img.getHeight());
-
-				for (int y = 0; y < data.height; y++) {
-					for (int x = 0; x < data.width; x++) {
-						int i = (x + y * data.width) * 4;
-						int col = img.getRGB(x, y);
-						data.pixels[i] = ((col >> 24) & 0xFF) / 255F;
-						data.pixels[i + 1] = ((col >> 16) & 0xFF) / 255F;
-						data.pixels[i + 2] = ((col >> 8) & 0xFF) / 255F;
-						data.pixels[i + 3] = ((col >> 0) & 0xFF) / 255F;
-					}
-				}
-
-				return data;
+				return new TextureData(ImageIO.read(stream));
 			} catch (Exception ex) {
 				throw new RuntimeException(ex);
 			}
@@ -110,23 +141,10 @@ public abstract class CombinedTextureProvider implements DataProvider {
 
 		for (Map.Entry<ResourceLocation, TextureData> entry : map.entrySet()) {
 			TextureData data = entry.getValue();
-			BufferedImage image = new BufferedImage(data.width, data.height, BufferedImage.TYPE_INT_ARGB);
-
-			for (int y = 0; y < data.height; y++) {
-				for (int x = 0; x < data.width; x++) {
-					int i = (x + y * data.width) * 4;
-					int a = Mth.clamp((int) (data.pixels[i] * 255F), 0, 255);
-					int r = Mth.clamp((int) (data.pixels[i + 1] * 255F), 0, 255);
-					int g = Mth.clamp((int) (data.pixels[i + 2] * 255F), 0, 255);
-					int b = Mth.clamp((int) (data.pixels[i + 3] * 255F), 0, 255);
-					image.setRGB(x, y, (a << 24) | (r << 16) | (g << 8) | b);
-				}
-			}
-
 			Path target = gen.getOutputFolder().resolve("assets/" + entry.getKey().getNamespace() + "/textures/" + entry.getKey().getPath() + ".png");
 
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			ImageIO.write(image, "PNG", out);
+			ImageIO.write(data.createBufferedImage(), "PNG", out);
 			byte[] bytes = out.toByteArray();
 
 			String hash = DataProvider.SHA1.hashBytes(bytes).toString();

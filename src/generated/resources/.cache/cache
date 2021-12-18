@@ -49,7 +49,7 @@ ed1e379681b7c961e99d9107a099af03ab0baed5 assets/ftbic/blockstates/reinforced_sto
 9ced6c6ded6f3a11c0ee68f56e8b6a1dcb2e7e6a assets/ftbic/blockstates/teleporter.json
 ef643960118fa966c93fe5c01dea6e094b563360 assets/ftbic/blockstates/tractor_beam.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-9a0e75d0c51e24297afb5bd304616f86e0cc1d5b assets/ftbic/lang/en_us.json
+00cfd27687e7f842a12ae5d38d92eed26eaa85e0 assets/ftbic/lang/en_us.json
 32a8fcccb6a46281b355b13187ab3268564e23ca assets/ftbic/models/block/advanced_machine_block.json
 5c1a2f33338963a3ba598423df6e653deaf1a094 assets/ftbic/models/block/burnt_cable_base.json
 ca034027b29128742967895a6aef4eff4b32d456 assets/ftbic/models/block/burnt_cable_connection.json
@@ -274,6 +274,7 @@ dbb6bf4c000fe2591e08e55f95c2d0c51f539510 assets/ftbic/models/item/mv_transformer
 e3fd9ec263ab12b1357ffc54d13347718bee9952 assets/ftbic/models/item/nuclear_reactor.json
 d28741d5e642d07d05b9d34e9258170072fa69bc assets/ftbic/models/item/nuclear_reactor_chamber.json
 6955e15b9c26f6f28be5077648328b0d98b30c2c assets/ftbic/models/item/nuke.json
+989aaad3ece1eb61a1d51a7934fa674c885b7a66 assets/ftbic/models/item/nuke_arrow.json
 dc369bae4e83045ca7253ab10abf25e42d888012 assets/ftbic/models/item/overclocked_heat_vent.json
 c44c0333e290292accbda084ded1eeeb3483a482 assets/ftbic/models/item/overclocker_upgrade.json
 3a98329d71378bc786199212d718094202e61924 assets/ftbic/models/item/powered_crafting_table.json
@@ -359,7 +360,7 @@ d9b0d5c354b8307acea8def8d6e2357089d51d89 assets/ftbic/textures/block/electric/da
 337bfcfdf3a91fcb8286474e919d92880f34e454 assets/ftbic/textures/block/electric/dark/mv_transformer_out.png
 5bca7659260bc1ef71f5cbc381130a2957aae1be assets/ftbic/textures/block/electric/dark/nuclear_reactor_front_off.png
 150858394924309da2dbb64d33f9f8eae75fc331 assets/ftbic/textures/block/electric/dark/nuclear_reactor_front_on.png
-18907ab9877aabc5e6c0ba802ccef35f9826463d assets/ftbic/textures/block/electric/dark/nuclear_reactor_top.png
+8849b8fade6575fef1ed4c97212587c7558b1c81 assets/ftbic/textures/block/electric/dark/nuclear_reactor_top.png
 eee14a1f3efef52266f35370bb987834c50d329f assets/ftbic/textures/block/electric/dark/powered_crafting_table_top.png
 7d71279ea5c2ad520b36f6c2e602d43c5947d91b assets/ftbic/textures/block/electric/dark/powered_furnace_front_off.png
 492b949137d94fc20f5f86712b3337b976ed0f34 assets/ftbic/textures/block/electric/dark/powered_furnace_front_on.png
@@ -430,7 +431,7 @@ a5b81eea37c220da4ba9be3bf2afdbfab0da5cf4 assets/ftbic/textures/block/electric/li
 a76b7384b629c1707641724436c768b1dbf1d0d9 assets/ftbic/textures/block/electric/light/mv_transformer_out.png
 44d42bd0afef6ddbc922c6f300c7096619c874b1 assets/ftbic/textures/block/electric/light/nuclear_reactor_front_off.png
 14d95bf5089f3b73676a052f3afb89ad41147e69 assets/ftbic/textures/block/electric/light/nuclear_reactor_front_on.png
-c6eede844cc8b7d7a14d49d383d04953dc21d8ac assets/ftbic/textures/block/electric/light/nuclear_reactor_top.png
+63f28364768fd54e925b40f75196d6d1de608174 assets/ftbic/textures/block/electric/light/nuclear_reactor_top.png
 f5fbe04d856bf29c6e53376a446d1cad73b33c9c assets/ftbic/textures/block/electric/light/powered_crafting_table_top.png
 33523467b7edadd1e8c6d408613cdf7334df982e assets/ftbic/textures/block/electric/light/powered_furnace_front_off.png
 531085a5d67b13663afa2ac0be2a69273f3427c5 assets/ftbic/textures/block/electric/light/powered_furnace_front_on.png
@@ -828,7 +829,7 @@ de7832ce83bd096be21cdf87f6b19f1324f9df8a data/ftbic/recipes/smithing/graphene_ba
 e90a2d8edba37ca052a0f5dcff3a5ab586138fbf data/ftbic/recipes/smithing/iridium_battery.json
 52be5fa4533ce50c9d0dd004e91ca599f885f204 data/ftbic/recipes/smoking/rubber.json
 cab3f4ea716e152525da323cdbb1161f01b89059 data/ftbic/tags/blocks/reinforced.json
-850d756c71cc30a59b4a157f688ec343c8e9a06f data/ftbic/tags/items/reinforced.json
 b109b9c379397e2f3eefc71bf6360fe92bf6fec6 data/ftbic/tags/items/uncannable_food.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/dragon_immune.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/wither_immune.json
+a3fd594a3c67c6930909c5420fb2047974ffa671 data/minecraft/tags/items/arrows.json
