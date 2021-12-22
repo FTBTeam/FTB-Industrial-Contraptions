@@ -73,7 +73,7 @@ public class FTBICConfig {
 	public static double LV_SOLAR_PANEL_OUTPUT = 1;
 	public static double MV_SOLAR_PANEL_OUTPUT = 8;
 	public static double HV_SOLAR_PANEL_OUTPUT = 64;
-	public static double EV_SOLAR_PANEL_OUTPUT = 256;
+	public static double EV_SOLAR_PANEL_OUTPUT = 512;
 	public static double NUCLEAR_REACTOR_CAPACITY = 8000;
 
 	public static double MACHINE_RECIPE_BASE_TICKS = 200;
