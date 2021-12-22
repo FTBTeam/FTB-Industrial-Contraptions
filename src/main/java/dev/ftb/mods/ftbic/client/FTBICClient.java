@@ -19,13 +19,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -54,9 +54,7 @@ public class FTBICClient extends FTBICCommon {
 
 		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.QUARRY.blockEntity.get(), DiggingBlockRenderer::new);
 		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.PUMP.blockEntity.get(), DiggingBlockRenderer::new);
-
-		EntityRenderDispatcher entityRenderDispatcher = event.getMinecraftSupplier().get().getEntityRenderDispatcher();
-		entityRenderDispatcher.register(FTBICEntities.NUKE_ARROW.get(), new NukeArrowRenderer(entityRenderDispatcher));
+		RenderingRegistry.registerEntityRenderingHandler(FTBICEntities.NUKE_ARROW.get(), NukeArrowRenderer::new);
 	}
 
 	@Override

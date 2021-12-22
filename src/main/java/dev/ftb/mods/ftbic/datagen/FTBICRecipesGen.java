@@ -181,7 +181,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item QUANTUM_CHESTPLATE = FTBICItems.QUANTUM_CHESTPLATE.get();
 	public static final Item QUANTUM_LEGGINGS = FTBICItems.QUANTUM_LEGGINGS.get();
 	public static final Item QUANTUM_BOOTS = FTBICItems.QUANTUM_BOOTS.get();
-	// public static final Item LOCATION_CARD = FTBICItems.LOCATION_CARD.get();
+	public static final Item NUKE_ARROW = FTBICItems.NUKE_ARROW.get();
 
 	public static final Item BASIC_GENERATOR = FTBICElectricBlocks.BASIC_GENERATOR.item.get();
 	public static final Item GEOTHERMAL_GENERATOR = FTBICElectricBlocks.GEOTHERMAL_GENERATOR.item.get();

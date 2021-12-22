@@ -20,6 +20,11 @@ public class HeatExchangerItem extends BaseReactorItem {
 	}
 
 	@Override
+	public boolean isHeatAcceptor(ItemStack stack) {
+		return stack.getMaxDamage() > 0;
+	}
+
+	@Override
 	public void reactorInfo(ItemStack stack, List<Component> list, boolean shift, boolean advanced, @Nullable NuclearReactor reactor, int x, int y) {
 		if (stack.getMaxDamage() > 0) {
 			list.add(new TextComponent("Coolant: ").append(FTBICUtils.formatHeat(stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GRAY));

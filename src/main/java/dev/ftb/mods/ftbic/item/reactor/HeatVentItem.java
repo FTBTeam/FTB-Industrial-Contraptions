@@ -8,7 +8,6 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HeatVentItem extends BaseReactorItem {
@@ -24,13 +23,13 @@ public class HeatVentItem extends BaseReactorItem {
 	}
 
 	@Override
-	public boolean isCoolant(ItemStack stack) {
+	public boolean isHeatAcceptor(ItemStack stack) {
 		return stack.getMaxDamage() > 0;
 	}
 
 	@Override
 	public void reactorInfo(ItemStack stack, List<Component> list, boolean shift, boolean advanced, @Nullable NuclearReactor reactor, int x, int y) {
-		if (!advanced && stack.getMaxDamage() > 0) {
+		if (stack.getMaxDamage() > 0) {
 			list.add(new TextComponent("Coolant: ").append(FTBICUtils.formatHeat(stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GRAY));
 		}
 
@@ -50,18 +49,12 @@ public class HeatVentItem extends BaseReactorItem {
 		}
 
 		if (componentCooling > 0) {
-			List<ItemStack> list = new ArrayList<>(4);
-
 			for (int i = 0; i < 4; i++) {
 				ItemStack is = reactor.getAt(x + NuclearReactorBlockEntity.OFFSET_X[i], y + NuclearReactorBlockEntity.OFFSET_Y[i]);
 
 				if (is.getItem() instanceof ReactorItem && ((ReactorItem) is.getItem()).isCoolant(is)) {
-					list.add(is);
+					((ReactorItem) is.getItem()).damageReactorItem(is, -componentCooling);
 				}
-			}
-
-			for (ItemStack is : list) {
-				((ReactorItem) is.getItem()).damageReactorItem(is, -componentCooling);
 			}
 		}
 	}

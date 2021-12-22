@@ -271,6 +271,13 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.define('P', IRIDIUM_ALLOY)
 				.save(consumer, shapedLoc("iridium_neutron_reflector"));
 
+		ShapelessRecipeBuilder.shapeless(NUKE_ARROW)
+				.unlockedBy("", has(NUKE))
+				.group(MODID + ":nuke_arrow")
+				.requires(NUKE)
+				.requires(Items.ARROW)
+				.save(consumer, shapelessLoc("nuke_arrow"));
+
 		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(FLUID_CELL))
 				.inputItem(waterCell())

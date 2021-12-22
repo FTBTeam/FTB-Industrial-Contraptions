@@ -38,7 +38,7 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 		}
 
 		drawNuclearBar(poseStack, leftPos + 115, topPos + 5, !menu.isPaused() && menu.getEnergyOutput() > 0);
-		drawHeatBar(poseStack, leftPos + 115, topPos + 127, menu.getHeat() / 10000F);
+		drawHeatBar(poseStack, leftPos + 115, topPos + 127, menu.getHeat() / (float) menu.getMaxHeat());
 		drawSmallPauseButton(poseStack, leftPos + 105, topPos + 5, mouseX, mouseY, menu.isPaused());
 	}
 

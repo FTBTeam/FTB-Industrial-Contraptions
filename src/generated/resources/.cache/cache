@@ -1,3 +1,4 @@
+d81a2a404ae84c403cbf064ab8ebe5566b3cfd15 assets/ftbic/blockstates/active_nuke.json
 3c82327ff009fbf51509d2652afa7a028c6a92fc assets/ftbic/blockstates/advanced_centrifuge.json
 47efa914d41cde819e341a38e2419bd2d5e24cf5 assets/ftbic/blockstates/advanced_compressor.json
 c34e5dff80ab612ff6db8c666a240ac15c88363d assets/ftbic/blockstates/advanced_macerator.json
@@ -49,7 +50,8 @@ ed1e379681b7c961e99d9107a099af03ab0baed5 assets/ftbic/blockstates/reinforced_sto
 9ced6c6ded6f3a11c0ee68f56e8b6a1dcb2e7e6a assets/ftbic/blockstates/teleporter.json
 ef643960118fa966c93fe5c01dea6e094b563360 assets/ftbic/blockstates/tractor_beam.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-00cfd27687e7f842a12ae5d38d92eed26eaa85e0 assets/ftbic/lang/en_us.json
+64de79745b479f8a10fb9abeabb684bffa70b0cf assets/ftbic/lang/en_us.json
+a065a23b07d8160a5c1826e33f8fdef051f9b9d9 assets/ftbic/models/block/active_nuke.json
 32a8fcccb6a46281b355b13187ab3268564e23ca assets/ftbic/models/block/advanced_machine_block.json
 5c1a2f33338963a3ba598423df6e653deaf1a094 assets/ftbic/models/block/burnt_cable_base.json
 ca034027b29128742967895a6aef4eff4b32d456 assets/ftbic/models/block/burnt_cable_connection.json
@@ -183,6 +185,7 @@ f24fc746a796a7cba1ecda18914fc0a9d1018662 assets/ftbic/models/block/orientable_3d
 30403029622ce3dc6ae1c3e66355a343ef67fe93 assets/ftbic/models/block/reinforced_stone.json
 b6295e5ff7d7deefe9d156ca8d1c50d2e2f5231b assets/ftbic/models/block/rubber_sheet.json
 5077a215b50bb788920d0c4038e3d52b3eabe86d assets/ftbic/models/block/tractor_beam.json
+8409577e659ae179e16fe4c4ba0f22d4ec290874 assets/ftbic/models/item/active_nuke.json
 cb5e20ffdd03fb079c96e104f4f2d9ecf1c160ee assets/ftbic/models/item/advanced_alloy.json
 d50f1b0375b26c03008c1a300db4a16ba7ad57fc assets/ftbic/models/item/advanced_centrifuge.json
 3ad0e1652c9a99ca9aed7db891f00381820f622f assets/ftbic/models/item/advanced_circuit.json
@@ -578,6 +581,7 @@ e9a0f5ebd0ac0683f81dc3903000488ff86ce782 data/ftbic/advancements/recipes/ftbic/s
 2e2e6927cb81e5952add874dba1b7c365b85266c data/ftbic/advancements/recipes/ftbic/shapeless/lv_cable.json
 933af89905143dfd30318ddf98937bfb0167a4ee data/ftbic/advancements/recipes/ftbic/shapeless/mixed_metal_blend.json
 12cd7914f3ed2ded37fde0d55d49897f324532c3 data/ftbic/advancements/recipes/ftbic/shapeless/mv_cable.json
+36a34489dd9bf7b31615fc064b1719e5b8fe8528 data/ftbic/advancements/recipes/ftbic/shapeless/nuke_arrow.json
 883dfe6c820bea9a59571ec62350771efb8e75d2 data/ftbic/advancements/recipes/ftbic/shapeless/reactor_plating.json
 cf4c342fc3b0e4b766e05a153b150ce927b5c72e data/ftbic/advancements/recipes/ftbic/shapeless/rubber.json
 0e49dfdfc52e0e9c4e4b2d33c629e59f2fdd0672 data/ftbic/advancements/recipes/ftbic/shapeless/scrap.json
@@ -817,6 +821,7 @@ c1e09066d8471d4d84de2634a79b7dbfae8712d1 data/ftbic/recipes/shaped/transformer_u
 b61fac003133cbd5ba5b7454e15279c5ee14ad37 data/ftbic/recipes/shapeless/lv_cable.json
 b18d5cf2e326833aa1a223b1810828dd69d60931 data/ftbic/recipes/shapeless/mixed_metal_blend.json
 594f20807efbf64ce067c28aefaec34d91595569 data/ftbic/recipes/shapeless/mv_cable.json
+0654656355d0dc5994ea75bd370e9afca5907878 data/ftbic/recipes/shapeless/nuke_arrow.json
 c24ba49acd7a34d5e84f09474b11950ebee0e47f data/ftbic/recipes/shapeless/reactor_plating.json
 dcf6431534bf7df754ba136041c857c32a6593ee data/ftbic/recipes/shapeless/rubber.json
 1f4514a9ca7595369c04fb310b5c43aedd35395a data/ftbic/recipes/shapeless/scrap.json

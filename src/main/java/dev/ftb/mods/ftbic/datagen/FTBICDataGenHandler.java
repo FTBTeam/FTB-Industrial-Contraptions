@@ -27,7 +27,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.ConstantIntValue;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -131,6 +130,7 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.EXFLUID, "Ex-Fluid");
 			addBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			addBlock(FTBICBlocks.NUKE);
+			addBlock(FTBICBlocks.ACTIVE_NUKE);
 			addBlock(FTBICBlocks.TRACTOR_BEAM);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
@@ -207,6 +207,8 @@ public class FTBICDataGenHandler {
 			add("item.ftbic.spray_paint_can.tooltip", "Right-click on a machine to change its theme");
 			add("block.ftbic.teleporter.perm_error", "Only owner of this teleporter can change it's settings!");
 			add("block.ftbic.teleporter.load_error", "The destination chunk has to be loaded!");
+			add("block.ftbic.nuke.broadcast", "%s has launched a Nuke!");
+			add("block.ftbic.nuclear_reactor.broadcast", "%s forgot to cool their Nuclear Reactor!");
 		}
 	}
 
@@ -485,6 +487,10 @@ public class FTBICDataGenHandler {
 					.texture("side", modLoc("block/nuke_side"))
 			;
 
+			withExistingParent("block/active_nuke", "block/tnt")
+					.texture("side", modLoc("block/nuke_side_active"))
+			;
+
 			withExistingParent("block/tractor_beam", "block/block")
 					.texture("particle", modLoc("block/tractor_beam"))
 					.texture("texture", modLoc("block/tractor_beam"))
@@ -618,9 +624,6 @@ public class FTBICDataGenHandler {
 			}
 
 			simpleBlock(FTBICBlocks.LANDMARK.get(), models().getExistingFile(modLoc("block/landmark")));
-			directionalBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get(), models().getExistingFile(modLoc("block/nuclear_reactor_chamber")));
-			simpleBlock(FTBICBlocks.NUKE.get(), models().getExistingFile(modLoc("block/nuke")));
-			directionalBlock(FTBICBlocks.TRACTOR_BEAM.get(), models().getExistingFile(modLoc("block/tractor_beam")));
 
 			simpleBlock(FTBICBlocks.EXFLUID.get(),
 					new ConfiguredModel(models().getExistingFile(mcLoc("block/dead_horn_coral_block"))),
@@ -630,14 +633,13 @@ public class FTBICDataGenHandler {
 					new ConfiguredModel(models().getExistingFile(mcLoc("block/dead_tube_coral_block")))
 			);
 
+			directionalBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get(), models().getExistingFile(modLoc("block/nuclear_reactor_chamber")));
+			simpleBlock(FTBICBlocks.NUKE.get(), models().getExistingFile(modLoc("block/nuke")));
+			simpleBlock(FTBICBlocks.ACTIVE_NUKE.get(), models().getExistingFile(modLoc("block/active_nuke")));
+			directionalBlock(FTBICBlocks.TRACTOR_BEAM.get(), models().getExistingFile(modLoc("block/tractor_beam")));
+
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
-					List<Property<?>> ignoredProperties = new ArrayList<>();
-
-					// if (machine.stateProperty == ElectricBlockState.OFF_BURNT) {
-					// 	ignoredProperties.add(ElectricBlockState.OFF_BURNT);
-					// }
-
 					getVariantBuilder(machine.block.get()).forAllStatesExcept(state -> {
 						boolean on = machine.canBeActive && state.getValue(ElectricBlock.ACTIVE);
 						boolean dark = state.getValue(SprayPaintable.DARK);
@@ -663,7 +665,7 @@ public class FTBICDataGenHandler {
 									.rotationY(facing.getAxis().isVertical() ? 0 : ((facing.get2DDataValue() & 3) * 90 + 180) % 360)
 									.build();
 						}
-					}, ignoredProperties.toArray(new Property[0]));
+					});
 				}
 			}
 		}
@@ -765,6 +767,7 @@ public class FTBICDataGenHandler {
 			singleTexture("landmark", mcLoc("item/generated"), "layer0", modLoc("block/landmark_ns"));
 			basicBlockItem(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			basicBlockItem(FTBICBlocks.NUKE);
+			basicBlockItem(FTBICBlocks.ACTIVE_NUKE);
 			basicBlockItem(FTBICBlocks.TRACTOR_BEAM);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {

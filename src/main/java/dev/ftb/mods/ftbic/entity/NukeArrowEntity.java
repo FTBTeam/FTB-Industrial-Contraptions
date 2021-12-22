@@ -2,8 +2,13 @@ package dev.ftb.mods.ftbic.entity;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.item.FTBICItems;
-import dev.ftb.mods.ftbic.util.NukeExplosion;
+import dev.ftb.mods.ftbic.util.NuclearExplosion;
+import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -45,7 +50,12 @@ public class NukeArrowEntity extends AbstractArrow {
 		kill();
 
 		if (level instanceof ServerLevel && ownerId != null) {
-			NukeExplosion.create((ServerLevel) level, hit.getBlockPos(), FTBICConfig.NUKE_RADIUS, ownerId, owner == null ? "Unknown" : owner.getScoreboardName());
+			Component ownerName = owner == null ? new TextComponent("Unknown") : owner.getDisplayName();
+
+			NuclearExplosion.builder((ServerLevel) level, hit.getBlockPos().relative(hit.getDirection()), FTBICConfig.NUKE_RADIUS, ownerId, ownerName.getString())
+					.preExplosion(() -> level.getServer().getPlayerList().broadcastMessage(new TranslatableComponent("block.ftbic.nuke.broadcast", ownerName), ChatType.SYSTEM, Util.NIL_UUID))
+					.create()
+			;
 		}
 	}
 }

@@ -629,6 +629,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	@Override
 	public int get(int id) {
 		if (id == 0) {
+			// TODO: Replace with packet int
 			return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 30000D / energyCapacity), 0, 30000);
 		}
 

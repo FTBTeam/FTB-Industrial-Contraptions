@@ -15,14 +15,12 @@ public class CoolantItem extends BaseReactorItem {
 	}
 
 	@Override
-	public boolean isCoolant(ItemStack stack) {
-		return true;
+	public boolean isHeatAcceptor(ItemStack stack) {
+		return stack.getMaxDamage() > 0;
 	}
 
 	@Override
 	public void reactorInfo(ItemStack stack, List<Component> list, boolean shift, boolean advanced, @Nullable NuclearReactor reactor, int x, int y) {
-		if (!advanced) {
-			list.add(new TextComponent("Coolant: ").append(FTBICUtils.formatHeat(stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GRAY));
-		}
+		list.add(new TextComponent("Coolant: ").append(FTBICUtils.formatHeat(stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GRAY));
 	}
 }

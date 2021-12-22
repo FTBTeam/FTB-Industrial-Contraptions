@@ -16,9 +16,7 @@ public class NeutronReflectorItem extends BaseReactorItem implements NeutronRefl
 
 	@Override
 	public void reactorInfo(ItemStack stack, List<Component> list, boolean shift, boolean advanced, @Nullable NuclearReactor reactor, int x, int y) {
-		if (!advanced) {
-			list.add(new TextComponent(stack.getMaxDamage() > 0 ? String.format("Durability: %,d", stack.getMaxDamage() - stack.getDamageValue()) : "Durability: Infinite").withStyle(ChatFormatting.GRAY));
-		}
+		list.add(new TextComponent(stack.getMaxDamage() > 0 ? String.format("Durability: %,d", stack.getMaxDamage() - stack.getDamageValue()) : "Durability: Infinite").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
@@ -31,7 +29,7 @@ public class NeutronReflectorItem extends BaseReactorItem implements NeutronRefl
 			ItemStack item = reactor.getAt(x + NuclearReactorBlockEntity.OFFSET_X[i], y + NuclearReactorBlockEntity.OFFSET_Y[i]);
 
 			if (item.getItem() instanceof ReactorItem) {
-				damageReactorItem(item, ((ReactorItem) item.getItem()).getRods());
+				damageReactorItem(stack, ((ReactorItem) item.getItem()).getRods());
 			}
 		}
 	}

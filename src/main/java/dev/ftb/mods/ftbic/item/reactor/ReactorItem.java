@@ -7,8 +7,16 @@ public interface ReactorItem {
 		return 0;
 	}
 
-	default boolean isCoolant(ItemStack stack) {
+	default double getRelativeDamage(ItemStack stack) {
+		return stack.isDamageableItem() ? stack.getDamageValue() / (double) stack.getMaxDamage() : 0D;
+	}
+
+	default boolean isHeatAcceptor(ItemStack stack) {
 		return false;
+	}
+
+	default boolean isCoolant(ItemStack stack) {
+		return isHeatAcceptor(stack);
 	}
 
 	default void damageReactorItem(ItemStack stack, int damage) {

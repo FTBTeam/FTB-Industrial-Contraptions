@@ -3,14 +3,18 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
 import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 import dev.ftb.mods.ftbic.item.reactor.ReactorItem;
 import dev.ftb.mods.ftbic.screen.NuclearReactorMenu;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
-import dev.ftb.mods.ftbic.util.NukeExplosion;
+import dev.ftb.mods.ftbic.util.NuclearExplosion;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -26,6 +30,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+
 public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public static final int[] OFFSET_X = {0, 0, -1, 1};
 	public static final int[] OFFSET_Y = {-1, 1, 0, 0};
@@ -33,6 +39,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public int timeUntilNextCycle;
 	public final NuclearReactor reactor;
 	public int simulateTicks = 0;
+	public boolean exploding;
 
 	public NuclearReactorBlockEntity() {
 		super(FTBICElectricBlocks.NUCLEAR_REACTOR);
@@ -71,6 +78,21 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
+	public void writeNetData(CompoundTag tag) {
+		super.writeNetData(tag);
+
+		if (exploding) {
+			tag.putBoolean("Exploding", true);
+		}
+	}
+
+	@Override
+	public void readNetData(CompoundTag tag) {
+		super.readNetData(tag);
+		exploding = tag.getBoolean("Exploding");
+	}
+
+	@Override
 	public int getSlotLimit(int slot) {
 		return 1;
 	}
@@ -87,7 +109,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public int getCount() {
-		return 5;
+		return 6;
 	}
 
 	@Override
@@ -105,6 +127,9 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 			case 4:
 				// isPaused()
 				return reactor.paused ? 1 : 0;
+			case 5:
+				// getMaxHeat()
+				return FTBICUtils.packInt(reactor.maxHeat, 101800);
 			default:
 				return super.get(id);
 		}
@@ -150,9 +175,27 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 
 		float h = reactor.heat / (float) reactor.maxHeat;
 
-		if (h >= 1F) {
-			if (!level.isClientSide()) {
-				NukeExplosion.create((ServerLevel) level, worldPosition, reactor.explosionRadius, placerId, placerName);
+		if (h >= 1F && !level.isClientSide()) {
+			if (!exploding) {
+				exploding = true;
+				Arrays.fill(inputItems, ItemStack.EMPTY);
+				setChanged();
+
+				level.setBlock(worldPosition, FTBICBlocks.ACTIVE_NUKE.get().defaultBlockState(), 3);
+
+				for (Direction direction : FTBICUtils.DIRECTIONS) {
+					if (level.getBlockState(worldPosition.relative(direction)).getBlock() instanceof NuclearReactorChamberBlock) {
+						level.setBlock(worldPosition.relative(direction), FTBICBlocks.ACTIVE_NUKE.get().defaultBlockState(), 3);
+					}
+				}
+
+				NuclearExplosion.builder((ServerLevel) level, worldPosition, reactor.explosionRadius, placerId, placerName)
+						.preExplosion(() -> {
+							level.getServer().getPlayerList().broadcastMessage(new TranslatableComponent("block.ftbic.nuclear_reactor.broadcast", placerName), ChatType.SYSTEM, Util.NIL_UUID);
+							level.removeBlock(worldPosition, false);
+						})
+						.create()
+				;
 			}
 		}
 		// other reactor big bads

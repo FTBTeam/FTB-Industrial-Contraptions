@@ -27,6 +27,8 @@ public class FuelRodItem extends BaseReactorItem implements NeutronReflectingRea
 
 	@Override
 	public void reactorInfo(ItemStack stack, List<Component> list, boolean shift, boolean advanced, @Nullable NuclearReactor reactor, int x, int y) {
+		list.add(new TextComponent(String.format("Lifespan: %,d s", stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GRAY));
+
 		int p = pulses;
 
 		if (reactor != null) {
@@ -39,10 +41,6 @@ public class FuelRodItem extends BaseReactorItem implements NeutronReflectingRea
 
 		list.add(new TextComponent("Energy Output: ").append(FTBICUtils.formatEnergy(p * energyMultiplier)).append("/t").withStyle(ChatFormatting.GRAY));
 		list.add(new TextComponent("Heat Produced: ").append(FTBICUtils.formatHeat((int) (heatMultiplier * p * (p + 1)))).append("/s").withStyle(ChatFormatting.GRAY));
-
-		if (!advanced) {
-			list.add(new TextComponent(String.format("Lifespan: %,d s", stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GRAY));
-		}
 	}
 
 	@Override

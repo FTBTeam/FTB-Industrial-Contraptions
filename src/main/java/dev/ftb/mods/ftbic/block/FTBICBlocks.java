@@ -35,5 +35,6 @@ public interface FTBICBlocks {
 	Supplier<Block> EXFLUID = REGISTRY.register("exfluid", ExFluidBlock::new);
 	Supplier<Block> NUCLEAR_REACTOR_CHAMBER = REGISTRY.register("nuclear_reactor_chamber", NuclearReactorChamberBlock::new);
 	Supplier<Block> NUKE = REGISTRY.register("nuke", NukeBlock::new);
+	Supplier<Block> ACTIVE_NUKE = REGISTRY.register("active_nuke", () -> new Block(BlockBehaviour.Properties.of(Material.EXPLOSIVE).sound(SoundType.GRASS).strength(-1F, 10000000000F).noDrops()));
 	Supplier<Block> TRACTOR_BEAM = REGISTRY.register("tractor_beam", TractorBeamBlock::new);
 }

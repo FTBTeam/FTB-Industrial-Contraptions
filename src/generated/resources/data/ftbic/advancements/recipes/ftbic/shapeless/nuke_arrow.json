@@ -1,0 +1,32 @@
+{
+	"parent": "minecraft:recipes/root",
+	"rewards": {
+		"recipes": [
+			"ftbic:shapeless/nuke_arrow"
+		]
+	},
+	"criteria": {
+		"": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"item": "ftbic:nuke"
+					}
+				]
+			}
+		},
+		"has_the_recipe": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "ftbic:shapeless/nuke_arrow"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"",
+			"has_the_recipe"
+		]
+	]
+}

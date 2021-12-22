@@ -22,7 +22,6 @@ public class ReactorPlatingItem extends BaseReactorItem {
 	@Override
 	public void reactorInfo(ItemStack stack, List<Component> list, boolean shift, boolean advanced, @Nullable NuclearReactor reactor, int x, int y) {
 		list.add(new TextComponent("Max Heat: +").append(FTBICUtils.formatHeat(maxHeatBonus)).withStyle(ChatFormatting.GRAY));
-
 		list.add(new TextComponent("Explosion Size: -" + (int) (100D - explosionModifier * 100D) + "%").withStyle(ChatFormatting.GRAY));
 	}
 

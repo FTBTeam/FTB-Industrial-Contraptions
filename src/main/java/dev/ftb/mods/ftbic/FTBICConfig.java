@@ -53,7 +53,7 @@ public class FTBICConfig {
 	public static int IRON_FURNACE_ITEMS_PER_COAL = 12;
 	public static int MAX_CABLE_LENGTH = 300;
 	public static double NUKE_RADIUS = 36;
-	public static boolean NUKE_DAEMON_THREAD = false;
+	public static boolean NUCLEAR_EXPLOSION_DAEMON_THREAD = false;
 	public static double NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS = 10;
 	public static double NUCLEAR_REACTOR_EXPLOSION_MULTIPLIER = 0.5;
 	public static double NUCLEAR_REACTOR_EXPLOSION_LIMIT = 80;

@@ -15,7 +15,7 @@ public class NuclearReactorMenu extends ElectricBlockMenu<NuclearReactorBlockEnt
 	}
 
 	public NuclearReactorMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-		this(id, playerInv, (NuclearReactorBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(5));
+		this(id, playerInv, (NuclearReactorBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(6));
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class NuclearReactorMenu extends ElectricBlockMenu<NuclearReactorBlockEnt
 	public void addBlockSlots(@Nullable Object extra) {
 		for (int y = 0; y < 6; y++) {
 			for (int x = 0; x < 9; x++) {
-				addSlot(new SimpleItemHandlerSlot(entity, y * 9 + x, 8 + x * 18, 18 + y * 18));
+				addSlot(new NuclearReactorSlot(entity, this, y * 9 + x, 8 + x * 18, 18 + y * 18));
 			}
 		}
 	}
@@ -46,6 +46,10 @@ public class NuclearReactorMenu extends ElectricBlockMenu<NuclearReactorBlockEnt
 
 	public boolean isPaused() {
 		return containerData.get(4) != 0;
+	}
+
+	public int getMaxHeat() {
+		return FTBICUtils.unpackInt(containerData.get(5), 101800);
 	}
 
 	@Override

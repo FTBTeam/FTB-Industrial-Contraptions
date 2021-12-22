@@ -1,4 +1,5 @@
 {
+	"block.ftbic.active_nuke": "Active Nuke",
 	"block.ftbic.advanced_centrifuge": "Advanced Centrifuge",
 	"block.ftbic.advanced_compressor": "Advanced Compressor",
 	"block.ftbic.advanced_macerator": "Advanced Macerator",
@@ -36,8 +37,10 @@
 	"block.ftbic.mv_solar_panel": "MV Solar Panel",
 	"block.ftbic.mv_transformer": "MV Transformer",
 	"block.ftbic.nuclear_reactor": "Nuclear Reactor",
+	"block.ftbic.nuclear_reactor.broadcast": "%s forgot to cool their Nuclear Reactor!",
 	"block.ftbic.nuclear_reactor_chamber": "Nuclear Reactor Chamber",
 	"block.ftbic.nuke": "Nuke",
+	"block.ftbic.nuke.broadcast": "%s has launched a Nuke!",
 	"block.ftbic.powered_crafting_table": "Powered Crafting Table",
 	"block.ftbic.powered_furnace": "Powered Furnace",
 	"block.ftbic.pump": "Pump",
