@@ -19,10 +19,31 @@ public interface ReactorItem {
 		return isHeatAcceptor(stack);
 	}
 
-	default void damageReactorItem(ItemStack stack, int damage) {
+	default int damageReactorItem(ItemStack stack, int damage) {
 		if (damage != 0 && stack.isDamageableItem()) {
-			stack.setDamageValue(stack.getDamageValue() + damage);
+			int max = stack.getMaxDamage();
+
+			if (max <= 0) {
+				return damage;
+			}
+
+			int result = 0;
+			int tempHeat = stack.getDamageValue();
+			tempHeat += damage;
+
+			if (tempHeat > max) {
+				result = max - tempHeat + 1;
+				tempHeat = max;
+			} else if (tempHeat < 0) {
+				result = tempHeat;
+				tempHeat = 0;
+			}
+
+			stack.setDamageValue(tempHeat);
+			return result;
 		}
+
+		return damage;
 	}
 
 	void reactorTickPre(NuclearReactor reactor, ItemStack stack, int x, int y);
