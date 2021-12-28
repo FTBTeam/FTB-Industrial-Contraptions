@@ -19,8 +19,20 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public abstract class BaseReactorItem extends Item implements ReactorItem {
+	private int noDamageStack = 16;
+
 	public BaseReactorItem(int durability) {
 		super(new Properties().durability(durability).tab(FTBIC.TAB));
+	}
+
+	public BaseReactorItem noDamageStack(int s) {
+		noDamageStack = s;
+		return this;
+	}
+
+	@Override
+	public int getItemStackLimit(ItemStack stack) {
+		return stack.getDamageValue() == 0 ? noDamageStack : super.getItemStackLimit(stack);
 	}
 
 	@Override
