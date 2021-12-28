@@ -765,6 +765,7 @@ public class FTBICDataGenHandler {
 			}
 
 			singleTexture("landmark", mcLoc("item/generated"), "layer0", modLoc("block/landmark_ns"));
+			withExistingParent(FTBICBlocks.EXFLUID.get().getRegistryName().getPath(), mcLoc("block/dead_horn_coral_block"));
 			basicBlockItem(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			basicBlockItem(FTBICBlocks.NUKE);
 			basicBlockItem(FTBICBlocks.ACTIVE_NUKE);

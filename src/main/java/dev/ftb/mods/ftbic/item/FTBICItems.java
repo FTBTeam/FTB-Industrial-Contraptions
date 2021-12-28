@@ -54,6 +54,7 @@ public interface FTBICItems {
 	Supplier<BlockItem> IV_CABLE = blockItem("iv_cable", FTBICBlocks.IV_CABLE);
 	Supplier<BlockItem> BURNT_CABLE = blockItem("burnt_cable", FTBICBlocks.BURNT_CABLE);
 	Supplier<BlockItem> LANDMARK = blockItem("landmark", FTBICBlocks.LANDMARK);
+	Supplier<BlockItem> EXFLUID = blockItem("exfluid", FTBICBlocks.EXFLUID);
 	Supplier<BlockItem> NUCLEAR_REACTOR_CHAMBER = blockItem("nuclear_reactor_chamber", FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 	Supplier<BlockItem> NUKE = blockItem("nuke", FTBICBlocks.NUKE);
 	Supplier<BlockItem> ACTIVE_NUKE = blockItem("active_nuke", FTBICBlocks.ACTIVE_NUKE);
