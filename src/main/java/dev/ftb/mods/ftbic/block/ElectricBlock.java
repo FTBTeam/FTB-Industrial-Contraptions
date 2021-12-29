@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -273,6 +274,24 @@ public class ElectricBlock extends Block implements SprayPaintable {
 
 		if (electricBlockInstance.energyCapacity > 0D && Screen.hasShiftDown()) {
 			list.add(new TranslatableComponent("ftbic.energy_capacity", FTBICUtils.formatEnergy(electricBlockInstance.energyCapacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		}
+
+		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", 10)) {
+			CompoundTag tag = stack.getTag().getCompound("BlockEntityTag").copy();
+			tag.remove("x");
+			tag.remove("y");
+			tag.remove("z");
+			tag.remove("id");
+			tag.remove("Inventory");
+			tag.remove("Upgrades");
+			tag.remove("Battery");
+			tag.remove("ChargeBattery");
+			tag.remove("PlacerId");
+			tag.remove("PlacerName");
+
+			for (String key : tag.getAllKeys()) {
+				list.add(new TextComponent("- " + key + ": " + tag.get(key)).withStyle(ChatFormatting.DARK_GRAY));
+			}
 		}
 	}
 

@@ -7,39 +7,57 @@ import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
 import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 import dev.ftb.mods.ftbic.item.reactor.ReactorItem;
 import dev.ftb.mods.ftbic.screen.NuclearReactorMenu;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
+import dev.ftb.mods.ftbic.screen.sync.SyncedDataKey;
+import dev.ftb.mods.ftbic.sound.FTBICSounds;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.NuclearExplosion;
+import it.unimi.dsi.fastutil.bytes.Byte2ObjectMap;
+import it.unimi.dsi.fastutil.bytes.Byte2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.bytes.ByteArrayList;
+import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public static final int[] OFFSET_X = {0, 0, -1, 1};
 	public static final int[] OFFSET_Y = {-1, 1, 0, 0};
 
+	public static final SyncedDataKey<Double> ENERGY_OUTPUT = new SyncedDataKey<>("energy_output", 0D);
+	public static final SyncedDataKey<Integer> HEAT = new SyncedDataKey<>("heat", 0);
+	public static final SyncedDataKey<Integer> MAX_HEAT = new SyncedDataKey<>("max_heat", 0);
+
 	public int timeUntilNextCycle;
 	public final NuclearReactor reactor;
-	public int simulateTicks = 0;
-	public boolean exploding;
+	public int debugSpeed = 0;
+	public Byte2ObjectOpenHashMap<Item> plan;
 
 	public NuclearReactorBlockEntity() {
 		super(FTBICElectricBlocks.NUCLEAR_REACTOR);
@@ -57,12 +75,27 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		super.writeData(tag);
 		tag.putInt("TimeUntilNextCycle", timeUntilNextCycle);
 		tag.putBoolean("Paused", reactor.paused);
-		tag.putByte("Chambers", (byte) reactor.chambers);
 		tag.putDouble("EnergyOutput", reactor.energyOutput);
 		tag.putInt("Heat", reactor.heat);
 
-		if (simulateTicks > 0) {
-			tag.putInt("SimulateTicks", simulateTicks);
+		if (debugSpeed > 0) {
+			tag.putInt("DebugSpeed", debugSpeed);
+		}
+
+		if (plan != null && !plan.isEmpty()) {
+			HashMap<Item, ByteArrayList> pmap = new HashMap<>();
+
+			for (Byte2ObjectMap.Entry<Item> entry : plan.byte2ObjectEntrySet()) {
+				pmap.computeIfAbsent(entry.getValue(), k -> new ByteArrayList()).add(entry.getByteKey());
+			}
+
+			CompoundTag ptag = new CompoundTag();
+
+			for (Map.Entry<Item, ByteArrayList> entry : pmap.entrySet()) {
+				ptag.putByteArray(entry.getKey().getRegistryName().toString(), entry.getValue().toByteArray());
+			}
+
+			tag.put("Plan", ptag);
 		}
 	}
 
@@ -71,25 +104,31 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		super.readData(tag);
 		timeUntilNextCycle = tag.getInt("TimeUntilNextCycle");
 		reactor.paused = tag.getBoolean("Paused");
-		reactor.chambers = Mth.clamp(tag.getByte("Chambers"), 0, 6);
 		reactor.energyOutput = tag.getDouble("EnergyOutput");
 		reactor.heat = tag.getInt("Heat");
-		simulateTicks = tag.getInt("SimulateTicks");
-	}
+		debugSpeed = tag.getInt("DebugSpeed");
 
-	@Override
-	public void writeNetData(CompoundTag tag) {
-		super.writeNetData(tag);
+		CompoundTag ptag = tag.getCompound("Plan");
 
-		if (exploding) {
-			tag.putBoolean("Exploding", true);
+		if (!ptag.isEmpty()) {
+			plan = new Byte2ObjectOpenHashMap<>();
+
+			for (String s : ptag.getAllKeys()) {
+				Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
+
+				if (item instanceof ReactorItem) {
+					for (byte b : ptag.getByteArray(s)) {
+						plan.put(b, item);
+					}
+				}
+			}
+
+			if (plan.isEmpty()) {
+				plan = null;
+			}
+		} else {
+			plan = null;
 		}
-	}
-
-	@Override
-	public void readNetData(CompoundTag tag) {
-		super.readNetData(tag);
-		exploding = tag.getBoolean("Exploding");
 	}
 
 	@Override
@@ -99,7 +138,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-		return (slot % 9) < (reactor.chambers + 3) && stack.getItem() instanceof ReactorItem;
+		return stack.getItem() instanceof ReactorItem && (plan == null || plan.get((byte) slot) == stack.getItem());
 	}
 
 	@Override
@@ -108,37 +147,18 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
-	public int getCount() {
-		return 6;
-	}
-
-	@Override
-	public int get(int id) {
-		switch (id) {
-			case 1:
-				// getEnergyOutput()
-				return FTBICUtils.packInt(Mth.ceil(reactor.energyOutput), 150000);
-			case 2:
-				// getHeat()
-				return FTBICUtils.packInt(reactor.heat, 101800);
-			case 3:
-				// getChambers()
-				return reactor.chambers;
-			case 4:
-				// isPaused()
-				return reactor.paused ? 1 : 0;
-			case 5:
-				// getMaxHeat()
-				return FTBICUtils.packInt(reactor.maxHeat, 101800);
-			default:
-				return super.get(id);
-		}
+	public void addSyncData(SyncedData data) {
+		super.addSyncData(data);
+		data.addBoolean(SyncedData.PAUSED, () -> reactor.paused);
+		data.addDouble(ENERGY_OUTPUT, () -> reactor.energyOutput);
+		data.addInt(HEAT, () -> reactor.heat);
+		data.addInt(MAX_HEAT, () -> reactor.maxHeat);
 	}
 
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			openMenu((ServerPlayer) player, (id, inventory) -> new NuclearReactorMenu(id, inventory, this, this));
+			openMenu((ServerPlayer) player, (id, inventory) -> new NuclearReactorMenu(id, inventory, this));
 		}
 
 		return InteractionResult.SUCCESS;
@@ -150,34 +170,40 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 
 		if (timeUntilNextCycle <= 0) {
 			timeUntilNextCycle = 20;
-			handleReactor();
+
+			if (debugSpeed <= 0) {
+				handleReactor();
+			}
 		}
 
-		if (simulateTicks > 0) {
-			handleReactor();
-			simulateTicks--;
+		if (debugSpeed > 0) {
+			for (int i = 0; i < debugSpeed; i++) {
+				handleReactor();
+			}
 		}
 
 		if (reactor.energyOutput > 0) {
 			active = true;
+			energy += Math.min(reactor.energyOutput, energyCapacity - energy);
 		}
-	}
 
-	public void handleReactor() {
-		double peo = reactor.energyOutput;
-		int ph = reactor.heat;
-
-		reactor.tick();
-
-		if (peo != reactor.energyOutput || ph != reactor.heat) {
-			setChanged();
+		if (level == null || level.isClientSide() || reactor.heat <= 0 || reactor.maxHeat <= 0) {
+			return;
 		}
 
 		float h = reactor.heat / (float) reactor.maxHeat;
 
-		if (h >= 1F && !level.isClientSide()) {
-			if (!exploding) {
-				exploding = true;
+		if (h >= 1F) {
+			if (debugSpeed > 0) {
+				level.getServer().getPlayerList().broadcastMessage(new TextComponent(String.format("Debug Nuclear Reactor at %d, %d, %d exploded:", worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())), ChatType.SYSTEM, Util.NIL_UUID);
+				level.getServer().getPlayerList().broadcastMessage(new TextComponent(String.format("- Radius: %,d", Mth.ceil(reactor.explosionRadius))), ChatType.SYSTEM, Util.NIL_UUID);
+				level.getServer().getPlayerList().broadcastMessage(new TextComponent(String.format("- Heat: %s / %s \uD83D\uDD25", FTBICUtils.formatEnergyValue(reactor.heat), FTBICUtils.formatEnergyValue(reactor.maxHeat))), ChatType.SYSTEM, Util.NIL_UUID);
+				level.getServer().getPlayerList().broadcastMessage(new TextComponent(String.format("- Energy: %s/t", FTBICUtils.formatEnergyValue(reactor.energyOutput))), ChatType.SYSTEM, Util.NIL_UUID);
+
+				reactor.paused = true;
+				reactor.heat = reactor.maxHeat - 1;
+				setChanged();
+			} else {
 				Arrays.fill(inputItems, ItemStack.EMPTY);
 				setChanged();
 
@@ -192,44 +218,49 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 				NuclearExplosion.builder((ServerLevel) level, worldPosition, reactor.explosionRadius, placerId, placerName)
 						.preExplosion(() -> {
 							level.getServer().getPlayerList().broadcastMessage(new TranslatableComponent("block.ftbic.nuclear_reactor.broadcast", placerName), ChatType.SYSTEM, Util.NIL_UUID);
+
+							Player player = level.getServer().getPlayerList().getPlayer(placerId);
+
+							if (player != null) {
+								player.sendMessage(new TextComponent(String.format("%s : [%d, %d, %d]", level.dimension().location().toString(), worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())).withStyle(ChatFormatting.GRAY), Util.NIL_UUID);
+							}
+
 							level.removeBlock(worldPosition, false);
 						})
 						.create()
 				;
 			}
-		}
-		// other reactor big bads
-	}
-
-	@Override
-	public void neighborChanged(BlockPos pos1, Block block1) {
-		super.neighborChanged(pos1, block1);
-		updateChambers();
-	}
-
-	@Override
-	public void onPlacedBy(@Nullable LivingEntity entity, ItemStack stack) {
-		super.onPlacedBy(entity, stack);
-
-		if (!level.isClientSide()) {
-			updateChambers();
-		}
-	}
-
-	public void updateChambers() {
-		int c = reactor.chambers;
-		reactor.chambers = 0;
-
-		for (Direction direction : FTBICUtils.DIRECTIONS) {
-			BlockState state = level.getBlockState(worldPosition.relative(direction));
-
-			if (state.getBlock() == FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get() && state.getValue(BlockStateProperties.FACING) == direction) {
-				reactor.chambers++;
+		} else if (h >= 0.75F) {
+			if (level.getGameTime() % 25L == 0L && reactor.energyOutput > 0D) {
+				level.playSound(null, worldPosition, FTBICSounds.RADIATION.get(), SoundSource.BLOCKS, 0.5F, 1F);
 			}
 		}
+	}
 
-		if (c != reactor.chambers) {
+	public void handleReactor() {
+		if (level == null || level.isClientSide()) {
+			return;
+		}
+
+		double peo = reactor.energyOutput;
+		int ph = reactor.heat;
+
+		reactor.tick();
+
+		if (peo != reactor.energyOutput || ph != reactor.heat) {
 			setChanged();
 		}
+	}
+
+	@Override
+	public void onBroken(Level level, BlockPos pos) {
+		if (debugSpeed <= 0) {
+			super.onBroken(level, pos);
+		}
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, Random r) {
 	}
 }

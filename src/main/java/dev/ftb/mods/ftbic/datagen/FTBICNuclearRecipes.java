@@ -37,7 +37,7 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.define('G', GLASS)
 				.save(consumer, shapedLoc("reinforced_glass"));
 
-		ShapedRecipeBuilder.shaped(NUCLEAR_REACTOR_CHAMBER)
+		ShapedRecipeBuilder.shaped(NUCLEAR_REACTOR_CHAMBER, 3)
 				.unlockedBy("has_item", has(ADVANCED_MACHINE_BLOCK))
 				.group(MODID + ":nuclear_reactor_chamber")
 				.pattern("HPH")

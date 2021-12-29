@@ -11,6 +11,7 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -55,13 +56,13 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		super.renderTooltip(poseStack, mouseX, mouseY);
 
 		if (energyX != -1 && energyY != -1 && isIn(mouseX, mouseY, leftPos + energyX, topPos + energyY, 14, 14) && menu.player.inventory.getCarried().isEmpty()) {
-			double capacity = menu.entity.energyCapacity;
+			double capacity = menu.data.get(SyncedData.ENERGY_CAPACITY);
 
 			if (menu.entity instanceof MachineBlockEntity) {
 				capacity += ((MachineBlockEntity) menu.entity).upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.STORAGE_UPGRADE;
 			}
 
-			double energy = menu.getEnergyBar() * capacity / 30000;
+			double energy = menu.data.get(SyncedData.ENERGY);
 
 			renderWrappedToolTip(poseStack, Collections.singletonList(new TextComponent("").append(FTBICUtils.formatEnergy(energy).withStyle(ChatFormatting.GRAY)).append(" / ").append(FTBICUtils.formatEnergy(capacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY)), mouseX, mouseY, font);
 		}
@@ -301,7 +302,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		minecraft.getTextureManager().bind(BASE_TEXTURE);
 
 		if (energyX != -1 && energyY != -1) {
-			int e = menu.getEnergyBar() * 14 / 30000;
+			int e = Mth.ceil(menu.data.get(SyncedData.ENERGY) * 14D / menu.data.get(SyncedData.ENERGY_CAPACITY));
 			drawEnergy(poseStack, leftPos + energyX, topPos + energyY, e);
 		}
 	}

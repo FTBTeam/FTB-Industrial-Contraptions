@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.screen.GeothermalGeneratorMenu;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -74,24 +75,15 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 		if (FluidUtil.interactWithFluidHandler(player, hand, (IFluidHandler) getTankOptional().orElse(null))) {
 			return InteractionResult.SUCCESS;
 		} else if (!level.isClientSide()) {
-			openMenu((ServerPlayer) player, (id, inventory) -> new GeothermalGeneratorMenu(id, inventory, this, this));
+			openMenu((ServerPlayer) player, (id, inventory) -> new GeothermalGeneratorMenu(id, inventory, this));
 		}
 
 		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public int getCount() {
-		return 2;
-	}
-
-	@Override
-	public int get(int id) {
-		if (id == 1) {
-			// getFluidAmount()
-			return fluidAmount;
-		}
-
-		return super.get(id);
+	public void addSyncData(SyncedData data) {
+		super.addSyncData(data);
+		data.addShort(SyncedData.BAR, () -> fluidAmount);
 	}
 }

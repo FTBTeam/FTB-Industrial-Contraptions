@@ -14,13 +14,11 @@ public enum EnergyTier {
 	public final String name;
 	private final int up;
 	public final double transferRate;
-	public final double itemTransferRate;
 
 	EnergyTier(String n, int u, double t) {
 		name = n;
 		up = u;
 		transferRate = t;
-		itemTransferRate = transferRate * FTBICConfig.ITEM_TRANSFER_EFFICIENCY;
 	}
 
 	public EnergyTier up() {

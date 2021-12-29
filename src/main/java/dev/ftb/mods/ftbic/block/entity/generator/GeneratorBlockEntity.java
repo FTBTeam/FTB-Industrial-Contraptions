@@ -83,7 +83,8 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
 				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double e = item.insertEnergy(battery, Math.min(energy, maxEnergyOutputTransfer), false);
+				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxEnergyOutputTransfer * FTBICConfig.ITEM_TRANSFER_EFFICIENCY;
+				double e = item.insertEnergy(battery, Math.min(energy, transfer), false);
 
 				if (e > 0) {
 					energy -= e;
@@ -204,7 +205,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		if (state.getBlock() instanceof CableBlock) {
 			CableBlock cableBlock = (CableBlock) state.getBlock();
 
-			if (origin.cableTier == null || cableBlock.tier.itemTransferRate < origin.cableTier.itemTransferRate) {
+			if (origin.cableTier == null || cableBlock.tier.transferRate < origin.cableTier.transferRate) {
 				origin.cableTier = cableBlock.tier;
 				origin.cablePos = pos;
 			}

@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.net.MoveLaserMessage;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.FTBChunksIntegration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -349,17 +350,9 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	}
 
 	@Override
-	public int getCount() {
-		return 2;
-	}
-
-	@Override
-	public int get(int id) {
-		if (id == 1) {
-			return paused ? 1 : 0;
-		} else {
-			return super.get(id);
-		}
+	public void addSyncData(SyncedData data) {
+		super.addSyncData(data);
+		data.addBoolean(SyncedData.PAUSED, () -> paused);
 	}
 
 	public void moveLaser(float x, int y, float z) {

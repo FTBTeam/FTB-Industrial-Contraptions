@@ -102,7 +102,7 @@ public class QuarryBlockEntity extends DiggingBaseBlockEntity {
 				paused = !paused;
 				syncBlock();
 			} else {
-				openMenu((ServerPlayer) player, (id, inventory) -> new QuarryMenu(id, inventory, this, this));
+				openMenu((ServerPlayer) player, (id, inventory) -> new QuarryMenu(id, inventory, this));
 			}
 		}
 

@@ -3,6 +3,8 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.screen.BasicGeneratorMenu;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
+import dev.ftb.mods.ftbic.screen.sync.SyncedDataKey;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -14,6 +16,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
+	public static final SyncedDataKey<Integer> FUEL_BAR = new SyncedDataKey<>("fuel_ticks", 0);
+
 	public int fuelTicks = 0;
 	public int maxFuelTicks = 0;
 
@@ -83,24 +87,15 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			openMenu((ServerPlayer) player, (id, inventory) -> new BasicGeneratorMenu(id, inventory, this, this));
+			openMenu((ServerPlayer) player, (id, inventory) -> new BasicGeneratorMenu(id, inventory, this));
 		}
 
 		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public int getCount() {
-		return 2;
-	}
-
-	@Override
-	public int get(int id) {
-		if (id == 1) {
-			// getFuelBar()
-			return fuelTicks == 0 ? 0 : Mth.clamp(Mth.ceil(fuelTicks * 14D / maxFuelTicks), 0, 14);
-		}
-
-		return super.get(id);
+	public void addSyncData(SyncedData data) {
+		super.addSyncData(data);
+		data.addShort(SyncedData.BAR, () -> fuelTicks == 0 ? 0 : Mth.clamp(Mth.ceil(fuelTicks * 14D / maxFuelTicks), 0, 14));
 	}
 }

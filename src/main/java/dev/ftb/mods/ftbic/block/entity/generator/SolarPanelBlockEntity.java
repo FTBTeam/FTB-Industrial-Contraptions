@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.screen.SolarPanelMenu;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -30,24 +31,15 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			openMenu((ServerPlayer) player, (id, inventory) -> new SolarPanelMenu(id, inventory, this, this));
+			openMenu((ServerPlayer) player, (id, inventory) -> new SolarPanelMenu(id, inventory, this));
 		}
 
 		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public int getCount() {
-		return 2;
-	}
-
-	@Override
-	public int get(int id) {
-		if (id == 1) {
-			// getLightValue()
-			return level.isDay() && level.canSeeSky(worldPosition.above()) ? 14 : 0;
-		}
-
-		return super.get(id);
+	public void addSyncData(SyncedData data) {
+		super.addSyncData(data);
+		data.addShort(SyncedData.BAR, () -> level.isDay() && level.canSeeSky(worldPosition.above()) ? 14 : 0);
 	}
 }

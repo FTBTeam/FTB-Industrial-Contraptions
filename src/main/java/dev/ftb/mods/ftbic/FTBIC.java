@@ -11,6 +11,7 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.net.FTBICNet;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
+import dev.ftb.mods.ftbic.sound.FTBICSounds;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -55,6 +56,7 @@ public class FTBIC {
 		FTBICRecipes.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICMenus.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICEntities.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
+		FTBICSounds.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICElectricBlocks.init();
 		FTBICUtils.init();
 		FTBICNet.init();

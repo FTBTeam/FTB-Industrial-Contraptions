@@ -37,7 +37,7 @@ public class HeatExchangerItem extends BaseReactorItem {
 	}
 
 	@Override
-	public void reactorTickPost(NuclearReactor reactor, ItemStack stack, int x, int y) {
+	public void reactorTickPre(NuclearReactor reactor, ItemStack stack, int x, int y) {
 		int damage = 0;
 
 		if (heatTransferToAdjacent > 0) {

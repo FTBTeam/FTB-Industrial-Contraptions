@@ -4,11 +4,13 @@ import com.google.gson.JsonElement;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -112,23 +114,15 @@ public class PoweredCraftingTableBlockEntity extends BasicMachineBlockEntity {
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			openMenu((ServerPlayer) player, (id, inventory) -> new PoweredCraftingTableMenu(id, inventory, this, this));
+			openMenu((ServerPlayer) player, (id, inventory) -> new PoweredCraftingTableMenu(id, inventory, this));
 		}
 
 		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public int getCount() {
-		return 2;
-	}
-
-	@Override
-	public int get(int id) {
-		if (id == 1) {
-			return (int) (progress * 22D / 100D);
-		} else {
-			return super.get(id);
-		}
+	public void addSyncData(SyncedData data) {
+		super.addSyncData(data);
+		data.addShort(SyncedData.BAR, () -> Mth.ceil(progress * 22D / 100D));
 	}
 }

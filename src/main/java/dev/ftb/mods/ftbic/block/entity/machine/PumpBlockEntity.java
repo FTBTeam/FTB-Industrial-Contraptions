@@ -100,7 +100,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 				paused = !paused;
 				syncBlock();
 			} else {
-				openMenu((ServerPlayer) player, (id, inventory) -> new PumpMenu(id, inventory, this, this));
+				openMenu((ServerPlayer) player, (id, inventory) -> new PumpMenu(id, inventory, this));
 			}
 		}
 

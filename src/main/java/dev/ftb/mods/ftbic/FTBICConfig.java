@@ -26,7 +26,7 @@ public class FTBICConfig {
 	public static double HV_TRANSFER_RATE = 512;
 	public static double EV_TRANSFER_RATE = 2_048;
 	public static double IV_TRANSFER_RATE = 8_192;
-	public static double ITEM_TRANSFER_EFFICIENCY = 0.75;
+	public static double ITEM_TRANSFER_EFFICIENCY = 20.0;
 	public static double ZAP_TO_FE_CONVERSION_RATE = 4.0;
 
 	public static double SINGLE_USE_BATTERY_CAPACITY = 2_400;
@@ -74,7 +74,7 @@ public class FTBICConfig {
 	public static double MV_SOLAR_PANEL_OUTPUT = 8;
 	public static double HV_SOLAR_PANEL_OUTPUT = 64;
 	public static double EV_SOLAR_PANEL_OUTPUT = 512;
-	public static double NUCLEAR_REACTOR_CAPACITY = 8000;
+	public static double NUCLEAR_REACTOR_CAPACITY = 50_000;
 
 	public static double MACHINE_RECIPE_BASE_TICKS = 200;
 

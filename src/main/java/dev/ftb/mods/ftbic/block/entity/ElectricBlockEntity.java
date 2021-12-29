@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.OpenMenuFactory;
 import net.minecraft.Util;
@@ -17,7 +18,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -25,7 +25,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -35,6 +34,8 @@ import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
@@ -53,7 +54,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, EnergyHandler, IItemHandlerModifiable, ContainerData {
+public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, EnergyHandler, IItemHandlerModifiable {
 	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
@@ -263,7 +264,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 		if (changeStateTicks <= 0) {
 			if (!isBurnt()) {
-				if (electricBlockInstance.canBeActive && getBlockState().getValue(ElectricBlock.ACTIVE) != active && !level.isClientSide()) {
+				if (level != null && electricBlockInstance.canBeActive && getBlockState().getBlock() instanceof ElectricBlock && getBlockState().getValue(ElectricBlock.ACTIVE) != active && !level.isClientSide()) {
 					level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, active), 3);
 					setChanged();
 				}
@@ -621,23 +622,13 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public void upgradesChanged() {
 	}
 
-	@Override
-	public int getCount() {
-		return 1;
+	public double getTotalPossibleEnergyCapacity() {
+		return electricBlockInstance.energyCapacity;
 	}
 
-	@Override
-	public int get(int id) {
-		if (id == 0) {
-			// TODO: Replace with packet int
-			return energy == 0 ? 0 : Mth.clamp(Mth.ceil(energy * 30000D / energyCapacity), 0, 30000);
-		}
-
-		return 0;
-	}
-
-	@Override
-	public void set(int id, int value) {
+	public void addSyncData(SyncedData data) {
+		data.addDouble(SyncedData.ENERGY, () -> energy);
+		data.addDouble(SyncedData.ENERGY_CAPACITY, () -> energyCapacity);
 	}
 
 	@Override
@@ -671,6 +662,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public void stepOn(ServerPlayer player) {
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, Random r) {
 	}
 

@@ -1,0 +1,9 @@
+{
+	"radiation": {
+		"sounds": [
+			"minecraft:ambient/nether/basalt_deltas/click2",
+			"minecraft:ambient/nether/basalt_deltas/click5",
+			"minecraft:ambient/nether/basalt_deltas/click7"
+		]
+	}
+}

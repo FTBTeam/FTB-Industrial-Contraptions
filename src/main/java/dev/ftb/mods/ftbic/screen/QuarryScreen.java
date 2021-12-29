@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundContainerButtonClickPacket;
@@ -29,7 +30,7 @@ public class QuarryScreen extends ElectricBlockScreen<QuarryMenu> {
 			drawSlot(poseStack, leftPos + 151, topPos + 7 + i * 18);
 		}
 
-		drawPauseButton(poseStack, leftPos + 124, topPos + 16, mouseX, mouseY, menu.isPaused());
+		drawPauseButton(poseStack, leftPos + 124, topPos + 16, mouseX, mouseY, menu.data.get(SyncedData.PAUSED));
 	}
 
 	@Override

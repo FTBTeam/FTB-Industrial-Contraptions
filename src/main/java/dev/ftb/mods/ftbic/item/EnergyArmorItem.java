@@ -6,7 +6,6 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
-import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -30,11 +29,6 @@ import java.util.function.Consumer;
 public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 	public EnergyArmorItem(EnergyArmorMaterial m) {
 		super(m, EquipmentSlot.CHEST, new Properties().tab(FTBIC.TAB));
-	}
-
-	@Override
-	public EnergyTier getEnergyTier() {
-		return material == EnergyArmorMaterial.QUANTUM ? EnergyTier.EV : EnergyTier.HV;
 	}
 
 	public void damageEnergyItem(ItemStack stack, double amount) {

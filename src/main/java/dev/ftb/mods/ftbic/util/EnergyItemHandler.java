@@ -5,10 +5,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.extensions.IForgeItem;
 
 public interface EnergyItemHandler extends IForgeItem {
-	default EnergyTier getEnergyTier() {
-		return EnergyTier.LV;
-	}
-
 	double getEnergyCapacity(ItemStack stack);
 
 	default double getEnergy(ItemStack stack) {
@@ -38,7 +34,7 @@ public interface EnergyItemHandler extends IForgeItem {
 		}
 
 		double energy = getEnergy(stack);
-		double energyReceived = Math.min(getEnergyCapacity(stack) - energy, Math.min(getEnergyTier().itemTransferRate, maxInsert));
+		double energyReceived = Math.min(getEnergyCapacity(stack) - energy, maxInsert);
 
 		if (!simulate && energyReceived > 0D) {
 			setEnergyRaw(stack, energy + energyReceived);
@@ -56,7 +52,7 @@ public interface EnergyItemHandler extends IForgeItem {
 		}
 
 		double energy = getEnergy(stack);
-		double energyExtracted = Math.min(energy, Math.min(getEnergyTier().itemTransferRate, maxExtract));
+		double energyExtracted = Math.min(energy, maxExtract);
 
 		if (!simulate && energyExtracted > 0D) {
 			setEnergyRaw(stack, energy - energyExtracted);

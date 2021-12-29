@@ -8,6 +8,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -50,6 +52,7 @@ public class ChargePadBlockEntity extends ElectricBlockEntity {
 	}
 
 	@Override
+	@OnlyIn(Dist.CLIENT)
 	public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, Random r) {
 		for (int i = 0; i < 5; i++) {
 			level.addParticle(new DustParticleOptions(1F, 0F, 0F, 1F), x + r.nextFloat(), y + 1F + r.nextFloat() * 2F, z + r.nextFloat(), 0D, 0D, 0D);

@@ -1,10 +1,10 @@
 package dev.ftb.mods.ftbic.screen;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -13,14 +13,14 @@ import org.jetbrains.annotations.Nullable;
 public class ElectricBlockMenu<E extends ElectricBlockEntity> extends AbstractContainerMenu {
 	public final E entity;
 	public final Player player;
-	public final ContainerData containerData;
+	public final SyncedData data;
 	private final int slotCount;
 
-	public ElectricBlockMenu(MenuType<?> type, int id, Inventory playerInv, E r, ContainerData d, @Nullable Object extra) {
+	public ElectricBlockMenu(MenuType<?> type, int id, Inventory playerInv, E r, @Nullable Object extra) {
 		super(type, id);
 		entity = r;
 		player = playerInv.player;
-		containerData = d;
+		data = new SyncedData();
 
 		int prevSlotCount = slots.size();
 		addBlockSlots(extra);
@@ -38,7 +38,9 @@ public class ElectricBlockMenu<E extends ElectricBlockEntity> extends AbstractCo
 			addSlot(new Slot(playerInv, x, 8 + x * 18, playerSlotOffset + 58));
 		}
 
-		addDataSlots(containerData);
+		entity.addSyncData(data);
+		data.setup();
+		addDataSlots(data);
 	}
 
 	public int getPlayerSlotOffset() {
@@ -82,15 +84,12 @@ public class ElectricBlockMenu<E extends ElectricBlockEntity> extends AbstractCo
 
 	@Override
 	public void broadcastChanges() {
+		data.update();
 		super.broadcastChanges();
 	}
 
 	@Override
 	public boolean clickMenuButton(Player player, int button) {
 		return false;
-	}
-
-	public int getEnergyBar() {
-		return containerData.get(0);
 	}
 }

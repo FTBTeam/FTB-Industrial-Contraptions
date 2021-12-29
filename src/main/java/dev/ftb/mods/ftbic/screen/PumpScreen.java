@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundContainerButtonClickPacket;
@@ -41,7 +42,7 @@ public class PumpScreen extends ElectricBlockScreen<PumpMenu> {
 
 		drawFluidSlot(poseStack, leftPos + 20, topPos + 34, filterStack);
 
-		drawPauseButton(poseStack, leftPos + 106, topPos + 16, mouseX, mouseY, menu.isPaused());
+		drawPauseButton(poseStack, leftPos + 106, topPos + 16, mouseX, mouseY, menu.data.get(SyncedData.PAUSED));
 	}
 
 	@Override

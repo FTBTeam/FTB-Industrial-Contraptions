@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.screen;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -77,6 +78,6 @@ public class PoweredCraftingTableScreen extends ElectricBlockScreen<PoweredCraft
 		itemRenderer.blitOffset = 0.0F;
 		Lighting.turnOff();
 
-		drawProgressBar(poseStack, leftPos + 110, topPos + 58, menu.getProgressBar());
+		drawProgressBar(poseStack, leftPos + 110, topPos + 58, menu.data.get(SyncedData.BAR));
 	}
 }

@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block.entity.storage;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.generator.GeneratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.BatteryInventory;
@@ -75,7 +76,8 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
 				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, maxInputEnergy), false);
+				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxInputEnergy * FTBICConfig.ITEM_TRANSFER_EFFICIENCY;
+				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, transfer), false);
 
 				if (e > 0) {
 					energy += e;
@@ -93,7 +95,7 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			openMenu((ServerPlayer) player, (id, inventory) -> new BatteryBoxMenu(id, inventory, this, this));
+			openMenu((ServerPlayer) player, (id, inventory) -> new BatteryBoxMenu(id, inventory, this));
 		}
 
 		return InteractionResult.SUCCESS;

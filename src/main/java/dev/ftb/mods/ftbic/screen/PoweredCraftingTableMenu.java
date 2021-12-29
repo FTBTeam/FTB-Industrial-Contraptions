@@ -6,20 +6,18 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
 public class PoweredCraftingTableMenu extends ElectricBlockMenu<PoweredCraftingTableBlockEntity> {
-	public PoweredCraftingTableMenu(int id, Inventory playerInv, PoweredCraftingTableBlockEntity r, ContainerData d) {
-		super(FTBICMenus.POWERED_CRAFTING_TABLE.get(), id, playerInv, r, d, null);
+	public PoweredCraftingTableMenu(int id, Inventory playerInv, PoweredCraftingTableBlockEntity r) {
+		super(FTBICMenus.POWERED_CRAFTING_TABLE.get(), id, playerInv, r, null);
 	}
 
 	public PoweredCraftingTableMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-		this(id, playerInv, (PoweredCraftingTableBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
+		this(id, playerInv, (PoweredCraftingTableBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()));
 
 		for (int i = 0; i < entity.ingredients.length; i++) {
 			entity.ingredients[i] = Ingredient.fromNetwork(buf);
@@ -58,9 +56,5 @@ public class PoweredCraftingTableMenu extends ElectricBlockMenu<PoweredCraftingT
 		if (!(player instanceof ServerPlayer)) {
 			new SelectCraftingRecipeMessage(in).sendToServer();
 		}
-	}
-
-	public int getProgressBar() {
-		return containerData.get(1);
 	}
 }

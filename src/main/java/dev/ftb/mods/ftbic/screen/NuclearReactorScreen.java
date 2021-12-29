@@ -2,12 +2,15 @@ package dev.ftb.mods.ftbic.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.game.ServerboundContainerButtonClickPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
 public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu> {
@@ -28,26 +31,17 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 	protected void renderBg(PoseStack poseStack, float delta, int mouseX, int mouseY) {
 		super.renderBg(poseStack, delta, mouseX, mouseY);
 
-		int chambers = menu.getChambers();
-		int achamber = 6 - chambers;
-
-		for (int x = 0; x < achamber; x++) {
-			for (int y = 0; y < 6; y++) {
-				drawLockedSlot(poseStack, leftPos + 61 + (x + chambers) * 18, topPos + 17 + y * 18);
-			}
-		}
-
-		drawNuclearBar(poseStack, leftPos + 115, topPos + 5, !menu.isPaused() && menu.getEnergyOutput() > 0);
-		drawHeatBar(poseStack, leftPos + 115, topPos + 127, menu.getHeat() / (float) menu.getMaxHeat());
-		drawSmallPauseButton(poseStack, leftPos + 105, topPos + 5, mouseX, mouseY, menu.isPaused());
+		drawNuclearBar(poseStack, leftPos + 115, topPos + 5, !menu.data.get(SyncedData.PAUSED) && menu.data.get(NuclearReactorBlockEntity.ENERGY_OUTPUT) > 0);
+		drawHeatBar(poseStack, leftPos + 115, topPos + 127, Mth.clamp(menu.data.get(NuclearReactorBlockEntity.HEAT) / (float) menu.data.get(NuclearReactorBlockEntity.MAX_HEAT), 0F, 1F));
+		drawSmallPauseButton(poseStack, leftPos + 105, topPos + 5, mouseX, mouseY, menu.data.get(SyncedData.PAUSED));
 	}
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
 		super.renderLabels(poseStack, mouseX, mouseY);
 
-		drawCenteredString(poseStack, font, menu.isPaused() ? new TextComponent("Paused") : FTBICUtils.formatEnergy(menu.getEnergyOutput()), 142, 6, 0xFFFFFF);
-		drawCenteredString(poseStack, font, FTBICUtils.formatHeat(menu.getHeat()), 142, 128, 0xFFFFFF);
+		drawCenteredString(poseStack, font, menu.data.get(SyncedData.PAUSED) ? new TextComponent("Paused") : FTBICUtils.formatEnergy(menu.data.get(NuclearReactorBlockEntity.ENERGY_OUTPUT)), 142, 6, 0xFFFFFF);
+		drawCenteredString(poseStack, font, FTBICUtils.formatHeat(menu.data.get(NuclearReactorBlockEntity.HEAT)), 142, 128, 0xFFFFFF);
 	}
 
 	@Override

@@ -6,6 +6,8 @@ import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.screen.AntimatterConstructorMenu;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
+import dev.ftb.mods.ftbic.screen.sync.SyncedDataKey;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -16,6 +18,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class AntimatterConstructorBlockEntity extends ElectricBlockEntity {
+	public static final SyncedDataKey<Boolean> HAS_BOOST = new SyncedDataKey<>("has_boost", false);
+
 	public double boost = 0D;
 	private boolean hasBoost = false;
 
@@ -95,24 +99,15 @@ public class AntimatterConstructorBlockEntity extends ElectricBlockEntity {
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			openMenu((ServerPlayer) player, (id, inventory) -> new AntimatterConstructorMenu(id, inventory, this, this));
+			openMenu((ServerPlayer) player, (id, inventory) -> new AntimatterConstructorMenu(id, inventory, this));
 		}
 
 		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public int getCount() {
-		return 2;
-	}
-
-	@Override
-	public int get(int id) {
-		if (id == 1) {
-			// getBoost()
-			return hasBoost ? 1 : 0;
-		}
-
-		return super.get(id);
+	public void addSyncData(SyncedData data) {
+		super.addSyncData(data);
+		data.addBoolean(HAS_BOOST, () -> hasBoost);
 	}
 }

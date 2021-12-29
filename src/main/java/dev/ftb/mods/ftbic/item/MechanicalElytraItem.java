@@ -6,7 +6,6 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
-import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -32,11 +31,6 @@ import java.util.function.Consumer;
 public class MechanicalElytraItem extends ArmorItem implements EnergyItemHandler {
 	public MechanicalElytraItem() {
 		super(EnergyArmorMaterial.ELYTRA, EquipmentSlot.CHEST, new Properties().tab(FTBIC.TAB));
-	}
-
-	@Override
-	public EnergyTier getEnergyTier() {
-		return EnergyTier.MV;
 	}
 
 	public void damageEnergyItem(ItemStack stack, double amount) {

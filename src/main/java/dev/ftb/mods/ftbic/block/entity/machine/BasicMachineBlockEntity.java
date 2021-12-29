@@ -58,7 +58,8 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
 				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, maxInputEnergy), false);
+				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxInputEnergy * FTBICConfig.ITEM_TRANSFER_EFFICIENCY;
+				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, transfer), false);
 
 				if (e > 0) {
 					energy += e;
@@ -74,6 +75,11 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 
 		handleProcessing();
 		handleChanges();
+	}
+
+	@Override
+	public double getTotalPossibleEnergyCapacity() {
+		return super.getTotalPossibleEnergyCapacity() + upgradeInventory.getSlots() * Math.min(FTBICConfig.UPGRADE_LIMIT_PER_SLOT, FTBICItems.ENERGY_STORAGE_UPGRADE.get().getMaxStackSize()) * FTBICConfig.STORAGE_UPGRADE;
 	}
 
 	public void handleProcessing() {

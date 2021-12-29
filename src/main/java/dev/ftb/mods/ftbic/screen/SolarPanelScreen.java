@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -15,7 +16,7 @@ public class SolarPanelScreen extends ElectricBlockScreen<SolarPanelMenu> {
 	protected void renderBg(PoseStack poseStack, float delta, int mouseX, int mouseY) {
 		super.renderBg(poseStack, delta, mouseX, mouseY);
 
-		drawSun(poseStack, leftPos + 63, topPos + 36, menu.getLightValue());
+		drawSun(poseStack, leftPos + 63, topPos + 36, menu.data.get(SyncedData.BAR));
 
 		drawSlot(poseStack, leftPos + 97, topPos + 43);
 	}

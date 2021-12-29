@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.ftb.mods.ftbic.block.entity.machine.AntimatterConstructorBlockEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -13,7 +14,7 @@ public class AntimatterConstructorScreen extends ElectricBlockScreen<AntimatterC
 
 	@Override
 	public int getEnergyType() {
-		return menu.getBoost() > 0 ? 2 : 1;
+		return menu.data.get(AntimatterConstructorBlockEntity.HAS_BOOST) ? 2 : 1;
 	}
 
 	@Override

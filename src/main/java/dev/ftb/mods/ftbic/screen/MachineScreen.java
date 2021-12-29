@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -22,7 +23,7 @@ public class MachineScreen extends ElectricBlockScreen<MachineMenu> {
 
 		super.renderBg(poseStack, delta, mouseX, mouseY);
 
-		drawArrow(poseStack, wx + s.progressX, wy + s.progressY, menu.getProgressBar());
+		drawArrow(poseStack, wx + s.progressX, wy + s.progressY, menu.data.get(SyncedData.BAR));
 
 		for (int i = 0; i < menu.entity.inputItems.length; i++) {
 			drawSlot(poseStack, wx + i * 18, wy);

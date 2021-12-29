@@ -55,19 +55,6 @@ public class FuelRodItem extends BaseReactorItem implements NeutronReflectingRea
 		}
 
 		reactor.explosionRadius += getRods() * FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_MULTIPLIER;
-
-		int p = pulses;
-		ItemStack[] around = new ItemStack[4];
-
-		for (int i = 0; i < 4; i++) {
-			around[i] = reactor.getAt(x + NuclearReactorBlockEntity.OFFSET_X[i], y + NuclearReactorBlockEntity.OFFSET_Y[i]);
-
-			if (around[i].getItem() instanceof NeutronReflectingReactorItem) {
-				p++;
-			}
-		}
-
-		reactor.distributeHeat(around, (int) (heatMultiplier * p * (p + 1)));
 	}
 
 	@Override
@@ -88,6 +75,7 @@ public class FuelRodItem extends BaseReactorItem implements NeutronReflectingRea
 		}
 
 		reactor.energyOutput += p * energyMultiplier;
+		reactor.distributeHeat(around, (int) (heatMultiplier * p * (p + 1)));
 		damageReactorItem(stack, 1);
 	}
 }

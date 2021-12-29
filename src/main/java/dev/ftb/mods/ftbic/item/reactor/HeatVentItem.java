@@ -39,7 +39,7 @@ public class HeatVentItem extends BaseReactorItem {
 	}
 
 	@Override
-	public void reactorTickPost(NuclearReactor reactor, ItemStack stack, int x, int y) {
+	public void reactorTickPre(NuclearReactor reactor, ItemStack stack, int x, int y) {
 		if (reactorCooling > 0) {
 			reactor.addHeat(-reactorCooling);
 		}

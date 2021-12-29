@@ -4,19 +4,17 @@ import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 public class PumpMenu extends ElectricBlockMenu<PumpBlockEntity> {
-	public PumpMenu(int id, Inventory playerInv, PumpBlockEntity r, ContainerData d) {
-		super(FTBICMenus.PUMP.get(), id, playerInv, r, d, null);
+	public PumpMenu(int id, Inventory playerInv, PumpBlockEntity r) {
+		super(FTBICMenus.PUMP.get(), id, playerInv, r, null);
 	}
 
 	public PumpMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-		this(id, playerInv, (PumpBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
+		this(id, playerInv, (PumpBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()));
 		entity.filter = ForgeRegistries.FLUIDS.getValue(buf.readResourceLocation());
 		entity.fluidStack = FluidStack.readFromPacket(buf);
 	}
@@ -42,9 +40,5 @@ public class PumpMenu extends ElectricBlockMenu<PumpBlockEntity> {
 		}
 
 		return false;
-	}
-
-	public boolean isPaused() {
-		return containerData.get(1) != 0;
 	}
 }

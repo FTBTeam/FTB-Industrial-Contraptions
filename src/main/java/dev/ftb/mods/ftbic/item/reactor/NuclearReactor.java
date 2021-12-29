@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbic.item.reactor;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
-import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ public class NuclearReactor {
 	public final ItemStack[] inputItems;
 
 	public boolean paused;
-	public int chambers;
 	public double energyOutput;
 	public int heat;
 
@@ -22,13 +20,12 @@ public class NuclearReactor {
 	public NuclearReactor(ItemStack[] is) {
 		inputItems = is;
 		paused = true;
-		chambers = 6;
 		energyOutput = 0D;
 		heat = 0;
 	}
 
 	public ItemStack getAt(int x, int y) {
-		if (x < 0 || x >= (3 + chambers) || y < 0 || y >= 6) {
+		if (x < 0 || x >= 9 || y < 0 || y >= 6) {
 			return ItemStack.EMPTY;
 		}
 
@@ -36,7 +33,7 @@ public class NuclearReactor {
 	}
 
 	public void setAt(int x, int y, ItemStack stack) {
-		if (x < 0 || x >= (3 + chambers) || y < 0 || y >= 6) {
+		if (x < 0 || x >= 9 || y < 0 || y >= 6) {
 			return;
 		}
 
@@ -79,9 +76,7 @@ public class NuclearReactor {
 		explosionRadius = FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS;
 		explosionModifier = 1D;
 
-		int cols = 3 + chambers;
-
-		for (int x = 0; x < cols; x++) {
+		for (int x = 0; x < 9; x++) {
 			for (int y = 0; y < 6; y++) {
 				ItemStack stack = getAt(x, y);
 
@@ -91,7 +86,7 @@ public class NuclearReactor {
 			}
 		}
 
-		for (int x = 0; x < cols; x++) {
+		for (int x = 0; x < 9; x++) {
 			for (int y = 0; y < 6; y++) {
 				ItemStack stack = getAt(x, y);
 
@@ -105,7 +100,7 @@ public class NuclearReactor {
 			}
 		}
 
-		heat = Mth.clamp(heat, 0, maxHeat);
+		heat = Math.max(0, heat);
 		explosionRadius *= explosionModifier;
 		explosionRadius = Math.min(explosionRadius, FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_LIMIT);
 	}

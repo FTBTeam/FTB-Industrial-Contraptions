@@ -7,6 +7,7 @@ import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.screen.MachineMenu;
+import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
 import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
@@ -215,7 +216,7 @@ public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 			MachineRecipeSerializer serializer = getRecipeSerializer();
 
 			if (serializer != null) {
-				openMenu((ServerPlayer) player, (id, inventory) -> new MachineMenu(id, inventory, this, this, serializer));
+				openMenu((ServerPlayer) player, (id, inventory) -> new MachineMenu(id, inventory, this, serializer));
 			} else {
 				player.sendMessage(new TextComponent("No GUI yet!"), Util.NIL_UUID);
 			}
@@ -231,22 +232,10 @@ public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 	}
 
 	@Override
-	public int getCount() {
-		return 3;
-	}
-
-	@Override
-	public int get(int id) {
-		switch (id) {
-			case 1:
-				// getProgressBar()
-				return energyUse == 0 ? 0 : Mth.clamp(Mth.ceil(progress * 24D / maxProgress), 0, 24);
-			case 2:
-				// getAcceleration()
-				return acceleration;
-			default:
-				return super.get(id);
-		}
+	public void addSyncData(SyncedData data) {
+		super.addSyncData(data);
+		data.addShort(SyncedData.BAR, () -> energyUse == 0 ? 0 : Mth.clamp(Mth.ceil(progress * 24D / maxProgress), 0, 24));
+		data.addShort(SyncedData.ACCELERATION, () -> acceleration);
 	}
 
 	@Override

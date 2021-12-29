@@ -4,17 +4,15 @@ import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
 import org.jetbrains.annotations.Nullable;
 
 public class QuarryMenu extends ElectricBlockMenu<QuarryBlockEntity> {
-	public QuarryMenu(int id, Inventory playerInv, QuarryBlockEntity r, ContainerData d) {
-		super(FTBICMenus.QUARRY.get(), id, playerInv, r, d, null);
+	public QuarryMenu(int id, Inventory playerInv, QuarryBlockEntity r) {
+		super(FTBICMenus.QUARRY.get(), id, playerInv, r, null);
 	}
 
 	public QuarryMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-		this(id, playerInv, (QuarryBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
+		this(id, playerInv, (QuarryBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()));
 	}
 
 	@Override
@@ -41,9 +39,5 @@ public class QuarryMenu extends ElectricBlockMenu<QuarryBlockEntity> {
 		}
 
 		return false;
-	}
-
-	public boolean isPaused() {
-		return containerData.get(1) != 0;
 	}
 }
