@@ -1,8 +1,17 @@
 package dev.ftb.mods.ftbic.item;
 
+import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
+import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,6 +35,11 @@ public class BatteryItem extends ElectricItem {
 		}
 
 		return null;
+	}
+
+	@Override
+	public boolean isFoil(ItemStack stack) {
+		return stack.hasTag() && stack.getTag().getBoolean("Active");
 	}
 
 	@Override
@@ -56,5 +70,39 @@ public class BatteryItem extends ElectricItem {
 		}
 
 		return d;
+	}
+
+	@Override
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+		ItemStack stack = player.getItemInHand(hand);
+
+		if (stack.hasTag() && stack.getTag().getBoolean("Active")) {
+			stack.removeTagKey("Active");
+		} else {
+			stack.addTagElement("Active", ByteTag.valueOf(true));
+		}
+
+		return InteractionResultHolder.success(stack);
+	}
+
+	@Override
+	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean bl) {
+		if (entity instanceof LivingEntity && stack.hasTag() && stack.getTag().getBoolean("Active") && getEnergy(stack) > 0D) {
+			for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+				ItemStack is = ((LivingEntity) entity).getItemBySlot(equipmentSlot);
+
+				if (is != stack && is.getItem() instanceof EnergyItemHandler) {
+					EnergyItemHandler handler = (EnergyItemHandler) is.getItem();
+					double e = getEnergy(stack);
+
+					if (e > 0D) {
+						double d = handler.insertEnergy(is, e, false);
+						extractEnergy(stack, d, false);
+					} else {
+						break;
+					}
+				}
+			}
+		}
 	}
 }
