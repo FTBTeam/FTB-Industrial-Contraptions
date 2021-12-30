@@ -18,6 +18,7 @@
 		}
 	},
 	"result": {
-		"item": "ftbic:nuclear_reactor_chamber"
+		"item": "ftbic:nuclear_reactor_chamber",
+		"count": 3
 	}
 }

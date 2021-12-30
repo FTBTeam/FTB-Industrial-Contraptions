@@ -98,7 +98,6 @@ public interface FTBICElectricBlocks {
 			.maxEnergyOutput(FTBICConfig.EV_SOLAR_PANEL_OUTPUT);
 
 	ElectricBlockInstance NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorBlockEntity::new)
-			.wip()
 			.advanced()
 			.energyCapacity(FTBICConfig.NUCLEAR_REACTOR_CAPACITY)
 			.io(54, 0);

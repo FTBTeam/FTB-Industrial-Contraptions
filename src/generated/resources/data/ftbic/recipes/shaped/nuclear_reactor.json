@@ -2,9 +2,9 @@
 	"type": "minecraft:crafting_shaped",
 	"group": "ftbic:nuclear_reactor",
 	"pattern": [
-		" C ",
+		"HCH",
 		"HHH",
-		" G "
+		"HGH"
 	],
 	"key": {
 		"H": {

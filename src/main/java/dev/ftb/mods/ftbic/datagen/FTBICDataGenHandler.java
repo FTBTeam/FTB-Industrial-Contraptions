@@ -633,7 +633,7 @@ public class FTBICDataGenHandler {
 					new ConfiguredModel(models().getExistingFile(mcLoc("block/dead_tube_coral_block")))
 			);
 
-			directionalBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get(), models().getExistingFile(modLoc("block/nuclear_reactor_chamber")));
+			simpleBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get(), models().getExistingFile(modLoc("block/nuclear_reactor_chamber")));
 			simpleBlock(FTBICBlocks.NUKE.get(), models().getExistingFile(modLoc("block/nuke")));
 			simpleBlock(FTBICBlocks.ACTIVE_NUKE.get(), models().getExistingFile(modLoc("block/active_nuke")));
 			directionalBlock(FTBICBlocks.TRACTOR_BEAM.get(), models().getExistingFile(modLoc("block/tractor_beam")));
