@@ -11,6 +11,11 @@ public interface ReactorItem {
 		return false;
 	}
 
+	default boolean isItemBroken(ItemStack stack) {
+		int max = stack.getMaxDamage();
+		return max > 0 && stack.getDamageValue() >= max;
+	}
+
 	default double getRelativeDamage(ItemStack stack) {
 		return stack.isDamageableItem() ? stack.getDamageValue() / (double) stack.getMaxDamage() : 0D;
 	}
@@ -31,20 +36,20 @@ public interface ReactorItem {
 				return damage;
 			}
 
-			int result = 0;
-			int tempHeat = stack.getDamageValue();
-			tempHeat += damage;
+			int extra = 0;
+			int newDamage = stack.getDamageValue();
+			newDamage += damage;
 
-			if (tempHeat > max) {
-				result = max - tempHeat + 1;
-				tempHeat = max;
-			} else if (tempHeat < 0) {
-				result = tempHeat;
-				tempHeat = 0;
+			if (newDamage > max) {
+				extra = max - newDamage + 1;
+				newDamage = max;
+			} else if (newDamage < 0) {
+				extra = newDamage;
+				newDamage = 0;
 			}
 
-			stack.setDamageValue(tempHeat);
-			return result;
+			stack.setDamageValue(newDamage);
+			return extra;
 		}
 
 		return damage;

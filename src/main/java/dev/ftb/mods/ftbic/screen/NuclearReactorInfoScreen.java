@@ -43,4 +43,9 @@ public class NuclearReactorInfoScreen extends Screen {
 
 		super.render(poseStack, mouseX, mouseY, delta);
 	}
+
+	@Override
+	public boolean isPauseScreen() {
+		return false;
+	}
 }
