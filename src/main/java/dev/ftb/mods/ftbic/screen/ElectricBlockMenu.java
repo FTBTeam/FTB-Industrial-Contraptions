@@ -84,7 +84,10 @@ public class ElectricBlockMenu<E extends ElectricBlockEntity> extends AbstractCo
 
 	@Override
 	public void broadcastChanges() {
-		data.update();
+		if (entity.hasLevel() && !entity.getLevel().isClientSide()) {
+			data.update();
+		}
+
 		super.broadcastChanges();
 	}
 
