@@ -8,7 +8,7 @@
 	"key": {
 		"U": {
 			"type": "forge:nbt",
-			"item": "ftbic:coolant_10k",
+			"item": "ftbic:small_coolant_cell",
 			"count": 1,
 			"nbt": "{Damage:0}"
 		},

@@ -143,9 +143,9 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Item HV_BATTERY = FTBICItems.HV_BATTERY.get();
 	public static final Item EV_BATTERY = FTBICItems.EV_BATTERY.get();
 	public static final Item FLUID_CELL = FTBICItems.FLUID_CELL.get();
-	public static final Item COOLANT_10K = FTBICItems.COOLANT_10K.get();
-	public static final Item COOLANT_30K = FTBICItems.COOLANT_30K.get();
-	public static final Item COOLANT_60K = FTBICItems.COOLANT_60K.get();
+	public static final Item SMALL_COOLANT_CELL = FTBICItems.SMALL_COOLANT_CELL.get();
+	public static final Item MEDIUM_COOLANT_CELL = FTBICItems.MEDIUM_COOLANT_CELL.get();
+	public static final Item LARGE_COOLANT_CELL = FTBICItems.LARGE_COOLANT_CELL.get();
 	public static final Item URANIUM_FUEL_ROD = FTBICItems.URANIUM_FUEL_ROD.get();
 	public static final Item DUAL_URANIUM_FUEL_ROD = FTBICItems.DUAL_URANIUM_FUEL_ROD.get();
 	public static final Item QUAD_URANIUM_FUEL_ROD = FTBICItems.QUAD_URANIUM_FUEL_ROD.get();

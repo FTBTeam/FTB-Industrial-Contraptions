@@ -93,7 +93,7 @@ public class FTBICGeneratorRecipes extends FTBICRecipesGen {
 				.pattern("SNS")
 				.define('S', HV_SOLAR_PANEL)
 				.define('A', ANTIMATTER)
-				.define('C', COOLANT_60K)
+				.define('C', LARGE_COOLANT_CELL)
 				.define('N', Items.NETHERITE_BLOCK)
 				.save(consumer, shapedLoc("ev_solar_panel"));
 	}

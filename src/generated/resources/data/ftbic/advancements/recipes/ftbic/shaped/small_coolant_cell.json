@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:shaped/coolant_10k"
+			"ftbic:shaped/small_coolant_cell"
 		]
 	},
 	"criteria": {
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:shaped/coolant_10k"
+				"recipe": "ftbic:shaped/small_coolant_cell"
 			}
 		}
 	},

@@ -148,9 +148,9 @@ public class FTBICDataGenHandler {
 			addItem(FTBICItems.EV_BATTERY, "EV Battery");
 			addItem(FTBICItems.CREATIVE_BATTERY);
 			addItem(FTBICItems.FLUID_CELL);
-			addItem(FTBICItems.COOLANT_10K, "10k Coolant Cell");
-			addItem(FTBICItems.COOLANT_30K, "30k Coolant Cell");
-			addItem(FTBICItems.COOLANT_60K, "60k Coolant Cell");
+			addItem(FTBICItems.SMALL_COOLANT_CELL);
+			addItem(FTBICItems.MEDIUM_COOLANT_CELL);
+			addItem(FTBICItems.LARGE_COOLANT_CELL);
 			addItem(FTBICItems.URANIUM_FUEL_ROD);
 			addItem(FTBICItems.DUAL_URANIUM_FUEL_ROD);
 			addItem(FTBICItems.QUAD_URANIUM_FUEL_ROD);
@@ -787,9 +787,9 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.HV_BATTERY);
 			basicItem(FTBICItems.EV_BATTERY);
 			basicItem(FTBICItems.CREATIVE_BATTERY);
-			basicItem(FTBICItems.COOLANT_10K);
-			basicItem(FTBICItems.COOLANT_30K);
-			basicItem(FTBICItems.COOLANT_60K);
+			basicItem(FTBICItems.SMALL_COOLANT_CELL);
+			basicItem(FTBICItems.MEDIUM_COOLANT_CELL);
+			basicItem(FTBICItems.LARGE_COOLANT_CELL);
 			basicItem(FTBICItems.URANIUM_FUEL_ROD);
 			basicItem(FTBICItems.DUAL_URANIUM_FUEL_ROD);
 			basicItem(FTBICItems.QUAD_URANIUM_FUEL_ROD);

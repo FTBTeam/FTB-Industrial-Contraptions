@@ -1,10 +1,10 @@
 {
 	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:coolant_60k",
+	"group": "ftbic:small_coolant_cell",
 	"pattern": [
+		" T ",
 		"TCT",
-		"TAT",
-		"TCT"
+		" T "
 	],
 	"key": {
 		"T": {
@@ -12,15 +12,12 @@
 		},
 		"C": {
 			"type": "forge:nbt",
-			"item": "ftbic:coolant_30k",
+			"item": "ftbic:fluid_cell",
 			"count": 1,
-			"nbt": "{Damage:0}"
-		},
-		"A": {
-			"item": "ftbic:dense_copper_plate"
+			"nbt": "{Fluid:\"minecraft:water\"}"
 		}
 	},
 	"result": {
-		"item": "ftbic:coolant_60k"
+		"item": "ftbic:small_coolant_cell"
 	}
 }

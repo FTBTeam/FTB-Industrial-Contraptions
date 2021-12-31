@@ -71,36 +71,36 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.define('C', ADVANCED_CIRCUIT)
 				.save(consumer, shapedLoc("nuke"));
 
-		ShapedRecipeBuilder.shaped(COOLANT_10K)
+		ShapedRecipeBuilder.shaped(SMALL_COOLANT_CELL)
 				.unlockedBy("has_item", has(FLUID_CELL))
-				.group(MODID + ":coolant_10k")
+				.group(MODID + ":small_coolant_cell")
 				.pattern(" T ")
 				.pattern("TCT")
 				.pattern(" T ")
 				.define('T', TIN_INGOT)
 				.define('C', waterCell())
-				.save(consumer, shapedLoc("coolant_10k"));
+				.save(consumer, shapedLoc("small_coolant_cell"));
 
-		ShapedRecipeBuilder.shaped(COOLANT_30K)
-				.unlockedBy("has_item", has(COOLANT_10K))
-				.group(MODID + ":coolant_30k")
+		ShapedRecipeBuilder.shaped(MEDIUM_COOLANT_CELL)
+				.unlockedBy("has_item", has(SMALL_COOLANT_CELL))
+				.group(MODID + ":medium_coolant_cell")
 				.pattern("TTT")
 				.pattern("CCC")
 				.pattern("TTT")
 				.define('T', TIN_INGOT)
-				.define('C', unbroken(COOLANT_10K))
-				.save(consumer, shapedLoc("coolant_30k"));
+				.define('C', unbroken(SMALL_COOLANT_CELL))
+				.save(consumer, shapedLoc("medium_coolant_cell"));
 
-		ShapedRecipeBuilder.shaped(COOLANT_60K)
-				.unlockedBy("has_item", has(COOLANT_30K))
-				.group(MODID + ":coolant_60k")
+		ShapedRecipeBuilder.shaped(LARGE_COOLANT_CELL)
+				.unlockedBy("has_item", has(MEDIUM_COOLANT_CELL))
+				.group(MODID + ":large_coolant_cell")
 				.pattern("TCT")
 				.pattern("TAT")
 				.pattern("TCT")
 				.define('T', TIN_INGOT)
-				.define('C', unbroken(COOLANT_30K))
+				.define('C', unbroken(MEDIUM_COOLANT_CELL))
 				.define('A', DENSE_COPPER_PLATE)
-				.save(consumer, shapedLoc("coolant_60k"));
+				.save(consumer, shapedLoc("large_coolant_cell"));
 
 		ShapedRecipeBuilder.shaped(DUAL_URANIUM_FUEL_ROD)
 				.unlockedBy("has_item", has(URANIUM_FUEL_ROD))
@@ -281,8 +281,8 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(FLUID_CELL))
 				.inputItem(waterCell())
-				.outputItem(new ItemStack(COOLANT_10K))
-				.save(consumer, separatingLoc("coolant_10k"));
+				.outputItem(new ItemStack(SMALL_COOLANT_CELL))
+				.save(consumer, separatingLoc("small_coolant_cell"));
 
 		MachineRecipeBuilder.canning()
 				.unlockedBy("has_item", has(URANIUM_DUST))

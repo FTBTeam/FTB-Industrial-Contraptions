@@ -50,7 +50,7 @@ ed1e379681b7c961e99d9107a099af03ab0baed5 assets/ftbic/blockstates/reinforced_sto
 9ced6c6ded6f3a11c0ee68f56e8b6a1dcb2e7e6a assets/ftbic/blockstates/teleporter.json
 ef643960118fa966c93fe5c01dea6e094b563360 assets/ftbic/blockstates/tractor_beam.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-64de79745b479f8a10fb9abeabb684bffa70b0cf assets/ftbic/lang/en_us.json
+d83df4f21d0aa7440712359803d754e41064298d assets/ftbic/lang/en_us.json
 a065a23b07d8160a5c1826e33f8fdef051f9b9d9 assets/ftbic/models/block/active_nuke.json
 32a8fcccb6a46281b355b13187ab3268564e23ca assets/ftbic/models/block/advanced_machine_block.json
 5c1a2f33338963a3ba598423df6e653deaf1a094 assets/ftbic/models/block/burnt_cable_base.json
@@ -218,9 +218,6 @@ d4adaade2ac3c6e01b40931aa0ce7cfb8cbe977a assets/ftbic/models/item/component_heat
 180de12509a08e1cd0bd0b105eb2b272ee10e307 assets/ftbic/models/item/compressed_coal_ball.json
 1f9308802a4e884f5b4cddb72c8aecd5b27f0ee5 assets/ftbic/models/item/compressor.json
 19f8fa1d15973215f3cd35d6b81919e0b49d802d assets/ftbic/models/item/containment_reactor_plating.json
-b96e579b556d67a2529d3005234cc0a19025a22d assets/ftbic/models/item/coolant_10k.json
-b3c98a0abe37fc16bb919ed2fc53acaff5689c81 assets/ftbic/models/item/coolant_30k.json
-d8a18cd7ffb05f3e4facf4d1338c9b86681a419f assets/ftbic/models/item/coolant_60k.json
 b342b941e8d289e05497d055e0bbd01dab93f205 assets/ftbic/models/item/copper_coil.json
 889adf00bb27e21e2fd67c1b0297f66823505bd1 assets/ftbic/models/item/copper_wire.json
 16c352680352cd746e3ccaf00d577510a93e4fe6 assets/ftbic/models/item/creative_battery.json
@@ -259,6 +256,7 @@ fc52e7dc575a2da9f63f465cbf6ee183fdbd6c6e assets/ftbic/models/item/hv_transformer
 0acacfb67715a505f0b853057c46f8096bd90210 assets/ftbic/models/item/iron_furnace.json
 e36c0491c959ca056553288102890f8fdfd1a966 assets/ftbic/models/item/iv_cable.json
 2607a3571ab7b002d2a0e02e5b8a550138eba23e assets/ftbic/models/item/landmark.json
+359cbfd9a7da493a9a18c1e1b3d1c1ed096346b2 assets/ftbic/models/item/large_coolant_cell.json
 509da6d131612cfd520a3b4a908e34a98897139d assets/ftbic/models/item/light_spray_paint_can.json
 78dc6a68e3570446b733c1c9baec1894e4892465 assets/ftbic/models/item/lv_battery.json
 f35b38b1ce74ca4a2ecc546ce77e3fd9acc76418 assets/ftbic/models/item/lv_battery_box.json
@@ -268,6 +266,7 @@ f072d9f32d316d8e077f180c9c0d18a8c672c054 assets/ftbic/models/item/lv_cable.json
 a75979afbd5706cd16a047b0d5a295fc7777ed71 assets/ftbic/models/item/macerator.json
 77e8551c50831bcc9074ffb40f617ce589692e16 assets/ftbic/models/item/machine_block.json
 8542b5f645b6c5b3db410ab3de0a3a73062ba706 assets/ftbic/models/item/mechanical_elytra.json
+996c58f3a303f3bcb5c17185afc843fb6767ab92 assets/ftbic/models/item/medium_coolant_cell.json
 be0e146393f65042243d08b098186c3fe659cf12 assets/ftbic/models/item/mixed_metal_blend.json
 7330c5945f3d800b894b52bf2c09f8c7206e8cce assets/ftbic/models/item/mv_battery.json
 799ceb1ffb7c81cbfa98dd47bffdfe125731cbec assets/ftbic/models/item/mv_battery_box.json
@@ -303,6 +302,7 @@ cc79e144f9e948229ccf6b233ddb25aa5bea469c assets/ftbic/models/item/rubber.json
 be7162efec3eedcf3e64c0a9f56a413a8bea6f87 assets/ftbic/models/item/scrap.json
 4e49316cfec947b04bf12d6f682099a0c71ef235 assets/ftbic/models/item/scrap_box.json
 a418003a2c12a10bc0fe77b0f8aed26a734e62e5 assets/ftbic/models/item/single_use_battery.json
+ba19355f6dacb14e18d1ba65c12980ade015dd70 assets/ftbic/models/item/small_coolant_cell.json
 6f55d8c3f9d54c352bb8a6c1d7df81c3c9eef9d6 assets/ftbic/models/item/teleporter.json
 4d5620d2007d03ccd9ea0e4f504e75b941e05527 assets/ftbic/models/item/thick_neutron_reflector.json
 4745edbb837c021ea4af199a0030755ee604cc5c assets/ftbic/models/item/tractor_beam.json
@@ -480,8 +480,8 @@ b1e1e4e77a9e9004dd5ab2725d1614eb50c8dedf data/ftbic/advancements/recipes/ftbic/c
 3898760264c6293aebc7ce3bd1d84733273cc53a data/ftbic/advancements/recipes/ftbic/extruding/copper_wire.json
 01e4f0926f65124c8add78191e6722277b820002 data/ftbic/advancements/recipes/ftbic/extruding/enderium_wire.json
 ad4058c7665f1b7590ab1be4f0ff19dd772a4dc9 data/ftbic/advancements/recipes/ftbic/extruding/gold_wire.json
-85d22826edf070b20321bac7b03c692997cf227a data/ftbic/advancements/recipes/ftbic/separating/coolant_10k.json
 7edf8498e6949ec8f3e2b2f3764ebc99e4d3dad3 data/ftbic/advancements/recipes/ftbic/separating/rubber_from_latex.json
+f6a19991b3b949ac0f773e737bebc78d296454ac data/ftbic/advancements/recipes/ftbic/separating/small_coolant_cell.json
 cca0e71db18a83f81e95918b6f533957088ae862 data/ftbic/advancements/recipes/ftbic/shaped/advanced_heat_exchanger.json
 e9eb6953d8ce4250ed11c25ea4e49df1d41a7b30 data/ftbic/advancements/recipes/ftbic/shaped/advanced_heat_vent.json
 f85af28cc6d392941afdb0107cd01c9f6d029eb4 data/ftbic/advancements/recipes/ftbic/shaped/aluminum_wire.json
@@ -500,9 +500,6 @@ cf9e02d9ce15e6d094f9adbe6827bb173d7a2399 data/ftbic/advancements/recipes/ftbic/s
 d4b3573916f9b0bbd9c725448de0cec2e84e7cb5 data/ftbic/advancements/recipes/ftbic/shaped/component_heat_exchanger.json
 fb920e9c0c35622f9cad79bb9b503111686af668 data/ftbic/advancements/recipes/ftbic/shaped/component_heat_vent.json
 d99d796d4bf7bee484b1d0f6fcf19bc8cf589127 data/ftbic/advancements/recipes/ftbic/shaped/compressor.json
-73fade2b81ccb66b1cffd026189085edb65d7ab4 data/ftbic/advancements/recipes/ftbic/shaped/coolant_10k.json
-60497b48faa0156ace17fbea1f013469c8358619 data/ftbic/advancements/recipes/ftbic/shaped/coolant_30k.json
-506cacbe2b95714c0873cd4841d98e9cc571f564 data/ftbic/advancements/recipes/ftbic/shaped/coolant_60k.json
 59c300db7d92bb494f898b790e08679e00e3e03a data/ftbic/advancements/recipes/ftbic/shaped/copper_coil.json
 4bcd42790a1c4ca5fd1db935d9a5d7c044fa6135 data/ftbic/advancements/recipes/ftbic/shaped/copper_wire.json
 8b37fe1ad7dd489f5f2207c06a4494d6d1c5d9d1 data/ftbic/advancements/recipes/ftbic/shaped/dual_uranium_fuel_rod.json
@@ -532,6 +529,7 @@ b21634d73dfff53b76c6b7b39c4ff464bdeb6b7f data/ftbic/advancements/recipes/ftbic/s
 b75577482b2dbbdafffde9d8607fc5ec90323507 data/ftbic/advancements/recipes/ftbic/shaped/iridium_neutron_reflector.json
 4ed2413b11d51bcdd971daa3fce1b2d5cdb236e4 data/ftbic/advancements/recipes/ftbic/shaped/iron_furnace.json
 89b245a42776bb8e5eff5874966aa3160bbf4e2f data/ftbic/advancements/recipes/ftbic/shaped/iv_cable.json
+65fb41cdb77ba490eb22bedb160dcdd78b2b2c18 data/ftbic/advancements/recipes/ftbic/shaped/large_coolant_cell.json
 ed00ac44d039901ef5dcc494c2fda3b6d7b209f3 data/ftbic/advancements/recipes/ftbic/shaped/lv_battery_box.json
 ba5e03d0f217322757293540b42893982ce54e92 data/ftbic/advancements/recipes/ftbic/shaped/lv_cable.json
 167ff43dbdf556a01bccea42377e815faa94cbe0 data/ftbic/advancements/recipes/ftbic/shaped/lv_solar_panel.json
@@ -539,6 +537,7 @@ ba5e03d0f217322757293540b42893982ce54e92 data/ftbic/advancements/recipes/ftbic/s
 bfec2ae4444f69aded9964b1761f37d4c2229743 data/ftbic/advancements/recipes/ftbic/shaped/macerator.json
 0d2e4172267d2f04eca40e0bda0dbc8883ddaf4e data/ftbic/advancements/recipes/ftbic/shaped/machine_block.json
 d78b840d22c9a64683d9e9b06dcda393b5a784b1 data/ftbic/advancements/recipes/ftbic/shaped/mechanical_elytra.json
+4c2d020a416e9752edb40747285bd226b6b7b546 data/ftbic/advancements/recipes/ftbic/shaped/medium_coolant_cell.json
 33b8af9d976560d6483956519d1bfb4ca9f90708 data/ftbic/advancements/recipes/ftbic/shaped/mv_battery_box.json
 90dfe1ee2e885f68d90e7befb37f6cdf0fdeb931 data/ftbic/advancements/recipes/ftbic/shaped/mv_cable.json
 726cbe5fc5d03eecb04c7f45b1af02feefb871e4 data/ftbic/advancements/recipes/ftbic/shaped/mv_solar_panel.json
@@ -548,7 +547,7 @@ e01133ce627d53a7c4f0eb703c72f2f831187db0 data/ftbic/advancements/recipes/ftbic/s
 59819738d5765d414ef819676faba5139bbf6eb9 data/ftbic/advancements/recipes/ftbic/shaped/nuclear_reactor_chamber.json
 7ffb07a62e5851a239885f039e2ee3e9ec340261 data/ftbic/advancements/recipes/ftbic/shaped/nuke.json
 7fececab919bbc6a83c113c1648b9be50dbdd58d data/ftbic/advancements/recipes/ftbic/shaped/overclocked_heat_vent.json
-395d5fbb97fff8f30bad2e1afd1b85e1f6d709b0 data/ftbic/advancements/recipes/ftbic/shaped/overclocker_upgrade.json
+6b42dfe118617460e2239ca77fd2a703a0efc8c1 data/ftbic/advancements/recipes/ftbic/shaped/overclocker_upgrade.json
 1a5e112f4eea81b3c921337063d4830961f4e428 data/ftbic/advancements/recipes/ftbic/shaped/pump.json
 d20e53989e9a03718149f73ae4eec28d1f8ea41c data/ftbic/advancements/recipes/ftbic/shaped/quad_uranium_fuel_rod.json
 c0c15e79239e25e3fc5e5e1d2373b0bb81054347 data/ftbic/advancements/recipes/ftbic/shaped/quantum_boots.json
@@ -565,6 +564,7 @@ ad5e72962f5436e8b6d1436a55c54fe29ba01f43 data/ftbic/advancements/recipes/ftbic/s
 2b2d5bc5d094b4630a85719a3aff5cff406673d7 data/ftbic/advancements/recipes/ftbic/shaped/rubber_sheet.json
 47278f06566f3807e503f9c56b9fc614472dce2b data/ftbic/advancements/recipes/ftbic/shaped/scrap_box.json
 43592da0fbb2c58aba528c0e5b169b79c27db545 data/ftbic/advancements/recipes/ftbic/shaped/single_use_battery.json
+ed173a6e7c5762d842e5728549e5a095af0de0f0 data/ftbic/advancements/recipes/ftbic/shaped/small_coolant_cell.json
 36c89ef643821e95999280715e223c099545f1a6 data/ftbic/advancements/recipes/ftbic/shaped/thick_neutron_reflector.json
 f5e5aef005255cc8b4264fc95fff12622d5dc9ed data/ftbic/advancements/recipes/ftbic/shaped/transformer_upgrade.json
 043d243f6c7d059706143575123148bc2cd86033 data/ftbic/advancements/recipes/ftbic/shaped/wind_mill.json
@@ -609,7 +609,6 @@ a58a50e4de14805c5df73c11ce3e0b70f6d64a28 data/ftbic/advancements/recipes/ftbic_f
 0e7c788c63dd6c5fdd67edba12b5fc0e010e14cf data/ftbic/advancements/recipes/misc/compressing/paper.json
 ca31bcb52f96801a846054bf6b5b41afe3a75b73 data/ftbic/advancements/recipes/misc/compressing/snowball.json
 482cb82098461ffb9959eb6426a5b6034a666df6 data/ftbic/advancements/recipes/misc/macerating/bone_meal.json
-c1a16852ab53f35430299fb1e969d8b80393fdbb data/ftbic/advancements/recipes/misc/macerating/coal_from_ore.json
 503f51a2bcba4e2d33083aee2a2a3884dd54e602 data/ftbic/advancements/recipes/misc/macerating/snowball.json
 cf1b5a2021499b61da3a792637b6d29fec36c80f data/ftbic/advancements/recipes/misc/macerating/string.json
 a369df379155812d798d73f6db5ca2a10689927b data/ftbic/advancements/recipes/misc/separating/flint.json
@@ -701,7 +700,6 @@ b4a184598c40aaa7030e3f4c26455f9c6bc3fc2a data/ftbic/recipes/extruding/gold_wire.
 d9b18b0d10d58bd5eb61b02ddabfb374382bd1e9 data/ftbic/recipes/macerating/bone_meal.json
 1977d6a00ec8b8ed05311fe77cf6a367e6968831 data/ftbic/recipes/macerating/charcoal_dust.json
 e9243722e01164ea19c2f7b6db13ed9aeb35a9c3 data/ftbic/recipes/macerating/coal_dust.json
-b71bd53a933cbc18cb30bb740bc8a2d5b4d6b651 data/ftbic/recipes/macerating/coal_from_ore.json
 1ce2f890caacbab8dfad498e4be15f52c7067491 data/ftbic/recipes/macerating/cobblestone.json
 2a4a01bb9d7d249b46b295b8c165c6337fdc100f data/ftbic/recipes/macerating/ender_dust.json
 7d7f9d4d9db09a0487868c5081964786dbc6dd6b data/ftbic/recipes/macerating/gravel.json
@@ -710,7 +708,6 @@ ea052fcd0da9550bcee0d11cf38a002a208a5aec data/ftbic/recipes/macerating/sand.json
 c3a4b6aa9ee16c42b0b40c2de39c901b7399af9d data/ftbic/recipes/macerating/sawdust.json
 375ebaef52f17258b818064363603ef383c51b9d data/ftbic/recipes/macerating/snowball.json
 2a0c3ecef41aa1922def811e5b13b11fc896e98c data/ftbic/recipes/macerating/string.json
-78dbd646fe204c58d4af27a87e04f4e3e4bae591 data/ftbic/recipes/separating/coolant_10k.json
 175a485642eb4c9b05960fa0831aad515a466104 data/ftbic/recipes/separating/flint.json
 d3ac32598ccaf4d1167725e541424a01b3136ff9 data/ftbic/recipes/separating/glowstone_dust.json
 7d3f0720b079094d3bfeb6977fde0bdc40dc7df8 data/ftbic/recipes/separating/latex_from_leaves.json
@@ -720,6 +717,7 @@ b19b0d37840c2fc589aff766c980202e19aac0e7 data/ftbic/recipes/separating/rubber_fr
 f67eadc32ab28e872ee1228e2dd3f7eed0f0d294 data/ftbic/recipes/separating/silicon_from_quartz.json
 3c814bee79ecb4efdc2cc09f9a8dc4304a16c400 data/ftbic/recipes/separating/silicon_from_sand.json
 4f79192b6c52e23e6285362643376936c80d54e2 data/ftbic/recipes/separating/slime_ball.json
+b42af9dc7f19404b91ca197abc34ec4523a741b0 data/ftbic/recipes/separating/small_coolant_cell.json
 ec7f36f29276ded9482710994f38089dfd1ddbe0 data/ftbic/recipes/separating/sugar.json
 50e3d474d3b41cca9d3f7a6a48107a0ae7a55b5d data/ftbic/recipes/separating/sulfur_from_gunpowder.json
 2d508943244111eff1faaa09fb5ea45fa83b1524 data/ftbic/recipes/shaped/advanced_heat_exchanger.json
@@ -740,9 +738,6 @@ a6c579f60b4c5dcf982ee05ef1e8b7342dc5274c data/ftbic/recipes/shaped/coal_ball.jso
 c965180ed5b20ff22bded7b6fa44d887d1d724a7 data/ftbic/recipes/shaped/component_heat_exchanger.json
 0e8d3833aa6323c0cc56dcd078fc444bc2488e13 data/ftbic/recipes/shaped/component_heat_vent.json
 fd83f7553656ce18a5bebfd857a912ee07bb31e9 data/ftbic/recipes/shaped/compressor.json
-dedbb522452e4efaa4c4e22eb4986f4d1a21baa1 data/ftbic/recipes/shaped/coolant_10k.json
-3e5c03c43a79435bb85fc09af7fbaeaf44098ee5 data/ftbic/recipes/shaped/coolant_30k.json
-ee475a81ab6637aed3db838bb6914df586e336ad data/ftbic/recipes/shaped/coolant_60k.json
 34dbf1a920509d60c9c8a0680824b080b3a66d53 data/ftbic/recipes/shaped/copper_coil.json
 9ed4c1e0b7d980f269cea2d5e05ec05676d4e9ca data/ftbic/recipes/shaped/copper_wire.json
 b5786ca8a6f8c576904bd7db6410ac2b5015739b data/ftbic/recipes/shaped/dual_uranium_fuel_rod.json
@@ -753,7 +748,7 @@ e0982e7206888d10ed6273caab2a47671468f4cf data/ftbic/recipes/shaped/enderium_wire
 33555f5e282a9b059411b18acecd8a45057d0b4d data/ftbic/recipes/shaped/energy_storage_upgrade.json
 20fba052b99619ce5317703b3c8d3423139f0e2a data/ftbic/recipes/shaped/ev_battery_box.json
 77978a1ffadc35823f4f0a2ec04046e2fecf0171 data/ftbic/recipes/shaped/ev_cable.json
-cced1f8cd01b4714ca0de0922d9639aed1f4677a data/ftbic/recipes/shaped/ev_solar_panel.json
+e6200d5a9a3b5562e4dd08976b77d43b0a94f6b4 data/ftbic/recipes/shaped/ev_solar_panel.json
 0f3c7a10ec4968d56ee538dfc9bab5239eca8f5b data/ftbic/recipes/shaped/ev_transformer.json
 f2132a0effdc8f9533ab0b90da6b325ae8e044b7 data/ftbic/recipes/shaped/extractor.json
 e75d5063e0aec60a18ff6f4209e79600a98f4425 data/ftbic/recipes/shaped/extruder.json
@@ -772,6 +767,7 @@ ccccc60466a07d90618792d6bd3d7ea2dde386fa data/ftbic/recipes/shaped/hv_battery_bo
 3811ccc45c4655f2771bc7ee57adc64962dd7fdb data/ftbic/recipes/shaped/iridium_neutron_reflector.json
 0dc4dc170935f7d1734753e9d55bccfdec9e14d9 data/ftbic/recipes/shaped/iron_furnace.json
 c4be50c233ac45b55685860a0afc3ae32532ad2a data/ftbic/recipes/shaped/iv_cable.json
+63fe5963a0a52bcb53283b353c40a640d89d0f5c data/ftbic/recipes/shaped/large_coolant_cell.json
 6b88ce45de75291b0b05c8e8cbc91e4ff8835577 data/ftbic/recipes/shaped/lv_battery_box.json
 fb4bc894eb0aa6abab2f148a31de77b28e5d230e data/ftbic/recipes/shaped/lv_cable.json
 fe958dce9e0899d9a10bf11211189ef0ab2d241b data/ftbic/recipes/shaped/lv_solar_panel.json
@@ -779,6 +775,7 @@ fe958dce9e0899d9a10bf11211189ef0ab2d241b data/ftbic/recipes/shaped/lv_solar_pane
 703ab39eb24384a26988a152ca4d211731b69e3d data/ftbic/recipes/shaped/macerator.json
 ea164d46b4646974b30eda9ed37efa8ceed3efc8 data/ftbic/recipes/shaped/machine_block.json
 21168c35e42a79b0473605604a7e6483810eda75 data/ftbic/recipes/shaped/mechanical_elytra.json
+1899ddf5885d73bddca944057f0d867740152098 data/ftbic/recipes/shaped/medium_coolant_cell.json
 f9eaa05ba38b360006aaf5b77cd76bd5452389ba data/ftbic/recipes/shaped/mv_battery_box.json
 ec5ddb2b3d4a89c6a8a530eaf0b8b181ec2cf985 data/ftbic/recipes/shaped/mv_cable.json
 a02f2ef374ffe138d932a4280e336527fccecd05 data/ftbic/recipes/shaped/mv_solar_panel.json
@@ -788,7 +785,7 @@ ba6ca2ed8e56dbbebd8ffe08be8165f12094706b data/ftbic/recipes/shaped/nuclear_react
 6d962c6f65f64066688304eddd276ad0950b45aa data/ftbic/recipes/shaped/nuclear_reactor_chamber.json
 d13b99c325b6ac189c204d597fc0dfc202527957 data/ftbic/recipes/shaped/nuke.json
 f391a33b436d33cfb7323c003511182c927edbe2 data/ftbic/recipes/shaped/overclocked_heat_vent.json
-72b81a4f2596bfd746a22dec2bb123d1b43f56fd data/ftbic/recipes/shaped/overclocker_upgrade.json
+d7cefe9fc50e6fafecb75a4d77b7836eae218170 data/ftbic/recipes/shaped/overclocker_upgrade.json
 a2ddbb54b27954e0e3096e90ee548f67837c502f data/ftbic/recipes/shaped/pump.json
 8fb22343546356e250b17d5313dcbedbcd02f1a2 data/ftbic/recipes/shaped/quad_uranium_fuel_rod.json
 1a6e1a73339c7113920f5b60dcc9cbff59c92634 data/ftbic/recipes/shaped/quantum_boots.json
@@ -805,6 +802,7 @@ f276c53ec19f60e0828990dd0365a1c448b19372 data/ftbic/recipes/shaped/quantum_leggi
 e74d4a63d8e3c4d42d1388f5bb2b21e149ccd859 data/ftbic/recipes/shaped/rubber_sheet.json
 c02db4b8841945ed679bdf73641579b39a128131 data/ftbic/recipes/shaped/scrap_box.json
 ff95d21b4138e41a22fb952ee0de33759b63c83f data/ftbic/recipes/shaped/single_use_battery.json
+37def3f3e91f5c6da0d023fbe6880ee1f9c86f81 data/ftbic/recipes/shaped/small_coolant_cell.json
 a4bca02b5eff6fd84ae07aa19870c7a8c9dbe2ab data/ftbic/recipes/shaped/thick_neutron_reflector.json
 c1e09066d8471d4d84de2634a79b7dbfae8712d1 data/ftbic/recipes/shaped/transformer_upgrade.json
 618b9894f01e67daa2db50e4a72fb650bc02c07b data/ftbic/recipes/shaped/wind_mill.json

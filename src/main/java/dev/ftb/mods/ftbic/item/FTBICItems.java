@@ -95,9 +95,9 @@ public interface FTBICItems {
 	Supplier<Item> EV_BATTERY = REGISTRY.register("ev_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.EV, FTBICConfig.EV_BATTERY_CAPACITY));
 	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, EnergyTier.IV, Integer.MAX_VALUE));
 	Supplier<Item> FLUID_CELL = REGISTRY.register("fluid_cell", FluidCellItem::new);
-	Supplier<Item> COOLANT_10K = REGISTRY.register("coolant_10k", () -> new CoolantItem(10_000));
-	Supplier<Item> COOLANT_30K = REGISTRY.register("coolant_30k", () -> new CoolantItem(30_000));
-	Supplier<Item> COOLANT_60K = REGISTRY.register("coolant_60k", () -> new CoolantItem(60_000));
+	Supplier<Item> SMALL_COOLANT_CELL = REGISTRY.register("small_coolant_cell", () -> new CoolantItem(10_000));
+	Supplier<Item> MEDIUM_COOLANT_CELL = REGISTRY.register("medium_coolant_cell", () -> new CoolantItem(30_000));
+	Supplier<Item> LARGE_COOLANT_CELL = REGISTRY.register("large_coolant_cell", () -> new CoolantItem(60_000));
 	Supplier<Item> URANIUM_FUEL_ROD = REGISTRY.register("uranium_fuel_rod", () -> new FuelRodItem(20_000, 1, 5, 2));
 	Supplier<Item> DUAL_URANIUM_FUEL_ROD = REGISTRY.register("dual_uranium_fuel_rod", () -> new FuelRodItem(20_000, 2, 10, 4));
 	Supplier<Item> QUAD_URANIUM_FUEL_ROD = REGISTRY.register("quad_uranium_fuel_rod", () -> new FuelRodItem(20_000, 4, 20, 8));

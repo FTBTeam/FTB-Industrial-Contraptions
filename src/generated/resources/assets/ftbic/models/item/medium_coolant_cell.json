@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "ftbic:item/coolant_60k"
+		"layer0": "ftbic:item/medium_coolant_cell"
 	}
 }

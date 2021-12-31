@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:macerating/coal_from_ore"
+			"ftbic:separating/small_coolant_cell"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"tag": "forge:ores/coal"
+						"item": "ftbic:fluid_cell"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:macerating/coal_from_ore"
+				"recipe": "ftbic:separating/small_coolant_cell"
 			}
 		}
 	},

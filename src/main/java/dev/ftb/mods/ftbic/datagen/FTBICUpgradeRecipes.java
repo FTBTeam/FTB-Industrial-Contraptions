@@ -14,11 +14,11 @@ public class FTBICUpgradeRecipes extends FTBICRecipesGen {
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
 		ShapedRecipeBuilder.shaped(OVERCLOCKER_UPGRADE)
-				.unlockedBy("has_item", has(COOLANT_10K))
+				.unlockedBy("has_item", has(SMALL_COOLANT_CELL))
 				.group(MODID + ":overclocker_upgrade")
 				.pattern("UUU")
 				.pattern("WCW")
-				.define('U', unbroken(COOLANT_10K))
+				.define('U', unbroken(SMALL_COOLANT_CELL))
 				.define('W', LV_CABLE)
 				.define('C', ELECTRONIC_CIRCUIT)
 				.save(consumer, shapedLoc("overclocker_upgrade"));

@@ -10,16 +10,18 @@ public class NuclearReactor {
 	public final ItemStack[] inputItems;
 
 	public boolean paused;
-	public double energyOutput;
+	public boolean simulation;
 	public int heat;
 
+	public double energyOutput;
 	public int maxHeat;
-	public double explosionRadius;
 	public double explosionModifier;
+	public double explosionRadius;
 
 	public NuclearReactor(ItemStack[] is) {
 		inputItems = is;
 		paused = true;
+		simulation = false;
 		energyOutput = 0D;
 		heat = 0;
 	}
@@ -70,11 +72,12 @@ public class NuclearReactor {
 		((ReactorItem) first.getItem()).damageReactorItem(first, heat % list.size());
 	}
 
-	public void tick() {
+	public boolean tick() {
 		energyOutput = 0D;
 		maxHeat = 10000;
-		explosionRadius = FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS;
 		explosionModifier = 1D;
+		explosionRadius = FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS;
+		boolean stopSimulation = true;
 
 		for (int x = 0; x < 9; x++) {
 			for (int y = 0; y < 6; y++) {
@@ -95,6 +98,8 @@ public class NuclearReactor {
 
 					if (stack.isEmpty() || stack.isDamageableItem() && stack.getDamageValue() >= stack.getMaxDamage()) {
 						setAt(x, y, ItemStack.EMPTY);
+					} else if (simulation && ((ReactorItem) stack.getItem()).keepSimulationRunning(stack)) {
+						stopSimulation = false;
 					}
 				}
 			}
@@ -103,5 +108,11 @@ public class NuclearReactor {
 		heat = Math.max(0, heat);
 		explosionRadius *= explosionModifier;
 		explosionRadius = Math.min(explosionRadius, FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_LIMIT);
+
+		if (heat >= maxHeat) {
+			stopSimulation = true;
+		}
+
+		return stopSimulation;
 	}
 }

@@ -3,8 +3,12 @@ package dev.ftb.mods.ftbic.item.reactor;
 import net.minecraft.world.item.ItemStack;
 
 public interface ReactorItem {
-	default int getRods() {
+	default int getRods(ItemStack stack) {
 		return 0;
+	}
+
+	default boolean keepSimulationRunning(ItemStack stack) {
+		return false;
 	}
 
 	default double getRelativeDamage(ItemStack stack) {

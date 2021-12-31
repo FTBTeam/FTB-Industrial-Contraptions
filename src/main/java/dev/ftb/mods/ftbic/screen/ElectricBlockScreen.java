@@ -258,12 +258,24 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		blit(poseStack, x, y, 134, 201, 9, 10);
 	}
 
+	public void drawSmallButtonQuestion(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 144, 201, 9, 10);
+	}
+
 	public void drawSmallPauseButton(PoseStack poseStack, int x, int y, int mouseX, int mouseY, boolean paused) {
 		if (paused) {
 			drawSmallButtonStart(poseStack, x, y);
 		} else {
 			drawSmallButtonPause(poseStack, x, y);
 		}
+
+		if (isIn(mouseX, mouseY, x, y, 9, 10)) {
+			drawSmallButtonFrame(poseStack, x, y);
+		}
+	}
+
+	public void drawSmallQuestionButton(PoseStack poseStack, int x, int y, int mouseX, int mouseY) {
+		drawSmallButtonQuestion(poseStack, x, y);
 
 		if (isIn(mouseX, mouseY, x, y, 9, 10)) {
 			drawSmallButtonFrame(poseStack, x, y);

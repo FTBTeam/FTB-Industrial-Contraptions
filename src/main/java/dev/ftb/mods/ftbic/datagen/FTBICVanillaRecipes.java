@@ -87,12 +87,6 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(CHARCOAL_DUST_ITEM))
 				.save(consumer, maceratingLoc("charcoal_dust"));
 
-		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(COAL_ORE))
-				.inputItem(Ingredient.of(COAL_ORE))
-				.outputItem(new ItemStack(Items.COAL, 2))
-				.save(consumer, maceratingLoc("coal_from_ore"));
-
 		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", has(GRAVEL))
 				.inputItem(Ingredient.of(GRAVEL))

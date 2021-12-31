@@ -2,7 +2,7 @@
 	"parent": "minecraft:recipes/root",
 	"rewards": {
 		"recipes": [
-			"ftbic:separating/coolant_10k"
+			"ftbic:shaped/medium_coolant_cell"
 		]
 	},
 	"criteria": {
@@ -11,7 +11,7 @@
 			"conditions": {
 				"items": [
 					{
-						"item": "ftbic:fluid_cell"
+						"item": "ftbic:small_coolant_cell"
 					}
 				]
 			}
@@ -19,7 +19,7 @@
 		"has_the_recipe": {
 			"trigger": "minecraft:recipe_unlocked",
 			"conditions": {
-				"recipe": "ftbic:separating/coolant_10k"
+				"recipe": "ftbic:shaped/medium_coolant_cell"
 			}
 		}
 	},

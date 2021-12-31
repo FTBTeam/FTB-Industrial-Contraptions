@@ -29,7 +29,7 @@ public class NeutronReflectorItem extends BaseReactorItem implements NeutronRefl
 			ItemStack item = reactor.getAt(x + NuclearReactorBlockEntity.OFFSET_X[i], y + NuclearReactorBlockEntity.OFFSET_Y[i]);
 
 			if (item.getItem() instanceof ReactorItem) {
-				damageReactorItem(stack, ((ReactorItem) item.getItem()).getRods());
+				damageReactorItem(stack, ((ReactorItem) item.getItem()).getRods(item));
 			}
 		}
 	}

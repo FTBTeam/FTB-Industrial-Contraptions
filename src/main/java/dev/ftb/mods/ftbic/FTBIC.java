@@ -120,6 +120,12 @@ public class FTBIC {
 				return FTBICItems.HV_BATTERY.get();
 			case "iridium_battery":
 				return FTBICItems.EV_BATTERY.get();
+			case "coolant_10k":
+				return FTBICItems.SMALL_COOLANT_CELL.get();
+			case "coolant_30k":
+				return FTBICItems.MEDIUM_COOLANT_CELL.get();
+			case "coolant_60k":
+				return FTBICItems.LARGE_COOLANT_CELL.get();
 			default:
 				return null;
 		}
