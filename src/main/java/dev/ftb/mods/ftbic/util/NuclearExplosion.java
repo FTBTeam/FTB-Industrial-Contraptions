@@ -586,7 +586,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 
 				if (i != listsSize - 1) {
 					try {
-						Thread.sleep(Mth.clamp(lists.get(i + 1).size() / 20L, 50L, 150L));
+						Thread.sleep(Math.min(Math.max(lists.get(i + 1).size() / 20L, 50L), 150L));
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}

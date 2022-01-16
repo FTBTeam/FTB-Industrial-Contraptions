@@ -5,3 +5,5 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
+
+rootProject.name = 'FTB-Industrial-Contraptions'
