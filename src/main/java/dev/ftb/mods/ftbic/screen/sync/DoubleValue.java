@@ -25,7 +25,10 @@ public class DoubleValue extends SyncedDataValue<Double> {
 
 	@Override
 	public Double read(int[] data) {
-		long bits = ((long) data[index]) | (((long) data[index + 1]) << 16L) | (((long) data[index + 2]) << 32L) | (((long) data[index + 3]) << 48L);
-		return Double.longBitsToDouble(bits);
+		long b0 = data[index] & 0xFFFFL;
+		long b1 = (data[index + 1] & 0xFFFFL) << 16L;
+		long b2 = (data[index + 2] & 0xFFFFL) << 32L;
+		long b3 = (data[index + 3] & 0xFFFFL) << 48L;
+		return Double.longBitsToDouble(b0 | b1 | b2 | b3);
 	}
 }

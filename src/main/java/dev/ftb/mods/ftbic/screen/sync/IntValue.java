@@ -23,6 +23,8 @@ public class IntValue extends SyncedDataValue<Integer> {
 
 	@Override
 	public Integer read(int[] data) {
-		return data[index] | (data[index + 1] << 16);
+		int b0 = data[index] & 0xFFFF;
+		int b1 = (data[index + 1] & 0xFFFF) << 16;
+		return b0 | b1;
 	}
 }
