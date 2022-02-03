@@ -17,6 +17,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	public final BatteryInventory dischargeBatteryInventory;
@@ -100,4 +106,152 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 
 		return InteractionResult.SUCCESS;
 	}
+
+	@Override
+	public int getSlots() {
+		return 2;
+	}
+
+	@NotNull
+	@Override
+	public ItemStack getStackInSlot(int slot) {
+		switch(slot) {
+			case 0:
+				return chargeBatteryInventory.getStackInSlot(0);
+			case 1:
+				return dischargeBatteryInventory.getStackInSlot(0);
+			default:
+				throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
+		}
+	}
+
+	@Override
+	public void setStackInSlot(int slot, ItemStack stack) {
+		ItemStack prev;
+		switch(slot) {
+			case 0:
+				prev = chargeBatteryInventory.getStackInSlot(0);
+				chargeBatteryInventory.setStackInSlot(0, stack);
+				break;
+			case 1:
+				prev = dischargeBatteryInventory.getStackInSlot(0);
+				dischargeBatteryInventory.setStackInSlot(0, stack);
+				break;
+			default:
+				throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
+		}
+		inventoryChanged(slot, prev);
+	}
+
+	@NotNull
+	@Override
+	public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+		if (slot >= getSlots() || stack.isEmpty() || !isItemValid(slot, stack)) {
+			return stack;
+		}
+
+		ItemStack existing = getStackInSlot(slot);
+		int limit = Math.min(this.getSlotLimit(slot), stack.getMaxStackSize());
+
+		if (!existing.isEmpty()) {
+			if (!ItemHandlerHelper.canItemStacksStack(stack, existing)) {
+				return stack;
+			}
+
+			limit -= existing.getCount();
+		}
+
+		if (limit <= 0) {
+			return stack;
+		}
+
+		boolean reachedLimit = stack.getCount() > limit;
+
+		if (!simulate) {
+			if (existing.isEmpty()) {
+				ItemStack prev = getStackInSlot(slot);
+				switch(slot) {
+					case 0:
+						chargeBatteryInventory.setStackInSlot(0, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
+						break;
+					case 1:
+						dischargeBatteryInventory.setStackInSlot(0, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
+						break;
+				}
+				inventoryChanged(slot, prev);
+			} else {
+				ItemStack prev = existing.copy();
+				existing.grow(reachedLimit ? limit : stack.getCount());
+				inventoryChanged(slot, prev);
+			}
+		}
+
+		return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
+	}
+
+	@NotNull
+	@Override
+	public ItemStack extractItem(int slot, int amount, boolean simulate) {
+		BatteryInventory batteryInv;
+		switch(slot) {
+			case 0:
+				batteryInv = chargeBatteryInventory;
+				break;
+			case 1:
+				batteryInv = dischargeBatteryInventory;
+				break;
+			default:
+				return ItemStack.EMPTY;
+		}
+		ItemStack existing = batteryInv.getStackInSlot(0);
+
+		if (existing.isEmpty()) {
+			return ItemStack.EMPTY;
+		}
+
+		int toExtract = Math.min(amount, existing.getMaxStackSize());
+
+		if (existing.getCount() <= toExtract) {
+			if (!simulate) {
+				batteryInv.setStackInSlot(0, ItemStack.EMPTY);
+				inventoryChanged(slot, existing);
+				return existing;
+			} else {
+				return existing.copy();
+			}
+		} else {
+			if (!simulate) {
+				batteryInv.setStackInSlot(0, ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract));
+				inventoryChanged(slot, existing);
+			}
+
+			return ItemHandlerHelper.copyStackWithSize(existing, toExtract);
+		}
+	}
+
+	@Override
+	public int getSlotLimit(int slot) {
+		return 64;
+	}
+
+	@Override
+	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+		return (slot == 0 && chargeBatteryInventory.isItemValid(0, stack)) || (slot == 1 && dischargeBatteryInventory.isItemValid(0, stack));
+	}
+
+	@NotNull
+	@Override
+	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			switch(side) {
+				case UP:
+					return LazyOptional.of(() -> dischargeBatteryInventory).cast();
+				default:
+					return LazyOptional.of(() -> chargeBatteryInventory).cast();
+			}
+		}
+
+		return super.getCapability(cap, side);
+	}
+
 }
