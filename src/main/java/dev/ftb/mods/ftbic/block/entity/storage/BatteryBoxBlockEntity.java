@@ -20,12 +20,15 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	public final BatteryInventory dischargeBatteryInventory;
+	private LazyOptional<IItemHandler> dischargeBatteryInventoryOptional;
+	private LazyOptional<IItemHandler> chargeBatteryInventoryOptional;
 
 	public BatteryBoxBlockEntity(ElectricBlockInstance type) {
 		super(type);
@@ -115,7 +118,7 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	@NotNull
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		switch(slot) {
+		switch (slot) {
 			case 0:
 				return chargeBatteryInventory.getStackInSlot(0);
 			case 1:
@@ -128,7 +131,7 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
 		ItemStack prev;
-		switch(slot) {
+		switch (slot) {
 			case 0:
 				prev = chargeBatteryInventory.getStackInSlot(0);
 				chargeBatteryInventory.setStackInSlot(0, stack);
@@ -170,7 +173,7 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 		if (!simulate) {
 			if (existing.isEmpty()) {
 				ItemStack prev = getStackInSlot(slot);
-				switch(slot) {
+				switch (slot) {
 					case 0:
 						chargeBatteryInventory.setStackInSlot(0, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
 						break;
@@ -192,17 +195,11 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	@NotNull
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		BatteryInventory batteryInv;
-		switch(slot) {
-			case 0:
-				batteryInv = chargeBatteryInventory;
-				break;
-			case 1:
-				batteryInv = dischargeBatteryInventory;
-				break;
-			default:
-				return ItemStack.EMPTY;
+		if (slot < 0 || slot > 1) {
+			return ItemStack.EMPTY;
 		}
+
+		BatteryInventory batteryInv = slot == 0 ? chargeBatteryInventory : dischargeBatteryInventory;
 		ItemStack existing = batteryInv.getStackInSlot(0);
 
 		if (existing.isEmpty()) {
@@ -239,16 +236,46 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 		return (slot == 0 && chargeBatteryInventory.isItemValid(0, stack)) || (slot == 1 && dischargeBatteryInventory.isItemValid(0, stack));
 	}
 
+	public LazyOptional<?> getDischargeBatteryInventoryOptional() {
+		if (dischargeBatteryInventoryOptional == null) {
+			dischargeBatteryInventoryOptional = LazyOptional.of(() -> dischargeBatteryInventory);
+		}
+
+		return dischargeBatteryInventoryOptional;
+	}
+
+	public LazyOptional<?> getChargeBatteryInventoryOptional() {
+		if (chargeBatteryInventoryOptional == null) {
+			chargeBatteryInventoryOptional = LazyOptional.of(() -> chargeBatteryInventory);
+		}
+
+		return chargeBatteryInventoryOptional;
+	}
+
+	@Override
+	public void invalidateCaps() {
+		super.invalidateCaps();
+
+		if (dischargeBatteryInventoryOptional != null) {
+			dischargeBatteryInventoryOptional.invalidate();
+			dischargeBatteryInventoryOptional = null;
+		}
+
+		if (chargeBatteryInventoryOptional != null) {
+			chargeBatteryInventoryOptional.invalidate();
+			chargeBatteryInventoryOptional = null;
+		}
+	}
+
 	@NotNull
 	@Override
 	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
 		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			switch(side) {
-				case UP:
-					return LazyOptional.of(() -> dischargeBatteryInventory).cast();
-				default:
-					return LazyOptional.of(() -> chargeBatteryInventory).cast();
+			if (side == Direction.UP) {
+				return getDischargeBatteryInventoryOptional().cast();
 			}
+
+			return getChargeBatteryInventoryOptional().cast();
 		}
 
 		return super.getCapability(cap, side);
