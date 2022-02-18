@@ -58,7 +58,6 @@ public interface FTBICItems {
 	Supplier<BlockItem> NUCLEAR_REACTOR_CHAMBER = blockItem("nuclear_reactor_chamber", FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 	Supplier<BlockItem> NUKE = blockItem("nuke", FTBICBlocks.NUKE);
 	Supplier<BlockItem> ACTIVE_NUKE = blockItem("active_nuke", FTBICBlocks.ACTIVE_NUKE);
-	Supplier<BlockItem> TRACTOR_BEAM = blockItem("tractor_beam", FTBICBlocks.TRACTOR_BEAM);
 
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");

@@ -76,19 +76,4 @@ public interface EnergyItemHandler extends IForgeItem {
 
 	default void energyChanged(ItemStack stack, double prevEnergy) {
 	}
-
-	@Override
-	default boolean showDurabilityBar(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().contains("Energy");
-	}
-
-	@Override
-	default double getDurabilityForDisplay(ItemStack stack) {
-		return 1D - getEnergy(stack) / getEnergyCapacity(stack);
-	}
-
-	@Override
-	default int getRGBDurabilityForDisplay(ItemStack stack) {
-		return 0xFFFF0000;
-	}
 }

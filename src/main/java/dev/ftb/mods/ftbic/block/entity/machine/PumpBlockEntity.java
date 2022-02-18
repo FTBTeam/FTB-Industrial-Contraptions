@@ -22,6 +22,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -34,8 +35,8 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 	public FluidStack fluidStack;
 	public Fluid filter;
 
-	public PumpBlockEntity() {
-		super(FTBICElectricBlocks.PUMP);
+	public PumpBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.PUMP, pos, state);
 		fluidStack = FluidStack.EMPTY;
 		filter = Fluids.EMPTY;
 	}
@@ -68,12 +69,14 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 
 	@Override
 	public void digBlock(BlockState state, BlockPos miningPos, double lx, double ly, double lz) {
-		if (state.getBlock() instanceof BucketPickup && fluidStack.getAmount() + FluidAttributes.BUCKET_VOLUME <= getCapacity()) {
-			Fluid takeLiquid = ((BucketPickup) state.getBlock()).takeLiquid(level, miningPos, state);
+		if (state.getBlock() instanceof BucketPickup bucketPickup && fluidStack.getAmount() + FluidAttributes.BUCKET_VOLUME <= getCapacity()) {
+			FluidStack fluidStack2 = FluidUtil.getFluidContained(bucketPickup.pickupBlock(level, miningPos, state)).orElse(FluidStack.EMPTY);
 
-			if (takeLiquid != Fluids.EMPTY && takeLiquid.isSource(takeLiquid.defaultFluidState())) {
+			if (!fluidStack2.isEmpty()) {
 				if (filter == Fluids.EMPTY) {
-					filter = takeLiquid;
+					filter = fluidStack2.getFluid();
+				} else if (filter != fluidStack2.getFluid()) {
+					return;
 				}
 
 				if (fluidStack.isEmpty()) {

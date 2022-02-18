@@ -18,6 +18,7 @@ import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -28,12 +29,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.ConstantIntValue;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -42,11 +44,10 @@ import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeLootTableProvider;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,17 +71,17 @@ public class FTBICDataGenHandler {
 		ExistingFileHelper efh = event.getExistingFileHelper();
 
 		if (event.includeClient()) {
-			gen.addProvider(new ICLang(gen, MODID, "en_us"));
-			gen.addProvider(new ICTextures(gen, MODID, event.getExistingFileHelper()));
-			gen.addProvider(new ICBlockModels(gen, MODID, event.getExistingFileHelper()));
-			gen.addProvider(new ICBlockStates(gen, MODID, event.getExistingFileHelper()));
-			gen.addProvider(new ICItemModels(gen, MODID, event.getExistingFileHelper()));
+			gen.addProvider(new FTBICLang(gen, MODID, "en_us"));
+			gen.addProvider(new FTBICTextures(gen, MODID, event.getExistingFileHelper()));
+			gen.addProvider(new FTBICBlockModels(gen, MODID, event.getExistingFileHelper()));
+			gen.addProvider(new FTBICBlockStates(gen, MODID, event.getExistingFileHelper()));
+			gen.addProvider(new FTBICItemModels(gen, MODID, event.getExistingFileHelper()));
 		}
 
 		if (event.includeServer()) {
 			ICBlockTags blockTags = new ICBlockTags(gen, MODID, efh);
 			gen.addProvider(blockTags);
-			gen.addProvider(new ICItemTags(gen, blockTags, MODID, efh));
+			gen.addProvider(new FTBICItemTags(gen, blockTags, MODID, efh));
 			gen.addProvider(new FTBICComponentRecipes(gen));
 			gen.addProvider(new FTBICUpgradeRecipes(gen));
 			gen.addProvider(new FTBICCableRecipes(gen));
@@ -93,12 +94,12 @@ public class FTBICDataGenHandler {
 			gen.addProvider(new FTBICNuclearRecipes(gen));
 			gen.addProvider(new FTBICGeneratorFuelRecipes(gen));
 			gen.addProvider(new FTBICVanillaRecipes(gen));
-			gen.addProvider(new ICLootTableProvider(gen));
+			gen.addProvider(new FTBICLootTableProvider(gen));
 		}
 	}
 
-	private static class ICLang extends LanguageProvider {
-		public ICLang(DataGenerator gen, String modid, String locale) {
+	private static class FTBICLang extends LanguageProvider {
+		public FTBICLang(DataGenerator gen, String modid, String locale) {
 			super(gen, modid, locale);
 		}
 
@@ -131,7 +132,6 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			addBlock(FTBICBlocks.NUKE);
 			addBlock(FTBICBlocks.ACTIVE_NUKE);
-			addBlock(FTBICBlocks.TRACTOR_BEAM);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -212,7 +212,7 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICTextures extends CombinedTextureProvider {
+	private static class FTBICTextures extends CombinedTextureProvider {
 		public static final int WOOD_UNIVERSAL = 0;
 		public static final int BASIC_UNIVERSAL = 1;
 		public static final int BASIC_TOP = 2;
@@ -235,7 +235,7 @@ public class FTBICDataGenHandler {
 				"advanced_side"
 		};
 
-		public ICTextures(DataGenerator g, String mod, ExistingFileHelper efh) {
+		public FTBICTextures(DataGenerator g, String mod, ExistingFileHelper efh) {
 			super(g, mod, efh);
 		}
 
@@ -321,7 +321,7 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICBlockModels extends BlockModelProvider {
+	private static class FTBICBlockModels extends BlockModelProvider {
 		public static final String BASIC_TOP = "basic_top";
 		public static final String BASIC_BOTTOM = "basic_bottom";
 		public static final String BASIC_SIDE = "basic_side";
@@ -329,7 +329,7 @@ public class FTBICDataGenHandler {
 		public static final String ADVANCED_BOTTOM = "advanced_bottom";
 		public static final String ADVANCED_SIDE = "advanced_side";
 
-		public ICBlockModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
+		public FTBICBlockModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
 			super(generator, modid, existingFileHelper);
 		}
 
@@ -585,8 +585,8 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICBlockStates extends BlockStateProvider {
-		public ICBlockStates(DataGenerator gen, String modid, ExistingFileHelper exFileHelper) {
+	private static class FTBICBlockStates extends BlockStateProvider {
+		public FTBICBlockStates(DataGenerator gen, String modid, ExistingFileHelper exFileHelper) {
 			super(gen, modid, exFileHelper);
 		}
 
@@ -636,7 +636,6 @@ public class FTBICDataGenHandler {
 			simpleBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get(), models().getExistingFile(modLoc("block/nuclear_reactor_chamber")));
 			simpleBlock(FTBICBlocks.NUKE.get(), models().getExistingFile(modLoc("block/nuke")));
 			simpleBlock(FTBICBlocks.ACTIVE_NUKE.get(), models().getExistingFile(modLoc("block/active_nuke")));
-			directionalBlock(FTBICBlocks.TRACTOR_BEAM.get(), models().getExistingFile(modLoc("block/tractor_beam")));
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
@@ -671,8 +670,8 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICItemModels extends ItemModelProvider {
-		public ICItemModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
+	private static class FTBICItemModels extends ItemModelProvider {
+		public FTBICItemModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
 			super(generator, modid, existingFileHelper);
 		}
 
@@ -769,7 +768,6 @@ public class FTBICDataGenHandler {
 			basicBlockItem(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			basicBlockItem(FTBICBlocks.NUKE);
 			basicBlockItem(FTBICBlocks.ACTIVE_NUKE);
-			basicBlockItem(FTBICBlocks.TRACTOR_BEAM);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
@@ -849,8 +847,8 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICItemTags extends ItemTagsProvider {
-		public ICItemTags(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, String modId, ExistingFileHelper existingFileHelper) {
+	private static class FTBICItemTags extends ItemTagsProvider {
+		public FTBICItemTags(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, String modId, ExistingFileHelper existingFileHelper) {
 			super(dataGenerator, blockTagProvider, modId, existingFileHelper);
 		}
 
@@ -861,11 +859,15 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICLootTableProvider extends ForgeLootTableProvider {
-		private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> lootTables = Lists.newArrayList(Pair.of(ICBlockLootTableProvider::new, LootContextParamSets.BLOCK));
+	private static class FTBICLootTableProvider extends LootTableProvider {
+		private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> lootTables = Lists.newArrayList(Pair.of(FTBICBlockLootTableProvider::new, LootContextParamSets.BLOCK));
 
-		public ICLootTableProvider(DataGenerator dataGeneratorIn) {
+		public FTBICLootTableProvider(DataGenerator dataGeneratorIn) {
 			super(dataGeneratorIn);
+		}
+
+		@Override
+		protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationtracker) {
 		}
 
 		@Override
@@ -874,7 +876,7 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	public static class ICBlockLootTableProvider extends BlockLoot {
+	public static class FTBICBlockLootTableProvider extends BlockLoot {
 		private final Map<ResourceLocation, LootTable.Builder> tables = Maps.newHashMap();
 
 		@Override
@@ -899,12 +901,12 @@ public class FTBICDataGenHandler {
 					add(machine.block.get(), LootTable.lootTable()
 							.withPool(LootPool.lootPool()
 									.when(new BurntBlockCondition.Builder().invert())
-									.setRolls(ConstantIntValue.exactly(1))
+									.setRolls(ConstantValue.exactly(1))
 									.add(LootItem.lootTableItem(machine.item.get()))
 							)
 							.withPool(LootPool.lootPool()
 									.when(new BurntBlockCondition.Builder())
-									.setRolls(ConstantIntValue.exactly(1))
+									.setRolls(ConstantValue.exactly(1))
 									.add(LootItem.lootTableItem(machine.advanced ? FTBICItems.ADVANCED_MACHINE_BLOCK.get() : FTBICItems.MACHINE_BLOCK.get()))
 							)
 					);

@@ -9,13 +9,13 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.common.ToolType;
 
 import java.util.Random;
 
 public class ExFluidBlock extends Block {
 	public ExFluidBlock() {
-		super(Properties.of(Material.STONE).strength(0.9F).harvestTool(ToolType.PICKAXE).sound(SoundType.STONE).noDrops().isValidSpawn((arg, arg2, arg3, object) -> false).randomTicks());
+		// FIXME: pickaxe
+		super(Properties.of(Material.STONE).strength(0.9F).sound(SoundType.STONE).noDrops().isValidSpawn((arg, arg2, arg3, object) -> false).randomTicks());
 	}
 
 	@Override

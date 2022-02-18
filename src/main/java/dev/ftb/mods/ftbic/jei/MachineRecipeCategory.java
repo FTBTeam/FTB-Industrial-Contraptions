@@ -19,7 +19,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -67,8 +67,8 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 	}
 
 	@Override
-	public String getTitle() {
-		return I18n.get(titleKey);
+	public Component getTitle() {
+		return new TextComponent(titleKey);
 	}
 
 	@Override

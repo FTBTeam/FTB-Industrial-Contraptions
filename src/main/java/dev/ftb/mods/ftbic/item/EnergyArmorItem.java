@@ -9,6 +9,7 @@ import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -103,5 +104,20 @@ public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isBarVisible(ItemStack stack) {
+		return stack.hasTag() && stack.getTag().contains("Energy");
+	}
+
+	@Override
+	public int getBarWidth(ItemStack stack) {
+		return Math.round((float) Mth.clamp((getEnergy(stack) / getEnergyCapacity(stack)) * 13D, 0D, 13D));
+	}
+
+	@Override
+	public int getBarColor(ItemStack stack) {
+		return 0xFFFF0000;
 	}
 }

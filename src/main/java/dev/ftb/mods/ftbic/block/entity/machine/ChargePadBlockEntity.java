@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -16,8 +17,8 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.Random;
 
 public class ChargePadBlockEntity extends ElectricBlockEntity {
-	public ChargePadBlockEntity() {
-		super(FTBICElectricBlocks.CHARGE_PAD);
+	public ChargePadBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.CHARGE_PAD, pos, state);
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class ChargePadBlockEntity extends ElectricBlockEntity {
 	@OnlyIn(Dist.CLIENT)
 	public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, Random r) {
 		for (int i = 0; i < 5; i++) {
-			level.addParticle(new DustParticleOptions(1F, 0F, 0F, 1F), x + r.nextFloat(), y + 1F + r.nextFloat() * 2F, z + r.nextFloat(), 0D, 0D, 0D);
+			level.addParticle(DustParticleOptions.REDSTONE, x + r.nextFloat(), y + 1F + r.nextFloat() * 2F, z + r.nextFloat(), 0D, 0D, 0D);
 		}
 	}
 }

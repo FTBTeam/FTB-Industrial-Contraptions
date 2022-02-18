@@ -34,7 +34,7 @@ public class SprayPaintCanItem extends Item {
 
 		if (state.getBlock() instanceof SprayPaintable) {
 			if (((SprayPaintable) state.getBlock()).paint(state, context.getLevel(), context.getClickedPos(), dark) && context.getLevel().isClientSide()) {
-				context.getLevel().playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.REDSTONE_TORCH_BURNOUT, SoundSource.BLOCKS, 0.5F, 2.6F + (random.nextFloat() - random.nextFloat()) * 0.8F);
+				context.getLevel().playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.REDSTONE_TORCH_BURNOUT, SoundSource.BLOCKS, 0.5F, 2.6F + (context.getLevel().random.nextFloat() - context.getLevel().random.nextFloat()) * 0.8F);
 			}
 
 			return InteractionResult.SUCCESS;

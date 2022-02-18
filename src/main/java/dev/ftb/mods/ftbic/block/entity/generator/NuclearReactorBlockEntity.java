@@ -59,8 +59,8 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public int debugSpeed = 0;
 	public Byte2ObjectOpenHashMap<Item> plan;
 
-	public NuclearReactorBlockEntity() {
-		super(FTBICElectricBlocks.NUCLEAR_REACTOR);
+	public NuclearReactorBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.NUCLEAR_REACTOR, pos, state);
 		reactor = new NuclearReactor(inputItems);
 	}
 
@@ -222,7 +222,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 							Player player = level.getServer().getPlayerList().getPlayer(placerId);
 
 							if (player != null) {
-								player.sendMessage(new TextComponent(String.format("%s : [%d, %d, %d]", level.dimension().location().toString(), worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())).withStyle(ChatFormatting.GRAY), Util.NIL_UUID);
+								player.sendMessage(new TextComponent(String.format("%s : [%d, %d, %d]", level.dimension().location(), worldPosition.getX(), worldPosition.getY(), worldPosition.getZ())).withStyle(ChatFormatting.GRAY), Util.NIL_UUID);
 							}
 
 							level.removeBlock(worldPosition, false);

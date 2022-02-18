@@ -14,12 +14,11 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +43,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class FluidCellItem extends Item {
-	private static final String TAG_FLUID = "Fluid";
+	public static final String TAG_FLUID = "Fluid";
 
 	public FluidCellItem() {
 		super(new Properties().stacksTo(16).tab(FTBIC.TAB));
@@ -87,22 +86,21 @@ public class FluidCellItem extends Item {
 		if (level.mayInteract(player, pos) && player.mayUseItemAt(pos1, direction, stack)) {
 			BlockState state = level.getBlockState(pos);
 
-			if (state.getBlock() instanceof BucketPickup) {
-				Fluid fluid = ((BucketPickup) state.getBlock()).takeLiquid(level, pos, state);
+			if (state.getBlock() instanceof BucketPickup bucketPickup) {
+				ItemStack fluidItem = bucketPickup.pickupBlock(level, pos, state);
 
-				if (fluid != Fluids.EMPTY) {
+				if (fluidItem.getItem() instanceof BucketItem bucketItem && bucketItem.getFluid() != Fluids.EMPTY) {
 					player.awardStat(Stats.ITEM_USED.get(this));
-					SoundEvent soundevent = fluid.getAttributes().getFillSound();
+					SoundEvent soundevent = bucketPickup.getPickupSound(state).orElse(null);
 
-					if (soundevent == null) {
-						soundevent = fluid.is(FluidTags.LAVA) ? SoundEvents.BUCKET_FILL_LAVA : SoundEvents.BUCKET_FILL;
+					if (soundevent != null) {
+						player.playSound(soundevent, 1F, 1F);
 					}
 
-					player.playSound(soundevent, 1F, 1F);
-					ItemStack itemstack1 = ItemUtils.createFilledResult(stack, player, setFluid(new ItemStack(this), fluid));
+					ItemStack itemstack1 = ItemUtils.createFilledResult(stack, player, setFluid(new ItemStack(this), bucketItem.getFluid()));
 
 					if (!level.isClientSide()) {
-						CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, new ItemStack(fluid.getBucket()));
+						CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, fluidItem);
 					}
 
 					return InteractionResultHolder.sidedSuccess(itemstack1, level.isClientSide());
@@ -176,15 +174,5 @@ public class FluidCellItem extends Item {
 		}
 
 		return Fluids.EMPTY;
-	}
-
-	public static String getSubtype(ItemStack stack) {
-		CompoundTag nbt = stack.getTag();
-
-		if (nbt != null) {
-			return nbt.getString(TAG_FLUID);
-		}
-
-		return "";
 	}
 }

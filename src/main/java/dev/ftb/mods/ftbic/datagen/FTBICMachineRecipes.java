@@ -1,6 +1,5 @@
 package dev.ftb.mods.ftbic.datagen;
 
-import com.ridanisaurus.emendatusenigmatica.registries.ItemHandler;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -94,7 +93,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.group(MODID + ":roller")
 				.pattern("HCH")
 				.pattern("PMP")
-				.define('H', ItemHandler.ENIGMATIC_HAMMER.get())
+				.define('H', Items.PAPER) // FIXME: .define('H', ItemHandler.ENIGMATIC_HAMMER.get())
 				.define('P', PISTON)
 				.define('M', MACHINE_BLOCK)
 				.define('C', ELECTRONIC_CIRCUIT)

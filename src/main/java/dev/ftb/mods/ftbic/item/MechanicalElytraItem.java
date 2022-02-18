@@ -10,6 +10,7 @@ import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -111,5 +112,20 @@ public class MechanicalElytraItem extends ArmorItem implements EnergyItemHandler
 		if (FTBICConfig.MECHANICAL_ELYTRA_RECHARGE > 0D && !level.isClientSide() && !player.isFallFlying() && level.isDay() && level.canSeeSky(new BlockPos(player.getEyePosition(1F)))) {
 			insertEnergy(stack, FTBICConfig.MECHANICAL_ELYTRA_RECHARGE, false);
 		}
+	}
+
+	@Override
+	public boolean isBarVisible(ItemStack stack) {
+		return stack.hasTag() && stack.getTag().contains("Energy");
+	}
+
+	@Override
+	public int getBarWidth(ItemStack stack) {
+		return Math.round((float) Mth.clamp((getEnergy(stack) / getEnergyCapacity(stack)) * 13D, 0D, 13D));
+	}
+
+	@Override
+	public int getBarColor(ItemStack stack) {
+		return 0xFFFF0000;
 	}
 }

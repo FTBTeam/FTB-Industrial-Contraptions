@@ -3,19 +3,21 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class WindMillBlockEntity extends GeneratorBlockEntity {
 	private int blocksInRadius = -1;
 	public double output = 0D;
 
-	public WindMillBlockEntity() {
-		super(FTBICElectricBlocks.WIND_MILL);
+	public WindMillBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.WIND_MILL, pos, state);
 	}
 
 	@Override

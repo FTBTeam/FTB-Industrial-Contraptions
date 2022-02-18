@@ -7,10 +7,11 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 	public final UpgradeInventory upgradeInventory;
@@ -19,8 +20,8 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 	public double energyUse;
 	public double progressSpeed;
 
-	public BasicMachineBlockEntity(ElectricBlockInstance type) {
-		super(type);
+	public BasicMachineBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 		upgradeInventory = new UpgradeInventory(this, 4, FTBICConfig.UPGRADE_LIMIT_PER_SLOT);
 		batteryInventory = new BatteryInventory(this, false);
 	}
@@ -29,7 +30,7 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 	public void writeData(CompoundTag tag) {
 		super.writeData(tag);
 
-		tag.put("Upgrades", upgradeInventory.serializeNBT().getList("Items", Constants.NBT.TAG_COMPOUND));
+		tag.put("Upgrades", upgradeInventory.serializeNBT().getList("Items", Tag.TAG_COMPOUND));
 
 		if (!batteryInventory.getStackInSlot(0).isEmpty()) {
 			tag.put("Battery", batteryInventory.getStackInSlot(0).serializeNBT());
@@ -41,7 +42,7 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 		super.readData(tag);
 
 		CompoundTag tag1 = new CompoundTag();
-		tag1.put("Items", tag.getList("Upgrades", Constants.NBT.TAG_COMPOUND));
+		tag1.put("Items", tag.getList("Upgrades", Tag.TAG_COMPOUND));
 		upgradeInventory.deserializeNBT(tag1);
 
 		if (tag.contains("Battery")) {

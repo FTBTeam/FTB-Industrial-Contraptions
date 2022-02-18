@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbic.jei;
 
 import dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.transfer.IRecipeTransferError;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
 import mezz.jei.transfer.RecipeTransferErrorInternal;
@@ -15,17 +15,22 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
-public class PoweredCraftingTableTransferHandler implements IRecipeTransferHandler<PoweredCraftingTableMenu> {
+public class PoweredCraftingTableTransferHandler implements IRecipeTransferHandler<PoweredCraftingTableMenu, Recipe> {
 	@Override
 	public Class<PoweredCraftingTableMenu> getContainerClass() {
 		return PoweredCraftingTableMenu.class;
 	}
 
+	@Override
+	public Class<Recipe> getRecipeClass() {
+		return Recipe.class;
+	}
+
 	@Nullable
 	@Override
-	public IRecipeTransferError transferRecipe(PoweredCraftingTableMenu container, Object recipe, IRecipeLayout recipeLayout, Player player, boolean maxTransfer, boolean doTransfer) {
-		if (recipe instanceof Recipe && ((Recipe<?>) recipe).getType() == RecipeType.CRAFTING) {
-			NonNullList<Ingredient> list = ((Recipe<?>) recipe).getIngredients();
+	public IRecipeTransferError transferRecipe(PoweredCraftingTableMenu container, Recipe recipe, IRecipeSlotsView recipeLayout, Player player, boolean maxTransfer, boolean doTransfer) {
+		if (recipe.getType() == RecipeType.CRAFTING) {
+			NonNullList<Ingredient> list = recipe.getIngredients();
 
 			if (list.size() > 9) {
 				return RecipeTransferErrorInternal.INSTANCE;

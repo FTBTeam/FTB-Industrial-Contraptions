@@ -34,8 +34,8 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	public double maxEnergyOutput;
 	public double maxEnergyOutputTransfer;
 
-	public GeneratorBlockEntity(ElectricBlockInstance type) {
-		super(type);
+	public GeneratorBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 		chargeBatteryInventory = new BatteryInventory(this, true);
 	}
 
@@ -215,7 +215,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 					find(traversed, set, origin, distance + 1, pos, dir);
 				}
 			}
-		} else if (state.hasTileEntity()) {
+		} else if (state.hasBlockEntity()) {
 			BlockEntity entity = level.getBlockEntity(pos);
 			EnergyHandler handler = entity instanceof EnergyHandler ? (EnergyHandler) entity : null; // entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
 

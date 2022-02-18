@@ -39,13 +39,14 @@ public class PoweredCraftingTableScreen extends ElectricBlockScreen<PoweredCraft
 
 		drawLargeSlot(poseStack, leftPos + 110, topPos + 30);
 
+		// TODO: Check if light is correct
 		Lighting.setupFor3DItems();
-		RenderSystem.color4f(1F, 1F, 1F, 1F);
-		RenderSystem.enableRescaleNormal();
+		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+		// RenderSystem.enableRescaleNormal();
 		itemRenderer.blitOffset = 100.0F;
 		RenderSystem.enableDepthTest();
 		RenderSystem.disableBlend();
-		RenderSystem.enableLighting();
+		// RenderSystem.enableLighting();
 
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 3; x++) {
@@ -62,7 +63,7 @@ public class PoweredCraftingTableScreen extends ElectricBlockScreen<PoweredCraft
 
 					itemRenderer.renderAndDecorateItem(clientItemStacks[i][(int) ((System.currentTimeMillis() / 1000L) % clientItemStacks[i].length)], ix, iy);
 
-					RenderSystem.disableLighting();
+					// RenderSystem.disableLighting();
 					RenderSystem.enableBlend();
 					RenderSystem.disableDepthTest();
 					RenderSystem.disableTexture();
@@ -70,13 +71,13 @@ public class PoweredCraftingTableScreen extends ElectricBlockScreen<PoweredCraft
 					RenderSystem.enableTexture();
 					RenderSystem.enableDepthTest();
 					RenderSystem.disableBlend();
-					RenderSystem.enableLighting();
+					// RenderSystem.enableLighting();
 				}
 			}
 		}
 
 		itemRenderer.blitOffset = 0.0F;
-		Lighting.turnOff();
+		Lighting.setupForFlatItems();
 
 		drawProgressBar(poseStack, leftPos + 110, topPos + 58, menu.data.get(SyncedData.BAR));
 	}

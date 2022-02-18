@@ -5,6 +5,7 @@ import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import dev.ftb.mods.ftbic.screen.BasicGeneratorMenu;
 import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.screen.sync.SyncedDataKey;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -12,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,8 +23,8 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int fuelTicks = 0;
 	public int maxFuelTicks = 0;
 
-	public BasicGeneratorBlockEntity() {
-		super(FTBICElectricBlocks.BASIC_GENERATOR);
+	public BasicGeneratorBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.BASIC_GENERATOR, pos, state);
 	}
 
 	@Override

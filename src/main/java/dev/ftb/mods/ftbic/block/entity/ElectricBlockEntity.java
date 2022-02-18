@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -30,20 +31,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,7 +53,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class ElectricBlockEntity extends BlockEntity implements TickableBlockEntity, EnergyHandler, IItemHandlerModifiable {
+public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, IItemHandlerModifiable {
 	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
@@ -83,8 +82,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	public UUID placerId = Util.NIL_UUID;
 	public String placerName = "";
 
-	public ElectricBlockEntity(ElectricBlockInstance type) {
-		super(type.blockEntity.get());
+	public ElectricBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+		super(type.blockEntity.get(), pos, state);
 		electricBlockInstance = type;
 		changed = false;
 		energy = 0;
@@ -139,7 +138,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			Arrays.fill(inputItems, ItemStack.EMPTY);
 			Arrays.fill(outputItems, ItemStack.EMPTY);
 
-			ListTag inv = tag.getList("Inventory", Constants.NBT.TAG_COMPOUND);
+			ListTag inv = tag.getList("Inventory", Tag.TAG_COMPOUND);
 
 			for (int i = 0; i < inv.size(); i++) {
 				CompoundTag tag1 = inv.getCompound(i);
@@ -169,8 +168,8 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag tag) {
-		super.load(state, tag);
+	public void load(CompoundTag tag) {
+		super.load(tag);
 		readData(tag);
 		initProperties();
 		upgradesChanged();
@@ -184,7 +183,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundTag tag) {
+	public void handleUpdateTag(CompoundTag tag) {
 		readNetData(tag);
 		initProperties();
 	}
@@ -202,12 +201,9 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		initProperties();
 	}
 
-	@Nullable
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		CompoundTag tag = new CompoundTag();
-		writeNetData(tag);
-		return new ClientboundBlockEntityDataPacket(worldPosition, 0, tag);
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override
@@ -218,15 +214,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 			upgradesChanged();
 		}
 
-		if (level != null && level.isClientSide() && !tickClientSide()) {
-			level.tickableBlockEntities.remove(this);
-		}
-
 		super.onLoad();
-	}
-
-	public boolean tickClientSide() {
-		return false;
 	}
 
 	public LazyOptional<?> getThisOptional() {
@@ -280,7 +268,6 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 		}
 	}
 
-	@Override
 	public void tick() {
 		handleChanges();
 	}
@@ -292,7 +279,7 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 
 	public void setChangedNow() {
 		changed = false;
-		level.blockEntityChanged(worldPosition, this);
+		level.blockEntityChanged(worldPosition);
 	}
 
 	@Override
@@ -701,8 +688,12 @@ public class ElectricBlockEntity extends BlockEntity implements TickableBlockEnt
 	}
 
 	public void neighborChanged(BlockPos pos1, Block block1) {
-		if (!level.getBlockState(pos1).getBlock().is(block1)) {
+		if (!level.getBlockState(pos1).is(block1)) {
 			electricNetworkUpdated(level, pos1);
 		}
+	}
+
+	public static <T extends BlockEntity> void ticker(Level level, BlockPos pos, BlockState state, T entity) {
+		((ElectricBlockEntity) entity).tick();
 	}
 }

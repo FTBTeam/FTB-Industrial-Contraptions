@@ -1,9 +1,9 @@
 package dev.ftb.mods.ftbic.net;
 
+import dev.architectury.networking.NetworkManager;
+import dev.architectury.networking.simple.BaseC2SMessage;
+import dev.architectury.networking.simple.MessageType;
 import dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu;
-import me.shedaniel.architectury.networking.NetworkManager;
-import me.shedaniel.architectury.networking.simple.BaseC2SMessage;
-import me.shedaniel.architectury.networking.simple.MessageType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.Ingredient;

@@ -5,10 +5,12 @@ import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class CanningMachineBlockEntity extends MachineBlockEntity {
-	public CanningMachineBlockEntity() {
-		super(FTBICElectricBlocks.CANNING_MACHINE);
+	public CanningMachineBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.CANNING_MACHINE, pos, state);
 	}
 
 	@Override

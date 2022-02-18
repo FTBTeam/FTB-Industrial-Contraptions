@@ -5,6 +5,7 @@ import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -36,5 +37,20 @@ public class ElectricItem extends Item implements EnergyItemHandler {
 		if (!isCreativeEnergyItem()) {
 			list.add(FTBICUtils.energyTooltip(stack, this));
 		}
+	}
+
+	@Override
+	public boolean isBarVisible(ItemStack stack) {
+		return stack.hasTag() && stack.getTag().contains("Energy");
+	}
+
+	@Override
+	public int getBarWidth(ItemStack stack) {
+		return Math.round((float) Mth.clamp((getEnergy(stack) / getEnergyCapacity(stack)) * 13D, 0D, 13D));
+	}
+
+	@Override
+	public int getBarColor(ItemStack stack) {
+		return 0xFFFF0000;
 	}
 }

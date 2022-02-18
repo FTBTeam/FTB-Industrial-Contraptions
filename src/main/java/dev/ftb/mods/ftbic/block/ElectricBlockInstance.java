@@ -34,8 +34,9 @@ public class ElectricBlockInstance {
 	public boolean wip = false;
 	public int inputItemCount = 0;
 	public int outputItemCount = 0;
+	public boolean tickClientSide = false;
 
-	public ElectricBlockInstance(String i, Supplier<BlockEntity> blockEntitySupplier) {
+	public ElectricBlockInstance(String i, BlockEntityType.BlockEntitySupplier<BlockEntity> blockEntitySupplier) {
 		id = i;
 		name = Arrays.stream(id.split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" "));
 
@@ -119,6 +120,11 @@ public class ElectricBlockInstance {
 	public ElectricBlockInstance io(int inItems, int outItems) {
 		inputItemCount = inItems;
 		outputItemCount = outItems;
+		return this;
+	}
+
+	public ElectricBlockInstance tickClientSide() {
+		tickClientSide = true;
 		return this;
 	}
 }

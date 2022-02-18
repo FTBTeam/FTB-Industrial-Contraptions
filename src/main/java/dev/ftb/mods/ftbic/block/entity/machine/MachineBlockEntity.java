@@ -10,6 +10,7 @@ import dev.ftb.mods.ftbic.screen.MachineMenu;
 import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
 import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,6 +21,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
@@ -36,8 +38,8 @@ public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 
 	public boolean shouldAccelerate;
 
-	public MachineBlockEntity(ElectricBlockInstance type) {
-		super(type);
+	public MachineBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 		progress = 0;
 		maxProgress = 0D;
 		acceleration = 0;

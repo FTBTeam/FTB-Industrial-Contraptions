@@ -6,26 +6,22 @@ import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.screen.sync.SyncedData;
-import dev.ftb.mods.ftbic.util.FTBICUtils;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.opengl.GL11;
-
-import java.util.Collections;
 
 public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends AbstractContainerScreen<T> {
 	public static final ResourceLocation BASE_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/gui/base.png");
@@ -55,7 +51,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 	protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
 		super.renderTooltip(poseStack, mouseX, mouseY);
 
-		if (energyX != -1 && energyY != -1 && isIn(mouseX, mouseY, leftPos + energyX, topPos + energyY, 14, 14) && menu.player.inventory.getCarried().isEmpty()) {
+		if (energyX != -1 && energyY != -1 && isIn(mouseX, mouseY, leftPos + energyX, topPos + energyY, 14, 14) && menu.getCarried().isEmpty()) {
 			double capacity = menu.data.get(SyncedData.ENERGY_CAPACITY);
 
 			if (menu.entity instanceof MachineBlockEntity) {
@@ -64,7 +60,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 
 			double energy = menu.data.get(SyncedData.ENERGY);
 
-			renderWrappedToolTip(poseStack, Collections.singletonList(new TextComponent("").append(FTBICUtils.formatEnergy(energy).withStyle(ChatFormatting.GRAY)).append(" / ").append(FTBICUtils.formatEnergy(capacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY)), mouseX, mouseY, font);
+			//FIXME: renderWrappedToolTip(poseStack, Collections.singletonList(new TextComponent("").append(FTBICUtils.formatEnergy(energy).withStyle(ChatFormatting.GRAY)).append(" / ").append(FTBICUtils.formatEnergy(capacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY)), mouseX, mouseY, font);
 		}
 	}
 
@@ -84,7 +80,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 
 	public void drawEnergy(PoseStack poseStack, int x, int y, int energy) {
 		switch (getEnergyType()) {
-			case 1: {
+			case 1 -> {
 				if (energy < 14) {
 					blit(poseStack, x + energy, y, 91 + energy, 240, 14 - energy, 14);
 				}
@@ -92,10 +88,8 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 				if (energy > 0) {
 					blit(poseStack, x, y, 106, 240, energy, 14);
 				}
-
-				break;
 			}
-			case 2: {
+			case 2 -> {
 				if (energy < 14) {
 					blit(poseStack, x + energy, y, 121 + energy, 240, 14 - energy, 14);
 				}
@@ -103,10 +97,8 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 				if (energy > 0) {
 					blit(poseStack, x, y, 136, 240, energy, 14);
 				}
-
-				break;
 			}
-			default: {
+			default -> {
 				if (energy < 14) {
 					blit(poseStack, x, y, 1, 240, 14, 14 - energy);
 				}
@@ -114,10 +106,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 				if (energy > 0) {
 					blit(poseStack, x, y + (14 - energy), 16, 240 + (14 - energy), 14, energy);
 				}
-
-				break;
 			}
-
 		}
 	}
 
@@ -160,7 +149,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 	public void drawTank(PoseStack poseStack, int x, int y, FluidStack fluid, int capacity) {
 		blit(poseStack, x, y, 49, 167, 18, 54);
 
-		minecraft.getTextureManager().bind(TextureAtlas.LOCATION_BLOCKS);
+		RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 		// render fluid here properly
 
 		double d = fluid.getAmount() / (double) capacity;
@@ -170,7 +159,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 			fillGradient(poseStack, x + 1, y + 1 + (52 - h), x + 17, y + 53, 0xFFFFB600, 0xFFD84C45);
 		}
 
-		minecraft.getTextureManager().bind(BASE_TEXTURE);
+		RenderSystem.setShaderTexture(0, BASE_TEXTURE);
 		blit(poseStack, x, y, 68, 167, 18, 54);
 	}
 
@@ -178,7 +167,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		drawSlot(poseStack, x, y);
 
 		if (!fluid.isEmpty()) {
-			minecraft.getTextureManager().bind(TextureAtlas.LOCATION_BLOCKS);
+			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 
 			TextureAtlasSprite sprite = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(fluid.getFluid().getAttributes().getStillTexture(fluid));
 
@@ -195,16 +184,17 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 			Matrix4f m = poseStack.last().pose();
 
 			BufferBuilder lv = Tesselator.getInstance().getBuilder();
-			lv.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_COLOR_TEX);
+			RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+			lv.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX);
 			lv.vertex(m, x + 1F, y + 1F, 0F).color(r, g, b, 255).uv(u0, v0).endVertex();
 			lv.vertex(m, x + 1F, y + 17F, 0F).color(r, g, b, 255).uv(u0, v1).endVertex();
 			lv.vertex(m, x + 17F, y + 17F, 0F).color(r, g, b, 255).uv(u1, v1).endVertex();
 			lv.vertex(m, x + 17F, y + 1F, 0F).color(r, g, b, 255).uv(u1, v0).endVertex();
 			lv.end();
-			RenderSystem.enableAlphaTest();
 			BufferUploader.end(lv);
 
-			minecraft.getTextureManager().bind(BASE_TEXTURE);
+			// FIXME: RenderSystem.enableAlphaTest();
+			RenderSystem.setShaderTexture(0, BASE_TEXTURE);
 		}
 	}
 
@@ -304,14 +294,14 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 
 	@Override
 	protected void renderBg(PoseStack poseStack, float delta, int mouseX, int mouseY) {
-		RenderSystem.color4f(1F, 1F, 1F, 1F);
+		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		RenderSystem.defaultBlendFunc();
-		minecraft.getTextureManager().bind(getScreenTexture());
+		RenderSystem.setShaderTexture(0, getScreenTexture());
 		int x = leftPos;
 		int y = topPos;
 		blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
 
-		minecraft.getTextureManager().bind(BASE_TEXTURE);
+		RenderSystem.setShaderTexture(0, BASE_TEXTURE);
 
 		if (energyX != -1 && energyY != -1) {
 			int e = Mth.ceil(menu.data.get(SyncedData.ENERGY) * 14D / menu.data.get(SyncedData.ENERGY_CAPACITY));

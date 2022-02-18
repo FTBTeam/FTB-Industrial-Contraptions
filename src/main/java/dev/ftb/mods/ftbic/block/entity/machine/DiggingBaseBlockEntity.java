@@ -21,8 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
@@ -49,8 +47,8 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	public long diggingMineTicks;
 	public long diggingMoveTicks;
 
-	public DiggingBaseBlockEntity(ElectricBlockInstance type) {
-		super(type);
+	public DiggingBaseBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 	}
 
 	@Override
@@ -250,24 +248,12 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public AABB getRenderBoundingBox() {
 		return INFINITE_EXTENT_AABB;
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public double getViewDistance() {
-		return 256D;
-	}
-
-	@Override
 	public boolean savePlacer() {
-		return true;
-	}
-
-	@Override
-	public boolean tickClientSide() {
 		return true;
 	}
 

@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu;
 import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +17,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,8 +28,8 @@ public class PoweredCraftingTableBlockEntity extends BasicMachineBlockEntity {
 	private ResourceLocation matchedRecipe;
 	public double progress;
 
-	public PoweredCraftingTableBlockEntity() {
-		super(FTBICElectricBlocks.POWERED_CRAFTING_TABLE);
+	public PoweredCraftingTableBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.POWERED_CRAFTING_TABLE, pos, state);
 		ingredients = new Ingredient[9];
 		Arrays.fill(ingredients, Ingredient.EMPTY);
 	}

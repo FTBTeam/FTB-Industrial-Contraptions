@@ -24,6 +24,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.ArrayList;
@@ -38,8 +39,8 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 	public boolean isPublic;
 	public String name;
 
-	public TeleporterBlockEntity() {
-		super(FTBICElectricBlocks.TELEPORTER);
+	public TeleporterBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.TELEPORTER, pos, state);
 		linkedPos = null;
 		linkedDimension = null;
 		linkedName = null;
@@ -219,6 +220,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 
 		List<TeleporterEntry> list = new ArrayList<>();
 
+		/* FIXME
 		for (BlockEntity entity : level.blockEntityList) {
 			if (entity instanceof TeleporterBlockEntity) {
 				TeleporterBlockEntity teleporter = (TeleporterBlockEntity) entity;
@@ -228,6 +230,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 				}
 			}
 		}
+		 */
 
 		buf.writeVarInt(list.size());
 

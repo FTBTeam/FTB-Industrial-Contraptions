@@ -36,15 +36,15 @@ import dev.ftb.mods.ftbic.block.entity.storage.LVTransformerBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.MVBatteryBoxBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.MVTransformerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 public interface FTBICElectricBlocks {
 	List<ElectricBlockInstance> ALL = new ArrayList<>();
 
-	static ElectricBlockInstance register(String id, Supplier<BlockEntity> supplier) {
+	static ElectricBlockInstance register(String id, BlockEntityType.BlockEntitySupplier<BlockEntity> supplier) {
 		ElectricBlockInstance instance = new ElectricBlockInstance(id, supplier);
 		ALL.add(instance);
 		return instance;
@@ -233,14 +233,16 @@ public interface FTBICElectricBlocks {
 			.energyCapacity(FTBICConfig.QUARRY_CAPACITY)
 			.maxEnergyInput(FTBICConfig.HV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.QUARRY_USE)
-			.io(0, 18);
+			.io(0, 18)
+			.tickClientSide();
 
 	ElectricBlockInstance PUMP = register("pump", PumpBlockEntity::new)
 			.advanced()
 			.energyCapacity(FTBICConfig.PUMP_CAPACITY)
 			.maxEnergyInput(FTBICConfig.HV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.PUMP_USE)
-			.io(1, 1);
+			.io(1, 1)
+			.tickClientSide();
 
 	// Battery Boxes //
 

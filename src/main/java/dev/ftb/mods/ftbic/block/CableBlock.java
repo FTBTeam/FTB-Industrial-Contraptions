@@ -40,7 +40,7 @@ public class CableBlock extends BaseCableBlock {
 	@Deprecated
 	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos pos, BlockPos facingPos) {
 		if (state.getValue(BlockStateProperties.WATERLOGGED)) {
-			level.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+			level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 		}
 
 		if (facingState.getBlock() instanceof BurntCableBlock) {
@@ -92,7 +92,7 @@ public class CableBlock extends BaseCableBlock {
 	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
 		super.onPlace(state, level, pos, state1, b);
 
-		if (!level.isClientSide() && !state.getBlock().is(state1.getBlock())) {
+		if (!level.isClientSide() && !state.is(state1.getBlock())) {
 			ElectricBlockEntity.electricNetworkUpdated(level, pos);
 		}
 	}
@@ -102,7 +102,7 @@ public class CableBlock extends BaseCableBlock {
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
 		super.onRemove(state, level, pos, state1, b);
 
-		if (!level.isClientSide() && !state.getBlock().is(state1.getBlock())) {
+		if (!level.isClientSide() && !state.is(state1.getBlock())) {
 			ElectricBlockEntity.electricNetworkUpdated(level, pos);
 		}
 	}

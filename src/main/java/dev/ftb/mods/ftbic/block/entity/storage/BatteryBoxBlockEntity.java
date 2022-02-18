@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -30,8 +31,8 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	private LazyOptional<IItemHandler> dischargeBatteryInventoryOptional;
 	private LazyOptional<IItemHandler> chargeBatteryInventoryOptional;
 
-	public BatteryBoxBlockEntity(ElectricBlockInstance type) {
-		super(type);
+	public BatteryBoxBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 		dischargeBatteryInventory = new BatteryInventory(this, false);
 	}
 

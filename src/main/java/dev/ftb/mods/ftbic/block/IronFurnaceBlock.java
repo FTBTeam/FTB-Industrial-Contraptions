@@ -1,9 +1,10 @@
 package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.IronFurnaceBlockEntity;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.FurnaceBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 
 public class IronFurnaceBlock extends FurnaceBlock {
@@ -12,7 +13,7 @@ public class IronFurnaceBlock extends FurnaceBlock {
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter level) {
-		return new IronFurnaceBlockEntity();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new IronFurnaceBlockEntity(pos, state);
 	}
 }

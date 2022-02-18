@@ -21,7 +21,7 @@ public class NuclearReactorInfoScreen extends Screen {
 
 	@Override
 	protected void init() {
-		addButton(new Button(this.width / 2 - 100, this.height / 4 + 120, 200, 20, CommonComponents.GUI_DONE, arg -> minecraft.setScreen(prev)));
+		addWidget(new Button(this.width / 2 - 100, this.height / 4 + 120, 200, 20, CommonComponents.GUI_DONE, arg -> minecraft.setScreen(prev)));
 	}
 
 	@Override

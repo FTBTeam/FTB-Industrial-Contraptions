@@ -1,8 +1,5 @@
 package dev.ftb.mods.ftbic.datagen;
 
-import com.ridanisaurus.emendatusenigmatica.registries.ItemHandler;
-import com.ridanisaurus.emendatusenigmatica.util.Materials;
-import com.ridanisaurus.emendatusenigmatica.util.ProcessedMaterials;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
@@ -84,14 +81,15 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final Tag<Item> TIN_DUST = ItemTags.bind("forge:dusts/tin");
 	public static final Tag<Item> ALUMINUM_DUST = ItemTags.bind("forge:dusts/aluminum");
 
-	public static final Item SILICON_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SILICON).get();
-	public static final Item OBSIDIAN_DUST_ITEM = ItemHandler.DUST_OBSIDIAN.get();
-	public static final Item ENDER_DUST_ITEM = ItemHandler.DUST_ENDER.get();
-	public static final Item SAWDUST_ITEM = ItemHandler.DUST_WOOD.get();
-	public static final Item COAL_DUST_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.COAL).get();
-	public static final Item CHARCOAL_DUST_ITEM = ItemHandler.DUST_CHARCOAL.get();
-	public static final Item URANIUM_DUST_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.URANIUM).get();
-	public static final Item SULFUR_ITEM = ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SULFUR).get();
+	// FIXME
+	public static final Item SILICON_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SILICON).get();
+	public static final Item OBSIDIAN_DUST_ITEM = Items.PAPER; // ItemHandler.DUST_OBSIDIAN.get();
+	public static final Item ENDER_DUST_ITEM = Items.PAPER; // ItemHandler.DUST_ENDER.get();
+	public static final Item SAWDUST_ITEM = Items.PAPER; // ItemHandler.DUST_WOOD.get();
+	public static final Item COAL_DUST_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.COAL).get();
+	public static final Item CHARCOAL_DUST_ITEM = Items.PAPER; // ItemHandler.DUST_CHARCOAL.get();
+	public static final Item URANIUM_DUST_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.URANIUM).get();
+	public static final Item SULFUR_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SULFUR).get();
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
 	public static final Item REINFORCED_STONE = FTBICItems.REINFORCED_STONE.get();
@@ -287,7 +285,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	}
 
 	@Override
-	protected final void buildShapelessRecipes(Consumer<FinishedRecipe> consumer) {
+	protected final void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
 		add(consumer);
 	}
 

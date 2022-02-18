@@ -3,12 +3,14 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.screen.GeothermalGeneratorMenu;
 import dev.ftb.mods.ftbic.screen.sync.SyncedData;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -22,8 +24,8 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int fluidAmount = 0;
 	private LazyOptional<GeothermalGeneratorTank> tankOptional;
 
-	public GeothermalGeneratorBlockEntity() {
-		super(FTBICElectricBlocks.GEOTHERMAL_GENERATOR);
+	public GeothermalGeneratorBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.GEOTHERMAL_GENERATOR, pos, state);
 	}
 
 	@Override
