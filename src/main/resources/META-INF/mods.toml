@@ -1,7 +1,7 @@
 modLoader = "javafml" #mandatory
 loaderVersion = "[36,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 license = "All rights reserved"
-#issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
+issueTrackerURL="https://github.com/FTBTeam/FTB-Mods-Issues/issues" #optional
 [[mods]] #mandatory
 modId = "ftbic" #mandatory
 version = "${version}" #mandatory
