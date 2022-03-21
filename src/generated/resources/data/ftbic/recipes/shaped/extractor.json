@@ -1,22 +1,22 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:extractor",
-	"pattern": [
-		"TMT",
-		"TCT"
-	],
-	"key": {
-		"T": {
-			"item": "myrtrees:tree_tap"
-		},
-		"M": {
-			"item": "ftbic:machine_block"
-		},
-		"C": {
-			"item": "ftbic:electronic_circuit"
-		}
-	},
-	"result": {
-		"item": "ftbic:centrifuge"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:extractor",
+  "pattern": [
+    "TMT",
+    "TCT"
+  ],
+  "key": {
+    "T": {
+      "item": "minecraft:stone"
+    },
+    "M": {
+      "item": "ftbic:machine_block"
+    },
+    "C": {
+      "item": "ftbic:electronic_circuit"
+    }
+  },
+  "result": {
+    "item": "ftbic:centrifuge"
+  }
 }

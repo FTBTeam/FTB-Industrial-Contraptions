@@ -1,21 +1,21 @@
 {
-	"type": "ftbic:separating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"item": "myrtrees:rubberwood_leaves"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "myrtrees:latex",
-			"chance": 0.35
-		},
-		{
-			"item": "myrtrees:rubberwood_sapling",
-			"chance": 0.05
-		}
-	]
+  "type": "ftbic:separating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "item": "minecraft:stone"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "minecraft:stone",
+      "chance": 0.35
+    },
+    {
+      "item": "minecraft:stone",
+      "chance": 0.05
+    }
+  ]
 }

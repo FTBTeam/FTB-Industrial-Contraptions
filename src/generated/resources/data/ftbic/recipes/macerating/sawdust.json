@@ -1,16 +1,16 @@
 {
-	"type": "ftbic:macerating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"tag": "minecraft:planks"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "emendatusenigmatica:wood_dust"
-		}
-	]
+  "type": "ftbic:macerating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "minecraft:planks"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "minecraft:paper"
+    }
+  ]
 }

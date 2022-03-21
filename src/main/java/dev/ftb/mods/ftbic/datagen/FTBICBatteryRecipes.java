@@ -1,12 +1,18 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.UpgradeRecipeBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class FTBICBatteryRecipes extends FTBICRecipesGen {
 	public FTBICBatteryRecipes(DataGenerator generator) {
@@ -15,8 +21,10 @@ public class FTBICBatteryRecipes extends FTBICRecipesGen {
 
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
+		Function<TagKey<Item>, InventoryChangeTrigger.TriggerInstance> tagKeyHas = (e) -> RecipeProvider.inventoryTrigger(ItemPredicate.Builder.item().of(e).build());
+
 		ShapedRecipeBuilder.shaped(SINGLE_USE_BATTERY)
-				.unlockedBy("has_item", has(COAL))
+				.unlockedBy("has_item", tagKeyHas.apply(COAL))
 				.group(MODID + ":single_use_battery")
 				.pattern("C")
 				.pattern("R")
@@ -27,7 +35,7 @@ public class FTBICBatteryRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("single_use_battery"));
 
 		ShapedRecipeBuilder.shaped(LV_BATTERY)
-				.unlockedBy("has_item", has(TIN_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(TIN_INGOT))
 				.group(MODID + ":battery")
 				.pattern(" C ")
 				.pattern("TRT")

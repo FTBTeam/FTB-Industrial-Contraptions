@@ -176,10 +176,9 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag tag) {
-		super.save(tag);
-		writeData(tag);
-		return tag;
+	protected void saveAdditional(CompoundTag arg) {
+		super.saveAdditional(arg);
+		writeData(arg);
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class CanningMachineRecipeResults extends MachineRecipeResults {
 				for (Item item : ForgeRegistries.ITEMS) {
 					FoodProperties f = item.getFoodProperties();
 
-					if (f != null && f.getNutrition() > 1 && f.getEffects().isEmpty() && !FTBICUtils.UNCANNABLE_FOOD.contains(item)) {
+					if (f != null && f.getNutrition() > 1 && f.getEffects().isEmpty() && !item.builtInRegistryHolder().is(FTBICUtils.UNCANNABLE_FOOD)) {
 						int cans = (f.getNutrition() + (f.isMeat() ? 8 : 3)) / 4;
 
 						if (cans > 0) {

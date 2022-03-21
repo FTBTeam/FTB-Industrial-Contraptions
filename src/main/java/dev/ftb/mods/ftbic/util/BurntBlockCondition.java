@@ -35,7 +35,7 @@ public class BurntBlockCondition implements LootItemCondition {
 
 	public static class Builder implements LootItemCondition.Builder {
 		@Override
-		public LootItemCondition m_6409_() {
+		public LootItemCondition build() {
 			return new BurntBlockCondition();
 		}
 	}

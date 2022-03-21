@@ -1,21 +1,21 @@
 {
-	"type": "ftbic:separating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"tag": "minecraft:sand"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "emendatusenigmatica:silicon_gem",
-			"chance": 0.2
-		},
-		{
-			"item": "emendatusenigmatica:silicon_gem",
-			"chance": 0.05
-		}
-	]
+  "type": "ftbic:separating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "minecraft:sand"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "minecraft:paper",
+      "chance": 0.2
+    },
+    {
+      "item": "minecraft:paper",
+      "chance": 0.05
+    }
+  ]
 }

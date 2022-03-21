@@ -1,13 +1,19 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class FTBICCableRecipes extends FTBICRecipesGen {
 	public FTBICCableRecipes(DataGenerator generator) {
@@ -16,31 +22,33 @@ public class FTBICCableRecipes extends FTBICRecipesGen {
 
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
+		Function<TagKey<Item>, InventoryChangeTrigger.TriggerInstance> tagKeyHas = (e) -> RecipeProvider.inventoryTrigger(ItemPredicate.Builder.item().of(e).build());
+
 		// Wire from metal
 
 		ShapedRecipeBuilder.shaped(COPPER_WIRE, 6)
-				.unlockedBy("has_item", has(COPPER_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(COPPER_INGOT))
 				.group(MODID + ":copper_wire")
 				.pattern("MMM")
 				.define('M', COPPER_INGOT)
 				.save(consumer, shapedLoc("copper_wire"));
 
 		ShapedRecipeBuilder.shaped(ALUMINUM_WIRE, 6)
-				.unlockedBy("has_item", has(ALUMINUM_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(ALUMINUM_INGOT))
 				.group(MODID + ":aluminum_wire")
 				.pattern("MMM")
 				.define('M', ALUMINUM_INGOT)
 				.save(consumer, shapedLoc("aluminum_wire"));
 
 		ShapedRecipeBuilder.shaped(GOLD_WIRE, 6)
-				.unlockedBy("has_item", has(GOLD_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(GOLD_INGOT))
 				.group(MODID + ":gold_wire")
 				.pattern("MMM")
 				.define('M', GOLD_INGOT)
 				.save(consumer, shapedLoc("gold_wire"));
 
 		ShapedRecipeBuilder.shaped(ENDERIUM_WIRE, 6)
-				.unlockedBy("has_item", has(ENDERIUM_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(ENDERIUM_INGOT))
 				.group(MODID + ":enderium_wire")
 				.pattern("MMM")
 				.define('M', ENDERIUM_INGOT)
@@ -141,25 +149,25 @@ public class FTBICCableRecipes extends FTBICRecipesGen {
 		// Wire extruding
 
 		MachineRecipeBuilder.extruding()
-				.unlockedBy("has_item", has(COPPER_PLATE))
+				.unlockedBy("has_item", tagKeyHas.apply(COPPER_PLATE))
 				.inputItem(Ingredient.of(COPPER_PLATE))
 				.outputItem(new ItemStack(COPPER_WIRE, 2))
 				.save(consumer, extrudingLoc("copper_wire"));
 
 		MachineRecipeBuilder.extruding()
-				.unlockedBy("has_item", has(GOLD_PLATE))
+				.unlockedBy("has_item", tagKeyHas.apply(GOLD_PLATE))
 				.inputItem(Ingredient.of(GOLD_PLATE))
 				.outputItem(new ItemStack(GOLD_WIRE, 2))
 				.save(consumer, extrudingLoc("gold_wire"));
 
 		MachineRecipeBuilder.extruding()
-				.unlockedBy("has_item", has(ALUMINUM_PLATE))
+				.unlockedBy("has_item", tagKeyHas.apply(ALUMINUM_PLATE))
 				.inputItem(Ingredient.of(ALUMINUM_PLATE))
 				.outputItem(new ItemStack(ALUMINUM_WIRE, 2))
 				.save(consumer, extrudingLoc("aluminum_wire"));
 
 		MachineRecipeBuilder.extruding()
-				.unlockedBy("has_item", has(ENDERIUM_PLATE))
+				.unlockedBy("has_item", tagKeyHas.apply(ENDERIUM_PLATE))
 				.inputItem(Ingredient.of(ENDERIUM_PLATE))
 				.outputItem(new ItemStack(ENDERIUM_WIRE, 2))
 				.save(consumer, extrudingLoc("enderium_wire"));

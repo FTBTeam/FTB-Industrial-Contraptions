@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
@@ -323,7 +324,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 								blocks.put(ipos, FLAG_IN_EXPLOSION | FLAG_IS_REINFORCED | FLAG_INSIDE);
 							} else if (state.isAir()) {
 								blocks.put(ipos, FLAG_IN_EXPLOSION | FLAG_IS_AIR | FLAG_INSIDE);
-							} else if (FTBICUtils.REINFORCED.contains(state.getBlock()) || state.getDestroySpeed(level, mpos) < 0F) {
+							} else if (state.is(FTBICUtils.REINFORCED) || state.getDestroySpeed(level, mpos) < 0F) {
 								blocks.put(ipos, FLAG_IN_EXPLOSION | FLAG_IS_REINFORCED | FLAG_INSIDE);
 							} else {
 								blocks.put(ipos, FLAG_IN_EXPLOSION | FLAG_IS_BLOCK | FLAG_INSIDE);
@@ -476,10 +477,10 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 					if (state.getBlock() instanceof GrassBlock) {
 						tasks.add(new BlockModification(p, podzol));
 						tasks.add(new LightUpdate(p, state, podzol, oldLight, oldOpacity));
-					} else if (Tags.Blocks.DIRT.contains(state.getBlock())) {
+					} else if (state.is(BlockTags.DIRT)) {
 						tasks.add(new BlockModification(p, coarseDirt));
 						tasks.add(new LightUpdate(p, state, coarseDirt, oldLight, oldOpacity));
-					} else if (state.getMaterial() == Material.STONE || Tags.Blocks.GRAVEL.contains(state.getBlock()) || Tags.Blocks.SAND.contains(state.getBlock())) {
+					} else if (state.getMaterial() == Material.STONE || state.is(Tags.Blocks.GRAVEL) || state.is(Tags.Blocks.SAND)) {
 						if (random.nextInt(10) == 0) {
 							BlockState burnt = getBurntBlock(random);
 							tasks.add(new BlockModification(p, burnt));

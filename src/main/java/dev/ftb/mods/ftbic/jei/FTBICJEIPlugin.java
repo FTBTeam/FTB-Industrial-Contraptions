@@ -56,7 +56,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration r) {
-		r.addRecipeTransferHandler(new PoweredCraftingTableTransferHandler(), VanillaRecipeCategoryUid.CRAFTING);
+		r.addRecipeTransferHandler(new PoweredCraftingTableTransferHandler(r.getTransferHelper()), VanillaRecipeCategoryUid.CRAFTING);
 	}
 
 	@Override

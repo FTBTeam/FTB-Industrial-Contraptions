@@ -1,14 +1,20 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class FTBICNuclearRecipes extends FTBICRecipesGen {
 	public FTBICNuclearRecipes(DataGenerator generator) {
@@ -17,6 +23,8 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
+		Function<TagKey<Item>, InventoryChangeTrigger.TriggerInstance> tagKeyHas = (e) -> RecipeProvider.inventoryTrigger(ItemPredicate.Builder.item().of(e).build());
+
 		ShapedRecipeBuilder.shaped(REINFORCED_STONE, 4)
 				.unlockedBy("has_item", has(ADVANCED_ALLOY))
 				.group(MODID + ":reinforced_stone")
@@ -174,7 +182,7 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("overclocked_heat_vent"));
 
 		ShapedRecipeBuilder.shaped(HEAT_EXCHANGER)
-				.unlockedBy("has_item", has(IRON_PLATE))
+				.unlockedBy("has_item", tagKeyHas.apply(IRON_PLATE))
 				.group(MODID + ":heat_exchanger")
 				.pattern(" C ")
 				.pattern("PBP")
@@ -241,7 +249,7 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.save(consumer, shapelessLoc("heat_capacity_reactor_plating"));
 
 		ShapedRecipeBuilder.shaped(NEUTRON_REFLECTOR)
-				.unlockedBy("has_item", has(TIN_DUST))
+				.unlockedBy("has_item", tagKeyHas.apply(TIN_DUST))
 				.group(MODID + ":neutron_reflector")
 				.pattern("TCT")
 				.pattern("TPT")
@@ -285,7 +293,7 @@ public class FTBICNuclearRecipes extends FTBICRecipesGen {
 				.save(consumer, separatingLoc("small_coolant_cell"));
 
 		MachineRecipeBuilder.canning()
-				.unlockedBy("has_item", has(URANIUM_DUST))
+				.unlockedBy("has_item", tagKeyHas.apply(URANIUM_DUST))
 				.inputItem(waterCell())
 				.inputItem(Ingredient.of(URANIUM_DUST))
 				.outputItem(new ItemStack(URANIUM_FUEL_ROD))

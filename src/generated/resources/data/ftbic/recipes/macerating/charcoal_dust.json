@@ -1,16 +1,16 @@
 {
-	"type": "ftbic:macerating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"item": "minecraft:charcoal"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "emendatusenigmatica:charcoal_dust"
-		}
-	]
+  "type": "ftbic:macerating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "item": "minecraft:charcoal"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "minecraft:paper"
+    }
+  ]
 }

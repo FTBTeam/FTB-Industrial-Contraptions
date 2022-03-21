@@ -23,22 +23,22 @@ public class ExtrudingRecipeResults extends SimpleMachineRecipeResults {
 	@Override
 	protected void addAdditionalRecipes(Level level, List<MachineRecipe> list) {
 		for (CraftingMaterial m : FTBICConfig.MATERIALS.values()) {
-			Item rod = FTBICConfig.getItemFromTag(m.rod);
+			Item rod = FTBICConfig.getItemFromTag(m.rod.getTag());
 
 			if (FTBICConfig.ADD_ROD_RECIPES && rod != Items.AIR) {
 				ResourceLocation id = rod.getRegistryName();
 
-				if (id != null && !FTBICUtils.NO_AUTO_RECIPE.contains(rod)) {
+				if (id != null && !rod.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {
 					if (!m.ingot.getValues().isEmpty()) {
 						MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "extracting/generated/rod_from_metal/" + id.getNamespace() + "/" + id.getPath()));
-						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.ingot), 1));
+						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.ingot.getTag()), 1));
 						recipe.outputItems.add(new StackWithChance(new ItemStack(rod, 2), 1D));
 						list.add(recipe);
 					}
 
 					if (!m.gem.getValues().isEmpty()) {
 						MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "extracting/generated/rod_from_gem/" + id.getNamespace() + "/" + id.getPath()));
-						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.gem), 1));
+						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.gem.getTag()), 1));
 						recipe.outputItems.add(new StackWithChance(new ItemStack(rod, 2), 1D));
 						list.add(recipe);
 					}

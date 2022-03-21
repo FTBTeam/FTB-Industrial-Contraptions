@@ -23,23 +23,23 @@ public class RollingRecipeResults extends SimpleMachineRecipeResults {
 	@Override
 	protected void addAdditionalRecipes(Level level, List<MachineRecipe> list) {
 		for (CraftingMaterial m : FTBICConfig.MATERIALS.values()) {
-			Item plate = FTBICConfig.getItemFromTag(m.plate);
-			Item gear = FTBICConfig.getItemFromTag(m.gear);
+			Item plate = FTBICConfig.getItemFromTag(m.plate.getTag());
+			Item gear = FTBICConfig.getItemFromTag(m.gear.getTag());
 
 			if (FTBICConfig.ADD_PLATE_RECIPES && plate != Items.AIR) {
 				ResourceLocation id = plate.getRegistryName();
 
-				if (id != null && !FTBICUtils.NO_AUTO_RECIPE.contains(plate)) {
+				if (id != null && !plate.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {
 					if (!m.ingot.getValues().isEmpty()) {
 						MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "rolling/generated/plate_from_ingot/" + id.getNamespace() + "/" + id.getPath()));
-						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.ingot), 1));
+						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.ingot.getTag()), 1));
 						recipe.outputItems.add(new StackWithChance(new ItemStack(plate, 2), 1D));
 						list.add(recipe);
 					}
 
 					if (!m.gem.getValues().isEmpty()) {
 						MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "rolling/generated/plate_from_gem/" + id.getNamespace() + "/" + id.getPath()));
-						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.gem), 1));
+						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.gem.getTag()), 1));
 						recipe.outputItems.add(new StackWithChance(new ItemStack(plate, 2), 1D));
 						list.add(recipe);
 					}
@@ -49,15 +49,15 @@ public class RollingRecipeResults extends SimpleMachineRecipeResults {
 			if (FTBICConfig.ADD_GEAR_RECIPES && gear != Items.AIR) {
 				ResourceLocation id = gear.getRegistryName();
 
-				if (id != null && !FTBICUtils.NO_AUTO_RECIPE.contains(gear)) {
+				if (id != null && !gear.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {
 					if (!m.plate.getValues().isEmpty()) {
 						MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "rolling/generated/gear_from_plate/" + id.getNamespace() + "/" + id.getPath()));
-						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.plate), 4));
+						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.plate.getTag()), 4));
 						recipe.outputItems.add(new StackWithChance(new ItemStack(gear), 1D));
 						list.add(recipe);
 					} else if (!m.gem.getValues().isEmpty()) {
 						MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "rolling/generated/gear_from_gem/" + id.getNamespace() + "/" + id.getPath()));
-						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.gem), 2));
+						recipe.inputItems.add(new IngredientWithCount(Ingredient.of(m.gem.getTag()), 2));
 						recipe.outputItems.add(new StackWithChance(new ItemStack(gear), 1D));
 						list.add(recipe);
 					}

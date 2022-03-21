@@ -2,20 +2,22 @@ package dev.ftb.mods.ftbic;
 
 import dev.ftb.mods.ftbic.util.CraftingMaterial;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FTBICConfig {
 	public static Component ENERGY_FORMAT = new TextComponent("⚡").withStyle(ChatFormatting.BOLD);
@@ -216,13 +218,13 @@ public class FTBICConfig {
 		return i == -1 ? MOD_MATERIAL_PRIORITY.size() : i;
 	}
 
-	public static Item getItemFromTag(Tag<Item> tag) {
-		List<Item> items = tag.getValues();
+	public static Item getItemFromTag(TagKey<Item> tag) {
+		ITag<Item> items = ForgeRegistries.ITEMS.tags().getTag(tag);
 
-		if (items.isEmpty()) {
+		if (!items.isEmpty()) {
 			return Items.AIR;
 		} else if (items.size() == 1) {
-			return items.get(0);
+			return items.iterator().next();
 		}
 
 		int order = Integer.MAX_VALUE;

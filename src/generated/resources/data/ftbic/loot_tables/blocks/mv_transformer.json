@@ -1,36 +1,38 @@
 {
-	"type": "minecraft:block",
-	"pools": [
-		{
-			"rolls": 1,
-			"entries": [
-				{
-					"type": "minecraft:item",
-					"name": "ftbic:mv_transformer"
-				}
-			],
-			"conditions": [
-				{
-					"condition": "minecraft:inverted",
-					"term": {
-						"condition": "ftbic:burnt_block"
-					}
-				}
-			]
-		},
-		{
-			"rolls": 1,
-			"entries": [
-				{
-					"type": "minecraft:item",
-					"name": "ftbic:machine_block"
-				}
-			],
-			"conditions": [
-				{
-					"condition": "ftbic:burnt_block"
-				}
-			]
-		}
-	]
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:mv_transformer"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "ftbic:burnt_block"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:machine_block"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "ftbic:burnt_block"
+        }
+      ]
+    }
+  ]
 }
