@@ -57,11 +57,21 @@ repositories {
 			includeGroup "io.alwa.mods"
 		}
 	}
+
+	maven {
+		name = 'ParchmentMC'
+		url = 'https://maven.parchmentmc.org'
+	}
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
+//	mappings loom.officialMojangMappings()
+
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-1.18.2:2022.03.13")
+	}
 
 	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 	modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")

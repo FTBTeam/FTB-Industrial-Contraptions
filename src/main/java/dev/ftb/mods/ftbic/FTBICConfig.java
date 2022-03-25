@@ -221,7 +221,7 @@ public class FTBICConfig {
 	public static Item getItemFromTag(TagKey<Item> tag) {
 		ITag<Item> items = ForgeRegistries.ITEMS.tags().getTag(tag);
 
-		if (!items.isEmpty()) {
+		if (items.isEmpty()) {
 			return Items.AIR;
 		} else if (items.size() == 1) {
 			return items.iterator().next();
