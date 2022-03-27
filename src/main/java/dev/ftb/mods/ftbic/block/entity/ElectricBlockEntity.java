@@ -164,7 +164,9 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	}
 
 	public void readNetData(CompoundTag tag) {
-		burnt = tag.getBoolean("Burnt");
+		if (tag != null) {
+			burnt = tag.getBoolean("Burnt");
+		}
 	}
 
 	@Override
