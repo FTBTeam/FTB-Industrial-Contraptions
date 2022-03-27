@@ -55,7 +55,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 			double capacity = menu.data.get(SyncedData.ENERGY_CAPACITY);
 
 			if (menu.entity instanceof MachineBlockEntity) {
-				capacity += ((MachineBlockEntity) menu.entity).upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.STORAGE_UPGRADE;
+				capacity += ((MachineBlockEntity) menu.entity).upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.MACHINES.STORAGE_UPGRADE.get();
 			}
 
 			double energy = menu.data.get(SyncedData.ENERGY);

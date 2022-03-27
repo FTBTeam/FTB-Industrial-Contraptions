@@ -3,11 +3,11 @@ package dev.ftb.mods.ftbic.util;
 import dev.ftb.mods.ftbic.FTBICConfig;
 
 public enum EnergyTier {
-	LV("lv", 1, FTBICConfig.LV_TRANSFER_RATE),
-	MV("mv", 2, FTBICConfig.MV_TRANSFER_RATE),
-	HV("hv", 3, FTBICConfig.HV_TRANSFER_RATE),
-	EV("ev", 4, FTBICConfig.EV_TRANSFER_RATE),
-	IV("xv", 4, FTBICConfig.IV_TRANSFER_RATE);
+	LV("lv", 1, FTBICConfig.ENERGY.LV_TRANSFER_RATE.get()),
+	MV("mv", 2, FTBICConfig.ENERGY.MV_TRANSFER_RATE.get()),
+	HV("hv", 3, FTBICConfig.ENERGY.HV_TRANSFER_RATE.get()),
+	EV("ev", 4, FTBICConfig.ENERGY.EV_TRANSFER_RATE.get()),
+	IV("xv", 4, FTBICConfig.ENERGY.IV_TRANSFER_RATE.get());
 
 	public static final EnergyTier[] VALUES = values();
 

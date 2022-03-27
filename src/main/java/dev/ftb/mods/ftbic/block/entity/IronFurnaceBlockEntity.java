@@ -27,6 +27,6 @@ public class IronFurnaceBlockEntity extends FurnaceBlockEntity {
 
 	@Override
 	protected int getBurnDuration(ItemStack stack) {
-		return super.getBurnDuration(stack) * 8 / FTBICConfig.IRON_FURNACE_ITEMS_PER_COAL;
+		return super.getBurnDuration(stack) * 8 / FTBICConfig.MACHINES.IRON_FURNACE_ITEMS_PER_COAL.get();
 	}
 }

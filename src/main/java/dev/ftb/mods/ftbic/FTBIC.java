@@ -27,7 +27,9 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,7 +54,10 @@ public class FTBIC {
 	public FTBIC() {
 		PROXY = DistExecutor.safeRunForDist(() -> FTBICClient::new, () -> FTBICCommon::new);
 
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_CONFIG);
+
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
 		modEventBus.addGenericListener(Item.class, FTBICRecipes::onItemRegistry);
 		modEventBus.addGenericListener(Item.class, FTBICUtils::onItemRegistry);
 
@@ -99,7 +104,7 @@ public class FTBIC {
 					}
 
 					float amountReduced = event.getAmount() * Math.min(protection, 1F);
-					double energy = FTBICConfig.ARMOR_DAMAGE_ENERGY * amountReduced;
+					double energy = FTBICConfig.EQUIPMENT.ARMOR_DAMAGE_ENERGY.get() * amountReduced;
 
 					((EnergyArmorItem) stack.getItem()).damageEnergyItem(stack, energy);
 					event.setAmount(event.getAmount() - amountReduced);

@@ -92,7 +92,7 @@ public class AntimatterConstructorBlockEntity extends ElectricBlockEntity {
 			double boosted = Math.min(boost, maxInsert);
 			boost -= boosted;
 			maxInsert -= boosted;
-			energy += boosted * FTBICConfig.ANTIMATTER_CONSTRUCTOR_BOOST + maxInsert;
+			energy += boosted * FTBICConfig.MACHINES.ANTIMATTER_CONSTRUCTOR_BOOST.get() + maxInsert;
 		}
 
 		return maxInsert;

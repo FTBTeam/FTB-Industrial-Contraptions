@@ -86,7 +86,7 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
 				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxInputEnergy * FTBICConfig.ITEM_TRANSFER_EFFICIENCY;
+				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxInputEnergy * FTBICConfig.MACHINES.ITEM_TRANSFER_EFFICIENCY.get();
 				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, transfer), false);
 
 				if (e > 0) {

@@ -49,7 +49,7 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 		background = guiHelper.createBlankDrawable(serializer.guiWidth, serializer.guiHeight);
 		icon = guiHelper.createDrawableIngredient(new ItemStack(item.item.get()));
 		arrowOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 87, 167, 24, 17).setTextureSize(256, 256).build();
-		arrowOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 87, 185, 24, 17).setTextureSize(256, 256).buildAnimated(Mth.ceil(FTBICConfig.MACHINE_RECIPE_BASE_TICKS), IDrawableAnimated.StartDirection.LEFT, false);
+		arrowOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 87, 185, 24, 17).setTextureSize(256, 256).buildAnimated(Mth.ceil(FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get()), IDrawableAnimated.StartDirection.LEFT, false);
 		powerOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 1, 240, 14, 14).setTextureSize(256, 256).build();
 		powerOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 16, 240, 14, 14).setTextureSize(256, 256).buildAnimated(84, IDrawableAnimated.StartDirection.TOP, true);
 		slot = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 1, 167, 18, 18).setTextureSize(256, 256).build();

@@ -202,16 +202,16 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 
 	public double getEnergyUse(ResourceKey<Level> d, BlockPos p) {
 		if (d != level.dimension()) {
-			return FTBICConfig.TELEPORTER_MAX_USE;
+			return FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get();
 		}
 
-		double mind = FTBICConfig.TELEPORTER_MIN_DISTANCE;
-		double maxd = FTBICConfig.TELEPORTER_MAX_DISTANCE;
+		double mind = FTBICConfig.MACHINES.TELEPORTER_MIN_DISTANCE.get();
+		double maxd = FTBICConfig.MACHINES.TELEPORTER_MAX_DISTANCE.get();
 		double dx = p.getX() - worldPosition.getX();
 		double dz = p.getZ() - worldPosition.getZ();
 
 		double dist = Mth.clamp(dx * dx + dz * dz, mind, maxd);
-		return Mth.lerp((dist - mind) / (maxd - mind), FTBICConfig.TELEPORTER_MIN_USE, FTBICConfig.TELEPORTER_MAX_USE);
+		return Mth.lerp((dist - mind) / (maxd - mind), FTBICConfig.MACHINES.TELEPORTER_MIN_USE.get(), FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get());
 	}
 
 	@Override

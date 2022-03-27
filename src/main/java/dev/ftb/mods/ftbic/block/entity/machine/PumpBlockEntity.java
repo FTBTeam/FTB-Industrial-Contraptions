@@ -44,8 +44,8 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		diggingMineTicks = FTBICConfig.PUMP_MINE_TICKS;
-		diggingMoveTicks = FTBICConfig.PUMP_MOVE_TICKS;
+		diggingMineTicks = FTBICConfig.MACHINES.PUMP_MINE_TICKS.get();
+		diggingMoveTicks = FTBICConfig.MACHINES.PUMP_MOVE_TICKS.get();
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 
 	@Override
 	public int getCapacity() {
-		return FTBICConfig.PUMP_TANK_CAPACITY;
+		return FTBICConfig.MACHINES.PUMP_TANK_CAPACITY.get();
 	}
 
 	@Override
@@ -156,7 +156,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 
 	@Override
 	public int getTankCapacity(int i) {
-		return FTBICConfig.PUMP_TANK_CAPACITY;
+		return FTBICConfig.MACHINES.PUMP_TANK_CAPACITY.get();
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		maxEnergyOutputTransfer = Math.max(FTBICConfig.LV_TRANSFER_RATE, maxEnergyOutput);
+		maxEnergyOutputTransfer = Math.max(FTBICConfig.ENERGY.LV_TRANSFER_RATE.get(), maxEnergyOutput);
 	}
 
 	@Override

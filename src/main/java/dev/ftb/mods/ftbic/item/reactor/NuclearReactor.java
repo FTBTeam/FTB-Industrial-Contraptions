@@ -76,7 +76,7 @@ public class NuclearReactor {
 		energyOutput = 0D;
 		maxHeat = 10000;
 		explosionModifier = 1D;
-		explosionRadius = FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS;
+		explosionRadius = FTBICConfig.NUCLEAR.NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS.get();
 		boolean stopSimulation = true;
 
 		for (int x = 0; x < 9; x++) {
@@ -127,7 +127,7 @@ public class NuclearReactor {
 
 		heat = Math.max(0, heat);
 		explosionRadius *= explosionModifier;
-		explosionRadius = Math.min(explosionRadius, FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_LIMIT);
+		explosionRadius = Math.min(explosionRadius, FTBICConfig.NUCLEAR.NUCLEAR_REACTOR_EXPLOSION_LIMIT.get());
 
 		if (heat >= maxHeat) {
 			stopSimulation = true;

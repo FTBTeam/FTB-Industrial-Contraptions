@@ -63,7 +63,7 @@ public class CableBlock extends BaseCableBlock {
 			return true;
 		} else if (!state.isAir()) {
 			BlockEntity t = world.getBlockEntity(pos);
-			return t instanceof EnergyHandler || FTBICConfig.ZAP_TO_FE_CONVERSION_RATE > 0D && t != null && t.getCapability(CapabilityEnergy.ENERGY, face).isPresent();
+			return t instanceof EnergyHandler || FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get() > 0D && t != null && t.getCapability(CapabilityEnergy.ENERGY, face).isPresent();
 		}
 
 		return false;

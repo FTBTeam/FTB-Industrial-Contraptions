@@ -67,7 +67,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		maxEnergyOutputTransfer = FTBICConfig.IV_TRANSFER_RATE;
+		maxEnergyOutputTransfer = FTBICConfig.ENERGY.IV_TRANSFER_RATE.get();
 	}
 
 	@Override

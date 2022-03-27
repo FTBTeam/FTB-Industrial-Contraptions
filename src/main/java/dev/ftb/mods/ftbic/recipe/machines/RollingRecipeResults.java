@@ -1,7 +1,10 @@
-package dev.ftb.mods.ftbic.recipe;
+package dev.ftb.mods.ftbic.recipe.machines;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
+import dev.ftb.mods.ftbic.recipe.MachineRecipe;
+import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.util.CraftingMaterial;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
@@ -26,7 +29,7 @@ public class RollingRecipeResults extends SimpleMachineRecipeResults {
 			Item plate = FTBICConfig.getItemFromTag(m.plate.getTag());
 			Item gear = FTBICConfig.getItemFromTag(m.gear.getTag());
 
-			if (FTBICConfig.ADD_PLATE_RECIPES && plate != Items.AIR) {
+			if (FTBICConfig.RECIPES.ADD_PLATE_RECIPES.get() && plate != Items.AIR) {
 				ResourceLocation id = plate.getRegistryName();
 
 				if (id != null && !plate.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {
@@ -46,7 +49,7 @@ public class RollingRecipeResults extends SimpleMachineRecipeResults {
 				}
 			}
 
-			if (FTBICConfig.ADD_GEAR_RECIPES && gear != Items.AIR) {
+			if (FTBICConfig.RECIPES.ADD_GEAR_RECIPES.get() && gear != Items.AIR) {
 				ResourceLocation id = gear.getRegistryName();
 
 				if (id != null && !gear.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {

@@ -49,6 +49,6 @@ public class LocationCardItem extends Item {
 			list.add(new TextComponent(String.format("X %d Y %d Z %d in %s", stack.getTag().getInt("PosX"), stack.getTag().getInt("PosY"), stack.getTag().getInt("PosZ"), stack.getTag().getString("Dimension"))).withStyle(ChatFormatting.GRAY));
 		}
 
-		// list.add(new TextComponent("< " + FTBICConfig.FLUID_CELL_CAPACITY + " mB of ").append(new TranslatableComponent(fluid.getAttributes().getTranslationKey())).append(" >").withStyle(ChatFormatting.GRAY));
+		// list.add(new TextComponent("< " + FTBICConfig.FLUID_CELL_CAPACITY.get() + " mB of ").append(new TranslatableComponent(fluid.getAttributes().getTranslationKey())).append(" >").withStyle(ChatFormatting.GRAY));
 	}
 }

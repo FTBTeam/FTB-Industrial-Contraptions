@@ -162,7 +162,7 @@ public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 				maxProgress = 0D;
 				setChanged();
 			} else if (progress <= 0D) {
-				maxProgress = result.time * FTBICConfig.MACHINE_RECIPE_BASE_TICKS;
+				maxProgress = result.time * FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
 				active = true;
 				setChanged();
 			}

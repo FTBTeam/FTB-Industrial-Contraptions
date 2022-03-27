@@ -1,7 +1,10 @@
-package dev.ftb.mods.ftbic.recipe;
+package dev.ftb.mods.ftbic.recipe.machines;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
+import dev.ftb.mods.ftbic.recipe.MachineRecipe;
+import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.util.CraftingMaterial;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
@@ -27,7 +30,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 
 			boolean gemFromOre = false;
 
-			if (FTBICConfig.ADD_GEM_FROM_ORE_RECIPES && !material.gem.getValues().isEmpty() && !material.ore.getValues().isEmpty()) {
+			if (FTBICConfig.RECIPES.ADD_GEM_FROM_ORE_RECIPES.get() && !material.gem.getValues().isEmpty() && !material.ore.getValues().isEmpty()) {
 				Item gem = FTBICConfig.getItemFromTag(material.gem.getTag());
 				ResourceLocation id = gem == Items.AIR ? null : gem.getRegistryName();
 
@@ -40,7 +43,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 				}
 			}
 
-			if (!gemFromOre && FTBICConfig.ADD_DUST_FROM_ORE_RECIPES && dust != Items.AIR && !material.ore.getValues().isEmpty()) {
+			if (!gemFromOre && FTBICConfig.RECIPES.ADD_DUST_FROM_ORE_RECIPES.get() && dust != Items.AIR && !material.ore.getValues().isEmpty()) {
 				ResourceLocation id = dust.getRegistryName();
 
 				if (id != null && !dust.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {
@@ -51,7 +54,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 				}
 			}
 
-			if (FTBICConfig.ADD_DUST_FROM_MATERIAL_RECIPES && dust != Items.AIR) {
+			if (FTBICConfig.RECIPES.ADD_DUST_FROM_MATERIAL_RECIPES.get() && dust != Items.AIR) {
 				ResourceLocation id = dust.getRegistryName();
 
 				if (id != null && !dust.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {

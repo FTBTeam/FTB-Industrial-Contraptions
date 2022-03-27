@@ -261,7 +261,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 				active = false;
 			}
 
-			changeStateTicks = FTBICConfig.STATE_UPDATE_TICKS;
+			changeStateTicks = FTBICConfig.MACHINES.STATE_UPDATE_TICKS.get();
 
 			if (changed) {
 				setChangedNow();

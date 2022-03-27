@@ -1,7 +1,10 @@
-package dev.ftb.mods.ftbic.recipe;
+package dev.ftb.mods.ftbic.recipe.machines;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
+import dev.ftb.mods.ftbic.recipe.MachineRecipe;
+import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.util.CraftingMaterial;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
@@ -25,7 +28,7 @@ public class ExtrudingRecipeResults extends SimpleMachineRecipeResults {
 		for (CraftingMaterial m : FTBICConfig.MATERIALS.values()) {
 			Item rod = FTBICConfig.getItemFromTag(m.rod.getTag());
 
-			if (FTBICConfig.ADD_ROD_RECIPES && rod != Items.AIR) {
+			if (FTBICConfig.RECIPES.ADD_ROD_RECIPES.get() && rod != Items.AIR) {
 				ResourceLocation id = rod.getRegistryName();
 
 				if (id != null && !rod.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {

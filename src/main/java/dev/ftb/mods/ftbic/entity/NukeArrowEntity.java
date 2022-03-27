@@ -54,7 +54,7 @@ public class NukeArrowEntity extends AbstractArrow {
 		if (level instanceof ServerLevel && ownerId != null) {
 			Component ownerName = owner == null ? new TextComponent("Unknown") : owner.getDisplayName();
 
-			NuclearExplosion.builder((ServerLevel) level, hit.getBlockPos().relative(hit.getDirection()), FTBICConfig.NUKE_RADIUS, ownerId, ownerName.getString())
+			NuclearExplosion.builder((ServerLevel) level, hit.getBlockPos().relative(hit.getDirection()), FTBICConfig.NUCLEAR.NUKE_RADIUS.get(), ownerId, ownerName.getString())
 					.preExplosion(() -> level.getServer().getPlayerList().broadcastMessage(new TranslatableComponent("block.ftbic.nuke.broadcast", ownerName), ChatType.SYSTEM, Util.NIL_UUID))
 					.create()
 			;

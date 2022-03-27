@@ -49,22 +49,22 @@ public class WindMillBlockEntity extends GeneratorBlockEntity {
 
 			int height = worldPosition.getY() - blocksInRadius;
 
-			if (height < FTBICConfig.WIND_MILL_MIN_Y) {
+			if (height < FTBICConfig.MACHINES.WIND_MILL_MIN_Y.get()) {
 				return;
-			} else if (height > FTBICConfig.WIND_MILL_MAX_Y) {
-				height = FTBICConfig.WIND_MILL_MAX_Y;
+			} else if (height > FTBICConfig.MACHINES.WIND_MILL_MAX_Y.get()) {
+				height = FTBICConfig.MACHINES.WIND_MILL_MAX_Y.get();
 			}
 
-			output = Mth.lerp(height / (double) (FTBICConfig.WIND_MILL_MAX_Y - FTBICConfig.WIND_MILL_MIN_Y), FTBICConfig.WIND_MILL_MIN_OUTPUT, FTBICConfig.WIND_MILL_MAX_OUTPUT);
+			output = Mth.lerp(height / (double) (FTBICConfig.MACHINES.WIND_MILL_MAX_Y.get() - FTBICConfig.MACHINES.WIND_MILL_MIN_Y.get()), FTBICConfig.MACHINES.WIND_MILL_MIN_OUTPUT.get(), FTBICConfig.MACHINES.WIND_MILL_MAX_OUTPUT.get());
 
 			if (output <= 0D) {
 				return;
 			}
 
 			if (level.isThundering()) {
-				output *= FTBICConfig.WIND_MILL_THUNDER_MODIFIER;
+				output *= FTBICConfig.MACHINES.WIND_MILL_THUNDER_MODIFIER.get();
 			} else if (level.isRaining()) {
-				output *= FTBICConfig.WIND_MILL_RAIN_MODIFIER;
+				output *= FTBICConfig.MACHINES.WIND_MILL_RAIN_MODIFIER.get();
 			}
 
 			energy += Math.min(energyCapacity - energy, output);

@@ -41,7 +41,7 @@ public class CanningMachineRecipeResults extends MachineRecipeResults {
 		if (allRecipes == null) {
 			allRecipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(FTBICRecipes.CANNING.get().recipeType));
 
-			if (FTBICConfig.ADD_CANNED_FOOD_RECIPES) {
+			if (FTBICConfig.RECIPES.ADD_CANNED_FOOD_RECIPES.get()) {
 				Ingredient canIngredient = Ingredient.of(FTBICItems.EMPTY_CAN.item.get());
 
 				for (Item item : ForgeRegistries.ITEMS) {

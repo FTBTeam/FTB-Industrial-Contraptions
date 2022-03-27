@@ -40,8 +40,8 @@ public class QuarryBlockEntity extends DiggingBaseBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		diggingMineTicks = FTBICConfig.QUARRY_MINE_TICKS;
-		diggingMoveTicks = FTBICConfig.QUARRY_MOVE_TICKS;
+		diggingMineTicks = FTBICConfig.MACHINES.QUARRY_MINE_TICKS.get();
+		diggingMoveTicks = FTBICConfig.MACHINES.QUARRY_MOVE_TICKS.get();
 	}
 
 	@Override

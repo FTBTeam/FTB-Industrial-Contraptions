@@ -1,6 +1,9 @@
-package dev.ftb.mods.ftbic.recipe;
+package dev.ftb.mods.ftbic.recipe.machines;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.recipe.MachineRecipe;
+import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
+import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
 import net.minecraft.resources.ResourceLocation;

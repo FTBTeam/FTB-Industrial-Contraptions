@@ -122,7 +122,7 @@ public class FluidCellItem extends Item {
 			list.add(new ItemStack(this));
 
 			for (Fluid fluid : ForgeRegistries.FLUIDS) {
-				if (fluid != Fluids.EMPTY && fluid.isSource(fluid.defaultFluidState()) && (FTBICConfig.ADD_ALL_FLUID_CELLS || !fluid.getRegistryName().getPath().contains("molten"))) {
+				if (fluid != Fluids.EMPTY && fluid.isSource(fluid.defaultFluidState()) && (FTBICConfig.NUCLEAR.ADD_ALL_FLUID_CELLS.get() || !fluid.getRegistryName().getPath().contains("molten"))) {
 					list.add(setFluid(new ItemStack(this), fluid));
 				}
 			}
@@ -135,7 +135,7 @@ public class FluidCellItem extends Item {
 		Fluid fluid = getFluid(stack);
 
 		if (fluid != Fluids.EMPTY) {
-			list.add(new TextComponent("< " + FTBICConfig.FLUID_CELL_CAPACITY + " mB of ").append(new TranslatableComponent(fluid.getAttributes().getTranslationKey())).append(" >").withStyle(ChatFormatting.GRAY));
+			list.add(new TextComponent("< " + FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get() + " mB of ").append(new TranslatableComponent(fluid.getAttributes().getTranslationKey())).append(" >").withStyle(ChatFormatting.GRAY));
 		}
 	}
 

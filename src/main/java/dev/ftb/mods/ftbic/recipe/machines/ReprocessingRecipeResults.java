@@ -1,8 +1,11 @@
-package dev.ftb.mods.ftbic.recipe;
+package dev.ftb.mods.ftbic.recipe.machines;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
+import dev.ftb.mods.ftbic.recipe.MachineRecipe;
+import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -22,13 +25,13 @@ public class ReprocessingRecipeResults extends SimpleMachineRecipeResults {
 
 	@Override
 	protected void addAdditionalRecipes(Level level, List<MachineRecipe> list) {
-		if (FTBICConfig.SCRAP_CHANCE <= 0D) {
+		if (FTBICConfig.MACHINES.SCRAP_CHANCE.get() <= 0D) {
 			return;
 		}
 
 		MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "reprocessing/generated/scrap"));
 		recipe.inputItems.add(new IngredientWithCount(Ingredient.of(ForgeRegistries.ITEMS.getValues().stream().map(ItemStack::new)), 1));
-		recipe.outputItems.add(new StackWithChance(new ItemStack(FTBICItems.SCRAP.item.get()), FTBICConfig.SCRAP_CHANCE));
+		recipe.outputItems.add(new StackWithChance(new ItemStack(FTBICItems.SCRAP.item.get()), FTBICConfig.MACHINES.SCRAP_CHANCE.get()));
 		recipe.hideFromJEI = true;
 		list.add(recipe);
 
@@ -37,7 +40,7 @@ public class ReprocessingRecipeResults extends SimpleMachineRecipeResults {
 
 		MachineRecipe recipeForJEI = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "reprocessing/generated/scrap_jei"));
 		recipeForJEI.inputItems.add(new IngredientWithCount(Ingredient.of(stack), 1));
-		recipeForJEI.outputItems.add(new StackWithChance(new ItemStack(FTBICItems.SCRAP.item.get()), FTBICConfig.SCRAP_CHANCE));
+		recipeForJEI.outputItems.add(new StackWithChance(new ItemStack(FTBICItems.SCRAP.item.get()), FTBICConfig.MACHINES.SCRAP_CHANCE.get()));
 		list.add(recipeForJEI);
 	}
 }
