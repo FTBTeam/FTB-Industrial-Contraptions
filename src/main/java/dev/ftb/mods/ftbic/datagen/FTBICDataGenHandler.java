@@ -46,6 +46,7 @@ import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -145,7 +146,7 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.ACTIVE_NUKE);
 
 			FTBICBlocks.RESOURCES.values()
-					.forEach(e -> addBlockWithSuffix(e, " Ore"));
+					.forEach(this::addBlock);
 
 			FTBICItems.RESOURCES_CHUNKS.forEach((k, v) -> {
 				if (!k.hasChunk()) return;
@@ -913,7 +914,10 @@ public class FTBICDataGenHandler {
 			tag(BlockTags.DRAGON_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
 			tag(BlockTags.WITHER_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
 
-			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(FTBICBlocks.RESOURCES.values().stream().map(Supplier::get).toArray(Block[]::new));
+			// Ore tags
+			Block[] resourceOres = FTBICBlocks.RESOURCES.values().stream().map(Supplier::get).toArray(Block[]::new);
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(resourceOres);
+			tag(Tags.Blocks.ORES).add(resourceOres);
 		}
 	}
 
@@ -926,6 +930,8 @@ public class FTBICDataGenHandler {
 		protected void addTags() {
 			tag(FTBICUtils.UNCANNABLE_FOOD).add(FTBICItems.CANNED_FOOD.get(), FTBICItems.PROTEIN_BAR.get());
 			tag(ItemTags.ARROWS).add(FTBICItems.NUKE_ARROW.get());
+
+
 		}
 	}
 

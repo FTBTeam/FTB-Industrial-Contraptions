@@ -46,6 +46,20 @@ public interface FTBICItems {
 		return m;
 	}
 
+	/**
+	 * Allows you to get an element from the registry based on the element type and the resource element specifically
+	 *
+	 * @param element the resource element, lead, tin, etc
+	 * @param type    the type of the resource you want, dust, chunk, rod, etc
+	 *
+	 * @return an {@link Optional<Supplier<Item>>} of the item. Sometimes empty if the item does not exist.
+	 */
+	static Optional<Supplier<Item>> getResourceFromType(ResourceElements element, ResourceElementTypes type) {
+		return RESOURCE_TYPE_MAP.get(type).entrySet().stream().filter(e -> e.getKey() == element)
+				.findFirst()
+				.map(Map.Entry::getValue);
+	}
+
 	Supplier<BlockItem> RUBBER_SHEET = blockItem("rubber_sheet", FTBICBlocks.RUBBER_SHEET);
 	Supplier<BlockItem> REINFORCED_STONE = blockItem("reinforced_stone", FTBICBlocks.REINFORCED_STONE);
 	Supplier<BlockItem> REINFORCED_GLASS = blockItem("reinforced_glass", FTBICBlocks.REINFORCED_GLASS);
@@ -146,6 +160,17 @@ public interface FTBICItems {
 	Map<ResourceElements, Supplier<Item>> RESOURCES_PLATES = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_plate", () -> new ResourceItem(ResourceElementTypes.PLATE))));
 	Map<ResourceElements, Supplier<Item>> RESOURCES_RODS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_rod", () -> new ResourceItem(ResourceElementTypes.ROD))));
 	Map<ResourceElements, Supplier<Item>> RESOURCES_GEARS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_gear", () -> new ResourceItem(ResourceElementTypes.GEAR))));
+
+	// Map of the resource types to resource lists
+	HashMap<ResourceElementTypes, Map<ResourceElements, Supplier<Item>>> RESOURCE_TYPE_MAP = new HashMap<>() {{
+		put(ResourceElementTypes.INGOT, RESOURCES_INGOTS);
+		put(ResourceElementTypes.CHUNK, RESOURCES_CHUNKS);
+		put(ResourceElementTypes.DUST, RESOURCES_DUSTS);
+		put(ResourceElementTypes.NUGGET, RESOURCES_NUGGETS);
+		put(ResourceElementTypes.PLATE, RESOURCES_PLATES);
+		put(ResourceElementTypes.ROD, RESOURCES_RODS);
+		put(ResourceElementTypes.GEAR, RESOURCES_GEARS);
+	}};
 
 	Map<ResourceElements, Supplier<BlockItem>> RESOURCES_ORE_ITEMS = FTBICBlocks.RESOURCES.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> blockItem(e.getKey().getName() + "_ore", e.getValue())));
 

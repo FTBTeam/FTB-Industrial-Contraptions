@@ -59,7 +59,7 @@ ed1e379681b7c961e99d9107a099af03ab0baed5 assets/ftbic/blockstates/reinforced_sto
 cff08c53bd481a3a4f5e3176f6878339ff4b3c2a assets/ftbic/blockstates/tin_ore.json
 e728379df978e262be04aab67e1304e2bcce0199 assets/ftbic/blockstates/uranium_ore.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-4628390ca82cfd4cd2c2596c19b6a792f0bd6bdd assets/ftbic/lang/en_us.json
+e0f21a7d0b36a59c3d2c6a5b3bc656afd3c3f77c assets/ftbic/lang/en_us.json
 a065a23b07d8160a5c1826e33f8fdef051f9b9d9 assets/ftbic/models/block/active_nuke.json
 32a8fcccb6a46281b355b13187ab3268564e23ca assets/ftbic/models/block/advanced_machine_block.json
 05d61ccd121161ece1b355438f65b7e791293451 assets/ftbic/models/block/aluminum_ore.json
@@ -521,6 +521,7 @@ dbc5198a3505c1836b37a7c3b6d49090820d9f44 assets/ftbic/textures/block/electric/li
 a79c7d3216016a1d5ba2087d9e933e131fdac503 assets/ftbic/textures/block/electric/light/teleporter_top_off.png
 6071b38f3fa2aaa8dd16d6e196d29263ff0c9ffd assets/ftbic/textures/block/electric/light/teleporter_top_on.png
 56e98e98dcc693b5cb82c1b26e5a53630328fbfe assets/ftbic/textures/block/electric/light/wind_mill_front.png
+c91a61626a8a8beb35bc6c99203866c8ef3d2ced data/forge/tags/blocks/ores.json
 3f1b197c18ef4348b2fab4969faa629a4355e641 data/ftbic/advancements/recipes/brewing/macerating/blaze_powder.json
 60530839343306377e15e4ec12336ba6283d1823 data/ftbic/advancements/recipes/building_blocks/compressing/ice.json
 c8381f7525d8ddbc45edd2e1268b5bce1a4f6b53 data/ftbic/advancements/recipes/building_blocks/macerating/cobblestone.json
@@ -905,6 +906,6 @@ e90a2d8edba37ca052a0f5dcff3a5ab586138fbf data/ftbic/recipes/smithing/iridium_bat
 cab3f4ea716e152525da323cdbb1161f01b89059 data/ftbic/tags/blocks/reinforced.json
 b109b9c379397e2f3eefc71bf6360fe92bf6fec6 data/ftbic/tags/items/uncannable_food.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/dragon_immune.json
-e0b4b6f7946f5e0f5c5ba0df6633d1b486db4cf6 data/minecraft/tags/blocks/mineable/pickaxe.json
+c91a61626a8a8beb35bc6c99203866c8ef3d2ced data/minecraft/tags/blocks/mineable/pickaxe.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/wither_immune.json
 a3fd594a3c67c6930909c5420fb2047974ffa671 data/minecraft/tags/items/arrows.json

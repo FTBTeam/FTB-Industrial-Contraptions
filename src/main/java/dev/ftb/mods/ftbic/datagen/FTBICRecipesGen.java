@@ -35,7 +35,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final TagKey<Item> SAND = ItemTags.SAND;
 	public static final TagKey<Item> IRON_INGOT = Tags.Items.INGOTS_IRON;
 	public static final TagKey<Item> GOLD_INGOT = Tags.Items.INGOTS_GOLD;
-	public static final TagKey<Item> COPPER_INGOT = Tags.Items.INGOTS_COPPER;// TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ingots/copper"));
+	public static final TagKey<Item> COPPER_INGOT = Tags.Items.INGOTS_COPPER;
 	public static final TagKey<Item> COPPER_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/copper"));
 	public static final TagKey<Item> LEAD_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/lead"));
 	public static final TagKey<Item> TIN_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/tin"));
