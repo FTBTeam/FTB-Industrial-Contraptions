@@ -21,6 +21,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -68,7 +69,7 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 
 	@Override
 	public Component getTitle() {
-		return new TextComponent(titleKey);
+		return new TranslatableComponent(titleKey);
 	}
 
 	@Override
