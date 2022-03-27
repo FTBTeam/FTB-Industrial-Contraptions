@@ -222,7 +222,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 		public void create() {
 			NuclearExplosion explosion = new NuclearExplosion(level, pos, radius, owner, ownerName, delay, preExplosion);
 
-			if (FTBICConfig.NUCLEAR_EXPLOSION_DAEMON_THREAD) {
+			if (FTBICConfig.NUCLEAR.NUCLEAR_EXPLOSION_DAEMON_THREAD.get()) {
 				explosion.setDaemon(true);
 			}
 
@@ -260,7 +260,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 		int rxz = Mth.ceil(radius);
 		double ry = Math.min(radius * 0.75D, 60);
 		double rys = ry / radius;
-		int ry0 = Math.max(pos.getY() - Mth.ceil(ry * 2D), 0);
+		int ry0 = Math.max(pos.getY() - Mth.ceil(ry * 2D), level.getMinBuildHeight());
 		int ry1 = Math.min(pos.getY() + Mth.ceil(ry * 2D), level.getHeight()) - 1;
 		double rsq = radius * radius;
 		double rsqc = (radius * 0.65D) * (radius * 0.65D);
