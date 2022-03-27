@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.util.EnergyTier;
+import dev.ftb.mods.ftbic.world.ResourceElements;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -12,7 +13,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public interface FTBICBlocks {
 	DeferredRegister<Block> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, FTBIC.MOD_ID);
@@ -29,10 +33,13 @@ public interface FTBICBlocks {
 	Supplier<Block> EV_CABLE = REGISTRY.register("ev_cable", () -> new CableBlock(EnergyTier.EV, 4, SoundType.WOOL));
 	Supplier<Block> IV_CABLE = REGISTRY.register("iv_cable", () -> new CableBlock(EnergyTier.IV, 6, SoundType.GLASS));
 	Supplier<Block> BURNT_CABLE = REGISTRY.register("burnt_cable", BurntCableBlock::new);
-	List<Supplier<Block>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE, BURNT_CABLE);
 	Supplier<Block> LANDMARK = REGISTRY.register("landmark", LandmarkBlock::new);
 	Supplier<Block> EXFLUID = REGISTRY.register("exfluid", ExFluidBlock::new);
 	Supplier<Block> NUCLEAR_REACTOR_CHAMBER = REGISTRY.register("nuclear_reactor_chamber", NuclearReactorChamberBlock::new);
 	Supplier<Block> NUKE = REGISTRY.register("nuke", NukeBlock::new);
 	Supplier<Block> ACTIVE_NUKE = REGISTRY.register("active_nuke", () -> new Block(BlockBehaviour.Properties.of(Material.EXPLOSIVE).sound(SoundType.GRASS).strength(-1F, 10000000000F).noDrops()));
+
+	List<Supplier<Block>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE, BURNT_CABLE);
+
+	Map<ResourceElements, Supplier<Block>> RESOURCES = ResourceElements.VALUES.stream().filter(ResourceElements::hasOre).collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_ore", ResourceBlock::new)));
 }

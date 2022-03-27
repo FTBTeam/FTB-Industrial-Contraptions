@@ -15,6 +15,8 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
 import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.world.ResourceElements;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
@@ -43,6 +45,7 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
+import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -104,11 +107,19 @@ public class FTBICDataGenHandler {
 		}
 
 		private void addBlock(Supplier<Block> block) {
-			addBlock(block, Arrays.stream(block.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")));
+			addBlockWithSuffix(block, "");
+		}
+
+		private void addBlockWithSuffix(Supplier<Block> block, String suffix) {
+			addBlock(block, Arrays.stream(block.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")) + suffix);
+		}
+
+		private void addItemWithSuffix(Supplier<Item> item, String suffix) {
+			addItem(item, Arrays.stream(item.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")));
 		}
 
 		private void addItem(Supplier<Item> item) {
-			addItem(item, Arrays.stream(item.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")));
+			addItemWithSuffix(item, "");
 		}
 
 		@Override
@@ -132,6 +143,22 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			addBlock(FTBICBlocks.NUKE);
 			addBlock(FTBICBlocks.ACTIVE_NUKE);
+
+			FTBICBlocks.RESOURCES.values()
+					.forEach(e -> addBlockWithSuffix(e, " Ore"));
+
+			FTBICItems.RESOURCES_CHUNKS.forEach((k, v) -> {
+				if (!k.hasChunk()) return;
+				addItemWithSuffix(v, " Chunk");
+			});
+
+			FTBICItems.RESOURCES_INGOTS.values().forEach(e -> addItemWithSuffix(e, " Ingot"));
+			FTBICItems.RESOURCES_DUSTS.values().forEach(e -> addItemWithSuffix(e, " Dust"));
+			addItemWithSuffix(FTBICItems.DIAMOND_DUST, " Dust");
+			FTBICItems.RESOURCES_NUGGETS.values().forEach(e -> addItemWithSuffix(e, " Nugget"));
+			FTBICItems.RESOURCES_PLATES.values().forEach(e -> addItemWithSuffix(e, " Plate"));
+			FTBICItems.RESOURCES_RODS.values().forEach(e -> addItemWithSuffix(e, " Rod"));
+			FTBICItems.RESOURCES_GEARS.values().forEach(e -> addItemWithSuffix(e, " Gear"));
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -637,6 +664,34 @@ public class FTBICDataGenHandler {
 			simpleBlock(FTBICBlocks.NUKE.get(), models().getExistingFile(modLoc("block/nuke")));
 			simpleBlock(FTBICBlocks.ACTIVE_NUKE.get(), models().getExistingFile(modLoc("block/active_nuke")));
 
+			// Ores (Taken from EmendatusEnigmatica, thanks guys!)
+			FTBICBlocks.RESOURCES.forEach((key, value) -> {
+				ResourceLocation registryName = value.get().getRegistryName();
+				String overlayTexture = "block/ore_overlays/" + key.getName().replace("deepslate_", ""); // no deepslate textures
+
+				models().getBuilder(registryName.getPath())
+						.parent(new ModelFile.UncheckedModelFile(mcLoc("block/block")))
+						.texture("particle", modLoc(overlayTexture))
+						.transforms()
+						.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+						.rotation(75F, 45F, 0F)
+						.translation(0F, 2.5F, 0)
+						.scale(0.375F, 0.375F, 0.375F)
+						.end()
+						.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+						.rotation(75F, 45F, 0F)
+						.translation(0F, 2.5F, 0)
+						.scale(0.375F, 0.375F, 0.375F)
+						.end()
+						.end()
+						.customLoader(MultiLayerModelBuilder::begin)
+						.submodel(RenderType.solid(), this.models().nested().parent(this.models().getExistingFile(key.getName().contains("deepslate") ? mcLoc("block/deepslate") : mcLoc("block/stone"))))
+						.submodel(RenderType.translucent(), this.models().nested().parent(this.models().getExistingFile(mcLoc("block/cube_all"))).texture("all", modLoc(overlayTexture))						)
+						.end();
+
+				simpleBlock(value.get(), new ModelFile.UncheckedModelFile(modLoc("block/" + registryName.getPath())));
+			});
+
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
 					getVariantBuilder(machine.block.get()).forAllStatesExcept(state -> {
@@ -824,6 +879,19 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.QUANTUM_LEGGINGS);
 			basicItem(FTBICItems.QUANTUM_BOOTS);
 			basicItem(FTBICItems.NUKE_ARROW);
+
+			FTBICBlocks.RESOURCES.values().forEach(this::basicBlockItem);
+			FTBICItems.RESOURCES_CHUNKS.forEach((k, v) -> {
+				if (!k.hasChunk()) return;
+				basicItem(v);
+			});
+			FTBICItems.RESOURCES_INGOTS.values().forEach(this::basicItem);
+			FTBICItems.RESOURCES_DUSTS.values().forEach(this::basicItem);
+			basicItem(FTBICItems.DIAMOND_DUST);
+			FTBICItems.RESOURCES_NUGGETS.values().forEach(this::basicItem);
+			FTBICItems.RESOURCES_PLATES.values().forEach(this::basicItem);
+			FTBICItems.RESOURCES_RODS.values().forEach(this::basicItem);
+			FTBICItems.RESOURCES_GEARS.values().forEach(this::basicItem);
 		}
 	}
 
@@ -844,6 +912,8 @@ public class FTBICDataGenHandler {
 
 			tag(BlockTags.DRAGON_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
 			tag(BlockTags.WITHER_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
+
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(FTBICBlocks.RESOURCES.values().stream().map(Supplier::get).toArray(Block[]::new));
 		}
 	}
 

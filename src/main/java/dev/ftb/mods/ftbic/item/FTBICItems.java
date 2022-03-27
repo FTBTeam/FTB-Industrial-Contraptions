@@ -11,16 +11,21 @@ import dev.ftb.mods.ftbic.item.reactor.NeutronReflectorItem;
 import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
+import dev.ftb.mods.ftbic.world.ResourceElementTypes;
+import dev.ftb.mods.ftbic.world.ResourceElements;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public interface FTBICItems {
 	DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, FTBIC.MOD_ID);
@@ -133,4 +138,17 @@ public interface FTBICItems {
 	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
 	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
 	Supplier<Item> NUKE_ARROW = REGISTRY.register("nuke_arrow", NukeArrowItem::new);
+
+	Map<ResourceElements, Supplier<Item>> RESOURCES_INGOTS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_ingot", () -> new ResourceItem(ResourceElementTypes.INGOT))));
+	Map<ResourceElements, Supplier<Item>> RESOURCES_CHUNKS = ResourceElements.NO_DEEPSLATE_VALUES.stream().filter(ResourceElements::hasChunk).collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_chunk", () -> new ResourceItem(ResourceElementTypes.CHUNK))));
+	Map<ResourceElements, Supplier<Item>> RESOURCES_DUSTS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_dust", () -> new ResourceItem(ResourceElementTypes.DUST))));
+	Map<ResourceElements, Supplier<Item>> RESOURCES_NUGGETS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_nugget", () -> new ResourceItem(ResourceElementTypes.NUGGET))));
+	Map<ResourceElements, Supplier<Item>> RESOURCES_PLATES = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_plate", () -> new ResourceItem(ResourceElementTypes.PLATE))));
+	Map<ResourceElements, Supplier<Item>> RESOURCES_RODS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_rod", () -> new ResourceItem(ResourceElementTypes.ROD))));
+	Map<ResourceElements, Supplier<Item>> RESOURCES_GEARS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_gear", () -> new ResourceItem(ResourceElementTypes.GEAR))));
+
+	Map<ResourceElements, Supplier<BlockItem>> RESOURCES_ORE_ITEMS = FTBICBlocks.RESOURCES.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> blockItem(e.getKey().getName() + "_ore", e.getValue())));
+
+	// One off item
+	Supplier<Item> DIAMOND_DUST = REGISTRY.register("diamond_dust", () -> new ResourceItem(ResourceElementTypes.DUST));
 }
