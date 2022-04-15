@@ -1,22 +1,22 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:carbon_helmet",
-	"pattern": [
-		"CEC",
-		"CAC"
-	],
-	"key": {
-		"C": {
-			"item": "ftbic:carbon_plate"
-		},
-		"E": {
-			"item": "ftbic:energy_crystal"
-		},
-		"A": {
-			"item": "minecraft:netherite_helmet"
-		}
-	},
-	"result": {
-		"item": "ftbic:carbon_helmet"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:carbon_helmet",
+  "pattern": [
+    "CEC",
+    "CAC"
+  ],
+  "key": {
+    "C": {
+      "item": "ftbic:carbon_plate"
+    },
+    "E": {
+      "item": "ftbic:energy_crystal"
+    },
+    "A": {
+      "item": "minecraft:netherite_helmet"
+    }
+  },
+  "result": {
+    "item": "ftbic:carbon_helmet"
+  }
 }

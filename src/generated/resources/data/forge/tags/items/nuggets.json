@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:nuggets/tin",
+    "#forge:nuggets/lead",
+    "#forge:nuggets/uranium",
+    "#forge:nuggets/iridium",
+    "#forge:nuggets/enderium",
+    "#forge:nuggets/aluminum"
+  ]
+}

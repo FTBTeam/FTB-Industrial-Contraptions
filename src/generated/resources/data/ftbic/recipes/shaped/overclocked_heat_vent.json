@@ -1,20 +1,20 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:overclocked_heat_vent",
-	"pattern": [
-		"P",
-		"V",
-		"P"
-	],
-	"key": {
-		"P": {
-			"tag": "forge:plates/enderium"
-		},
-		"V": {
-			"item": "ftbic:reactor_heat_vent"
-		}
-	},
-	"result": {
-		"item": "ftbic:overclocked_heat_vent"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:overclocked_heat_vent",
+  "pattern": [
+    "P",
+    "V",
+    "P"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/enderium"
+    },
+    "V": {
+      "item": "ftbic:reactor_heat_vent"
+    }
+  },
+  "result": {
+    "item": "ftbic:overclocked_heat_vent"
+  }
 }

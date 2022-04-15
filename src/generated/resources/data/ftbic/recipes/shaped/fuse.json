@@ -1,21 +1,21 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:fuse",
-	"pattern": [
-		"GGG",
-		"MMM",
-		"GGG"
-	],
-	"key": {
-		"G": {
-			"tag": "forge:glass/colorless"
-		},
-		"M": {
-			"item": "ftbic:industrial_grade_metal"
-		}
-	},
-	"result": {
-		"item": "ftbic:fuse",
-		"count": 24
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:fuse",
+  "pattern": [
+    "GGG",
+    "MMM",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:glass/colorless"
+    },
+    "M": {
+      "item": "ftbic:industrial_grade_metal"
+    }
+  },
+  "result": {
+    "item": "ftbic:fuse",
+    "count": 24
+  }
 }

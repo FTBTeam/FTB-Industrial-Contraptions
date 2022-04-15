@@ -1,25 +1,25 @@
 {
-	"type": "ftbic:canning",
-	"inputItems": [
-		{
-			"ingredient": {
-				"type": "forge:nbt",
-				"item": "ftbic:fluid_cell",
-				"count": 1,
-				"nbt": "{Fluid:\"minecraft:water\"}"
-			},
-			"count": 1
-		},
-		{
-			"ingredient": {
-				"tag": "forge:dyes/white"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "ftbic:light_spray_paint_can"
-		}
-	]
+  "type": "ftbic:canning",
+  "inputItems": [
+    {
+      "ingredient": {
+        "type": "forge:nbt",
+        "item": "ftbic:fluid_cell",
+        "count": 1,
+        "nbt": "{Fluid:\"minecraft:water\"}"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "forge:dyes/white"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:light_spray_paint_can"
+    }
+  ]
 }

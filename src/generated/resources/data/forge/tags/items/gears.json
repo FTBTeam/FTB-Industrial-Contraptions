@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:gears/tin",
+    "#forge:gears/lead",
+    "#forge:gears/uranium",
+    "#forge:gears/iridium",
+    "#forge:gears/enderium",
+    "#forge:gears/aluminum"
+  ]
+}

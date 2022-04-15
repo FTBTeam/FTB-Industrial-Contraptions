@@ -1,16 +1,16 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:enderium_wire",
-	"pattern": [
-		"MMM"
-	],
-	"key": {
-		"M": {
-			"tag": "forge:ingots/enderium"
-		}
-	},
-	"result": {
-		"item": "ftbic:enderium_wire",
-		"count": 6
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:enderium_wire",
+  "pattern": [
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "tag": "forge:ingots/enderium"
+    }
+  },
+  "result": {
+    "item": "ftbic:enderium_wire",
+    "count": 6
+  }
 }

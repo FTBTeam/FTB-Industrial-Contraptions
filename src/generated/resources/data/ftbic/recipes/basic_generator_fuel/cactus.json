@@ -1,7 +1,7 @@
 {
-	"type": "ftbic:basic_generator_fuel",
-	"ingredient": {
-		"item": "minecraft:cactus"
-	},
-	"ticks": 48
+  "type": "ftbic:basic_generator_fuel",
+  "ingredient": {
+    "item": "minecraft:cactus"
+  },
+  "ticks": 48
 }

@@ -1,18 +1,18 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:fluid_cell",
-	"pattern": [
-		" T ",
-		"T T",
-		" T "
-	],
-	"key": {
-		"T": {
-			"tag": "forge:ingots/tin"
-		}
-	},
-	"result": {
-		"item": "ftbic:fluid_cell",
-		"count": 4
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:fluid_cell",
+  "pattern": [
+    " T ",
+    "T T",
+    " T "
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:ingots/tin"
+    }
+  },
+  "result": {
+    "item": "ftbic:fluid_cell",
+    "count": 4
+  }
 }

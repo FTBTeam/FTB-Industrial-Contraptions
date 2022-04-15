@@ -1,36 +1,36 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"group": "ftbic:advanced_machine_block",
-	"ingredients": [
-		{
-			"item": "ftbic:copper_coil"
-		},
-		{
-			"item": "ftbic:carbon_plate"
-		},
-		{
-			"item": "ftbic:copper_coil"
-		},
-		{
-			"item": "ftbic:advanced_alloy"
-		},
-		{
-			"item": "ftbic:machine_block"
-		},
-		{
-			"item": "ftbic:advanced_alloy"
-		},
-		{
-			"item": "ftbic:copper_coil"
-		},
-		{
-			"item": "ftbic:carbon_plate"
-		},
-		{
-			"item": "ftbic:copper_coil"
-		}
-	],
-	"result": {
-		"item": "ftbic:advanced_machine_block"
-	}
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:advanced_machine_block",
+  "ingredients": [
+    {
+      "item": "ftbic:copper_coil"
+    },
+    {
+      "item": "ftbic:carbon_plate"
+    },
+    {
+      "item": "ftbic:copper_coil"
+    },
+    {
+      "item": "ftbic:advanced_alloy"
+    },
+    {
+      "item": "ftbic:machine_block"
+    },
+    {
+      "item": "ftbic:advanced_alloy"
+    },
+    {
+      "item": "ftbic:copper_coil"
+    },
+    {
+      "item": "ftbic:carbon_plate"
+    },
+    {
+      "item": "ftbic:copper_coil"
+    }
+  ],
+  "result": {
+    "item": "ftbic:advanced_machine_block"
+  }
 }

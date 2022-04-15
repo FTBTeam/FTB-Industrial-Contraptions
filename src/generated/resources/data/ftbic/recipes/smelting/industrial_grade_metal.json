@@ -1,9 +1,9 @@
 {
-	"type": "minecraft:smelting",
-	"ingredient": {
-		"tag": "forge:ingots/iron"
-	},
-	"result": "ftbic:industrial_grade_metal",
-	"experience": 0.0,
-	"cookingtime": 400
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "tag": "forge:ingots/iron"
+  },
+  "result": "ftbic:industrial_grade_metal",
+  "experience": 0.0,
+  "cookingtime": 400
 }

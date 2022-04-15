@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:enderium_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/enderium"
+    }
+  ],
+  "result": {
+    "item": "ftbic:enderium_nugget",
+    "count": 9
+  }
+}

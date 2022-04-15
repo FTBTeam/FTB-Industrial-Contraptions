@@ -1,6 +1,6 @@
 {
-	"parent": "minecraft:item/generated",
-	"textures": {
-		"layer0": "ftbic:item/ejector_upgrade"
-	}
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ftbic:item/ejector_upgrade"
+  }
 }

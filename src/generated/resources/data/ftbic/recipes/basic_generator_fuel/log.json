@@ -1,7 +1,7 @@
 {
-	"type": "ftbic:basic_generator_fuel",
-	"ingredient": {
-		"tag": "minecraft:logs_that_burn"
-	},
-	"ticks": 300
+  "type": "ftbic:basic_generator_fuel",
+  "ingredient": {
+    "tag": "minecraft:logs_that_burn"
+  },
+  "ticks": 300
 }

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:lead_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/lead"
+    }
+  ],
+  "result": {
+    "item": "ftbic:lead_nugget",
+    "count": 9
+  }
+}

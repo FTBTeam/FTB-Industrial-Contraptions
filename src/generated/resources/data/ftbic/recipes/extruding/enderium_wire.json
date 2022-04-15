@@ -1,17 +1,17 @@
 {
-	"type": "ftbic:extruding",
-	"inputItems": [
-		{
-			"ingredient": {
-				"tag": "forge:plates/enderium"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "ftbic:enderium_wire",
-			"count": 2
-		}
-	]
+  "type": "ftbic:extruding",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:plates/enderium"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:enderium_wire",
+      "count": 2
+    }
+  ]
 }

@@ -1,36 +1,36 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"group": "ftbic:electronic_circuit",
-	"ingredients": [
-		{
-			"item": "ftbic:lv_cable"
-		},
-		{
-			"item": "ftbic:lv_cable"
-		},
-		{
-			"item": "ftbic:lv_cable"
-		},
-		{
-			"tag": "forge:dusts/redstone"
-		},
-		{
-			"item": "ftbic:industrial_grade_metal"
-		},
-		{
-			"tag": "forge:dusts/redstone"
-		},
-		{
-			"item": "ftbic:lv_cable"
-		},
-		{
-			"item": "ftbic:lv_cable"
-		},
-		{
-			"item": "ftbic:lv_cable"
-		}
-	],
-	"result": {
-		"item": "ftbic:electronic_circuit"
-	}
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:electronic_circuit",
+  "ingredients": [
+    {
+      "item": "ftbic:lv_cable"
+    },
+    {
+      "item": "ftbic:lv_cable"
+    },
+    {
+      "item": "ftbic:lv_cable"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "item": "ftbic:industrial_grade_metal"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "item": "ftbic:lv_cable"
+    },
+    {
+      "item": "ftbic:lv_cable"
+    },
+    {
+      "item": "ftbic:lv_cable"
+    }
+  ],
+  "result": {
+    "item": "ftbic:electronic_circuit"
+  }
 }

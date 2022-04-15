@@ -1,25 +1,25 @@
 {
-	"type": "ftbic:canning",
-	"inputItems": [
-		{
-			"ingredient": {
-				"type": "forge:nbt",
-				"item": "ftbic:fluid_cell",
-				"count": 1,
-				"nbt": "{Fluid:\"minecraft:water\"}"
-			},
-			"count": 1
-		},
-		{
-			"ingredient": {
-				"tag": "forge:dusts/uranium"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "ftbic:uranium_fuel_rod"
-		}
-	]
+  "type": "ftbic:canning",
+  "inputItems": [
+    {
+      "ingredient": {
+        "type": "forge:nbt",
+        "item": "ftbic:fluid_cell",
+        "count": 1,
+        "nbt": "{Fluid:\"minecraft:water\"}"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "forge:dusts/uranium"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:uranium_fuel_rod"
+    }
+  ]
 }

@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:dusts/tin",
+    "#forge:dusts/lead",
+    "#forge:dusts/uranium",
+    "#forge:dusts/iridium",
+    "#forge:dusts/enderium",
+    "#forge:dusts/aluminum",
+    "#forge:dusts/diamond"
+  ]
+}

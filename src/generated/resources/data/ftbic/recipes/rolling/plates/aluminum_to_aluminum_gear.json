@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:rolling",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:plates/aluminum"
+      },
+      "count": 4
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:aluminum_gear"
+    }
+  ]
+}

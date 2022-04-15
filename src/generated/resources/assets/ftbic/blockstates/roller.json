@@ -1,64 +1,64 @@
 {
-	"variants": {
-		"active=false,dark=false,facing=north": {
-			"model": "ftbic:block/electric/light/roller_off"
-		},
-		"active=true,dark=false,facing=north": {
-			"model": "ftbic:block/electric/light/roller_on"
-		},
-		"active=false,dark=true,facing=north": {
-			"model": "ftbic:block/electric/dark/roller_off"
-		},
-		"active=true,dark=true,facing=north": {
-			"model": "ftbic:block/electric/dark/roller_on"
-		},
-		"active=false,dark=false,facing=south": {
-			"model": "ftbic:block/electric/light/roller_off",
-			"y": 180
-		},
-		"active=true,dark=false,facing=south": {
-			"model": "ftbic:block/electric/light/roller_on",
-			"y": 180
-		},
-		"active=false,dark=true,facing=south": {
-			"model": "ftbic:block/electric/dark/roller_off",
-			"y": 180
-		},
-		"active=true,dark=true,facing=south": {
-			"model": "ftbic:block/electric/dark/roller_on",
-			"y": 180
-		},
-		"active=false,dark=false,facing=west": {
-			"model": "ftbic:block/electric/light/roller_off",
-			"y": 270
-		},
-		"active=true,dark=false,facing=west": {
-			"model": "ftbic:block/electric/light/roller_on",
-			"y": 270
-		},
-		"active=false,dark=true,facing=west": {
-			"model": "ftbic:block/electric/dark/roller_off",
-			"y": 270
-		},
-		"active=true,dark=true,facing=west": {
-			"model": "ftbic:block/electric/dark/roller_on",
-			"y": 270
-		},
-		"active=false,dark=false,facing=east": {
-			"model": "ftbic:block/electric/light/roller_off",
-			"y": 90
-		},
-		"active=true,dark=false,facing=east": {
-			"model": "ftbic:block/electric/light/roller_on",
-			"y": 90
-		},
-		"active=false,dark=true,facing=east": {
-			"model": "ftbic:block/electric/dark/roller_off",
-			"y": 90
-		},
-		"active=true,dark=true,facing=east": {
-			"model": "ftbic:block/electric/dark/roller_on",
-			"y": 90
-		}
-	}
+  "variants": {
+    "active=false,dark=false,facing=north": {
+      "model": "ftbic:block/electric/light/roller_off"
+    },
+    "active=true,dark=false,facing=north": {
+      "model": "ftbic:block/electric/light/roller_on"
+    },
+    "active=false,dark=true,facing=north": {
+      "model": "ftbic:block/electric/dark/roller_off"
+    },
+    "active=true,dark=true,facing=north": {
+      "model": "ftbic:block/electric/dark/roller_on"
+    },
+    "active=false,dark=false,facing=south": {
+      "model": "ftbic:block/electric/light/roller_off",
+      "y": 180
+    },
+    "active=true,dark=false,facing=south": {
+      "model": "ftbic:block/electric/light/roller_on",
+      "y": 180
+    },
+    "active=false,dark=true,facing=south": {
+      "model": "ftbic:block/electric/dark/roller_off",
+      "y": 180
+    },
+    "active=true,dark=true,facing=south": {
+      "model": "ftbic:block/electric/dark/roller_on",
+      "y": 180
+    },
+    "active=false,dark=false,facing=west": {
+      "model": "ftbic:block/electric/light/roller_off",
+      "y": 270
+    },
+    "active=true,dark=false,facing=west": {
+      "model": "ftbic:block/electric/light/roller_on",
+      "y": 270
+    },
+    "active=false,dark=true,facing=west": {
+      "model": "ftbic:block/electric/dark/roller_off",
+      "y": 270
+    },
+    "active=true,dark=true,facing=west": {
+      "model": "ftbic:block/electric/dark/roller_on",
+      "y": 270
+    },
+    "active=false,dark=false,facing=east": {
+      "model": "ftbic:block/electric/light/roller_off",
+      "y": 90
+    },
+    "active=true,dark=false,facing=east": {
+      "model": "ftbic:block/electric/light/roller_on",
+      "y": 90
+    },
+    "active=false,dark=true,facing=east": {
+      "model": "ftbic:block/electric/dark/roller_off",
+      "y": 90
+    },
+    "active=true,dark=true,facing=east": {
+      "model": "ftbic:block/electric/dark/roller_on",
+      "y": 90
+    }
+  }
 }

@@ -1,23 +1,23 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:neutron_reflector",
-	"pattern": [
-		"TCT",
-		"TPT",
-		"TCT"
-	],
-	"key": {
-		"T": {
-			"tag": "forge:dusts/tin"
-		},
-		"C": {
-			"tag": "forge:dusts/coal"
-		},
-		"P": {
-			"item": "ftbic:dense_copper_plate"
-		}
-	},
-	"result": {
-		"item": "ftbic:neutron_reflector"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:neutron_reflector",
+  "pattern": [
+    "TCT",
+    "TPT",
+    "TCT"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:dusts/tin"
+    },
+    "C": {
+      "tag": "forge:dusts/coal"
+    },
+    "P": {
+      "item": "ftbic:dense_copper_plate"
+    }
+  },
+  "result": {
+    "item": "ftbic:neutron_reflector"
+  }
 }

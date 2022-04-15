@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:rolling",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:plates/enderium"
+      },
+      "count": 4
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:enderium_gear"
+    }
+  ]
+}

@@ -1,16 +1,16 @@
 {
-	"type": "ftbic:compressing",
-	"inputItems": [
-		{
-			"ingredient": {
-				"item": "ftbic:carbon_fiber_mesh"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "ftbic:carbon_plate"
-		}
-	]
+  "type": "ftbic:compressing",
+  "inputItems": [
+    {
+      "ingredient": {
+        "item": "ftbic:carbon_fiber_mesh"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:carbon_plate"
+    }
+  ]
 }

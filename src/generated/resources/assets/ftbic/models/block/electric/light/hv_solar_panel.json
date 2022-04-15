@@ -1,9 +1,9 @@
 {
-	"parent": "ftbic:block/orientable_2d",
-	"textures": {
-		"side": "ftbic:block/electric/light/advanced_side",
-		"front": "ftbic:block/electric/light/advanced_side",
-		"top": "ftbic:block/electric/light/hv_solar_panel_top",
-		"bottom": "ftbic:block/electric/light/advanced_bottom"
-	}
+  "parent": "ftbic:block/orientable_2d",
+  "textures": {
+    "side": "ftbic:block/electric/light/advanced_side",
+    "front": "ftbic:block/electric/light/advanced_side",
+    "top": "ftbic:block/electric/light/hv_solar_panel_top",
+    "bottom": "ftbic:block/electric/light/advanced_bottom"
+  }
 }

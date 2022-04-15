@@ -1,9 +1,9 @@
 {
-	"parent": "ftbic:block/orientable_2d",
-	"textures": {
-		"side": "ftbic:block/electric/light/basic_side",
-		"front": "ftbic:block/electric/light/compressor_front_on",
-		"top": "ftbic:block/electric/light/compressor_top",
-		"bottom": "ftbic:block/electric/light/basic_bottom"
-	}
+  "parent": "ftbic:block/orientable_2d",
+  "textures": {
+    "side": "ftbic:block/electric/light/basic_side",
+    "front": "ftbic:block/electric/light/compressor_front_on",
+    "top": "ftbic:block/electric/light/compressor_top",
+    "bottom": "ftbic:block/electric/light/basic_bottom"
+  }
 }

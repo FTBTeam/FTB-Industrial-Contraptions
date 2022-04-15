@@ -1,23 +1,23 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:single_use_battery",
-	"pattern": [
-		"C",
-		"R",
-		"O"
-	],
-	"key": {
-		"C": {
-			"item": "ftbic:lv_cable"
-		},
-		"O": {
-			"tag": "minecraft:coals"
-		},
-		"R": {
-			"tag": "forge:dusts/redstone"
-		}
-	},
-	"result": {
-		"item": "ftbic:single_use_battery"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:single_use_battery",
+  "pattern": [
+    "C",
+    "R",
+    "O"
+  ],
+  "key": {
+    "C": {
+      "item": "ftbic:lv_cable"
+    },
+    "O": {
+      "tag": "minecraft:coals"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    }
+  },
+  "result": {
+    "item": "ftbic:single_use_battery"
+  }
 }

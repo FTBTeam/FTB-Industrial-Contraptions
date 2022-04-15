@@ -1,20 +1,20 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:reactor_heat_exchanger",
-	"pattern": [
-		"P",
-		"V",
-		"P"
-	],
-	"key": {
-		"P": {
-			"tag": "forge:plates/lead"
-		},
-		"V": {
-			"item": "ftbic:heat_exchanger"
-		}
-	},
-	"result": {
-		"item": "ftbic:reactor_heat_exchanger"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:reactor_heat_exchanger",
+  "pattern": [
+    "P",
+    "V",
+    "P"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/lead"
+    },
+    "V": {
+      "item": "ftbic:heat_exchanger"
+    }
+  },
+  "result": {
+    "item": "ftbic:reactor_heat_exchanger"
+  }
 }

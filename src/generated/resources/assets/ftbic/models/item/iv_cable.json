@@ -1,218 +1,218 @@
 {
-	"parent": "minecraft:block/block",
-	"display": {
-		"thirdperson_righthand": {
-			"rotation": [
-				75,
-				45,
-				0
-			],
-			"translation": [
-				0,
-				1.5,
-				0
-			],
-			"scale": [
-				0.375,
-				0.375,
-				0.375
-			]
-		},
-		"thirdperson_lefthand": {
-			"rotation": [
-				75,
-				45,
-				0
-			],
-			"translation": [
-				0,
-				1.5,
-				0
-			],
-			"scale": [
-				0.375,
-				0.375,
-				0.375
-			]
-		},
-		"firstperson_righthand": {
-			"rotation": [
-				0,
-				45,
-				0
-			],
-			"scale": [
-				0.4,
-				0.4,
-				0.4
-			]
-		},
-		"firstperson_lefthand": {
-			"rotation": [
-				0,
-				225,
-				0
-			],
-			"scale": [
-				0.4,
-				0.4,
-				0.4
-			]
-		},
-		"ground": {
-			"translation": [
-				0,
-				3,
-				0
-			],
-			"scale": [
-				0.25,
-				0.25,
-				0.25
-			]
-		},
-		"gui": {
-			"rotation": [
-				45,
-				45,
-				90
-			],
-			"translation": [
-				1.75,
-				1,
-				0
-			],
-			"scale": [
-				0.625,
-				0.625,
-				0.625
-			]
-		},
-		"fixed": {
-			"translation": [
-				0,
-				-1.5,
-				0
-			],
-			"scale": [
-				0.5,
-				0.5,
-				0.5
-			]
-		}
-	},
-	"textures": {
-		"particle": "ftbic:block/iv_cable",
-		"cable": "ftbic:block/iv_cable"
-	},
-	"elements": [
-		{
-			"from": [
-				6,
-				0,
-				6
-			],
-			"to": [
-				10,
-				10,
-				10
-			],
-			"faces": {
-				"down": {
-					"texture": "#cable"
-				},
-				"up": {
-					"texture": "#cable"
-				},
-				"north": {
-					"texture": "#cable",
-					"rotation": 180
-				},
-				"south": {
-					"texture": "#cable",
-					"rotation": 180
-				},
-				"west": {
-					"texture": "#cable",
-					"rotation": 180
-				},
-				"east": {
-					"texture": "#cable",
-					"rotation": 180
-				}
-			}
-		},
-		{
-			"from": [
-				6,
-				10,
-				6
-			],
-			"to": [
-				10,
-				20,
-				10
-			],
-			"faces": {
-				"down": {
-					"texture": "#cable",
-					"uv": [
-						10.0,
-						10.0,
-						6.0,
-						6.0
-					]
-				},
-				"up": {
-					"texture": "#cable",
-					"uv": [
-						10.0,
-						10.0,
-						6.0,
-						6.0
-					]
-				},
-				"north": {
-					"texture": "#cable",
-					"uv": [
-						10.0,
-						16.0,
-						6.0,
-						6.0
-					],
-					"rotation": 180
-				},
-				"south": {
-					"texture": "#cable",
-					"uv": [
-						10.0,
-						16.0,
-						6.0,
-						6.0
-					],
-					"rotation": 180
-				},
-				"west": {
-					"texture": "#cable",
-					"uv": [
-						10.0,
-						16.0,
-						6.0,
-						6.0
-					],
-					"rotation": 180
-				},
-				"east": {
-					"texture": "#cable",
-					"uv": [
-						10.0,
-						16.0,
-						6.0,
-						6.0
-					],
-					"rotation": 180
-				}
-			}
-		}
-	]
+  "parent": "minecraft:block/block",
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        1.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        1.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "gui": {
+      "rotation": [
+        45,
+        45,
+        90
+      ],
+      "translation": [
+        1.75,
+        1,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "fixed": {
+      "translation": [
+        0,
+        -1.5,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  },
+  "textures": {
+    "particle": "ftbic:block/iv_cable",
+    "cable": "ftbic:block/iv_cable"
+  },
+  "elements": [
+    {
+      "from": [
+        6,
+        0,
+        6
+      ],
+      "to": [
+        10,
+        10,
+        10
+      ],
+      "faces": {
+        "down": {
+          "texture": "#cable"
+        },
+        "up": {
+          "texture": "#cable"
+        },
+        "north": {
+          "texture": "#cable",
+          "rotation": 180
+        },
+        "south": {
+          "texture": "#cable",
+          "rotation": 180
+        },
+        "west": {
+          "texture": "#cable",
+          "rotation": 180
+        },
+        "east": {
+          "texture": "#cable",
+          "rotation": 180
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        10,
+        6
+      ],
+      "to": [
+        10,
+        20,
+        10
+      ],
+      "faces": {
+        "down": {
+          "texture": "#cable",
+          "uv": [
+            10.0,
+            10.0,
+            6.0,
+            6.0
+          ]
+        },
+        "up": {
+          "texture": "#cable",
+          "uv": [
+            10.0,
+            10.0,
+            6.0,
+            6.0
+          ]
+        },
+        "north": {
+          "texture": "#cable",
+          "uv": [
+            10.0,
+            16.0,
+            6.0,
+            6.0
+          ],
+          "rotation": 180
+        },
+        "south": {
+          "texture": "#cable",
+          "uv": [
+            10.0,
+            16.0,
+            6.0,
+            6.0
+          ],
+          "rotation": 180
+        },
+        "west": {
+          "texture": "#cable",
+          "uv": [
+            10.0,
+            16.0,
+            6.0,
+            6.0
+          ],
+          "rotation": 180
+        },
+        "east": {
+          "texture": "#cable",
+          "uv": [
+            10.0,
+            16.0,
+            6.0,
+            6.0
+          ],
+          "rotation": 180
+        }
+      }
+    }
+  ]
 }
