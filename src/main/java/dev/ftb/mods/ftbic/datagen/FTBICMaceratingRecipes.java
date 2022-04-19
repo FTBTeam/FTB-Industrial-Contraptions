@@ -33,7 +33,7 @@ public class FTBICMaceratingRecipes extends FTBICRecipesGen{
 		resourceBreakDown(List.of(ALUMINUM_INGOT), ResourceElements.ALUMINUM, ResourceType.DUST, 1, consumer);
 		resourceBreakDown(List.of(ENDERIUM_INGOT), ResourceElements.ENDERIUM, ResourceType.DUST,1, consumer);
 
-		resourceBreakDown(List.of(DIAMOND), FTBICItems.DIAMOND_DUST.get(),1, consumer);
+		resourceBreakDown(List.of(DIAMOND), ResourceElements.DIAMOND, ResourceType.DUST,1, consumer);
 	}
 
 	private static void resourceBreakDown(List<TagKey<Item>> input, ResourceElements element, ResourceType type, int count, Consumer<FinishedRecipe> consumer) {

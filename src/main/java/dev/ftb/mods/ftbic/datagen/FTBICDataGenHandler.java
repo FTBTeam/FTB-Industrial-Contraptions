@@ -64,6 +64,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static dev.ftb.mods.ftbic.datagen.FTBICRecipesGen.*;
+import static dev.ftb.mods.ftbic.world.ResourceElements.DIAMOND;
 import static dev.ftb.mods.ftbic.world.ResourceType.*;
 import static dev.ftb.mods.ftbic.world.ResourceElements.*;
 
@@ -967,7 +968,7 @@ public class FTBICDataGenHandler {
 			tag(IRIDIUM_DUST).add(FTBICItems.getResourceFromType(IRIDIUM, DUST).orElseThrow().get());
 			tag(ENDERIUM_DUST).add(FTBICItems.getResourceFromType(ENDERIUM, DUST).orElseThrow().get());
 			tag(ALUMINUM_DUST).add(FTBICItems.getResourceFromType(ALUMINUM, DUST).orElseThrow().get());
-			tag(DIAMOND_DUST).add(FTBICItems.DIAMOND_DUST.get());
+			tag(DIAMOND_DUST).add(FTBICItems.getResourceFromType(DIAMOND, DUST).orElseThrow().get());
 
 			tag(Tags.Items.DUSTS).addTag(TIN_DUST);
 			tag(Tags.Items.DUSTS).addTag(LEAD_DUST);
