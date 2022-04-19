@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "ftbic:uranium_ore",
-    "ftbic:deepslate_uranium_ore"
+    "ftbic:deepslate_uranium_ore",
+    "ftbic:uranium_ore"
   ]
 }

@@ -8,26 +8,25 @@ import java.util.stream.Collectors;
 
 public enum ResourceElements {
     TIN,
-    DEEPSLATE_TIN,
+    DEEPSLATE_TIN(Requirements.builder().add(ResourceType.ORE)),
     LEAD,
-    DEEPSLATE_LEAD,
+    DEEPSLATE_LEAD(Requirements.builder().add(ResourceType.ORE)),
     URANIUM,
-    DEEPSLATE_URANIUM,
+    DEEPSLATE_URANIUM(Requirements.builder().add(ResourceType.ORE)),
     IRIDIUM,
-    DEEPSLATE_IRIDIUM,
+    DEEPSLATE_IRIDIUM(Requirements.builder().add(ResourceType.ORE)),
     ALUMINUM,
-    DEEPSLATE_ALUMINUM,
+    DEEPSLATE_ALUMINUM(Requirements.builder().add(ResourceType.ORE)),
     ENDERIUM(Requirements.builder().all().remove(ResourceType.ORE).remove(ResourceType.CHUNK)),
 	DIAMOND(Requirements.builder().add(ResourceType.DUST));
 
     public static final List<ResourceElements> VALUES = Arrays.stream(ResourceElements.values()).toList();
-    public static final List<ResourceElements> NO_DEEPSLATE_VALUES = VALUES.stream().filter(e -> !e.getName().contains("deepslate_")).toList();
 
 	/**
 	 * Creates a map of the resource types which link together the elements that the resource contains.
 	 * For example, if you get the {@link ResourceType#ORE} from the list, you will not get an ore version of {@link ResourceElements#ENDERIUM}
 	 */
-	public static final Map<ResourceType, List<ResourceElements>> RESOURCES_BY_REQUIREMENT = ResourceType.VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> NO_DEEPSLATE_VALUES.stream().filter(a -> a.requirements.has(e)).collect(Collectors.toList())));
+	public static final Map<ResourceType, List<ResourceElements>> RESOURCES_BY_REQUIREMENT = ResourceType.VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> VALUES.stream().filter(a -> a.requirements.has(e)).collect(Collectors.toList())));
 
     private final Requirements requirements;
 

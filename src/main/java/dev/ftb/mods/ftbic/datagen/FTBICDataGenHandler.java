@@ -15,6 +15,8 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
 import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -27,6 +29,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -887,7 +890,14 @@ public class FTBICDataGenHandler {
 
 			FTBICBlocks.RESOURCES.values().forEach(this::basicBlockItem);
 
-			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> v.forEach((k2, v2) -> basicItem(v2)));
+			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> {
+				// Don't register ores as items
+				if (k.equals(ORE)) {
+					return;
+				}
+
+				v.forEach((k2, v2) -> basicItem(v2));
+			});
 		}
 	}
 
@@ -912,7 +922,6 @@ public class FTBICDataGenHandler {
 			// Ore tags (Make them minable)
 			Block[] resourceOres = FTBICBlocks.RESOURCES.values().stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(resourceOres);
-			tag(Tags.Blocks.ORES).add(resourceOres);
 
 			// Register the tags
 			FTBICBlocks.RESOURCES.forEach((k, v) -> {
@@ -920,6 +929,8 @@ public class FTBICDataGenHandler {
 				var name = k.getName().replace("deepslate_", "");
 				tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/" + name))).add(FTBICBlocks.RESOURCES.get(k).get());
 			});
+
+			tag(Tags.Blocks.ORES).add(resourceOres);
 		}
 	}
 
@@ -1039,16 +1050,16 @@ public class FTBICDataGenHandler {
 			tag(GEARS).addTag(ALUMINUM_GEAR);
 
 			//ORES
-//			tag(TIN_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(TIN).get());
-//			tag(TIN_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_TIN).get());
-//			tag(LEAD_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(LEAD).get());
-//			tag(LEAD_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_LEAD).get());
-//			tag(URANIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(URANIUM).get());
-//			tag(URANIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_URANIUM).get());
-//			tag(IRIDIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(IRIDIUM).get());
-//			tag(IRIDIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_IRIDIUM).get());
-//			tag(ALUMINUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(ALUMINUM).get());
-//			tag(ALUMINUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_ALUMINUM).get());
+			tag(TIN_ORE).add(FTBICItems.getResourceFromType(TIN, ORE).orElseThrow().get());
+			tag(TIN_ORE).add(FTBICItems.getResourceFromType(DEEPSLATE_TIN, ORE).orElseThrow().get());
+			tag(LEAD_ORE).add(FTBICItems.getResourceFromType(LEAD, ORE).orElseThrow().get());
+			tag(LEAD_ORE).add(FTBICItems.getResourceFromType(DEEPSLATE_LEAD, ORE).orElseThrow().get());
+			tag(URANIUM_ORE).add(FTBICItems.getResourceFromType(URANIUM, ORE).orElseThrow().get());
+			tag(URANIUM_ORE).add(FTBICItems.getResourceFromType(DEEPSLATE_URANIUM, ORE).orElseThrow().get());
+			tag(IRIDIUM_ORE).add(FTBICItems.getResourceFromType(IRIDIUM, ORE).orElseThrow().get());
+			tag(IRIDIUM_ORE).add(FTBICItems.getResourceFromType(DEEPSLATE_IRIDIUM, ORE).orElseThrow().get());
+			tag(ALUMINUM_ORE).add(FTBICItems.getResourceFromType(ALUMINUM, ORE).orElseThrow().get());
+			tag(ALUMINUM_ORE).add(FTBICItems.getResourceFromType(DEEPSLATE_ALUMINUM, ORE).orElseThrow().get());
 
 			tag(Tags.Items.ORES).addTag(TIN_ORE);
 			tag(Tags.Items.ORES).addTag(LEAD_ORE);

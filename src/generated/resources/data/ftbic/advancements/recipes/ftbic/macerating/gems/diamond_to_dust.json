@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "ftbic:macerating/gems/diamond_to_diamond_dust"
+      "ftbic:macerating/gems/diamond_to_dust"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "ftbic:macerating/gems/diamond_to_diamond_dust"
+        "recipe": "ftbic:macerating/gems/diamond_to_dust"
       }
     }
   },

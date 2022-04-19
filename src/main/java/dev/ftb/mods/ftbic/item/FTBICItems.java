@@ -159,9 +159,4 @@ public interface FTBICItems {
 		var elementsForType = ResourceElements.RESOURCES_BY_REQUIREMENT.get(e);
 		return elementsForType.stream().collect(Collectors.toMap(Function.identity(), a -> REGISTRY.register(a.getName() + "_" + e.name().toLowerCase(), () -> new ResourceItem(e))));
 	}));
-
-//	Map<ResourceElements, Supplier<BlockItem>> RESOURCES_ORE_ITEMS = FTBICBlocks.RESOURCES.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> blockItem(e.getKey().getName() + "_ore", e.getValue())));
-
-	// One off item
-//	Supplier<Item> DIAMOND_DUST = REGISTRY.register("diamond_dust", () -> new ResourceItem(ResourceType.DUST));
 }
