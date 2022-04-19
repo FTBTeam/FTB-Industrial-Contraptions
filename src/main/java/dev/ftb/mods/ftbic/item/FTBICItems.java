@@ -157,6 +157,6 @@ public interface FTBICItems {
 	 */
 	Map<ResourceType, Map<ResourceElements, Supplier<Item>>> RESOURCE_TYPE_MAP = ResourceType.VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> {
 		var elementsForType = ResourceElements.RESOURCES_BY_REQUIREMENT.get(e);
-		return elementsForType.stream().collect(Collectors.toMap(Function.identity(), a -> REGISTRY.register(a.getName() + "_" + e.name().toLowerCase(), () -> new ResourceItem(e))));
+		return elementsForType.stream().collect(Collectors.toMap(Function.identity(), a -> REGISTRY.register(a.getName() + "_" + e.name().toLowerCase(), () -> e == ResourceType.ORE ? new BlockItem(FTBICBlocks.RESOURCE_ORES.get(a).get(), new Item.Properties().tab(FTBIC.TAB)) : new ResourceItem(e))));
 	}));
 }

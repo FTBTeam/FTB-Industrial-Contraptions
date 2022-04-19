@@ -16,7 +16,6 @@ import dev.ftb.mods.ftbic.item.MaterialItem;
 import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.world.ResourceElements;
-import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -29,7 +28,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -68,8 +66,8 @@ import java.util.stream.Collectors;
 
 import static dev.ftb.mods.ftbic.datagen.FTBICRecipesGen.*;
 import static dev.ftb.mods.ftbic.world.ResourceElements.DIAMOND;
-import static dev.ftb.mods.ftbic.world.ResourceType.*;
 import static dev.ftb.mods.ftbic.world.ResourceElements.*;
+import static dev.ftb.mods.ftbic.world.ResourceType.*;
 
 /**
  * @author LatvianModder
@@ -163,8 +161,8 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.NUKE);
 			addBlock(FTBICBlocks.ACTIVE_NUKE);
 
-			FTBICBlocks.RESOURCES.values()
-					.forEach(this::addBlock);
+//			FTBICBlocks.RESOURCE_ORES.values()
+//					.forEach(this::addBlock);
 
 			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> v.forEach((k2, v2) -> addItemWithSuffix(v2, " " + titleCase(k.name().toLowerCase()))));
 
@@ -673,7 +671,7 @@ public class FTBICDataGenHandler {
 			simpleBlock(FTBICBlocks.ACTIVE_NUKE.get(), models().getExistingFile(modLoc("block/active_nuke")));
 
 			// Ores (Taken from EmendatusEnigmatica, thanks guys!)
-			FTBICBlocks.RESOURCES.forEach((key, value) -> {
+			FTBICBlocks.RESOURCE_ORES.forEach((key, value) -> {
 				ResourceLocation registryName = value.get().getRegistryName();
 				String overlayTexture = "block/ore_overlays/" + key.getName().replace("deepslate_", ""); // no deepslate textures
 
@@ -888,7 +886,7 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.QUANTUM_BOOTS);
 			basicItem(FTBICItems.NUKE_ARROW);
 
-			FTBICBlocks.RESOURCES.values().forEach(this::basicBlockItem);
+			FTBICBlocks.RESOURCE_ORES.values().forEach(this::basicBlockItem);
 
 			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> {
 				// Don't register ores as items
@@ -920,14 +918,14 @@ public class FTBICDataGenHandler {
 			tag(BlockTags.WITHER_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
 
 			// Ore tags (Make them minable)
-			Block[] resourceOres = FTBICBlocks.RESOURCES.values().stream().map(Supplier::get).toArray(Block[]::new);
+			Block[] resourceOres = FTBICBlocks.RESOURCE_ORES.values().stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(resourceOres);
 
 			// Register the tags
-			FTBICBlocks.RESOURCES.forEach((k, v) -> {
+			FTBICBlocks.RESOURCE_ORES.forEach((k, v) -> {
 				// Use the same tag name for deepslate &
 				var name = k.getName().replace("deepslate_", "");
-				tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/" + name))).add(FTBICBlocks.RESOURCES.get(k).get());
+				tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/" + name))).add(FTBICBlocks.RESOURCE_ORES.get(k).get());
 			});
 
 			tag(Tags.Blocks.ORES).add(resourceOres);
@@ -1105,6 +1103,15 @@ public class FTBICDataGenHandler {
 			dropSelf(FTBICBlocks.LANDMARK.get());
 			dropSelf(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get());
 			dropSelf(FTBICBlocks.NUKE.get());
+
+			// Ore drops
+			FTBICBlocks.RESOURCE_ORES.forEach((k, v) -> {
+				ResourceElements.getNonDeepslateVersion(k).ifPresent(e -> {
+					if (e.requirements().has(CHUNK)) {
+						add(v.get(), createOreDrop(v.get(), FTBICItems.getResourceFromType(e, CHUNK).orElseThrow().get()));
+					}
+				});
+			});
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (machine.canBurn) {

@@ -57,7 +57,7 @@ public class FTBICClient extends FTBICCommon {
 		BlockEntityRendererRegistry.register((BlockEntityType) FTBICElectricBlocks.PUMP.blockEntity.get(), DiggingBlockRenderer::new);
 		EntityRendererRegistry.register((Supplier) FTBICEntities.NUKE_ARROW, NukeArrowRenderer::new);
 
-		FTBICBlocks.RESOURCES.values().forEach(e -> ItemBlockRenderTypes.setRenderLayer(e.get(), renderType -> renderType == RenderType.solid() || renderType == RenderType.translucent()));
+		FTBICBlocks.RESOURCE_ORES.values().forEach(e -> ItemBlockRenderTypes.setRenderLayer(e.get(), renderType -> renderType == RenderType.solid() || renderType == RenderType.translucent()));
 	}
 
 	@Override

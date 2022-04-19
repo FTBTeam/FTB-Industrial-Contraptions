@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.world;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,16 @@ public enum ResourceElements {
 
 	public Requirements requirements() {
 		return requirements;
+	}
+
+	/**
+	 * Accepts a resource element type then gives back the non-deepslate version. This method is safe to use on
+	 * non-deepslated types as it'll just find itself.
+	 */
+	public static Optional<ResourceElements> getNonDeepslateVersion(ResourceElements element) {
+		var name = element.getName().replace("deepslate_", "");
+
+		return VALUES.stream().filter(e -> e.getName().equals(name)).findFirst();
 	}
 
 	/**
