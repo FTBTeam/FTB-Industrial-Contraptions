@@ -11,7 +11,8 @@ public enum ResourceType {
 	NUGGET(16),
 	PLATE(32),
 	ROD(64),
-	GEAR(128);
+	GEAR(128),
+	BLOCKOF(256);
 
 	public static final List<ResourceType> VALUES = Arrays.stream(ResourceType.values()).toList();
 

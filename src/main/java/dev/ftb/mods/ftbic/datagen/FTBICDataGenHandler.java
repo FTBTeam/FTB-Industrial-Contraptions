@@ -920,6 +920,13 @@ public class FTBICDataGenHandler {
 			// Ore tags (Make them minable)
 			Block[] resourceOres = FTBICBlocks.RESOURCE_ORES.values().stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(resourceOres);
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get(), FTBICBlocks.MACHINE_BLOCK.get(), FTBICBlocks.REINFORCED_GLASS.get(), FTBICBlocks.REINFORCED_STONE.get());
+
+			Block[] cables = FTBICBlocks.CABLES.stream().map(Supplier::get).toArray(Block[]::new);
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(cables);
+
+			Block[] blocks = FTBICElectricBlocks.ALL.stream().map(e -> e.block.get()).toArray(Block[]::new);
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(blocks);
 
 			// Register the tags
 			FTBICBlocks.RESOURCE_ORES.forEach((k, v) -> {

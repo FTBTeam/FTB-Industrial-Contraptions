@@ -1,15 +1,25 @@
 {
   "replace": false,
   "values": [
-    "ftbic:tin_ore",
+    "ftbic:deepslate_lead_ore",
     "ftbic:deepslate_iridium_ore",
     "ftbic:aluminum_ore",
-    "ftbic:iridium_ore",
-    "ftbic:lead_ore",
-    "ftbic:deepslate_lead_ore",
-    "ftbic:uranium_ore",
+    "ftbic:tin_ore",
     "ftbic:deepslate_tin_ore",
+    "ftbic:lead_ore",
     "ftbic:deepslate_aluminum_ore",
-    "ftbic:deepslate_uranium_ore"
+    "ftbic:uranium_ore",
+    "ftbic:deepslate_uranium_ore",
+    "ftbic:iridium_ore",
+    "ftbic:advanced_machine_block",
+    "ftbic:machine_block",
+    "ftbic:reinforced_glass",
+    "ftbic:reinforced_stone",
+    "ftbic:lv_cable",
+    "ftbic:mv_cable",
+    "ftbic:hv_cable",
+    "ftbic:ev_cable",
+    "ftbic:iv_cable",
+    "ftbic:burnt_cable"
   ]
 }

@@ -19,7 +19,10 @@ public enum ResourceElements {
     ALUMINUM,
     DEEPSLATE_ALUMINUM(Requirements.builder().add(ResourceType.ORE)),
     ENDERIUM(Requirements.builder().all().remove(ResourceType.ORE).remove(ResourceType.CHUNK)),
-	DIAMOND(Requirements.builder().add(ResourceType.DUST));
+	DIAMOND(Requirements.builder().add(ResourceType.DUST)),
+	IRON(Requirements.builder().add(ResourceType.ROD).add(ResourceType.DUST).add(ResourceType.PLATE)),
+	COPPER(Requirements.builder().add(ResourceType.PLATE).add(ResourceType.DUST)),
+	GOLD(Requirements.builder().add(ResourceType.DUST));
 
     public static final List<ResourceElements> VALUES = Arrays.stream(ResourceElements.values()).toList();
 
@@ -84,7 +87,7 @@ public enum ResourceElements {
 		 * OR every resource, so we have them all, simple math 1 + 2 + 4 + 8 + 16 + 32 + 64 + 128 = 255 (8 bits)
 		 */
 		public Requirements all() {
-			this.requirements = ResourceType.ORE.bit | ResourceType.INGOT.bit | ResourceType.CHUNK.bit | ResourceType.DUST.bit | ResourceType.NUGGET.bit | ResourceType.PLATE.bit | ResourceType.ROD.bit | ResourceType.GEAR.bit;
+			this.requirements = ResourceType.ORE.bit | ResourceType.INGOT.bit | ResourceType.CHUNK.bit | ResourceType.DUST.bit | ResourceType.NUGGET.bit | ResourceType.PLATE.bit | ResourceType.ROD.bit | ResourceType.GEAR.bit | ResourceType.BLOCKOF.bit;
 			return this;
 		}
 
