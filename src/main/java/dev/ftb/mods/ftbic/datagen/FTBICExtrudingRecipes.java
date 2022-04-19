@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Consumer;
 
-import static dev.ftb.mods.ftbic.world.ResourceElementTypes.*;
+import static dev.ftb.mods.ftbic.world.ResourceType.*;
 import static dev.ftb.mods.ftbic.world.ResourceElements.*;
 
 public class FTBICExtrudingRecipes extends FTBICRecipesGen {

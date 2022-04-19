@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbic.datagen;
 
 import dev.ftb.mods.ftbic.item.FTBICItems;
-import dev.ftb.mods.ftbic.world.ResourceElementTypes;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import dev.ftb.mods.ftbic.world.ResourceElements;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -21,16 +21,16 @@ public class FTBICFurnaceRecipes extends FTBICRecipesGen {
 
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
-		blastAndSmelt(List.of(TIN_ORE, TIN_CHUNK, TIN_DUST), ResourceElements.TIN, ResourceElementTypes.INGOT, consumer);
-		blastAndSmelt(List.of(LEAD_ORE, LEAD_CHUNK, LEAD_DUST), ResourceElements.LEAD, ResourceElementTypes.INGOT, consumer);
-		blastAndSmelt(List.of(IRIDIUM_ORE, IRIDIUM_CHUNK, IRIDIUM_DUST), ResourceElements.IRIDIUM, ResourceElementTypes.INGOT, consumer);
-		blastAndSmelt(List.of(URANIUM_ORE, URANIUM_CHUNK, URANIUM_DUST), ResourceElements.URANIUM, ResourceElementTypes.INGOT, consumer);
-		blastAndSmelt(List.of(ALUMINUM_ORE, ALUMINUM_CHUNK, ALUMINUM_DUST), ResourceElements.ALUMINUM, ResourceElementTypes.INGOT, consumer);
+		blastAndSmelt(List.of(TIN_ORE, TIN_CHUNK, TIN_DUST), ResourceElements.TIN, ResourceType.INGOT, consumer);
+		blastAndSmelt(List.of(LEAD_ORE, LEAD_CHUNK, LEAD_DUST), ResourceElements.LEAD, ResourceType.INGOT, consumer);
+		blastAndSmelt(List.of(IRIDIUM_ORE, IRIDIUM_CHUNK, IRIDIUM_DUST), ResourceElements.IRIDIUM, ResourceType.INGOT, consumer);
+		blastAndSmelt(List.of(URANIUM_ORE, URANIUM_CHUNK, URANIUM_DUST), ResourceElements.URANIUM, ResourceType.INGOT, consumer);
+		blastAndSmelt(List.of(ALUMINUM_ORE, ALUMINUM_CHUNK, ALUMINUM_DUST), ResourceElements.ALUMINUM, ResourceType.INGOT, consumer);
 
-		blastAndSmelt(List.of(ENDERIUM_DUST), ResourceElements.ENDERIUM, ResourceElementTypes.INGOT, consumer);
+		blastAndSmelt(List.of(ENDERIUM_DUST), ResourceElements.ENDERIUM, ResourceType.INGOT, consumer);
 	}
 
-	private static void blastAndSmelt(List<TagKey<Item>> input, ResourceElements element, ResourceElementTypes type, Consumer<FinishedRecipe> consumer) {
+	private static void blastAndSmelt(List<TagKey<Item>> input, ResourceElements element, ResourceType type, Consumer<FinishedRecipe> consumer) {
 		for (TagKey<Item> item : input) {
 			SimpleCookingRecipeBuilder.cooking(Ingredient.of(item), FTBICItems.getResourceFromType(element, type).orElseThrow().get(), 0.7F, 200, RecipeSerializer.SMELTING_RECIPE)
 					.unlockedBy("has_item", has(item))

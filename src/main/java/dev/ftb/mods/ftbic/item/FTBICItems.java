@@ -11,7 +11,7 @@ import dev.ftb.mods.ftbic.item.reactor.NeutronReflectorItem;
 import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
-import dev.ftb.mods.ftbic.world.ResourceElementTypes;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import dev.ftb.mods.ftbic.world.ResourceElements;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
 import java.util.function.Function;
@@ -54,7 +53,7 @@ public interface FTBICItems {
 	 *
 	 * @return an {@link Optional<Supplier<Item>>} of the item. Sometimes empty if the item does not exist.
 	 */
-	static Optional<Supplier<Item>> getResourceFromType(ResourceElements element, ResourceElementTypes type) {
+	static Optional<Supplier<Item>> getResourceFromType(ResourceElements element, ResourceType type) {
 		return RESOURCE_TYPE_MAP.get(type).entrySet().stream().filter(e -> e.getKey() == element)
 				.findFirst()
 				.map(Map.Entry::getValue);
@@ -153,27 +152,16 @@ public interface FTBICItems {
 	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
 	Supplier<Item> NUKE_ARROW = REGISTRY.register("nuke_arrow", NukeArrowItem::new);
 
-	Map<ResourceElements, Supplier<Item>> RESOURCES_INGOTS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_ingot", () -> new ResourceItem(ResourceElementTypes.INGOT))));
-	Map<ResourceElements, Supplier<Item>> RESOURCES_CHUNKS = ResourceElements.NO_DEEPSLATE_VALUES.stream().filter(ResourceElements::hasChunk).collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_chunk", () -> new ResourceItem(ResourceElementTypes.CHUNK))));
-	Map<ResourceElements, Supplier<Item>> RESOURCES_DUSTS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_dust", () -> new ResourceItem(ResourceElementTypes.DUST))));
-	Map<ResourceElements, Supplier<Item>> RESOURCES_NUGGETS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_nugget", () -> new ResourceItem(ResourceElementTypes.NUGGET))));
-	Map<ResourceElements, Supplier<Item>> RESOURCES_PLATES = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_plate", () -> new ResourceItem(ResourceElementTypes.PLATE))));
-	Map<ResourceElements, Supplier<Item>> RESOURCES_RODS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_rod", () -> new ResourceItem(ResourceElementTypes.ROD))));
-	Map<ResourceElements, Supplier<Item>> RESOURCES_GEARS = ResourceElements.NO_DEEPSLATE_VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_gear", () -> new ResourceItem(ResourceElementTypes.GEAR))));
+	/**
+	 * This goes over all the resource types, finds the resources we require for each element, then registers them for us! so helpful...
+	 */
+	Map<ResourceType, Map<ResourceElements, Supplier<Item>>> RESOURCE_TYPE_MAP = ResourceType.VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> {
+		var elementsForType = ResourceElements.RESOURCES_BY_REQUIREMENT.get(e);
+		return elementsForType.stream().collect(Collectors.toMap(Function.identity(), a -> REGISTRY.register(a.getName() + "_" + e.name().toLowerCase(), () -> new ResourceItem(e))));
+	}));
 
-	// Map of the resource types to resource lists
-	HashMap<ResourceElementTypes, Map<ResourceElements, Supplier<Item>>> RESOURCE_TYPE_MAP = new HashMap<>() {{
-		put(ResourceElementTypes.INGOT, RESOURCES_INGOTS);
-		put(ResourceElementTypes.CHUNK, RESOURCES_CHUNKS);
-		put(ResourceElementTypes.DUST, RESOURCES_DUSTS);
-		put(ResourceElementTypes.NUGGET, RESOURCES_NUGGETS);
-		put(ResourceElementTypes.PLATE, RESOURCES_PLATES);
-		put(ResourceElementTypes.ROD, RESOURCES_RODS);
-		put(ResourceElementTypes.GEAR, RESOURCES_GEARS);
-	}};
-
-	Map<ResourceElements, Supplier<BlockItem>> RESOURCES_ORE_ITEMS = FTBICBlocks.RESOURCES.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> blockItem(e.getKey().getName() + "_ore", e.getValue())));
+//	Map<ResourceElements, Supplier<BlockItem>> RESOURCES_ORE_ITEMS = FTBICBlocks.RESOURCES.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> blockItem(e.getKey().getName() + "_ore", e.getValue())));
 
 	// One off item
-	Supplier<Item> DIAMOND_DUST = REGISTRY.register("diamond_dust", () -> new ResourceItem(ResourceElementTypes.DUST));
+//	Supplier<Item> DIAMOND_DUST = REGISTRY.register("diamond_dust", () -> new ResourceItem(ResourceType.DUST));
 }

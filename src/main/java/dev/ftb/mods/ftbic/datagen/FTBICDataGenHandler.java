@@ -15,8 +15,6 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
 import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
-import dev.ftb.mods.ftbic.world.ResourceElementTypes;
-import dev.ftb.mods.ftbic.world.ResourceElements;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -25,7 +23,6 @@ import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -52,7 +49,6 @@ import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeItemTagsProvider;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -68,7 +64,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static dev.ftb.mods.ftbic.datagen.FTBICRecipesGen.*;
-import static dev.ftb.mods.ftbic.world.ResourceElementTypes.*;
+import static dev.ftb.mods.ftbic.world.ResourceType.*;
 import static dev.ftb.mods.ftbic.world.ResourceElements.*;
 
 /**
@@ -116,6 +112,10 @@ public class FTBICDataGenHandler {
 		}
 	}
 
+	private static String titleCase(String input) {
+		return Character.toUpperCase(input.charAt(0)) + input.substring(1);
+	}
+
 	private static class FTBICLang extends LanguageProvider {
 		public FTBICLang(DataGenerator gen, String modid, String locale) {
 			super(gen, modid, locale);
@@ -126,7 +126,7 @@ public class FTBICDataGenHandler {
 		}
 
 		private void addBlockWithSuffix(Supplier<Block> block, String suffix) {
-			addBlock(block, Arrays.stream(block.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")) + suffix);
+			addBlock(block, Arrays.stream(block.get().getRegistryName().getPath().split("_")).map(FTBICDataGenHandler::titleCase).collect(Collectors.joining(" ")) + suffix);
 		}
 
 		private void addItemWithSuffix(Supplier<Item> item, String suffix) {
@@ -162,18 +162,7 @@ public class FTBICDataGenHandler {
 			FTBICBlocks.RESOURCES.values()
 					.forEach(this::addBlock);
 
-			FTBICItems.RESOURCES_CHUNKS.forEach((k, v) -> {
-				if (!k.hasChunk()) return;
-				addItemWithSuffix(v, " Chunk");
-			});
-
-			FTBICItems.RESOURCES_INGOTS.values().forEach(e -> addItemWithSuffix(e, " Ingot"));
-			FTBICItems.RESOURCES_DUSTS.values().forEach(e -> addItemWithSuffix(e, " Dust"));
-			addItemWithSuffix(FTBICItems.DIAMOND_DUST, " Dust");
-			FTBICItems.RESOURCES_NUGGETS.values().forEach(e -> addItemWithSuffix(e, " Nugget"));
-			FTBICItems.RESOURCES_PLATES.values().forEach(e -> addItemWithSuffix(e, " Plate"));
-			FTBICItems.RESOURCES_RODS.values().forEach(e -> addItemWithSuffix(e, " Rod"));
-			FTBICItems.RESOURCES_GEARS.values().forEach(e -> addItemWithSuffix(e, " Gear"));
+			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> v.forEach((k2, v2) -> addItemWithSuffix(v2, " " + titleCase(k.name().toLowerCase()))));
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -896,17 +885,8 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.NUKE_ARROW);
 
 			FTBICBlocks.RESOURCES.values().forEach(this::basicBlockItem);
-			FTBICItems.RESOURCES_CHUNKS.forEach((k, v) -> {
-				if (!k.hasChunk()) return;
-				basicItem(v);
-			});
-			FTBICItems.RESOURCES_INGOTS.values().forEach(this::basicItem);
-			FTBICItems.RESOURCES_DUSTS.values().forEach(this::basicItem);
-			basicItem(FTBICItems.DIAMOND_DUST);
-			FTBICItems.RESOURCES_NUGGETS.values().forEach(this::basicItem);
-			FTBICItems.RESOURCES_PLATES.values().forEach(this::basicItem);
-			FTBICItems.RESOURCES_RODS.values().forEach(this::basicItem);
-			FTBICItems.RESOURCES_GEARS.values().forEach(this::basicItem);
+
+			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> v.forEach((k2, v2) -> basicItem(v2)));
 		}
 	}
 
@@ -928,20 +908,17 @@ public class FTBICDataGenHandler {
 			tag(BlockTags.DRAGON_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
 			tag(BlockTags.WITHER_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
 
-			// Ore tags
+			// Ore tags (Make them minable)
 			Block[] resourceOres = FTBICBlocks.RESOURCES.values().stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(resourceOres);
-			tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/tin"))).add(FTBICBlocks.RESOURCES.get(TIN).get());
-			tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/lead"))).add(FTBICBlocks.RESOURCES.get(LEAD).get());
-			tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/uranium"))).add(FTBICBlocks.RESOURCES.get(URANIUM).get());
-			tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/aluminum"))).add(FTBICBlocks.RESOURCES.get(ALUMINUM).get());
-			tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/iridium"))).add(FTBICBlocks.RESOURCES.get(IRIDIUM).get());
-			tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/tin"))).add(FTBICBlocks.RESOURCES.get(DEEPSLATE_TIN).get());
-			tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/lead"))).add(FTBICBlocks.RESOURCES.get(DEEPSLATE_LEAD).get());
-			tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/uranium"))).add(FTBICBlocks.RESOURCES.get(DEEPSLATE_URANIUM).get());
-			tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/aluminum"))).add(FTBICBlocks.RESOURCES.get(DEEPSLATE_ALUMINUM).get());
-			tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/iridium"))).add(FTBICBlocks.RESOURCES.get(DEEPSLATE_IRIDIUM).get());
 			tag(Tags.Blocks.ORES).add(resourceOres);
+
+			// Register the tags
+			FTBICBlocks.RESOURCES.forEach((k, v) -> {
+				// Use the same tag name for deepslate &
+				var name = k.getName().replace("deepslate_", "");
+				tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/" + name))).add(FTBICBlocks.RESOURCES.get(k).get());
+			});
 		}
 	}
 
@@ -1061,16 +1038,16 @@ public class FTBICDataGenHandler {
 			tag(GEARS).addTag(ALUMINUM_GEAR);
 
 			//ORES
-			tag(TIN_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(TIN).get());
-			tag(TIN_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_TIN).get());
-			tag(LEAD_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(LEAD).get());
-			tag(LEAD_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_LEAD).get());
-			tag(URANIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(URANIUM).get());
-			tag(URANIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_URANIUM).get());
-			tag(IRIDIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(IRIDIUM).get());
-			tag(IRIDIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_IRIDIUM).get());
-			tag(ALUMINUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(ALUMINUM).get());
-			tag(ALUMINUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_ALUMINUM).get());
+//			tag(TIN_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(TIN).get());
+//			tag(TIN_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_TIN).get());
+//			tag(LEAD_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(LEAD).get());
+//			tag(LEAD_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_LEAD).get());
+//			tag(URANIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(URANIUM).get());
+//			tag(URANIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_URANIUM).get());
+//			tag(IRIDIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(IRIDIUM).get());
+//			tag(IRIDIUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_IRIDIUM).get());
+//			tag(ALUMINUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(ALUMINUM).get());
+//			tag(ALUMINUM_ORE).add(FTBICItems.RESOURCES_ORE_ITEMS.get(DEEPSLATE_ALUMINUM).get());
 
 			tag(Tags.Items.ORES).addTag(TIN_ORE);
 			tag(Tags.Items.ORES).addTag(LEAD_ORE);

@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.block;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -41,5 +42,5 @@ public interface FTBICBlocks {
 
 	List<Supplier<Block>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE, BURNT_CABLE);
 
-	Map<ResourceElements, Supplier<Block>> RESOURCES = ResourceElements.VALUES.stream().filter(ResourceElements::hasOre).collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_ore", ResourceBlock::new)));
+	Map<ResourceElements, Supplier<Block>> RESOURCES = ResourceElements.VALUES.stream().filter(e -> e.requirements().has(ResourceType.ORE)).collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_ore", ResourceBlock::new)));
 }

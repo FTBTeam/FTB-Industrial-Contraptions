@@ -7,11 +7,10 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Consumer;
 
-import static dev.ftb.mods.ftbic.world.ResourceElementTypes.*;
+import static dev.ftb.mods.ftbic.world.ResourceType.*;
 import static dev.ftb.mods.ftbic.world.ResourceElements.*;
 
 public class FTBICCraftingRecipes extends FTBICRecipesGen {
