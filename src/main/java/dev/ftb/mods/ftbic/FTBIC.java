@@ -31,9 +31,12 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 @Mod(FTBIC.MOD_ID)
 @Mod.EventBusSubscriber(modid = FTBIC.MOD_ID)
@@ -42,6 +45,18 @@ public class FTBIC {
 	public static final String MOD_NAME = "FTB Industrial Contraptions";
 	public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 	public static FTBICCommon PROXY;
+
+	public static final List<DeferredRegister<?>> REGISTERS = List.of(
+			FTBICBlocks.REGISTRY,
+			FTBICItems.REGISTRY,
+			FTBICBlockEntities.REGISTRY,
+			FTBICRecipes.REGISTRY,
+			FTBICRecipes.REGISTRY_TYPE,
+			FTBICMenus.REGISTRY,
+			FTBICEntities.REGISTRY,
+			FTBICSounds.REGISTRY,
+			FTBICUtils.LOOT_REGISTRY
+	);
 
 	public static final CreativeModeTab TAB = new CreativeModeTab(MOD_ID) {
 		@Override
@@ -54,20 +69,13 @@ public class FTBIC {
 	public FTBIC() {
 		PROXY = DistExecutor.safeRunForDist(() -> FTBICClient::new, () -> FTBICCommon::new);
 
+		// Config setup
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_CONFIG);
-
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		modEventBus.addGenericListener(Item.class, FTBICRecipes::onItemRegistry);
-		modEventBus.addGenericListener(Item.class, FTBICUtils::onItemRegistry);
+		// Register all the registries
+		REGISTERS.forEach(e -> e.register(modEventBus));
 
-		FTBICBlocks.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICItems.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICBlockEntities.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICRecipes.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICMenus.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICEntities.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICSounds.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 		FTBICElectricBlocks.init();
 		FTBICUtils.init();
 		FTBICNet.init();

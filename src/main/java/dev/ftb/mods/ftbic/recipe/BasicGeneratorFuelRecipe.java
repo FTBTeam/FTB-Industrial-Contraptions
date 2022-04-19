@@ -49,6 +49,6 @@ public class BasicGeneratorFuelRecipe implements Recipe<NoContainer> {
 
 	@Override
 	public RecipeType<?> getType() {
-		return FTBICRecipes.BASIC_GENERATOR_FUEL_TYPE;
+		return FTBICRecipes.BASIC_GENERATOR_FUEL_TYPE.get();
 	}
 }
