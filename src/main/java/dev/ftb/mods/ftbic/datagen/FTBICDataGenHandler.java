@@ -83,10 +83,10 @@ public class FTBICDataGenHandler {
 
 		if (event.includeClient()) {
 			gen.addProvider(new FTBICLang(gen, MODID, "en_us"));
-			gen.addProvider(new FTBICTextures(gen, MODID, event.getExistingFileHelper()));
-			gen.addProvider(new FTBICBlockModels(gen, MODID, event.getExistingFileHelper()));
-			gen.addProvider(new FTBICBlockStates(gen, MODID, event.getExistingFileHelper()));
-			gen.addProvider(new FTBICItemModels(gen, MODID, event.getExistingFileHelper()));
+			gen.addProvider(new FTBICTextures(gen, MODID, efh));
+			gen.addProvider(new FTBICBlockModels(gen, MODID, efh));
+			gen.addProvider(new FTBICBlockStates(gen, MODID, efh));
+			gen.addProvider(new FTBICItemModels(gen, MODID, efh));
 		}
 
 		if (event.includeServer()) {
@@ -890,7 +890,7 @@ public class FTBICDataGenHandler {
 
 			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> {
 				// Don't register ores as items
-				if (k.equals(ORE)) {
+				if (k.equals(ORE) || k.equals(BLOCK)) {
 					return;
 				}
 

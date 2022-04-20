@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 
 public enum ResourceElements {
     TIN,
-    DEEPSLATE_TIN(Requirements.builder().add(ResourceType.ORE)),
     LEAD,
-    DEEPSLATE_LEAD(Requirements.builder().add(ResourceType.ORE)),
     URANIUM,
-    DEEPSLATE_URANIUM(Requirements.builder().add(ResourceType.ORE)),
     IRIDIUM,
-    DEEPSLATE_IRIDIUM(Requirements.builder().add(ResourceType.ORE)),
     ALUMINUM,
+    DEEPSLATE_TIN(Requirements.builder().add(ResourceType.ORE)),
+    DEEPSLATE_LEAD(Requirements.builder().add(ResourceType.ORE)),
+    DEEPSLATE_URANIUM(Requirements.builder().add(ResourceType.ORE)),
+    DEEPSLATE_IRIDIUM(Requirements.builder().add(ResourceType.ORE)),
     DEEPSLATE_ALUMINUM(Requirements.builder().add(ResourceType.ORE)),
     ENDERIUM(Requirements.builder().all().remove(ResourceType.ORE).remove(ResourceType.CHUNK)),
 	DIAMOND(Requirements.builder().add(ResourceType.DUST)),
@@ -83,11 +83,8 @@ public enum ResourceElements {
 			return new Requirements();
 		}
 
-		/**
-		 * OR every resource, so we have them all, simple math 1 + 2 + 4 + 8 + 16 + 32 + 64 + 128 = 255 (8 bits)
-		 */
 		public Requirements all() {
-			this.requirements = ResourceType.ORE.bit | ResourceType.INGOT.bit | ResourceType.CHUNK.bit | ResourceType.DUST.bit | ResourceType.NUGGET.bit | ResourceType.PLATE.bit | ResourceType.ROD.bit | ResourceType.GEAR.bit | ResourceType.BLOCKOF.bit;
+			this.requirements = -1;
 			return this;
 		}
 

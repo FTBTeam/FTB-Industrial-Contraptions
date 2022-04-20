@@ -19,7 +19,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITag;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FTBICConfig {
 	public static Component ENERGY_FORMAT = new TextComponent("⚡").withStyle(ChatFormatting.BOLD);
@@ -62,8 +66,8 @@ public class FTBICConfig {
 			QUANTUM_ARMOR_CAPACITY = b().comment("Max energy the Quantum armor can contain").defineInRange("Quantum armor capacity", 15_000_000D, 0D, Double.POSITIVE_INFINITY);
 			MECHANICAL_ELYTRA_CAPACITY = b().comment("Max energy that the elytra can contain").defineInRange("Mechanical elytra capacity", 50_000D, 0D, Double.POSITIVE_INFINITY);
 			MECHANICAL_ELYTRA_RECHARGE = b().comment("How much power is recharged passively").defineInRange("Mechanical elytra recharge", 1D, 0D, 100_000D);
-			ARMOR_DAMAGE_ENERGY = b().comment("").defineInRange("Armor damage energy", 5_000D, 0D, Double.POSITIVE_INFINITY);
-			ARMOR_FLIGHT_ENERGY = b().comment("").defineInRange("Armor flight energy", 5D, 0D, Double.POSITIVE_INFINITY);
+			ARMOR_DAMAGE_ENERGY = b().comment("Armor damage energy").defineInRange("Armor damage energy", 5_000D, 0D, Double.POSITIVE_INFINITY);
+			ARMOR_FLIGHT_ENERGY = b().comment("Armor flight engery").defineInRange("Armor flight energy", 5D, 0D, Double.POSITIVE_INFINITY);
 			ARMOR_FLIGHT_BOOST = b().comment("Boost gained from wearing the armor during flight").defineInRange("Armor flight boost", 50D, 0D, 100_000D);
 			ARMOR_FLIGHT_STOP = b().comment("Force used to stop flight").defineInRange("Armor flight stop", 15D, 0D, 100_000D);
 

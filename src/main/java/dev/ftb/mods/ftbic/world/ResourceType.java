@@ -6,19 +6,21 @@ import java.util.List;
 public enum ResourceType {
 	ORE(1),
 	INGOT(2),
-	CHUNK(4),
-	DUST(8),
-	NUGGET(16),
-	PLATE(32),
-	ROD(64),
-	GEAR(128),
-	BLOCKOF(256);
+	CHUNK(3),
+	DUST(4),
+	NUGGET(5),
+	PLATE(6),
+	ROD(7),
+	GEAR(8),
+	BLOCK(9);
 
 	public static final List<ResourceType> VALUES = Arrays.stream(ResourceType.values()).toList();
 
+	final int index;
 	final int bit;
 
-	ResourceType(int bit) {
-		this.bit = bit;
+	ResourceType(int index) {
+		this.index = index;
+		this.bit = 1 << index;
 	}
 }

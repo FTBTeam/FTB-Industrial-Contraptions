@@ -59,7 +59,7 @@ ed1e379681b7c961e99d9107a099af03ab0baed5 assets/ftbic/blockstates/reinforced_sto
 cff08c53bd481a3a4f5e3176f6878339ff4b3c2a assets/ftbic/blockstates/tin_ore.json
 e728379df978e262be04aab67e1304e2bcce0199 assets/ftbic/blockstates/uranium_ore.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-e0f21a7d0b36a59c3d2c6a5b3bc656afd3c3f77c assets/ftbic/lang/en_us.json
+397014f73f6271e0dea73726f448f69607174f05 assets/ftbic/lang/en_us.json
 a065a23b07d8160a5c1826e33f8fdef051f9b9d9 assets/ftbic/models/block/active_nuke.json
 32a8fcccb6a46281b355b13187ab3268564e23ca assets/ftbic/models/block/advanced_machine_block.json
 05d61ccd121161ece1b355438f65b7e791293451 assets/ftbic/models/block/aluminum_ore.json
@@ -246,6 +246,8 @@ d4adaade2ac3c6e01b40931aa0ce7cfb8cbe977a assets/ftbic/models/item/component_heat
 1f9308802a4e884f5b4cddb72c8aecd5b27f0ee5 assets/ftbic/models/item/compressor.json
 19f8fa1d15973215f3cd35d6b81919e0b49d802d assets/ftbic/models/item/containment_reactor_plating.json
 b342b941e8d289e05497d055e0bbd01dab93f205 assets/ftbic/models/item/copper_coil.json
+078b46a5ff1678d6bcbd472134eabbcaa368d34c assets/ftbic/models/item/copper_dust.json
+784db8431301825aa145a601a99c9e56aec55d17 assets/ftbic/models/item/copper_plate.json
 889adf00bb27e21e2fd67c1b0297f66823505bd1 assets/ftbic/models/item/copper_wire.json
 16c352680352cd746e3ccaf00d577510a93e4fe6 assets/ftbic/models/item/creative_battery.json
 acd9919ec9e5d8941e42c11cb8b83f98dcb6a435 assets/ftbic/models/item/dark_spray_paint_can.json
@@ -278,6 +280,7 @@ fc4e44641009552b53013c36ceb69845f57346bf assets/ftbic/models/item/ev_transformer
 2f871a28c6e52643848fe0d4e5619af059a9f24f assets/ftbic/models/item/extruder.json
 c270b3a608bb907da4d09059f059bd956e0cffe1 assets/ftbic/models/item/fuse.json
 cc417949525be6eba72b12ece12729188c2363e1 assets/ftbic/models/item/geothermal_generator.json
+849facaceb5eab9041b0026b5285fa76987c5c57 assets/ftbic/models/item/gold_dust.json
 9b6b6a89a6c65b3106641466fed58f2aa4cd26ea assets/ftbic/models/item/gold_wire.json
 477ac20d67179f486a321f89d7aa61f464a47550 assets/ftbic/models/item/graphene.json
 d83fff056f9f2d537f81ec9a7f24d2134bae8e41 assets/ftbic/models/item/heat_capacity_reactor_plating.json
@@ -300,7 +303,10 @@ d9e41f46036b9409e2c5a5cb2d05aa795c04d3e1 assets/ftbic/models/item/iridium_ingot.
 1f05dff5fbb166b4c573b84b8e2ec303bc6ff696 assets/ftbic/models/item/iridium_ore.json
 55bcc1737e53cf26981c0c983f291582a66658e9 assets/ftbic/models/item/iridium_plate.json
 6937e9e556e43dee7cdf8941d77a351f7de50695 assets/ftbic/models/item/iridium_rod.json
+aee56c718fe076c87ad61467590df001a695e649 assets/ftbic/models/item/iron_dust.json
 0acacfb67715a505f0b853057c46f8096bd90210 assets/ftbic/models/item/iron_furnace.json
+65117e8677269109816ba8d51519da698ad1e3a5 assets/ftbic/models/item/iron_plate.json
+8d1f4bf907f7977927f2d2181b92d0dda3f3c324 assets/ftbic/models/item/iron_rod.json
 e36c0491c959ca056553288102890f8fdfd1a966 assets/ftbic/models/item/iv_cable.json
 2607a3571ab7b002d2a0e02e5b8a550138eba23e assets/ftbic/models/item/landmark.json
 359cbfd9a7da493a9a18c1e1b3d1c1ed096346b2 assets/ftbic/models/item/large_coolant_cell.json
@@ -521,12 +527,12 @@ dbc5198a3505c1836b37a7c3b6d49090820d9f44 assets/ftbic/textures/block/electric/li
 a79c7d3216016a1d5ba2087d9e933e131fdac503 assets/ftbic/textures/block/electric/light/teleporter_top_off.png
 6071b38f3fa2aaa8dd16d6e196d29263ff0c9ffd assets/ftbic/textures/block/electric/light/teleporter_top_on.png
 56e98e98dcc693b5cb82c1b26e5a53630328fbfe assets/ftbic/textures/block/electric/light/wind_mill_front.png
-10148fc12bada18079d2bf3ed391dd8430b05895 data/forge/tags/blocks/ores.json
+72fd421e3062c135948021eab8f6bde728171caa data/forge/tags/blocks/ores.json
 7b66b543d0c5d9c985862e8753579c7071d3aec2 data/forge/tags/blocks/ores/aluminum.json
 8f35f6ca5b8bcfad66ed1e21f0e533055a6f15e7 data/forge/tags/blocks/ores/iridium.json
-055af3801f990858364f077610b7b262d9653752 data/forge/tags/blocks/ores/lead.json
+1929d14f7f66dce2e83eaefa076da84c48acefa1 data/forge/tags/blocks/ores/lead.json
 fb5300ff2ce87c3846bb83aff4deaa179fb25bdb data/forge/tags/blocks/ores/tin.json
-f499eaced37a547e652930b655e4c85557585e24 data/forge/tags/blocks/ores/uranium.json
+28ecc7f50399d8f3fd87947b9252e96d9057f9da data/forge/tags/blocks/ores/uranium.json
 edb1496beddf549afb2a1a411cb11d8a664b3237 data/forge/tags/items/dusts.json
 8bdd75c708698969d0ecdb4f9f9fd30289160630 data/forge/tags/items/dusts/aluminum.json
 4f7e10142328e6a96f8d7c52588fa816d23c4ffd data/forge/tags/items/dusts/diamond.json
@@ -1134,6 +1140,6 @@ e90a2d8edba37ca052a0f5dcff3a5ab586138fbf data/ftbic/recipes/smithing/iridium_bat
 cab3f4ea716e152525da323cdbb1161f01b89059 data/ftbic/tags/blocks/reinforced.json
 b109b9c379397e2f3eefc71bf6360fe92bf6fec6 data/ftbic/tags/items/uncannable_food.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/dragon_immune.json
-88bb0e4fac6aa4e50e1edc094ffc97929a02637d data/minecraft/tags/blocks/mineable/pickaxe.json
+a23f31a12a9517cb53398094ca6ff7d5183471eb data/minecraft/tags/blocks/mineable/pickaxe.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/wither_immune.json
 a3fd594a3c67c6930909c5420fb2047974ffa671 data/minecraft/tags/items/arrows.json
