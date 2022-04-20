@@ -11,17 +11,19 @@ import dev.ftb.mods.ftbic.item.reactor.NeutronReflectorItem;
 import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
-import dev.ftb.mods.ftbic.world.ResourceType;
 import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -157,6 +159,6 @@ public interface FTBICItems {
 	 */
 	Map<ResourceType, Map<ResourceElements, Supplier<Item>>> RESOURCE_TYPE_MAP = ResourceType.VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> {
 		var elementsForType = ResourceElements.RESOURCES_BY_REQUIREMENT.get(e);
-		return elementsForType.stream().collect(Collectors.toMap(Function.identity(), a -> REGISTRY.register(a.getName() + "_" + e.name().toLowerCase(), () -> e == ResourceType.ORE ? new BlockItem(FTBICBlocks.RESOURCE_ORES.get(a).get(), new Item.Properties().tab(FTBIC.TAB)) : new ResourceItem(e))));
+		return elementsForType.stream().collect(Collectors.toMap(Function.identity(), a -> REGISTRY.register(a.getName() + "_" + e.name().toLowerCase(), () -> e == ResourceType.ORE || e == ResourceType.BLOCK ? new BlockItem((e == ResourceType.BLOCK ? FTBICBlocks.RESOURCE_BLOCKS_OF.get(a) : FTBICBlocks.RESOURCE_ORES.get(a)).get(), new Item.Properties().tab(FTBIC.TAB)) : new ResourceItem(e))));
 	}));
 }

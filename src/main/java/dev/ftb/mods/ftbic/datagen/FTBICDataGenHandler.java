@@ -670,6 +670,8 @@ public class FTBICDataGenHandler {
 			simpleBlock(FTBICBlocks.NUKE.get(), models().getExistingFile(modLoc("block/nuke")));
 			simpleBlock(FTBICBlocks.ACTIVE_NUKE.get(), models().getExistingFile(modLoc("block/active_nuke")));
 
+			FTBICBlocks.RESOURCE_BLOCKS_OF.values().forEach(e -> simpleBlock(e.get()));
+
 			// Ores (Taken from EmendatusEnigmatica, thanks guys!)
 			FTBICBlocks.RESOURCE_ORES.forEach((key, value) -> {
 				ResourceLocation registryName = value.get().getRegistryName();
@@ -887,6 +889,7 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.NUKE_ARROW);
 
 			FTBICBlocks.RESOURCE_ORES.values().forEach(this::basicBlockItem);
+			FTBICBlocks.RESOURCE_BLOCKS_OF.values().forEach(this::basicBlockItem);
 
 			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> {
 				// Don't register ores as items
@@ -919,7 +922,9 @@ public class FTBICDataGenHandler {
 
 			// Ore tags (Make them minable)
 			Block[] resourceOres = FTBICBlocks.RESOURCE_ORES.values().stream().map(Supplier::get).toArray(Block[]::new);
+			Block[] blockOfResources = FTBICBlocks.RESOURCE_BLOCKS_OF.values().stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(resourceOres);
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(blockOfResources);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get(), FTBICBlocks.MACHINE_BLOCK.get(), FTBICBlocks.REINFORCED_GLASS.get(), FTBICBlocks.REINFORCED_STONE.get());
 
 			Block[] cables = FTBICBlocks.CABLES.stream().map(Supplier::get).toArray(Block[]::new);
@@ -1110,6 +1115,8 @@ public class FTBICDataGenHandler {
 			dropSelf(FTBICBlocks.LANDMARK.get());
 			dropSelf(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get());
 			dropSelf(FTBICBlocks.NUKE.get());
+
+			FTBICBlocks.RESOURCE_BLOCKS_OF.forEach((k, v) -> dropSelf(v.get()));
 
 			// Ore drops
 			FTBICBlocks.RESOURCE_ORES.forEach((k, v) -> {

@@ -29,8 +29,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import java.util.function.Supplier;
-
 public class FTBICClient extends FTBICCommon {
 	@Override
 	public void init() {
@@ -55,7 +53,7 @@ public class FTBICClient extends FTBICCommon {
 
 		BlockEntityRendererRegistry.register((BlockEntityType) FTBICElectricBlocks.QUARRY.blockEntity.get(), DiggingBlockRenderer::new);
 		BlockEntityRendererRegistry.register((BlockEntityType) FTBICElectricBlocks.PUMP.blockEntity.get(), DiggingBlockRenderer::new);
-		EntityRendererRegistry.register((Supplier) FTBICEntities.NUKE_ARROW, NukeArrowRenderer::new);
+		EntityRendererRegistry.register(FTBICEntities.NUKE_ARROW, NukeArrowRenderer::new);
 
 		FTBICBlocks.RESOURCE_ORES.values().forEach(e -> ItemBlockRenderTypes.setRenderLayer(e.get(), renderType -> renderType == RenderType.solid() || renderType == RenderType.translucent()));
 	}

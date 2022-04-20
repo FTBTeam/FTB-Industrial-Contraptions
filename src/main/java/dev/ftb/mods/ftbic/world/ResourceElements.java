@@ -7,24 +7,26 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static dev.ftb.mods.ftbic.world.ResourceType.*;
+
 public enum ResourceElements {
     TIN,
     LEAD,
     URANIUM,
     IRIDIUM,
     ALUMINUM,
-    DEEPSLATE_TIN(Requirements.builder().add(ResourceType.ORE)),
-    DEEPSLATE_LEAD(Requirements.builder().add(ResourceType.ORE)),
-    DEEPSLATE_URANIUM(Requirements.builder().add(ResourceType.ORE)),
-    DEEPSLATE_IRIDIUM(Requirements.builder().add(ResourceType.ORE)),
-    DEEPSLATE_ALUMINUM(Requirements.builder().add(ResourceType.ORE)),
-    ENDERIUM(Requirements.builder().all().remove(ResourceType.ORE).remove(ResourceType.CHUNK)),
-	DIAMOND(Requirements.builder().add(ResourceType.DUST)),
-	IRON(Requirements.builder().add(ResourceType.ROD).add(ResourceType.DUST).add(ResourceType.PLATE)),
-	COPPER(Requirements.builder().add(ResourceType.PLATE).add(ResourceType.DUST)),
-	GOLD(Requirements.builder().add(ResourceType.DUST));
+    DEEPSLATE_TIN(Requirements.builder().add(ORE)),
+    DEEPSLATE_LEAD(Requirements.builder().add(ORE)),
+    DEEPSLATE_URANIUM(Requirements.builder().add(ORE)),
+    DEEPSLATE_IRIDIUM(Requirements.builder().add(ORE)),
+    DEEPSLATE_ALUMINUM(Requirements.builder().add(ORE)),
+    ENDERIUM(Requirements.builder().all().remove(ORE, CHUNK)),
+	DIAMOND(Requirements.builder().add(DUST)),
+	IRON(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET)),
+	COPPER(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK)),
+	GOLD(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET));
 
-    public static final List<ResourceElements> VALUES = Arrays.stream(ResourceElements.values()).toList();
+    public static final List<ResourceElements> VALUES = Arrays.asList(values());
 
 	/**
 	 * Creates a map of the resource types which link together the elements that the resource contains.
@@ -91,16 +93,20 @@ public enum ResourceElements {
 		/**
 		 * OR the bit of the type
 		 */
-		public Requirements add(ResourceType type) {
-			this.requirements |= type.bit;
+		public Requirements add(ResourceType... type) {
+			for (ResourceType resourceType : type) {
+				this.requirements |= resourceType.bit;
+			}
 			return this;
 		}
 
 		/**
 		 * NOT the bit of the type to remove it
 		 */
-		public Requirements remove(ResourceType type) {
-			this.requirements &= ~type.bit;
+		public Requirements remove(ResourceType... type) {
+			for (ResourceType resourceType : type) {
+				this.requirements &= ~resourceType.bit;
+			}
 			return this;
 		}
 	}
