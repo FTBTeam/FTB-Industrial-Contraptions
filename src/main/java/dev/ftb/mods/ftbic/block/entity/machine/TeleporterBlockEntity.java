@@ -220,17 +220,16 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 
 		List<TeleporterEntry> list = new ArrayList<>();
 
-		/* FIXME
-		for (BlockEntity entity : level.blockEntityList) {
-			if (entity instanceof TeleporterBlockEntity) {
-				TeleporterBlockEntity teleporter = (TeleporterBlockEntity) entity;
-
-				if (teleporter.isPublic || teleporter.placerId.equals(player.getUUID())) {
-					list.add(new TeleporterEntry(teleporter, getEnergyUse(teleporter.level.dimension(), teleporter.worldPosition)));
-				}
-			}
-		}
-		 */
+		// fixme
+//		for (BlockEntity entity : level.blockEntityList) {
+//			if (entity instanceof TeleporterBlockEntity) {
+//				TeleporterBlockEntity teleporter = (TeleporterBlockEntity) entity;
+//
+//				if (teleporter.isPublic || teleporter.placerId.equals(player.getUUID())) {
+//					list.add(new TeleporterEntry(teleporter, getEnergyUse(teleporter.level.dimension(), teleporter.worldPosition)));
+//				}
+//			}
+//		}
 
 		buf.writeVarInt(list.size());
 
