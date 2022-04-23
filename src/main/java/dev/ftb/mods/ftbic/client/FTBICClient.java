@@ -26,6 +26,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -33,6 +34,8 @@ public class FTBICClient extends FTBICCommon {
 	@Override
 	public void init() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::renders);
+
 	}
 
 	private void setup(FMLClientSetupEvent event) {
@@ -53,9 +56,14 @@ public class FTBICClient extends FTBICCommon {
 
 		BlockEntityRendererRegistry.register((BlockEntityType) FTBICElectricBlocks.QUARRY.blockEntity.get(), DiggingBlockRenderer::new);
 		BlockEntityRendererRegistry.register((BlockEntityType) FTBICElectricBlocks.PUMP.blockEntity.get(), DiggingBlockRenderer::new);
-		EntityRendererRegistry.register(FTBICEntities.NUKE_ARROW, NukeArrowRenderer::new);
+		/*EntityRendererRegistry.register(FTBICEntities.NUKE_ARROW, NukeArrowRenderer::new);*/
 
 		FTBICBlocks.RESOURCE_ORES.values().forEach(e -> ItemBlockRenderTypes.setRenderLayer(e.get(), renderType -> renderType == RenderType.solid() || renderType == RenderType.translucent()));
+	}
+
+	private void renders(final EntityRenderersEvent.RegisterRenderers event) {
+		event.registerEntityRenderer(FTBICEntities.NUKE_ARROW.get(), NukeArrowRenderer::new);
+
 	}
 
 	@Override
