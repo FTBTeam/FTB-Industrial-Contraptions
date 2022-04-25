@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:extruding",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:ingots/gold"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:gold_rod",
+      "count": 2
+    }
+  ]
+}

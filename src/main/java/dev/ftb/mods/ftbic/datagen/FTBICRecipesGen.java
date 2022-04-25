@@ -20,10 +20,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
 import java.util.function.Consumer;
 
-public abstract class FTBICRecipesGen extends RecipeProvider {
+public abstract class FTBICRecipesGen extends RecipeProvider implements IConditionBuilder {
 	public static final String MODID = FTBIC.MOD_ID;
 	public static final TagKey<Item> REDSTONE = Tags.Items.DUSTS_REDSTONE;
 	public static final TagKey<Item> GLOWSTONE = Tags.Items.DUSTS_GLOWSTONE;
@@ -36,6 +37,12 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final TagKey<Item> IRON_INGOT = Tags.Items.INGOTS_IRON;
 	public static final TagKey<Item> GOLD_INGOT = Tags.Items.INGOTS_GOLD;
 	public static final TagKey<Item> COPPER_INGOT = Tags.Items.INGOTS_COPPER;
+	public static final TagKey<Item> IRON_ORE = Tags.Items.ORES_IRON;
+	public static final TagKey<Item> GOLD_ORE = Tags.Items.ORES_GOLD;
+	public static final TagKey<Item> COPPER_ORE = Tags.Items.ORES_COPPER;
+	public static final TagKey<Item> IRON_RAW = Tags.Items.RAW_MATERIALS_IRON;
+	public static final TagKey<Item> GOLD_RAW = Tags.Items.RAW_MATERIALS_GOLD;
+	public static final TagKey<Item> COPPER_RAW = Tags.Items.RAW_MATERIALS_COPPER;
 	public static final TagKey<Item> PLATES = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates"));
 	public static final TagKey<Item> COPPER_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/copper"));
 	public static final TagKey<Item> LEAD_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/lead"));
@@ -57,6 +64,7 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final TagKey<Item> ALUMINUM_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/aluminum"));
 	public static final TagKey<Item> ENDERIUM_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/enderium"));
 	public static final TagKey<Item> IRIDIUM_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/iridium"));
+	public static final TagKey<Item> COPPER_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/copper"));
 	public static final TagKey<Item> RODS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods"));
 	public static final TagKey<Item> TIN_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/tin"));
 	public static final TagKey<Item> LEAD_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/lead"));
@@ -64,6 +72,8 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final TagKey<Item> ALUMINUM_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/aluminum"));
 	public static final TagKey<Item> ENDERIUM_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/enderium"));
 	public static final TagKey<Item> IRIDIUM_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/iridium"));
+	public static final TagKey<Item> GOLD_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/gold"));
+	public static final TagKey<Item> COPPER_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/copper"));
 	public static final TagKey<Item> TIN_ORE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ores/tin"));
 	public static final TagKey<Item> LEAD_ORE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ores/lead"));
 	public static final TagKey<Item> URANIUM_ORE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ores/uranium"));
@@ -76,6 +86,9 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final TagKey<Item> ALUMINUM_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/aluminum"));
 	public static final TagKey<Item> ENDERIUM_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/enderium"));
 	public static final TagKey<Item> IRIDIUM_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/iridium"));
+	public static final TagKey<Item> IRON_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/iron"));
+	public static final TagKey<Item> GOLD_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/gold"));
+	public static final TagKey<Item> COPPER_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/copper"));
 	public static final TagKey<Item> TIN_CHUNK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "raw_materials/tin"));
 	public static final TagKey<Item> LEAD_CHUNK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "raw_materials/lead"));
 	public static final TagKey<Item> URANIUM_CHUNK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "raw_materials/uranium"));
@@ -120,6 +133,14 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final TagKey<Item> TIN_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/tin"));
 	public static final TagKey<Item> ALUMINUM_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/aluminum"));
 	public static final TagKey<Item> DIAMOND_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/diamond"));
+	public static final TagKey<Item> GOLD_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/gold"));
+	public static final TagKey<Item> COPPER_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/copper"));
+	public static final TagKey<Item> TIN_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/tin"));
+	public static final TagKey<Item> LEAD_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/lead"));
+	public static final TagKey<Item> URANIUM_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/uranium"));
+	public static final TagKey<Item> ALUMINUM_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/aluminum"));
+	public static final TagKey<Item> IRIDIUM_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/iridium"));
+	public static final TagKey<Item> ENDERIUM_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/enderium"));
 
 	// FIXME
 	public static final Item SILICON_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SILICON).get();
@@ -338,4 +359,6 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public Ingredient waterCell() {
 		return new NBTIngredientExt(FluidCellItem.setFluid(new ItemStack(FLUID_CELL), Fluids.WATER));
 	}
+
+
 }

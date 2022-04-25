@@ -1,0 +1,83 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "value": {
+            "tag": "forge:dusts/constantan",
+            "type": "forge:tag_empty"
+          },
+          "type": "forge:not"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shapeless",
+        "group": "ftbic:mixed_metal_blend",
+        "ingredients": [
+          [
+            {
+              "tag": "forge:dusts/iron"
+            },
+            {
+              "tag": "forge:dusts/lead"
+            }
+          ],
+          [
+            {
+              "tag": "forge:dusts/iron"
+            },
+            {
+              "tag": "forge:dusts/lead"
+            }
+          ],
+          [
+            {
+              "tag": "forge:dusts/iron"
+            },
+            {
+              "tag": "forge:dusts/lead"
+            }
+          ],
+          {
+            "tag": "forge:dusts/constantan"
+          },
+          {
+            "tag": "forge:dusts/constantan"
+          },
+          {
+            "tag": "forge:dusts/constantan"
+          },
+          [
+            {
+              "tag": "forge:dusts/tin"
+            },
+            {
+              "tag": "forge:dusts/aluminum"
+            }
+          ],
+          [
+            {
+              "tag": "forge:dusts/tin"
+            },
+            {
+              "tag": "forge:dusts/aluminum"
+            }
+          ],
+          [
+            {
+              "tag": "forge:dusts/tin"
+            },
+            {
+              "tag": "forge:dusts/aluminum"
+            }
+          ]
+        ],
+        "result": {
+          "item": "ftbic:mixed_metal_blend",
+          "count": 3
+        }
+      }
+    }
+  ]
+}

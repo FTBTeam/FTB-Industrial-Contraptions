@@ -6,6 +6,9 @@
     "#forge:plates/uranium",
     "#forge:plates/iridium",
     "#forge:plates/enderium",
-    "#forge:plates/aluminum"
+    "#forge:plates/aluminum",
+    "#forge:plates/iron",
+    "#forge:plates/gold",
+    "#forge:plates/copper"
   ]
 }

@@ -25,6 +25,9 @@ public class FTBICMaceratingRecipes extends FTBICRecipesGen{
 		resourceBreakDown(List.of(IRIDIUM_ORE, IRIDIUM_CHUNK), ResourceElements.IRIDIUM, ResourceType.DUST, 2, consumer);
 		resourceBreakDown(List.of(URANIUM_ORE, URANIUM_CHUNK), ResourceElements.URANIUM, ResourceType.DUST, 2, consumer);
 		resourceBreakDown(List.of(ALUMINUM_ORE, ALUMINUM_CHUNK), ResourceElements.ALUMINUM, ResourceType.DUST, 2, consumer);
+		resourceBreakDown(List.of(IRON_ORE, IRON_RAW), ResourceElements.IRON, ResourceType.DUST, 2, consumer);
+		resourceBreakDown(List.of(GOLD_ORE, GOLD_RAW), ResourceElements.GOLD, ResourceType.DUST, 2, consumer);
+		resourceBreakDown(List.of(COPPER_ORE, COPPER_RAW), ResourceElements.COPPER, ResourceType.DUST, 2, consumer);
 
 		resourceBreakDown(List.of(TIN_INGOT), ResourceElements.TIN, ResourceType.DUST, 1, consumer);
 		resourceBreakDown(List.of(LEAD_INGOT), ResourceElements.LEAD, ResourceType.DUST, 1, consumer);
@@ -32,6 +35,9 @@ public class FTBICMaceratingRecipes extends FTBICRecipesGen{
 		resourceBreakDown(List.of(URANIUM_INGOT), ResourceElements.URANIUM, ResourceType.DUST, 1, consumer);
 		resourceBreakDown(List.of(ALUMINUM_INGOT), ResourceElements.ALUMINUM, ResourceType.DUST, 1, consumer);
 		resourceBreakDown(List.of(ENDERIUM_INGOT), ResourceElements.ENDERIUM, ResourceType.DUST,1, consumer);
+		resourceBreakDown(List.of(IRON_INGOT), ResourceElements.IRON, ResourceType.DUST,1, consumer);
+		resourceBreakDown(List.of(GOLD_INGOT), ResourceElements.GOLD, ResourceType.DUST,1, consumer);
+		resourceBreakDown(List.of(COPPER_INGOT), ResourceElements.COPPER, ResourceType.DUST,1, consumer);
 
 		resourceBreakDown(List.of(DIAMOND), ResourceElements.DIAMOND, ResourceType.DUST,1, consumer);
 	}

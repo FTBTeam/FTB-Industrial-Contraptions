@@ -7,6 +7,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
@@ -26,6 +27,15 @@ public class FTBICCraftingRecipes extends FTBICRecipesGen {
 		ingotToNuggetAndBack(IRIDIUM_INGOT, FTBICItems.getResourceFromType(IRIDIUM, INGOT).orElseThrow().get(), IRIDIUM_NUGGET, FTBICItems.getResourceFromType(IRIDIUM, NUGGET).orElseThrow().get(), consumer);
 		ingotToNuggetAndBack(ALUMINUM_INGOT, FTBICItems.getResourceFromType(ALUMINUM, INGOT).orElseThrow().get(), ALUMINUM_NUGGET, FTBICItems.getResourceFromType(ALUMINUM, NUGGET).orElseThrow().get(), consumer);
 		ingotToNuggetAndBack(ENDERIUM_INGOT, FTBICItems.getResourceFromType(ENDERIUM, INGOT).orElseThrow().get(), ENDERIUM_NUGGET, FTBICItems.getResourceFromType(ENDERIUM, NUGGET).orElseThrow().get(), consumer);
+		ingotToNuggetAndBack(COPPER_INGOT, Items.COPPER_INGOT, COPPER_NUGGET, FTBICItems.getResourceFromType(COPPER, NUGGET).orElseThrow().get(), consumer);
+
+
+		ingotToBlockAndBack(TIN_INGOT, FTBICItems.getResourceFromType(TIN, INGOT).orElseThrow().get(), TIN_BLOCK, FTBICItems.getResourceFromType(TIN, BLOCK).orElseThrow().get(), consumer);
+		ingotToBlockAndBack(LEAD_INGOT, FTBICItems.getResourceFromType(LEAD, INGOT).orElseThrow().get(), LEAD_BLOCK, FTBICItems.getResourceFromType(LEAD, BLOCK).orElseThrow().get(), consumer);
+		ingotToBlockAndBack(URANIUM_INGOT, FTBICItems.getResourceFromType(URANIUM, INGOT).orElseThrow().get(), URANIUM_BLOCK, FTBICItems.getResourceFromType(URANIUM, BLOCK).orElseThrow().get(), consumer);
+		ingotToBlockAndBack(IRIDIUM_INGOT, FTBICItems.getResourceFromType(IRIDIUM, INGOT).orElseThrow().get(), IRIDIUM_BLOCK, FTBICItems.getResourceFromType(IRIDIUM, BLOCK).orElseThrow().get(), consumer);
+		ingotToBlockAndBack(ALUMINUM_INGOT, FTBICItems.getResourceFromType(ALUMINUM, INGOT).orElseThrow().get(), ALUMINUM_BLOCK, FTBICItems.getResourceFromType(ALUMINUM, BLOCK).orElseThrow().get(), consumer);
+		ingotToBlockAndBack(ENDERIUM_INGOT, FTBICItems.getResourceFromType(ENDERIUM, INGOT).orElseThrow().get(), ENDERIUM_BLOCK, FTBICItems.getResourceFromType(ENDERIUM, BLOCK).orElseThrow().get(), consumer);
 	}
 
 	private static void ingotToNuggetAndBack(TagKey<Item> ingotTag, Item ingotItem, TagKey<Item> nuggetTag, Item nuggetItem, Consumer<FinishedRecipe> consumer) {
@@ -43,5 +53,22 @@ public class FTBICCraftingRecipes extends FTBICRecipesGen {
 			.pattern("XXX")
 			.define('X', nuggetTag)
 			.save(consumer, shapedLoc(nuggetItem + "_to_" + ingotItem));
+	}
+
+	private static void ingotToBlockAndBack(TagKey<Item> ingotTag, Item ingotItem, TagKey<Item> blockTag, Item blockItem, Consumer<FinishedRecipe> consumer) {
+		ShapelessRecipeBuilder.shapeless(ingotItem, 9)
+				.unlockedBy("has_item", has(blockTag))
+				.group(MODID + ":" + ingotItem)
+				.requires(blockTag)
+				.save(consumer, shapelessLoc(blockItem + "_to_" + ingotItem));
+
+		ShapedRecipeBuilder.shaped(blockItem)
+				.unlockedBy("has_item", has(ingotTag))
+				.group(MODID + ":" + blockItem)
+				.pattern("XXX")
+				.pattern("XXX")
+				.pattern("XXX")
+				.define('X', ingotTag)
+				.save(consumer, shapedLoc(ingotItem + "_to_" + blockItem));
 	}
 }
