@@ -6,6 +6,9 @@
     "#forge:rods/uranium",
     "#forge:rods/iridium",
     "#forge:rods/enderium",
-    "#forge:rods/aluminum"
+    "#forge:rods/aluminum",
+    "#forge:rods/iron",
+    "#forge:rods/copper",
+    "#forge:rods/gold"
   ]
 }

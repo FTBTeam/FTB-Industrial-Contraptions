@@ -969,6 +969,21 @@ public class FTBICDataGenHandler {
 			tag(Tags.Items.INGOTS).addTag(ENDERIUM_INGOT);
 			tag(Tags.Items.INGOTS).addTag(ALUMINUM_INGOT);
 
+			//BLOCKS
+			tag(TIN_BLOCK).add(FTBICItems.getResourceFromType(TIN, BLOCK).orElseThrow().get());
+			tag(LEAD_BLOCK).add(FTBICItems.getResourceFromType(LEAD, BLOCK).orElseThrow().get());
+			tag(URANIUM_BLOCK).add(FTBICItems.getResourceFromType(URANIUM, BLOCK).orElseThrow().get());
+			tag(IRIDIUM_BLOCK).add(FTBICItems.getResourceFromType(IRIDIUM, BLOCK).orElseThrow().get());
+			tag(ENDERIUM_BLOCK).add(FTBICItems.getResourceFromType(ENDERIUM, BLOCK).orElseThrow().get());
+			tag(ALUMINUM_BLOCK).add(FTBICItems.getResourceFromType(ALUMINUM, BLOCK).orElseThrow().get());
+
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(TIN_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(LEAD_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(URANIUM_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(IRIDIUM_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(ENDERIUM_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(ALUMINUM_BLOCK);
+
 			//CHUNKS
 			tag(TIN_CHUNK).add(FTBICItems.getResourceFromType(TIN, CHUNK).orElseThrow().get());
 			tag(LEAD_CHUNK).add(FTBICItems.getResourceFromType(LEAD, CHUNK).orElseThrow().get());
@@ -990,6 +1005,9 @@ public class FTBICDataGenHandler {
 			tag(ENDERIUM_DUST).add(FTBICItems.getResourceFromType(ENDERIUM, DUST).orElseThrow().get());
 			tag(ALUMINUM_DUST).add(FTBICItems.getResourceFromType(ALUMINUM, DUST).orElseThrow().get());
 			tag(DIAMOND_DUST).add(FTBICItems.getResourceFromType(DIAMOND, DUST).orElseThrow().get());
+			tag(IRON_DUST).add(FTBICItems.getResourceFromType(IRON, DUST).orElseThrow().get());
+			tag(COPPER_DUST).add(FTBICItems.getResourceFromType(COPPER, DUST).orElseThrow().get());
+			tag(GOLD_DUST).add(FTBICItems.getResourceFromType(GOLD, DUST).orElseThrow().get());
 
 			tag(Tags.Items.DUSTS).addTag(TIN_DUST);
 			tag(Tags.Items.DUSTS).addTag(LEAD_DUST);
@@ -998,6 +1016,9 @@ public class FTBICDataGenHandler {
 			tag(Tags.Items.DUSTS).addTag(ENDERIUM_DUST);
 			tag(Tags.Items.DUSTS).addTag(ALUMINUM_DUST);
 			tag(Tags.Items.DUSTS).addTag(DIAMOND_DUST);
+			tag(Tags.Items.DUSTS).addTag(IRON_DUST);
+			tag(Tags.Items.DUSTS).addTag(COPPER_DUST);
+			tag(Tags.Items.DUSTS).addTag(GOLD_DUST);
 
 			//PLATES
 			tag(TIN_PLATE).add(FTBICItems.getResourceFromType(TIN, PLATE).orElseThrow().get());
@@ -1006,6 +1027,9 @@ public class FTBICDataGenHandler {
 			tag(IRIDIUM_PLATE).add(FTBICItems.getResourceFromType(IRIDIUM, PLATE).orElseThrow().get());
 			tag(ENDERIUM_PLATE).add(FTBICItems.getResourceFromType(ENDERIUM, PLATE).orElseThrow().get());
 			tag(ALUMINUM_PLATE).add(FTBICItems.getResourceFromType(ALUMINUM, PLATE).orElseThrow().get());
+			tag(IRON_PLATE).add(FTBICItems.getResourceFromType(IRON, PLATE).orElseThrow().get());
+			tag(GOLD_PLATE).add(FTBICItems.getResourceFromType(GOLD, PLATE).orElseThrow().get());
+			tag(COPPER_PLATE).add(FTBICItems.getResourceFromType(COPPER, PLATE).orElseThrow().get());
 
 			tag(PLATES).addTag(TIN_PLATE);
 			tag(PLATES).addTag(LEAD_PLATE);
@@ -1013,6 +1037,9 @@ public class FTBICDataGenHandler {
 			tag(PLATES).addTag(IRIDIUM_PLATE);
 			tag(PLATES).addTag(ENDERIUM_PLATE);
 			tag(PLATES).addTag(ALUMINUM_PLATE);
+			tag(PLATES).addTag(IRON_PLATE);
+			tag(PLATES).addTag(GOLD_PLATE);
+			tag(PLATES).addTag(COPPER_PLATE);
 
 			//NUGGETS
 			tag(TIN_NUGGET).add(FTBICItems.getResourceFromType(TIN, NUGGET).orElseThrow().get());
@@ -1021,6 +1048,7 @@ public class FTBICDataGenHandler {
 			tag(IRIDIUM_NUGGET).add(FTBICItems.getResourceFromType(IRIDIUM, NUGGET).orElseThrow().get());
 			tag(ENDERIUM_NUGGET).add(FTBICItems.getResourceFromType(ENDERIUM, NUGGET).orElseThrow().get());
 			tag(ALUMINUM_NUGGET).add(FTBICItems.getResourceFromType(ALUMINUM, NUGGET).orElseThrow().get());
+			tag(COPPER_NUGGET).add(FTBICItems.getResourceFromType(COPPER, NUGGET).orElseThrow().get());
 
 			tag(Tags.Items.NUGGETS).addTag(TIN_NUGGET);
 			tag(Tags.Items.NUGGETS).addTag(LEAD_NUGGET);
@@ -1028,6 +1056,7 @@ public class FTBICDataGenHandler {
 			tag(Tags.Items.NUGGETS).addTag(IRIDIUM_NUGGET);
 			tag(Tags.Items.NUGGETS).addTag(ENDERIUM_NUGGET);
 			tag(Tags.Items.NUGGETS).addTag(ALUMINUM_NUGGET);
+			tag(Tags.Items.NUGGETS).addTag(COPPER_NUGGET);
 
 			//RODS
 			tag(TIN_ROD).add(FTBICItems.getResourceFromType(TIN, ROD).orElseThrow().get());
@@ -1036,6 +1065,9 @@ public class FTBICDataGenHandler {
 			tag(IRIDIUM_ROD).add(FTBICItems.getResourceFromType(IRIDIUM, ROD).orElseThrow().get());
 			tag(ENDERIUM_ROD).add(FTBICItems.getResourceFromType(ENDERIUM, ROD).orElseThrow().get());
 			tag(ALUMINUM_ROD).add(FTBICItems.getResourceFromType(ALUMINUM, ROD).orElseThrow().get());
+			tag(IRON_ROD).add(FTBICItems.getResourceFromType(IRON, ROD).orElseThrow().get());
+			tag(COPPER_ROD).add(FTBICItems.getResourceFromType(COPPER, ROD).orElseThrow().get());
+			tag(GOLD_ROD).add(FTBICItems.getResourceFromType(GOLD, ROD).orElseThrow().get());
 
 			tag(RODS).addTag(TIN_ROD);
 			tag(RODS).addTag(LEAD_ROD);
@@ -1043,6 +1075,9 @@ public class FTBICDataGenHandler {
 			tag(RODS).addTag(IRIDIUM_ROD);
 			tag(RODS).addTag(ENDERIUM_ROD);
 			tag(RODS).addTag(ALUMINUM_ROD);
+			tag(RODS).addTag(IRON_ROD);
+			tag(RODS).addTag(COPPER_ROD);
+			tag(RODS).addTag(GOLD_ROD);
 
 			//GEARS
 			tag(TIN_GEAR).add(FTBICItems.getResourceFromType(TIN, GEAR).orElseThrow().get());
@@ -1051,6 +1086,9 @@ public class FTBICDataGenHandler {
 			tag(IRIDIUM_GEAR).add(FTBICItems.getResourceFromType(IRIDIUM, GEAR).orElseThrow().get());
 			tag(ENDERIUM_GEAR).add(FTBICItems.getResourceFromType(ENDERIUM, GEAR).orElseThrow().get());
 			tag(ALUMINUM_GEAR).add(FTBICItems.getResourceFromType(ALUMINUM, GEAR).orElseThrow().get());
+			tag(IRON_GEAR).add(FTBICItems.getResourceFromType(IRON, GEAR).orElseThrow().get());
+			tag(GOLD_GEAR).add(FTBICItems.getResourceFromType(GOLD, GEAR).orElseThrow().get());
+			tag(COPPER_GEAR).add(FTBICItems.getResourceFromType(COPPER, GEAR).orElseThrow().get());
 
 			tag(GEARS).addTag(TIN_GEAR);
 			tag(GEARS).addTag(LEAD_GEAR);
@@ -1058,6 +1096,9 @@ public class FTBICDataGenHandler {
 			tag(GEARS).addTag(IRIDIUM_GEAR);
 			tag(GEARS).addTag(ENDERIUM_GEAR);
 			tag(GEARS).addTag(ALUMINUM_GEAR);
+			tag(GEARS).addTag(IRON_GEAR);
+			tag(GEARS).addTag(GOLD_GEAR);
+			tag(GEARS).addTag(COPPER_GEAR);
 
 			//ORES
 			tag(TIN_ORE).add(FTBICItems.getResourceFromType(TIN, ORE).orElseThrow().get());

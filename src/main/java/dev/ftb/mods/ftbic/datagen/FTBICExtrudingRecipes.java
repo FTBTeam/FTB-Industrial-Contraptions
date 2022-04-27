@@ -47,5 +47,20 @@ public class FTBICExtrudingRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(ENDERIUM_INGOT))
 				.io(Ingredient.of(ENDERIUM_INGOT), new ItemStack(FTBICItems.getResourceFromType(ENDERIUM, ROD).orElseThrow().get(), 2))
 				.save(consumer, extrudingLoc(ENDERIUM_INGOT.location().getPath() + "_to_" + FTBICItems.getResourceFromType(ENDERIUM, ROD).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(IRON_INGOT))
+				.io(Ingredient.of(IRON_INGOT), new ItemStack(FTBICItems.getResourceFromType(IRON, ROD).orElseThrow().get(), 2))
+				.save(consumer, extrudingLoc(IRON_INGOT.location().getPath() + "_to_" + FTBICItems.getResourceFromType(IRON, ROD).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(GOLD_INGOT))
+				.io(Ingredient.of(GOLD_INGOT), new ItemStack(FTBICItems.getResourceFromType(GOLD, ROD).orElseThrow().get(), 2))
+				.save(consumer, extrudingLoc(GOLD_INGOT.location().getPath() + "_to_" + FTBICItems.getResourceFromType(GOLD, ROD).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(COPPER_INGOT))
+				.io(Ingredient.of(COPPER_INGOT), new ItemStack(FTBICItems.getResourceFromType(COPPER, ROD).orElseThrow().get(), 2))
+				.save(consumer, extrudingLoc(COPPER_INGOT.location().getPath() + "_to_" + FTBICItems.getResourceFromType(COPPER, ROD).orElseThrow().get()));
 	}
 }

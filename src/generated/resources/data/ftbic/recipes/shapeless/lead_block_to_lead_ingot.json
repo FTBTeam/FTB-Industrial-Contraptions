@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:lead_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/lead"
+    }
+  ],
+  "result": {
+    "item": "ftbic:lead_ingot",
+    "count": 9
+  }
+}

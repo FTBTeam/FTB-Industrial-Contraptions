@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:iridium_ingot",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/iridium"
+    }
+  ],
+  "result": {
+    "item": "ftbic:iridium_ingot",
+    "count": 9
+  }
+}

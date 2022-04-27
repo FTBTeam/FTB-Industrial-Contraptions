@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:tin_block",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/tin"
+    }
+  },
+  "result": {
+    "item": "ftbic:tin_block"
+  }
+}

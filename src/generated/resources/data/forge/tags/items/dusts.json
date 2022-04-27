@@ -7,6 +7,9 @@
     "#forge:dusts/iridium",
     "#forge:dusts/enderium",
     "#forge:dusts/aluminum",
-    "#forge:dusts/diamond"
+    "#forge:dusts/diamond",
+    "#forge:dusts/iron",
+    "#forge:dusts/copper",
+    "#forge:dusts/gold"
   ]
 }

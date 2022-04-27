@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "ftbic:shapeless/mixed_metal_blend"
+      "ftbic:shapeless/iridium_block_to_iridium_ingot"
     ]
   },
   "criteria": {
@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "ftbic:industrial_grade_metal"
-            ]
+            "tag": "forge:storage_blocks/iridium"
           }
         ]
       }
@@ -21,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "ftbic:shapeless/mixed_metal_blend"
+        "recipe": "ftbic:shapeless/iridium_block_to_iridium_ingot"
       }
     }
   },
