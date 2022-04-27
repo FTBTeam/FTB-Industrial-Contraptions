@@ -77,11 +77,11 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(ENDER_DUST_ITEM))
 				.save(consumer, maceratingLoc("ender_dust"));
 
-		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", tagKeyHas.apply(PLANKS))
-				.inputItem(Ingredient.of(PLANKS))
-				.outputItem(new ItemStack(SAWDUST_ITEM))
-				.save(consumer, maceratingLoc("sawdust"));
+//		MachineRecipeBuilder.macerating()
+//				.unlockedBy("has_item", tagKeyHas.apply(PLANKS))
+//				.inputItem(Ingredient.of(PLANKS))
+//				.outputItem(new ItemStack(SAWDUST_ITEM))
+//				.save(consumer, maceratingLoc("sawdust"));
 
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", has(Items.COAL))
@@ -178,11 +178,11 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(RUBBERWOOD_SAPLING), 0.05)
 				.save(consumer, separatingLoc("latex_from_leaves"));
 
-		MachineRecipeBuilder.separating()
-				.unlockedBy("has_item", has(Items.GUNPOWDER))
-				.inputItem(Ingredient.of(Items.GUNPOWDER))
-				.outputItem(new ItemStack(COAL_DUST_ITEM))
-				.outputItem(new ItemStack(SULFUR_ITEM), 0.50)
-				.save(consumer, separatingLoc("sulfur_from_gunpowder"));
+//		MachineRecipeBuilder.separating()
+//				.unlockedBy("has_item", has(Items.GUNPOWDER))
+//				.inputItem(Ingredient.of(Items.GUNPOWDER))
+//				.outputItem(new ItemStack(COAL_DUST_ITEM))
+//				.outputItem(new ItemStack(SULFUR_ITEM), 0.50)
+//				.save(consumer, separatingLoc("sulfur_from_gunpowder"));
 	}
 }

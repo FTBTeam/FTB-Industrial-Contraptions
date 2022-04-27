@@ -1,5 +1,8 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
@@ -101,7 +104,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.group(MODID + ":roller")
 				.pattern("HCH")
 				.pattern("PMP")
-				.define('H', Items.PAPER) // FIXME: .define('H', ItemHandler.ENIGMATIC_HAMMER.get())
+				.define('H', FTBICItems.getResourceFromType(ResourceElements.ALUMINUM, ResourceType.GEAR).orElseThrow().get())
 				.define('P', PISTON)
 				.define('M', MACHINE_BLOCK)
 				.define('C', ELECTRONIC_CIRCUIT)

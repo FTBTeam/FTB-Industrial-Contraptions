@@ -22,9 +22,14 @@ public enum ResourceElements {
     DEEPSLATE_ALUMINUM(Requirements.builder().add(ORE)),
     ENDERIUM(Requirements.builder().all().remove(ORE, CHUNK)),
 	DIAMOND(Requirements.builder().add(DUST)),
+	BRONZE(Requirements.builder().all().remove(ORE, CHUNK)),
 	IRON(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET)),
 	COPPER(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK)),
-	GOLD(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET));
+	GOLD(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET)),
+	OBSIDIAN(Requirements.builder().add(DUST)),
+	ENDER(Requirements.builder().add(DUST)),
+	COAL(Requirements.builder().add(DUST)),
+	CHARCOAL(Requirements.builder().add(DUST));
 
     public static final List<ResourceElements> VALUES = Arrays.asList(values());
 

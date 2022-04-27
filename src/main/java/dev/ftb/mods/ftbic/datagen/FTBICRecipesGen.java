@@ -4,14 +4,14 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.FluidCellItem;
-//import io.alwa.mods.myrtrees.common.item.MyrtreesItems;
+import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -143,14 +143,14 @@ public abstract class FTBICRecipesGen extends RecipeProvider implements IConditi
 	public static final TagKey<Item> ENDERIUM_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/enderium"));
 
 	// FIXME
-	public static final Item SILICON_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SILICON).get();
-	public static final Item OBSIDIAN_DUST_ITEM = Items.PAPER; // ItemHandler.DUST_OBSIDIAN.get();
-	public static final Item ENDER_DUST_ITEM = Items.PAPER; // ItemHandler.DUST_ENDER.get();
-	public static final Item SAWDUST_ITEM = Items.PAPER; // ItemHandler.DUST_WOOD.get();
-	public static final Item COAL_DUST_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.COAL).get();
-	public static final Item CHARCOAL_DUST_ITEM = Items.PAPER; // ItemHandler.DUST_CHARCOAL.get();
-	public static final Item URANIUM_DUST_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.URANIUM).get();
-	public static final Item SULFUR_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SULFUR).get();
+	public static final Item SILICON_ITEM = FTBICItems.SILICON.item.get();
+	public static final Item OBSIDIAN_DUST_ITEM = FTBICItems.getResourceFromType(ResourceElements.OBSIDIAN, ResourceType.DUST).orElseThrow().get();
+	public static final Item ENDER_DUST_ITEM = FTBICItems.getResourceFromType(ResourceElements.ENDER, ResourceType.DUST).orElseThrow().get();
+//	public static final Item SAWDUST_ITEM = Items.PAPER; // ItemHandler.DUST_WOOD.get();
+	public static final Item COAL_DUST_ITEM = FTBICItems.getResourceFromType(ResourceElements.COAL, ResourceType.DUST).orElseThrow().get();
+	public static final Item CHARCOAL_DUST_ITEM = FTBICItems.getResourceFromType(ResourceElements.CHARCOAL, ResourceType.DUST).orElseThrow().get();
+//	public static final Item URANIUM_DUST_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.URANIUM).get();
+//	public static final Item SULFUR_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SULFUR).get();
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
 	public static final Item REINFORCED_STONE = FTBICItems.REINFORCED_STONE.get();

@@ -81,6 +81,7 @@ public interface FTBICItems {
 
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");
+	MaterialItem SILICON = material("silicon");
 	MaterialItem FUSE = material("fuse");
 	MaterialItem COPPER_WIRE = material("copper_wire");
 	MaterialItem GOLD_WIRE = material("gold_wire");
