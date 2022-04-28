@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.FluidCellItem;
 import dev.ftb.mods.ftbic.world.ResourceElements;
 import dev.ftb.mods.ftbic.world.ResourceType;
+import io.alwa.mods.myrtrees.common.item.MyrtreesItems;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -117,11 +118,11 @@ public abstract class FTBICRecipesGen extends RecipeProvider implements IConditi
 	public static final TagKey<Item> BLAZE_ROD = Tags.Items.RODS_BLAZE;
 	public static final TagKey<Item> LAPIS = Tags.Items.GEMS_LAPIS;
 	public static final Item PISTON = Items.PISTON;
-	public static final Item LATEX = Items.STONE; //MyrtreesItems.LATEX.get(); // TODO: add this back!
-	public static final Item TREE_TAP = Items.STONE; //MyrtreesItems.TREE_TAP.get(); // TODO: add this back!
-	public static final Item RUBBERWOOD_LOG = Items.STONE; //MyrtreesItems.RUBBERWOOD_LOG.get(); // TODO: add this back!
-	public static final Item RUBBERWOOD_SAPLING = Items.STONE; //MyrtreesItems.RUBBERWOOD_SAPLING.get(); // TODO: add this back!
-	public static final Item RUBBERWOOD_LEAVES = Items.STONE; //MyrtreesItems.RUBBERWOOD_LEAVES.get(); // TODO: add this back!
+	public static final Item LATEX = MyrtreesItems.LATEX.get();
+	public static final Item TREE_TAP = MyrtreesItems.TREE_TAP.get();
+	public static final Item RUBBERWOOD_LOG = MyrtreesItems.RUBBERWOOD_LOG.get();
+	public static final Item RUBBERWOOD_SAPLING = MyrtreesItems.RUBBERWOOD_SAPLING.get();
+	public static final Item RUBBERWOOD_LEAVES = MyrtreesItems.RUBBERWOOD_LEAVES.get();
 	public static final TagKey<Item> IRON_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/iron"));
 	public static final TagKey<Item> IRON_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/iron"));
 	public static final TagKey<Item> LEAD_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/lead"));
