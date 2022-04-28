@@ -3,7 +3,7 @@
   "inputItems": [
     {
       "ingredient": {
-        "item": "minecraft:stone"
+        "item": "myrtrees:latex"
       },
       "count": 1
     }

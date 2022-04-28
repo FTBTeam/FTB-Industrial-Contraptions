@@ -63,6 +63,10 @@ public class FTBICRollingRecipes extends FTBICRecipesGen{
 				.io(Ingredient.of(COPPER_INGOT), new ItemStack(FTBICItems.getResourceFromType(COPPER, PLATE).orElseThrow().get(), 2))
 				.save(consumer, rollingLoc(COPPER_INGOT.location().getPath() + "_to_" + FTBICItems.getResourceFromType(COPPER, PLATE).orElseThrow().get()));
 
+		MachineRecipeBuilder.rolling()
+				.unlockedBy("has_item", has(BRONZE_INGOT))
+				.io(Ingredient.of(BRONZE_INGOT), new ItemStack(FTBICItems.getResourceFromType(BRONZE, PLATE).orElseThrow().get(), 2))
+				.save(consumer, rollingLoc(BRONZE_INGOT.location().getPath() + "_to_" + FTBICItems.getResourceFromType(BRONZE, PLATE).orElseThrow().get()));
 
 		MachineRecipeBuilder.rolling()
 				.unlockedBy("has_item", has(TIN_PLATE))
@@ -108,5 +112,10 @@ public class FTBICRollingRecipes extends FTBICRecipesGen{
 				.unlockedBy("has_item", has(COPPER_PLATE))
 				.io(Ingredient.of(COPPER_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(COPPER, GEAR).orElseThrow().get(), 1))
 				.save(consumer, rollingLoc(COPPER_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(COPPER, GEAR).orElseThrow().get()));
+
+		MachineRecipeBuilder.rolling()
+				.unlockedBy("has_item", has(BRONZE_PLATE))
+				.io(Ingredient.of(BRONZE_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(BRONZE, GEAR).orElseThrow().get(), 1))
+				.save(consumer, rollingLoc(BRONZE_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(BRONZE, GEAR).orElseThrow().get()));
 	}
 }

@@ -9,6 +9,7 @@
     "#forge:plates/aluminum",
     "#forge:plates/iron",
     "#forge:plates/gold",
-    "#forge:plates/copper"
+    "#forge:plates/copper",
+    "#forge:plates/bronze"
   ]
 }

@@ -9,6 +9,7 @@
     "#forge:rods/aluminum",
     "#forge:rods/iron",
     "#forge:rods/copper",
-    "#forge:rods/gold"
+    "#forge:rods/gold",
+    "#forge:rods/bronze"
   ]
 }

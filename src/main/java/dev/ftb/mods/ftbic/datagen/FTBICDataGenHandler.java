@@ -16,6 +16,7 @@ import dev.ftb.mods.ftbic.item.MaterialItem;
 import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -65,8 +66,10 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static dev.ftb.mods.ftbic.datagen.FTBICRecipesGen.*;
+import static dev.ftb.mods.ftbic.world.ResourceElements.COAL;
 import static dev.ftb.mods.ftbic.world.ResourceElements.DIAMOND;
 import static dev.ftb.mods.ftbic.world.ResourceElements.*;
+import static dev.ftb.mods.ftbic.world.ResourceElements.OBSIDIAN;
 import static dev.ftb.mods.ftbic.world.ResourceType.*;
 
 /**
@@ -961,6 +964,7 @@ public class FTBICDataGenHandler {
 			tag(IRIDIUM_INGOT).add(FTBICItems.getResourceFromType(IRIDIUM, INGOT).orElseThrow().get());
 			tag(ENDERIUM_INGOT).add(FTBICItems.getResourceFromType(ENDERIUM, INGOT).orElseThrow().get());
 			tag(ALUMINUM_INGOT).add(FTBICItems.getResourceFromType(ALUMINUM, INGOT).orElseThrow().get());
+			tag(BRONZE_INGOT).add(FTBICItems.getResourceFromType(BRONZE, INGOT).orElseThrow().get());
 
 			tag(Tags.Items.INGOTS).addTag(TIN_INGOT);
 			tag(Tags.Items.INGOTS).addTag(LEAD_INGOT);
@@ -968,6 +972,7 @@ public class FTBICDataGenHandler {
 			tag(Tags.Items.INGOTS).addTag(IRIDIUM_INGOT);
 			tag(Tags.Items.INGOTS).addTag(ENDERIUM_INGOT);
 			tag(Tags.Items.INGOTS).addTag(ALUMINUM_INGOT);
+			tag(Tags.Items.INGOTS).addTag(BRONZE_INGOT);
 
 			//BLOCKS
 			tag(TIN_BLOCK).add(FTBICItems.getResourceFromType(TIN, BLOCK).orElseThrow().get());
@@ -976,6 +981,7 @@ public class FTBICDataGenHandler {
 			tag(IRIDIUM_BLOCK).add(FTBICItems.getResourceFromType(IRIDIUM, BLOCK).orElseThrow().get());
 			tag(ENDERIUM_BLOCK).add(FTBICItems.getResourceFromType(ENDERIUM, BLOCK).orElseThrow().get());
 			tag(ALUMINUM_BLOCK).add(FTBICItems.getResourceFromType(ALUMINUM, BLOCK).orElseThrow().get());
+			tag(BRONZE_BLOCK).add(FTBICItems.getResourceFromType(BRONZE, BLOCK).orElseThrow().get());
 
 			tag(Tags.Items.STORAGE_BLOCKS).addTag(TIN_BLOCK);
 			tag(Tags.Items.STORAGE_BLOCKS).addTag(LEAD_BLOCK);
@@ -983,6 +989,7 @@ public class FTBICDataGenHandler {
 			tag(Tags.Items.STORAGE_BLOCKS).addTag(IRIDIUM_BLOCK);
 			tag(Tags.Items.STORAGE_BLOCKS).addTag(ENDERIUM_BLOCK);
 			tag(Tags.Items.STORAGE_BLOCKS).addTag(ALUMINUM_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(BRONZE_BLOCK);
 
 			//CHUNKS
 			tag(TIN_CHUNK).add(FTBICItems.getResourceFromType(TIN, CHUNK).orElseThrow().get());
@@ -1008,6 +1015,11 @@ public class FTBICDataGenHandler {
 			tag(IRON_DUST).add(FTBICItems.getResourceFromType(IRON, DUST).orElseThrow().get());
 			tag(COPPER_DUST).add(FTBICItems.getResourceFromType(COPPER, DUST).orElseThrow().get());
 			tag(GOLD_DUST).add(FTBICItems.getResourceFromType(GOLD, DUST).orElseThrow().get());
+			tag(BRONZE_DUST).add(FTBICItems.getResourceFromType(BRONZE, DUST).orElseThrow().get());
+			tag(OBSIDIAN_DUST).add(FTBICItems.getResourceFromType(OBSIDIAN, DUST).orElseThrow().get());
+			tag(COAL_DUST).add(FTBICItems.getResourceFromType(COAL, DUST).orElseThrow().get());
+			tag(CHARCOAL_DUST).add(FTBICItems.getResourceFromType(CHARCOAL, DUST).orElseThrow().get());
+			tag(ENDER_DUST).add(FTBICItems.getResourceFromType(ENDER, DUST).orElseThrow().get());
 
 			tag(Tags.Items.DUSTS).addTag(TIN_DUST);
 			tag(Tags.Items.DUSTS).addTag(LEAD_DUST);
@@ -1019,6 +1031,11 @@ public class FTBICDataGenHandler {
 			tag(Tags.Items.DUSTS).addTag(IRON_DUST);
 			tag(Tags.Items.DUSTS).addTag(COPPER_DUST);
 			tag(Tags.Items.DUSTS).addTag(GOLD_DUST);
+			tag(Tags.Items.DUSTS).addTag(BRONZE_DUST);
+			tag(Tags.Items.DUSTS).addTag(OBSIDIAN_DUST);
+			tag(Tags.Items.DUSTS).addTag(COAL_DUST);
+			tag(Tags.Items.DUSTS).addTag(CHARCOAL_DUST);
+			tag(Tags.Items.DUSTS).addTag(ENDER_DUST);
 
 			//PLATES
 			tag(TIN_PLATE).add(FTBICItems.getResourceFromType(TIN, PLATE).orElseThrow().get());
@@ -1030,6 +1047,7 @@ public class FTBICDataGenHandler {
 			tag(IRON_PLATE).add(FTBICItems.getResourceFromType(IRON, PLATE).orElseThrow().get());
 			tag(GOLD_PLATE).add(FTBICItems.getResourceFromType(GOLD, PLATE).orElseThrow().get());
 			tag(COPPER_PLATE).add(FTBICItems.getResourceFromType(COPPER, PLATE).orElseThrow().get());
+			tag(BRONZE_PLATE).add(FTBICItems.getResourceFromType(BRONZE, PLATE).orElseThrow().get());
 
 			tag(PLATES).addTag(TIN_PLATE);
 			tag(PLATES).addTag(LEAD_PLATE);
@@ -1040,6 +1058,7 @@ public class FTBICDataGenHandler {
 			tag(PLATES).addTag(IRON_PLATE);
 			tag(PLATES).addTag(GOLD_PLATE);
 			tag(PLATES).addTag(COPPER_PLATE);
+			tag(PLATES).addTag(BRONZE_PLATE);
 
 			//NUGGETS
 			tag(TIN_NUGGET).add(FTBICItems.getResourceFromType(TIN, NUGGET).orElseThrow().get());
@@ -1049,6 +1068,8 @@ public class FTBICDataGenHandler {
 			tag(ENDERIUM_NUGGET).add(FTBICItems.getResourceFromType(ENDERIUM, NUGGET).orElseThrow().get());
 			tag(ALUMINUM_NUGGET).add(FTBICItems.getResourceFromType(ALUMINUM, NUGGET).orElseThrow().get());
 			tag(COPPER_NUGGET).add(FTBICItems.getResourceFromType(COPPER, NUGGET).orElseThrow().get());
+			tag(BRONZE_NUGGET).add(FTBICItems.getResourceFromType(BRONZE, NUGGET).orElseThrow().get());
+
 
 			tag(Tags.Items.NUGGETS).addTag(TIN_NUGGET);
 			tag(Tags.Items.NUGGETS).addTag(LEAD_NUGGET);
@@ -1057,6 +1078,7 @@ public class FTBICDataGenHandler {
 			tag(Tags.Items.NUGGETS).addTag(ENDERIUM_NUGGET);
 			tag(Tags.Items.NUGGETS).addTag(ALUMINUM_NUGGET);
 			tag(Tags.Items.NUGGETS).addTag(COPPER_NUGGET);
+			tag(Tags.Items.NUGGETS).addTag(BRONZE_NUGGET);
 
 			//RODS
 			tag(TIN_ROD).add(FTBICItems.getResourceFromType(TIN, ROD).orElseThrow().get());
@@ -1068,6 +1090,8 @@ public class FTBICDataGenHandler {
 			tag(IRON_ROD).add(FTBICItems.getResourceFromType(IRON, ROD).orElseThrow().get());
 			tag(COPPER_ROD).add(FTBICItems.getResourceFromType(COPPER, ROD).orElseThrow().get());
 			tag(GOLD_ROD).add(FTBICItems.getResourceFromType(GOLD, ROD).orElseThrow().get());
+			tag(BRONZE_ROD).add(FTBICItems.getResourceFromType(BRONZE, ROD).orElseThrow().get());
+
 
 			tag(RODS).addTag(TIN_ROD);
 			tag(RODS).addTag(LEAD_ROD);
@@ -1078,6 +1102,8 @@ public class FTBICDataGenHandler {
 			tag(RODS).addTag(IRON_ROD);
 			tag(RODS).addTag(COPPER_ROD);
 			tag(RODS).addTag(GOLD_ROD);
+			tag(RODS).addTag(BRONZE_ROD);
+
 
 			//GEARS
 			tag(TIN_GEAR).add(FTBICItems.getResourceFromType(TIN, GEAR).orElseThrow().get());
@@ -1089,6 +1115,7 @@ public class FTBICDataGenHandler {
 			tag(IRON_GEAR).add(FTBICItems.getResourceFromType(IRON, GEAR).orElseThrow().get());
 			tag(GOLD_GEAR).add(FTBICItems.getResourceFromType(GOLD, GEAR).orElseThrow().get());
 			tag(COPPER_GEAR).add(FTBICItems.getResourceFromType(COPPER, GEAR).orElseThrow().get());
+			tag(BRONZE_GEAR).add(FTBICItems.getResourceFromType(BRONZE, GEAR).orElseThrow().get());
 
 			tag(GEARS).addTag(TIN_GEAR);
 			tag(GEARS).addTag(LEAD_GEAR);
@@ -1099,6 +1126,8 @@ public class FTBICDataGenHandler {
 			tag(GEARS).addTag(IRON_GEAR);
 			tag(GEARS).addTag(GOLD_GEAR);
 			tag(GEARS).addTag(COPPER_GEAR);
+			tag(GEARS).addTag(BRONZE_GEAR);
+
 
 			//ORES
 			tag(TIN_ORE).add(FTBICItems.getResourceFromType(TIN, ORE).orElseThrow().get());
@@ -1117,6 +1146,8 @@ public class FTBICDataGenHandler {
 			tag(Tags.Items.ORES).addTag(URANIUM_ORE);
 			tag(Tags.Items.ORES).addTag(IRIDIUM_ORE);
 			tag(Tags.Items.ORES).addTag(ALUMINUM_ORE);
+
+			tag(SILICON).add(SILICON_ITEM);
 		}
 	}
 

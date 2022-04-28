@@ -9,6 +9,7 @@
     "#forge:gears/aluminum",
     "#forge:gears/iron",
     "#forge:gears/gold",
-    "#forge:gears/copper"
+    "#forge:gears/copper",
+    "#forge:gears/bronze"
   ]
 }

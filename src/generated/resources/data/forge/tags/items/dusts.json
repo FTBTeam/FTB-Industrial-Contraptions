@@ -10,6 +10,11 @@
     "#forge:dusts/diamond",
     "#forge:dusts/iron",
     "#forge:dusts/copper",
-    "#forge:dusts/gold"
+    "#forge:dusts/gold",
+    "#forge:dusts/bronze",
+    "#forge:dusts/obsidian",
+    "#forge:dusts/coal",
+    "#forge:dusts/charcoal",
+    "#forge:dusts/ender"
   ]
 }

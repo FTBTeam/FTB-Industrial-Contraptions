@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:bronze_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/bronze"
+    }
+  ],
+  "result": {
+    "item": "ftbic:bronze_nugget",
+    "count": 9
+  }
+}

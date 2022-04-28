@@ -38,6 +38,7 @@ public class FTBICMaceratingRecipes extends FTBICRecipesGen{
 		resourceBreakDown(List.of(IRON_INGOT), ResourceElements.IRON, ResourceType.DUST,1, consumer);
 		resourceBreakDown(List.of(GOLD_INGOT), ResourceElements.GOLD, ResourceType.DUST,1, consumer);
 		resourceBreakDown(List.of(COPPER_INGOT), ResourceElements.COPPER, ResourceType.DUST,1, consumer);
+		resourceBreakDown(List.of(BRONZE_INGOT), ResourceElements.BRONZE, ResourceType.DUST,1, consumer);
 
 		resourceBreakDown(List.of(DIAMOND), ResourceElements.DIAMOND, ResourceType.DUST,1, consumer);
 	}

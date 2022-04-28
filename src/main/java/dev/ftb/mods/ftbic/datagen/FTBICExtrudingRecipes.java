@@ -62,5 +62,10 @@ public class FTBICExtrudingRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(COPPER_INGOT))
 				.io(Ingredient.of(COPPER_INGOT), new ItemStack(FTBICItems.getResourceFromType(COPPER, ROD).orElseThrow().get(), 2))
 				.save(consumer, extrudingLoc(COPPER_INGOT.location().getPath() + "_to_" + FTBICItems.getResourceFromType(COPPER, ROD).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(BRONZE_INGOT))
+				.io(Ingredient.of(BRONZE_INGOT), new ItemStack(FTBICItems.getResourceFromType(BRONZE, ROD).orElseThrow().get(), 2))
+				.save(consumer, extrudingLoc(BRONZE_INGOT.location().getPath() + "_to_" + FTBICItems.getResourceFromType(BRONZE, ROD).orElseThrow().get()));
 	}
 }

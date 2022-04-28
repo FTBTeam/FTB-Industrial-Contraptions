@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:ender_dust",
+  "pattern": [
+    "LLL",
+    "DEE"
+  ],
+  "key": {
+    "L": {
+      "tag": "forge:dusts/lead"
+    },
+    "D": {
+      "tag": "forge:dusts/diamond"
+    },
+    "E": {
+      "tag": "forge:ender_pearls"
+    }
+  },
+  "result": {
+    "item": "ftbic:enderium_dust",
+    "count": 2
+  }
+}

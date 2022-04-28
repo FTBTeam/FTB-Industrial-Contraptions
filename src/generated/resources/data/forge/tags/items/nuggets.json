@@ -7,6 +7,7 @@
     "#forge:nuggets/iridium",
     "#forge:nuggets/enderium",
     "#forge:nuggets/aluminum",
-    "#forge:nuggets/copper"
+    "#forge:nuggets/copper",
+    "#forge:nuggets/bronze"
   ]
 }
