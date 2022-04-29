@@ -5,6 +5,7 @@ on:
     branches:
       # main and dev versions for each mc ver here
       - "main"
+      - "dev"
 
 jobs:
   build:
