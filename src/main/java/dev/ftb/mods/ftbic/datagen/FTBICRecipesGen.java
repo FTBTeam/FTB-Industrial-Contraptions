@@ -4,14 +4,15 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.FluidCellItem;
-//import io.alwa.mods.myrtrees.common.item.MyrtreesItems;
+import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
+import io.alwa.mods.myrtrees.common.item.MyrtreesItems;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,10 +21,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
 import java.util.function.Consumer;
 
-public abstract class FTBICRecipesGen extends RecipeProvider {
+public abstract class FTBICRecipesGen extends RecipeProvider implements IConditionBuilder {
 	public static final String MODID = FTBIC.MOD_ID;
 	public static final TagKey<Item> REDSTONE = Tags.Items.DUSTS_REDSTONE;
 	public static final TagKey<Item> GLOWSTONE = Tags.Items.DUSTS_GLOWSTONE;
@@ -36,17 +38,72 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final TagKey<Item> IRON_INGOT = Tags.Items.INGOTS_IRON;
 	public static final TagKey<Item> GOLD_INGOT = Tags.Items.INGOTS_GOLD;
 	public static final TagKey<Item> COPPER_INGOT = Tags.Items.INGOTS_COPPER;
+	public static final TagKey<Item> IRON_ORE = Tags.Items.ORES_IRON;
+	public static final TagKey<Item> GOLD_ORE = Tags.Items.ORES_GOLD;
+	public static final TagKey<Item> COPPER_ORE = Tags.Items.ORES_COPPER;
+	public static final TagKey<Item> IRON_RAW = Tags.Items.RAW_MATERIALS_IRON;
+	public static final TagKey<Item> GOLD_RAW = Tags.Items.RAW_MATERIALS_GOLD;
+	public static final TagKey<Item> COPPER_RAW = Tags.Items.RAW_MATERIALS_COPPER;
+	public static final TagKey<Item> PLATES = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates"));
 	public static final TagKey<Item> COPPER_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/copper"));
 	public static final TagKey<Item> LEAD_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/lead"));
+	public static final TagKey<Item> URANIUM_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/uranium"));
+	public static final TagKey<Item> IRIDIUM_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/iridium"));
 	public static final TagKey<Item> TIN_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/tin"));
 	public static final TagKey<Item> IRON_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/iron"));
 	public static final TagKey<Item> GOLD_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/gold"));
 	public static final TagKey<Item> ALUMINUM_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/aluminum"));
 	public static final TagKey<Item> ENDERIUM_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/enderium"));
+	public static final TagKey<Item> BRONZE_PLATE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "plates/bronze"));
 	public static final TagKey<Item> TIN_INGOT = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ingots/tin"));
+	public static final TagKey<Item> LEAD_INGOT = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ingots/lead"));
+	public static final TagKey<Item> URANIUM_INGOT = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ingots/uranium"));
 	public static final TagKey<Item> ALUMINUM_INGOT = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ingots/aluminum"));
 	public static final TagKey<Item> ENDERIUM_INGOT = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ingots/enderium"));
+	public static final TagKey<Item> BRONZE_INGOT = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ingots/bronze"));
+	public static final TagKey<Item> TIN_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/tin"));
+	public static final TagKey<Item> LEAD_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/lead"));
+	public static final TagKey<Item> URANIUM_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/uranium"));
+	public static final TagKey<Item> ALUMINUM_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/aluminum"));
+	public static final TagKey<Item> ENDERIUM_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/enderium"));
+	public static final TagKey<Item> IRIDIUM_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/iridium"));
+	public static final TagKey<Item> COPPER_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/copper"));
+	public static final TagKey<Item> BRONZE_NUGGET = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "nuggets/bronze"));
+	public static final TagKey<Item> RODS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods"));
+	public static final TagKey<Item> TIN_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/tin"));
+	public static final TagKey<Item> LEAD_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/lead"));
+	public static final TagKey<Item> URANIUM_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/uranium"));
+	public static final TagKey<Item> ALUMINUM_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/aluminum"));
+	public static final TagKey<Item> ENDERIUM_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/enderium"));
+	public static final TagKey<Item> IRIDIUM_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/iridium"));
+	public static final TagKey<Item> GOLD_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/gold"));
+	public static final TagKey<Item> COPPER_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/copper"));
+	public static final TagKey<Item> BRONZE_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/bronze"));
+	public static final TagKey<Item> TIN_ORE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ores/tin"));
+	public static final TagKey<Item> LEAD_ORE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ores/lead"));
+	public static final TagKey<Item> URANIUM_ORE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ores/uranium"));
+	public static final TagKey<Item> ALUMINUM_ORE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ores/aluminum"));
+	public static final TagKey<Item> IRIDIUM_ORE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "ores/iridium"));
+	public static final TagKey<Item> GEARS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears"));
+	public static final TagKey<Item> TIN_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/tin"));
+	public static final TagKey<Item> LEAD_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/lead"));
+	public static final TagKey<Item> URANIUM_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/uranium"));
+	public static final TagKey<Item> ALUMINUM_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/aluminum"));
+	public static final TagKey<Item> ENDERIUM_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/enderium"));
+	public static final TagKey<Item> IRIDIUM_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/iridium"));
+	public static final TagKey<Item> IRON_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/iron"));
+	public static final TagKey<Item> GOLD_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/gold"));
+	public static final TagKey<Item> COPPER_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/copper"));
+	public static final TagKey<Item> BRONZE_GEAR = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "gears/bronze"));
+	public static final TagKey<Item> TIN_CHUNK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "raw_materials/tin"));
+	public static final TagKey<Item> LEAD_CHUNK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "raw_materials/lead"));
+	public static final TagKey<Item> URANIUM_CHUNK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "raw_materials/uranium"));
+	public static final TagKey<Item> ALUMINUM_CHUNK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "raw_materials/aluminum"));
+	public static final TagKey<Item> IRIDIUM_CHUNK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "raw_materials/iridium"));
 	public static final TagKey<Item> COAL_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/coal"));
+	public static final TagKey<Item> CHARCOAL_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/charcoal"));
+	public static final TagKey<Item> OBSIDIAN_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/obsidian"));
+	public static final TagKey<Item> ENDER_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/ender"));
 	public static final TagKey<Item> PLANKS = ItemTags.PLANKS;
 	public static final TagKey<Item> LOGS_THAT_BURN = ItemTags.LOGS_THAT_BURN;
 	public static final TagKey<Item> STICK = Tags.Items.RODS_WOODEN;
@@ -69,29 +126,41 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public static final TagKey<Item> BLAZE_ROD = Tags.Items.RODS_BLAZE;
 	public static final TagKey<Item> LAPIS = Tags.Items.GEMS_LAPIS;
 	public static final Item PISTON = Items.PISTON;
-	public static final Item LATEX = Items.STONE; //MyrtreesItems.LATEX.get(); // TODO: add this back!
-	public static final Item TREE_TAP = Items.STONE; //MyrtreesItems.TREE_TAP.get(); // TODO: add this back!
-	public static final Item RUBBERWOOD_LOG = Items.STONE; //MyrtreesItems.RUBBERWOOD_LOG.get(); // TODO: add this back!
-	public static final Item RUBBERWOOD_SAPLING = Items.STONE; //MyrtreesItems.RUBBERWOOD_SAPLING.get(); // TODO: add this back!
-	public static final Item RUBBERWOOD_LEAVES = Items.STONE; //MyrtreesItems.RUBBERWOOD_LEAVES.get(); // TODO: add this back!
+	public static final Item LATEX = MyrtreesItems.LATEX.get();
+	public static final Item TREE_TAP = MyrtreesItems.TREE_TAP.get();
+	public static final Item RUBBERWOOD_LOG = MyrtreesItems.RUBBERWOOD_LOG.get();
+	public static final Item RUBBERWOOD_SAPLING = MyrtreesItems.RUBBERWOOD_SAPLING.get();
+	public static final Item RUBBERWOOD_LEAVES = MyrtreesItems.RUBBERWOOD_LEAVES.get();
 	public static final TagKey<Item> IRON_ROD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "rods/iron"));
 	public static final TagKey<Item> IRON_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/iron"));
 	public static final TagKey<Item> LEAD_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/lead"));
+	public static final TagKey<Item> IRIDIUM_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/iridium"));
+	public static final TagKey<Item> ENDERIUM_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/enderium"));
 	public static final TagKey<Item> BRONZE_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/bronze"));
 	public static final TagKey<Item> ELECTRUM_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/electrum"));
 	public static final TagKey<Item> CONSTANTAN_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/constantan"));
 	public static final TagKey<Item> TIN_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/tin"));
 	public static final TagKey<Item> ALUMINUM_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/aluminum"));
+	public static final TagKey<Item> DIAMOND_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/diamond"));
+	public static final TagKey<Item> GOLD_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/gold"));
+	public static final TagKey<Item> COPPER_DUST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "dusts/copper"));
+	public static final TagKey<Item> TIN_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/tin"));
+	public static final TagKey<Item> LEAD_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/lead"));
+	public static final TagKey<Item> URANIUM_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/uranium"));
+	public static final TagKey<Item> ALUMINUM_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/aluminum"));
+	public static final TagKey<Item> IRIDIUM_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/iridium"));
+	public static final TagKey<Item> ENDERIUM_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/enderium"));
+	public static final TagKey<Item> BRONZE_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/bronze"));
 
 	// FIXME
-	public static final Item SILICON_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SILICON).get();
-	public static final Item OBSIDIAN_DUST_ITEM = Items.PAPER; // ItemHandler.DUST_OBSIDIAN.get();
-	public static final Item ENDER_DUST_ITEM = Items.PAPER; // ItemHandler.DUST_ENDER.get();
-	public static final Item SAWDUST_ITEM = Items.PAPER; // ItemHandler.DUST_WOOD.get();
-	public static final Item COAL_DUST_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.COAL).get();
-	public static final Item CHARCOAL_DUST_ITEM = Items.PAPER; // ItemHandler.DUST_CHARCOAL.get();
-	public static final Item URANIUM_DUST_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.URANIUM).get();
-	public static final Item SULFUR_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SULFUR).get();
+	public static final Item SILICON_ITEM = FTBICItems.SILICON.item.get();
+	public static final Item OBSIDIAN_DUST_ITEM = FTBICItems.getResourceFromType(ResourceElements.OBSIDIAN, ResourceType.DUST).orElseThrow().get();
+	public static final Item ENDER_DUST_ITEM = FTBICItems.getResourceFromType(ResourceElements.ENDER, ResourceType.DUST).orElseThrow().get();
+//	public static final Item SAWDUST_ITEM = Items.PAPER; // ItemHandler.DUST_WOOD.get();
+	public static final Item COAL_DUST_ITEM = FTBICItems.getResourceFromType(ResourceElements.COAL, ResourceType.DUST).orElseThrow().get();
+	public static final Item CHARCOAL_DUST_ITEM = FTBICItems.getResourceFromType(ResourceElements.CHARCOAL, ResourceType.DUST).orElseThrow().get();
+//	public static final Item URANIUM_DUST_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.DUST, Materials.URANIUM).get();
+//	public static final Item SULFUR_ITEM = Items.PAPER; // ItemHandler.backingItemTable.get(ProcessedMaterials.GEM, Materials.SULFUR).get();
 
 	public static final Item RUBBER_SHEET = FTBICItems.RUBBER_SHEET.get();
 	public static final Item REINFORCED_STONE = FTBICItems.REINFORCED_STONE.get();
@@ -300,4 +369,6 @@ public abstract class FTBICRecipesGen extends RecipeProvider {
 	public Ingredient waterCell() {
 		return new NBTIngredientExt(FluidCellItem.setFluid(new ItemStack(FLUID_CELL), Fluids.WATER));
 	}
+
+
 }

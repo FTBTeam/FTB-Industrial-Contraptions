@@ -1,23 +1,23 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:carbon_chestplate",
-	"pattern": [
-		"CEC",
-		"CAC",
-		"CCC"
-	],
-	"key": {
-		"C": {
-			"item": "ftbic:carbon_plate"
-		},
-		"E": {
-			"item": "ftbic:hv_battery"
-		},
-		"A": {
-			"item": "minecraft:netherite_chestplate"
-		}
-	},
-	"result": {
-		"item": "ftbic:carbon_chestplate"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:carbon_chestplate",
+  "pattern": [
+    "CEC",
+    "CAC",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "ftbic:carbon_plate"
+    },
+    "E": {
+      "item": "ftbic:hv_battery"
+    },
+    "A": {
+      "item": "minecraft:netherite_chestplate"
+    }
+  },
+  "result": {
+    "item": "ftbic:carbon_chestplate"
+  }
 }

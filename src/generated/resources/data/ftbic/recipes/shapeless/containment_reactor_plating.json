@@ -1,18 +1,18 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"group": "ftbic:containment_reactor_plating",
-	"ingredients": [
-		{
-			"item": "ftbic:reactor_plating"
-		},
-		{
-			"item": "ftbic:advanced_alloy"
-		},
-		{
-			"item": "ftbic:advanced_alloy"
-		}
-	],
-	"result": {
-		"item": "ftbic:containment_reactor_plating"
-	}
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:containment_reactor_plating",
+  "ingredients": [
+    {
+      "item": "ftbic:reactor_plating"
+    },
+    {
+      "item": "ftbic:advanced_alloy"
+    },
+    {
+      "item": "ftbic:advanced_alloy"
+    }
+  ],
+  "result": {
+    "item": "ftbic:containment_reactor_plating"
+  }
 }

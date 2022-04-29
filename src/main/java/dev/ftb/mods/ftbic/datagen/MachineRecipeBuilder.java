@@ -80,6 +80,21 @@ public class MachineRecipeBuilder {
 		return inputItem(in, 1);
 	}
 
+	public MachineRecipeBuilder io(Ingredient in,  ItemStack out) {
+		return io(in, 1, out, 1D);
+	}
+
+	public MachineRecipeBuilder io(Ingredient in, int count, ItemStack out) {
+		recipe.inputItems.add(new IngredientWithCount(in, count));
+		recipe.outputItems.add(new StackWithChance(out, 1D));
+		return this;
+	}
+	public MachineRecipeBuilder io(Ingredient in, int count, ItemStack out, double chance) {
+		recipe.inputItems.add(new IngredientWithCount(in, count));
+		recipe.outputItems.add(new StackWithChance(out, chance));
+		return this;
+	}
+
 	public MachineRecipeBuilder inputFluid(FluidStack stack) {
 		recipe.inputFluids.add(stack);
 		return this;

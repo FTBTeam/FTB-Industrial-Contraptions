@@ -10,11 +10,11 @@
   ],
   "outputItems": [
     {
-      "item": "minecraft:paper",
+      "item": "ftbic:silicon",
       "chance": 0.2
     },
     {
-      "item": "minecraft:paper",
+      "item": "ftbic:silicon",
       "chance": 0.05
     }
   ]

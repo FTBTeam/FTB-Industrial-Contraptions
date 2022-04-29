@@ -1,61 +1,61 @@
 {
-	"parent": "minecraft:block/block",
-	"display": {
-		"firstperson_righthand": {
-			"rotation": [
-				0,
-				135,
-				0
-			],
-			"scale": [
-				0.4,
-				0.4,
-				0.4
-			]
-		}
-	},
-	"textures": {
-		"particle": "#side"
-	},
-	"elements": [
-		{
-			"from": [
-				0,
-				0,
-				0
-			],
-			"to": [
-				16,
-				16,
-				16
-			],
-			"faces": {
-				"down": {
-					"texture": "#bottom",
-					"cullface": "down"
-				},
-				"up": {
-					"texture": "#top",
-					"cullface": "up",
-					"rotation": 180
-				},
-				"north": {
-					"texture": "#front",
-					"cullface": "north"
-				},
-				"south": {
-					"texture": "#side",
-					"cullface": "south"
-				},
-				"west": {
-					"texture": "#side",
-					"cullface": "west"
-				},
-				"east": {
-					"texture": "#side",
-					"cullface": "east"
-				}
-			}
-		}
-	]
+  "parent": "minecraft:block/block",
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        135,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    }
+  },
+  "textures": {
+    "particle": "#side"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#bottom",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#top",
+          "cullface": "up",
+          "rotation": 180
+        },
+        "north": {
+          "texture": "#front",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#side",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#side",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#side",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
 }

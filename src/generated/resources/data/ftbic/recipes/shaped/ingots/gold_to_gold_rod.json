@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:gold_rod",
+  "pattern": [
+    " X ",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/gold"
+    }
+  },
+  "result": {
+    "item": "ftbic:gold_rod"
+  }
+}

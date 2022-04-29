@@ -13,27 +13,35 @@ import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.sound.FTBICSounds;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.world.OreGeneration;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 @Mod(FTBIC.MOD_ID)
 @Mod.EventBusSubscriber(modid = FTBIC.MOD_ID)
@@ -42,6 +50,18 @@ public class FTBIC {
 	public static final String MOD_NAME = "FTB Industrial Contraptions";
 	public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 	public static FTBICCommon PROXY;
+
+	public static final List<DeferredRegister<?>> REGISTERS = List.of(
+			FTBICBlocks.REGISTRY,
+			FTBICItems.REGISTRY,
+			FTBICBlockEntities.REGISTRY,
+			FTBICRecipes.REGISTRY,
+			FTBICRecipes.REGISTRY_TYPE,
+			FTBICMenus.REGISTRY,
+			FTBICEntities.REGISTRY,
+			FTBICSounds.REGISTRY,
+			FTBICUtils.LOOT_REGISTRY
+	);
 
 	public static final CreativeModeTab TAB = new CreativeModeTab(MOD_ID) {
 		@Override
@@ -54,25 +74,35 @@ public class FTBIC {
 	public FTBIC() {
 		PROXY = DistExecutor.safeRunForDist(() -> FTBICClient::new, () -> FTBICCommon::new);
 
+		// Config setup
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_CONFIG);
-
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		modEventBus.addGenericListener(Item.class, FTBICRecipes::onItemRegistry);
-		modEventBus.addGenericListener(Item.class, FTBICUtils::onItemRegistry);
+		modEventBus.addListener(this::setup);
 
-		FTBICBlocks.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICItems.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICBlockEntities.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICRecipes.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICMenus.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICEntities.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-		FTBICSounds.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
+		// Register all the registries
+		REGISTERS.forEach(e -> e.register(modEventBus));
+
 		FTBICElectricBlocks.init();
 		FTBICUtils.init();
 		FTBICNet.init();
 		FTBICConfig.init();
+
 		PROXY.init();
+	}
+
+	private void setup(final FMLCommonSetupEvent event) {
+		event.enqueueWork(OreGeneration::setupConfiguredFeatures);
+	}
+
+	@SubscribeEvent
+	public static void biomeLoadEvent(BiomeLoadingEvent event) {
+		var biome = event.getCategory();
+		if (biome == Biome.BiomeCategory.THEEND || biome == Biome.BiomeCategory.NONE || biome == Biome.BiomeCategory.NETHER) {
+			return;
+		}
+
+		OreGeneration.PLACEMENT_FEATURES.forEach((k, v) -> v.forEach(e -> event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, e)));
 	}
 
 	private static boolean isDummyArmor(LivingDamageEvent event, EquipmentSlot slot, ArmorMaterial material) {

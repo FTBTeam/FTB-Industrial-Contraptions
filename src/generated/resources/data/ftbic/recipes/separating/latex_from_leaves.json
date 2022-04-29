@@ -3,18 +3,18 @@
   "inputItems": [
     {
       "ingredient": {
-        "item": "minecraft:stone"
+        "item": "myrtrees:rubberwood_leaves"
       },
       "count": 1
     }
   ],
   "outputItems": [
     {
-      "item": "minecraft:stone",
+      "item": "myrtrees:latex",
       "chance": 0.35
     },
     {
-      "item": "minecraft:stone",
+      "item": "myrtrees:rubberwood_sapling",
       "chance": 0.05
     }
   ]

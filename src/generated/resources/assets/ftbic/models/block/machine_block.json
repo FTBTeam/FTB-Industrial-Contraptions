@@ -1,8 +1,8 @@
 {
-	"parent": "minecraft:block/cube_all",
-	"textures": {
-		"all": "ftbic:block/electric/light/basic_side",
-		"top": "ftbic:block/electric/light/basic_top",
-		"bottom": "ftbic:block/electric/light/basic_bottom"
-	}
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "ftbic:block/electric/light/basic_side",
+    "top": "ftbic:block/electric/light/basic_top",
+    "bottom": "ftbic:block/electric/light/basic_bottom"
+  }
 }

@@ -1,22 +1,22 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:charge_pad",
-	"pattern": [
-		"WWW",
-		"CMC"
-	],
-	"key": {
-		"M": {
-			"item": "ftbic:machine_block"
-		},
-		"C": {
-			"item": "ftbic:advanced_circuit"
-		},
-		"W": {
-			"item": "ftbic:copper_coil"
-		}
-	},
-	"result": {
-		"item": "ftbic:charge_pad"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:charge_pad",
+  "pattern": [
+    "WWW",
+    "CMC"
+  ],
+  "key": {
+    "M": {
+      "item": "ftbic:machine_block"
+    },
+    "C": {
+      "item": "ftbic:advanced_circuit"
+    },
+    "W": {
+      "item": "ftbic:copper_coil"
+    }
+  },
+  "result": {
+    "item": "ftbic:charge_pad"
+  }
 }

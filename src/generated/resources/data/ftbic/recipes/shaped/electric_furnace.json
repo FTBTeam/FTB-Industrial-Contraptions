@@ -1,22 +1,22 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:electric_furnace",
-	"pattern": [
-		" C ",
-		"RFR"
-	],
-	"key": {
-		"C": {
-			"item": "ftbic:electronic_circuit"
-		},
-		"R": {
-			"tag": "forge:dusts/redstone"
-		},
-		"F": {
-			"item": "ftbic:iron_furnace"
-		}
-	},
-	"result": {
-		"item": "ftbic:powered_furnace"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:electric_furnace",
+  "pattern": [
+    " C ",
+    "RFR"
+  ],
+  "key": {
+    "C": {
+      "item": "ftbic:electronic_circuit"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "F": {
+      "item": "ftbic:iron_furnace"
+    }
+  },
+  "result": {
+    "item": "ftbic:powered_furnace"
+  }
 }

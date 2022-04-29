@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:rolling",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:plates/bronze"
+      },
+      "count": 4
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:bronze_gear"
+    }
+  ]
+}

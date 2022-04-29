@@ -1,26 +1,26 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:transformer_upgrade",
-	"pattern": [
-		"GGG",
-		"WTW",
-		"GCG"
-	],
-	"key": {
-		"G": {
-			"tag": "forge:glass/colorless"
-		},
-		"W": {
-			"item": "ftbic:mv_cable"
-		},
-		"T": {
-			"item": "ftbic:mv_transformer"
-		},
-		"C": {
-			"item": "ftbic:electronic_circuit"
-		}
-	},
-	"result": {
-		"item": "ftbic:transformer_upgrade"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:transformer_upgrade",
+  "pattern": [
+    "GGG",
+    "WTW",
+    "GCG"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:glass/colorless"
+    },
+    "W": {
+      "item": "ftbic:mv_cable"
+    },
+    "T": {
+      "item": "ftbic:mv_transformer"
+    },
+    "C": {
+      "item": "ftbic:electronic_circuit"
+    }
+  },
+  "result": {
+    "item": "ftbic:transformer_upgrade"
+  }
 }

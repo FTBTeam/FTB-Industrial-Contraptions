@@ -13,7 +13,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 public class BurntBlockCondition implements LootItemCondition {
 	@Override
 	public LootItemConditionType getType() {
-		return FTBICUtils.BURNT_BLOCK;
+		return FTBICUtils.BURNT_BLOCK.get();
 	}
 
 	@Override

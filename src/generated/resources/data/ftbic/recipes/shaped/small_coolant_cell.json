@@ -1,23 +1,23 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:small_coolant_cell",
-	"pattern": [
-		" T ",
-		"TCT",
-		" T "
-	],
-	"key": {
-		"T": {
-			"tag": "forge:ingots/tin"
-		},
-		"C": {
-			"type": "forge:nbt",
-			"item": "ftbic:fluid_cell",
-			"count": 1,
-			"nbt": "{Fluid:\"minecraft:water\"}"
-		}
-	},
-	"result": {
-		"item": "ftbic:small_coolant_cell"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:small_coolant_cell",
+  "pattern": [
+    " T ",
+    "TCT",
+    " T "
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:ingots/tin"
+    },
+    "C": {
+      "type": "forge:nbt",
+      "item": "ftbic:fluid_cell",
+      "count": 1,
+      "nbt": "{Fluid:\"minecraft:water\"}"
+    }
+  },
+  "result": {
+    "item": "ftbic:small_coolant_cell"
+  }
 }

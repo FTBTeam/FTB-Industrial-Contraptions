@@ -1,9 +1,9 @@
 {
-	"type": "minecraft:campfire_cooking",
-	"ingredient": {
-		"tag": "forge:slimeballs"
-	},
-	"result": "ftbic:rubber",
-	"experience": 0.0,
-	"cookingtime": 800
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "tag": "forge:slimeballs"
+  },
+  "result": "ftbic:rubber",
+  "experience": 0.0,
+  "cookingtime": 800
 }

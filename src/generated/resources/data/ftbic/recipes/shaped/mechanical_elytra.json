@@ -1,29 +1,29 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:mechanical_elytra",
-	"pattern": [
-		"CBC",
-		"CSC",
-		"VLV"
-	],
-	"key": {
-		"C": {
-			"item": "ftbic:carbon_plate"
-		},
-		"B": {
-			"item": "ftbic:mv_battery"
-		},
-		"L": {
-			"item": "minecraft:elytra"
-		},
-		"S": {
-			"item": "ftbic:lv_solar_panel"
-		},
-		"V": {
-			"item": "ftbic:heat_vent"
-		}
-	},
-	"result": {
-		"item": "ftbic:mechanical_elytra"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:mechanical_elytra",
+  "pattern": [
+    "CBC",
+    "CSC",
+    "VLV"
+  ],
+  "key": {
+    "C": {
+      "item": "ftbic:carbon_plate"
+    },
+    "B": {
+      "item": "ftbic:mv_battery"
+    },
+    "L": {
+      "item": "minecraft:elytra"
+    },
+    "S": {
+      "item": "ftbic:lv_solar_panel"
+    },
+    "V": {
+      "item": "ftbic:heat_vent"
+    }
+  },
+  "result": {
+    "item": "ftbic:mechanical_elytra"
+  }
 }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:tin_rod",
+  "pattern": [
+    " X ",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/tin"
+    }
+  },
+  "result": {
+    "item": "ftbic:tin_rod"
+  }
+}

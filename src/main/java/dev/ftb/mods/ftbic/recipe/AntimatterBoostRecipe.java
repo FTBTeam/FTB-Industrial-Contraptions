@@ -49,6 +49,6 @@ public class AntimatterBoostRecipe implements Recipe<NoContainer> {
 
 	@Override
 	public RecipeType<?> getType() {
-		return FTBICRecipes.ANTIMATTER_BOOST_TYPE;
+		return FTBICRecipes.ANTIMATTER_BOOST_TYPE.get();
 	}
 }

@@ -1,7 +1,7 @@
 {
-	"variants": {
-		"": {
-			"model": "ftbic:block/nuclear_reactor_chamber"
-		}
-	}
+  "variants": {
+    "": {
+      "model": "ftbic:block/nuclear_reactor_chamber"
+    }
+  }
 }

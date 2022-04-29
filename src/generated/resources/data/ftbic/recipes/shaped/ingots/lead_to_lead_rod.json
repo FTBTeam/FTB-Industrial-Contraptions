@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:lead_rod",
+  "pattern": [
+    " X ",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/lead"
+    }
+  },
+  "result": {
+    "item": "ftbic:lead_rod"
+  }
+}

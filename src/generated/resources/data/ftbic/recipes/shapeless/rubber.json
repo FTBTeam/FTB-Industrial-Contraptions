@@ -1,13 +1,13 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"group": "ftbic:rubber",
-	"ingredients": [
-		{
-			"item": "ftbic:rubber_sheet"
-		}
-	],
-	"result": {
-		"item": "ftbic:rubber",
-		"count": 3
-	}
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:rubber",
+  "ingredients": [
+    {
+      "item": "ftbic:rubber_sheet"
+    }
+  ],
+  "result": {
+    "item": "ftbic:rubber",
+    "count": 3
+  }
 }

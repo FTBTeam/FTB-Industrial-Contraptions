@@ -1,23 +1,23 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:wind_mill",
-	"pattern": [
-		" P ",
-		"CGC",
-		" P "
-	],
-	"key": {
-		"P": {
-			"item": "ftbic:carbon_plate"
-		},
-		"G": {
-			"item": "ftbic:basic_generator"
-		},
-		"C": {
-			"item": "ftbic:electronic_circuit"
-		}
-	},
-	"result": {
-		"item": "ftbic:wind_mill"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:wind_mill",
+  "pattern": [
+    " P ",
+    "CGC",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "item": "ftbic:carbon_plate"
+    },
+    "G": {
+      "item": "ftbic:basic_generator"
+    },
+    "C": {
+      "item": "ftbic:electronic_circuit"
+    }
+  },
+  "result": {
+    "item": "ftbic:wind_mill"
+  }
 }

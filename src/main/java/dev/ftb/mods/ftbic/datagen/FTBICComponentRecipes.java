@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import dev.ftb.mods.ftbic.item.FTBICItems;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
@@ -10,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.common.crafting.ConditionalRecipe;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -52,13 +54,47 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(MIXED_METAL_BLEND))
 				.save(consumer, blastingLoc("advanced_alloy"));
 
-		ShapelessRecipeBuilder.shapeless(MIXED_METAL_BLEND, 3)
-				.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
-				.group(MODID + ":mixed_metal_blend")
-				.requires(Ingredient.merge(Arrays.asList(Ingredient.of(IRON_DUST), Ingredient.of(LEAD_DUST))), 3)
-				.requires(Ingredient.merge(Arrays.asList(Ingredient.of(BRONZE_DUST), Ingredient.of(ELECTRUM_DUST), Ingredient.of(CONSTANTAN_DUST))), 3)
-				.requires(Ingredient.merge(Arrays.asList(Ingredient.of(TIN_DUST), Ingredient.of(ALUMINUM_DUST))), 3)
-				.save(consumer, shapelessLoc("mixed_metal_blend"));
+		ConditionalRecipe.builder()
+				.addCondition(not(tagEmpty(BRONZE_DUST)))
+				.addRecipe( finishedRecipeConsumer ->
+						ShapelessRecipeBuilder.shapeless(MIXED_METAL_BLEND, 3)
+								.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
+								.group(MODID + ":mixed_metal_blend")
+								.requires(Ingredient.merge(Arrays.asList(Ingredient.of(IRON_DUST), Ingredient.of(LEAD_DUST))), 3)
+								.requires(Ingredient.of(BRONZE_DUST), 3)
+								.requires(Ingredient.merge(Arrays.asList(Ingredient.of(TIN_DUST), Ingredient.of(ALUMINUM_DUST))), 3)
+								.save(finishedRecipeConsumer, shapelessLoc("mixed_metal_blend_1"))
+				)
+				.generateAdvancement()
+				.build(consumer, shapelessLoc("mixed_metal_blend_1"));
+
+		ConditionalRecipe.builder()
+				.addCondition(not(tagEmpty(ELECTRUM_DUST)))
+				.addRecipe( finishedRecipeConsumer ->
+						ShapelessRecipeBuilder.shapeless(MIXED_METAL_BLEND, 3)
+								.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
+								.group(MODID + ":mixed_metal_blend")
+								.requires(Ingredient.merge(Arrays.asList(Ingredient.of(IRON_DUST), Ingredient.of(LEAD_DUST))), 3)
+								.requires(Ingredient.of(ELECTRUM_DUST), 3)
+								.requires(Ingredient.merge(Arrays.asList(Ingredient.of(TIN_DUST), Ingredient.of(ALUMINUM_DUST))), 3)
+								.save(finishedRecipeConsumer, shapelessLoc("mixed_metal_blend_2"))
+				)
+				.generateAdvancement()
+				.build(consumer, shapelessLoc("mixed_metal_blend_2"));
+
+		ConditionalRecipe.builder()
+				.addCondition(not(tagEmpty(CONSTANTAN_DUST)))
+				.addRecipe( finishedRecipeConsumer ->
+						ShapelessRecipeBuilder.shapeless(MIXED_METAL_BLEND, 3)
+								.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
+								.group(MODID + ":mixed_metal_blend")
+								.requires(Ingredient.merge(Arrays.asList(Ingredient.of(IRON_DUST), Ingredient.of(LEAD_DUST))), 3)
+								.requires(Ingredient.of(CONSTANTAN_DUST), 3)
+								.requires(Ingredient.merge(Arrays.asList(Ingredient.of(TIN_DUST), Ingredient.of(ALUMINUM_DUST))), 3)
+								.save(finishedRecipeConsumer, shapelessLoc("mixed_metal_blend_3"))
+				)
+				.generateAdvancement()
+				.build(consumer, shapelessLoc("mixed_metal_blend_3"));
 
 		ShapedRecipeBuilder.shaped(RUBBER_SHEET)
 				.unlockedBy("has_item", has(RUBBER))

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:uranium_rod",
+  "pattern": [
+    " X ",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/uranium"
+    }
+  },
+  "result": {
+    "item": "ftbic:uranium_rod"
+  }
+}

@@ -1,20 +1,20 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:machine_block",
-	"pattern": [
-		"MMM",
-		"MFM",
-		"MMM"
-	],
-	"key": {
-		"M": {
-			"item": "ftbic:industrial_grade_metal"
-		},
-		"F": {
-			"item": "ftbic:fuse"
-		}
-	},
-	"result": {
-		"item": "ftbic:machine_block"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:machine_block",
+  "pattern": [
+    "MMM",
+    "MFM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "ftbic:industrial_grade_metal"
+    },
+    "F": {
+      "item": "ftbic:fuse"
+    }
+  },
+  "result": {
+    "item": "ftbic:machine_block"
+  }
 }

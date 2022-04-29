@@ -1,23 +1,23 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:heat_vent",
-	"pattern": [
-		"MIM",
-		"ICI",
-		"MIM"
-	],
-	"key": {
-		"I": {
-			"item": "minecraft:iron_bars"
-		},
-		"C": {
-			"item": "ftbic:copper_coil"
-		},
-		"M": {
-			"item": "ftbic:industrial_grade_metal"
-		}
-	},
-	"result": {
-		"item": "ftbic:heat_vent"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:heat_vent",
+  "pattern": [
+    "MIM",
+    "ICI",
+    "MIM"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_bars"
+    },
+    "C": {
+      "item": "ftbic:copper_coil"
+    },
+    "M": {
+      "item": "ftbic:industrial_grade_metal"
+    }
+  },
+  "result": {
+    "item": "ftbic:heat_vent"
+  }
 }

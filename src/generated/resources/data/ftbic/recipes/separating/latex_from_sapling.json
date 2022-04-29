@@ -3,14 +3,14 @@
   "inputItems": [
     {
       "ingredient": {
-        "item": "minecraft:stone"
+        "item": "myrtrees:rubberwood_sapling"
       },
       "count": 1
     }
   ],
   "outputItems": [
     {
-      "item": "minecraft:stone"
+      "item": "myrtrees:latex"
     }
   ]
 }

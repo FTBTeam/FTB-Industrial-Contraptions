@@ -1,7 +1,7 @@
 {
-	"variants": {
-		"": {
-			"model": "ftbic:block/rubber_sheet"
-		}
-	}
+  "variants": {
+    "": {
+      "model": "ftbic:block/rubber_sheet"
+    }
+  }
 }

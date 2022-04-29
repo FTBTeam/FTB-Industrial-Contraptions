@@ -1,7 +1,7 @@
 {
-	"variants": {
-		"": {
-			"model": "ftbic:block/reinforced_glass"
-		}
-	}
+  "variants": {
+    "": {
+      "model": "ftbic:block/reinforced_glass"
+    }
+  }
 }

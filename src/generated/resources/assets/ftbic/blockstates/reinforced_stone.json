@@ -1,7 +1,7 @@
 {
-	"variants": {
-		"": {
-			"model": "ftbic:block/reinforced_stone"
-		}
-	}
+  "variants": {
+    "": {
+      "model": "ftbic:block/reinforced_stone"
+    }
+  }
 }

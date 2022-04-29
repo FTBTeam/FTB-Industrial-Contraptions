@@ -1,16 +1,16 @@
 {
-	"type": "ftbic:separating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"tag": "forge:gravel"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "minecraft:flint"
-		}
-	]
+  "type": "ftbic:separating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:gravel"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "minecraft:flint"
+    }
+  ]
 }
