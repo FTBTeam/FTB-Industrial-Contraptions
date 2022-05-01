@@ -928,7 +928,7 @@ public class FTBICDataGenHandler {
 			Block[] blockOfResources = FTBICBlocks.RESOURCE_BLOCKS_OF.values().stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(resourceOres);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(blockOfResources);
-			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get(), FTBICBlocks.MACHINE_BLOCK.get(), FTBICBlocks.REINFORCED_GLASS.get(), FTBICBlocks.REINFORCED_STONE.get());
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get(), FTBICBlocks.MACHINE_BLOCK.get(), FTBICBlocks.REINFORCED_GLASS.get(), FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.IRON_FURNACE.get());
 
 			Block[] cables = FTBICBlocks.CABLES.stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(cables);
