@@ -566,12 +566,12 @@ dbc5198a3505c1836b37a7c3b6d49090820d9f44 assets/ftbic/textures/block/electric/li
 a79c7d3216016a1d5ba2087d9e933e131fdac503 assets/ftbic/textures/block/electric/light/teleporter_top_off.png
 6071b38f3fa2aaa8dd16d6e196d29263ff0c9ffd assets/ftbic/textures/block/electric/light/teleporter_top_on.png
 56e98e98dcc693b5cb82c1b26e5a53630328fbfe assets/ftbic/textures/block/electric/light/wind_mill_front.png
-2f4c4a54df14a7b334c537f2b6b153339dd22b14 data/forge/tags/blocks/ores.json
+00ba1cb5de25ff5ac3b267e95d6e9c3ef908b8af data/forge/tags/blocks/ores.json
 7b66b543d0c5d9c985862e8753579c7071d3aec2 data/forge/tags/blocks/ores/aluminum.json
 8f35f6ca5b8bcfad66ed1e21f0e533055a6f15e7 data/forge/tags/blocks/ores/iridium.json
-055af3801f990858364f077610b7b262d9653752 data/forge/tags/blocks/ores/lead.json
+1929d14f7f66dce2e83eaefa076da84c48acefa1 data/forge/tags/blocks/ores/lead.json
 2f83fd1ae4ffb67b60c94a8291b0e3dc37f36393 data/forge/tags/blocks/ores/tin.json
-f499eaced37a547e652930b655e4c85557585e24 data/forge/tags/blocks/ores/uranium.json
+28ecc7f50399d8f3fd87947b9252e96d9057f9da data/forge/tags/blocks/ores/uranium.json
 70f34c71f531c10ac8008786ff04f0d8c243abeb data/forge/tags/items/dusts.json
 8bdd75c708698969d0ecdb4f9f9fd30289160630 data/forge/tags/items/dusts/aluminum.json
 96537458b2316d883a731edac1cbfc0b0253df55 data/forge/tags/items/dusts/bronze.json
@@ -974,9 +974,9 @@ a775b7256be211d14fa2aa4492a8e599914c08d5 data/ftbic/advancements/recipes/misc/sm
 bf0fbdfdd87b3f5f5735654d1260160b14ef046a data/ftbic/advancements/recipes/myrtrees.myrtrees_tab/separating/latex_from_leaves.json
 f34044d7a407e64fe26ef3d7f6f2dd8d9fabe088 data/ftbic/advancements/recipes/myrtrees.myrtrees_tab/separating/latex_from_log.json
 0e6778abbec200917c9275e6e2a180b364b43da3 data/ftbic/advancements/recipes/myrtrees.myrtrees_tab/separating/latex_from_sapling.json
-993e27723c5d1a1bb94cd238e89685ddafbcdaca data/ftbic/advancements/recipes/shapeless/mixed_metal_blend_1.json
-3f7cd32857dff3169b704f60542833b634297ce4 data/ftbic/advancements/recipes/shapeless/mixed_metal_blend_2.json
-feb9c0544a67884b9b0ce0c2905ca8ca0adf769e data/ftbic/advancements/recipes/shapeless/mixed_metal_blend_3.json
+9b4feb089e0bb062feabf27e4a29fdd44c4138c6 data/ftbic/advancements/recipes/shaped/mixed_metal_blend_1.json
+e04738281d615ad0bddbd18f4f8a3fcc2b533fee data/ftbic/advancements/recipes/shaped/mixed_metal_blend_2.json
+208ea2689c9415434755360ccdb1aece9bdf9798 data/ftbic/advancements/recipes/shaped/mixed_metal_blend_3.json
 e51bbaa14251b95000bbf1830aa1933b2b38c91d data/ftbic/loot_tables/blocks/advanced_centrifuge.json
 a58705b0c1887a82c975338d4ed6094a20a5c1e0 data/ftbic/loot_tables/blocks/advanced_compressor.json
 32e7cdd5e808fb9da4b3fbac9c12ecbb3bbcbee5 data/ftbic/loot_tables/blocks/advanced_macerator.json
@@ -1258,6 +1258,9 @@ fe958dce9e0899d9a10bf11211189ef0ab2d241b data/ftbic/recipes/shaped/lv_solar_pane
 ea164d46b4646974b30eda9ed37efa8ceed3efc8 data/ftbic/recipes/shaped/machine_block.json
 21168c35e42a79b0473605604a7e6483810eda75 data/ftbic/recipes/shaped/mechanical_elytra.json
 1899ddf5885d73bddca944057f0d867740152098 data/ftbic/recipes/shaped/medium_coolant_cell.json
+c490c3b88ecead8f869f6ec9a0ea75fbab2e2f88 data/ftbic/recipes/shaped/mixed_metal_blend_1.json
+9a18fe869eb2060c0d97942fe28c1410ecea3725 data/ftbic/recipes/shaped/mixed_metal_blend_2.json
+5d03249dd034f0e4fe935d58cd66756cd98d8ef4 data/ftbic/recipes/shaped/mixed_metal_blend_3.json
 f9eaa05ba38b360006aaf5b77cd76bd5452389ba data/ftbic/recipes/shaped/mv_battery_box.json
 ec5ddb2b3d4a89c6a8a530eaf0b8b181ec2cf985 data/ftbic/recipes/shaped/mv_cable.json
 a02f2ef374ffe138d932a4280e336527fccecd05 data/ftbic/recipes/shaped/mv_solar_panel.json
@@ -1321,9 +1324,6 @@ ba30fc373081ce94730f28406581b5074e1f1f4d data/ftbic/recipes/shapeless/copper_ing
 ee2ac59edda9d0774ef551bb88ae05a9ff01d276 data/ftbic/recipes/shapeless/lead_block_to_lead_ingot.json
 1a56b709b1bc7ebaf453ae2068f343c2bce445e5 data/ftbic/recipes/shapeless/lead_ingot_to_lead_nugget.json
 b61fac003133cbd5ba5b7454e15279c5ee14ad37 data/ftbic/recipes/shapeless/lv_cable.json
-9d5ea894e87dedd93b7b5ed1df88d61ccec2cb73 data/ftbic/recipes/shapeless/mixed_metal_blend_1.json
-46446ae3b577534a1e69a8f94e39fb7875429be8 data/ftbic/recipes/shapeless/mixed_metal_blend_2.json
-cfd5b275e0afaf20c4727747ad517570fa6a2e97 data/ftbic/recipes/shapeless/mixed_metal_blend_3.json
 594f20807efbf64ce067c28aefaec34d91595569 data/ftbic/recipes/shapeless/mv_cable.json
 0654656355d0dc5994ea75bd370e9afca5907878 data/ftbic/recipes/shapeless/nuke_arrow.json
 c24ba49acd7a34d5e84f09474b11950ebee0e47f data/ftbic/recipes/shapeless/reactor_plating.json
@@ -1364,6 +1364,6 @@ e90a2d8edba37ca052a0f5dcff3a5ab586138fbf data/ftbic/recipes/smithing/iridium_bat
 cab3f4ea716e152525da323cdbb1161f01b89059 data/ftbic/tags/blocks/reinforced.json
 b109b9c379397e2f3eefc71bf6360fe92bf6fec6 data/ftbic/tags/items/uncannable_food.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/dragon_immune.json
-25ced0591588435b099d9dd36427f8c98524ee20 data/minecraft/tags/blocks/mineable/pickaxe.json
+dca86f0fb2694ee452a89217ce64d3ba7a17e018 data/minecraft/tags/blocks/mineable/pickaxe.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/wither_immune.json
 a3fd594a3c67c6930909c5420fb2047974ffa671 data/minecraft/tags/items/arrows.json

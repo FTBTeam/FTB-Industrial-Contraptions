@@ -14,7 +14,7 @@
         "parent": "minecraft:recipes/root",
         "rewards": {
           "recipes": [
-            "ftbic:shapeless/mixed_metal_blend_1"
+            "ftbic:shaped/mixed_metal_blend_1"
           ]
         },
         "criteria": {
@@ -33,7 +33,7 @@
           "has_the_recipe": {
             "trigger": "minecraft:recipe_unlocked",
             "conditions": {
-              "recipe": "ftbic:shapeless/mixed_metal_blend_1"
+              "recipe": "ftbic:shaped/mixed_metal_blend_1"
             }
           }
         },
