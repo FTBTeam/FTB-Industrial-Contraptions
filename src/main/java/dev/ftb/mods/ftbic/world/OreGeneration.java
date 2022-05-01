@@ -1,13 +1,11 @@
 package dev.ftb.mods.ftbic.world;
 
-import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
-import dev.ftb.mods.ftbic.world.OreDistribution.Placement;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -20,74 +18,85 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 public class OreGeneration {
-	public static final List<OreConfiguration.TargetBlockState> TIN_TARGET_LIST = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.TIN).get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.DEEPSLATE_TIN).get().defaultBlockState()));
-	public static final List<OreConfiguration.TargetBlockState> LEAD_TARGET_LIST = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.LEAD).get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.DEEPSLATE_LEAD).get().defaultBlockState()));
-	public static final List<OreConfiguration.TargetBlockState> ALUMINUM_TARGET_LIST = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.ALUMINUM).get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.DEEPSLATE_ALUMINUM).get().defaultBlockState()));
-	public static final List<OreConfiguration.TargetBlockState> URANIUM_TARGET_LIST = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.URANIUM).get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.DEEPSLATE_URANIUM).get().defaultBlockState()));
-	public static final List<OreConfiguration.TargetBlockState> IRIDIUM_TARGET_LIST = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.IRIDIUM).get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.DEEPSLATE_IRIDIUM).get().defaultBlockState()));
+	public static final List<OreConfiguration.TargetBlockState> TIN_TARGET_LIST;
+	public static final List<OreConfiguration.TargetBlockState> LEAD_TARGET_LIST;
+	public static final List<OreConfiguration.TargetBlockState> ALUMINUM_TARGET_LIST;
+	public static final List<OreConfiguration.TargetBlockState> URANIUM_TARGET_LIST;
+	public static final List<OreConfiguration.TargetBlockState> IRIDIUM_TARGET_LIST;
 
-	private static final Holder<ConfiguredFeature<OreConfiguration, ?>> TIN = createOreConfig("tin", new OreConfiguration(TIN_TARGET_LIST, 9));
-	private static final Holder<ConfiguredFeature<OreConfiguration, ?>> LEAD = createOreConfig("lead", new OreConfiguration(LEAD_TARGET_LIST, 9));
-	private static final Holder<ConfiguredFeature<OreConfiguration, ?>> ALUMINUM = createOreConfig("aluminum", new OreConfiguration(ALUMINUM_TARGET_LIST, 9));
-	private static final Holder<ConfiguredFeature<OreConfiguration, ?>> IRIDIUM = createOreConfig("iridium", new OreConfiguration(IRIDIUM_TARGET_LIST, 9));
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_TIN_CONFIG;
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_TIN_SMALL_CONFIG;
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_LEAD_CONFIG;
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_LEAD_SMALL_CONFIG;
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_ALUMINUM_CONFIG;
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_ALUMINUM_SMALL_CONFIG;
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_URANIUM_CONFIG;
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_URANIUM_BURIED_CONFIG;
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_IRIDIUM_SMALL_CONFIG;
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_IRIDIUM_LARGE_CONFIG;
+	public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ORE_IRIDIUM_BURIED_CONFIG;
 
-	private static final Map<ResourceElements, OreDistribution> PLACEMENT_DISTRIBUTIONS = new HashMap<>() {{
-		put(ResourceElements.TIN, OreDistribution.builder()
-				.setSmall(Placement.builder().count(10).common().customPlacement(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72))).build(), TIN)
-				.setNormal(Placement.builder().count(10).common().triangle(-24, 56).build(), TIN)
-				.setLarge(Placement.builder().count(90).common().triangle(80, 384).build(), createOreConfig("tin_small", new OreConfiguration(TIN_TARGET_LIST, 4)))
-				.build());
+	public static final Holder<PlacedFeature> ORE_TIN_UPPER;
+	public static final Holder<PlacedFeature> ORE_TIN_MIDDLE;
+	public static final Holder<PlacedFeature> ORE_TIN_SMALL;
+	public static final Holder<PlacedFeature> ORE_LEAD_UPPER;
+	public static final Holder<PlacedFeature> ORE_LEAD_MIDDLE;
+	public static final Holder<PlacedFeature> ORE_LEAD_SMALL;
+	public static final Holder<PlacedFeature> ORE_ALUMINUM_UPPER;
+	public static final Holder<PlacedFeature> ORE_ALUMINUM_MIDDLE;
+	public static final Holder<PlacedFeature> ORE_ALUMINUM_SMALL;
+	public static final Holder<PlacedFeature> ORE_URANIUM_EXTRA;
+	public static final Holder<PlacedFeature> ORE_URANIUM;
+	public static final Holder<PlacedFeature> ORE_URANIUM_LOWER;
+	public static final Holder<PlacedFeature> ORE_IRIDIUM;
+	public static final Holder<PlacedFeature> ORE_IRIDIUM_LARGE;
+	public static final Holder<PlacedFeature> ORE_IRIDIUM_BURIED;
 
-		put(ResourceElements.LEAD, OreDistribution.builder()
-				.setSmall(Placement.builder().count(10).common().customPlacement(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72))).build(), LEAD)
-				.setNormal(Placement.builder().count(10).common().triangle(-24, 56).build(), LEAD)
-				.setLarge(Placement.builder().count(90).common().triangle(80, 384).build(), createOreConfig("lead_small", new OreConfiguration(LEAD_TARGET_LIST, 4)))
-				.build());
+	public static final Set<Holder<PlacedFeature>> PLACEMENTS = new HashSet<>();
 
-		put(ResourceElements.ALUMINUM, OreDistribution.builder()
-				.setSmall(Placement.builder().count(10).common().customPlacement(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72))).build(), ALUMINUM)
-				.setNormal(Placement.builder().count(10).common().triangle(-24, 56).build(), ALUMINUM)
-				.setLarge(Placement.builder().count(90).common().triangle(80, 384).build(), createOreConfig("aluminum_small", new OreConfiguration(ALUMINUM_TARGET_LIST, 4)))
-				.build());
+	public static void init() {}
 
-		put(ResourceElements.URANIUM, OreDistribution.builder()
-				.setSmall(Placement.builder().count(50).common().uniform(32, 256).build(), createOreConfig("uranium_small", new OreConfiguration(URANIUM_TARGET_LIST, 4, 0.5f)))
-				.setLarge(Placement.builder().count(4).common().triangle(-64, 32).build(), createOreConfig("uranium_large", new OreConfiguration(URANIUM_TARGET_LIST, 12, 0.7f)))
-				.setBuried(Placement.builder().count(8).common().triangle(-32, 32).build(), createOreConfig("uranium_buried", new OreConfiguration(URANIUM_TARGET_LIST, 8, 1.0f)))
-				.build());
+	static {
+		TIN_TARGET_LIST = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.TIN).get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.DEEPSLATE_TIN).get().defaultBlockState()));
+		LEAD_TARGET_LIST = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.LEAD).get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.DEEPSLATE_LEAD).get().defaultBlockState()));
+		ALUMINUM_TARGET_LIST = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.ALUMINUM).get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.DEEPSLATE_ALUMINUM).get().defaultBlockState()));
+		URANIUM_TARGET_LIST = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.URANIUM).get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.DEEPSLATE_URANIUM).get().defaultBlockState()));
+		IRIDIUM_TARGET_LIST = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.IRIDIUM).get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, FTBICBlocks.RESOURCE_ORES.get(ResourceElements.DEEPSLATE_IRIDIUM).get().defaultBlockState()));
 
-		put(ResourceElements.IRIDIUM, OreDistribution.builder()
-				.setSmall(Placement.builder().count(7).common().triangleAboveBottom(-80, 80).build(), IRIDIUM)
-				.setLarge(Placement.builder().count(9).rare().triangleAboveBottom(-80, 80).build(), IRIDIUM)
-				.setBuried(Placement.builder().count(4).common().triangleAboveBottom(-80, 80).build(), createOreConfig("iridium_buried", new OreConfiguration(IRIDIUM_TARGET_LIST, 9, 0.5f)))
-				.build());
-	}};
+		ORE_TIN_CONFIG = FeatureUtils.register("ore_tin", Feature.ORE, new OreConfiguration(TIN_TARGET_LIST, 9));
+		ORE_TIN_SMALL_CONFIG = FeatureUtils.register("ore_tin_small", Feature.ORE, new OreConfiguration(TIN_TARGET_LIST, 4));
+		ORE_LEAD_CONFIG = FeatureUtils.register("ore_lead", Feature.ORE, new OreConfiguration(LEAD_TARGET_LIST, 9));
+		ORE_LEAD_SMALL_CONFIG = FeatureUtils.register("ore_lead_small", Feature.ORE, new OreConfiguration(LEAD_TARGET_LIST, 4));
+		ORE_ALUMINUM_CONFIG = FeatureUtils.register("ore_aluminum", Feature.ORE, new OreConfiguration(ALUMINUM_TARGET_LIST, 9));
+		ORE_ALUMINUM_SMALL_CONFIG = FeatureUtils.register("ore_aluminum_small", Feature.ORE, new OreConfiguration(ALUMINUM_TARGET_LIST, 4));
+		ORE_URANIUM_CONFIG = FeatureUtils.register("ore_uranium", Feature.ORE, new OreConfiguration(URANIUM_TARGET_LIST, 9));
+		ORE_URANIUM_BURIED_CONFIG = FeatureUtils.register("ore_uranium_buried", Feature.ORE, new OreConfiguration(URANIUM_TARGET_LIST, 9, 0.5F));
+		ORE_IRIDIUM_SMALL_CONFIG = FeatureUtils.register("ore_iridium_small", Feature.ORE, new OreConfiguration(IRIDIUM_TARGET_LIST, 4, 0.5F));
+		ORE_IRIDIUM_LARGE_CONFIG = FeatureUtils.register("ore_iridium_large", Feature.ORE, new OreConfiguration(IRIDIUM_TARGET_LIST, 12, 0.7F));
+		ORE_IRIDIUM_BURIED_CONFIG = FeatureUtils.register("ore_iridium_buried", Feature.ORE, new OreConfiguration(IRIDIUM_TARGET_LIST, 8, 1.0F));
 
-	private static Holder<ConfiguredFeature<OreConfiguration, ?>> createOreConfig(String id, OreConfiguration config) {
-		return FeatureUtils.register(new ResourceLocation(FTBIC.MOD_ID, id).toString(), Feature.ORE, config);
-	}
+		ORE_TIN_UPPER = PlacementUtils.register("ore_tin_upper", ORE_TIN_CONFIG, commonOrePlacement(90, HeightRangePlacement.triangle(VerticalAnchor.absolute(80), VerticalAnchor.absolute(384))));
+		ORE_TIN_MIDDLE = PlacementUtils.register("ore_tin_middle", ORE_TIN_CONFIG, commonOrePlacement(10, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56))));
+		ORE_TIN_SMALL = PlacementUtils.register("ore_tin_small", ORE_TIN_SMALL_CONFIG, commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72))));
+		ORE_LEAD_UPPER = PlacementUtils.register("ore_lead_upper", ORE_LEAD_CONFIG, commonOrePlacement(90, HeightRangePlacement.triangle(VerticalAnchor.absolute(80), VerticalAnchor.absolute(384))));
+		ORE_LEAD_MIDDLE = PlacementUtils.register("ore_lead_middle", ORE_LEAD_CONFIG, commonOrePlacement(10, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56))));
+		ORE_LEAD_SMALL = PlacementUtils.register("ore_lead_small", ORE_LEAD_SMALL_CONFIG, commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72))));
+		ORE_ALUMINUM_UPPER = PlacementUtils.register("ore_aluminum_upper", ORE_ALUMINUM_CONFIG, commonOrePlacement(90, HeightRangePlacement.triangle(VerticalAnchor.absolute(80), VerticalAnchor.absolute(384))));
+		ORE_ALUMINUM_MIDDLE = PlacementUtils.register("ore_aluminum_middle", ORE_ALUMINUM_CONFIG, commonOrePlacement(10, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56))));
+		ORE_ALUMINUM_SMALL = PlacementUtils.register("ore_aluminum_small", ORE_ALUMINUM_SMALL_CONFIG, commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72))));
+		ORE_URANIUM_EXTRA = PlacementUtils.register("ore_uranium_extra", ORE_URANIUM_CONFIG, commonOrePlacement(50, HeightRangePlacement.uniform(VerticalAnchor.absolute(32), VerticalAnchor.absolute(256))));
+		ORE_URANIUM = PlacementUtils.register("ore_uranium", ORE_URANIUM_BURIED_CONFIG, commonOrePlacement(4, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(32))));
+		ORE_URANIUM_LOWER = PlacementUtils.register("ore_uranium_lower", ORE_URANIUM_BURIED_CONFIG, orePlacement(CountPlacement.of(UniformInt.of(0, 1)), HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(-48))));
+		ORE_IRIDIUM = PlacementUtils.register("ore_iridium", ORE_IRIDIUM_SMALL_CONFIG, commonOrePlacement(7, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80))));
+		ORE_IRIDIUM_LARGE = PlacementUtils.register("ore_iridium_large", ORE_IRIDIUM_LARGE_CONFIG, rareOrePlacement(9, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80))));
+		ORE_IRIDIUM_BURIED = PlacementUtils.register("ore_iridium_buried", ORE_IRIDIUM_BURIED_CONFIG, commonOrePlacement(4, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80))));
 
-	public static final Map<ResourceElements, List<Holder<PlacedFeature>>> PLACEMENT_FEATURES = new HashMap<>();
-
-	public static void setupConfiguredFeatures() {
-		FTBICBlocks.RESOURCE_ORES.keySet().forEach((v) -> {
-			OreDistribution oreDistribution = PLACEMENT_DISTRIBUTIONS.get(ResourceElements.getNonDeepslateVersion(v).orElseThrow());
-			List<Holder<PlacedFeature>> placementFeatures = oreDistribution.getSetPlacements().stream()
-					.map(e -> {
-						Placement placement = e.getValue().getKey();
-						var modifiers = placement.rarity() == OreDistribution.Rarity.COMMON ? rareOrePlacement(placement.count(), placement.placementType()) : commonOrePlacement(placement.count(), placement.placementType());
-						Holder<PlacedFeature> register = PlacementUtils.register(new ResourceLocation(FTBIC.MOD_ID, "overwold_" + v.getName() + "_" + e.getKey()).toString(), e.getValue().getValue(), modifiers);
-						return register;
-					})
-					.toList();
-
-			PLACEMENT_FEATURES.put(v, placementFeatures);
-		});
+		PLACEMENTS.addAll(List.of(ORE_TIN_UPPER, ORE_TIN_MIDDLE, ORE_TIN_SMALL, ORE_LEAD_UPPER, ORE_LEAD_MIDDLE, ORE_LEAD_SMALL, ORE_ALUMINUM_UPPER, ORE_ALUMINUM_MIDDLE, ORE_ALUMINUM_SMALL, ORE_URANIUM_EXTRA, ORE_URANIUM, ORE_URANIUM_LOWER, ORE_IRIDIUM, ORE_IRIDIUM_LARGE, ORE_IRIDIUM_BURIED));
 	}
 
 	/**

@@ -92,7 +92,7 @@ public class FTBIC {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-		event.enqueueWork(OreGeneration::setupConfiguredFeatures);
+		event.enqueueWork(OreGeneration::init);
 	}
 
 	@SubscribeEvent
@@ -102,7 +102,7 @@ public class FTBIC {
 			return;
 		}
 
-		OreGeneration.PLACEMENT_FEATURES.forEach((k, v) -> v.forEach(e -> event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, e)));
+		OreGeneration.PLACEMENTS.forEach(e -> event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, e));
 	}
 
 	private static boolean isDummyArmor(LivingDamageEvent event, EquipmentSlot slot, ArmorMaterial material) {
