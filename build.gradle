@@ -88,6 +88,7 @@ dependencies {
 	modImplementation("dev.ftb.mods:ftb-library-forge:${rootProject.ftblibrary_version}") { transitive = false }
 	modImplementation("dev.ftb.mods:ftb-teams-forge:${rootProject.ftbteams_version}") { transitive = false }
 	modImplementation("dev.ftb.mods:ftb-chunks-forge:${rootProject.ftbchunks_version}") { transitive = false }
+	modRuntimeOnly ("com.sunekaer.mods:ToolKit:2.2.1-build.9999+mc1.18.2") // local
 
 //	modRuntime("curse.maven:ctm-267602:3586556")
 	// modRuntime("curse.maven:pipez-443900:3525428")

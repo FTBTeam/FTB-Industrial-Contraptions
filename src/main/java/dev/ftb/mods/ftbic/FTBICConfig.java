@@ -201,7 +201,7 @@ public class FTBICConfig {
 			WIND_MILL_MIN_OUTPUT = b().comment("The min amount of energy the wind mill can output").defineInRange("Wind mill min output", 0.3D, 0.001D, 100_000D);
 			WIND_MILL_MAX_OUTPUT = b().comment("The max amount of energy the wind mill can output").defineInRange("Wind mill max output", 6.5D, 0.001D, 1000_000D);
 			WIND_MILL_MIN_Y = b().comment("Minimum height that the windmill is effective from").defineInRange("Wind mill min y", 64, 0, 250);
-			WIND_MILL_MAX_Y = b().comment("Maximum height that the windmill is effective from ").defineInRange("Wind mill max y", 250, 0, 250);
+			WIND_MILL_MAX_Y = b().comment("Maximum height that the windmill is effective from ").defineInRange("Wind mill max y", 320, 0, 320);
 			WIND_MILL_RAIN_MODIFIER = b().comment("How much rain effects the energy production").defineInRange("Wind mill rain modifier", 1.2D, 0.001D, 5_000D);
 			WIND_MILL_THUNDER_MODIFIER = b().comment("How much thunder effects the energy production").defineInRange("Wind mill thunder modifier", 1.5D, 0.001D, 5_000D);
 			LV_SOLAR_PANEL_OUTPUT = b().comment("Energy created from the Lv solar panel").defineInRange("Lv solar panel output", 1D, 1D, 100_000D);

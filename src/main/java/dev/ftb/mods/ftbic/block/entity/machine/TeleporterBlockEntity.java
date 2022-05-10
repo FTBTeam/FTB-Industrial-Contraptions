@@ -103,7 +103,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 	public void writeNetData(CompoundTag tag) {
 		super.writeNetData(tag);
 
-		if (!linkedName.isEmpty()) {
+		if (linkedName != null && !linkedName.isEmpty()) {
 			tag.putString("LinkedName", linkedName);
 		}
 	}
@@ -111,7 +111,13 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 	@Override
 	public void readNetData(CompoundTag tag) {
 		super.readNetData(tag);
-		linkedName = tag.getString("LinkedName");
+		if (tag == null) {
+			return;
+		}
+
+		if (tag.contains("LinkedName")) {
+			linkedName = tag.getString("LinkedName");
+		}
 	}
 
 	@Override
@@ -149,7 +155,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 					t.cooldown = 60;
 					t.setChanged();
 
-					if (!linkedName.equals(t.name)) {
+					if (linkedName != null && !linkedName.equals(t.name)) {
 						linkedName = t.name;
 						syncBlock();
 					}
@@ -186,6 +192,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
 			if (placerId.equals(player.getUUID())) {
+				// TODO: add gui here
 				// open gui
 			} else {
 				player.displayClientMessage(new TranslatableComponent("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED), true);

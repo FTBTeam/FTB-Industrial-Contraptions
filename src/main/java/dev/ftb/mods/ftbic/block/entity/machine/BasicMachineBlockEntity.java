@@ -128,6 +128,10 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 		}
 
 		energyCapacity += upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.MACHINES.STORAGE_UPGRADE.get();
+		if (energy > energyCapacity) {
+			energy = energyCapacity;
+		}
+
 		autoEject = upgradeInventory.countUpgrades(FTBICItems.EJECTOR_UPGRADE.get()) > 0;
 	}
 }

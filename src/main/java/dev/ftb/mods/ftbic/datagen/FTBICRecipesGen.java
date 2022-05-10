@@ -152,7 +152,6 @@ public abstract class FTBICRecipesGen extends RecipeProvider implements IConditi
 	public static final TagKey<Item> ENDERIUM_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/enderium"));
 	public static final TagKey<Item> BRONZE_BLOCK = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", "storage_blocks/bronze"));
 
-	// FIXME
 	public static final Item SILICON_ITEM = FTBICItems.SILICON.item.get();
 	public static final Item OBSIDIAN_DUST_ITEM = FTBICItems.getResourceFromType(ResourceElements.OBSIDIAN, ResourceType.DUST).orElseThrow().get();
 	public static final Item ENDER_DUST_ITEM = FTBICItems.getResourceFromType(ResourceElements.ENDER, ResourceType.DUST).orElseThrow().get();

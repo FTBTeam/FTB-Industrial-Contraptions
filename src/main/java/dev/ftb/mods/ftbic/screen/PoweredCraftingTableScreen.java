@@ -39,7 +39,6 @@ public class PoweredCraftingTableScreen extends ElectricBlockScreen<PoweredCraft
 
 		drawLargeSlot(poseStack, leftPos + 110, topPos + 30);
 
-		// TODO: Check if light is correct
 		Lighting.setupFor3DItems();
 		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		// RenderSystem.enableRescaleNormal();

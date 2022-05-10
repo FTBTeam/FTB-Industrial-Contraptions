@@ -13,7 +13,6 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class NuclearReactorChamberBlock extends Block {
 	public NuclearReactorChamberBlock() {
-		// TODO: pickaxe
 		super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops());
 	}
 

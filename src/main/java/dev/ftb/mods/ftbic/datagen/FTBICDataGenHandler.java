@@ -16,7 +16,6 @@ import dev.ftb.mods.ftbic.item.MaterialItem;
 import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.world.ResourceElements;
-import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -68,8 +67,8 @@ import java.util.stream.Collectors;
 import static dev.ftb.mods.ftbic.datagen.FTBICRecipesGen.*;
 import static dev.ftb.mods.ftbic.world.ResourceElements.COAL;
 import static dev.ftb.mods.ftbic.world.ResourceElements.DIAMOND;
-import static dev.ftb.mods.ftbic.world.ResourceElements.*;
 import static dev.ftb.mods.ftbic.world.ResourceElements.OBSIDIAN;
+import static dev.ftb.mods.ftbic.world.ResourceElements.*;
 import static dev.ftb.mods.ftbic.world.ResourceType.*;
 
 /**
@@ -928,7 +927,19 @@ public class FTBICDataGenHandler {
 			Block[] blockOfResources = FTBICBlocks.RESOURCE_BLOCKS_OF.values().stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(resourceOres);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(blockOfResources);
-			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(FTBICBlocks.ADVANCED_MACHINE_BLOCK.get(), FTBICBlocks.MACHINE_BLOCK.get(), FTBICBlocks.REINFORCED_GLASS.get(), FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.IRON_FURNACE.get());
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
+					FTBICBlocks.ADVANCED_MACHINE_BLOCK.get(),
+					FTBICBlocks.MACHINE_BLOCK.get(),
+					FTBICBlocks.REINFORCED_GLASS.get(),
+					FTBICBlocks.REINFORCED_STONE.get(),
+					FTBICBlocks.IRON_FURNACE.get(),
+					FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get(),
+					FTBICBlocks.RUBBER_SHEET.get(),
+					FTBICBlocks.BURNT_CABLE.get(),
+					FTBICBlocks.LANDMARK.get(),
+					FTBICBlocks.EXFLUID.get(),
+					FTBICBlocks.NUKE.get()
+			);
 
 			Block[] cables = FTBICBlocks.CABLES.stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(cables);

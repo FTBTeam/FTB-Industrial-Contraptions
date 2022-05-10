@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -42,6 +43,6 @@ public interface FTBICBlocks {
 
 	List<Supplier<Block>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE, BURNT_CABLE);
 
-	Map<ResourceElements, Supplier<Block>> RESOURCE_ORES = ResourceElements.VALUES.stream().filter(e -> e.requirements().has(ResourceType.ORE)).collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_ore", ResourceBlock::new)));
-	Map<ResourceElements, Supplier<Block>> RESOURCE_BLOCKS_OF = ResourceElements.VALUES.stream().filter(e -> e.requirements().has(ResourceType.BLOCK)).collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0f, 3.0f)))));
+	Map<ResourceElements, Supplier<Block>> RESOURCE_ORES = ResourceElements.VALUES.stream().filter(e -> e.requirements().has(ResourceType.ORE)).collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_ore", () -> new ResourceBlock(e.getName().contains("deepslate")))));
+	Map<ResourceElements, Supplier<Block>> RESOURCE_BLOCKS_OF = ResourceElements.VALUES.stream().filter(e -> e.requirements().has(ResourceType.BLOCK)).collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0f, 6.0f).sound(SoundType.METAL)))));
 }

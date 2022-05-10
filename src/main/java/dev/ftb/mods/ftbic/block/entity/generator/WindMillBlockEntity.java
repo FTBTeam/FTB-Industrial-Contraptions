@@ -78,7 +78,7 @@ public class WindMillBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			player.displayClientMessage(new TranslatableComponent("ftbic.output", FTBICUtils.formatEnergy(output)), false);
+			player.displayClientMessage(new TranslatableComponent("ftbic.energy_output", FTBICUtils.formatEnergy(output)), false);
 		}
 
 		return InteractionResult.SUCCESS;

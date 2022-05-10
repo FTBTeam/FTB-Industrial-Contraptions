@@ -9,9 +9,6 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 import dev.ftb.mods.ftbic.FTBIC;
-import dev.ftb.mods.ftbic.FTBICConfig;
-import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
-import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
@@ -60,13 +57,13 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		if (energyX != -1 && energyY != -1 && isIn(mouseX, mouseY, leftPos + energyX, topPos + energyY, 14, 14) && menu.getCarried().isEmpty()) {
 			double capacity = menu.data.get(SyncedData.ENERGY_CAPACITY);
 
-			if (menu.entity instanceof MachineBlockEntity) {
-				capacity += ((MachineBlockEntity) menu.entity).upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.MACHINES.STORAGE_UPGRADE.get();
-			}
+// breaks the ui counting for some reason #blamelat
+//			if (menu.entity instanceof MachineBlockEntity) {
+//				capacity += ((MachineBlockEntity) menu.entity).upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.MACHINES.STORAGE_UPGRADE.get();
+//			}
 
 			double energy = menu.data.get(SyncedData.ENERGY);
 			renderTooltip(poseStack, Collections.singletonList(new TextComponent("").append(FTBICUtils.formatEnergy(energy).withStyle(ChatFormatting.GRAY)).append(" / ").append(FTBICUtils.formatEnergy(capacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY)), Optional.empty(), mouseX, mouseY);
-			//FIXME: renderWrappedToolTip(poseStack, Collections.singletonList(new TextComponent("").append(FTBICUtils.formatEnergy(energy).withStyle(ChatFormatting.GRAY)).append(" / ").append(FTBICUtils.formatEnergy(capacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY)), mouseX, mouseY, font);
 		}
 	}
 
@@ -156,13 +153,35 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		blit(poseStack, x, y, 49, 167, 18, 54);
 
 		RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
-		// render fluid here properly
 
 		double d = fluid.getAmount() / (double) capacity;
 		int h = Mth.ceil(d * 52);
-
 		if (h > 0) {
-			fillGradient(poseStack, x + 1, y + 1 + (52 - h), x + 17, y + 53, 0xFFFFB600, 0xFFD84C45);
+			TextureAtlasSprite sprite = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(fluid.getFluid().getAttributes().getStillTexture(fluid));
+
+			int color = fluid.getFluid().getAttributes().getColor(fluid);
+			int r = (color >> 16) & 255;
+			int g = (color >> 8) & 255;
+			int b = (color) & 255;
+
+			float u0 = sprite.getU0();
+			float v0 = sprite.getV0();
+			float u1 = sprite.getU1();
+			float v1 = sprite.getV1();
+
+			Matrix4f m = poseStack.last().pose();
+
+			BufferBuilder lv = Tesselator.getInstance().getBuilder();
+			RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+			lv.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX);
+
+			lv.vertex(m, x + 1F, y + 53F - h, 0F).color(r, g, b, 255).uv(u0, v0).endVertex(); // TOP LEFT
+			lv.vertex(m, x + 1F, y + 53F, 0F).color(r, g, b, 255).uv(u0, v1).endVertex(); // BOTTOM left
+			lv.vertex(m, x + 17F, y + 53F, 0F).color(r, g, b, 255).uv(u1, v1).endVertex(); // BOTTOM RIGHT
+			lv.vertex(m, x + 17F, y + 53F - h, 0F).color(r, g, b, 255).uv(u1, v0).endVertex(); // TOP RIGHT
+
+			lv.end();
+			BufferUploader.end(lv);
 		}
 
 		RenderSystem.setShaderTexture(0, BASE_TEXTURE);

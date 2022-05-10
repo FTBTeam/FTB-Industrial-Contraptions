@@ -22,6 +22,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
 import java.util.Collections;
+import java.util.List;
 
 public class DiggingBlockRenderer implements BlockEntityRenderer<DiggingBaseBlockEntity> {
 	private static final ResourceLocation QUARRY_FRAME_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_frame.png");
@@ -39,11 +40,9 @@ public class DiggingBlockRenderer implements BlockEntityRenderer<DiggingBaseBloc
 	private final ModelPart quarryHead;
 
 	private static ModelPart make(BlockEntityRendererProvider.Context context, int tw, int th, int tx, int ty, float x, float y, float z, float w, float h, float d) {
-		//FIXME: ModelPart part = new ModelPart(tw, th, tx, ty);
-		//part.addBox(x, y, z, w, h, d, 0, false);
-		//return part;
-		// context.bakeLayer()
-		return new ModelPart(Collections.emptyList(), Collections.emptyMap());
+		return new ModelPart(List.of(
+				new ModelPart.Cube(tx, ty, x, y, z, w, h, d, 0f, 0f, 0f, false, tw, th)
+		), Collections.emptyMap());
 	}
 
 	public DiggingBlockRenderer(BlockEntityRendererProvider.Context context) {

@@ -53,7 +53,6 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 	public final ElectricBlockInstance electricBlockInstance;
 
 	public ElectricBlock(ElectricBlockInstance m) {
-		// FIXME: pickaxe
 		super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops());
 		electricBlockInstance = m;
 		BlockState state = getStateDefinition().any().setValue(SprayPaintable.DARK, false);

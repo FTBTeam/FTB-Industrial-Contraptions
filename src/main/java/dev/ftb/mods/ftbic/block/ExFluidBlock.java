@@ -14,7 +14,6 @@ import java.util.Random;
 
 public class ExFluidBlock extends Block {
 	public ExFluidBlock() {
-		// FIXME: pickaxe
 		super(Properties.of(Material.STONE).strength(0.9F).sound(SoundType.STONE).noDrops().isValidSpawn((arg, arg2, arg3, object) -> false).randomTicks());
 	}
 

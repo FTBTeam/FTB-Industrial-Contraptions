@@ -13,11 +13,25 @@ import net.minecraftforge.fluids.FluidStack;
 public class PumpScreen extends ElectricBlockScreen<PumpMenu> {
 	private Fluid prevFilter = null;
 	private FluidStack filterStack = FluidStack.EMPTY;
+	private Component title;
+	private boolean paused = false;
 
 	public PumpScreen(PumpMenu m, Inventory inv, Component c) {
 		super(m, inv, c);
 		energyX = 108;
 		energyY = 36;
+
+		title = m.entity.createDisplayName();
+		if (m.entity.paused) {
+			paused = true;
+			title = title.copy().append(" [Paused]");
+		}
+	}
+
+	@Override
+	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
+		this.font.draw(poseStack, title, (float)this.titleLabelX, (float)this.titleLabelY, 0x404040);
+		this.font.draw(poseStack, this.playerInventoryTitle, (float)this.inventoryLabelX, (float)this.inventoryLabelY, 0x404040);
 	}
 
 	@Override
@@ -43,6 +57,16 @@ public class PumpScreen extends ElectricBlockScreen<PumpMenu> {
 		drawFluidSlot(poseStack, leftPos + 20, topPos + 34, filterStack);
 
 		drawPauseButton(poseStack, leftPos + 106, topPos + 16, mouseX, mouseY, menu.data.get(SyncedData.PAUSED));
+	}
+
+	@Override
+	protected void containerTick() {
+		super.containerTick();
+
+		if (menu.entity.paused != paused) {
+			paused = menu.entity.paused;
+			title = paused ? title.copy().append(" [Paused]") : menu.entity.createDisplayName();
+		}
 	}
 
 	@Override

@@ -63,6 +63,20 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 	}
 
 	@Override
+	public void readNetData(CompoundTag tag) {
+		super.readNetData(tag);
+		fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid"));
+		filter = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(tag.getString("Filter")));
+	}
+
+	@Override
+	public void writeNetData(CompoundTag tag) {
+		super.writeNetData(tag);
+		tag.put("Fluid", fluidStack.writeToNBT(new CompoundTag()));
+		tag.putString("Filter", filter.getRegistryName().toString());
+	}
+
+	@Override
 	public boolean isValidBlock(BlockState state, BlockPos pos) {
 		return state.getMaterial().isLiquid() && state.getBlock() instanceof BucketPickup && (filter == Fluids.EMPTY || filter.isSame(state.getFluidState().getType())) && state.getFluidState().isSource();
 	}

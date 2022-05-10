@@ -9,8 +9,6 @@ import dev.ftb.mods.ftbic.util.FTBChunksIntegration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -57,11 +55,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 		tag.putFloat("LaserX", laserX);
 		tag.putInt("LaserY", laserY);
 		tag.putFloat("LaserZ", laserZ);
-
-		if (paused) {
-			tag.putBoolean("Paused", true);
-		}
-
+		tag.putBoolean("Paused", paused);
 		tag.putLong("Tick", tick);
 		tag.putByte("OffsetX", (byte) offsetX);
 		tag.putByte("OffsetZ", (byte) offsetZ);
@@ -94,10 +88,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 		tag.putFloat("LaserX", laserX);
 		tag.putInt("LaserY", laserY);
 		tag.putFloat("LaserZ", laserZ);
-
-		if (paused) {
-			tag.putBoolean("Paused", true);
-		}
+		tag.putBoolean("Paused", paused);
 
 		tag.putLong("Tick", tick);
 		tag.putByte("OffsetX", (byte) offsetX);
@@ -232,7 +223,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 			return INVALID_Y;
 		}
 
-		for (int y = worldPosition.getY(); y >= 0; y--) {
+		for (int y = worldPosition.getY(); y >= level.getMinBuildHeight(); y--) {
 			pos.setY(y);
 
 			if (level.isLoaded(pos)) {
@@ -358,14 +349,5 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 
 	public float[] getLaserColor() {
 		return new float[]{1F, 1F, 1F};
-	}
-
-	@Override
-	public Component createDisplayName() {
-		if (paused) {
-			return new TextComponent("").append(super.createDisplayName()).append(" [Paused]");
-		}
-
-		return super.createDisplayName();
 	}
 }
