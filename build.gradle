@@ -170,9 +170,8 @@ if (ENV.CURSEFORGE_KEY) {
 			addGameVersion project.minecraft_version
 			mainArtifact(remapJar.archivePath)
 			relations {
-				requiredDependency 'architectury-forge'
+				requiredDependency 'architectury-api'
 				requiredDependency 'myrtrees'
-				requiredDependency 'emendatus-enigmatica'
 			}
 			changelog = getGitChangelog
 			changelogType = 'markdown'
