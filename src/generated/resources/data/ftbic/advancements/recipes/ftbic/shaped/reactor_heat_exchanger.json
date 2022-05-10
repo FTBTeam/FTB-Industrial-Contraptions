@@ -1,32 +1,34 @@
 {
-	"parent": "minecraft:recipes/root",
-	"rewards": {
-		"recipes": [
-			"ftbic:shaped/reactor_heat_exchanger"
-		]
-	},
-	"criteria": {
-		"has_item": {
-			"trigger": "minecraft:inventory_changed",
-			"conditions": {
-				"items": [
-					{
-						"item": "ftbic:heat_exchanger"
-					}
-				]
-			}
-		},
-		"has_the_recipe": {
-			"trigger": "minecraft:recipe_unlocked",
-			"conditions": {
-				"recipe": "ftbic:shaped/reactor_heat_exchanger"
-			}
-		}
-	},
-	"requirements": [
-		[
-			"has_item",
-			"has_the_recipe"
-		]
-	]
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "ftbic:shaped/reactor_heat_exchanger"
+    ]
+  },
+  "criteria": {
+    "has_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "ftbic:heat_exchanger"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "ftbic:shaped/reactor_heat_exchanger"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_item",
+      "has_the_recipe"
+    ]
+  ]
 }

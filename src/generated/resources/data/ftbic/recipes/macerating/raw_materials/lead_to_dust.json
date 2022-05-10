@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:macerating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:raw_materials/lead"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:lead_dust",
+      "count": 2
+    }
+  ]
+}

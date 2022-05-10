@@ -21,23 +21,23 @@ public class ForgeEnergyHandler implements EnergyHandler {
 
 	@Override
 	public double getEnergyCapacity() {
-		return storage.getMaxEnergyStored() / FTBICConfig.ZAP_TO_FE_CONVERSION_RATE;
+		return storage.getMaxEnergyStored() / FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 	}
 
 	@Override
 	public double getEnergy() {
-		return storage.getEnergyStored() / FTBICConfig.ZAP_TO_FE_CONVERSION_RATE;
+		return storage.getEnergyStored() / FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 	}
 
 	@Override
 	public void setEnergyRaw(double e) {
 		if (storage.getEnergyStored() <= 0 || storage.extractEnergy(storage.getEnergyStored(), false) > 0) {
-			storage.receiveEnergy(Mth.ceil(e * FTBICConfig.ZAP_TO_FE_CONVERSION_RATE), false);
+			storage.receiveEnergy(Mth.ceil(e * FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get()), false);
 		}
 	}
 
 	@Override
 	public double insertEnergy(double maxInsert, boolean simulate) {
-		return storage.receiveEnergy(Mth.ceil(maxInsert * FTBICConfig.ZAP_TO_FE_CONVERSION_RATE), simulate) / FTBICConfig.ZAP_TO_FE_CONVERSION_RATE;
+		return storage.receiveEnergy(Mth.ceil(maxInsert * FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get()), simulate) / FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 	}
 }

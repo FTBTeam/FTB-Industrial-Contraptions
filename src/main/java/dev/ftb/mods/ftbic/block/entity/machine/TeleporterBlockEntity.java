@@ -24,6 +24,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.ArrayList;
@@ -38,8 +39,8 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 	public boolean isPublic;
 	public String name;
 
-	public TeleporterBlockEntity() {
-		super(FTBICElectricBlocks.TELEPORTER);
+	public TeleporterBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.TELEPORTER, pos, state);
 		linkedPos = null;
 		linkedDimension = null;
 		linkedName = null;
@@ -102,7 +103,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 	public void writeNetData(CompoundTag tag) {
 		super.writeNetData(tag);
 
-		if (!linkedName.isEmpty()) {
+		if (linkedName != null && !linkedName.isEmpty()) {
 			tag.putString("LinkedName", linkedName);
 		}
 	}
@@ -110,7 +111,13 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 	@Override
 	public void readNetData(CompoundTag tag) {
 		super.readNetData(tag);
-		linkedName = tag.getString("LinkedName");
+		if (tag == null) {
+			return;
+		}
+
+		if (tag.contains("LinkedName")) {
+			linkedName = tag.getString("LinkedName");
+		}
 	}
 
 	@Override
@@ -148,7 +155,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 					t.cooldown = 60;
 					t.setChanged();
 
-					if (!linkedName.equals(t.name)) {
+					if (linkedName != null && !linkedName.equals(t.name)) {
 						linkedName = t.name;
 						syncBlock();
 					}
@@ -185,6 +192,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
 			if (placerId.equals(player.getUUID())) {
+				// TODO: add gui here
 				// open gui
 			} else {
 				player.displayClientMessage(new TranslatableComponent("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED), true);
@@ -201,16 +209,16 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 
 	public double getEnergyUse(ResourceKey<Level> d, BlockPos p) {
 		if (d != level.dimension()) {
-			return FTBICConfig.TELEPORTER_MAX_USE;
+			return FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get();
 		}
 
-		double mind = FTBICConfig.TELEPORTER_MIN_DISTANCE;
-		double maxd = FTBICConfig.TELEPORTER_MAX_DISTANCE;
+		double mind = FTBICConfig.MACHINES.TELEPORTER_MIN_DISTANCE.get();
+		double maxd = FTBICConfig.MACHINES.TELEPORTER_MAX_DISTANCE.get();
 		double dx = p.getX() - worldPosition.getX();
 		double dz = p.getZ() - worldPosition.getZ();
 
 		double dist = Mth.clamp(dx * dx + dz * dz, mind, maxd);
-		return Mth.lerp((dist - mind) / (maxd - mind), FTBICConfig.TELEPORTER_MIN_USE, FTBICConfig.TELEPORTER_MAX_USE);
+		return Mth.lerp((dist - mind) / (maxd - mind), FTBICConfig.MACHINES.TELEPORTER_MIN_USE.get(), FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get());
 	}
 
 	@Override
@@ -219,15 +227,16 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 
 		List<TeleporterEntry> list = new ArrayList<>();
 
-		for (BlockEntity entity : level.blockEntityList) {
-			if (entity instanceof TeleporterBlockEntity) {
-				TeleporterBlockEntity teleporter = (TeleporterBlockEntity) entity;
-
-				if (teleporter.isPublic || teleporter.placerId.equals(player.getUUID())) {
-					list.add(new TeleporterEntry(teleporter, getEnergyUse(teleporter.level.dimension(), teleporter.worldPosition)));
-				}
-			}
-		}
+		// fixme
+//		for (BlockEntity entity : level.blockEntityList) {
+//			if (entity instanceof TeleporterBlockEntity) {
+//				TeleporterBlockEntity teleporter = (TeleporterBlockEntity) entity;
+//
+//				if (teleporter.isPublic || teleporter.placerId.equals(player.getUUID())) {
+//					list.add(new TeleporterEntry(teleporter, getEnergyUse(teleporter.level.dimension(), teleporter.worldPosition)));
+//				}
+//			}
+//		}
 
 		buf.writeVarInt(list.size());
 

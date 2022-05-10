@@ -1,6 +1,6 @@
 {
-	"parent": "minecraft:block/tnt",
-	"textures": {
-		"side": "ftbic:block/nuke_side_active"
-	}
+  "parent": "minecraft:block/tnt",
+  "textures": {
+    "side": "ftbic:block/nuke_side_active"
+  }
 }

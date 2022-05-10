@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:aluminum_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/aluminum"
+    }
+  ],
+  "result": {
+    "item": "ftbic:aluminum_nugget",
+    "count": 9
+  }
+}

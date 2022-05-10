@@ -9,9 +9,9 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class EnergyArmorMaterial implements ArmorMaterial {
-	public static final EnergyArmorMaterial ELYTRA = new EnergyArmorMaterial(FTBIC.MOD_ID + ":elytra", FTBICConfig.MECHANICAL_ELYTRA_CAPACITY);
-	public static final EnergyArmorMaterial CARBON = new EnergyArmorMaterial(FTBIC.MOD_ID + ":carbon", FTBICConfig.CARBON_ARMOR_CAPACITY);
-	public static final EnergyArmorMaterial QUANTUM = new EnergyArmorMaterial(FTBIC.MOD_ID + ":quantum", FTBICConfig.QUANTUM_ARMOR_CAPACITY);
+	public static final EnergyArmorMaterial ELYTRA = new EnergyArmorMaterial(FTBIC.MOD_ID + ":elytra", FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_CAPACITY.get());
+	public static final EnergyArmorMaterial CARBON = new EnergyArmorMaterial(FTBIC.MOD_ID + ":carbon", FTBICConfig.EQUIPMENT.CARBON_ARMOR_CAPACITY.get());
+	public static final EnergyArmorMaterial QUANTUM = new EnergyArmorMaterial(FTBIC.MOD_ID + ":quantum", FTBICConfig.EQUIPMENT.QUANTUM_ARMOR_CAPACITY.get());
 
 	private final String name;
 	public final double capacity;

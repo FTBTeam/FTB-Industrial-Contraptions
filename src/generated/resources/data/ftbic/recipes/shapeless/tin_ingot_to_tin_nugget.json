@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:tin_nugget",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/tin"
+    }
+  ],
+  "result": {
+    "item": "ftbic:tin_nugget",
+    "count": 9
+  }
+}

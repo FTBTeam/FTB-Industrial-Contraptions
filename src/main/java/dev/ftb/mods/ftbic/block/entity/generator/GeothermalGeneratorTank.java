@@ -27,7 +27,7 @@ public class GeothermalGeneratorTank implements IFluidHandler, IFluidTank {
 
 	@Override
 	public int getCapacity() {
-		return FTBICConfig.GEOTHERMAL_GENERATOR_TANK_SIZE;
+		return FTBICConfig.MACHINES.GEOTHERMAL_GENERATOR_TANK_SIZE.get();
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class GeothermalGeneratorTank implements IFluidHandler, IFluidTank {
 
 	@Override
 	public int getTankCapacity(int i) {
-		return FTBICConfig.GEOTHERMAL_GENERATOR_TANK_SIZE;
+		return FTBICConfig.MACHINES.GEOTHERMAL_GENERATOR_TANK_SIZE.get();
 	}
 
 	@Override

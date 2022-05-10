@@ -1,26 +1,26 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:energy_storage_upgrade",
-	"pattern": [
-		"PPP",
-		"WBW",
-		"PCP"
-	],
-	"key": {
-		"P": {
-			"tag": "minecraft:planks"
-		},
-		"W": {
-			"item": "ftbic:lv_cable"
-		},
-		"B": {
-			"item": "ftbic:lv_battery"
-		},
-		"C": {
-			"item": "ftbic:electronic_circuit"
-		}
-	},
-	"result": {
-		"item": "ftbic:energy_storage_upgrade"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:energy_storage_upgrade",
+  "pattern": [
+    "PPP",
+    "WBW",
+    "PCP"
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "W": {
+      "item": "ftbic:lv_cable"
+    },
+    "B": {
+      "item": "ftbic:lv_battery"
+    },
+    "C": {
+      "item": "ftbic:electronic_circuit"
+    }
+  },
+  "result": {
+    "item": "ftbic:energy_storage_upgrade"
+  }
 }

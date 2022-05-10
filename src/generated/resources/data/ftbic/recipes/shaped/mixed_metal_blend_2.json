@@ -1,0 +1,50 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "value": {
+            "tag": "forge:dusts/electrum",
+            "type": "forge:tag_empty"
+          },
+          "type": "forge:not"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "group": "ftbic:mixed_metal_blend",
+        "pattern": [
+          "III",
+          "OOO",
+          "PPP"
+        ],
+        "key": {
+          "I": [
+            {
+              "tag": "forge:dusts/iron"
+            },
+            {
+              "tag": "forge:dusts/lead"
+            }
+          ],
+          "O": {
+            "tag": "forge:dusts/electrum"
+          },
+          "P": [
+            {
+              "tag": "forge:dusts/tin"
+            },
+            {
+              "tag": "forge:dusts/aluminum"
+            }
+          ]
+        },
+        "result": {
+          "item": "ftbic:mixed_metal_blend",
+          "count": 3
+        }
+      }
+    }
+  ]
+}

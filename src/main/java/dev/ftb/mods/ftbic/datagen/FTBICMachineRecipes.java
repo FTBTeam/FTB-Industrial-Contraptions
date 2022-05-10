@@ -1,12 +1,20 @@
 package dev.ftb.mods.ftbic.datagen;
 
-import com.ridanisaurus.emendatusenigmatica.registries.ItemHandler;
+import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class FTBICMachineRecipes extends FTBICRecipesGen {
 	public FTBICMachineRecipes(DataGenerator generator) {
@@ -15,8 +23,10 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
+		Function<TagKey<Item>, InventoryChangeTrigger.TriggerInstance> tagKeyHas = (e) -> RecipeProvider.inventoryTrigger(ItemPredicate.Builder.item().of(e).build());
+
 		ShapedRecipeBuilder.shaped(IRON_FURNACE)
-				.unlockedBy("has_item", has(IRON_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(IRON_INGOT))
 				.group(MODID + ":iron_furnace")
 				.pattern(" I ")
 				.pattern("I I")
@@ -94,7 +104,7 @@ public class FTBICMachineRecipes extends FTBICRecipesGen {
 				.group(MODID + ":roller")
 				.pattern("HCH")
 				.pattern("PMP")
-				.define('H', ItemHandler.ENIGMATIC_HAMMER.get())
+				.define('H', FTBICItems.getResourceFromType(ResourceElements.ALUMINUM, ResourceType.GEAR).orElseThrow().get())
 				.define('P', PISTON)
 				.define('M', MACHINE_BLOCK)
 				.define('C', ELECTRONIC_CIRCUIT)

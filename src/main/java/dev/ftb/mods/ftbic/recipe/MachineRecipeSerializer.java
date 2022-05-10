@@ -50,7 +50,7 @@ public class MachineRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer
 	public MachineRecipe fromJson(ResourceLocation id, JsonObject json) {
 		MachineRecipe recipe = new MachineRecipe(this, id);
 		recipe.realRecipe = true;
-		recipe.inputItems = FTBICUtils.listFromJson(json, "inputItems", IngredientWithCount::new);
+		recipe.inputItems = FTBICUtils.listFromJson(json, "inputItems", IngredientWithCount::deserialize);
 		recipe.inputFluids = FTBICUtils.listFromJson(json, "inputFluids", FTBICUtils::fluidFromJson);
 		recipe.outputItems = FTBICUtils.listFromJson(json, "outputItems", StackWithChance::new);
 		recipe.outputFluids = FTBICUtils.listFromJson(json, "outputFluids", FTBICUtils::fluidFromJson);

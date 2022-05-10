@@ -1,17 +1,21 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import dev.ftb.mods.ftbic.item.FTBICItems;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.recipes.*;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.common.crafting.ConditionalRecipe;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class FTBICComponentRecipes extends FTBICRecipesGen {
 	public FTBICComponentRecipes(DataGenerator generator) {
@@ -20,24 +24,26 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
+		Function<TagKey<Item>, InventoryChangeTrigger.TriggerInstance> tagKeyHas = (e) -> RecipeProvider.inventoryTrigger(ItemPredicate.Builder.item().of(e).build());
+
 		SimpleCookingRecipeBuilder.cooking(Ingredient.of(IRON_INGOT), INDUSTRIAL_GRADE_METAL, 0F, 400, RecipeSerializer.SMELTING_RECIPE)
-				.unlockedBy("has_item", has(IRON_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(IRON_INGOT))
 				.save(consumer, smeltingLoc("industrial_grade_metal"));
 
 		SimpleCookingRecipeBuilder.cooking(Ingredient.of(IRON_INGOT), INDUSTRIAL_GRADE_METAL, 0F, 200, RecipeSerializer.BLASTING_RECIPE)
-				.unlockedBy("has_item", has(IRON_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(IRON_INGOT))
 				.save(consumer, blastingLoc("industrial_grade_metal"));
 
 		SimpleCookingRecipeBuilder.cooking(Ingredient.of(SLIMEBALL), RUBBER, 0F, 300, RecipeSerializer.SMELTING_RECIPE)
-				.unlockedBy("has_item", has(SLIMEBALL))
+				.unlockedBy("has_item", tagKeyHas.apply(SLIMEBALL))
 				.save(consumer, smeltingLoc("rubber"));
 
 		SimpleCookingRecipeBuilder.cooking(Ingredient.of(SLIMEBALL), RUBBER, 0F, 800, RecipeSerializer.CAMPFIRE_COOKING_RECIPE)
-				.unlockedBy("has_item", has(SLIMEBALL))
+				.unlockedBy("has_item", tagKeyHas.apply(SLIMEBALL))
 				.save(consumer, campfireCookingLoc("rubber"));
 
 		SimpleCookingRecipeBuilder.cooking(Ingredient.of(SLIMEBALL), RUBBER, 0F, 150, RecipeSerializer.SMOKING_RECIPE)
-				.unlockedBy("has_item", has(SLIMEBALL))
+				.unlockedBy("has_item", tagKeyHas.apply(SLIMEBALL))
 				.save(consumer, smokingLoc("rubber"));
 
 		SimpleCookingRecipeBuilder.cooking(Ingredient.of(MIXED_METAL_BLEND), ADVANCED_ALLOY, 0F, 400, RecipeSerializer.SMELTING_RECIPE)
@@ -48,13 +54,56 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(MIXED_METAL_BLEND))
 				.save(consumer, blastingLoc("advanced_alloy"));
 
-		ShapelessRecipeBuilder.shapeless(MIXED_METAL_BLEND, 3)
-				.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
-				.group(MODID + ":mixed_metal_blend")
-				.requires(Ingredient.merge(Arrays.asList(Ingredient.of(IRON_DUST), Ingredient.of(LEAD_DUST))), 3)
-				.requires(Ingredient.merge(Arrays.asList(Ingredient.of(BRONZE_DUST), Ingredient.of(ELECTRUM_DUST), Ingredient.of(CONSTANTAN_DUST))), 3)
-				.requires(Ingredient.merge(Arrays.asList(Ingredient.of(TIN_DUST), Ingredient.of(ALUMINUM_DUST))), 3)
-				.save(consumer, shapelessLoc("mixed_metal_blend"));
+		ConditionalRecipe.builder()
+				.addCondition(not(tagEmpty(BRONZE_DUST)))
+				.addRecipe( finishedRecipeConsumer ->
+						ShapedRecipeBuilder.shaped(MIXED_METAL_BLEND, 3)
+								.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
+								.group(MODID + ":mixed_metal_blend")
+								.pattern("III")
+								.pattern("OOO")
+								.pattern("PPP")
+								.define('I', Ingredient.merge(Arrays.asList(Ingredient.of(IRON_DUST), Ingredient.of(LEAD_DUST))))
+								.define('O', BRONZE_DUST)
+								.define('P', Ingredient.merge(Arrays.asList(Ingredient.of(TIN_DUST), Ingredient.of(ALUMINUM_DUST))))
+								.save(finishedRecipeConsumer, shapedLoc("mixed_metal_blend_1"))
+				)
+				.generateAdvancement()
+				.build(consumer, shapedLoc("mixed_metal_blend_1"));
+
+		ConditionalRecipe.builder()
+				.addCondition(not(tagEmpty(ELECTRUM_DUST)))
+				.addRecipe( finishedRecipeConsumer ->
+						ShapedRecipeBuilder.shaped(MIXED_METAL_BLEND, 3)
+								.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
+								.group(MODID + ":mixed_metal_blend")
+								.pattern("III")
+								.pattern("OOO")
+								.pattern("PPP")
+								.define('I', Ingredient.merge(Arrays.asList(Ingredient.of(IRON_DUST), Ingredient.of(LEAD_DUST))))
+								.define('O', Ingredient.of(ELECTRUM_DUST))
+								.define('P', Ingredient.merge(Arrays.asList(Ingredient.of(TIN_DUST), Ingredient.of(ALUMINUM_DUST))))
+								.save(finishedRecipeConsumer, shapedLoc("mixed_metal_blend_2"))
+				)
+				.generateAdvancement()
+				.build(consumer, shapedLoc("mixed_metal_blend_2"));
+
+		ConditionalRecipe.builder()
+				.addCondition(not(tagEmpty(CONSTANTAN_DUST)))
+				.addRecipe( finishedRecipeConsumer ->
+						ShapedRecipeBuilder.shaped(MIXED_METAL_BLEND, 3)
+								.unlockedBy("has_item", has(INDUSTRIAL_GRADE_METAL))
+								.group(MODID + ":mixed_metal_blend")
+								.pattern("III")
+								.pattern("OOO")
+								.pattern("PPP")
+								.define('I', Ingredient.merge(Arrays.asList(Ingredient.of(IRON_DUST), Ingredient.of(LEAD_DUST))))
+								.define('O', Ingredient.of(CONSTANTAN_DUST))
+								.define('P', Ingredient.merge(Arrays.asList(Ingredient.of(TIN_DUST), Ingredient.of(ALUMINUM_DUST))))
+								.save(finishedRecipeConsumer, shapedLoc("mixed_metal_blend_3"))
+				)
+				.generateAdvancement()
+				.build(consumer, shapedLoc("mixed_metal_blend_3"));
 
 		ShapedRecipeBuilder.shaped(RUBBER_SHEET)
 				.unlockedBy("has_item", has(RUBBER))
@@ -73,7 +122,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("scrap_box"));
 
 		ShapedRecipeBuilder.shaped(COAL_BALL)
-				.unlockedBy("has_item", has(COAL))
+				.unlockedBy("has_item", tagKeyHas.apply(COAL))
 				.group(MODID + ":coal_ball")
 				.pattern("CCC")
 				.pattern("CFC")
@@ -93,7 +142,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("graphene"));
 
 		ShapelessRecipeBuilder.shapeless(ENERGY_CRYSTAL)
-				.unlockedBy("has_item", has(DIAMOND))
+				.unlockedBy("has_item", tagKeyHas.apply(DIAMOND))
 				.group(MODID + ":energy_crystal")
 				.requires(REDSTONE)
 				.requires(GLOWSTONE)
@@ -161,7 +210,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, shapelessLoc("iridium_circuit"));
 
 		ShapedRecipeBuilder.shaped(FUSE, 24)
-				.unlockedBy("has_item", has(GLASS))
+				.unlockedBy("has_item", tagKeyHas.apply(GLASS))
 				.group(MODID + ":fuse")
 				.pattern("GGG")
 				.pattern("MMM")
@@ -195,7 +244,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, shapelessLoc("advanced_machine_block"));
 
 		ShapedRecipeBuilder.shaped(FLUID_CELL, 4)
-				.unlockedBy("has_item", has(TIN_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(TIN_INGOT))
 				.group(MODID + ":fluid_cell")
 				.pattern(" T ")
 				.pattern("T T")
@@ -215,7 +264,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("antimatter_crystal"));
 
 		ShapedRecipeBuilder.shaped(EMPTY_CAN, 10)
-				.unlockedBy("has_item", has(TIN_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(TIN_INGOT))
 				.group(MODID + ":empty_can")
 				.pattern("T T")
 				.pattern("TTT")
@@ -223,7 +272,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("empty_can"));
 
 		ShapedRecipeBuilder.shaped(IRIDIUM_ALLOY)
-				.unlockedBy("has_item", has(IRIDIUM_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(IRIDIUM_INGOT))
 				.group(MODID + ":iridium_alloy")
 				.pattern("IAI")
 				.pattern("ADA")
@@ -234,7 +283,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, shapedLoc("iridium_alloy"));
 
 		ShapedRecipeBuilder.shaped(CARBON_FIBERS)
-				.unlockedBy("has_item", has(COAL_DUST))
+				.unlockedBy("has_item", tagKeyHas.apply(COAL_DUST))
 				.group(MODID + ":carbon_fibers")
 				.pattern("DD")
 				.pattern("DD")
@@ -271,7 +320,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, separatingLoc("rubber_from_latex"));
 
 		MachineRecipeBuilder.compressing()
-				.unlockedBy("has_item", has(IRON_INGOT))
+				.unlockedBy("has_item", tagKeyHas.apply(IRON_INGOT))
 				.inputItem(Ingredient.of(IRON_INGOT), 3)
 				.outputItem(new ItemStack(INDUSTRIAL_GRADE_METAL, 3))
 				.save(consumer, compressingLoc("industrial_grade_metal"));
@@ -289,7 +338,7 @@ public class FTBICComponentRecipes extends FTBICRecipesGen {
 				.save(consumer, compressingLoc("compressed_coal_ball"));
 
 		MachineRecipeBuilder.compressing()
-				.unlockedBy("has_item", has(COPPER_PLATE))
+				.unlockedBy("has_item", tagKeyHas.apply(COPPER_PLATE))
 				.inputItem(Ingredient.of(COPPER_PLATE), 8)
 				.outputItem(new ItemStack(DENSE_COPPER_PLATE))
 				.save(consumer, compressingLoc("dense_copper_plate"));

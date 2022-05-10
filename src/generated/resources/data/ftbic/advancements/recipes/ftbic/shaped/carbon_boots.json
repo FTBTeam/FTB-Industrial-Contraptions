@@ -1,32 +1,34 @@
 {
-	"parent": "minecraft:recipes/root",
-	"rewards": {
-		"recipes": [
-			"ftbic:shaped/carbon_boots"
-		]
-	},
-	"criteria": {
-		"has_item": {
-			"trigger": "minecraft:inventory_changed",
-			"conditions": {
-				"items": [
-					{
-						"item": "ftbic:carbon_plate"
-					}
-				]
-			}
-		},
-		"has_the_recipe": {
-			"trigger": "minecraft:recipe_unlocked",
-			"conditions": {
-				"recipe": "ftbic:shaped/carbon_boots"
-			}
-		}
-	},
-	"requirements": [
-		[
-			"has_item",
-			"has_the_recipe"
-		]
-	]
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "ftbic:shaped/carbon_boots"
+    ]
+  },
+  "criteria": {
+    "has_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "ftbic:carbon_plate"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "ftbic:shaped/carbon_boots"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_item",
+      "has_the_recipe"
+    ]
+  ]
 }

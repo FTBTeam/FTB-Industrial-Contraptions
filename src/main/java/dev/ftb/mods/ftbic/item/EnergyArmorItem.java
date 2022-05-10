@@ -9,6 +9,7 @@ import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -39,7 +40,7 @@ public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 
 	@Override
 	public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-		damageEnergyItem(stack, FTBICConfig.ARMOR_DAMAGE_ENERGY * amount);
+		damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_DAMAGE_ENERGY.get() * amount);
 		return 0;
 	}
 
@@ -77,13 +78,13 @@ public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 
 	@Override
 	public boolean canElytraFly(ItemStack stack, LivingEntity entity) {
-		return material == EnergyArmorMaterial.QUANTUM && getEnergy(stack) >= FTBICConfig.ARMOR_FLIGHT_ENERGY;
+		return material == EnergyArmorMaterial.QUANTUM && getEnergy(stack) >= FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_ENERGY.get();
 	}
 
 	@Override
 	public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
 		if (!entity.level.isClientSide) {
-			damageEnergyItem(stack, FTBICConfig.ARMOR_FLIGHT_ENERGY);
+			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_ENERGY.get());
 		}
 
 		if (flightTicks >= 3 && entity.isCrouching()) {
@@ -92,16 +93,31 @@ public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 			d = Math.min(d, 1D);
 			d = d * 0.91D;
 			entity.setDeltaMovement(m.multiply(d, d, d));
-			damageEnergyItem(stack, FTBICConfig.ARMOR_FLIGHT_STOP);
+			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_STOP.get());
 		} else if (flightTicks >= 5 && entity.isSprinting()) {
 			Vec3 v = entity.getLookAngle();
 			double d0 = 1.5D;
 			double d1 = 0.1D;
 			Vec3 m = entity.getDeltaMovement();
 			entity.setDeltaMovement(m.add(v.x * d1 + (v.x * d0 - m.x) * 0.5D, v.y * d1 + (v.y * d0 - m.y) * 0.5D, v.z * d1 + (v.z * d0 - m.z) * 0.5D));
-			damageEnergyItem(stack, FTBICConfig.ARMOR_FLIGHT_BOOST);
+			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_BOOST.get());
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isBarVisible(ItemStack stack) {
+		return stack.hasTag() && stack.getTag().contains("Energy");
+	}
+
+	@Override
+	public int getBarWidth(ItemStack stack) {
+		return Math.round((float) Mth.clamp((getEnergy(stack) / getEnergyCapacity(stack)) * 13D, 0D, 13D));
+	}
+
+	@Override
+	public int getBarColor(ItemStack stack) {
+		return 0xFFFF0000;
 	}
 }

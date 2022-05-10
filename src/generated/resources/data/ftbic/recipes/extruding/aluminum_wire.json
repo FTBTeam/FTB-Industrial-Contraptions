@@ -1,17 +1,17 @@
 {
-	"type": "ftbic:extruding",
-	"inputItems": [
-		{
-			"ingredient": {
-				"tag": "forge:plates/aluminum"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "ftbic:aluminum_wire",
-			"count": 2
-		}
-	]
+  "type": "ftbic:extruding",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:plates/aluminum"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:aluminum_wire",
+      "count": 2
+    }
+  ]
 }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:lead_block",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/lead"
+    }
+  },
+  "result": {
+    "item": "ftbic:lead_block"
+  }
+}

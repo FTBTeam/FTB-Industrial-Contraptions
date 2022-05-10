@@ -1,9 +1,9 @@
 {
-	"type": "minecraft:blasting",
-	"ingredient": {
-		"item": "ftbic:mixed_metal_blend"
-	},
-	"result": "ftbic:advanced_alloy",
-	"experience": 0.0,
-	"cookingtime": 200
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "ftbic:mixed_metal_blend"
+  },
+  "result": "ftbic:advanced_alloy",
+  "experience": 0.0,
+  "cookingtime": 200
 }

@@ -33,15 +33,15 @@ public class QuarryBlockEntity extends DiggingBaseBlockEntity {
 	private static final Predicate<ItemEntity> ITEM_ENTITY_PREDICATE = entity -> true;
 	private static final float[] LASER_COLOR = {1F, 0.1F, 0.1F};
 
-	public QuarryBlockEntity() {
-		super(FTBICElectricBlocks.QUARRY);
+	public QuarryBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.QUARRY, pos, state);
 	}
 
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		diggingMineTicks = FTBICConfig.QUARRY_MINE_TICKS;
-		diggingMoveTicks = FTBICConfig.QUARRY_MOVE_TICKS;
+		diggingMineTicks = FTBICConfig.MACHINES.QUARRY_MINE_TICKS.get();
+		diggingMoveTicks = FTBICConfig.MACHINES.QUARRY_MOVE_TICKS.get();
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class QuarryBlockEntity extends DiggingBaseBlockEntity {
 
 	@Override
 	public void digBlock(BlockState state, BlockPos miningPos, double lx, double ly, double lz) {
-		BlockEntity minedEntity = state.hasTileEntity() ? level.getBlockEntity(miningPos) : null;
+		BlockEntity minedEntity = state.hasBlockEntity() ? level.getBlockEntity(miningPos) : null;
 		LootContext.Builder lootContext = new LootContext.Builder((ServerLevel) level)
 				.withRandom(level.random)
 				.withParameter(LootContextParams.ORIGIN, new Vec3(lx, ly, lz))

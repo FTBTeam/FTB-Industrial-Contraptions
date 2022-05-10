@@ -13,15 +13,18 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
-public class DiggingBlockRenderer extends BlockEntityRenderer<DiggingBaseBlockEntity> {
+import java.util.Collections;
+import java.util.List;
+
+public class DiggingBlockRenderer implements BlockEntityRenderer<DiggingBaseBlockEntity> {
 	private static final ResourceLocation QUARRY_FRAME_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_frame.png");
 	private static final ResourceLocation QUARRY_MODEL_LIGHT_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_model_light.png");
 	private static final ResourceLocation QUARRY_MODEL_DARK_TEXTURE = new ResourceLocation(FTBIC.MOD_ID, "textures/block/quarry_model_dark.png");
@@ -36,24 +39,22 @@ public class DiggingBlockRenderer extends BlockEntityRenderer<DiggingBaseBlockEn
 	private final ModelPart quarryBarEnd;
 	private final ModelPart quarryHead;
 
-	private static ModelPart make(int tw, int th, int tx, int ty, float x, float y, float z, float w, float h, float d) {
-		ModelPart part = new ModelPart(tw, th, tx, ty);
-		part.addBox(x, y, z, w, h, d, 0, false);
-		return part;
+	private static ModelPart make(BlockEntityRendererProvider.Context context, int tw, int th, int tx, int ty, float x, float y, float z, float w, float h, float d) {
+		return new ModelPart(List.of(
+				new ModelPart.Cube(tx, ty, x, y, z, w, h, d, 0f, 0f, 0f, false, tw, th)
+		), Collections.emptyMap());
 	}
 
-	public DiggingBlockRenderer(BlockEntityRenderDispatcher dispatcher) {
-		super(dispatcher);
-
-		quarryFrameWE = make(64, 32, 0, 0, -8, -1, -1, 16, 2, 2);
-		quarryFrameSN = make(64, 32, 22, 2, -1, -1, -8, 2, 2, 16);
-		quarryFrameW = make(64, 32, 0, 10, -8, -1, -1, 7, 2, 2);
-		quarryFrameE = make(64, 32, 0, 5, 1, -1, -1, 7, 2, 2);
-		quarryFrameS = make(64, 32, 19, 5, -1, -1, 1, 2, 2, 7);
-		quarryFrameN = make(64, 32, 44, 5, -1, -1, -8, 2, 2, 7);
-		quarryBar = make(64, 16, 0, 0, -8, -1, -1, 16, 2, 2);
-		quarryBarEnd = make(64, 16, 0, 10, -1.5F, -1.5F, -1.5F, 3, 3, 3);
-		quarryHead = make(64, 16, 32, 0, -4, -4, -4, 8, 8, 8);
+	public DiggingBlockRenderer(BlockEntityRendererProvider.Context context) {
+		quarryFrameWE = make(context, 64, 32, 0, 0, -8, -1, -1, 16, 2, 2);
+		quarryFrameSN = make(context, 64, 32, 22, 2, -1, -1, -8, 2, 2, 16);
+		quarryFrameW = make(context, 64, 32, 0, 10, -8, -1, -1, 7, 2, 2);
+		quarryFrameE = make(context, 64, 32, 0, 5, 1, -1, -1, 7, 2, 2);
+		quarryFrameS = make(context, 64, 32, 19, 5, -1, -1, 1, 2, 2, 7);
+		quarryFrameN = make(context, 64, 32, 44, 5, -1, -1, -8, 2, 2, 7);
+		quarryBar = make(context, 64, 16, 0, 0, -8, -1, -1, 16, 2, 2);
+		quarryBarEnd = make(context, 64, 16, 0, 10, -1.5F, -1.5F, -1.5F, 3, 3, 3);
+		quarryHead = make(context, 64, 16, 32, 0, -4, -4, -4, 8, 8, 8);
 	}
 
 	private int getLight(DiggingBaseBlockEntity entity, BlockPos.MutableBlockPos pos, double x, double y, double z) {
@@ -261,5 +262,10 @@ public class DiggingBlockRenderer extends BlockEntityRenderer<DiggingBaseBlockEn
 	@Override
 	public boolean shouldRenderOffScreen(DiggingBaseBlockEntity entity) {
 		return true;
+	}
+
+	@Override
+	public int getViewDistance() {
+		return 256;
 	}
 }

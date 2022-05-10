@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.client;
 
+import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.ftb.mods.ftbic.FTBICCommon;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
@@ -24,8 +25,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -33,13 +33,13 @@ public class FTBICClient extends FTBICCommon {
 	@Override
 	public void init() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerEntityRenders);
 	}
 
 	private void setup(FMLClientSetupEvent event) {
 		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.REINFORCED_GLASS.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.IV_CABLE.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.LANDMARK.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(FTBICBlocks.TRACTOR_BEAM.get(), RenderType.translucent());
 
 		MenuScreens.register(FTBICMenus.MACHINE.get(), MachineScreen::new);
 		MenuScreens.register(FTBICMenus.BASIC_GENERATOR.get(), BasicGeneratorScreen::new);
@@ -52,9 +52,15 @@ public class FTBICClient extends FTBICCommon {
 		MenuScreens.register(FTBICMenus.QUARRY.get(), QuarryScreen::new);
 		MenuScreens.register(FTBICMenus.PUMP.get(), PumpScreen::new);
 
-		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.QUARRY.blockEntity.get(), DiggingBlockRenderer::new);
-		ClientRegistry.bindTileEntityRenderer((BlockEntityType) FTBICElectricBlocks.PUMP.blockEntity.get(), DiggingBlockRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(FTBICEntities.NUKE_ARROW.get(), NukeArrowRenderer::new);
+		BlockEntityRendererRegistry.register((BlockEntityType) FTBICElectricBlocks.QUARRY.blockEntity.get(), DiggingBlockRenderer::new);
+		BlockEntityRendererRegistry.register((BlockEntityType) FTBICElectricBlocks.PUMP.blockEntity.get(), DiggingBlockRenderer::new);
+//		EntityRendererRegistry.register(FTBICEntities.NUKE_ARROW, NukeArrowRenderer::new);
+
+		FTBICBlocks.RESOURCE_ORES.values().forEach(e -> ItemBlockRenderTypes.setRenderLayer(e.get(), renderType -> renderType == RenderType.solid() || renderType == RenderType.translucent()));
+	}
+
+	private void registerEntityRenders(final EntityRenderersEvent.RegisterRenderers event) {
+		event.registerEntityRenderer(FTBICEntities.NUKE_ARROW.get(), NukeArrowRenderer::new);
 	}
 
 	@Override

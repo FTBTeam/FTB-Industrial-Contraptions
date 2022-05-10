@@ -1,12 +1,18 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class FTBICVanillaRecipes extends FTBICRecipesGen {
 	public FTBICVanillaRecipes(DataGenerator generator) {
@@ -15,8 +21,10 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
+		Function<TagKey<Item>, InventoryChangeTrigger.TriggerInstance> tagKeyHas = (e) -> RecipeProvider.inventoryTrigger(ItemPredicate.Builder.item().of(e).build());
+
 		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(BLAZE_ROD))
+				.unlockedBy("has_item", tagKeyHas.apply(BLAZE_ROD))
 				.inputItem(Ingredient.of(BLAZE_ROD))
 				.outputItem(new ItemStack(Items.BLAZE_POWDER, 5))
 				.save(consumer, maceratingLoc("blaze_powder"));
@@ -28,19 +36,19 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.save(consumer, maceratingLoc("bone_meal"));
 
 		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(COBBLESTONE))
+				.unlockedBy("has_item", tagKeyHas.apply(COBBLESTONE))
 				.inputItem(Ingredient.of(COBBLESTONE))
 				.outputItem(new ItemStack(Items.GRAVEL))
 				.save(consumer, maceratingLoc("gravel"));
 
 		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(STONE))
+				.unlockedBy("has_item", tagKeyHas.apply(STONE))
 				.inputItem(Ingredient.of(STONE))
 				.outputItem(new ItemStack(Items.COBBLESTONE))
 				.save(consumer, maceratingLoc("cobblestone"));
 
 		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(GRAVEL))
+				.unlockedBy("has_item", tagKeyHas.apply(GRAVEL))
 				.inputItem(Ingredient.of(GRAVEL))
 				.outputItem(new ItemStack(Items.SAND))
 				.save(consumer, maceratingLoc("sand"));
@@ -52,28 +60,28 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.save(consumer, maceratingLoc("snowball"));
 
 		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(WOOL))
+				.unlockedBy("has_item", tagKeyHas.apply(WOOL))
 				.inputItem(Ingredient.of(WOOL))
 				.outputItem(new ItemStack(Items.STRING, 4))
 				.save(consumer, maceratingLoc("string"));
 
 		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(OBSIDIAN))
+				.unlockedBy("has_item", tagKeyHas.apply(OBSIDIAN))
 				.inputItem(Ingredient.of(OBSIDIAN))
 				.outputItem(new ItemStack(OBSIDIAN_DUST_ITEM))
 				.save(consumer, maceratingLoc("obsidian_dust"));
 
 		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(ENDER_PEARL))
+				.unlockedBy("has_item", tagKeyHas.apply(ENDER_PEARL))
 				.inputItem(Ingredient.of(ENDER_PEARL))
 				.outputItem(new ItemStack(ENDER_DUST_ITEM))
 				.save(consumer, maceratingLoc("ender_dust"));
 
-		MachineRecipeBuilder.macerating()
-				.unlockedBy("has_item", has(PLANKS))
-				.inputItem(Ingredient.of(PLANKS))
-				.outputItem(new ItemStack(SAWDUST_ITEM))
-				.save(consumer, maceratingLoc("sawdust"));
+//		MachineRecipeBuilder.macerating()
+//				.unlockedBy("has_item", tagKeyHas.apply(PLANKS))
+//				.inputItem(Ingredient.of(PLANKS))
+//				.outputItem(new ItemStack(SAWDUST_ITEM))
+//				.save(consumer, maceratingLoc("sawdust"));
 
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", has(Items.COAL))
@@ -88,19 +96,19 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.save(consumer, maceratingLoc("charcoal_dust"));
 
 		MachineRecipeBuilder.separating()
-				.unlockedBy("has_item", has(GRAVEL))
+				.unlockedBy("has_item", tagKeyHas.apply(GRAVEL))
 				.inputItem(Ingredient.of(GRAVEL))
 				.outputItem(new ItemStack(Items.FLINT))
 				.save(consumer, separatingLoc("flint"));
 
 		MachineRecipeBuilder.separating()
-				.unlockedBy("has_item", has(QUARTZ))
+				.unlockedBy("has_item", tagKeyHas.apply(QUARTZ))
 				.inputItem(Ingredient.of(QUARTZ))
 				.outputItem(new ItemStack(SILICON_ITEM, 3))
 				.save(consumer, separatingLoc("silicon_from_quartz"));
 
 		MachineRecipeBuilder.separating()
-				.unlockedBy("has_item", has(SAND))
+				.unlockedBy("has_item", tagKeyHas.apply(SAND))
 				.inputItem(Ingredient.of(SAND))
 				.outputItem(new ItemStack(SILICON_ITEM), 0.20)
 				.outputItem(new ItemStack(SILICON_ITEM), 0.05)
@@ -170,11 +178,11 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.outputItem(new ItemStack(RUBBERWOOD_SAPLING), 0.05)
 				.save(consumer, separatingLoc("latex_from_leaves"));
 
-		MachineRecipeBuilder.separating()
-				.unlockedBy("has_item", has(Items.GUNPOWDER))
-				.inputItem(Ingredient.of(Items.GUNPOWDER))
-				.outputItem(new ItemStack(COAL_DUST_ITEM))
-				.outputItem(new ItemStack(SULFUR_ITEM), 0.50)
-				.save(consumer, separatingLoc("sulfur_from_gunpowder"));
+//		MachineRecipeBuilder.separating()
+//				.unlockedBy("has_item", has(Items.GUNPOWDER))
+//				.inputItem(Ingredient.of(Items.GUNPOWDER))
+//				.outputItem(new ItemStack(COAL_DUST_ITEM))
+//				.outputItem(new ItemStack(SULFUR_ITEM), 0.50)
+//				.save(consumer, separatingLoc("sulfur_from_gunpowder"));
 	}
 }

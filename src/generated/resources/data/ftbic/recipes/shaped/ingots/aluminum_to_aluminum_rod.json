@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:aluminum_rod",
+  "pattern": [
+    " X ",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/aluminum"
+    }
+  },
+  "result": {
+    "item": "ftbic:aluminum_rod"
+  }
+}

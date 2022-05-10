@@ -1,26 +1,26 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:antimatter_fabricator",
-	"pattern": [
-		"GCG",
-		"MEM",
-		"GCG"
-	],
-	"key": {
-		"G": {
-			"tag": "forge:dusts/glowstone"
-		},
-		"M": {
-			"item": "ftbic:advanced_machine_block"
-		},
-		"C": {
-			"item": "ftbic:iridium_circuit"
-		},
-		"E": {
-			"item": "minecraft:nether_star"
-		}
-	},
-	"result": {
-		"item": "ftbic:antimatter_constructor"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:antimatter_fabricator",
+  "pattern": [
+    "GCG",
+    "MEM",
+    "GCG"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:dusts/glowstone"
+    },
+    "M": {
+      "item": "ftbic:advanced_machine_block"
+    },
+    "C": {
+      "item": "ftbic:iridium_circuit"
+    },
+    "E": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "item": "ftbic:antimatter_constructor"
+  }
 }

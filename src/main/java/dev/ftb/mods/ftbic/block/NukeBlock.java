@@ -29,7 +29,7 @@ public class NukeBlock extends Block {
 		if (!level.isClientSide() && !(player instanceof FakePlayer)) {
 			level.setBlock(pos, FTBICBlocks.ACTIVE_NUKE.get().defaultBlockState(), 3);
 
-			NuclearExplosion.builder((ServerLevel) level, pos, FTBICConfig.NUKE_RADIUS, player.getUUID(), player.getScoreboardName())
+			NuclearExplosion.builder((ServerLevel) level, pos, FTBICConfig.NUCLEAR.NUKE_RADIUS.get(), player.getUUID(), player.getScoreboardName())
 					.delay(10000L)
 					.preExplosion(() -> {
 						level.getServer().getPlayerList().broadcastMessage(new TranslatableComponent("block.ftbic.nuke.broadcast", player.getDisplayName()), ChatType.SYSTEM, Util.NIL_UUID);

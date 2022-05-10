@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:plates/tin",
+    "#forge:plates/lead",
+    "#forge:plates/uranium",
+    "#forge:plates/iridium",
+    "#forge:plates/enderium",
+    "#forge:plates/aluminum",
+    "#forge:plates/iron",
+    "#forge:plates/gold",
+    "#forge:plates/copper",
+    "#forge:plates/bronze"
+  ]
+}

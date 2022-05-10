@@ -1,6 +1,6 @@
 {
-	"parent": "minecraft:item/generated",
-	"textures": {
-		"layer0": "ftbic:item/advanced_circuit"
-	}
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ftbic:item/advanced_circuit"
+  }
 }

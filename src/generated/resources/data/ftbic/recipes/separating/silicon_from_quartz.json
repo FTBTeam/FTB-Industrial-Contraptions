@@ -1,17 +1,17 @@
 {
-	"type": "ftbic:separating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"tag": "forge:gems/quartz"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "emendatusenigmatica:silicon_gem",
-			"count": 3
-		}
-	]
+  "type": "ftbic:separating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:gems/quartz"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:silicon",
+      "count": 3
+    }
+  ]
 }

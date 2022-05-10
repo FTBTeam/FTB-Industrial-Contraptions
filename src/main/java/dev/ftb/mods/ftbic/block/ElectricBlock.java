@@ -27,10 +27,13 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -39,19 +42,18 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Random;
 
-public class ElectricBlock extends Block implements SprayPaintable {
+public class ElectricBlock extends Block implements EntityBlock, SprayPaintable {
 	public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
 	public final ElectricBlockInstance electricBlockInstance;
 
 	public ElectricBlock(ElectricBlockInstance m) {
-		super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops());
+		super(Properties.of(Material.METAL).strength(3.5F).sound(SoundType.METAL).requiresCorrectToolForDrops());
 		electricBlockInstance = m;
 		BlockState state = getStateDefinition().any().setValue(SprayPaintable.DARK, false);
 
@@ -67,14 +69,14 @@ public class ElectricBlock extends Block implements SprayPaintable {
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return electricBlockInstance.blockEntity.get().create(pos, state);
 	}
 
 	@Nullable
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter level) {
-		return electricBlockInstance.blockEntity.get().create();
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+		return electricBlockInstance.tickClientSide || !level.isClientSide() ? ElectricBlockEntity::ticker : null;
 	}
 
 	@Override
@@ -172,7 +174,7 @@ public class ElectricBlock extends Block implements SprayPaintable {
 	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
 		super.onPlace(state, level, pos, state1, b);
 
-		if (!level.isClientSide() && !state.getBlock().is(state1.getBlock())) {
+		if (!level.isClientSide() && !state.is(state1.getBlock())) {
 			ElectricBlockEntity.electricNetworkUpdated(level, pos);
 		}
 	}
@@ -191,7 +193,7 @@ public class ElectricBlock extends Block implements SprayPaintable {
 	@Override
 	@Deprecated
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
-		if (!level.isClientSide() && !state.getBlock().is(state1.getBlock())) {
+		if (!level.isClientSide() && !state.is(state1.getBlock())) {
 			ElectricBlockEntity.electricNetworkUpdated(level, pos);
 
 			BlockEntity entity = level.getBlockEntity(pos);
@@ -296,7 +298,7 @@ public class ElectricBlock extends Block implements SprayPaintable {
 	}
 
 	@Override
-	public void stepOn(Level level, BlockPos pos, Entity entity) {
+	public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
 		if (entity instanceof ServerPlayer) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 

@@ -1,7 +1,7 @@
 {
-	"variants": {
-		"": {
-			"model": "ftbic:block/active_nuke"
-		}
-	}
+  "variants": {
+    "": {
+      "model": "ftbic:block/active_nuke"
+    }
+  }
 }

@@ -1,6 +1,13 @@
 package dev.ftb.mods.ftbic.recipe;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.recipe.machines.CompressingRecipeResults;
+import dev.ftb.mods.ftbic.recipe.machines.CookingRecipeResults;
+import dev.ftb.mods.ftbic.recipe.machines.ExtrudingRecipeResults;
+import dev.ftb.mods.ftbic.recipe.machines.MaceratingRecipeResults;
+import dev.ftb.mods.ftbic.recipe.machines.ReprocessingRecipeResults;
+import dev.ftb.mods.ftbic.recipe.machines.RollingRecipeResults;
+import dev.ftb.mods.ftbic.recipe.machines.SeparatingRecipeResults;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -66,7 +73,7 @@ public class RecipeCache implements Recipe<NoContainer> {
 
 	@Override
 	public RecipeType<?> getType() {
-		return FTBICRecipes.RECIPE_CACHE_TYPE;
+		return FTBICRecipes.RECIPE_CACHE_TYPE.get();
 	}
 
 	public int getBasicGeneratorFuelTicks(Level level, ItemStack item) {
@@ -76,7 +83,7 @@ public class RecipeCache implements Recipe<NoContainer> {
 			return fuel;
 		}
 
-		for (BasicGeneratorFuelRecipe recipe : level.getRecipeManager().getAllRecipesFor(FTBICRecipes.BASIC_GENERATOR_FUEL_TYPE)) {
+		for (BasicGeneratorFuelRecipe recipe : level.getRecipeManager().getAllRecipesFor(FTBICRecipes.BASIC_GENERATOR_FUEL_TYPE.get())) {
 			if (recipe.ingredient.test(item)) {
 				basicGeneratorFuel.put(item.getItem(), recipe.ticks);
 				return recipe.ticks;
@@ -94,7 +101,7 @@ public class RecipeCache implements Recipe<NoContainer> {
 			return boost;
 		}
 
-		for (AntimatterBoostRecipe recipe : level.getRecipeManager().getAllRecipesFor(FTBICRecipes.ANTIMATTER_BOOST_TYPE)) {
+		for (AntimatterBoostRecipe recipe : level.getRecipeManager().getAllRecipesFor(FTBICRecipes.ANTIMATTER_BOOST_TYPE.get())) {
 			if (recipe.ingredient.test(item)) {
 				antimatterBoost.put(item.getItem(), recipe.boost);
 				return recipe.boost;

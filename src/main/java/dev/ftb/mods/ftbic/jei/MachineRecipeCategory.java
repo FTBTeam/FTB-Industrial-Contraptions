@@ -19,8 +19,9 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -49,7 +50,7 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 		background = guiHelper.createBlankDrawable(serializer.guiWidth, serializer.guiHeight);
 		icon = guiHelper.createDrawableIngredient(new ItemStack(item.item.get()));
 		arrowOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 87, 167, 24, 17).setTextureSize(256, 256).build();
-		arrowOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 87, 185, 24, 17).setTextureSize(256, 256).buildAnimated(Mth.ceil(FTBICConfig.MACHINE_RECIPE_BASE_TICKS), IDrawableAnimated.StartDirection.LEFT, false);
+		arrowOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 87, 185, 24, 17).setTextureSize(256, 256).buildAnimated(Mth.ceil(FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get()), IDrawableAnimated.StartDirection.LEFT, false);
 		powerOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 1, 240, 14, 14).setTextureSize(256, 256).build();
 		powerOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 16, 240, 14, 14).setTextureSize(256, 256).buildAnimated(84, IDrawableAnimated.StartDirection.TOP, true);
 		slot = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 1, 167, 18, 18).setTextureSize(256, 256).build();
@@ -67,8 +68,8 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 	}
 
 	@Override
-	public String getTitle() {
-		return I18n.get(titleKey);
+	public Component getTitle() {
+		return new TranslatableComponent(titleKey);
 	}
 
 	@Override

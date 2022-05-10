@@ -41,13 +41,13 @@ public class CanningMachineRecipeResults extends MachineRecipeResults {
 		if (allRecipes == null) {
 			allRecipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(FTBICRecipes.CANNING.get().recipeType));
 
-			if (FTBICConfig.ADD_CANNED_FOOD_RECIPES) {
+			if (FTBICConfig.RECIPES.ADD_CANNED_FOOD_RECIPES.get()) {
 				Ingredient canIngredient = Ingredient.of(FTBICItems.EMPTY_CAN.item.get());
 
 				for (Item item : ForgeRegistries.ITEMS) {
 					FoodProperties f = item.getFoodProperties();
 
-					if (f != null && f.getNutrition() > 1 && f.getEffects().isEmpty() && !FTBICUtils.UNCANNABLE_FOOD.contains(item)) {
+					if (f != null && f.getNutrition() > 1 && f.getEffects().isEmpty() && !item.builtInRegistryHolder().is(FTBICUtils.UNCANNABLE_FOOD)) {
 						int cans = (f.getNutrition() + (f.isMeat() ? 8 : 3)) / 4;
 
 						if (cans > 0) {

@@ -1,26 +1,26 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:mv_solar_panel",
-	"pattern": [
-		"SES",
-		"SAS",
-		"SCS"
-	],
-	"key": {
-		"S": {
-			"item": "ftbic:lv_solar_panel"
-		},
-		"E": {
-			"item": "ftbic:energy_crystal"
-		},
-		"A": {
-			"item": "ftbic:advanced_alloy"
-		},
-		"C": {
-			"item": "ftbic:advanced_circuit"
-		}
-	},
-	"result": {
-		"item": "ftbic:mv_solar_panel"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:mv_solar_panel",
+  "pattern": [
+    "SES",
+    "SAS",
+    "SCS"
+  ],
+  "key": {
+    "S": {
+      "item": "ftbic:lv_solar_panel"
+    },
+    "E": {
+      "item": "ftbic:energy_crystal"
+    },
+    "A": {
+      "item": "ftbic:advanced_alloy"
+    },
+    "C": {
+      "item": "ftbic:advanced_circuit"
+    }
+  },
+  "result": {
+    "item": "ftbic:mv_solar_panel"
+  }
 }

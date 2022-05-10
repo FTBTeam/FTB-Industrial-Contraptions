@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block;
 
+import com.mojang.math.Vector3f;
 import dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
@@ -14,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.TorchBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,14 +27,15 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class LandmarkBlock extends TorchBlock {
+public class LandmarkBlock extends TorchBlock implements SimpleWaterloggedBlock {
 	public LandmarkBlock() {
-		super(Properties.of(Material.WOOD).strength(0.1F).sound(SoundType.WOOD).noCollission().noOcclusion().lightLevel(value -> 8), new DustParticleOptions(0F, 0F, 1F, 1F));
+		super(Properties.of(Material.WOOD).strength(0.1F).sound(SoundType.WOOD).noCollission().noOcclusion().lightLevel(value -> 8), new DustParticleOptions(new Vector3f(Vec3.fromRGB24(0x0000FF)), 1F));
 
 		registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.WATERLOGGED, false));
 	}
@@ -52,7 +55,7 @@ public class LandmarkBlock extends TorchBlock {
 	@Deprecated
 	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos pos, BlockPos facingPos) {
 		if (state.getValue(BlockStateProperties.WATERLOGGED)) {
-			level.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+			level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 		}
 
 		return facing == Direction.DOWN && !canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState() : state;

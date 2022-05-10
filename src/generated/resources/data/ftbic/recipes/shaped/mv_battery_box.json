@@ -1,23 +1,23 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"group": "ftbic:mv_battery_box",
-	"pattern": [
-		"WBW",
-		"BMB",
-		"WBW"
-	],
-	"key": {
-		"W": {
-			"item": "ftbic:mv_cable"
-		},
-		"B": {
-			"item": "ftbic:energy_crystal"
-		},
-		"M": {
-			"item": "ftbic:machine_block"
-		}
-	},
-	"result": {
-		"item": "ftbic:mv_battery_box"
-	}
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:mv_battery_box",
+  "pattern": [
+    "WBW",
+    "BMB",
+    "WBW"
+  ],
+  "key": {
+    "W": {
+      "item": "ftbic:mv_cable"
+    },
+    "B": {
+      "item": "ftbic:energy_crystal"
+    },
+    "M": {
+      "item": "ftbic:machine_block"
+    }
+  },
+  "result": {
+    "item": "ftbic:mv_battery_box"
+  }
 }

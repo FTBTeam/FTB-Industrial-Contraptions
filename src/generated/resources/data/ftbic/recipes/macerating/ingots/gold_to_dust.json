@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:macerating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:ingots/gold"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:gold_dust"
+    }
+  ]
+}

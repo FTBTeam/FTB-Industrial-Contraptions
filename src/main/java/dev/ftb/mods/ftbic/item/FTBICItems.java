@@ -11,6 +11,8 @@ import dev.ftb.mods.ftbic.item.reactor.NeutronReflectorItem;
 import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
+import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -20,7 +22,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public interface FTBICItems {
 	DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, FTBIC.MOD_ID);
@@ -41,6 +47,20 @@ public interface FTBICItems {
 		return m;
 	}
 
+	/**
+	 * Allows you to get an element from the registry based on the element type and the resource element specifically
+	 *
+	 * @param element the resource element, lead, tin, etc
+	 * @param type    the type of the resource you want, dust, chunk, rod, etc
+	 *
+	 * @return an {@link Optional<Supplier<Item>>} of the item. Sometimes empty if the item does not exist.
+	 */
+	static Optional<Supplier<Item>> getResourceFromType(ResourceElements element, ResourceType type) {
+		return RESOURCE_TYPE_MAP.get(type).entrySet().stream().filter(e -> e.getKey() == element)
+				.findFirst()
+				.map(Map.Entry::getValue);
+	}
+
 	Supplier<BlockItem> RUBBER_SHEET = blockItem("rubber_sheet", FTBICBlocks.RUBBER_SHEET);
 	Supplier<BlockItem> REINFORCED_STONE = blockItem("reinforced_stone", FTBICBlocks.REINFORCED_STONE);
 	Supplier<BlockItem> REINFORCED_GLASS = blockItem("reinforced_glass", FTBICBlocks.REINFORCED_GLASS);
@@ -58,10 +78,10 @@ public interface FTBICItems {
 	Supplier<BlockItem> NUCLEAR_REACTOR_CHAMBER = blockItem("nuclear_reactor_chamber", FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 	Supplier<BlockItem> NUKE = blockItem("nuke", FTBICBlocks.NUKE);
 	Supplier<BlockItem> ACTIVE_NUKE = blockItem("active_nuke", FTBICBlocks.ACTIVE_NUKE);
-	Supplier<BlockItem> TRACTOR_BEAM = blockItem("tractor_beam", FTBICBlocks.TRACTOR_BEAM);
 
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");
+	MaterialItem SILICON = material("silicon");
 	MaterialItem FUSE = material("fuse");
 	MaterialItem COPPER_WIRE = material("copper_wire");
 	MaterialItem GOLD_WIRE = material("gold_wire");
@@ -88,11 +108,11 @@ public interface FTBICItems {
 	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
 	MaterialItem DENSE_COPPER_PLATE = material("dense_copper_plate");
 
-	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, EnergyTier.LV, FTBICConfig.SINGLE_USE_BATTERY_CAPACITY));
-	Supplier<Item> LV_BATTERY = REGISTRY.register("lv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.LV, FTBICConfig.LV_BATTERY_CAPACITY));
-	Supplier<Item> MV_BATTERY = REGISTRY.register("mv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.MV, FTBICConfig.MV_BATTERY_CAPACITY));
-	Supplier<Item> HV_BATTERY = REGISTRY.register("hv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.HV, FTBICConfig.HV_BATTERY_CAPACITY));
-	Supplier<Item> EV_BATTERY = REGISTRY.register("ev_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.EV, FTBICConfig.EV_BATTERY_CAPACITY));
+	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, EnergyTier.LV, FTBICConfig.ENERGY.SINGLE_USE_BATTERY_CAPACITY.get()));
+	Supplier<Item> LV_BATTERY = REGISTRY.register("lv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.LV, FTBICConfig.ENERGY.LV_BATTERY_CAPACITY.get()));
+	Supplier<Item> MV_BATTERY = REGISTRY.register("mv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.MV, FTBICConfig.ENERGY.MV_BATTERY_CAPACITY.get()));
+	Supplier<Item> HV_BATTERY = REGISTRY.register("hv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.HV, FTBICConfig.ENERGY.HV_BATTERY_CAPACITY.get()));
+	Supplier<Item> EV_BATTERY = REGISTRY.register("ev_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.EV, FTBICConfig.ENERGY.EV_BATTERY_CAPACITY.get()));
 	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, EnergyTier.IV, Integer.MAX_VALUE));
 	Supplier<Item> FLUID_CELL = REGISTRY.register("fluid_cell", FluidCellItem::new);
 	Supplier<Item> SMALL_COOLANT_CELL = REGISTRY.register("small_coolant_cell", () -> new CoolantItem(10_000));
@@ -134,4 +154,12 @@ public interface FTBICItems {
 	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
 	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
 	Supplier<Item> NUKE_ARROW = REGISTRY.register("nuke_arrow", NukeArrowItem::new);
+
+	/**
+	 * This goes over all the resource types, finds the resources we require for each element, then registers them for us! so helpful...
+	 */
+	Map<ResourceType, Map<ResourceElements, Supplier<Item>>> RESOURCE_TYPE_MAP = ResourceType.VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> {
+		var elementsForType = ResourceElements.RESOURCES_BY_REQUIREMENT.get(e);
+		return elementsForType.stream().collect(Collectors.toMap(Function.identity(), a -> REGISTRY.register(a.getName() + "_" + e.name().toLowerCase(), () -> e == ResourceType.ORE || e == ResourceType.BLOCK ? new BlockItem((e == ResourceType.BLOCK ? FTBICBlocks.RESOURCE_BLOCKS_OF.get(a) : FTBICBlocks.RESOURCE_ORES.get(a)).get(), new Item.Properties().tab(FTBIC.TAB)) : new ResourceItem(e))));
+	}));
 }

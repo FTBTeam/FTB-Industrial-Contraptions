@@ -1,36 +1,36 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"group": "ftbic:advanced_circuit",
-	"ingredients": [
-		{
-			"tag": "forge:dusts/redstone"
-		},
-		{
-			"tag": "forge:dusts/glowstone"
-		},
-		{
-			"tag": "forge:dusts/redstone"
-		},
-		{
-			"tag": "forge:silicon"
-		},
-		{
-			"item": "ftbic:electronic_circuit"
-		},
-		{
-			"tag": "forge:silicon"
-		},
-		{
-			"tag": "forge:dusts/redstone"
-		},
-		{
-			"tag": "forge:dusts/glowstone"
-		},
-		{
-			"tag": "forge:dusts/redstone"
-		}
-	],
-	"result": {
-		"item": "ftbic:advanced_circuit"
-	}
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:advanced_circuit",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:dusts/glowstone"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:silicon"
+    },
+    {
+      "item": "ftbic:electronic_circuit"
+    },
+    {
+      "tag": "forge:silicon"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:dusts/glowstone"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    }
+  ],
+  "result": {
+    "item": "ftbic:advanced_circuit"
+  }
 }

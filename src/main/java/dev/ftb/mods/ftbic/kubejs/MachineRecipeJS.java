@@ -3,12 +3,12 @@ package dev.ftb.mods.ftbic.kubejs;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
-import dev.latvian.kubejs.fluid.FluidStackJS;
-import dev.latvian.kubejs.item.ItemStackJS;
-import dev.latvian.kubejs.item.ingredient.IngredientJS;
-import dev.latvian.kubejs.item.ingredient.IngredientStackJS;
-import dev.latvian.kubejs.recipe.RecipeJS;
-import dev.latvian.kubejs.util.ListJS;
+import dev.latvian.mods.kubejs.fluid.FluidStackJS;
+import dev.latvian.mods.kubejs.item.ItemStackJS;
+import dev.latvian.mods.kubejs.item.ingredient.IngredientJS;
+import dev.latvian.mods.kubejs.item.ingredient.IngredientStackJS;
+import dev.latvian.mods.kubejs.recipe.RecipeJS;
+import dev.latvian.mods.kubejs.util.ListJS;
 
 import java.util.ArrayList;
 import java.util.List;

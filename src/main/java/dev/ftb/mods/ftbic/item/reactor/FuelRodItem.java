@@ -59,7 +59,7 @@ public class FuelRodItem extends BaseReactorItem implements NeutronReflectingRea
 			return;
 		}
 
-		reactor.explosionRadius += getRods(stack) * FTBICConfig.NUCLEAR_REACTOR_EXPLOSION_MULTIPLIER;
+		reactor.explosionRadius += getRods(stack) * FTBICConfig.NUCLEAR.NUCLEAR_REACTOR_EXPLOSION_MULTIPLIER.get();
 	}
 
 	@Override

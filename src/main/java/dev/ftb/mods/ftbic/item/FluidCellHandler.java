@@ -49,7 +49,7 @@ public class FluidCellHandler implements IFluidHandlerItem, ICapabilityProvider 
 
 	@Override
 	public int getTankCapacity(int tank) {
-		return FTBICConfig.FLUID_CELL_CAPACITY;
+		return FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get();
 	}
 
 	private Fluid getFluid() {
@@ -58,12 +58,12 @@ public class FluidCellHandler implements IFluidHandlerItem, ICapabilityProvider 
 
 	@Override
 	public FluidStack getFluidInTank(int tank) {
-		return getFluid() == Fluids.EMPTY ? FluidStack.EMPTY : new FluidStack(getFluid(), FTBICConfig.FLUID_CELL_CAPACITY);
+		return getFluid() == Fluids.EMPTY ? FluidStack.EMPTY : new FluidStack(getFluid(), FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get());
 	}
 
 	@Override
 	public int fill(FluidStack resource, FluidAction action) {
-		if (getFluid() != Fluids.EMPTY || resource.getAmount() < FTBICConfig.FLUID_CELL_CAPACITY) {
+		if (getFluid() != Fluids.EMPTY || resource.getAmount() < FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get()) {
 			return 0;
 		}
 
@@ -71,12 +71,12 @@ public class FluidCellHandler implements IFluidHandlerItem, ICapabilityProvider 
 			FluidCellItem.setFluid(container, resource.getFluid());
 		}
 
-		return FTBICConfig.FLUID_CELL_CAPACITY;
+		return FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get();
 	}
 
 	@Override
 	public FluidStack drain(FluidStack resource, FluidAction action) {
-		if (resource.isEmpty() || resource.getAmount() < FTBICConfig.FLUID_CELL_CAPACITY) {
+		if (resource.isEmpty() || resource.getAmount() < FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get()) {
 			return FluidStack.EMPTY;
 		}
 
@@ -86,7 +86,7 @@ public class FluidCellHandler implements IFluidHandlerItem, ICapabilityProvider 
 			return FluidStack.EMPTY;
 		}
 
-		FluidStack output = new FluidStack(fluid, FTBICConfig.FLUID_CELL_CAPACITY);
+		FluidStack output = new FluidStack(fluid, FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get());
 
 		if (action.execute()) {
 			FluidCellItem.setFluid(container, Fluids.EMPTY);
@@ -97,7 +97,7 @@ public class FluidCellHandler implements IFluidHandlerItem, ICapabilityProvider 
 
 	@Override
 	public FluidStack drain(int maxDrain, FluidAction action) {
-		if (maxDrain < FTBICConfig.FLUID_CELL_CAPACITY) {
+		if (maxDrain < FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get()) {
 			return FluidStack.EMPTY;
 		}
 
@@ -107,7 +107,7 @@ public class FluidCellHandler implements IFluidHandlerItem, ICapabilityProvider 
 			return FluidStack.EMPTY;
 		}
 
-		FluidStack output = new FluidStack(fluid, FTBICConfig.FLUID_CELL_CAPACITY);
+		FluidStack output = new FluidStack(fluid, FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get());
 
 		if (action.execute()) {
 			FluidCellItem.setFluid(container, Fluids.EMPTY);

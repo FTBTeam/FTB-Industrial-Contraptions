@@ -3,19 +3,21 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class WindMillBlockEntity extends GeneratorBlockEntity {
 	private int blocksInRadius = -1;
 	public double output = 0D;
 
-	public WindMillBlockEntity() {
-		super(FTBICElectricBlocks.WIND_MILL);
+	public WindMillBlockEntity(BlockPos pos, BlockState state) {
+		super(FTBICElectricBlocks.WIND_MILL, pos, state);
 	}
 
 	@Override
@@ -47,22 +49,22 @@ public class WindMillBlockEntity extends GeneratorBlockEntity {
 
 			int height = worldPosition.getY() - blocksInRadius;
 
-			if (height < FTBICConfig.WIND_MILL_MIN_Y) {
+			if (height < FTBICConfig.MACHINES.WIND_MILL_MIN_Y.get()) {
 				return;
-			} else if (height > FTBICConfig.WIND_MILL_MAX_Y) {
-				height = FTBICConfig.WIND_MILL_MAX_Y;
+			} else if (height > FTBICConfig.MACHINES.WIND_MILL_MAX_Y.get()) {
+				height = FTBICConfig.MACHINES.WIND_MILL_MAX_Y.get();
 			}
 
-			output = Mth.lerp(height / (double) (FTBICConfig.WIND_MILL_MAX_Y - FTBICConfig.WIND_MILL_MIN_Y), FTBICConfig.WIND_MILL_MIN_OUTPUT, FTBICConfig.WIND_MILL_MAX_OUTPUT);
+			output = Mth.lerp(height / (double) (FTBICConfig.MACHINES.WIND_MILL_MAX_Y.get() - FTBICConfig.MACHINES.WIND_MILL_MIN_Y.get()), FTBICConfig.MACHINES.WIND_MILL_MIN_OUTPUT.get(), FTBICConfig.MACHINES.WIND_MILL_MAX_OUTPUT.get());
 
 			if (output <= 0D) {
 				return;
 			}
 
 			if (level.isThundering()) {
-				output *= FTBICConfig.WIND_MILL_THUNDER_MODIFIER;
+				output *= FTBICConfig.MACHINES.WIND_MILL_THUNDER_MODIFIER.get();
 			} else if (level.isRaining()) {
-				output *= FTBICConfig.WIND_MILL_RAIN_MODIFIER;
+				output *= FTBICConfig.MACHINES.WIND_MILL_RAIN_MODIFIER.get();
 			}
 
 			energy += Math.min(energyCapacity - energy, output);
@@ -76,7 +78,7 @@ public class WindMillBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			player.displayClientMessage(new TranslatableComponent("ftbic.output", FTBICUtils.formatEnergy(output)), false);
+			player.displayClientMessage(new TranslatableComponent("ftbic.energy_output", FTBICUtils.formatEnergy(output)), false);
 		}
 
 		return InteractionResult.SUCCESS;

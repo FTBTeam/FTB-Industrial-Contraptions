@@ -7,10 +7,11 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 	public final UpgradeInventory upgradeInventory;
@@ -19,9 +20,9 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 	public double energyUse;
 	public double progressSpeed;
 
-	public BasicMachineBlockEntity(ElectricBlockInstance type) {
-		super(type);
-		upgradeInventory = new UpgradeInventory(this, 4, FTBICConfig.UPGRADE_LIMIT_PER_SLOT);
+	public BasicMachineBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
+		upgradeInventory = new UpgradeInventory(this, 4, FTBICConfig.MACHINES.UPGRADE_LIMIT_PER_SLOT.get());
 		batteryInventory = new BatteryInventory(this, false);
 	}
 
@@ -29,7 +30,7 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 	public void writeData(CompoundTag tag) {
 		super.writeData(tag);
 
-		tag.put("Upgrades", upgradeInventory.serializeNBT().getList("Items", Constants.NBT.TAG_COMPOUND));
+		tag.put("Upgrades", upgradeInventory.serializeNBT().getList("Items", Tag.TAG_COMPOUND));
 
 		if (!batteryInventory.getStackInSlot(0).isEmpty()) {
 			tag.put("Battery", batteryInventory.getStackInSlot(0).serializeNBT());
@@ -41,7 +42,7 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 		super.readData(tag);
 
 		CompoundTag tag1 = new CompoundTag();
-		tag1.put("Items", tag.getList("Upgrades", Constants.NBT.TAG_COMPOUND));
+		tag1.put("Items", tag.getList("Upgrades", Tag.TAG_COMPOUND));
 		upgradeInventory.deserializeNBT(tag1);
 
 		if (tag.contains("Battery")) {
@@ -58,7 +59,7 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
 				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxInputEnergy * FTBICConfig.ITEM_TRANSFER_EFFICIENCY;
+				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxInputEnergy * FTBICConfig.MACHINES.ITEM_TRANSFER_EFFICIENCY.get();
 				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, transfer), false);
 
 				if (e > 0) {
@@ -79,7 +80,7 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 
 	@Override
 	public double getTotalPossibleEnergyCapacity() {
-		return super.getTotalPossibleEnergyCapacity() + upgradeInventory.getSlots() * Math.min(FTBICConfig.UPGRADE_LIMIT_PER_SLOT, FTBICItems.ENERGY_STORAGE_UPGRADE.get().getMaxStackSize()) * FTBICConfig.STORAGE_UPGRADE;
+		return super.getTotalPossibleEnergyCapacity() + upgradeInventory.getSlots() * Math.min(FTBICConfig.MACHINES.UPGRADE_LIMIT_PER_SLOT.get(), FTBICItems.ENERGY_STORAGE_UPGRADE.get().getMaxStackSize()) * FTBICConfig.MACHINES.STORAGE_UPGRADE.get();
 	}
 
 	public void handleProcessing() {
@@ -111,8 +112,8 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 		int overclockers = upgradeInventory.countUpgrades(FTBICItems.OVERCLOCKER_UPGRADE.get());
 
 		for (int i = 0; i < overclockers; i++) {
-			energyUse *= FTBICConfig.OVERCLOCKER_ENERGY_USE;
-			progressSpeed *= FTBICConfig.OVERCLOCKER_SPEED;
+			energyUse *= FTBICConfig.MACHINES.OVERCLOCKER_ENERGY_USE.get();
+			progressSpeed *= FTBICConfig.MACHINES.OVERCLOCKER_SPEED.get();
 		}
 
 		int transformers = upgradeInventory.countUpgrades(FTBICItems.TRANSFORMER_UPGRADE.get());
@@ -122,11 +123,15 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 			maxInputEnergy *= 4D;
 		}
 
-		if (maxInputEnergy > FTBICConfig.IV_TRANSFER_RATE) {
-			maxInputEnergy = FTBICConfig.IV_TRANSFER_RATE;
+		if (maxInputEnergy > FTBICConfig.ENERGY.IV_TRANSFER_RATE.get()) {
+			maxInputEnergy = FTBICConfig.ENERGY.IV_TRANSFER_RATE.get();
 		}
 
-		energyCapacity += upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.STORAGE_UPGRADE;
+		energyCapacity += upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.MACHINES.STORAGE_UPGRADE.get();
+		if (energy > energyCapacity) {
+			energy = energyCapacity;
+		}
+
 		autoEject = upgradeInventory.countUpgrades(FTBICItems.EJECTOR_UPGRADE.get()) > 0;
 	}
 }

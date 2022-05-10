@@ -1,16 +1,16 @@
 {
-	"type": "ftbic:compressing",
-	"inputItems": [
-		{
-			"ingredient": {
-				"item": "ftbic:canned_food"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "ftbic:protein_bar"
-		}
-	]
+  "type": "ftbic:compressing",
+  "inputItems": [
+    {
+      "ingredient": {
+        "item": "ftbic:canned_food"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:protein_bar"
+    }
+  ]
 }

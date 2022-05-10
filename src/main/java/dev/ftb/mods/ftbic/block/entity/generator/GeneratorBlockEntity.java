@@ -34,8 +34,8 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	public double maxEnergyOutput;
 	public double maxEnergyOutputTransfer;
 
-	public GeneratorBlockEntity(ElectricBlockInstance type) {
-		super(type);
+	public GeneratorBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 		chargeBatteryInventory = new BatteryInventory(this, true);
 	}
 
@@ -43,7 +43,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	public void initProperties() {
 		super.initProperties();
 		maxEnergyOutput = electricBlockInstance.maxEnergyOutput;
-		maxEnergyOutputTransfer = FTBICConfig.LV_TRANSFER_RATE;
+		maxEnergyOutputTransfer = FTBICConfig.ENERGY.LV_TRANSFER_RATE.get();
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
 				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
-				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxEnergyOutputTransfer * FTBICConfig.ITEM_TRANSFER_EFFICIENCY;
+				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxEnergyOutputTransfer * FTBICConfig.MACHINES.ITEM_TRANSFER_EFFICIENCY.get();
 				double e = item.insertEnergy(battery, Math.min(energy, transfer), false);
 
 				if (e > 0) {
@@ -190,7 +190,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	}
 
 	private void find(Set<BlockPos> traversed, Set<CachedEnergyStorage> set, CachedEnergyStorageOrigin origin, int distance, BlockPos currentPos, Direction direction) {
-		if (level == null || distance > FTBICConfig.MAX_CABLE_LENGTH) {
+		if (level == null || distance > FTBICConfig.ENERGY.MAX_CABLE_LENGTH.get()) {
 			return;
 		}
 
@@ -215,7 +215,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 					find(traversed, set, origin, distance + 1, pos, dir);
 				}
 			}
-		} else if (state.hasTileEntity()) {
+		} else if (state.hasBlockEntity()) {
 			BlockEntity entity = level.getBlockEntity(pos);
 			EnergyHandler handler = entity instanceof EnergyHandler ? (EnergyHandler) entity : null; // entity.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
 
@@ -228,7 +228,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 					s.energyHandler = handler;
 					set.add(s);
 				}
-			} else if (FTBICConfig.ZAP_TO_FE_CONVERSION_RATE > 0D) {
+			} else if (FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get() > 0D) {
 				LazyOptional<IEnergyStorage> energyCap = entity.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite());
 				IEnergyStorage feStorage = energyCap.orElse(null);
 

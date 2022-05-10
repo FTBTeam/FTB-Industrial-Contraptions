@@ -1,32 +1,34 @@
 {
-	"parent": "minecraft:recipes/root",
-	"rewards": {
-		"recipes": [
-			"ftbic:smithing/iridium_battery"
-		]
-	},
-	"criteria": {
-		"has_item": {
-			"trigger": "minecraft:inventory_changed",
-			"conditions": {
-				"items": [
-					{
-						"item": "ftbic:iridium_alloy"
-					}
-				]
-			}
-		},
-		"has_the_recipe": {
-			"trigger": "minecraft:recipe_unlocked",
-			"conditions": {
-				"recipe": "ftbic:smithing/iridium_battery"
-			}
-		}
-	},
-	"requirements": [
-		[
-			"has_item",
-			"has_the_recipe"
-		]
-	]
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "ftbic:smithing/iridium_battery"
+    ]
+  },
+  "criteria": {
+    "has_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "ftbic:iridium_alloy"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "ftbic:smithing/iridium_battery"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_item",
+      "has_the_recipe"
+    ]
+  ]
 }

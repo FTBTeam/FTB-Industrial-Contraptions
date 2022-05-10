@@ -1,8 +1,8 @@
 package dev.ftb.mods.ftbic.kubejs;
 
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
-import dev.latvian.kubejs.KubeJSPlugin;
-import dev.latvian.kubejs.recipe.RegisterRecipeHandlersEvent;
+import dev.latvian.mods.kubejs.KubeJSPlugin;
+import dev.latvian.mods.kubejs.recipe.RegisterRecipeHandlersEvent;
 
 public class FTBICKubeJSPlugin extends KubeJSPlugin {
 	@Override

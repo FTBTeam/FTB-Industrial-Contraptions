@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:rolling",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:ingots/copper"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:copper_plate",
+      "count": 2
+    }
+  ]
+}

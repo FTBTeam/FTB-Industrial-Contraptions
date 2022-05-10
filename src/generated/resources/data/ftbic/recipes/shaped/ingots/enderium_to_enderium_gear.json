@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:enderium_gear",
+  "pattern": [
+    " X ",
+    "XIX",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/enderium"
+    },
+    "I": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "result": {
+    "item": "ftbic:enderium_gear"
+  }
+}

@@ -9,8 +9,6 @@ import dev.ftb.mods.ftbic.util.FTBChunksIntegration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,8 +19,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
@@ -49,8 +45,8 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	public long diggingMineTicks;
 	public long diggingMoveTicks;
 
-	public DiggingBaseBlockEntity(ElectricBlockInstance type) {
-		super(type);
+	public DiggingBaseBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 	}
 
 	@Override
@@ -59,11 +55,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 		tag.putFloat("LaserX", laserX);
 		tag.putInt("LaserY", laserY);
 		tag.putFloat("LaserZ", laserZ);
-
-		if (paused) {
-			tag.putBoolean("Paused", true);
-		}
-
+		tag.putBoolean("Paused", paused);
 		tag.putLong("Tick", tick);
 		tag.putByte("OffsetX", (byte) offsetX);
 		tag.putByte("OffsetZ", (byte) offsetZ);
@@ -96,10 +88,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 		tag.putFloat("LaserX", laserX);
 		tag.putInt("LaserY", laserY);
 		tag.putFloat("LaserZ", laserZ);
-
-		if (paused) {
-			tag.putBoolean("Paused", true);
-		}
+		tag.putBoolean("Paused", paused);
 
 		tag.putLong("Tick", tick);
 		tag.putByte("OffsetX", (byte) offsetX);
@@ -234,7 +223,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 			return INVALID_Y;
 		}
 
-		for (int y = worldPosition.getY(); y >= 0; y--) {
+		for (int y = worldPosition.getY(); y >= level.getMinBuildHeight(); y--) {
 			pos.setY(y);
 
 			if (level.isLoaded(pos)) {
@@ -250,24 +239,12 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public AABB getRenderBoundingBox() {
 		return INFINITE_EXTENT_AABB;
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public double getViewDistance() {
-		return 256D;
-	}
-
-	@Override
 	public boolean savePlacer() {
-		return true;
-	}
-
-	@Override
-	public boolean tickClientSide() {
 		return true;
 	}
 
@@ -372,14 +349,5 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 
 	public float[] getLaserColor() {
 		return new float[]{1F, 1F, 1F};
-	}
-
-	@Override
-	public Component createDisplayName() {
-		if (paused) {
-			return new TextComponent("").append(super.createDisplayName()).append(" [Paused]");
-		}
-
-		return super.createDisplayName();
 	}
 }

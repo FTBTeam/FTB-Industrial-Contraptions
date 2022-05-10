@@ -1,16 +1,16 @@
 {
-	"type": "ftbic:macerating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"item": "minecraft:coal"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "emendatusenigmatica:coal_dust"
-		}
-	]
+  "type": "ftbic:macerating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "item": "minecraft:coal"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:coal_dust"
+    }
+  ]
 }

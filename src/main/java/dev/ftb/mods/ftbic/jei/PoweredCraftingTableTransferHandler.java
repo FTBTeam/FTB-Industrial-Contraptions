@@ -1,10 +1,10 @@
 package dev.ftb.mods.ftbic.jei;
 
 import dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.transfer.IRecipeTransferError;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
-import mezz.jei.transfer.RecipeTransferErrorInternal;
+import mezz.jei.api.recipe.transfer.IRecipeTransferHandlerHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -15,20 +15,31 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
-public class PoweredCraftingTableTransferHandler implements IRecipeTransferHandler<PoweredCraftingTableMenu> {
+public class PoweredCraftingTableTransferHandler implements IRecipeTransferHandler<PoweredCraftingTableMenu, Recipe> {
+	private IRecipeTransferHandlerHelper transferHelper;
+
+	public PoweredCraftingTableTransferHandler(IRecipeTransferHandlerHelper transferHelper) {
+		this.transferHelper = transferHelper;
+	}
+
 	@Override
 	public Class<PoweredCraftingTableMenu> getContainerClass() {
 		return PoweredCraftingTableMenu.class;
 	}
 
+	@Override
+	public Class<Recipe> getRecipeClass() {
+		return Recipe.class;
+	}
+
 	@Nullable
 	@Override
-	public IRecipeTransferError transferRecipe(PoweredCraftingTableMenu container, Object recipe, IRecipeLayout recipeLayout, Player player, boolean maxTransfer, boolean doTransfer) {
-		if (recipe instanceof Recipe && ((Recipe<?>) recipe).getType() == RecipeType.CRAFTING) {
-			NonNullList<Ingredient> list = ((Recipe<?>) recipe).getIngredients();
+	public IRecipeTransferError transferRecipe(PoweredCraftingTableMenu container, Recipe recipe, IRecipeSlotsView recipeLayout, Player player, boolean maxTransfer, boolean doTransfer) {
+		if (recipe.getType() == RecipeType.CRAFTING) {
+			NonNullList<Ingredient> list = recipe.getIngredients();
 
 			if (list.size() > 9) {
-				return RecipeTransferErrorInternal.INSTANCE;
+				return this.transferHelper.createInternalError();
 			} else if (doTransfer) {
 				Ingredient[] in = new Ingredient[9];
 				Arrays.fill(in, Ingredient.EMPTY);
@@ -54,6 +65,6 @@ public class PoweredCraftingTableTransferHandler implements IRecipeTransferHandl
 			return null;
 		}
 
-		return RecipeTransferErrorInternal.INSTANCE;
+		return this.transferHelper.createInternalError();
 	}
 }

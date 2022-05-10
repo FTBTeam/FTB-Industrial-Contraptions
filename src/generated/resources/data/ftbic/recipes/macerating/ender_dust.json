@@ -1,16 +1,16 @@
 {
-	"type": "ftbic:macerating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"tag": "forge:ender_pearls"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "emendatusenigmatica:ender_dust"
-		}
-	]
+  "type": "ftbic:macerating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:ender_pearls"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:ender_dust"
+    }
+  ]
 }

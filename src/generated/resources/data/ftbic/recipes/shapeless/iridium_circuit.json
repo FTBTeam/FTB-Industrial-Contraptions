@@ -1,37 +1,37 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"group": "ftbic:iridium_circuit",
-	"ingredients": [
-		{
-			"item": "ftbic:advanced_alloy"
-		},
-		{
-			"item": "ftbic:graphene"
-		},
-		{
-			"item": "ftbic:advanced_alloy"
-		},
-		{
-			"item": "ftbic:advanced_circuit"
-		},
-		{
-			"item": "ftbic:iridium_alloy"
-		},
-		{
-			"item": "ftbic:advanced_circuit"
-		},
-		{
-			"item": "ftbic:advanced_alloy"
-		},
-		{
-			"item": "ftbic:graphene"
-		},
-		{
-			"item": "ftbic:advanced_alloy"
-		}
-	],
-	"result": {
-		"item": "ftbic:iridium_circuit",
-		"count": 2
-	}
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:iridium_circuit",
+  "ingredients": [
+    {
+      "item": "ftbic:advanced_alloy"
+    },
+    {
+      "item": "ftbic:graphene"
+    },
+    {
+      "item": "ftbic:advanced_alloy"
+    },
+    {
+      "item": "ftbic:advanced_circuit"
+    },
+    {
+      "item": "ftbic:iridium_alloy"
+    },
+    {
+      "item": "ftbic:advanced_circuit"
+    },
+    {
+      "item": "ftbic:advanced_alloy"
+    },
+    {
+      "item": "ftbic:graphene"
+    },
+    {
+      "item": "ftbic:advanced_alloy"
+    }
+  ],
+  "result": {
+    "item": "ftbic:iridium_circuit",
+    "count": 2
+  }
 }

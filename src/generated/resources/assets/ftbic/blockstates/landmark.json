@@ -1,7 +1,7 @@
 {
-	"variants": {
-		"": {
-			"model": "ftbic:block/landmark"
-		}
-	}
+  "variants": {
+    "": {
+      "model": "ftbic:block/landmark"
+    }
+  }
 }

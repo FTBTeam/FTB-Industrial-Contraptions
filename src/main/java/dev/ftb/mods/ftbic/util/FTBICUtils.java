@@ -14,9 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -25,7 +23,9 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,11 +35,12 @@ import java.util.function.Function;
 
 public class FTBICUtils {
 	public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().setLenient().create();
-	public static final Tag.Named<Block> REINFORCED = BlockTags.createOptional(new ResourceLocation(FTBIC.MOD_ID, "reinforced"));
-	public static final Tag.Named<Item> UNCANNABLE_FOOD = ItemTags.createOptional(new ResourceLocation(FTBIC.MOD_ID, "uncannable_food"));
-	public static final Tag.Named<Item> NO_AUTO_RECIPE = ItemTags.createOptional(new ResourceLocation(FTBIC.MOD_ID, "no_auto_recipe"));
+	public static final TagKey<Block> REINFORCED = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(FTBIC.MOD_ID, "reinforced"));
+	public static final TagKey<Item> UNCANNABLE_FOOD = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(FTBIC.MOD_ID, "uncannable_food"));
+	public static final TagKey<Item> NO_AUTO_RECIPE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(FTBIC.MOD_ID, "no_auto_recipe"));
 
-	public static final LootItemConditionType BURNT_BLOCK = Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(FTBIC.MOD_ID, "burnt_block"), new LootItemConditionType(new BurntBlockCondition.Serializer()));
+	public static final DeferredRegister<LootItemConditionType> LOOT_REGISTRY = DeferredRegister.create(Registry.LOOT_ITEM_REGISTRY, FTBIC.MOD_ID);
+	public static RegistryObject<LootItemConditionType> BURNT_BLOCK = LOOT_REGISTRY.register("burnt_block", () -> new LootItemConditionType(new BurntBlockCondition.Serializer()));
 
 	public static final Direction[] DIRECTIONS = Direction.values();
 	public static final Direction[] HORIZONTAL_DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};

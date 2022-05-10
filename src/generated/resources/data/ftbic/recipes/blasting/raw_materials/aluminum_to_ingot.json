@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "tag": "forge:raw_materials/aluminum"
+  },
+  "result": "ftbic:aluminum_ingot",
+  "experience": 0.7,
+  "cookingtime": 200
+}

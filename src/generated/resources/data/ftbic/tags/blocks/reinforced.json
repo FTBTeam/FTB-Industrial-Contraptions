@@ -1,10 +1,10 @@
 {
-	"replace": false,
-	"values": [
-		"ftbic:reinforced_stone",
-		"ftbic:reinforced_glass",
-		"minecraft:bedrock",
-		"minecraft:barrier",
-		"minecraft:command_block"
-	]
+  "replace": false,
+  "values": [
+    "ftbic:reinforced_stone",
+    "ftbic:reinforced_glass",
+    "minecraft:bedrock",
+    "minecraft:barrier",
+    "minecraft:command_block"
+  ]
 }

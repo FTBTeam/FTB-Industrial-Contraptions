@@ -1,6 +1,6 @@
 {
-	"parent": "minecraft:item/generated",
-	"textures": {
-		"layer0": "ftbic:item/iridium_neutron_reflector"
-	}
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ftbic:item/iridium_neutron_reflector"
+  }
 }

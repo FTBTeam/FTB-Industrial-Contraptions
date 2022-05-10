@@ -1,7 +1,7 @@
 {
-	"parent": "ftbic:block/orientable_3d",
-	"textures": {
-		"side": "ftbic:block/electric/light/lv_battery_box_in",
-		"front": "ftbic:block/electric/light/lv_battery_box_out"
-	}
+  "parent": "ftbic:block/orientable_3d",
+  "textures": {
+    "side": "ftbic:block/electric/light/lv_battery_box_in",
+    "front": "ftbic:block/electric/light/lv_battery_box_out"
+  }
 }

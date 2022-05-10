@@ -1,16 +1,16 @@
 {
-	"type": "ftbic:separating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"item": "myrtrees:rubberwood_sapling"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "myrtrees:latex"
-		}
-	]
+  "type": "ftbic:separating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "item": "myrtrees:rubberwood_sapling"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "myrtrees:latex"
+    }
+  ]
 }

@@ -1,9 +1,9 @@
 {
-	"parent": "ftbic:block/orientable_2d",
-	"textures": {
-		"side": "ftbic:block/electric/dark/basic_side",
-		"front": "ftbic:block/electric/dark/compressor_front_on",
-		"top": "ftbic:block/electric/dark/compressor_top",
-		"bottom": "ftbic:block/electric/dark/basic_bottom"
-	}
+  "parent": "ftbic:block/orientable_2d",
+  "textures": {
+    "side": "ftbic:block/electric/dark/basic_side",
+    "front": "ftbic:block/electric/dark/compressor_front_on",
+    "top": "ftbic:block/electric/dark/compressor_top",
+    "bottom": "ftbic:block/electric/dark/basic_bottom"
+  }
 }

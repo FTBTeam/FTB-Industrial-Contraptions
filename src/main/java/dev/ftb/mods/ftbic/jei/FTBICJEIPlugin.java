@@ -9,12 +9,14 @@ import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -33,7 +35,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistration r) {
-		r.registerSubtypeInterpreter(FTBICItems.FLUID_CELL.get(), FluidCellItem::getSubtype);
+		r.registerSubtypeInterpreter(FTBICItems.FLUID_CELL.get(), FTBICJEIPlugin::getSubtype);
 
 		r.useNbtForSubtypes(
 				FTBICItems.MECHANICAL_ELYTRA.get(),
@@ -42,9 +44,19 @@ public class FTBICJEIPlugin implements IModPlugin {
 		);
 	}
 
+	public static String getSubtype(ItemStack stack, UidContext context) {
+		CompoundTag nbt = stack.getTag();
+
+		if (nbt != null) {
+			return nbt.getString(FluidCellItem.TAG_FLUID);
+		}
+
+		return "";
+	}
+
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration r) {
-		r.addRecipeTransferHandler(new PoweredCraftingTableTransferHandler(), VanillaRecipeCategoryUid.CRAFTING);
+		r.addRecipeTransferHandler(new PoweredCraftingTableTransferHandler(r.getTransferHelper()), VanillaRecipeCategoryUid.CRAFTING);
 	}
 
 	@Override

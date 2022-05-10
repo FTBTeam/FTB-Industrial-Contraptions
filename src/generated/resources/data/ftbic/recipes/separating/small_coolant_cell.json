@@ -1,19 +1,19 @@
 {
-	"type": "ftbic:separating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"type": "forge:nbt",
-				"item": "ftbic:fluid_cell",
-				"count": 1,
-				"nbt": "{Fluid:\"minecraft:water\"}"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "ftbic:small_coolant_cell"
-		}
-	]
+  "type": "ftbic:separating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "type": "forge:nbt",
+        "item": "ftbic:fluid_cell",
+        "count": 1,
+        "nbt": "{Fluid:\"minecraft:water\"}"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:small_coolant_cell"
+    }
+  ]
 }

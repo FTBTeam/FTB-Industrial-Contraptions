@@ -1,7 +1,7 @@
 {
-	"variants": {
-		"": {
-			"model": "ftbic:block/machine_block"
-		}
-	}
+  "variants": {
+    "": {
+      "model": "ftbic:block/machine_block"
+    }
+  }
 }

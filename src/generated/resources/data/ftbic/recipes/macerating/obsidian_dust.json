@@ -1,16 +1,16 @@
 {
-	"type": "ftbic:macerating",
-	"inputItems": [
-		{
-			"ingredient": {
-				"tag": "forge:obsidian"
-			},
-			"count": 1
-		}
-	],
-	"outputItems": [
-		{
-			"item": "emendatusenigmatica:obsidian_dust"
-		}
-	]
+  "type": "ftbic:macerating",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:obsidian"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:obsidian_dust"
+    }
+  ]
 }

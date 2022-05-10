@@ -15,25 +15,31 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
 import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.world.ResourceElements;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.ConstantIntValue;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -41,12 +47,13 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
+import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeLootTableProvider;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +63,13 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import static dev.ftb.mods.ftbic.datagen.FTBICRecipesGen.*;
+import static dev.ftb.mods.ftbic.world.ResourceElements.COAL;
+import static dev.ftb.mods.ftbic.world.ResourceElements.DIAMOND;
+import static dev.ftb.mods.ftbic.world.ResourceElements.OBSIDIAN;
+import static dev.ftb.mods.ftbic.world.ResourceElements.*;
+import static dev.ftb.mods.ftbic.world.ResourceType.*;
 
 /**
  * @author LatvianModder
@@ -70,17 +84,17 @@ public class FTBICDataGenHandler {
 		ExistingFileHelper efh = event.getExistingFileHelper();
 
 		if (event.includeClient()) {
-			gen.addProvider(new ICLang(gen, MODID, "en_us"));
-			gen.addProvider(new ICTextures(gen, MODID, event.getExistingFileHelper()));
-			gen.addProvider(new ICBlockModels(gen, MODID, event.getExistingFileHelper()));
-			gen.addProvider(new ICBlockStates(gen, MODID, event.getExistingFileHelper()));
-			gen.addProvider(new ICItemModels(gen, MODID, event.getExistingFileHelper()));
+			gen.addProvider(new FTBICLang(gen, MODID, "en_us"));
+			gen.addProvider(new FTBICTextures(gen, MODID, efh));
+			gen.addProvider(new FTBICBlockModels(gen, MODID, efh));
+			gen.addProvider(new FTBICBlockStates(gen, MODID, efh));
+			gen.addProvider(new FTBICItemModels(gen, MODID, efh));
 		}
 
 		if (event.includeServer()) {
 			ICBlockTags blockTags = new ICBlockTags(gen, MODID, efh);
 			gen.addProvider(blockTags);
-			gen.addProvider(new ICItemTags(gen, blockTags, MODID, efh));
+			gen.addProvider(new FTBICItemTags(gen, blockTags, MODID, efh));
 			gen.addProvider(new FTBICComponentRecipes(gen));
 			gen.addProvider(new FTBICUpgradeRecipes(gen));
 			gen.addProvider(new FTBICCableRecipes(gen));
@@ -93,21 +107,38 @@ public class FTBICDataGenHandler {
 			gen.addProvider(new FTBICNuclearRecipes(gen));
 			gen.addProvider(new FTBICGeneratorFuelRecipes(gen));
 			gen.addProvider(new FTBICVanillaRecipes(gen));
-			gen.addProvider(new ICLootTableProvider(gen));
+			gen.addProvider(new FTBICLootTableProvider(gen));
+			gen.addProvider(new FTBICFurnaceRecipes(gen));
+			gen.addProvider(new FTBICMaceratingRecipes(gen));
+			gen.addProvider(new FTBICCraftingRecipes(gen));
+			gen.addProvider(new FTBICRollingRecipes(gen));
+			gen.addProvider(new FTBICExtrudingRecipes(gen));
 		}
 	}
 
-	private static class ICLang extends LanguageProvider {
-		public ICLang(DataGenerator gen, String modid, String locale) {
+	private static String titleCase(String input) {
+		return Character.toUpperCase(input.charAt(0)) + input.substring(1);
+	}
+
+	private static class FTBICLang extends LanguageProvider {
+		public FTBICLang(DataGenerator gen, String modid, String locale) {
 			super(gen, modid, locale);
 		}
 
 		private void addBlock(Supplier<Block> block) {
-			addBlock(block, Arrays.stream(block.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")));
+			addBlockWithSuffix(block, "");
+		}
+
+		private void addBlockWithSuffix(Supplier<Block> block, String suffix) {
+			addBlock(block, Arrays.stream(block.get().getRegistryName().getPath().split("_")).map(FTBICDataGenHandler::titleCase).collect(Collectors.joining(" ")) + suffix);
+		}
+
+		private void addItemWithSuffix(Supplier<Item> item, String suffix) {
+			addItem(item, Arrays.stream(item.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")));
 		}
 
 		private void addItem(Supplier<Item> item) {
-			addItem(item, Arrays.stream(item.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")));
+			addItemWithSuffix(item, "");
 		}
 
 		@Override
@@ -131,7 +162,11 @@ public class FTBICDataGenHandler {
 			addBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			addBlock(FTBICBlocks.NUKE);
 			addBlock(FTBICBlocks.ACTIVE_NUKE);
-			addBlock(FTBICBlocks.TRACTOR_BEAM);
+
+//			FTBICBlocks.RESOURCE_ORES.values()
+//					.forEach(this::addBlock);
+
+			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> v.forEach((k2, v2) -> addItemWithSuffix(v2, " " + titleCase(k.name().toLowerCase()))));
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);
@@ -212,7 +247,7 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICTextures extends CombinedTextureProvider {
+	private static class FTBICTextures extends CombinedTextureProvider {
 		public static final int WOOD_UNIVERSAL = 0;
 		public static final int BASIC_UNIVERSAL = 1;
 		public static final int BASIC_TOP = 2;
@@ -235,7 +270,7 @@ public class FTBICDataGenHandler {
 				"advanced_side"
 		};
 
-		public ICTextures(DataGenerator g, String mod, ExistingFileHelper efh) {
+		public FTBICTextures(DataGenerator g, String mod, ExistingFileHelper efh) {
 			super(g, mod, efh);
 		}
 
@@ -321,7 +356,7 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICBlockModels extends BlockModelProvider {
+	private static class FTBICBlockModels extends BlockModelProvider {
 		public static final String BASIC_TOP = "basic_top";
 		public static final String BASIC_BOTTOM = "basic_bottom";
 		public static final String BASIC_SIDE = "basic_side";
@@ -329,7 +364,7 @@ public class FTBICDataGenHandler {
 		public static final String ADVANCED_BOTTOM = "advanced_bottom";
 		public static final String ADVANCED_SIDE = "advanced_side";
 
-		public ICBlockModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
+		public FTBICBlockModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
 			super(generator, modid, existingFileHelper);
 		}
 
@@ -585,8 +620,8 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICBlockStates extends BlockStateProvider {
-		public ICBlockStates(DataGenerator gen, String modid, ExistingFileHelper exFileHelper) {
+	private static class FTBICBlockStates extends BlockStateProvider {
+		public FTBICBlockStates(DataGenerator gen, String modid, ExistingFileHelper exFileHelper) {
 			super(gen, modid, exFileHelper);
 		}
 
@@ -636,7 +671,36 @@ public class FTBICDataGenHandler {
 			simpleBlock(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get(), models().getExistingFile(modLoc("block/nuclear_reactor_chamber")));
 			simpleBlock(FTBICBlocks.NUKE.get(), models().getExistingFile(modLoc("block/nuke")));
 			simpleBlock(FTBICBlocks.ACTIVE_NUKE.get(), models().getExistingFile(modLoc("block/active_nuke")));
-			directionalBlock(FTBICBlocks.TRACTOR_BEAM.get(), models().getExistingFile(modLoc("block/tractor_beam")));
+
+			FTBICBlocks.RESOURCE_BLOCKS_OF.values().forEach(e -> simpleBlock(e.get()));
+
+			// Ores (Taken from EmendatusEnigmatica, thanks guys!)
+			FTBICBlocks.RESOURCE_ORES.forEach((key, value) -> {
+				ResourceLocation registryName = value.get().getRegistryName();
+				String overlayTexture = "block/ore_overlays/" + key.getName().replace("deepslate_", ""); // no deepslate textures
+
+				models().getBuilder(registryName.getPath())
+						.parent(new ModelFile.UncheckedModelFile(mcLoc("block/block")))
+						.texture("particle", modLoc(overlayTexture))
+						.transforms()
+						.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+						.rotation(75F, 45F, 0F)
+						.translation(0F, 2.5F, 0)
+						.scale(0.375F, 0.375F, 0.375F)
+						.end()
+						.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+						.rotation(75F, 45F, 0F)
+						.translation(0F, 2.5F, 0)
+						.scale(0.375F, 0.375F, 0.375F)
+						.end()
+						.end()
+						.customLoader(MultiLayerModelBuilder::begin)
+						.submodel(RenderType.solid(), this.models().nested().parent(this.models().getExistingFile(key.getName().contains("deepslate") ? mcLoc("block/deepslate") : mcLoc("block/stone"))))
+						.submodel(RenderType.translucent(), this.models().nested().parent(this.models().getExistingFile(mcLoc("block/cube_all"))).texture("all", modLoc(overlayTexture))						)
+						.end();
+
+				simpleBlock(value.get(), new ModelFile.UncheckedModelFile(modLoc("block/" + registryName.getPath())));
+			});
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
@@ -671,8 +735,8 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	private static class ICItemModels extends ItemModelProvider {
-		public ICItemModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
+	private static class FTBICItemModels extends ItemModelProvider {
+		public FTBICItemModels(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
 			super(generator, modid, existingFileHelper);
 		}
 
@@ -769,7 +833,6 @@ public class FTBICDataGenHandler {
 			basicBlockItem(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			basicBlockItem(FTBICBlocks.NUKE);
 			basicBlockItem(FTBICBlocks.ACTIVE_NUKE);
-			basicBlockItem(FTBICBlocks.TRACTOR_BEAM);
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (!machine.noModel) {
@@ -826,6 +889,18 @@ public class FTBICDataGenHandler {
 			basicItem(FTBICItems.QUANTUM_LEGGINGS);
 			basicItem(FTBICItems.QUANTUM_BOOTS);
 			basicItem(FTBICItems.NUKE_ARROW);
+
+			FTBICBlocks.RESOURCE_ORES.values().forEach(this::basicBlockItem);
+			FTBICBlocks.RESOURCE_BLOCKS_OF.values().forEach(this::basicBlockItem);
+
+			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> {
+				// Don't register ores as items
+				if (k.equals(ORE) || k.equals(BLOCK)) {
+					return;
+				}
+
+				v.forEach((k2, v2) -> basicItem(v2));
+			});
 		}
 	}
 
@@ -846,11 +921,45 @@ public class FTBICDataGenHandler {
 
 			tag(BlockTags.DRAGON_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
 			tag(BlockTags.WITHER_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
+
+			// Ore tags (Make them minable)
+			Block[] resourceOres = FTBICBlocks.RESOURCE_ORES.values().stream().map(Supplier::get).toArray(Block[]::new);
+			Block[] blockOfResources = FTBICBlocks.RESOURCE_BLOCKS_OF.values().stream().map(Supplier::get).toArray(Block[]::new);
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(resourceOres);
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(blockOfResources);
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
+					FTBICBlocks.ADVANCED_MACHINE_BLOCK.get(),
+					FTBICBlocks.MACHINE_BLOCK.get(),
+					FTBICBlocks.REINFORCED_GLASS.get(),
+					FTBICBlocks.REINFORCED_STONE.get(),
+					FTBICBlocks.IRON_FURNACE.get(),
+					FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get(),
+					FTBICBlocks.RUBBER_SHEET.get(),
+					FTBICBlocks.BURNT_CABLE.get(),
+					FTBICBlocks.LANDMARK.get(),
+					FTBICBlocks.EXFLUID.get(),
+					FTBICBlocks.NUKE.get()
+			);
+
+			Block[] cables = FTBICBlocks.CABLES.stream().map(Supplier::get).toArray(Block[]::new);
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(cables);
+
+			Block[] blocks = FTBICElectricBlocks.ALL.stream().map(e -> e.block.get()).toArray(Block[]::new);
+			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(blocks);
+
+			// Register the tags
+			FTBICBlocks.RESOURCE_ORES.forEach((k, v) -> {
+				// Use the same tag name for deepslate &
+				var name = k.getName().replace("deepslate_", "");
+				tag(TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("forge", "ores/" + name))).add(FTBICBlocks.RESOURCE_ORES.get(k).get());
+			});
+
+			tag(Tags.Blocks.ORES).add(resourceOres);
 		}
 	}
 
-	private static class ICItemTags extends ItemTagsProvider {
-		public ICItemTags(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, String modId, ExistingFileHelper existingFileHelper) {
+	private static class FTBICItemTags extends ItemTagsProvider {
+		public FTBICItemTags(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, String modId, ExistingFileHelper existingFileHelper) {
 			super(dataGenerator, blockTagProvider, modId, existingFileHelper);
 		}
 
@@ -858,14 +967,210 @@ public class FTBICDataGenHandler {
 		protected void addTags() {
 			tag(FTBICUtils.UNCANNABLE_FOOD).add(FTBICItems.CANNED_FOOD.get(), FTBICItems.PROTEIN_BAR.get());
 			tag(ItemTags.ARROWS).add(FTBICItems.NUKE_ARROW.get());
+
+			//INGOTS
+			tag(TIN_INGOT).add(FTBICItems.getResourceFromType(TIN, INGOT).orElseThrow().get());
+			tag(LEAD_INGOT).add(FTBICItems.getResourceFromType(LEAD, INGOT).orElseThrow().get());
+			tag(URANIUM_INGOT).add(FTBICItems.getResourceFromType(URANIUM, INGOT).orElseThrow().get());
+			tag(IRIDIUM_INGOT).add(FTBICItems.getResourceFromType(IRIDIUM, INGOT).orElseThrow().get());
+			tag(ENDERIUM_INGOT).add(FTBICItems.getResourceFromType(ENDERIUM, INGOT).orElseThrow().get());
+			tag(ALUMINUM_INGOT).add(FTBICItems.getResourceFromType(ALUMINUM, INGOT).orElseThrow().get());
+			tag(BRONZE_INGOT).add(FTBICItems.getResourceFromType(BRONZE, INGOT).orElseThrow().get());
+
+			tag(Tags.Items.INGOTS).addTag(TIN_INGOT);
+			tag(Tags.Items.INGOTS).addTag(LEAD_INGOT);
+			tag(Tags.Items.INGOTS).addTag(URANIUM_INGOT);
+			tag(Tags.Items.INGOTS).addTag(IRIDIUM_INGOT);
+			tag(Tags.Items.INGOTS).addTag(ENDERIUM_INGOT);
+			tag(Tags.Items.INGOTS).addTag(ALUMINUM_INGOT);
+			tag(Tags.Items.INGOTS).addTag(BRONZE_INGOT);
+
+			//BLOCKS
+			tag(TIN_BLOCK).add(FTBICItems.getResourceFromType(TIN, BLOCK).orElseThrow().get());
+			tag(LEAD_BLOCK).add(FTBICItems.getResourceFromType(LEAD, BLOCK).orElseThrow().get());
+			tag(URANIUM_BLOCK).add(FTBICItems.getResourceFromType(URANIUM, BLOCK).orElseThrow().get());
+			tag(IRIDIUM_BLOCK).add(FTBICItems.getResourceFromType(IRIDIUM, BLOCK).orElseThrow().get());
+			tag(ENDERIUM_BLOCK).add(FTBICItems.getResourceFromType(ENDERIUM, BLOCK).orElseThrow().get());
+			tag(ALUMINUM_BLOCK).add(FTBICItems.getResourceFromType(ALUMINUM, BLOCK).orElseThrow().get());
+			tag(BRONZE_BLOCK).add(FTBICItems.getResourceFromType(BRONZE, BLOCK).orElseThrow().get());
+
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(TIN_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(LEAD_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(URANIUM_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(IRIDIUM_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(ENDERIUM_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(ALUMINUM_BLOCK);
+			tag(Tags.Items.STORAGE_BLOCKS).addTag(BRONZE_BLOCK);
+
+			//CHUNKS
+			tag(TIN_CHUNK).add(FTBICItems.getResourceFromType(TIN, CHUNK).orElseThrow().get());
+			tag(LEAD_CHUNK).add(FTBICItems.getResourceFromType(LEAD, CHUNK).orElseThrow().get());
+			tag(URANIUM_CHUNK).add(FTBICItems.getResourceFromType(URANIUM, CHUNK).orElseThrow().get());
+			tag(IRIDIUM_CHUNK).add(FTBICItems.getResourceFromType(IRIDIUM, CHUNK).orElseThrow().get());
+			tag(ALUMINUM_CHUNK).add(FTBICItems.getResourceFromType(ALUMINUM, CHUNK).orElseThrow().get());
+
+			tag(Tags.Items.RAW_MATERIALS).addTag(TIN_CHUNK);
+			tag(Tags.Items.RAW_MATERIALS).addTag(LEAD_CHUNK);
+			tag(Tags.Items.RAW_MATERIALS).addTag(URANIUM_CHUNK);
+			tag(Tags.Items.RAW_MATERIALS).addTag(IRIDIUM_CHUNK);
+			tag(Tags.Items.RAW_MATERIALS).addTag(ALUMINUM_CHUNK);
+
+			//DUSTS
+			tag(TIN_DUST).add(FTBICItems.getResourceFromType(TIN, DUST).orElseThrow().get());
+			tag(LEAD_DUST).add(FTBICItems.getResourceFromType(LEAD, DUST).orElseThrow().get());
+			tag(URANIUM_DUST).add(FTBICItems.getResourceFromType(URANIUM, DUST).orElseThrow().get());
+			tag(IRIDIUM_DUST).add(FTBICItems.getResourceFromType(IRIDIUM, DUST).orElseThrow().get());
+			tag(ENDERIUM_DUST).add(FTBICItems.getResourceFromType(ENDERIUM, DUST).orElseThrow().get());
+			tag(ALUMINUM_DUST).add(FTBICItems.getResourceFromType(ALUMINUM, DUST).orElseThrow().get());
+			tag(DIAMOND_DUST).add(FTBICItems.getResourceFromType(DIAMOND, DUST).orElseThrow().get());
+			tag(IRON_DUST).add(FTBICItems.getResourceFromType(IRON, DUST).orElseThrow().get());
+			tag(COPPER_DUST).add(FTBICItems.getResourceFromType(COPPER, DUST).orElseThrow().get());
+			tag(GOLD_DUST).add(FTBICItems.getResourceFromType(GOLD, DUST).orElseThrow().get());
+			tag(BRONZE_DUST).add(FTBICItems.getResourceFromType(BRONZE, DUST).orElseThrow().get());
+			tag(OBSIDIAN_DUST).add(FTBICItems.getResourceFromType(OBSIDIAN, DUST).orElseThrow().get());
+			tag(COAL_DUST).add(FTBICItems.getResourceFromType(COAL, DUST).orElseThrow().get());
+			tag(CHARCOAL_DUST).add(FTBICItems.getResourceFromType(CHARCOAL, DUST).orElseThrow().get());
+			tag(ENDER_DUST).add(FTBICItems.getResourceFromType(ENDER, DUST).orElseThrow().get());
+
+			tag(Tags.Items.DUSTS).addTag(TIN_DUST);
+			tag(Tags.Items.DUSTS).addTag(LEAD_DUST);
+			tag(Tags.Items.DUSTS).addTag(URANIUM_DUST);
+			tag(Tags.Items.DUSTS).addTag(IRIDIUM_DUST);
+			tag(Tags.Items.DUSTS).addTag(ENDERIUM_DUST);
+			tag(Tags.Items.DUSTS).addTag(ALUMINUM_DUST);
+			tag(Tags.Items.DUSTS).addTag(DIAMOND_DUST);
+			tag(Tags.Items.DUSTS).addTag(IRON_DUST);
+			tag(Tags.Items.DUSTS).addTag(COPPER_DUST);
+			tag(Tags.Items.DUSTS).addTag(GOLD_DUST);
+			tag(Tags.Items.DUSTS).addTag(BRONZE_DUST);
+			tag(Tags.Items.DUSTS).addTag(OBSIDIAN_DUST);
+			tag(Tags.Items.DUSTS).addTag(COAL_DUST);
+			tag(Tags.Items.DUSTS).addTag(CHARCOAL_DUST);
+			tag(Tags.Items.DUSTS).addTag(ENDER_DUST);
+
+			//PLATES
+			tag(TIN_PLATE).add(FTBICItems.getResourceFromType(TIN, PLATE).orElseThrow().get());
+			tag(LEAD_PLATE).add(FTBICItems.getResourceFromType(LEAD, PLATE).orElseThrow().get());
+			tag(URANIUM_PLATE).add(FTBICItems.getResourceFromType(URANIUM, PLATE).orElseThrow().get());
+			tag(IRIDIUM_PLATE).add(FTBICItems.getResourceFromType(IRIDIUM, PLATE).orElseThrow().get());
+			tag(ENDERIUM_PLATE).add(FTBICItems.getResourceFromType(ENDERIUM, PLATE).orElseThrow().get());
+			tag(ALUMINUM_PLATE).add(FTBICItems.getResourceFromType(ALUMINUM, PLATE).orElseThrow().get());
+			tag(IRON_PLATE).add(FTBICItems.getResourceFromType(IRON, PLATE).orElseThrow().get());
+			tag(GOLD_PLATE).add(FTBICItems.getResourceFromType(GOLD, PLATE).orElseThrow().get());
+			tag(COPPER_PLATE).add(FTBICItems.getResourceFromType(COPPER, PLATE).orElseThrow().get());
+			tag(BRONZE_PLATE).add(FTBICItems.getResourceFromType(BRONZE, PLATE).orElseThrow().get());
+
+			tag(PLATES).addTag(TIN_PLATE);
+			tag(PLATES).addTag(LEAD_PLATE);
+			tag(PLATES).addTag(URANIUM_PLATE);
+			tag(PLATES).addTag(IRIDIUM_PLATE);
+			tag(PLATES).addTag(ENDERIUM_PLATE);
+			tag(PLATES).addTag(ALUMINUM_PLATE);
+			tag(PLATES).addTag(IRON_PLATE);
+			tag(PLATES).addTag(GOLD_PLATE);
+			tag(PLATES).addTag(COPPER_PLATE);
+			tag(PLATES).addTag(BRONZE_PLATE);
+
+			//NUGGETS
+			tag(TIN_NUGGET).add(FTBICItems.getResourceFromType(TIN, NUGGET).orElseThrow().get());
+			tag(LEAD_NUGGET).add(FTBICItems.getResourceFromType(LEAD, NUGGET).orElseThrow().get());
+			tag(URANIUM_NUGGET).add(FTBICItems.getResourceFromType(URANIUM, NUGGET).orElseThrow().get());
+			tag(IRIDIUM_NUGGET).add(FTBICItems.getResourceFromType(IRIDIUM, NUGGET).orElseThrow().get());
+			tag(ENDERIUM_NUGGET).add(FTBICItems.getResourceFromType(ENDERIUM, NUGGET).orElseThrow().get());
+			tag(ALUMINUM_NUGGET).add(FTBICItems.getResourceFromType(ALUMINUM, NUGGET).orElseThrow().get());
+			tag(COPPER_NUGGET).add(FTBICItems.getResourceFromType(COPPER, NUGGET).orElseThrow().get());
+			tag(BRONZE_NUGGET).add(FTBICItems.getResourceFromType(BRONZE, NUGGET).orElseThrow().get());
+
+
+			tag(Tags.Items.NUGGETS).addTag(TIN_NUGGET);
+			tag(Tags.Items.NUGGETS).addTag(LEAD_NUGGET);
+			tag(Tags.Items.NUGGETS).addTag(URANIUM_NUGGET);
+			tag(Tags.Items.NUGGETS).addTag(IRIDIUM_NUGGET);
+			tag(Tags.Items.NUGGETS).addTag(ENDERIUM_NUGGET);
+			tag(Tags.Items.NUGGETS).addTag(ALUMINUM_NUGGET);
+			tag(Tags.Items.NUGGETS).addTag(COPPER_NUGGET);
+			tag(Tags.Items.NUGGETS).addTag(BRONZE_NUGGET);
+
+			//RODS
+			tag(TIN_ROD).add(FTBICItems.getResourceFromType(TIN, ROD).orElseThrow().get());
+			tag(LEAD_ROD).add(FTBICItems.getResourceFromType(LEAD, ROD).orElseThrow().get());
+			tag(URANIUM_ROD).add(FTBICItems.getResourceFromType(URANIUM, ROD).orElseThrow().get());
+			tag(IRIDIUM_ROD).add(FTBICItems.getResourceFromType(IRIDIUM, ROD).orElseThrow().get());
+			tag(ENDERIUM_ROD).add(FTBICItems.getResourceFromType(ENDERIUM, ROD).orElseThrow().get());
+			tag(ALUMINUM_ROD).add(FTBICItems.getResourceFromType(ALUMINUM, ROD).orElseThrow().get());
+			tag(IRON_ROD).add(FTBICItems.getResourceFromType(IRON, ROD).orElseThrow().get());
+			tag(COPPER_ROD).add(FTBICItems.getResourceFromType(COPPER, ROD).orElseThrow().get());
+			tag(GOLD_ROD).add(FTBICItems.getResourceFromType(GOLD, ROD).orElseThrow().get());
+			tag(BRONZE_ROD).add(FTBICItems.getResourceFromType(BRONZE, ROD).orElseThrow().get());
+
+
+			tag(RODS).addTag(TIN_ROD);
+			tag(RODS).addTag(LEAD_ROD);
+			tag(RODS).addTag(URANIUM_ROD);
+			tag(RODS).addTag(IRIDIUM_ROD);
+			tag(RODS).addTag(ENDERIUM_ROD);
+			tag(RODS).addTag(ALUMINUM_ROD);
+			tag(RODS).addTag(IRON_ROD);
+			tag(RODS).addTag(COPPER_ROD);
+			tag(RODS).addTag(GOLD_ROD);
+			tag(RODS).addTag(BRONZE_ROD);
+
+
+			//GEARS
+			tag(TIN_GEAR).add(FTBICItems.getResourceFromType(TIN, GEAR).orElseThrow().get());
+			tag(LEAD_GEAR).add(FTBICItems.getResourceFromType(LEAD, GEAR).orElseThrow().get());
+			tag(URANIUM_GEAR).add(FTBICItems.getResourceFromType(URANIUM, GEAR).orElseThrow().get());
+			tag(IRIDIUM_GEAR).add(FTBICItems.getResourceFromType(IRIDIUM, GEAR).orElseThrow().get());
+			tag(ENDERIUM_GEAR).add(FTBICItems.getResourceFromType(ENDERIUM, GEAR).orElseThrow().get());
+			tag(ALUMINUM_GEAR).add(FTBICItems.getResourceFromType(ALUMINUM, GEAR).orElseThrow().get());
+			tag(IRON_GEAR).add(FTBICItems.getResourceFromType(IRON, GEAR).orElseThrow().get());
+			tag(GOLD_GEAR).add(FTBICItems.getResourceFromType(GOLD, GEAR).orElseThrow().get());
+			tag(COPPER_GEAR).add(FTBICItems.getResourceFromType(COPPER, GEAR).orElseThrow().get());
+			tag(BRONZE_GEAR).add(FTBICItems.getResourceFromType(BRONZE, GEAR).orElseThrow().get());
+
+			tag(GEARS).addTag(TIN_GEAR);
+			tag(GEARS).addTag(LEAD_GEAR);
+			tag(GEARS).addTag(URANIUM_GEAR);
+			tag(GEARS).addTag(IRIDIUM_GEAR);
+			tag(GEARS).addTag(ENDERIUM_GEAR);
+			tag(GEARS).addTag(ALUMINUM_GEAR);
+			tag(GEARS).addTag(IRON_GEAR);
+			tag(GEARS).addTag(GOLD_GEAR);
+			tag(GEARS).addTag(COPPER_GEAR);
+			tag(GEARS).addTag(BRONZE_GEAR);
+
+
+			//ORES
+			tag(TIN_ORE).add(FTBICItems.getResourceFromType(TIN, ORE).orElseThrow().get());
+			tag(TIN_ORE).add(FTBICItems.getResourceFromType(DEEPSLATE_TIN, ORE).orElseThrow().get());
+			tag(LEAD_ORE).add(FTBICItems.getResourceFromType(LEAD, ORE).orElseThrow().get());
+			tag(LEAD_ORE).add(FTBICItems.getResourceFromType(DEEPSLATE_LEAD, ORE).orElseThrow().get());
+			tag(URANIUM_ORE).add(FTBICItems.getResourceFromType(URANIUM, ORE).orElseThrow().get());
+			tag(URANIUM_ORE).add(FTBICItems.getResourceFromType(DEEPSLATE_URANIUM, ORE).orElseThrow().get());
+			tag(IRIDIUM_ORE).add(FTBICItems.getResourceFromType(IRIDIUM, ORE).orElseThrow().get());
+			tag(IRIDIUM_ORE).add(FTBICItems.getResourceFromType(DEEPSLATE_IRIDIUM, ORE).orElseThrow().get());
+			tag(ALUMINUM_ORE).add(FTBICItems.getResourceFromType(ALUMINUM, ORE).orElseThrow().get());
+			tag(ALUMINUM_ORE).add(FTBICItems.getResourceFromType(DEEPSLATE_ALUMINUM, ORE).orElseThrow().get());
+
+			tag(Tags.Items.ORES).addTag(TIN_ORE);
+			tag(Tags.Items.ORES).addTag(LEAD_ORE);
+			tag(Tags.Items.ORES).addTag(URANIUM_ORE);
+			tag(Tags.Items.ORES).addTag(IRIDIUM_ORE);
+			tag(Tags.Items.ORES).addTag(ALUMINUM_ORE);
+
+			tag(SILICON).add(SILICON_ITEM);
 		}
 	}
 
-	private static class ICLootTableProvider extends ForgeLootTableProvider {
-		private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> lootTables = Lists.newArrayList(Pair.of(ICBlockLootTableProvider::new, LootContextParamSets.BLOCK));
+	private static class FTBICLootTableProvider extends LootTableProvider {
+		private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> lootTables = Lists.newArrayList(Pair.of(FTBICBlockLootTableProvider::new, LootContextParamSets.BLOCK));
 
-		public ICLootTableProvider(DataGenerator dataGeneratorIn) {
+		public FTBICLootTableProvider(DataGenerator dataGeneratorIn) {
 			super(dataGeneratorIn);
+		}
+
+		@Override
+		protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationtracker) {
 		}
 
 		@Override
@@ -874,7 +1179,7 @@ public class FTBICDataGenHandler {
 		}
 	}
 
-	public static class ICBlockLootTableProvider extends BlockLoot {
+	public static class FTBICBlockLootTableProvider extends BlockLoot {
 		private final Map<ResourceLocation, LootTable.Builder> tables = Maps.newHashMap();
 
 		@Override
@@ -894,17 +1199,28 @@ public class FTBICDataGenHandler {
 			dropSelf(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get());
 			dropSelf(FTBICBlocks.NUKE.get());
 
+			FTBICBlocks.RESOURCE_BLOCKS_OF.forEach((k, v) -> dropSelf(v.get()));
+
+			// Ore drops
+			FTBICBlocks.RESOURCE_ORES.forEach((k, v) -> {
+				ResourceElements.getNonDeepslateVersion(k).ifPresent(e -> {
+					if (e.requirements().has(CHUNK)) {
+						add(v.get(), createOreDrop(v.get(), FTBICItems.getResourceFromType(e, CHUNK).orElseThrow().get()));
+					}
+				});
+			});
+
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				if (machine.canBurn) {
 					add(machine.block.get(), LootTable.lootTable()
 							.withPool(LootPool.lootPool()
 									.when(new BurntBlockCondition.Builder().invert())
-									.setRolls(ConstantIntValue.exactly(1))
+									.setRolls(ConstantValue.exactly(1))
 									.add(LootItem.lootTableItem(machine.item.get()))
 							)
 							.withPool(LootPool.lootPool()
 									.when(new BurntBlockCondition.Builder())
-									.setRolls(ConstantIntValue.exactly(1))
+									.setRolls(ConstantValue.exactly(1))
 									.add(LootItem.lootTableItem(machine.advanced ? FTBICItems.ADVANCED_MACHINE_BLOCK.get() : FTBICItems.MACHINE_BLOCK.get()))
 							)
 					);

@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:rolling",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:ingots/uranium"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:uranium_plate",
+      "count": 2
+    }
+  ]
+}

@@ -19,7 +19,7 @@ public class GeothermalGeneratorScreen extends ElectricBlockScreen<GeothermalGen
 	protected void renderBg(PoseStack poseStack, float delta, int mouseX, int mouseY) {
 		super.renderBg(poseStack, delta, mouseX, mouseY);
 
-		drawTank(poseStack, leftPos + 97, topPos + 16, new FluidStack(Fluids.LAVA, menu.data.get(SyncedData.BAR)), FTBICConfig.GEOTHERMAL_GENERATOR_TANK_SIZE);
+		drawTank(poseStack, leftPos + 97, topPos + 16, new FluidStack(Fluids.LAVA, menu.data.get(SyncedData.BAR)), FTBICConfig.MACHINES.GEOTHERMAL_GENERATOR_TANK_SIZE.get());
 
 		drawSlot(poseStack, leftPos + 61, topPos + 16);
 		drawSlot(poseStack, leftPos + 61, topPos + 52);

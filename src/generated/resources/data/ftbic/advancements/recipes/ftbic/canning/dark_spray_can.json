@@ -1,32 +1,34 @@
 {
-	"parent": "minecraft:recipes/root",
-	"rewards": {
-		"recipes": [
-			"ftbic:canning/dark_spray_can"
-		]
-	},
-	"criteria": {
-		"has_item": {
-			"trigger": "minecraft:inventory_changed",
-			"conditions": {
-				"items": [
-					{
-						"item": "ftbic:fluid_cell"
-					}
-				]
-			}
-		},
-		"has_the_recipe": {
-			"trigger": "minecraft:recipe_unlocked",
-			"conditions": {
-				"recipe": "ftbic:canning/dark_spray_can"
-			}
-		}
-	},
-	"requirements": [
-		[
-			"has_item",
-			"has_the_recipe"
-		]
-	]
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "ftbic:canning/dark_spray_can"
+    ]
+  },
+  "criteria": {
+    "has_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "ftbic:fluid_cell"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "ftbic:canning/dark_spray_can"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_item",
+      "has_the_recipe"
+    ]
+  ]
 }

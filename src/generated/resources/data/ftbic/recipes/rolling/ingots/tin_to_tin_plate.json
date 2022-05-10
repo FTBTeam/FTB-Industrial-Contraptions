@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:rolling",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:ingots/tin"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:tin_plate",
+      "count": 2
+    }
+  ]
+}

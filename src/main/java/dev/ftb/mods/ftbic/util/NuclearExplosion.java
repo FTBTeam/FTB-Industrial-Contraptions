@@ -11,9 +11,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.GrassBlock;
@@ -182,7 +182,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 
 		@Override
 		public void execute(NuclearExplosion explosion) {
-			if (state.useShapeForLightOcclusion() || old.useShapeForLightOcclusion() || state.getLightBlock(explosion.level, pos) != oldOpacity || state.getLightValue(explosion.level, pos) != oldLight) {
+			if (state.useShapeForLightOcclusion() || old.useShapeForLightOcclusion() || state.getLightBlock(explosion.level, pos) != oldOpacity || state.getLightEmission(explosion.level, pos) != oldLight) {
 				explosion.level.getProfiler().push("queueCheckLight");
 				explosion.level.getLightEngine().checkBlock(pos);
 				explosion.level.getProfiler().pop();
@@ -222,7 +222,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 		public void create() {
 			NuclearExplosion explosion = new NuclearExplosion(level, pos, radius, owner, ownerName, delay, preExplosion);
 
-			if (FTBICConfig.NUCLEAR_EXPLOSION_DAEMON_THREAD) {
+			if (FTBICConfig.NUCLEAR.NUCLEAR_EXPLOSION_DAEMON_THREAD.get()) {
 				explosion.setDaemon(true);
 			}
 
@@ -260,7 +260,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 		int rxz = Mth.ceil(radius);
 		double ry = Math.min(radius * 0.75D, 60);
 		double rys = ry / radius;
-		int ry0 = Math.max(pos.getY() - Mth.ceil(ry * 2D), 0);
+		int ry0 = Math.max(pos.getY() - Mth.ceil(ry * 2D), level.getMinBuildHeight());
 		int ry1 = Math.min(pos.getY() + Mth.ceil(ry * 2D), level.getHeight()) - 1;
 		double rsq = radius * radius;
 		double rsqc = (radius * 0.65D) * (radius * 0.65D);
@@ -299,7 +299,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 
 				boolean blockProtected = FTBChunksIntegration.instance.isProtected(level, mpos, owner) || !level.mayInteract(player, mpos);
 
-				if (!Level.isInWorldBounds(mpos)) {
+				if (!level.isInWorldBounds(mpos)) {
 					continue;
 				}
 
@@ -311,7 +311,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 					if (dist <= rsq) {
 						mpos.setY(y);
 
-						if (Level.isOutsideBuildHeight(mpos)) {
+						if (level.isOutsideBuildHeight(mpos)) {
 							continue;
 						}
 
@@ -324,7 +324,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 								blocks.put(ipos, FLAG_IN_EXPLOSION | FLAG_IS_REINFORCED | FLAG_INSIDE);
 							} else if (state.isAir()) {
 								blocks.put(ipos, FLAG_IN_EXPLOSION | FLAG_IS_AIR | FLAG_INSIDE);
-							} else if (FTBICUtils.REINFORCED.contains(state.getBlock()) || state.getDestroySpeed(level, mpos) < 0F) {
+							} else if (state.is(FTBICUtils.REINFORCED) || state.getDestroySpeed(level, mpos) < 0F) {
 								blocks.put(ipos, FLAG_IN_EXPLOSION | FLAG_IS_REINFORCED | FLAG_INSIDE);
 							} else {
 								blocks.put(ipos, FLAG_IN_EXPLOSION | FLAG_IS_BLOCK | FLAG_INSIDE);
@@ -453,7 +453,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 				try {
 					BlockPos p = entry.getKey();
 					BlockState state = level.getBlockState(p);
-					int oldLight = state.getLightValue(level, pos);
+					int oldLight = state.getLightEmission(level, pos);
 					int oldOpacity = state.getLightBlock(level, pos);
 
 					tasks.add(new BlockModification(p, air, 2, 0));
@@ -471,16 +471,16 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 				try {
 					BlockPos p = entry.getKey();
 					BlockState state = level.getBlockState(p);
-					int oldLight = state.getLightValue(level, pos);
+					int oldLight = state.getLightEmission(level, pos);
 					int oldOpacity = state.getLightBlock(level, pos);
 
 					if (state.getBlock() instanceof GrassBlock) {
 						tasks.add(new BlockModification(p, podzol));
 						tasks.add(new LightUpdate(p, state, podzol, oldLight, oldOpacity));
-					} else if (Tags.Blocks.DIRT.contains(state.getBlock())) {
+					} else if (state.is(BlockTags.DIRT)) {
 						tasks.add(new BlockModification(p, coarseDirt));
 						tasks.add(new LightUpdate(p, state, coarseDirt, oldLight, oldOpacity));
-					} else if (state.getMaterial() == Material.STONE || Tags.Blocks.GRAVEL.contains(state.getBlock()) || Tags.Blocks.SAND.contains(state.getBlock())) {
+					} else if (state.getMaterial() == Material.STONE || state.is(Tags.Blocks.GRAVEL) || state.is(Tags.Blocks.SAND)) {
 						if (random.nextInt(10) == 0) {
 							BlockState burnt = getBurntBlock(random);
 							tasks.add(new BlockModification(p, burnt));
@@ -511,7 +511,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 				try {
 					BlockPos p = entry.getKey();
 					BlockState state = level.getBlockState(p);
-					int oldLight = state.getLightValue(level, pos);
+					int oldLight = state.getLightEmission(level, pos);
 					int oldOpacity = state.getLightBlock(level, pos);
 
 					if (random.nextInt(60) == 0) {
