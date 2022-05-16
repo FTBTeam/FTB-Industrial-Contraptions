@@ -229,6 +229,10 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 					set.add(s);
 				}
 			} else if (FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get() > 0D) {
+				if (entity == null) {
+					return;
+				}
+
 				LazyOptional<IEnergyStorage> energyCap = entity.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite());
 				IEnergyStorage feStorage = energyCap.orElse(null);
 
