@@ -9,7 +9,7 @@ apply from: 'https://files.latmod.com/public/markdown-git-changelog.gradle'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = 17
 
 def ENV = System.getenv()
-version = "${mod_version}-build.${ENV.GITHUB_RUN_NUMBER ?: 9999}"
+version = "${mod_version}-build.${ENV.GITHUB_RUN_NUMBER ?: 'preview'}"
 archivesBaseName = project.archives_base_name
 group = project.maven_group
 

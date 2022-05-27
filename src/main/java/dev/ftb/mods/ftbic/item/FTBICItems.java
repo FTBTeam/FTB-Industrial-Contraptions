@@ -22,6 +22,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -160,6 +161,6 @@ public interface FTBICItems {
 	 */
 	Map<ResourceType, Map<ResourceElements, Supplier<Item>>> RESOURCE_TYPE_MAP = ResourceType.VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> {
 		var elementsForType = ResourceElements.RESOURCES_BY_REQUIREMENT.get(e);
-		return elementsForType.stream().collect(Collectors.toMap(Function.identity(), a -> REGISTRY.register(a.getName() + "_" + e.name().toLowerCase(), () -> e == ResourceType.ORE || e == ResourceType.BLOCK ? new BlockItem((e == ResourceType.BLOCK ? FTBICBlocks.RESOURCE_BLOCKS_OF.get(a) : FTBICBlocks.RESOURCE_ORES.get(a)).get(), new Item.Properties().tab(FTBIC.TAB)) : new ResourceItem(e))));
+		return elementsForType.stream().collect(Collectors.toMap(Function.identity(), a -> REGISTRY.register(a.getName() + "_" + e.name().toLowerCase(Locale.ENGLISH), () -> e == ResourceType.ORE || e == ResourceType.BLOCK ? new BlockItem((e == ResourceType.BLOCK ? FTBICBlocks.RESOURCE_BLOCKS_OF.get(a) : FTBICBlocks.RESOURCE_ORES.get(a)).get(), new Item.Properties().tab(FTBIC.TAB)) : new ResourceItem(e))));
 	}));
 }

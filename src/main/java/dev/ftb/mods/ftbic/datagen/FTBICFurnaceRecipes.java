@@ -1,8 +1,8 @@
 package dev.ftb.mods.ftbic.datagen;
 
 import dev.ftb.mods.ftbic.item.FTBICItems;
-import dev.ftb.mods.ftbic.world.ResourceType;
 import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
@@ -14,6 +14,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 
 public class FTBICFurnaceRecipes extends FTBICRecipesGen {
@@ -41,10 +42,10 @@ public class FTBICFurnaceRecipes extends FTBICRecipesGen {
 		for (TagKey<Item> item : input) {
 			SimpleCookingRecipeBuilder.cooking(Ingredient.of(item), FTBICItems.getResourceFromType(element, type).orElseThrow().get(), 0.7F, 200, RecipeSerializer.SMELTING_RECIPE)
 					.unlockedBy("has_item", has(item))
-					.save(consumer, smeltingLoc(item.location().getPath() + "_to_" + type.name().toLowerCase()));
+					.save(consumer, smeltingLoc(item.location().getPath() + "_to_" + type.name().toLowerCase(Locale.ENGLISH)));
 			SimpleCookingRecipeBuilder.cooking(Ingredient.of(item), FTBICItems.getResourceFromType(element, type).orElseThrow().get(), 0.7F, 200, RecipeSerializer.BLASTING_RECIPE)
 					.unlockedBy("has_item", has(item))
-					.save(consumer, blastingLoc(item.location().getPath() + "_to_" + type.name().toLowerCase()));
+					.save(consumer, blastingLoc(item.location().getPath() + "_to_" + type.name().toLowerCase(Locale.ENGLISH)));
 		}
 	}
 

@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.world;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -50,7 +51,7 @@ public enum ResourceElements {
     }
 
     public String getName() {
-        return name().toLowerCase();
+        return name().toLowerCase(Locale.ENGLISH);
     }
 
 	public Requirements requirements() {
