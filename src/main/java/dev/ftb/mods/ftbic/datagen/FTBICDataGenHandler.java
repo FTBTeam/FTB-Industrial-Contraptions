@@ -58,6 +58,7 @@ import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -166,7 +167,7 @@ public class FTBICDataGenHandler {
 //			FTBICBlocks.RESOURCE_ORES.values()
 //					.forEach(this::addBlock);
 
-			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> v.forEach((k2, v2) -> addItemWithSuffix(v2, " " + titleCase(k.name().toLowerCase()))));
+			FTBICItems.RESOURCE_TYPE_MAP.forEach((k, v) -> v.forEach((k2, v2) -> addItemWithSuffix(v2, " " + titleCase(k.name().toLowerCase(Locale.ENGLISH)))));
 
 			for (ElectricBlockInstance machine : FTBICElectricBlocks.ALL) {
 				addBlock(machine.block, machine.name);

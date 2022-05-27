@@ -1,8 +1,8 @@
 package dev.ftb.mods.ftbic.datagen;
 
 import dev.ftb.mods.ftbic.item.FTBICItems;
-import dev.ftb.mods.ftbic.world.ResourceType;
 import dev.ftb.mods.ftbic.world.ResourceElements;
+import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.TagKey;
@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 
 public class FTBICMaceratingRecipes extends FTBICRecipesGen{
@@ -49,7 +50,7 @@ public class FTBICMaceratingRecipes extends FTBICRecipesGen{
 					.unlockedBy("has_item", has(item))
 					.inputItem(Ingredient.of(item))
 					.outputItem(new ItemStack(FTBICItems.getResourceFromType(element, type).orElseThrow().get(), count))
-					.save(consumer, maceratingLoc(item.location().getPath() + "_to_" + type.name().toLowerCase()));
+					.save(consumer, maceratingLoc(item.location().getPath() + "_to_" + type.name().toLowerCase(Locale.ENGLISH)));
 		}
 	}
 
