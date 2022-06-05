@@ -78,6 +78,7 @@
   "ftbic.fuse_info": "Right-click with a Fuse on this machine to repair it!",
   "ftbic.max_input": "Max Input: %s",
   "ftbic.requires_chestplate": "Requires Chestplate to function",
+  "ftbic.zap_to_fe_conversion": "Allows one-way conversion of %1$s to FE (1 %1$s = %2$s FE)",
   "item.ftbic.advanced_alloy": "Advanced Alloy",
   "item.ftbic.advanced_circuit": "Advanced Circuit",
   "item.ftbic.advanced_heat_exchanger": "Advanced Heat Exchanger",
