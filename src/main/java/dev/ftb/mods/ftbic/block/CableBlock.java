@@ -24,6 +24,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -62,8 +63,10 @@ public class CableBlock extends BaseCableBlock {
 		} else if (state.getBlock() instanceof ElectricBlock) {
 			return true;
 		} else if (!state.isAir()) {
-			BlockEntity t = world.getBlockEntity(pos);
-			return t instanceof EnergyHandler || FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get() > 0D && t != null && t.getCapability(CapabilityEnergy.ENERGY, face).isPresent();
+			BlockEntity be = world.getBlockEntity(pos);
+			if (FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get() > 0D && be instanceof EnergyHandler) {
+				return be.getCapability(CapabilityEnergy.ENERGY, face).map(IEnergyStorage::canReceive).isPresent();
+			}
 		}
 
 		return false;
@@ -111,5 +114,9 @@ public class CableBlock extends BaseCableBlock {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> list, TooltipFlag flag) {
 		list.add(new TranslatableComponent("ftbic.max_input", FTBICUtils.formatEnergy(tier.transferRate).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		var feRatio = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
+		if (feRatio > 0D) {
+			list.add(new TranslatableComponent("ftbic.zap_to_fe_conversion", FTBICConfig.ENERGY_FORMAT, feRatio).withStyle(ChatFormatting.DARK_GRAY));
+		}
 	}
 }

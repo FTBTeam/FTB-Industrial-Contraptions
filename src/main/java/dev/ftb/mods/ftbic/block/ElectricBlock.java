@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
@@ -260,6 +261,10 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 
 		if (electricBlockInstance.maxEnergyOutput > 0D) {
 			list.add(new TranslatableComponent("ftbic.energy_output", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyOutput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+			var feRatio = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
+			if (feRatio > 0D) {
+				list.add(new TranslatableComponent("ftbic.zap_to_fe_conversion", FTBICConfig.ENERGY_FORMAT, feRatio).withStyle(ChatFormatting.DARK_GRAY));
+			}
 		}
 
 		if (electricBlockInstance.energyUsage > 0D) {

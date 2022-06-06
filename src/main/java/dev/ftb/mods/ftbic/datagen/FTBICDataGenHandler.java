@@ -240,6 +240,7 @@ public class FTBICDataGenHandler {
 			add("ftbic.fuse_info", "Right-click with a Fuse on this machine to repair it!");
 			add("ftbic.any_item", "Any Item");
 			add("ftbic.requires_chestplate", "Requires Chestplate to function");
+			add("ftbic.zap_to_fe_conversion", "Allows one-way conversion of %1$s to FE (1 %1$s = %2$s FE)");
 			add("item.ftbic.spray_paint_can.tooltip", "Right-click on a machine to change its theme");
 			add("block.ftbic.teleporter.perm_error", "Only owner of this teleporter can change it's settings!");
 			add("block.ftbic.teleporter.load_error", "The destination chunk has to be loaded!");

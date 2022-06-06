@@ -101,7 +101,7 @@ public class FTBICConfig {
 			HV_TRANSFER_RATE = b().comment("Hv Transfer Rate (how much energy is transferred per tick)").defineInRange("Hv Transfer Rate", 512D, 1D, Double.POSITIVE_INFINITY);
 			EV_TRANSFER_RATE = b().comment("Ev Transfer Rate (how much energy is transferred per tick)").defineInRange("Ev Transfer Rate", 2_048D, 1D, Double.POSITIVE_INFINITY);
 			IV_TRANSFER_RATE = b().comment("Iv Transfer Rate (how much energy is transferred per tick)").defineInRange("Iv Transfer Rate", 8_192D, 1D, Double.POSITIVE_INFINITY);
-			ZAP_TO_FE_CONVERSION_RATE = b().comment("The amount of Zaps to FE").defineInRange("Zap To Fe Conversion Rate", 4.0D, 1D, Double.POSITIVE_INFINITY);
+			ZAP_TO_FE_CONVERSION_RATE = b().comment("The amount of Zaps to FE").defineInRange("Zap To Fe Conversion Rate", 4.0D, 0D, Double.POSITIVE_INFINITY);
 			SINGLE_USE_BATTERY_CAPACITY = b().comment("The amount of energy a single use battery can contain").defineInRange("Single Use Battery Capacity", 2_400D, 1D, Double.POSITIVE_INFINITY);
 			LV_BATTERY_CAPACITY = b().comment("Energy a Lv Battery can contain").defineInRange("Lv Battery Capacity", 4_000D, 1D, Double.POSITIVE_INFINITY);
 			MV_BATTERY_CAPACITY = b().comment("Energy a Mv Battery can contain").defineInRange("Mv Battery Capacity", 40_000D, 1D, Double.POSITIVE_INFINITY);

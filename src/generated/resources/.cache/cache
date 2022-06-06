@@ -66,7 +66,7 @@ cff08c53bd481a3a4f5e3176f6878339ff4b3c2a assets/ftbic/blockstates/tin_ore.json
 dc32d7b7c0000308ed5d006639c6aebe7827ad7b assets/ftbic/blockstates/uranium_block.json
 e728379df978e262be04aab67e1304e2bcce0199 assets/ftbic/blockstates/uranium_ore.json
 7555a47a5e01cc30fe349a96af06a6189b018950 assets/ftbic/blockstates/wind_mill.json
-fc7c48b07643377c3200d18a67977b629c32b898 assets/ftbic/lang/en_us.json
+56eeeba1d4ec8b06f279d9815917d0d6033a5d79 assets/ftbic/lang/en_us.json
 a065a23b07d8160a5c1826e33f8fdef051f9b9d9 assets/ftbic/models/block/active_nuke.json
 32a8fcccb6a46281b355b13187ab3268564e23ca assets/ftbic/models/block/advanced_machine_block.json
 5999c13ee7afe248498b433a99ec39c5a60960c7 assets/ftbic/models/block/aluminum_block.json
@@ -566,12 +566,12 @@ dbc5198a3505c1836b37a7c3b6d49090820d9f44 assets/ftbic/textures/block/electric/li
 a79c7d3216016a1d5ba2087d9e933e131fdac503 assets/ftbic/textures/block/electric/light/teleporter_top_off.png
 6071b38f3fa2aaa8dd16d6e196d29263ff0c9ffd assets/ftbic/textures/block/electric/light/teleporter_top_on.png
 56e98e98dcc693b5cb82c1b26e5a53630328fbfe assets/ftbic/textures/block/electric/light/wind_mill_front.png
-e00d3627ceac315bde80bb3ec765352a727f8288 data/forge/tags/blocks/ores.json
+b19e6b97230c51c13cff658e14363859f2a8e3e5 data/forge/tags/blocks/ores.json
 7b66b543d0c5d9c985862e8753579c7071d3aec2 data/forge/tags/blocks/ores/aluminum.json
 e4a555008a0f66f2aeff941bc83b6f36e2841975 data/forge/tags/blocks/ores/iridium.json
-055af3801f990858364f077610b7b262d9653752 data/forge/tags/blocks/ores/lead.json
-fb5300ff2ce87c3846bb83aff4deaa179fb25bdb data/forge/tags/blocks/ores/tin.json
-28ecc7f50399d8f3fd87947b9252e96d9057f9da data/forge/tags/blocks/ores/uranium.json
+1929d14f7f66dce2e83eaefa076da84c48acefa1 data/forge/tags/blocks/ores/lead.json
+2f83fd1ae4ffb67b60c94a8291b0e3dc37f36393 data/forge/tags/blocks/ores/tin.json
+f499eaced37a547e652930b655e4c85557585e24 data/forge/tags/blocks/ores/uranium.json
 70f34c71f531c10ac8008786ff04f0d8c243abeb data/forge/tags/items/dusts.json
 8bdd75c708698969d0ecdb4f9f9fd30289160630 data/forge/tags/items/dusts/aluminum.json
 96537458b2316d883a731edac1cbfc0b0253df55 data/forge/tags/items/dusts/bronze.json
@@ -1364,6 +1364,6 @@ e90a2d8edba37ca052a0f5dcff3a5ab586138fbf data/ftbic/recipes/smithing/iridium_bat
 cab3f4ea716e152525da323cdbb1161f01b89059 data/ftbic/tags/blocks/reinforced.json
 b109b9c379397e2f3eefc71bf6360fe92bf6fec6 data/ftbic/tags/items/uncannable_food.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/dragon_immune.json
-c2f35d2cc7f2f2f6c7560d78c6309fc169ac8650 data/minecraft/tags/blocks/mineable/pickaxe.json
+48cd404689aa62979846655f7d7145ad7f254cb2 data/minecraft/tags/blocks/mineable/pickaxe.json
 850d756c71cc30a59b4a157f688ec343c8e9a06f data/minecraft/tags/blocks/wither_immune.json
 a3fd594a3c67c6930909c5420fb2047974ffa671 data/minecraft/tags/items/arrows.json
