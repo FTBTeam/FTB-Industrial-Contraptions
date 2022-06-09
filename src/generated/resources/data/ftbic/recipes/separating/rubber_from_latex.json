@@ -2,16 +2,14 @@
   "type": "ftbic:separating",
   "inputItems": [
     {
-      "ingredient": {
-        "item": "myrtrees:latex"
-      },
-      "count": 1
+      "count": 1,
+      "ingredient": []
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:rubber",
-      "count": 3
+      "count": 3,
+      "item": "ftbic:rubber"
     }
   ]
 }

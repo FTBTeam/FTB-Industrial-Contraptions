@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:nuclear_reactor_chamber",
-  "pattern": [
-    "HPH",
-    "PMP",
-    "HPH"
-  ],
   "key": {
+    "H": {
+      "item": "ftbic:reactor_plating"
+    },
     "M": {
       "item": "ftbic:advanced_machine_block"
     },
     "P": {
       "item": "ftbic:dense_copper_plate"
-    },
-    "H": {
-      "item": "ftbic:reactor_plating"
     }
   },
+  "pattern": [
+    "HPH",
+    "PMP",
+    "HPH"
+  ],
   "result": {
-    "item": "ftbic:nuclear_reactor_chamber",
-    "count": 3
+    "count": 3,
+    "item": "ftbic:nuclear_reactor_chamber"
   }
 }

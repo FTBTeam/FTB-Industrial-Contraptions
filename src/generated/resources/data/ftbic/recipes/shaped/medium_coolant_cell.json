@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:medium_coolant_cell",
+  "key": {
+    "C": {
+      "type": "forge:nbt",
+      "count": 1,
+      "item": "ftbic:small_coolant_cell",
+      "nbt": "{Damage:0}"
+    },
+    "T": {
+      "tag": "forge:ingots/tin"
+    }
+  },
   "pattern": [
     "TTT",
     "CCC",
     "TTT"
   ],
-  "key": {
-    "T": {
-      "tag": "forge:ingots/tin"
-    },
-    "C": {
-      "type": "forge:nbt",
-      "item": "ftbic:small_coolant_cell",
-      "count": 1,
-      "nbt": "{Damage:0}"
-    }
-  },
   "result": {
     "item": "ftbic:medium_coolant_cell"
   }

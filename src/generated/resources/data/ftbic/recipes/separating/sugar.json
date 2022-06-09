@@ -2,20 +2,20 @@
   "type": "ftbic:separating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "item": "minecraft:sugar_cane"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "minecraft:sugar",
-      "count": 2
+      "count": 2,
+      "item": "minecraft:sugar"
     },
     {
-      "item": "minecraft:paper",
-      "chance": 0.5
+      "chance": 0.5,
+      "item": "minecraft:paper"
     }
   ]
 }

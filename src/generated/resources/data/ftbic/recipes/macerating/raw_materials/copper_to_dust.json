@@ -2,16 +2,16 @@
   "type": "ftbic:macerating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:raw_materials/copper"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:copper_dust",
-      "count": 2
+      "count": 2,
+      "item": "ftbic:copper_dust"
     }
   ]
 }

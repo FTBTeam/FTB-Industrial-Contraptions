@@ -2,16 +2,16 @@
   "type": "ftbic:macerating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:ores/uranium"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:uranium_dust",
-      "count": 2
+      "count": 2,
+      "item": "ftbic:uranium_dust"
     }
   ]
 }

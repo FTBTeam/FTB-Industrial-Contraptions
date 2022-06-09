@@ -2,16 +2,16 @@
   "type": "ftbic:extruding",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:ingots/bronze"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:bronze_rod",
-      "count": 2
+      "count": 2,
+      "item": "ftbic:bronze_rod"
     }
   ]
 }

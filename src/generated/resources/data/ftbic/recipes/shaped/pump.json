@@ -1,14 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:pump",
-  "pattern": [
-    "FFF",
-    "CMC",
-    "ADA"
-  ],
   "key": {
-    "M": {
-      "item": "ftbic:advanced_machine_block"
+    "A": {
+      "item": "ftbic:advanced_alloy"
     },
     "C": {
       "item": "ftbic:advanced_circuit"
@@ -19,10 +14,15 @@
     "F": {
       "item": "ftbic:fluid_cell"
     },
-    "A": {
-      "item": "ftbic:advanced_alloy"
+    "M": {
+      "item": "ftbic:advanced_machine_block"
     }
   },
+  "pattern": [
+    "FFF",
+    "CMC",
+    "ADA"
+  ],
   "result": {
     "item": "ftbic:pump"
   }

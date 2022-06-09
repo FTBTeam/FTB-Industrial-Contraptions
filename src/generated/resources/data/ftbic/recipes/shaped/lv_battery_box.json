@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:lv_battery_box",
-  "pattern": [
-    "PWP",
-    "BBB",
-    "PPP"
-  ],
   "key": {
-    "W": {
-      "item": "ftbic:lv_cable"
-    },
     "B": {
       "item": "ftbic:lv_battery"
     },
     "P": {
       "tag": "minecraft:planks"
+    },
+    "W": {
+      "item": "ftbic:lv_cable"
     }
   },
+  "pattern": [
+    "PWP",
+    "BBB",
+    "PPP"
+  ],
   "result": {
     "item": "ftbic:lv_battery_box"
   }

@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:lv_transformer",
-  "pattern": [
-    "PWP",
-    "CCC",
-    "PWP"
-  ],
   "key": {
-    "W": {
-      "item": "ftbic:lv_cable"
-    },
     "C": {
       "tag": "forge:ingots/copper"
     },
     "P": {
       "tag": "minecraft:planks"
+    },
+    "W": {
+      "item": "ftbic:lv_cable"
     }
   },
+  "pattern": [
+    "PWP",
+    "CCC",
+    "PWP"
+  ],
   "result": {
     "item": "ftbic:lv_transformer"
   }

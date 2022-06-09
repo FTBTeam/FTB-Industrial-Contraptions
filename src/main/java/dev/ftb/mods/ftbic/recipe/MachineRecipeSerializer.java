@@ -1,15 +1,16 @@
 package dev.ftb.mods.ftbic.recipe;
 
 import com.google.gson.JsonObject;
-import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 public class MachineRecipeSerializer implements RecipeSerializer<MachineRecipe> {
@@ -27,8 +28,8 @@ public class MachineRecipeSerializer implements RecipeSerializer<MachineRecipe> 
 	public int inputSlots = 1;
 	public int outputSlots = 1;
 
-	public MachineRecipeSerializer(String id) {
-		recipeType = RecipeType.register(FTBIC.MOD_ID + ":" + id);
+	public MachineRecipeSerializer(RegistryObject<RecipeType<Recipe<?>>> id) {
+		recipeType = (RecipeType<MachineRecipe>) (Object) id.get();
 	}
 
 	public MachineRecipeSerializer twoInputs() {

@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:battery",
+  "key": {
+    "C": {
+      "item": "ftbic:lv_cable"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "T": {
+      "tag": "forge:ingots/tin"
+    }
+  },
   "pattern": [
     " C ",
     "TRT",
     "TRT"
   ],
-  "key": {
-    "C": {
-      "item": "ftbic:lv_cable"
-    },
-    "T": {
-      "tag": "forge:ingots/tin"
-    },
-    "R": {
-      "tag": "forge:dusts/redstone"
-    }
-  },
   "result": {
     "item": "ftbic:lv_battery"
   }

@@ -2,10 +2,10 @@
   "type": "ftbic:rolling",
   "inputItems": [
     {
+      "count": 4,
       "ingredient": {
         "tag": "forge:plates/gold"
-      },
-      "count": 4
+      }
     }
   ],
   "outputItems": [

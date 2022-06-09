@@ -36,6 +36,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,6 +51,7 @@ public class FTBIC {
 	public static FTBICCommon PROXY;
 
 	private static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, MOD_ID);
+	public static final RegistryObject<Codec<OreBiomeModifier>> ORE_BIOME_MODIFIER = BIOME_SERIALIZERS.register("ore_biome_modifiers", () -> OreBiomeModifier.CODEC);
 
 	public static final List<DeferredRegister<?>> REGISTERS = List.of(
 			FTBICBlocks.REGISTRY,
@@ -90,7 +92,6 @@ public class FTBIC {
 
 		PROXY.init();
 
-		BIOME_SERIALIZERS.register("ore_biome_modifiers", () -> OreBiomeModifier.CODEC);
 		BIOME_SERIALIZERS.register(modEventBus);
 	}
 

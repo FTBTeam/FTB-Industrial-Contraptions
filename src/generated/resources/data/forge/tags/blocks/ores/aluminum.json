@@ -1,7 +1,6 @@
 {
-  "replace": false,
   "values": [
-    "ftbic:aluminum_ore",
-    "ftbic:deepslate_aluminum_ore"
+    "ftbic:deepslate_aluminum_ore",
+    "ftbic:aluminum_ore"
   ]
 }

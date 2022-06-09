@@ -2,10 +2,10 @@
   "type": "ftbic:compressing",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "item": "minecraft:snowball"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

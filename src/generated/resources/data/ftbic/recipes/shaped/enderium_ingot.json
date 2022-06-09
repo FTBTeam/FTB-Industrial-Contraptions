@@ -1,20 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:ender_dust",
-  "pattern": [
-    "LLL",
-    "DEE",
-    "F  "
-  ],
   "key": {
-    "L": [
-      {
-        "tag": "forge:dusts/lead"
-      },
-      {
-        "tag": "forge:ingots/lead"
-      }
-    ],
     "D": {
       "tag": "forge:dusts/diamond"
     },
@@ -23,10 +10,23 @@
     },
     "F": {
       "item": "minecraft:fire_charge"
-    }
+    },
+    "L": [
+      {
+        "tag": "forge:dusts/lead"
+      },
+      {
+        "tag": "forge:ingots/lead"
+      }
+    ]
   },
+  "pattern": [
+    "LLL",
+    "DEE",
+    "F  "
+  ],
   "result": {
-    "item": "ftbic:enderium_ingot",
-    "count": 2
+    "count": 2,
+    "item": "ftbic:enderium_ingot"
   }
 }

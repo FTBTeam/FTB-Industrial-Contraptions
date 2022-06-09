@@ -1,0 +1,11 @@
+// 1.19	2022-06-09T17:57:30.675584	Tags for minecraft:block
+e07d3fefdf833ed78d4b0ddd0a85af019504a9cd data/forge/tags/blocks/ores.json
+2794b786c54441296d830dad6cc400c76e49e7c5 data/forge/tags/blocks/ores/aluminum.json
+f744bfa324ab82475ff6476e4dbf0aa7c6e1fb93 data/forge/tags/blocks/ores/iridium.json
+54af6f7ae7c897e20c61fd678b7873804fda6a10 data/forge/tags/blocks/ores/lead.json
+2d2a3117ffea6ca7bd620a10a35a12f0c44a8ec8 data/forge/tags/blocks/ores/tin.json
+59c571f4729dd48a52e994071916106429d3ed02 data/forge/tags/blocks/ores/uranium.json
+aaaf4f43fde990a1d48a5cb85927f2fbd0dfc71d data/ftbic/tags/blocks/reinforced.json
+1453312d92845b1abf48d3b5e94d9c1ffadfa1dc data/minecraft/tags/blocks/dragon_immune.json
+34e5913159308a3912c682b94f0698438c9a7e83 data/minecraft/tags/blocks/mineable/pickaxe.json
+1453312d92845b1abf48d3b5e94d9c1ffadfa1dc data/minecraft/tags/blocks/wither_immune.json

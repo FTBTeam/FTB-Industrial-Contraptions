@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:iridium_gear",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_nugget"
+    },
+    "X": {
+      "tag": "forge:ingots/iridium"
+    }
+  },
   "pattern": [
     " X ",
     "XIX",
     " X "
   ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/iridium"
-    },
-    "I": {
-      "item": "minecraft:iron_nugget"
-    }
-  },
   "result": {
     "item": "ftbic:iridium_gear"
   }

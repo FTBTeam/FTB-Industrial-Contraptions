@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:quad_uranium_fuel_rod",
+  "key": {
+    "M": {
+      "item": "ftbic:dense_copper_plate"
+    },
+    "R": {
+      "type": "forge:nbt",
+      "count": 1,
+      "item": "ftbic:dual_uranium_fuel_rod",
+      "nbt": "{Damage:0}"
+    }
+  },
   "pattern": [
     " R ",
     "MMM",
     " R "
   ],
-  "key": {
-    "R": {
-      "type": "forge:nbt",
-      "item": "ftbic:dual_uranium_fuel_rod",
-      "count": 1,
-      "nbt": "{Damage:0}"
-    },
-    "M": {
-      "item": "ftbic:dense_copper_plate"
-    }
-  },
   "result": {
     "item": "ftbic:quad_uranium_fuel_rod"
   }

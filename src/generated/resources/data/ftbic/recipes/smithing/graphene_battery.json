@@ -1,10 +1,10 @@
 {
   "type": "minecraft:smithing",
-  "base": {
-    "item": "ftbic:mv_battery"
-  },
   "addition": {
     "item": "ftbic:graphene"
+  },
+  "base": {
+    "item": "ftbic:mv_battery"
   },
   "result": {
     "item": "ftbic:hv_battery"

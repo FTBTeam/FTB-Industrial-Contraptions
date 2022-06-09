@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:mv_transformer",
+  "key": {
+    "M": {
+      "item": "ftbic:machine_block"
+    },
+    "W": {
+      "item": "ftbic:mv_cable"
+    }
+  },
   "pattern": [
     "W",
     "M",
     "W"
   ],
-  "key": {
-    "W": {
-      "item": "ftbic:mv_cable"
-    },
-    "M": {
-      "item": "ftbic:machine_block"
-    }
-  },
   "result": {
     "item": "ftbic:mv_transformer"
   }

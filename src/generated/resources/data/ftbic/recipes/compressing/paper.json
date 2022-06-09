@@ -2,16 +2,16 @@
   "type": "ftbic:compressing",
   "inputItems": [
     {
+      "count": 3,
       "ingredient": {
         "item": "minecraft:sugar_cane"
-      },
-      "count": 3
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "minecraft:paper",
-      "count": 5
+      "count": 5,
+      "item": "minecraft:paper"
     }
   ]
 }

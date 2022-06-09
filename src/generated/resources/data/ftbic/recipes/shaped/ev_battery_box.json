@@ -1,28 +1,28 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:ev_battery_box",
+  "key": {
+    "C": {
+      "item": "ftbic:iridium_circuit"
+    },
+    "E": {
+      "item": "ftbic:antimatter_crystal"
+    },
+    "G": {
+      "item": "ftbic:advanced_alloy"
+    },
+    "M": {
+      "item": "ftbic:advanced_machine_block"
+    },
+    "X": {
+      "item": "ftbic:hv_battery_box"
+    }
+  },
   "pattern": [
     "GCG",
     "EXE",
     "GMG"
   ],
-  "key": {
-    "C": {
-      "item": "ftbic:iridium_circuit"
-    },
-    "G": {
-      "item": "ftbic:advanced_alloy"
-    },
-    "E": {
-      "item": "ftbic:antimatter_crystal"
-    },
-    "X": {
-      "item": "ftbic:hv_battery_box"
-    },
-    "M": {
-      "item": "ftbic:advanced_machine_block"
-    }
-  },
   "result": {
     "item": "ftbic:ev_battery_box"
   }

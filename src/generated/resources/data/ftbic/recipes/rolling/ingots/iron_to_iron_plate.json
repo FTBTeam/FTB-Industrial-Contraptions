@@ -2,16 +2,16 @@
   "type": "ftbic:rolling",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:ingots/iron"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:iron_plate",
-      "count": 2
+      "count": 2,
+      "item": "ftbic:iron_plate"
     }
   ]
 }

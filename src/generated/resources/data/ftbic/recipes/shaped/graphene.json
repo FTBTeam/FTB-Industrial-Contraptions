@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:graphene",
-  "pattern": [
-    "CCC",
-    "COC",
-    "CCC"
-  ],
   "key": {
     "C": {
       "item": "ftbic:compressed_coal_ball"
@@ -14,6 +9,11 @@
       "tag": "forge:obsidian"
     }
   },
+  "pattern": [
+    "CCC",
+    "COC",
+    "CCC"
+  ],
   "result": {
     "item": "ftbic:graphene"
   }

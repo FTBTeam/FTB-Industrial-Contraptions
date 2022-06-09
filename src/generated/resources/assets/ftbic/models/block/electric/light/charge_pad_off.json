@@ -1,9 +1,9 @@
 {
   "parent": "ftbic:block/orientable_2d",
   "textures": {
-    "side": "ftbic:block/electric/light/basic_side",
+    "bottom": "ftbic:block/electric/light/basic_bottom",
     "front": "ftbic:block/electric/light/basic_side",
-    "top": "ftbic:block/electric/light/charge_pad_top_off",
-    "bottom": "ftbic:block/electric/light/basic_bottom"
+    "side": "ftbic:block/electric/light/basic_side",
+    "top": "ftbic:block/electric/light/charge_pad_top_off"
   }
 }

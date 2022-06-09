@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:basic_generator",
+  "key": {
+    "B": {
+      "item": "ftbic:lv_battery"
+    },
+    "F": {
+      "item": "ftbic:iron_furnace"
+    },
+    "M": {
+      "item": "ftbic:industrial_grade_metal"
+    }
+  },
   "pattern": [
     " B ",
     "MMM",
     " F "
   ],
-  "key": {
-    "B": {
-      "item": "ftbic:lv_battery"
-    },
-    "M": {
-      "item": "ftbic:industrial_grade_metal"
-    },
-    "F": {
-      "item": "ftbic:iron_furnace"
-    }
-  },
   "result": {
     "item": "ftbic:basic_generator"
   }

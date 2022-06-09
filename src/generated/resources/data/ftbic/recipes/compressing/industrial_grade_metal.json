@@ -2,16 +2,16 @@
   "type": "ftbic:compressing",
   "inputItems": [
     {
+      "count": 3,
       "ingredient": {
         "tag": "forge:ingots/iron"
-      },
-      "count": 3
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:industrial_grade_metal",
-      "count": 3
+      "count": 3,
+      "item": "ftbic:industrial_grade_metal"
     }
   ]
 }

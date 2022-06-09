@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:bronze_ingot",
-  "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
-  ],
   "key": {
     "X": {
       "tag": "forge:nuggets/bronze"
     }
   },
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
   "result": {
     "item": "ftbic:bronze_ingot"
   }

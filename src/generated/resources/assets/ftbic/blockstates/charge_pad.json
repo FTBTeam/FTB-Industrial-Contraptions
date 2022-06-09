@@ -3,11 +3,11 @@
     "active=false,dark=false": {
       "model": "ftbic:block/electric/light/charge_pad_off"
     },
-    "active=true,dark=false": {
-      "model": "ftbic:block/electric/light/charge_pad_on"
-    },
     "active=false,dark=true": {
       "model": "ftbic:block/electric/dark/charge_pad_off"
+    },
+    "active=true,dark=false": {
+      "model": "ftbic:block/electric/light/charge_pad_on"
     },
     "active=true,dark=true": {
       "model": "ftbic:block/electric/dark/charge_pad_on"

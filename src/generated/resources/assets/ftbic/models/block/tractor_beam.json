@@ -1,102 +1,102 @@
 {
   "parent": "minecraft:block/block",
   "ambientocclusion": false,
+  "elements": [
+    {
+      "faces": {
+        "north": {
+          "cullface": "north",
+          "texture": "#texture"
+        },
+        "south": {
+          "cullface": "north",
+          "texture": "#texture"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "shade": false,
+      "to": [
+        16,
+        16,
+        0
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "cullface": "south",
+          "texture": "#texture"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#texture"
+        }
+      },
+      "from": [
+        0,
+        0,
+        16
+      ],
+      "shade": false,
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "cullface": "west",
+          "texture": "#texture"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#texture"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "shade": false,
+      "to": [
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "cullface": "east",
+          "texture": "#texture"
+        },
+        "west": {
+          "cullface": "east",
+          "texture": "#texture"
+        }
+      },
+      "from": [
+        16,
+        0,
+        0
+      ],
+      "shade": false,
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
   "textures": {
     "particle": "ftbic:block/tractor_beam",
     "texture": "ftbic:block/tractor_beam"
-  },
-  "elements": [
-    {
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        0
-      ],
-      "shade": false,
-      "faces": {
-        "north": {
-          "texture": "#texture",
-          "cullface": "north"
-        },
-        "south": {
-          "texture": "#texture",
-          "cullface": "north"
-        }
-      }
-    },
-    {
-      "from": [
-        0,
-        0,
-        16
-      ],
-      "to": [
-        16,
-        16,
-        16
-      ],
-      "shade": false,
-      "faces": {
-        "north": {
-          "texture": "#texture",
-          "cullface": "south"
-        },
-        "south": {
-          "texture": "#texture",
-          "cullface": "south"
-        }
-      }
-    },
-    {
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        0,
-        16,
-        16
-      ],
-      "shade": false,
-      "faces": {
-        "west": {
-          "texture": "#texture",
-          "cullface": "west"
-        },
-        "east": {
-          "texture": "#texture",
-          "cullface": "west"
-        }
-      }
-    },
-    {
-      "from": [
-        16,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        16
-      ],
-      "shade": false,
-      "faces": {
-        "west": {
-          "texture": "#texture",
-          "cullface": "east"
-        },
-        "east": {
-          "texture": "#texture",
-          "cullface": "east"
-        }
-      }
-    }
-  ]
+  }
 }

@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:copper_wire",
-  "pattern": [
-    "MMM"
-  ],
   "key": {
     "M": {
       "tag": "forge:ingots/copper"
     }
   },
+  "pattern": [
+    "MMM"
+  ],
   "result": {
-    "item": "ftbic:copper_wire",
-    "count": 6
+    "count": 6,
+    "item": "ftbic:copper_wire"
   }
 }

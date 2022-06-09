@@ -2,14 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "ftbic:roller"
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:inverted",
@@ -17,22 +10,29 @@
             "condition": "ftbic:burnt_block"
           }
         }
-      ]
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:roller"
+        }
+      ],
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "ftbic:burnt_block"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "ftbic:machine_block"
         }
       ],
-      "conditions": [
-        {
-          "condition": "ftbic:burnt_block"
-        }
-      ]
+      "rolls": 1.0
     }
   ]
 }

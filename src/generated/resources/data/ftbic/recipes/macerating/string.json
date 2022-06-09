@@ -2,16 +2,16 @@
   "type": "ftbic:macerating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "minecraft:wool"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "minecraft:string",
-      "count": 4
+      "count": 4,
+      "item": "minecraft:string"
     }
   ]
 }

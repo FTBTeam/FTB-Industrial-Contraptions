@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 400,
+  "experience": 0.0,
   "ingredient": {
     "item": "ftbic:mixed_metal_blend"
   },
-  "result": "ftbic:advanced_alloy",
-  "experience": 0.0,
-  "cookingtime": 400
+  "result": "ftbic:advanced_alloy"
 }

@@ -1,38 +1,16 @@
 {
   "parent": "minecraft:block/block",
   "display": {
-    "thirdperson_righthand": {
+    "firstperson_lefthand": {
       "rotation": [
-        75,
-        45,
-        0
-      ],
-      "translation": [
         0,
-        1.5,
+        225,
         0
       ],
       "scale": [
-        0.375,
-        0.375,
-        0.375
-      ]
-    },
-    "thirdperson_lefthand": {
-      "rotation": [
-        75,
-        45,
-        0
-      ],
-      "translation": [
-        0,
-        1.5,
-        0
-      ],
-      "scale": [
-        0.375,
-        0.375,
-        0.375
+        0.4,
+        0.4,
+        0.4
       ]
     },
     "firstperson_righthand": {
@@ -47,28 +25,28 @@
         0.4
       ]
     },
-    "firstperson_lefthand": {
-      "rotation": [
-        0,
-        225,
-        0
-      ],
+    "fixed": {
       "scale": [
-        0.4,
-        0.4,
-        0.4
+        0.5,
+        0.5,
+        0.5
+      ],
+      "translation": [
+        0,
+        -1.5,
+        0
       ]
     },
     "ground": {
-      "translation": [
-        0,
-        3,
-        0
-      ],
       "scale": [
         0.25,
         0.25,
         0.25
+      ],
+      "translation": [
+        0,
+        3,
+        0
       ]
     },
     "gui": {
@@ -77,36 +55,78 @@
         45,
         90
       ],
-      "translation": [
-        1.75,
-        1,
-        0
-      ],
       "scale": [
         0.625,
         0.625,
         0.625
+      ],
+      "translation": [
+        1.75,
+        1,
+        0
       ]
     },
-    "fixed": {
-      "translation": [
-        0,
-        -1.5,
+    "thirdperson_lefthand": {
+      "rotation": [
+        75,
+        45,
         0
       ],
       "scale": [
-        0.5,
-        0.5,
-        0.5
+        0.375,
+        0.375,
+        0.375
+      ],
+      "translation": [
+        0,
+        1.5,
+        0
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ],
+      "translation": [
+        0,
+        1.5,
+        0
       ]
     }
   },
-  "textures": {
-    "particle": "ftbic:block/mv_cable",
-    "cable": "ftbic:block/mv_cable"
-  },
   "elements": [
     {
+      "faces": {
+        "down": {
+          "texture": "#cable"
+        },
+        "east": {
+          "rotation": 180,
+          "texture": "#cable"
+        },
+        "north": {
+          "rotation": 180,
+          "texture": "#cable"
+        },
+        "south": {
+          "rotation": 180,
+          "texture": "#cable"
+        },
+        "up": {
+          "texture": "#cable"
+        },
+        "west": {
+          "rotation": 180,
+          "texture": "#cable"
+        }
+      },
       "from": [
         4,
         0,
@@ -116,33 +136,69 @@
         12,
         12,
         12
-      ],
-      "faces": {
-        "down": {
-          "texture": "#cable"
-        },
-        "up": {
-          "texture": "#cable"
-        },
-        "north": {
-          "texture": "#cable",
-          "rotation": 180
-        },
-        "south": {
-          "texture": "#cable",
-          "rotation": 180
-        },
-        "west": {
-          "texture": "#cable",
-          "rotation": 180
-        },
-        "east": {
-          "texture": "#cable",
-          "rotation": 180
-        }
-      }
+      ]
     },
     {
+      "faces": {
+        "down": {
+          "texture": "#cable",
+          "uv": [
+            12.0,
+            12.0,
+            4.0,
+            4.0
+          ]
+        },
+        "east": {
+          "rotation": 180,
+          "texture": "#cable",
+          "uv": [
+            12.0,
+            16.0,
+            4.0,
+            4.0
+          ]
+        },
+        "north": {
+          "rotation": 180,
+          "texture": "#cable",
+          "uv": [
+            12.0,
+            16.0,
+            4.0,
+            4.0
+          ]
+        },
+        "south": {
+          "rotation": 180,
+          "texture": "#cable",
+          "uv": [
+            12.0,
+            16.0,
+            4.0,
+            4.0
+          ]
+        },
+        "up": {
+          "texture": "#cable",
+          "uv": [
+            12.0,
+            12.0,
+            4.0,
+            4.0
+          ]
+        },
+        "west": {
+          "rotation": 180,
+          "texture": "#cable",
+          "uv": [
+            12.0,
+            16.0,
+            4.0,
+            4.0
+          ]
+        }
+      },
       "from": [
         4,
         12,
@@ -152,67 +208,11 @@
         12,
         24,
         12
-      ],
-      "faces": {
-        "down": {
-          "texture": "#cable",
-          "uv": [
-            12.0,
-            12.0,
-            4.0,
-            4.0
-          ]
-        },
-        "up": {
-          "texture": "#cable",
-          "uv": [
-            12.0,
-            12.0,
-            4.0,
-            4.0
-          ]
-        },
-        "north": {
-          "texture": "#cable",
-          "uv": [
-            12.0,
-            16.0,
-            4.0,
-            4.0
-          ],
-          "rotation": 180
-        },
-        "south": {
-          "texture": "#cable",
-          "uv": [
-            12.0,
-            16.0,
-            4.0,
-            4.0
-          ],
-          "rotation": 180
-        },
-        "west": {
-          "texture": "#cable",
-          "uv": [
-            12.0,
-            16.0,
-            4.0,
-            4.0
-          ],
-          "rotation": 180
-        },
-        "east": {
-          "texture": "#cable",
-          "uv": [
-            12.0,
-            16.0,
-            4.0,
-            4.0
-          ],
-          "rotation": 180
-        }
-      }
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "cable": "ftbic:block/mv_cable",
+    "particle": "ftbic:block/mv_cable"
+  }
 }

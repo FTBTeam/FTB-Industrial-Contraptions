@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.recipe;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import net.minecraft.core.Registry;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -16,7 +17,16 @@ public abstract class FTBICRecipes {
 	public static final DeferredRegister<RecipeType<?>> REGISTRY_TYPE = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, FTBIC.MOD_ID);
 
 	public static Supplier<MachineRecipeSerializer> machine(String id, Function<MachineRecipeSerializer, MachineRecipeSerializer> properties) {
-		return REGISTRY.register(id, () -> properties.apply(new MachineRecipeSerializer(id)));
+		RegistryObject<RecipeType<Recipe<?>>> type = registerRecipeType(id);
+		return REGISTRY.register(id, () -> properties.apply(new MachineRecipeSerializer(type)));
+	}
+
+	public static <T extends Recipe<?>> RegistryObject<RecipeType<T>> registerRecipeType(final String string) {
+		return REGISTRY_TYPE.register(string, () -> new RecipeType<T>() {
+			public String toString() {
+				return string;
+			}
+		});
 	}
 
 	public static final Supplier<RecipeCacheSerializer> RECIPE_CACHE = REGISTRY.register("recipe_cache", RecipeCacheSerializer::new);

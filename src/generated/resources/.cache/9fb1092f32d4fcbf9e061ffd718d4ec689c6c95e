@@ -1,0 +1,15 @@
+// 1.19	2022-06-09T17:57:30.677234	Recipes
+a4adf1cd4b4f13753932a06b33fe0cc773815db4 data/ftbic/advancements/recipes/ftbic/shaped/basic_generator.json
+7098db530f330cabe0e1ac3d64a281aed7ba10ca data/ftbic/advancements/recipes/ftbic/shaped/ev_solar_panel.json
+269566b006e996ae9eed99c34af438fe3e3b3eb1 data/ftbic/advancements/recipes/ftbic/shaped/geothermal_generator.json
+57e4b7520bcd914624d442ba6bf193e1edbecc27 data/ftbic/advancements/recipes/ftbic/shaped/hv_solar_panel.json
+48eaa6fcb28e7dc2beef6496f465d89215cbe50a data/ftbic/advancements/recipes/ftbic/shaped/lv_solar_panel.json
+606ffe779fb2dc38d75f04c150659d65b8725a3f data/ftbic/advancements/recipes/ftbic/shaped/mv_solar_panel.json
+37b1d560be3d22bdbf412f3d93f1c05f0fa319da data/ftbic/advancements/recipes/ftbic/shaped/wind_mill.json
+4a80c9a0a01aa41f6d1b99d113e73e974e543729 data/ftbic/recipes/shaped/basic_generator.json
+6087d304b7611b419da289513a988eaecc89a015 data/ftbic/recipes/shaped/ev_solar_panel.json
+701b4ba54e0bf917c8b85994bb75f4df1e0a5230 data/ftbic/recipes/shaped/geothermal_generator.json
+1dde33538db54e0001d0afdabd70784a118e4bb9 data/ftbic/recipes/shaped/hv_solar_panel.json
+c48335f4e67b28aeb5c4a40a23529ff25c2f760f data/ftbic/recipes/shaped/lv_solar_panel.json
+fc43b4ea25d41bc0bf6bea841dec245d7815f7c7 data/ftbic/recipes/shaped/mv_solar_panel.json
+a5b5d3a3d82a0bc80b716bb8ccedd7ded0307a0a data/ftbic/recipes/shaped/wind_mill.json

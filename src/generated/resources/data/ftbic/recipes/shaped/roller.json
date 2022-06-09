@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:roller",
-  "pattern": [
-    "HCH",
-    "PMP"
-  ],
   "key": {
+    "C": {
+      "item": "ftbic:electronic_circuit"
+    },
     "H": {
       "item": "ftbic:aluminum_gear"
-    },
-    "P": {
-      "item": "minecraft:piston"
     },
     "M": {
       "item": "ftbic:machine_block"
     },
-    "C": {
-      "item": "ftbic:electronic_circuit"
+    "P": {
+      "item": "minecraft:piston"
     }
   },
+  "pattern": [
+    "HCH",
+    "PMP"
+  ],
   "result": {
     "item": "ftbic:roller"
   }

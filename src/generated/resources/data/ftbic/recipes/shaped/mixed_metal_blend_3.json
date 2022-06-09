@@ -4,21 +4,16 @@
     {
       "conditions": [
         {
+          "type": "forge:not",
           "value": {
-            "tag": "forge:dusts/constantan",
-            "type": "forge:tag_empty"
-          },
-          "type": "forge:not"
+            "type": "forge:tag_empty",
+            "tag": "forge:dusts/constantan"
+          }
         }
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "group": "ftbic:mixed_metal_blend",
-        "pattern": [
-          "III",
-          "OOO",
-          "PPP"
-        ],
         "key": {
           "I": [
             {
@@ -40,9 +35,14 @@
             }
           ]
         },
+        "pattern": [
+          "III",
+          "OOO",
+          "PPP"
+        ],
         "result": {
-          "item": "ftbic:mixed_metal_blend",
-          "count": 3
+          "count": 3,
+          "item": "ftbic:mixed_metal_blend"
         }
       }
     }

@@ -1,25 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:nuke",
-  "pattern": [
-    "UCU",
-    "TMT",
-    "UCU"
-  ],
   "key": {
+    "C": {
+      "item": "ftbic:advanced_circuit"
+    },
+    "M": {
+      "item": "ftbic:advanced_machine_block"
+    },
     "T": {
       "item": "minecraft:tnt"
     },
     "U": {
       "item": "ftbic:quad_uranium_fuel_rod"
-    },
-    "M": {
-      "item": "ftbic:advanced_machine_block"
-    },
-    "C": {
-      "item": "ftbic:advanced_circuit"
     }
   },
+  "pattern": [
+    "UCU",
+    "TMT",
+    "UCU"
+  ],
   "result": {
     "item": "ftbic:nuke"
   }
