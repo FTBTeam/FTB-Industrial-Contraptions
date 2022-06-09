@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 
 public class DummyEnergyArmorItem extends ArmorItem {
 	public DummyEnergyArmorItem(EnergyArmorMaterial m, EquipmentSlot s) {
-		super(m, s, new Properties().tab(FTBIC.TAB).fireResistant());
+		super(m, s, new Properties().tab(FTBIC.TAB));
 	}
 
 	@Override
