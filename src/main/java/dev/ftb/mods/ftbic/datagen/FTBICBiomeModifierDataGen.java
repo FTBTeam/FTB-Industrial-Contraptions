@@ -69,6 +69,4 @@ public class FTBICBiomeModifierDataGen implements DataProvider {
 	{
 		return FTBIC.MOD_ID + " biome modifier data provider";
 	}
-
-	record BiomeModiferData(Path output, OreBiomeModifier modifer){}
 }
