@@ -1,15 +1,17 @@
-// 1.19	2022-06-09T17:57:30.677234	Recipes
-a4adf1cd4b4f13753932a06b33fe0cc773815db4 data/ftbic/advancements/recipes/ftbic/shaped/basic_generator.json
-7098db530f330cabe0e1ac3d64a281aed7ba10ca data/ftbic/advancements/recipes/ftbic/shaped/ev_solar_panel.json
-269566b006e996ae9eed99c34af438fe3e3b3eb1 data/ftbic/advancements/recipes/ftbic/shaped/geothermal_generator.json
-57e4b7520bcd914624d442ba6bf193e1edbecc27 data/ftbic/advancements/recipes/ftbic/shaped/hv_solar_panel.json
-48eaa6fcb28e7dc2beef6496f465d89215cbe50a data/ftbic/advancements/recipes/ftbic/shaped/lv_solar_panel.json
-606ffe779fb2dc38d75f04c150659d65b8725a3f data/ftbic/advancements/recipes/ftbic/shaped/mv_solar_panel.json
-37b1d560be3d22bdbf412f3d93f1c05f0fa319da data/ftbic/advancements/recipes/ftbic/shaped/wind_mill.json
-4a80c9a0a01aa41f6d1b99d113e73e974e543729 data/ftbic/recipes/shaped/basic_generator.json
-6087d304b7611b419da289513a988eaecc89a015 data/ftbic/recipes/shaped/ev_solar_panel.json
-701b4ba54e0bf917c8b85994bb75f4df1e0a5230 data/ftbic/recipes/shaped/geothermal_generator.json
-1dde33538db54e0001d0afdabd70784a118e4bb9 data/ftbic/recipes/shaped/hv_solar_panel.json
-c48335f4e67b28aeb5c4a40a23529ff25c2f760f data/ftbic/recipes/shaped/lv_solar_panel.json
-fc43b4ea25d41bc0bf6bea841dec245d7815f7c7 data/ftbic/recipes/shaped/mv_solar_panel.json
-a5b5d3a3d82a0bc80b716bb8ccedd7ded0307a0a data/ftbic/recipes/shaped/wind_mill.json
+// 1.19	2022-06-09T18:42:08.690048	Recipes
+4a339346a1a2fbfd74c41e72ea8c95285f101825 data/ftbic/advancements/recipes/ftbic/shaped/ev_battery_box.json
+57d4f97e7c63a02ae24470ae30c61a54042a17a7 data/ftbic/advancements/recipes/ftbic/shaped/ev_transformer.json
+8ca9ff93da7fd41fc3cf8bf7dc28a72be3c4710b data/ftbic/advancements/recipes/ftbic/shaped/hv_battery_box.json
+7f92f083eef3cea1f6a9b64b9a4bb036078afbb9 data/ftbic/advancements/recipes/ftbic/shaped/hv_transformer.json
+35f058db453d37fff5ad2f37b8f148e56b5b5158 data/ftbic/advancements/recipes/ftbic/shaped/lv_battery_box.json
+bde6b04e8db1c3abda6fa8e094a2b4ae8ee36c9c data/ftbic/advancements/recipes/ftbic/shaped/lv_transformer.json
+de8a80c6a08fa5ad4508802c4b20aeef3f5012ae data/ftbic/advancements/recipes/ftbic/shaped/mv_battery_box.json
+f774484529f1d1f0b2c21797ddcdec76731864aa data/ftbic/advancements/recipes/ftbic/shaped/mv_transformer.json
+2ef5ca43a98e63d39ae36970f76522ecf412c20c data/ftbic/recipes/shaped/ev_battery_box.json
+5817cda78dd95d0f9b95ef6a6c909748d273e070 data/ftbic/recipes/shaped/ev_transformer.json
+8a1827ab38442fddc7b453a14445670880748968 data/ftbic/recipes/shaped/hv_battery_box.json
+c69180d6aef7106d85e681c058acb9f083029199 data/ftbic/recipes/shaped/hv_transformer.json
+b388c1a1f71dde65f16bb60da01227326ee661e8 data/ftbic/recipes/shaped/lv_battery_box.json
+82a2a797ea10ba27106e6ca94e28436e9012da20 data/ftbic/recipes/shaped/lv_transformer.json
+e456e97010a3fd40a38ad9ab9308eca86e8d60eb data/ftbic/recipes/shaped/mv_battery_box.json
+543d779b3f21e35ea3d05b238dd30e78adfa0115 data/ftbic/recipes/shaped/mv_transformer.json

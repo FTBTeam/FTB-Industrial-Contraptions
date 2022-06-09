@@ -62,7 +62,10 @@ public class FTBIC {
 			FTBICMenus.REGISTRY,
 			FTBICEntities.REGISTRY,
 			FTBICSounds.REGISTRY,
-			FTBICUtils.LOOT_REGISTRY
+			FTBICUtils.LOOT_REGISTRY,
+			OreGeneration.FEATURE_REGISTRY,
+			OreGeneration.PLACED_FEATURE_REGISTRY,
+			BIOME_SERIALIZERS
 	);
 
 	public static final CreativeModeTab TAB = new CreativeModeTab(MOD_ID) {
@@ -91,8 +94,6 @@ public class FTBIC {
 		FTBICConfig.init();
 
 		PROXY.init();
-
-		BIOME_SERIALIZERS.register(modEventBus);
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {

@@ -14,8 +14,8 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
@@ -26,24 +26,23 @@ import java.nio.file.Path;
 
 public class FTBICBiomeModifierDataGen implements DataProvider {
 	private static final Logger LOGGER = LogManager.getLogger();
-	private final RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, RegistryAccess.BUILTIN.get());
 
-	private final BiomeModifier oreBiomeModifier;
-	private final String biomeModifierPathString;
-	private final Path biomeModifierPath;
+	private final RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, RegistryAccess.BUILTIN.get());
+	private final Path modifierPath;
+	private final OreBiomeModifier oreBiomeModifier;
 
 	public FTBICBiomeModifierDataGen(DataGenerator gen, String modid) {
 		Path outputFolder = gen.getOutputFolder();
 		String directory = PackType.SERVER_DATA.getDirectory();
 
+		Registry<PlacedFeature> placedFeatures = ops.registry(Registry.PLACED_FEATURE_REGISTRY).get();
+
 		ResourceLocation modifiersRegistry = ForgeRegistries.Keys.BIOME_MODIFIERS.location();
-		this.biomeModifierPathString = String.join("/", directory, modid, modifiersRegistry.getNamespace(), modifiersRegistry.getPath(), "ore_features_biome_modifier.json");
-		this.biomeModifierPath = outputFolder.resolve(biomeModifierPathString);
+		this.modifierPath = outputFolder.resolve(String.join("/", directory, modid, modifiersRegistry.getNamespace(), modifiersRegistry.getPath(), "ftbic_ore_biome_modifier.json"));
 
 		this.oreBiomeModifier = new OreBiomeModifier(
-				new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), BiomeTags.IS_BADLANDS),
 				GenerationStep.Decoration.TOP_LAYER_MODIFICATION,
-				HolderSet.direct(OreGeneration.PLACEMENTS.stream().toList())
+				HolderSet.direct(OreGeneration.PLACEMENTS.stream().map(e -> placedFeatures.getOrCreateHolderOrThrow(e.getKey())).toList())
 		);
 	}
 
@@ -51,16 +50,16 @@ public class FTBICBiomeModifierDataGen implements DataProvider {
 	public void run(final CachedOutput cache)
 	{
 		BiomeModifier.DIRECT_CODEC.encodeStart(ops, oreBiomeModifier)
-				.resultOrPartial(msg -> LOGGER.error("Failed to encode {}: {}", biomeModifierPathString, msg)) // Log error on encode failure.
+				.resultOrPartial(msg -> LOGGER.error("Failed to encode {}: {}", modifierPath.toAbsolutePath(), msg)) // Log error on encode failure.
 				.ifPresent(json -> // Output to file on encode success.
 				{
 					try
 					{
-						DataProvider.saveStable(cache, json, biomeModifierPath);
+						DataProvider.saveStable(cache, json, modifierPath);
 					}
 					catch (IOException e) // The throws can't deal with this exception, because we're inside the ifPresent.
 					{
-						LOGGER.error("Failed to save " + biomeModifierPathString, e);
+						LOGGER.error("Failed to save " + modifierPath.toAbsolutePath(), e);
 					}
 				});
 	}
@@ -70,4 +69,6 @@ public class FTBICBiomeModifierDataGen implements DataProvider {
 	{
 		return FTBIC.MOD_ID + " biome modifier data provider";
 	}
+
+	record BiomeModiferData(Path output, OreBiomeModifier modifer){}
 }
