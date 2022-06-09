@@ -8,7 +8,9 @@
     "M": {
       "item": "ftbic:machine_block"
     },
-    "T": []
+    "T": {
+      "item": "minecraft:paper"
+    }
   },
   "pattern": [
     "TMT",

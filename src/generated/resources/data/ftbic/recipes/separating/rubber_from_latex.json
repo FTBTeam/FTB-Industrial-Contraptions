@@ -3,7 +3,9 @@
   "inputItems": [
     {
       "count": 1,
-      "ingredient": []
+      "ingredient": {
+        "item": "minecraft:paper"
+      }
     }
   ],
   "outputItems": [

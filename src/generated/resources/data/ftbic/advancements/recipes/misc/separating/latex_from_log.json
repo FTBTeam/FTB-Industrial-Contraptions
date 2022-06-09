@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "minecraft:air"
+              "minecraft:paper"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ftbic:separating/latex_from_leaves"
+        "recipe": "ftbic:separating/latex_from_log"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ftbic:separating/latex_from_leaves"
+      "ftbic:separating/latex_from_log"
     ]
   }
 }

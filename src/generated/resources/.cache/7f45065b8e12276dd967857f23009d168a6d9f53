@@ -1,4 +1,4 @@
-// 1.19	2022-06-09T18:42:08.684075	Item Models: ftbic
+// 1.19	2022-06-09T19:04:00.5358672	Item Models: ftbic
 9e3c56533ebb13a4999afbea8c524970a0d95686 assets/ftbic/models/item/active_nuke.json
 79b652016b978da95a54e79555c8a0c93e5547a2 assets/ftbic/models/item/advanced_alloy.json
 bc88c594e44f6f8b7bdca4102ce4cffdaf06284c assets/ftbic/models/item/advanced_centrifuge.json
@@ -35,8 +35,8 @@ ee0e20aa4bdfb0580eaad322070cd78d18d9d1bd assets/ftbic/models/item/canned_food.js
 3693358b348eea5b584ab5e9cbfccce658acfb0b assets/ftbic/models/item/canning_machine.json
 5079629d84320850955a8cb35afa2c563973315f assets/ftbic/models/item/carbon_boots.json
 6020759e989e08c463b34e11337ee6dc2c11bc93 assets/ftbic/models/item/carbon_chestplate.json
-782df60731e8ed4db390aad417b3cf6f4e369ecc assets/ftbic/models/item/carbon_fiber_mesh.json
 187fe7e4b1926d79f9de9f16c64fa7eb988e5f56 assets/ftbic/models/item/carbon_fibers.json
+782df60731e8ed4db390aad417b3cf6f4e369ecc assets/ftbic/models/item/carbon_fiber_mesh.json
 40305ac688fbf6c162977e7d3ef7fb1742a5aaaa assets/ftbic/models/item/carbon_helmet.json
 3f5fad38cd8d6f580a5814772c07abd0d61b7a3f assets/ftbic/models/item/carbon_leggings.json
 9809e47b58b071baa50f80feebf7a05b45df23f6 assets/ftbic/models/item/carbon_plate.json
@@ -70,7 +70,6 @@ fa8afc92679403920b619dbd7dbf41b79d3d8f53 assets/ftbic/models/item/dual_uranium_f
 157c448675f42a4d2ff32526588f12cc0a78536c assets/ftbic/models/item/ejector_upgrade.json
 011273262ef4f1b1ee7f21e1b2e7657582426730 assets/ftbic/models/item/electronic_circuit.json
 7d84c64b634ba532be82e5a94f3cc053bc52e9dd assets/ftbic/models/item/empty_can.json
-947ed6ca70c99f9ccccf7219c292990fbe9897ac assets/ftbic/models/item/ender_dust.json
 5c13756790ba848a95380aa773eb6230e34a1576 assets/ftbic/models/item/enderium_block.json
 4153afec44fe215d7e90c5c0c98d5dff3d95c1c0 assets/ftbic/models/item/enderium_dust.json
 226767c5b254284c0304f5941494d5e38704f6a6 assets/ftbic/models/item/enderium_gear.json
@@ -79,6 +78,7 @@ fa8afc92679403920b619dbd7dbf41b79d3d8f53 assets/ftbic/models/item/dual_uranium_f
 3250ff64d95efe8f3e3bfd5dfe3c2af082616403 assets/ftbic/models/item/enderium_plate.json
 494f711b288cd8e42579d83e9d3381cd0d11ceef assets/ftbic/models/item/enderium_rod.json
 1c4b94a52581db16ac92f65f4d705d15c5f6c5e5 assets/ftbic/models/item/enderium_wire.json
+947ed6ca70c99f9ccccf7219c292990fbe9897ac assets/ftbic/models/item/ender_dust.json
 4ff5e6ab6292f9585b9c58bef4793848721199d4 assets/ftbic/models/item/energy_crystal.json
 43e253dd13a1ddad64485e19ecdf989d10bec6b3 assets/ftbic/models/item/energy_storage_upgrade.json
 4408fa82ecf0b27b6eef2e9f8e55b246a77fad10 assets/ftbic/models/item/ev_battery.json

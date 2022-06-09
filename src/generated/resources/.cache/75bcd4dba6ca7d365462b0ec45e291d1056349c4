@@ -1,11 +1,11 @@
-// 1.19	2022-06-09T18:42:08.687292	Tags for minecraft:block
-f982bc6e2e76551cb92cb91acfbf889683724937 data/forge/tags/blocks/ores.json
+// 1.19	2022-06-09T19:04:00.548868	Tags for minecraft:block
+076196e44e5b6dd6c139c6d772a21bbf67a0ebcf data/forge/tags/blocks/ores.json
 fb042cf044dfd777944166d253b5dac8bfb10f93 data/forge/tags/blocks/ores/aluminum.json
 fd67fb89577fa67988dbedfbc9c693aea9425ea2 data/forge/tags/blocks/ores/iridium.json
-54af6f7ae7c897e20c61fd678b7873804fda6a10 data/forge/tags/blocks/ores/lead.json
+2837c105a9b47815dc7224ed8f099b58bb488224 data/forge/tags/blocks/ores/lead.json
 2d2a3117ffea6ca7bd620a10a35a12f0c44a8ec8 data/forge/tags/blocks/ores/tin.json
 59c571f4729dd48a52e994071916106429d3ed02 data/forge/tags/blocks/ores/uranium.json
 aaaf4f43fde990a1d48a5cb85927f2fbd0dfc71d data/ftbic/tags/blocks/reinforced.json
 1453312d92845b1abf48d3b5e94d9c1ffadfa1dc data/minecraft/tags/blocks/dragon_immune.json
-d8e7916d3331b51cfff65407d5bb4e06227da9ef data/minecraft/tags/blocks/mineable/pickaxe.json
+82ffb7981dbf81fe63535cad5f8bf2f14c7619d4 data/minecraft/tags/blocks/mineable/pickaxe.json
 1453312d92845b1abf48d3b5e94d9c1ffadfa1dc data/minecraft/tags/blocks/wither_immune.json

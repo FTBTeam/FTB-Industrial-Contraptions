@@ -3,17 +3,19 @@
   "inputItems": [
     {
       "count": 1,
-      "ingredient": []
+      "ingredient": {
+        "item": "minecraft:paper"
+      }
     }
   ],
   "outputItems": [
     {
       "chance": 0.35,
-      "item": "minecraft:air"
+      "item": "minecraft:paper"
     },
     {
       "chance": 0.05,
-      "item": "minecraft:air"
+      "item": "minecraft:paper"
     }
   ]
 }
