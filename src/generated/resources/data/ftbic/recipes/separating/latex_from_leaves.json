@@ -4,18 +4,18 @@
     {
       "count": 1,
       "ingredient": {
-        "item": "minecraft:paper"
+        "item": "myrtrees:rubberwood_leaves"
       }
     }
   ],
   "outputItems": [
     {
       "chance": 0.35,
-      "item": "minecraft:paper"
+      "item": "myrtrees:latex"
     },
     {
       "chance": 0.05,
-      "item": "minecraft:paper"
+      "item": "myrtrees:rubberwood_sapling"
     }
   ]
 }

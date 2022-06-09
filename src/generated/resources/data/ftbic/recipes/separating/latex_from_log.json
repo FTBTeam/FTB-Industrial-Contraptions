@@ -4,14 +4,14 @@
     {
       "count": 1,
       "ingredient": {
-        "item": "minecraft:paper"
+        "item": "myrtrees:rubberwood_log"
       }
     }
   ],
   "outputItems": [
     {
       "chance": 0.8,
-      "item": "minecraft:paper"
+      "item": "myrtrees:latex"
     }
   ]
 }
