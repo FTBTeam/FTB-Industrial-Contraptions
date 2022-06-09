@@ -2,10 +2,9 @@ package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.util.NuclearExplosion;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.ChatType;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,7 +31,7 @@ public class NukeBlock extends Block {
 			NuclearExplosion.builder((ServerLevel) level, pos, FTBICConfig.NUCLEAR.NUKE_RADIUS.get(), player.getUUID(), player.getScoreboardName())
 					.delay(10000L)
 					.preExplosion(() -> {
-						level.getServer().getPlayerList().broadcastMessage(new TranslatableComponent("block.ftbic.nuke.broadcast", player.getDisplayName()), ChatType.SYSTEM, Util.NIL_UUID);
+						level.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("block.ftbic.nuke.broadcast", player.getDisplayName()), ChatType.SYSTEM);
 						level.removeBlock(pos, false);
 					})
 					.create()

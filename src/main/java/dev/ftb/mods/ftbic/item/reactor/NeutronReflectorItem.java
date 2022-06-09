@@ -3,7 +3,6 @@ package dev.ftb.mods.ftbic.item.reactor;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,7 +15,7 @@ public class NeutronReflectorItem extends BaseReactorItem implements NeutronRefl
 
 	@Override
 	public void reactorInfo(ItemStack stack, List<Component> list, boolean shift, boolean advanced, @Nullable NuclearReactor reactor, int x, int y) {
-		list.add(new TextComponent(stack.getMaxDamage() > 0 ? String.format("Durability: %,d", stack.getMaxDamage() - stack.getDamageValue()) : "Durability: Infinite").withStyle(ChatFormatting.GRAY));
+		list.add(Component.literal(stack.getMaxDamage() > 0 ? String.format("Durability: %,d", stack.getMaxDamage() - stack.getDamageValue()) : "Durability: Infinite").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override

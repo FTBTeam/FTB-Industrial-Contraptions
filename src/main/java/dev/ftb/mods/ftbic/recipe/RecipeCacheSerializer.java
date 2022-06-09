@@ -4,10 +4,9 @@ import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.Nullable;
 
-public class RecipeCacheSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeCache> {
+public class RecipeCacheSerializer implements RecipeSerializer<RecipeCache> {
 	@Override
 	public RecipeCache fromJson(ResourceLocation id, JsonObject json) {
 		return new RecipeCache();

@@ -9,6 +9,7 @@ import dev.ftb.mods.ftbic.util.CraftingMaterial;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,7 +33,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 
 			if (FTBICConfig.RECIPES.ADD_GEM_FROM_ORE_RECIPES.get() && !material.gem.getValues().isEmpty() && !material.ore.getValues().isEmpty()) {
 				Item gem = FTBICConfig.getItemFromTag(material.gem.getTag());
-				ResourceLocation id = gem == Items.AIR ? null : gem.getRegistryName();
+				ResourceLocation id = gem == Items.AIR ? null : Registry.ITEM.getKey(gem);
 
 				if (id != null && !gem.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {
 					MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "macerating/generated/gem_from_ore/" + id.getNamespace() + "/" + id.getPath()));
@@ -44,7 +45,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 			}
 
 			if (!gemFromOre && FTBICConfig.RECIPES.ADD_DUST_FROM_ORE_RECIPES.get() && dust != Items.AIR && !material.ore.getValues().isEmpty()) {
-				ResourceLocation id = dust.getRegistryName();
+				ResourceLocation id = Registry.ITEM.getKey(dust);
 
 				if (id != null && !dust.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {
 					MachineRecipe recipe = new MachineRecipe(recipeSerializer.get(), new ResourceLocation(FTBIC.MOD_ID, "macerating/generated/dust_from_ore/" + id.getNamespace() + "/" + id.getPath()));
@@ -55,7 +56,7 @@ public class MaceratingRecipeResults extends SimpleMachineRecipeResults {
 			}
 
 			if (FTBICConfig.RECIPES.ADD_DUST_FROM_MATERIAL_RECIPES.get() && dust != Items.AIR) {
-				ResourceLocation id = dust.getRegistryName();
+				ResourceLocation id = Registry.ITEM.getKey(dust);
 
 				if (id != null && !dust.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {
 					if (!material.ingot.getValues().isEmpty()) {

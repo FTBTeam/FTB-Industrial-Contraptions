@@ -9,6 +9,7 @@ import dev.ftb.mods.ftbic.util.CraftingMaterial;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +30,7 @@ public class ExtrudingRecipeResults extends SimpleMachineRecipeResults {
 			Item rod = FTBICConfig.getItemFromTag(m.rod.getTag());
 
 			if (FTBICConfig.RECIPES.ADD_ROD_RECIPES.get() && rod != Items.AIR) {
-				ResourceLocation id = rod.getRegistryName();
+				ResourceLocation id = Registry.ITEM.getKey(rod);
 
 				if (id != null && !rod.builtInRegistryHolder().is(FTBICUtils.NO_AUTO_RECIPE)) {
 					if (!m.ingot.getValues().isEmpty()) {

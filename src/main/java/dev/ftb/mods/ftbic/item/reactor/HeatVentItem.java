@@ -4,7 +4,6 @@ import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,12 +29,12 @@ public class HeatVentItem extends BaseReactorItem {
 	@Override
 	public void reactorInfo(ItemStack stack, List<Component> list, boolean shift, boolean advanced, @Nullable NuclearReactor reactor, int x, int y) {
 		if (stack.getMaxDamage() > 0) {
-			list.add(new TextComponent("Coolant: ").append(FTBICUtils.formatHeat(stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GRAY));
+			list.add(Component.literal("Coolant: ").append(FTBICUtils.formatHeat(stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GRAY));
 		}
 
-		list.add(new TextComponent("Self Cooling: ").append(FTBICUtils.formatHeat(selfCooling)).append("/s").withStyle(ChatFormatting.GRAY));
-		list.add(new TextComponent("Reactor Cooling: ").append(FTBICUtils.formatHeat(reactorCooling)).append("/s").withStyle(ChatFormatting.GRAY));
-		list.add(new TextComponent("Component Cooling: ").append(FTBICUtils.formatHeat(componentCooling)).append("/s").withStyle(ChatFormatting.GRAY));
+		list.add(Component.literal("Self Cooling: ").append(FTBICUtils.formatHeat(selfCooling)).append("/s").withStyle(ChatFormatting.GRAY));
+		list.add(Component.literal("Reactor Cooling: ").append(FTBICUtils.formatHeat(reactorCooling)).append("/s").withStyle(ChatFormatting.GRAY));
+		list.add(Component.literal("Component Cooling: ").append(FTBICUtils.formatHeat(componentCooling)).append("/s").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override

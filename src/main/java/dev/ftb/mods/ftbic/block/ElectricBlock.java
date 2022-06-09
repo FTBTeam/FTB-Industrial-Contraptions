@@ -5,18 +5,16 @@ import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -46,7 +44,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Random;
 
 public class ElectricBlock extends Block implements EntityBlock, SprayPaintable {
 	public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
@@ -120,7 +117,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState state, Level level, BlockPos pos, Random r) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource r) {
 		boolean active = electricBlockInstance.canBeActive && state.getValue(ACTIVE);
 		if (active || electricBlockInstance.canBurn) {
 			BlockEntity entity = level.getBlockEntity(pos);
@@ -240,7 +237,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 
 					return InteractionResult.sidedSuccess(level.isClientSide());
 				} else if (!level.isClientSide()) {
-					player.sendMessage(new TranslatableComponent("ftbic.fuse_info"), Util.NIL_UUID);
+					player.sendSystemMessage(Component.translatable("ftbic.fuse_info"));
 				}
 
 				return InteractionResult.SUCCESS;
@@ -256,31 +253,31 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> list, TooltipFlag flag) {
 		if (electricBlockInstance.wip) {
-			list.add(new TextComponent("WIP!").withStyle(ChatFormatting.RED));
+			list.add(Component.literal("WIP!").withStyle(ChatFormatting.RED));
 		}
 
 		if (electricBlockInstance.maxEnergyOutput > 0D) {
-			list.add(new TranslatableComponent("ftbic.energy_output", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyOutput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+			list.add(Component.translatable("ftbic.energy_output", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyOutput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 			var feRatio = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 			if (feRatio > 0D) {
-				list.add(new TranslatableComponent("ftbic.zap_to_fe_conversion", FTBICConfig.ENERGY_FORMAT, feRatio).withStyle(ChatFormatting.DARK_GRAY));
+				list.add(Component.translatable("ftbic.zap_to_fe_conversion", FTBICConfig.ENERGY_FORMAT, feRatio).withStyle(ChatFormatting.DARK_GRAY));
 			}
 		}
 
 		if (electricBlockInstance.energyUsage > 0D) {
 			if (electricBlockInstance.energyUsageIsPerTick) {
-				list.add(new TranslatableComponent("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+				list.add(Component.translatable("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 			} else {
-				list.add(new TranslatableComponent("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+				list.add(Component.translatable("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 			}
 		}
 
 		if (electricBlockInstance.maxEnergyInput > 0D) {
-			list.add(new TranslatableComponent("ftbic.max_input", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyInput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+			list.add(Component.translatable("ftbic.max_input", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyInput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 		}
 
 		if (electricBlockInstance.energyCapacity > 0D && Screen.hasShiftDown()) {
-			list.add(new TranslatableComponent("ftbic.energy_capacity", FTBICUtils.formatEnergy(electricBlockInstance.energyCapacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+			list.add(Component.translatable("ftbic.energy_capacity", FTBICUtils.formatEnergy(electricBlockInstance.energyCapacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 		}
 
 		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", 10)) {
@@ -297,7 +294,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 			tag.remove("PlacerName");
 
 			for (String key : tag.getAllKeys()) {
-				list.add(new TextComponent("- " + key + ": " + tag.get(key)).withStyle(ChatFormatting.DARK_GRAY));
+				list.add(Component.literal("- " + key + ": " + tag.get(key)).withStyle(ChatFormatting.DARK_GRAY));
 			}
 		}
 	}

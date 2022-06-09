@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.util;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +32,7 @@ public class StackWithChance {
 
 	public JsonObject toJson() {
 		JsonObject json = new JsonObject();
-		json.addProperty("item", stack.getItem().getRegistryName().toString());
+		json.addProperty("item", Registry.ITEM.getKey(stack.getItem()).toString());
 
 		if (stack.getCount() > 1) {
 			json.addProperty("count", stack.getCount());

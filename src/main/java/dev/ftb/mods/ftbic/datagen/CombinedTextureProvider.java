@@ -1,26 +1,24 @@
 package dev.ftb.mods.ftbic.datagen;
 
+import com.google.common.hash.HashCode;
+import com.google.common.hash.Hashing;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.util.Mth;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.imageio.ImageIO;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author LatvianModder
@@ -121,7 +119,7 @@ public abstract class CombinedTextureProvider implements DataProvider {
 
 	public TextureData load(ResourceLocation id) {
 		return textureCache.computeIfAbsent(id, id0 -> {
-			try (InputStream stream = existingFileHelper.getResource(id0, PackType.CLIENT_RESOURCES, ".png", "textures").getInputStream()) {
+			try (InputStream stream = existingFileHelper.getResource(id0, PackType.CLIENT_RESOURCES, ".png", "textures").open()) {
 				return new TextureData(ImageIO.read(stream));
 			} catch (Exception ex) {
 				throw new RuntimeException(ex);
@@ -135,8 +133,9 @@ public abstract class CombinedTextureProvider implements DataProvider {
 
 	public abstract void registerTextures();
 
+
 	@Override
-	public void run(HashCache cache) throws IOException {
+	public void run(CachedOutput cache) throws IOException {
 		registerTextures();
 
 		for (Map.Entry<ResourceLocation, TextureData> entry : map.entrySet()) {
@@ -147,17 +146,17 @@ public abstract class CombinedTextureProvider implements DataProvider {
 			ImageIO.write(data.createBufferedImage(), "PNG", out);
 			byte[] bytes = out.toByteArray();
 
-			String hash = DataProvider.SHA1.hashBytes(bytes).toString();
+			HashCode hash = Hashing.sha256().hashBytes(bytes);
 
-			if (!Objects.equals(cache.getHash(target), hash) || !Files.exists(target)) {
-				Files.createDirectories(target.getParent());
+//			if (!Objects.equals(cache.getHash(target), hash) || !Files.exists(target)) {
+//				Files.createDirectories(target.getParent());
+//
+//				try (OutputStream outputStream = Files.newOutputStream(target)) {
+//					outputStream.write(bytes);
+//				}
+//			}
 
-				try (OutputStream outputStream = Files.newOutputStream(target)) {
-					outputStream.write(bytes);
-				}
-			}
-
-			cache.putNew(target, hash);
+			cache.writeIfNeeded(target, bytes, hash);
 			existingFileHelper.trackGenerated(entry.getKey(), TEXTURE);
 		}
 	}

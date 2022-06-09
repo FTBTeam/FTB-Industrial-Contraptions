@@ -1,10 +1,14 @@
-package dev.ftb.mods.ftbic.datagen;
+package dev.ftb.mods.ftbic.datagen.recipies;
 
-import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.datagen.FTBICRecipesGen;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

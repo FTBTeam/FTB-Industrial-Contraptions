@@ -2,14 +2,13 @@ package dev.ftb.mods.ftbic.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Random;
 
 public class BurntCableBlock extends BaseCableBlock {
 	public BurntCableBlock() {
@@ -33,7 +32,7 @@ public class BurntCableBlock extends BaseCableBlock {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		for (int i = 0; i < 3; i++) {
 			double x = pos.getX() + 0.3 + random.nextDouble() * 0.4;
 			double y = pos.getY() + 0.3 + random.nextDouble() * 0.4;

@@ -6,7 +6,6 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -46,6 +45,6 @@ public class DummyEnergyArmorItem extends ArmorItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-		list.add(new TranslatableComponent("ftbic.requires_chestplate").withStyle(ChatFormatting.GRAY));
+		list.add(Component.translatable("ftbic.requires_chestplate").withStyle(ChatFormatting.GRAY));
 	}
 }

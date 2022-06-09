@@ -72,19 +72,19 @@ dependencies {
 
 	mappings loom.layered() {
 		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.18.2:2022.03.13")
+//		parchment("org.parchmentmc.data:parchment-1.18.2:2022.03.13")
 	}
 
 	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 	modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")
 
-	modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
+//	modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
 //	modCompileOnly("curse.maven:jei-238222:${jei_file}")
 //	modImplementation("curse.maven:jei-238222:${jei_file}")
 
-	modImplementation("io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}")
-	modImplementation("dev.latvian.mods:rhino-forge:${rootProject.rhino_version}")
-	modImplementation("dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}") { transitive = false }
+//	modImplementation("io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}")
+//	modImplementation("dev.latvian.mods:rhino-forge:${rootProject.rhino_version}")
+//	modImplementation("dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}") { transitive = false }
 	modImplementation("dev.ftb.mods:ftb-library-forge:${rootProject.ftblibrary_version}") { transitive = false }
 	modImplementation("dev.ftb.mods:ftb-teams-forge:${rootProject.ftbteams_version}") { transitive = false }
 	modImplementation("dev.ftb.mods:ftb-chunks-forge:${rootProject.ftbchunks_version}") { transitive = false }

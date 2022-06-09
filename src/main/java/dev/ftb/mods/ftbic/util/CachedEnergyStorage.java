@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.util;
 
+import net.minecraft.core.Registry;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public final class CachedEnergyStorage {
@@ -25,7 +26,7 @@ public final class CachedEnergyStorage {
 
 	@Override
 	public String toString() {
-		return String.format("%s@%d,%d,%d", blockEntity.getType().getRegistryName(), blockEntity.getBlockPos().getX(), blockEntity.getBlockPos().getY(), blockEntity.getBlockPos().getZ());
+		return String.format("%s@%d,%d,%d", Registry.BLOCK_ENTITY_TYPE.getKey(blockEntity.getType()), blockEntity.getBlockPos().getX(), blockEntity.getBlockPos().getY(), blockEntity.getBlockPos().getZ());
 	}
 
 	public boolean shouldReceiveEnergy() {

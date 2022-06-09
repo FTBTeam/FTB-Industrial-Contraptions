@@ -2,8 +2,8 @@ package dev.ftb.mods.ftbic;
 
 import dev.ftb.mods.ftbic.util.CraftingMaterial;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 public class FTBICConfig {
-	public static Component ENERGY_FORMAT = new TextComponent("⚡").withStyle(ChatFormatting.BOLD);
-	public static Component HEAT_FORMAT = new TextComponent("\uD83D\uDD25");
+	public static Component ENERGY_FORMAT = Component.literal("⚡").withStyle(ChatFormatting.BOLD);
+	public static Component HEAT_FORMAT = Component.literal("\uD83D\uDD25");
 
     static final ForgeConfigSpec COMMON_CONFIG;
     private static final Builder COMMON =  new Builder();
@@ -408,7 +408,7 @@ public class FTBICConfig {
 		Item current = null;
 
 		for (Item item : items) {
-			int o = getOrder(item.getRegistryName());
+			int o = getOrder(Registry.ITEM.getKey(item));
 
 			if (o == 0) {
 				return item;

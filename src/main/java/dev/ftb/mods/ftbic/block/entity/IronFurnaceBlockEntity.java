@@ -4,7 +4,6 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
@@ -22,7 +21,7 @@ public class IronFurnaceBlockEntity extends FurnaceBlockEntity {
 
 	@Override
 	protected Component getDefaultName() {
-		return new TranslatableComponent(FTBICBlocks.IRON_FURNACE.get().getDescriptionId());
+		return Component.translatable(FTBICBlocks.IRON_FURNACE.get().getDescriptionId());
 	}
 
 	@Override

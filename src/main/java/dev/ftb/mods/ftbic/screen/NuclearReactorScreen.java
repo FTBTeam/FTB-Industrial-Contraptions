@@ -9,7 +9,6 @@ import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.game.ServerboundContainerButtonClickPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -47,7 +46,7 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
 		super.renderLabels(poseStack, mouseX, mouseY);
 
-		drawCenteredString(poseStack, font, menu.data.get(SyncedData.PAUSED) ? new TextComponent("Paused") : FTBICUtils.formatEnergy(menu.data.get(NuclearReactorBlockEntity.ENERGY_OUTPUT)), 142, 6, 0xFFFFFF);
+		drawCenteredString(poseStack, font, menu.data.get(SyncedData.PAUSED) ? Component.literal("Paused") : FTBICUtils.formatEnergy(menu.data.get(NuclearReactorBlockEntity.ENERGY_OUTPUT)), 142, 6, 0xFFFFFF);
 		drawCenteredString(poseStack, font, FTBICUtils.formatHeat(menu.data.get(NuclearReactorBlockEntity.HEAT)), 142, 128, 0xFFFFFF);
 	}
 
@@ -86,24 +85,24 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 				if (stop) {
 					break;
 				} else if (runTime >= 10_000_000) {
-					info.add(new TextComponent("Simulation ran for too long!").withStyle(ChatFormatting.RED));
+					info.add(Component.literal("Simulation ran for too long!").withStyle(ChatFormatting.RED));
 					break;
 				}
 			}
 
 			if (maxEnergyOutput <= 0D) {
-				info.add(new TextComponent("Insert Fuel Rods to check run time!"));
+				info.add(Component.literal("Insert Fuel Rods to check run time!"));
 			} else {
-				info.add(new TextComponent(String.format("This reactor will run for %,d s", runTime)));
+				info.add(Component.literal(String.format("This reactor will run for %,d s", runTime)));
 
 				if (reactor.heat >= reactor.maxHeat) {
-					info.add(new TextComponent("This reactor will explode with " + Mth.ceil(reactor.explosionRadius) + " block radius").withStyle(ChatFormatting.RED));
+					info.add(Component.literal("This reactor will explode with " + Mth.ceil(reactor.explosionRadius) + " block radius").withStyle(ChatFormatting.RED));
 				} else {
-					info.add(new TextComponent("This reactor will not explode").withStyle(ChatFormatting.GREEN));
+					info.add(Component.literal("This reactor will not explode").withStyle(ChatFormatting.GREEN));
 				}
 
-				info.add(new TextComponent("Max energy generated: ").append(FTBICUtils.formatEnergy(maxEnergyOutput)).append("/t"));
-				info.add(new TextComponent("Total energy generated: ").append(FTBICUtils.formatEnergy(totalEnergyOutput)));
+				info.add(Component.literal("Max energy generated: ").append(FTBICUtils.formatEnergy(maxEnergyOutput)).append("/t"));
+				info.add(Component.literal("Total energy generated: ").append(FTBICUtils.formatEnergy(totalEnergyOutput)));
 			}
 
 			minecraft.setScreen(new NuclearReactorInfoScreen(this, info));

@@ -6,10 +6,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.Nullable;
 
-public class AntimatterBoostRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AntimatterBoostRecipe> {
+public class AntimatterBoostRecipeSerializer implements RecipeSerializer<AntimatterBoostRecipe> {
 	@Override
 	public AntimatterBoostRecipe fromJson(ResourceLocation id, JsonObject json) {
 		AntimatterBoostRecipe recipe = new AntimatterBoostRecipe(id);

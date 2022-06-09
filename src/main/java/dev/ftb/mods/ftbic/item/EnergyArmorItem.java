@@ -61,7 +61,7 @@ public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 
 	@Override
 	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
-		if (allowdedIn(tab)) {
+		if (allowedIn(tab)) {
 			list.add(new ItemStack(this));
 
 			ItemStack full = new ItemStack(this);

@@ -4,7 +4,6 @@ import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -29,11 +28,11 @@ public class HeatExchangerItem extends BaseReactorItem {
 	@Override
 	public void reactorInfo(ItemStack stack, List<Component> list, boolean shift, boolean advanced, @Nullable NuclearReactor reactor, int x, int y) {
 		if (stack.getMaxDamage() > 0) {
-			list.add(new TextComponent("Coolant: ").append(FTBICUtils.formatHeat(stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GRAY));
+			list.add(Component.literal("Coolant: ").append(FTBICUtils.formatHeat(stack.getMaxDamage() - stack.getDamageValue())).withStyle(ChatFormatting.GRAY));
 		}
 
-		list.add(new TextComponent("Heat Transfer to Adjacent: ").append(FTBICUtils.formatHeat(heatTransferToAdjacent)).append("/s").withStyle(ChatFormatting.GRAY));
-		list.add(new TextComponent("Heat Transfer to Core: ").append(FTBICUtils.formatHeat(heatTransferToCore)).append("/s").withStyle(ChatFormatting.GRAY));
+		list.add(Component.literal("Heat Transfer to Adjacent: ").append(FTBICUtils.formatHeat(heatTransferToAdjacent)).append("/s").withStyle(ChatFormatting.GRAY));
+		list.add(Component.literal("Heat Transfer to Core: ").append(FTBICUtils.formatHeat(heatTransferToCore)).append("/s").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override

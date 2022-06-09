@@ -6,10 +6,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.Nullable;
 
-public class BasicGeneratorFuelRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<BasicGeneratorFuelRecipe> {
+public class BasicGeneratorFuelRecipeSerializer implements RecipeSerializer<BasicGeneratorFuelRecipe> {
 	@Override
 	public BasicGeneratorFuelRecipe fromJson(ResourceLocation id, JsonObject json) {
 		BasicGeneratorFuelRecipe recipe = new BasicGeneratorFuelRecipe(id);
