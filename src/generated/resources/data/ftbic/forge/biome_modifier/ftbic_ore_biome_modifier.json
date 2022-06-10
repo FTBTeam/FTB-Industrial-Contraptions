@@ -17,5 +17,5 @@
     "ftbic:ore_uranium_lower",
     "ftbic:ore_tin_middle"
   ],
-  "generation_stage": "TOP_LAYER_MODIFICATION"
+  "generation_stage": "UNDERGROUND_ORES"
 }

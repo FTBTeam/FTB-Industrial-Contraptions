@@ -41,7 +41,7 @@ public class FTBICBiomeModifierDataGen implements DataProvider {
 		this.modifierPath = outputFolder.resolve(String.join("/", directory, modid, modifiersRegistry.getNamespace(), modifiersRegistry.getPath(), "ftbic_ore_biome_modifier.json"));
 
 		this.oreBiomeModifier = new OreBiomeModifier(
-				GenerationStep.Decoration.TOP_LAYER_MODIFICATION,
+				GenerationStep.Decoration.UNDERGROUND_ORES,
 				HolderSet.direct(OreGeneration.PLACEMENTS.stream().map(e -> placedFeatures.getOrCreateHolderOrThrow(e.getKey())).toList())
 		);
 	}
