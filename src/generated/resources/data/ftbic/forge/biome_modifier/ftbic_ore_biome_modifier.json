@@ -1,5 +1,6 @@
 {
   "type": "ftbic:ore_biome_modifiers",
+  "biome_blacklist": "#ftbic:ore_spawn_blacklist",
   "features": [
     "ftbic:ore_iridium_large",
     "ftbic:ore_iridium_buried",

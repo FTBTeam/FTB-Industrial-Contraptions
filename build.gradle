@@ -63,6 +63,10 @@ repositories {
 		url = 'https://maven.parchmentmc.org'
 	}
 
+	maven {
+		url "https://maven.nanite.dev/"
+	}
+
 	mavenLocal()
 }
 

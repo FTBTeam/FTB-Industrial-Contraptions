@@ -32,6 +32,7 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
 import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.world.ICBiomeTags;
 import dev.ftb.mods.ftbic.world.ResourceElements;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
@@ -39,9 +40,11 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -113,6 +116,7 @@ public class FTBICDataGenHandler {
 			ICBlockTags blockTags = new ICBlockTags(gen, MODID, efh);
 			gen.addProvider(event.includeServer(), blockTags);
 			gen.addProvider(event.includeServer(), new FTBICItemTags(gen, blockTags, MODID, efh));
+			gen.addProvider(event.includeServer(), new ICBiomeTags(gen, MODID, efh));
 			gen.addProvider(event.includeServer(), new FTBICComponentRecipes(gen));
 			gen.addProvider(event.includeServer(), new FTBICUpgradeRecipes(gen));
 			gen.addProvider(event.includeServer(), new FTBICCableRecipes(gen));
@@ -976,6 +980,22 @@ public class FTBICDataGenHandler {
 			});
 
 			tag(Tags.Blocks.ORES).add(resourceOres);
+		}
+	}
+
+
+	private static class ICBiomeTags extends BiomeTagsProvider {
+		public ICBiomeTags(DataGenerator generatorIn, String modId, ExistingFileHelper existingFileHelper) {
+			super(generatorIn, modId, existingFileHelper);
+		}
+
+		@Override
+		protected void addTags() {
+			tag(dev.ftb.mods.ftbic.world.ICBiomeTags.ORE_SPAWN_BLACKLIST).addTags(
+					BiomeTags.IS_END,
+					BiomeTags.IS_NETHER
+			);
+
 		}
 	}
 
