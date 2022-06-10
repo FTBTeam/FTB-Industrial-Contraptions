@@ -28,7 +28,8 @@ public record OreBiomeModifier(
 	@Override
 	public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder)
 	{
-		if (phase == Phase.ADD && (biome.is(BiomeTags.IS_END) && biome.is(BiomeTags.IS_NETHER)))
+		System.out.println("Modifiying");
+		if (phase == Phase.ADD)
 		{
 			BiomeGenerationSettingsBuilder generation = builder.getGenerationSettings();
 			this.features.forEach(holder -> generation.addFeature(this.generationStage, holder));

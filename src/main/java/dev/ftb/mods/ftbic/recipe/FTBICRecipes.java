@@ -16,7 +16,7 @@ public abstract class FTBICRecipes {
 	public static final DeferredRegister<RecipeSerializer<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, FTBIC.MOD_ID);
 	public static final DeferredRegister<RecipeType<?>> REGISTRY_TYPE = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, FTBIC.MOD_ID);
 
-	public static Supplier<MachineRecipeSerializer> machine(String id, Function<MachineRecipeSerializer, MachineRecipeSerializer> properties) {
+	public static RegistryObject<MachineRecipeSerializer> machine(String id, Function<MachineRecipeSerializer, MachineRecipeSerializer> properties) {
 		RegistryObject<RecipeType<Recipe<?>>> type = registerRecipeType(id);
 		return REGISTRY.register(id, () -> properties.apply(new MachineRecipeSerializer(type)));
 	}
@@ -38,12 +38,12 @@ public abstract class FTBICRecipes {
 	public static final Supplier<AntimatterBoostRecipeSerializer> ANTIMATTER_BOOST = REGISTRY.register("antimatter_boost", AntimatterBoostRecipeSerializer::new);
 	public static RegistryObject<RecipeType<AntimatterBoostRecipe>> ANTIMATTER_BOOST_TYPE = REGISTRY_TYPE.register("antimatter_boost", () -> new RecipeType<>() {});
 
-	public static final Supplier<MachineRecipeSerializer> SMELTING = machine("smelting", Function.identity());
-	public static final Supplier<MachineRecipeSerializer> MACERATING = machine("macerating", MachineRecipeSerializer::extraOutput);
-	public static final Supplier<MachineRecipeSerializer> SEPARATING = machine("separating", MachineRecipeSerializer::extraOutput);
-	public static final Supplier<MachineRecipeSerializer> COMPRESSING = machine("compressing", Function.identity());
-	public static final Supplier<MachineRecipeSerializer> REPROCESSING = machine("reprocessing", Function.identity());
-	public static final Supplier<MachineRecipeSerializer> CANNING = machine("canning", MachineRecipeSerializer::twoInputs);
-	public static final Supplier<MachineRecipeSerializer> ROLLING = machine("rolling", Function.identity());
-	public static final Supplier<MachineRecipeSerializer> EXTRUDING = machine("extruding", Function.identity());
+	public static final RegistryObject<MachineRecipeSerializer> SMELTING = machine("smelting", Function.identity());
+	public static final RegistryObject<MachineRecipeSerializer> MACERATING = machine("macerating", MachineRecipeSerializer::extraOutput);
+	public static final RegistryObject<MachineRecipeSerializer> SEPARATING = machine("separating", MachineRecipeSerializer::extraOutput);
+	public static final RegistryObject<MachineRecipeSerializer> COMPRESSING = machine("compressing", Function.identity());
+	public static final RegistryObject<MachineRecipeSerializer> REPROCESSING = machine("reprocessing", Function.identity());
+	public static final RegistryObject<MachineRecipeSerializer> CANNING = machine("canning", MachineRecipeSerializer::twoInputs);
+	public static final RegistryObject<MachineRecipeSerializer> ROLLING = machine("rolling", Function.identity());
+	public static final RegistryObject<MachineRecipeSerializer> EXTRUDING = machine("extruding", Function.identity());
 }
