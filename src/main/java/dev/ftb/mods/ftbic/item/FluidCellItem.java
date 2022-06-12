@@ -90,11 +90,7 @@ public class FluidCellItem extends Item {
 
 				if (fluidItem.getItem() instanceof BucketItem bucketItem && bucketItem.getFluid() != Fluids.EMPTY) {
 					player.awardStat(Stats.ITEM_USED.get(this));
-					SoundEvent soundevent = bucketPickup.getPickupSound(state).orElse(null);
-
-					if (soundevent != null) {
-						player.playSound(soundevent, 1F, 1F);
-					}
+					bucketPickup.getPickupSound(state).ifPresent(soundevent -> player.playSound(soundevent, 1F, 1F));
 
 					ItemStack itemstack1 = ItemUtils.createFilledResult(stack, player, setFluid(new ItemStack(this), bucketItem.getFluid()));
 

@@ -43,9 +43,7 @@ public abstract class BaseReactorItem extends Item implements ReactorItem {
 
 		Player player = Minecraft.getInstance().player;
 
-		if (player != null && player.containerMenu instanceof NuclearReactorMenu) {
-			NuclearReactorMenu m = (NuclearReactorMenu) player.containerMenu;
-
+		if (player != null && player.containerMenu instanceof NuclearReactorMenu m) {
 			for (int x = 0; x < 9; x++) {
 				for (int y = 0; y < 6; y++) {
 					if (m.entity.reactor.getAt(x, y) == stack) {

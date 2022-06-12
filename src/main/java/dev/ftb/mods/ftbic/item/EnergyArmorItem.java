@@ -29,7 +29,7 @@ import java.util.function.Consumer;
 
 public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
 	public EnergyArmorItem(EnergyArmorMaterial m) {
-		super(m, EquipmentSlot.CHEST, new Properties().tab(FTBIC.TAB));
+		super(m, EquipmentSlot.CHEST, new Properties().tab(FTBIC.TAB).fireResistant());
 	}
 
 	public void damageEnergyItem(ItemStack stack, double amount) {

@@ -120,9 +120,7 @@ public class FTBIC {
 		if (!event.getSource().isBypassInvul() && event.getEntityLiving() instanceof Player) {
 			ItemStack stack = event.getEntityLiving().getItemBySlot(EquipmentSlot.CHEST);
 
-			if (stack.getItem() instanceof EnergyArmorItem) {
-				EnergyArmorItem armorItem = (EnergyArmorItem) stack.getItem();
-
+			if (stack.getItem() instanceof EnergyArmorItem armorItem) {
 				if (armorItem.getEnergy(stack) > 0D) {
 					float protection = 0.35F;
 
@@ -141,7 +139,7 @@ public class FTBIC {
 					float amountReduced = event.getAmount() * Math.min(protection, 1F);
 					double energy = FTBICConfig.EQUIPMENT.ARMOR_DAMAGE_ENERGY.get() * amountReduced;
 
-					((EnergyArmorItem) stack.getItem()).damageEnergyItem(stack, energy);
+					armorItem.damageEnergyItem(stack, energy);
 					event.setAmount(event.getAmount() - amountReduced);
 					//event.setCanceled(true);
 
