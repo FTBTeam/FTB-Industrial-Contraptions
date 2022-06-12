@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:extruding",
+  "inputItems": [
+    {
+      "count": 4,
+      "ingredient": {
+        "tag": "forge:plates/bronze"
+      }
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:bronze_gear"
+    }
+  ]
+}
