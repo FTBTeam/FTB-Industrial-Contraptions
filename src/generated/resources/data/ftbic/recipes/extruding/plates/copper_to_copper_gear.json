@@ -1,16 +1,16 @@
 {
-  "type": "ftbic:rolling",
+  "type": "ftbic:extruding",
   "inputItems": [
     {
       "ingredient": {
-        "tag": "forge:plates/enderium"
+        "tag": "forge:plates/copper"
       },
       "count": 4
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:enderium_gear"
+      "item": "ftbic:copper_gear"
     }
   ]
 }

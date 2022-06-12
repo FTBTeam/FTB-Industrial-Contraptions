@@ -1,16 +1,16 @@
 {
-  "type": "ftbic:rolling",
+  "type": "ftbic:extruding",
   "inputItems": [
     {
       "ingredient": {
-        "tag": "forge:plates/iridium"
+        "tag": "forge:plates/bronze"
       },
       "count": 4
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:iridium_gear"
+      "item": "ftbic:bronze_gear"
     }
   ]
 }

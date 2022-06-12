@@ -1,5 +1,5 @@
 plugins {
-	id "dev.architectury.loom" version "0.11.0-SNAPSHOT"
+	id "dev.architectury.loom" version "0.12.0-SNAPSHOT"
 	id 'maven-publish'
 	id "com.matthewprenger.cursegradle" version "1.4.0"
 }
@@ -94,6 +94,8 @@ dependencies {
 	// modRuntime("curse.maven:pipez-443900:3525428")
 	// modRuntime("curse.maven:tanky-551182:3542146")
 	// modRuntime("curse.maven:refined-storage-243076:3527504")
+
+//	modImplementation("curse.maven:tool-kit-324888:3671112")
 }
 
 processResources {

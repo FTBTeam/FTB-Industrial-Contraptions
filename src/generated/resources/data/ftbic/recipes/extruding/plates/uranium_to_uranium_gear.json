@@ -1,16 +1,16 @@
 {
-  "type": "ftbic:rolling",
+  "type": "ftbic:extruding",
   "inputItems": [
     {
       "ingredient": {
-        "tag": "forge:plates/copper"
+        "tag": "forge:plates/uranium"
       },
       "count": 4
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:copper_gear"
+      "item": "ftbic:uranium_gear"
     }
   ]
 }
