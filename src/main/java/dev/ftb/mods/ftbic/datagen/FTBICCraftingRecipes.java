@@ -11,7 +11,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.function.Consumer;
 
 import static dev.ftb.mods.ftbic.world.ResourceType.*;

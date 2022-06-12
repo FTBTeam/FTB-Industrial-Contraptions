@@ -57,8 +57,7 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 		if (!isBurnt() && !level.isClientSide() && energy < energyCapacity) {
 			ItemStack battery = batteryInventory.getStackInSlot(0);
 
-			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
-				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
+			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler item) {
 				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxInputEnergy * FTBICConfig.MACHINES.ITEM_TRANSFER_EFFICIENCY.get();
 				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, transfer), false);
 

@@ -1,11 +1,6 @@
 package dev.ftb.mods.ftbic.util;
 
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.common.Tags;
 
 public class CraftingMaterial {
 	public final String id;

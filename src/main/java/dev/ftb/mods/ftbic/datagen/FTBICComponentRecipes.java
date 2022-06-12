@@ -1,6 +1,5 @@
 package dev.ftb.mods.ftbic.datagen;
 
-import dev.ftb.mods.ftbic.item.FTBICItems;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;

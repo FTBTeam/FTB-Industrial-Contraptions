@@ -91,9 +91,8 @@ public class BatteryItem extends ElectricItem {
 			for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
 				ItemStack is = ((LivingEntity) entity).getItemBySlot(equipmentSlot);
 
-				if (is != stack && is.getItem() instanceof EnergyItemHandler) {
-					EnergyItemHandler handler = (EnergyItemHandler) is.getItem();
-					double e = getEnergy(stack);
+				if (is != stack && is.getItem() instanceof EnergyItemHandler handler) {
+                    double e = getEnergy(stack);
 
 					if (e > 0D) {
 						double d = handler.insertEnergy(is, e, false);

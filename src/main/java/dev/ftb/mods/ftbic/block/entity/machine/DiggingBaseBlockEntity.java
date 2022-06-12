@@ -314,8 +314,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 
 		BlockEntity e = level.getBlockEntity(worldPosition.below());
 
-		if (e instanceof DiggingBaseBlockEntity) {
-			DiggingBaseBlockEntity q = (DiggingBaseBlockEntity) e;
+		if (e instanceof DiggingBaseBlockEntity q) {
 			offsetX = q.offsetX;
 			offsetZ = q.offsetZ;
 			sizeX = q.sizeX;
