@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Consumer;
 
 import static dev.ftb.mods.ftbic.world.ResourceElements.*;
+import static dev.ftb.mods.ftbic.world.ResourceType.GEAR;
 import static dev.ftb.mods.ftbic.world.ResourceType.ROD;
 
 public class FTBICExtrudingRecipes extends FTBICRecipesGen {
@@ -68,5 +69,55 @@ public class FTBICExtrudingRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(BRONZE_INGOT))
 				.io(Ingredient.of(BRONZE_INGOT), new ItemStack(FTBICItems.getResourceFromType(BRONZE, ROD).orElseThrow().get(), 2))
 				.save(consumer, extrudingLoc(BRONZE_INGOT.location().getPath() + "_to_" + FTBICItems.getResourceFromType(BRONZE, ROD).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(TIN_PLATE))
+				.io(Ingredient.of(TIN_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(TIN, GEAR).orElseThrow().get(), 1))
+				.save(consumer, extrudingLoc(TIN_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(TIN, GEAR).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(LEAD_PLATE))
+				.io(Ingredient.of(LEAD_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(LEAD, GEAR).orElseThrow().get(), 1))
+				.save(consumer, extrudingLoc(LEAD_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(LEAD, GEAR).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(URANIUM_PLATE))
+				.io(Ingredient.of(URANIUM_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(URANIUM, GEAR).orElseThrow().get(), 1))
+				.save(consumer, extrudingLoc(URANIUM_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(URANIUM, GEAR).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(IRIDIUM_PLATE))
+				.io(Ingredient.of(IRIDIUM_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(IRIDIUM, GEAR).orElseThrow().get(), 1))
+				.save(consumer, extrudingLoc(IRIDIUM_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(IRIDIUM, GEAR).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(ALUMINUM_PLATE))
+				.io(Ingredient.of(ALUMINUM_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(ALUMINUM, GEAR).orElseThrow().get(), 1))
+				.save(consumer, extrudingLoc(ALUMINUM_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(ALUMINUM, GEAR).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(ENDERIUM_PLATE))
+				.io(Ingredient.of(ENDERIUM_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(ENDERIUM, GEAR).orElseThrow().get(), 1))
+				.save(consumer, extrudingLoc(ENDERIUM_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(ENDERIUM, GEAR).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(GOLD_PLATE))
+				.io(Ingredient.of(GOLD_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(GOLD, GEAR).orElseThrow().get(), 1))
+				.save(consumer, extrudingLoc(GOLD_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(GOLD, GEAR).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(IRON_PLATE))
+				.io(Ingredient.of(IRON_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(IRON, GEAR).orElseThrow().get(), 1))
+				.save(consumer, extrudingLoc(IRON_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(IRON, GEAR).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(COPPER_PLATE))
+				.io(Ingredient.of(COPPER_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(COPPER, GEAR).orElseThrow().get(), 1))
+				.save(consumer, extrudingLoc(COPPER_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(COPPER, GEAR).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(BRONZE_PLATE))
+				.io(Ingredient.of(BRONZE_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(BRONZE, GEAR).orElseThrow().get(), 1))
+				.save(consumer, extrudingLoc(BRONZE_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(BRONZE, GEAR).orElseThrow().get()));
 	}
 }
