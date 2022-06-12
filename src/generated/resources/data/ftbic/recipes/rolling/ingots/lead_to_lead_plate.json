@@ -10,8 +10,7 @@
   ],
   "outputItems": [
     {
-      "item": "ftbic:lead_plate",
-      "count": 2
+      "item": "ftbic:lead_plate"
     }
   ]
 }

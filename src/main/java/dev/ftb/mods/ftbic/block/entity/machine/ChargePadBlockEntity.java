@@ -30,10 +30,8 @@ public class ChargePadBlockEntity extends ElectricBlockEntity {
 				for (int i = 0; i < handler.getSlots(); i++) {
 					ItemStack stack = handler.getStackInSlot(i);
 
-					if (stack.getItem() instanceof EnergyItemHandler) {
-						EnergyItemHandler energyItemHandler = (EnergyItemHandler) stack.getItem();
-
-						if (!energyItemHandler.isCreativeEnergyItem()) {
+					if (stack.getItem() instanceof EnergyItemHandler energyItemHandler) {
+                        if (!energyItemHandler.isCreativeEnergyItem()) {
 							double e = energyItemHandler.insertEnergy(stack, energy, false);
 
 							if (e > 0D) {

@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "ftbic:rolling/plates/iron_to_iron_gear"
+      "ftbic:extruding/plates/iridium_to_iridium_gear"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:plates/iron"
+            "tag": "forge:plates/iridium"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "ftbic:rolling/plates/iron_to_iron_gear"
+        "recipe": "ftbic:extruding/plates/iridium_to_iridium_gear"
       }
     }
   },

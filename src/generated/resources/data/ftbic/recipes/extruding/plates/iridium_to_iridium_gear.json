@@ -1,16 +1,16 @@
 {
-  "type": "ftbic:rolling",
+  "type": "ftbic:extruding",
   "inputItems": [
     {
       "ingredient": {
-        "tag": "forge:plates/tin"
+        "tag": "forge:plates/iridium"
       },
       "count": 4
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:tin_gear"
+      "item": "ftbic:iridium_gear"
     }
   ]
 }

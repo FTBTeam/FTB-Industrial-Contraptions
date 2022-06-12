@@ -1,5 +1,5 @@
 {
-  "type": "ftbic:rolling",
+  "type": "ftbic:extruding",
   "inputItems": [
     {
       "ingredient": {

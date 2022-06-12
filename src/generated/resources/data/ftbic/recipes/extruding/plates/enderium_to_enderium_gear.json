@@ -1,16 +1,16 @@
 {
-  "type": "ftbic:rolling",
+  "type": "ftbic:extruding",
   "inputItems": [
     {
       "ingredient": {
-        "tag": "forge:plates/gold"
+        "tag": "forge:plates/enderium"
       },
       "count": 4
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:gold_gear"
+      "item": "ftbic:enderium_gear"
     }
   ]
 }

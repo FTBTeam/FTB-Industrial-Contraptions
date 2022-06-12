@@ -1,16 +1,16 @@
 {
-  "type": "ftbic:rolling",
+  "type": "ftbic:extruding",
   "inputItems": [
     {
       "ingredient": {
-        "tag": "forge:plates/bronze"
+        "tag": "forge:plates/lead"
       },
       "count": 4
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:bronze_gear"
+      "item": "ftbic:lead_gear"
     }
   ]
 }

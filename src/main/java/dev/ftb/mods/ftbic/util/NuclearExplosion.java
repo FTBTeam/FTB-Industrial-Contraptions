@@ -62,15 +62,7 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 		return new Builder(level, pos, radius, owner, ownerName);
 	}
 
-	private static class CrustFilter implements Predicate<BlockPos> {
-		private final Object2IntOpenHashMap<BlockPos> blocks;
-		private final BlockPos.MutableBlockPos mpos;
-
-		private CrustFilter(Object2IntOpenHashMap<BlockPos> blocks, BlockPos.MutableBlockPos mpos) {
-			this.blocks = blocks;
-			this.mpos = mpos;
-		}
-
+	private record CrustFilter(Object2IntMap<BlockPos> blocks, BlockPos.MutableBlockPos mpos) implements Predicate<BlockPos> {
 		@Override
 		public boolean test(BlockPos pos) {
 			for (Direction dir : FTBICUtils.DIRECTIONS) {
@@ -607,14 +599,11 @@ public class NuclearExplosion extends Thread implements Comparator<NuclearExplos
 	}
 
 	private BlockState getBurntBlock(Random random) {
-		switch (random.nextInt(3)) {
-			case 0:
-				return Blocks.MAGMA_BLOCK.defaultBlockState();
-			case 1:
-				return Blocks.BASALT.defaultBlockState();
-			default:
-				return Blocks.BLACKSTONE.defaultBlockState();
-		}
+		return switch (random.nextInt(3)) {
+			case 0 -> Blocks.MAGMA_BLOCK.defaultBlockState();
+			case 1 -> Blocks.BASALT.defaultBlockState();
+			default -> Blocks.BLACKSTONE.defaultBlockState();
+		};
 	}
 
 	@Override

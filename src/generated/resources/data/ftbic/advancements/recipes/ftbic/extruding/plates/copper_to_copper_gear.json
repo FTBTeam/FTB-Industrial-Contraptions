@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "ftbic:rolling/plates/uranium_to_uranium_gear"
+      "ftbic:extruding/plates/copper_to_copper_gear"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:plates/uranium"
+            "tag": "forge:plates/copper"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "ftbic:rolling/plates/uranium_to_uranium_gear"
+        "recipe": "ftbic:extruding/plates/copper_to_copper_gear"
       }
     }
   },

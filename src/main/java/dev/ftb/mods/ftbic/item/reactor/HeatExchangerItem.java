@@ -44,14 +44,12 @@ public class HeatExchangerItem extends BaseReactorItem {
 			for (int i = 0; i < 4; i++) {
 				ItemStack is = reactor.getAt(x + NuclearReactorBlockEntity.OFFSET_X[i], y + NuclearReactorBlockEntity.OFFSET_Y[i]);
 
-				if (is.getItem() instanceof ReactorItem && ((ReactorItem) is.getItem()).isHeatAcceptor(is)) {
-					ReactorItem heatableNeighbor = (ReactorItem) is.getItem();
-
-					double sh = getRelativeDamage(stack) * 100D;
-					double rh = heatableNeighbor.getRelativeDamage(is) * 100D;
+				if (is.getItem() instanceof ReactorItem reactorItem && reactorItem.isHeatAcceptor(is)) {
+                    double sh = getRelativeDamage(stack) * 100D;
+					double rh = reactorItem.getRelativeDamage(is) * 100D;
 					int heat = getHeatTransfer(sh, rh, is.getMaxDamage(), heatTransferToAdjacent);
 					damage -= heat;
-					damage += heatableNeighbor.damageReactorItem(is, heat);
+					damage += reactorItem.damageReactorItem(is, heat);
 				}
 			}
 		}
