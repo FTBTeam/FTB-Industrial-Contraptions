@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:component_heat_exchanger",
-  "pattern": [
-    " P ",
-    "PVP",
-    " P "
-  ],
   "key": {
     "P": {
       "tag": "forge:plates/tin"
@@ -14,6 +9,11 @@
       "item": "ftbic:heat_exchanger"
     }
   },
+  "pattern": [
+    " P ",
+    "PVP",
+    " P "
+  ],
   "result": {
     "item": "ftbic:component_heat_exchanger"
   }

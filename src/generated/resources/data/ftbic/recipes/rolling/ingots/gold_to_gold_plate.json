@@ -2,16 +2,15 @@
   "type": "ftbic:rolling",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:ingots/gold"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:gold_plate",
-      "count": 2
+      "item": "ftbic:gold_plate"
     }
   ]
 }

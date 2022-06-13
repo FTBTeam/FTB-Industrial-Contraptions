@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:compressor",
+  "key": {
+    "C": {
+      "item": "ftbic:electronic_circuit"
+    },
+    "M": {
+      "item": "ftbic:machine_block"
+    },
+    "S": {
+      "tag": "forge:stone"
+    }
+  },
   "pattern": [
     "S S",
     "SMS",
     "SCS"
   ],
-  "key": {
-    "S": {
-      "tag": "forge:stone"
-    },
-    "M": {
-      "item": "ftbic:machine_block"
-    },
-    "C": {
-      "item": "ftbic:electronic_circuit"
-    }
-  },
   "result": {
     "item": "ftbic:compressor"
   }

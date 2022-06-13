@@ -2,10 +2,10 @@
   "type": "ftbic:compressing",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "item": "ftbic:carbon_fiber_mesh"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

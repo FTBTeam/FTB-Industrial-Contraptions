@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:aluminum_gear",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_nugget"
+    },
+    "X": {
+      "tag": "forge:ingots/aluminum"
+    }
+  },
   "pattern": [
     " X ",
     "XIX",
     " X "
   ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/aluminum"
-    },
-    "I": {
-      "item": "minecraft:iron_nugget"
-    }
-  },
   "result": {
     "item": "ftbic:aluminum_gear"
   }

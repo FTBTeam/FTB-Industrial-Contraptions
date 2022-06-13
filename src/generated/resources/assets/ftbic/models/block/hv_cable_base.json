@@ -1,11 +1,27 @@
 {
   "parent": "minecraft:block/block",
-  "textures": {
-    "texture": "ftbic:block/hv_cable",
-    "particle": "ftbic:block/hv_cable"
-  },
   "elements": [
     {
+      "faces": {
+        "down": {
+          "texture": "#texture"
+        },
+        "east": {
+          "texture": "#texture"
+        },
+        "north": {
+          "texture": "#texture"
+        },
+        "south": {
+          "texture": "#texture"
+        },
+        "up": {
+          "texture": "#texture"
+        },
+        "west": {
+          "texture": "#texture"
+        }
+      },
       "from": [
         6,
         6,
@@ -15,27 +31,11 @@
         10,
         10,
         10
-      ],
-      "faces": {
-        "down": {
-          "texture": "#texture"
-        },
-        "up": {
-          "texture": "#texture"
-        },
-        "north": {
-          "texture": "#texture"
-        },
-        "south": {
-          "texture": "#texture"
-        },
-        "west": {
-          "texture": "#texture"
-        },
-        "east": {
-          "texture": "#texture"
-        }
-      }
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "particle": "ftbic:block/hv_cable",
+    "texture": "ftbic:block/hv_cable"
+  }
 }

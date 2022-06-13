@@ -2,13 +2,13 @@
   "type": "ftbic:separating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "type": "forge:nbt",
-        "item": "ftbic:fluid_cell",
         "count": 1,
+        "item": "ftbic:fluid_cell",
         "nbt": "{Fluid:\"minecraft:water\"}"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

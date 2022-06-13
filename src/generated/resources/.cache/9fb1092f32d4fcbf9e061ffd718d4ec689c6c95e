@@ -1,0 +1,11 @@
+// 1.19	2022-06-12T18:55:34.966874	Recipes
+09e80d4073a345b05ea883e51f576ff63433e1ad data/ftbic/advancements/recipes/ftbic/shaped/battery.json
+518b2b5958b41602289cc087a0d9b252c07cc4f6 data/ftbic/advancements/recipes/ftbic/shaped/single_use_battery.json
+ffd63f126b1dd6406733c765f22298206b174dd6 data/ftbic/advancements/recipes/ftbic/smithing/crystal_battery.json
+6829d282be729e3044fa90f61635690f186d9a24 data/ftbic/advancements/recipes/ftbic/smithing/graphene_battery.json
+c8114d0ef97b14fa919be042cffa0d39b26667da data/ftbic/advancements/recipes/ftbic/smithing/iridium_battery.json
+f8d1542ca84e6f3c484f47d49077188b9f42a70e data/ftbic/recipes/shaped/battery.json
+7c4f1e4a42983b796ee2d6e1e14e31c7d3be8eba data/ftbic/recipes/shaped/single_use_battery.json
+f21b83219f5631f3971cbb95ca5ab1319ec73fb5 data/ftbic/recipes/smithing/crystal_battery.json
+485815fcb446b4ca983213381be9dd7218b623d8 data/ftbic/recipes/smithing/graphene_battery.json
+c0caa9dbfb3246c0651e6c93893153d2a46032f5 data/ftbic/recipes/smithing/iridium_battery.json

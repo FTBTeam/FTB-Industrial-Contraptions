@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:gold_gear",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_nugget"
+    },
+    "X": {
+      "tag": "forge:ingots/gold"
+    }
+  },
   "pattern": [
     " X ",
     "XIX",
     " X "
   ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/gold"
-    },
-    "I": {
-      "item": "minecraft:iron_nugget"
-    }
-  },
   "result": {
     "item": "ftbic:gold_gear"
   }

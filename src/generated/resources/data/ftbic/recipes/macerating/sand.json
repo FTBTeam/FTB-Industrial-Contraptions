@@ -2,10 +2,10 @@
   "type": "ftbic:macerating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:gravel"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

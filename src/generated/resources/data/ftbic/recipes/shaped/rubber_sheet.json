@@ -1,14 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:rubber_sheet",
-  "pattern": [
-    "III"
-  ],
   "key": {
     "I": {
       "item": "ftbic:rubber"
     }
   },
+  "pattern": [
+    "III"
+  ],
   "result": {
     "item": "ftbic:rubber_sheet"
   }

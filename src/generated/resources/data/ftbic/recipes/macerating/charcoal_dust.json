@@ -2,10 +2,10 @@
   "type": "ftbic:macerating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "item": "minecraft:charcoal"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:nuclear_reactor",
-  "pattern": [
-    "HCH",
-    "HHH",
-    "HGH"
-  ],
   "key": {
-    "H": {
-      "item": "ftbic:nuclear_reactor_chamber"
-    },
     "C": {
       "item": "ftbic:iridium_circuit"
     },
     "G": {
       "item": "ftbic:basic_generator"
+    },
+    "H": {
+      "item": "ftbic:nuclear_reactor_chamber"
     }
   },
+  "pattern": [
+    "HCH",
+    "HHH",
+    "HGH"
+  ],
   "result": {
     "item": "ftbic:nuclear_reactor"
   }

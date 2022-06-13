@@ -2,16 +2,16 @@
   "type": "ftbic:macerating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:rods/blaze"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "minecraft:blaze_powder",
-      "count": 5
+      "count": 5,
+      "item": "minecraft:blaze_powder"
     }
   ]
 }

@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:overclocker_upgrade",
-  "pattern": [
-    "UUU",
-    "WCW"
-  ],
   "key": {
+    "C": {
+      "item": "ftbic:electronic_circuit"
+    },
     "U": {
       "type": "forge:nbt",
-      "item": "ftbic:small_coolant_cell",
       "count": 1,
+      "item": "ftbic:small_coolant_cell",
       "nbt": "{Damage:0}"
     },
     "W": {
       "item": "ftbic:lv_cable"
-    },
-    "C": {
-      "item": "ftbic:electronic_circuit"
     }
   },
+  "pattern": [
+    "UUU",
+    "WCW"
+  ],
   "result": {
     "item": "ftbic:overclocker_upgrade"
   }

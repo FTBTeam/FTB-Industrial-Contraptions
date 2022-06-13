@@ -2,10 +2,10 @@
   "type": "ftbic:compressing",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "item": "ftbic:coal_ball"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

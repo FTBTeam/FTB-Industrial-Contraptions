@@ -1,25 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:hv_solar_panel",
-  "pattern": [
-    "SGS",
-    "SAS",
-    "SCS"
-  ],
   "key": {
-    "S": {
-      "item": "ftbic:mv_solar_panel"
-    },
-    "G": {
-      "item": "ftbic:graphene"
-    },
     "A": {
       "item": "ftbic:advanced_machine_block"
     },
     "C": {
       "item": "ftbic:iridium_circuit"
+    },
+    "G": {
+      "item": "ftbic:graphene"
+    },
+    "S": {
+      "item": "ftbic:mv_solar_panel"
     }
   },
+  "pattern": [
+    "SGS",
+    "SAS",
+    "SCS"
+  ],
   "result": {
     "item": "ftbic:hv_solar_panel"
   }

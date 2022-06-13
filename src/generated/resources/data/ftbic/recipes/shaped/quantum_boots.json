@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:quantum_boots",
-  "pattern": [
-    "IAI",
-    "SLS"
-  ],
   "key": {
     "A": {
       "item": "ftbic:carbon_boots"
@@ -12,13 +8,17 @@
     "I": {
       "item": "ftbic:iridium_alloy"
     },
-    "S": {
-      "item": "ftbic:reinforced_stone"
-    },
     "L": {
       "item": "minecraft:leather_boots"
+    },
+    "S": {
+      "item": "ftbic:reinforced_stone"
     }
   },
+  "pattern": [
+    "IAI",
+    "SLS"
+  ],
   "result": {
     "item": "ftbic:quantum_boots"
   }

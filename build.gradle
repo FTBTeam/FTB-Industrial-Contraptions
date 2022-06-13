@@ -1,5 +1,5 @@
 plugins {
-	id "dev.architectury.loom" version "0.11.0-SNAPSHOT"
+	id "dev.architectury.loom" version "0.12.0-SNAPSHOT"
 	id 'maven-publish'
 	id "com.matthewprenger.cursegradle" version "1.4.0"
 }
@@ -63,6 +63,10 @@ repositories {
 		url = 'https://maven.parchmentmc.org'
 	}
 
+	maven {
+		url "https://maven.nanite.dev/"
+	}
+
 	mavenLocal()
 }
 
@@ -72,23 +76,23 @@ dependencies {
 
 	mappings loom.layered() {
 		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.18.2:2022.03.13")
+//		parchment("org.parchmentmc.data:parchment-1.18.2:2022.03.13")
 	}
 
 	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 	modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")
 
-	modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
+//	modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
 //	modCompileOnly("curse.maven:jei-238222:${jei_file}")
 //	modImplementation("curse.maven:jei-238222:${jei_file}")
 
-	modImplementation("io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}")
+	modImplementation("io.alwa.mods:myrtrees-forge:${myrtrees_version}")
 	modImplementation("dev.latvian.mods:rhino-forge:${rootProject.rhino_version}")
 	modImplementation("dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}") { transitive = false }
 	modImplementation("dev.ftb.mods:ftb-library-forge:${rootProject.ftblibrary_version}") { transitive = false }
 	modImplementation("dev.ftb.mods:ftb-teams-forge:${rootProject.ftbteams_version}") { transitive = false }
 	modImplementation("dev.ftb.mods:ftb-chunks-forge:${rootProject.ftbchunks_version}") { transitive = false }
-//	modRuntimeOnly ("com.sunekaer.mods:ToolKit:2.2.1-build.9999+mc1.18.2") // local
+//	modRuntimeOnly ("com.sunekaer.mods:ToolKit:2.3.0-build.9999+mc1.19") // local
 
 //	modRuntime("curse.maven:ctm-267602:3586556")
 	// modRuntime("curse.maven:pipez-443900:3525428")

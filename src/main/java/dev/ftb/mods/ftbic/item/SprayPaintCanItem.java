@@ -4,7 +4,6 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.SprayPaintable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -46,6 +45,6 @@ public class SprayPaintCanItem extends Item {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-		list.add(new TranslatableComponent("item.ftbic.spray_paint_can.tooltip").withStyle(ChatFormatting.GRAY));
+		list.add(Component.translatable("item.ftbic.spray_paint_can.tooltip").withStyle(ChatFormatting.GRAY));
 	}
 }

@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:single_use_battery",
-  "pattern": [
-    "C",
-    "R",
-    "O"
-  ],
   "key": {
     "C": {
       "item": "ftbic:lv_cable"
@@ -17,6 +12,11 @@
       "tag": "forge:dusts/redstone"
     }
   },
+  "pattern": [
+    "C",
+    "R",
+    "O"
+  ],
   "result": {
     "item": "ftbic:single_use_battery"
   }

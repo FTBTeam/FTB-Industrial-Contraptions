@@ -1,25 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:large_coolant_cell",
+  "key": {
+    "A": {
+      "item": "ftbic:dense_copper_plate"
+    },
+    "C": {
+      "type": "forge:nbt",
+      "count": 1,
+      "item": "ftbic:medium_coolant_cell",
+      "nbt": "{Damage:0}"
+    },
+    "T": {
+      "tag": "forge:ingots/tin"
+    }
+  },
   "pattern": [
     "TCT",
     "TAT",
     "TCT"
   ],
-  "key": {
-    "T": {
-      "tag": "forge:ingots/tin"
-    },
-    "C": {
-      "type": "forge:nbt",
-      "item": "ftbic:medium_coolant_cell",
-      "count": 1,
-      "nbt": "{Damage:0}"
-    },
-    "A": {
-      "item": "ftbic:dense_copper_plate"
-    }
-  },
   "result": {
     "item": "ftbic:large_coolant_cell"
   }

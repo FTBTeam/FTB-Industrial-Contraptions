@@ -2,16 +2,15 @@
   "type": "ftbic:rolling",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:ingots/lead"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:lead_plate",
-      "count": 2
+      "item": "ftbic:lead_plate"
     }
   ]
 }

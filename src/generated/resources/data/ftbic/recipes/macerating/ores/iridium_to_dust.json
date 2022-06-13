@@ -2,16 +2,16 @@
   "type": "ftbic:macerating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:ores/iridium"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:iridium_dust",
-      "count": 2
+      "count": 2,
+      "item": "ftbic:iridium_dust"
     }
   ]
 }

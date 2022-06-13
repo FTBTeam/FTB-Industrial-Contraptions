@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.screen.PumpMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -52,7 +53,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 	public void writeData(CompoundTag tag) {
 		super.writeData(tag);
 		tag.put("Fluid", fluidStack.writeToNBT(new CompoundTag()));
-		tag.putString("Filter", filter.getRegistryName().toString());
+		tag.putString("Filter", Registry.FLUID.getKey(filter).toString());
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 	public void writeNetData(CompoundTag tag) {
 		super.writeNetData(tag);
 		tag.put("Fluid", fluidStack.writeToNBT(new CompoundTag()));
-		tag.putString("Filter", filter.getRegistryName().toString());
+		tag.putString("Filter", Registry.FLUID.getKey(filter).toString());
 	}
 
 	@Override
@@ -127,7 +128,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 	@Override
 	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {
 		super.writeMenu(player, buf);
-		buf.writeResourceLocation(filter.getRegistryName());
+		buf.writeResourceLocation(Registry.FLUID.getKey(filter));
 		fluidStack.writeToPacket(buf);
 	}
 

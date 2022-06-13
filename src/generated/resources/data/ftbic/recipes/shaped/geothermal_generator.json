@@ -1,25 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:geothermal_generator",
+  "key": {
+    "C": {
+      "item": "ftbic:fluid_cell"
+    },
+    "G": {
+      "item": "ftbic:basic_generator"
+    },
+    "L": {
+      "tag": "forge:glass/colorless"
+    },
+    "M": {
+      "item": "ftbic:industrial_grade_metal"
+    }
+  },
   "pattern": [
     "LCL",
     "LCL",
     "MGM"
   ],
-  "key": {
-    "L": {
-      "tag": "forge:glass/colorless"
-    },
-    "C": {
-      "item": "ftbic:fluid_cell"
-    },
-    "M": {
-      "item": "ftbic:industrial_grade_metal"
-    },
-    "G": {
-      "item": "ftbic:basic_generator"
-    }
-  },
   "result": {
     "item": "ftbic:geothermal_generator"
   }

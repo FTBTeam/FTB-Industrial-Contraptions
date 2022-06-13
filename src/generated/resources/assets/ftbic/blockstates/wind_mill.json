@@ -1,34 +1,34 @@
 {
   "variants": {
+    "dark=false,facing=east": {
+      "model": "ftbic:block/electric/light/wind_mill",
+      "y": 90
+    },
     "dark=false,facing=north": {
       "model": "ftbic:block/electric/light/wind_mill"
     },
-    "dark=true,facing=north": {
-      "model": "ftbic:block/electric/dark/wind_mill"
-    },
     "dark=false,facing=south": {
       "model": "ftbic:block/electric/light/wind_mill",
-      "y": 180
-    },
-    "dark=true,facing=south": {
-      "model": "ftbic:block/electric/dark/wind_mill",
       "y": 180
     },
     "dark=false,facing=west": {
       "model": "ftbic:block/electric/light/wind_mill",
       "y": 270
     },
-    "dark=true,facing=west": {
-      "model": "ftbic:block/electric/dark/wind_mill",
-      "y": 270
-    },
-    "dark=false,facing=east": {
-      "model": "ftbic:block/electric/light/wind_mill",
-      "y": 90
-    },
     "dark=true,facing=east": {
       "model": "ftbic:block/electric/dark/wind_mill",
       "y": 90
+    },
+    "dark=true,facing=north": {
+      "model": "ftbic:block/electric/dark/wind_mill"
+    },
+    "dark=true,facing=south": {
+      "model": "ftbic:block/electric/dark/wind_mill",
+      "y": 180
+    },
+    "dark=true,facing=west": {
+      "model": "ftbic:block/electric/dark/wind_mill",
+      "y": 270
     }
   }
 }

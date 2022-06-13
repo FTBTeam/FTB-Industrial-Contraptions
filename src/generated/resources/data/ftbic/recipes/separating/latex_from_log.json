@@ -2,16 +2,16 @@
   "type": "ftbic:separating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "item": "myrtrees:rubberwood_log"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "myrtrees:latex",
-      "chance": 0.8
+      "chance": 0.8,
+      "item": "myrtrees:latex"
     }
   ]
 }

@@ -1,28 +1,15 @@
 {
   "parent": "minecraft:block/block",
   "ambientocclusion": false,
-  "textures": {
-    "particle": "ftbic:block/landmark_ns",
-    "landmark_ns": "ftbic:block/landmark_ns",
-    "landmark_we": "ftbic:block/landmark_we"
-  },
   "elements": [
     {
-      "from": [
-        7,
-        0,
-        7
-      ],
-      "to": [
-        9,
-        7,
-        9
-      ],
-      "shade": false,
       "faces": {
         "down": {
-          "texture": "#landmark_ns",
-          "cullface": "down"
+          "cullface": "down",
+          "texture": "#landmark_ns"
+        },
+        "east": {
+          "texture": "#landmark_we"
         },
         "north": {
           "texture": "#landmark_ns"
@@ -32,26 +19,50 @@
         },
         "west": {
           "texture": "#landmark_we"
-        },
-        "east": {
-          "texture": "#landmark_we"
         }
-      }
-    },
-    {
+      },
       "from": [
-        6.97,
-        6.97,
-        6.97
-      ],
-      "to": [
-        9.03,
-        9.03,
-        9.03
+        7,
+        0,
+        7
       ],
       "shade": false,
+      "to": [
+        9,
+        7,
+        9
+      ]
+    },
+    {
       "faces": {
         "down": {
+          "texture": "#landmark_ns",
+          "uv": [
+            7.0,
+            7.0,
+            9.0,
+            9.0
+          ]
+        },
+        "east": {
+          "texture": "#landmark_we",
+          "uv": [
+            7.0,
+            7.0,
+            9.0,
+            9.0
+          ]
+        },
+        "north": {
+          "texture": "#landmark_ns",
+          "uv": [
+            7.0,
+            7.0,
+            9.0,
+            9.0
+          ]
+        },
+        "south": {
           "texture": "#landmark_ns",
           "uv": [
             7.0,
@@ -69,24 +80,6 @@
             9.0
           ]
         },
-        "north": {
-          "texture": "#landmark_ns",
-          "uv": [
-            7.0,
-            7.0,
-            9.0,
-            9.0
-          ]
-        },
-        "south": {
-          "texture": "#landmark_ns",
-          "uv": [
-            7.0,
-            7.0,
-            9.0,
-            9.0
-          ]
-        },
         "west": {
           "texture": "#landmark_we",
           "uv": [
@@ -95,17 +88,24 @@
             9.0,
             9.0
           ]
-        },
-        "east": {
-          "texture": "#landmark_we",
-          "uv": [
-            7.0,
-            7.0,
-            9.0,
-            9.0
-          ]
         }
-      }
+      },
+      "from": [
+        6.97,
+        6.97,
+        6.97
+      ],
+      "shade": false,
+      "to": [
+        9.03,
+        9.03,
+        9.03
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "landmark_ns": "ftbic:block/landmark_ns",
+    "landmark_we": "ftbic:block/landmark_we",
+    "particle": "ftbic:block/landmark_ns"
+  }
 }

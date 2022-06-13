@@ -1,17 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:mechanical_elytra",
-  "pattern": [
-    "CBC",
-    "CSC",
-    "VLV"
-  ],
   "key": {
-    "C": {
-      "item": "ftbic:carbon_plate"
-    },
     "B": {
       "item": "ftbic:mv_battery"
+    },
+    "C": {
+      "item": "ftbic:carbon_plate"
     },
     "L": {
       "item": "minecraft:elytra"
@@ -23,6 +18,11 @@
       "item": "ftbic:heat_vent"
     }
   },
+  "pattern": [
+    "CBC",
+    "CSC",
+    "VLV"
+  ],
   "result": {
     "item": "ftbic:mechanical_elytra"
   }

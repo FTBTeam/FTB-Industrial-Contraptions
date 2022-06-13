@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.7,
   "ingredient": {
     "tag": "forge:dusts/enderium"
   },
-  "result": "ftbic:enderium_ingot",
-  "experience": 0.7,
-  "cookingtime": 200
+  "result": "ftbic:enderium_ingot"
 }

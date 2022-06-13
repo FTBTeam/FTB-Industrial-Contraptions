@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:scrap_box",
-  "pattern": [
-    "SSS",
-    "SSS",
-    "SSS"
-  ],
   "key": {
     "S": {
       "item": "ftbic:scrap"
     }
   },
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
   "result": {
     "item": "ftbic:scrap_box"
   }

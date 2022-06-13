@@ -4,7 +4,7 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -78,7 +78,7 @@ public class WindMillBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			player.displayClientMessage(new TranslatableComponent("ftbic.energy_output", FTBICUtils.formatEnergy(output)), false);
+			player.displayClientMessage(Component.translatable("ftbic.energy_output", FTBICUtils.formatEnergy(output)), false);
 		}
 
 		return InteractionResult.SUCCESS;

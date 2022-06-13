@@ -7,7 +7,7 @@
     }
   ],
   "result": {
-    "item": "ftbic:copper_nugget",
-    "count": 9
+    "count": 9,
+    "item": "ftbic:copper_nugget"
   }
 }

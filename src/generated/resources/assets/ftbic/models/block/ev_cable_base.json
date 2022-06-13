@@ -1,11 +1,27 @@
 {
   "parent": "minecraft:block/block",
-  "textures": {
-    "texture": "ftbic:block/ev_cable",
-    "particle": "ftbic:block/ev_cable"
-  },
   "elements": [
     {
+      "faces": {
+        "down": {
+          "texture": "#texture"
+        },
+        "east": {
+          "texture": "#texture"
+        },
+        "north": {
+          "texture": "#texture"
+        },
+        "south": {
+          "texture": "#texture"
+        },
+        "up": {
+          "texture": "#texture"
+        },
+        "west": {
+          "texture": "#texture"
+        }
+      },
       "from": [
         4,
         4,
@@ -15,27 +31,11 @@
         12,
         12,
         12
-      ],
-      "faces": {
-        "down": {
-          "texture": "#texture"
-        },
-        "up": {
-          "texture": "#texture"
-        },
-        "north": {
-          "texture": "#texture"
-        },
-        "south": {
-          "texture": "#texture"
-        },
-        "west": {
-          "texture": "#texture"
-        },
-        "east": {
-          "texture": "#texture"
-        }
-      }
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "particle": "ftbic:block/ev_cable",
+    "texture": "ftbic:block/ev_cable"
+  }
 }

@@ -2,16 +2,16 @@
   "type": "ftbic:separating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:gems/quartz"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:silicon",
-      "count": 3
+      "count": 3,
+      "item": "ftbic:silicon"
     }
   ]
 }

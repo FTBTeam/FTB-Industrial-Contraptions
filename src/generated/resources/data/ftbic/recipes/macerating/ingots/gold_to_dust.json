@@ -2,10 +2,10 @@
   "type": "ftbic:macerating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:ingots/gold"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

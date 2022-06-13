@@ -1,25 +1,14 @@
 {
   "parent": "minecraft:block/block",
-  "textures": {
-    "texture": "ftbic:block/lv_cable",
-    "particle": "ftbic:block/lv_cable"
-  },
   "elements": [
     {
-      "from": [
-        5,
-        0,
-        5
-      ],
-      "to": [
-        11,
-        5,
-        11
-      ],
       "faces": {
         "down": {
-          "texture": "#texture",
-          "cullface": "down"
+          "cullface": "down",
+          "texture": "#texture"
+        },
+        "east": {
+          "texture": "#texture"
         },
         "north": {
           "texture": "#texture"
@@ -29,11 +18,22 @@
         },
         "west": {
           "texture": "#texture"
-        },
-        "east": {
-          "texture": "#texture"
         }
-      }
+      },
+      "from": [
+        5,
+        0,
+        5
+      ],
+      "to": [
+        11,
+        5,
+        11
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "particle": "ftbic:block/lv_cable",
+    "texture": "ftbic:block/lv_cable"
+  }
 }

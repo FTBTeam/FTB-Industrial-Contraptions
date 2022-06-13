@@ -1,28 +1,28 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:quantum_helmet",
-  "pattern": [
-    " A ",
-    "INI",
-    "CGC"
-  ],
   "key": {
     "A": {
       "item": "ftbic:carbon_helmet"
-    },
-    "I": {
-      "item": "ftbic:iridium_alloy"
-    },
-    "N": {
-      "tag": "forge:dusts/glowstone"
     },
     "C": {
       "item": "ftbic:iridium_circuit"
     },
     "G": {
       "item": "ftbic:reinforced_glass"
+    },
+    "I": {
+      "item": "ftbic:iridium_alloy"
+    },
+    "N": {
+      "tag": "forge:dusts/glowstone"
     }
   },
+  "pattern": [
+    " A ",
+    "INI",
+    "CGC"
+  ],
   "result": {
     "item": "ftbic:quantum_helmet"
   }

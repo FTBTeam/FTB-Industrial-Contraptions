@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:advanced_heat_vent",
-  "pattern": [
-    "IVI",
-    "IDI",
-    "IVI"
-  ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_bars"
-    },
     "D": {
       "tag": "forge:gems/diamond"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
     },
     "V": {
       "item": "ftbic:heat_vent"
     }
   },
+  "pattern": [
+    "IVI",
+    "IDI",
+    "IVI"
+  ],
   "result": {
     "item": "ftbic:advanced_heat_vent"
   }

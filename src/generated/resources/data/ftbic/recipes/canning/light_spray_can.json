@@ -2,19 +2,19 @@
   "type": "ftbic:canning",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "type": "forge:nbt",
-        "item": "ftbic:fluid_cell",
         "count": 1,
+        "item": "ftbic:fluid_cell",
         "nbt": "{Fluid:\"minecraft:water\"}"
-      },
-      "count": 1
+      }
     },
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:dyes/white"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

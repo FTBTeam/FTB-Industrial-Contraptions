@@ -7,15 +7,15 @@
         45,
         0
       ],
-      "translation": [
-        0,
-        2.5,
-        0
-      ],
       "scale": [
         0.375,
         0.375,
         0.375
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
       ]
     },
     "thirdperson_righthand": {
@@ -24,22 +24,18 @@
         45,
         0
       ],
-      "translation": [
-        0,
-        2.5,
-        0
-      ],
       "scale": [
         0.375,
         0.375,
         0.375
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
       ]
     }
   },
-  "textures": {
-    "particle": "ftbic:block/ore_overlays/tin"
-  },
-  "loader": "forge:multi-layer",
   "layers": {
     "solid": {
       "parent": "minecraft:block/stone"
@@ -50,5 +46,9 @@
         "all": "ftbic:block/ore_overlays/tin"
       }
     }
+  },
+  "loader": "forge:multi-layer",
+  "textures": {
+    "particle": "ftbic:block/ore_overlays/tin"
   }
 }

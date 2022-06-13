@@ -1,11 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:antimatter_crystal",
-  "pattern": [
-    "AAC",
-    "ANA",
-    "CAA"
-  ],
   "key": {
     "A": {
       "item": "ftbic:antimatter"
@@ -17,6 +12,11 @@
       "item": "minecraft:nether_star"
     }
   },
+  "pattern": [
+    "AAC",
+    "ANA",
+    "CAA"
+  ],
   "result": {
     "item": "ftbic:antimatter_crystal"
   }

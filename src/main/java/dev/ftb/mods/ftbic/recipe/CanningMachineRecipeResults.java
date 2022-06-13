@@ -8,6 +8,7 @@ import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.ItemKeyPair;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
 import dev.ftb.mods.ftbic.util.StackWithChance;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
@@ -51,7 +52,7 @@ public class CanningMachineRecipeResults extends MachineRecipeResults {
 						int cans = (f.getNutrition() + (f.isMeat() ? 8 : 3)) / 4;
 
 						if (cans > 0) {
-							ResourceLocation id = item.getRegistryName();
+							ResourceLocation id = Registry.ITEM.getKey(item);
 							MachineRecipe recipe = new MachineRecipe(FTBICRecipes.CANNING.get(), new ResourceLocation(FTBIC.MOD_ID, "canning/generated/canned_food/" + id.getNamespace() + "/" + id.getPath()));
 							recipe.inputItems.add(new IngredientWithCount(canIngredient, cans));
 							recipe.inputItems.add(new IngredientWithCount(Ingredient.of(item), 1));

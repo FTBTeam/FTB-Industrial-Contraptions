@@ -2,10 +2,10 @@
   "type": "ftbic:macerating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:cobblestone"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

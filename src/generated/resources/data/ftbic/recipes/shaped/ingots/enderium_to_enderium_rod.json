@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:enderium_rod",
-  "pattern": [
-    " X ",
-    " X "
-  ],
   "key": {
     "X": {
       "tag": "forge:ingots/enderium"
     }
   },
+  "pattern": [
+    " X ",
+    " X "
+  ],
   "result": {
     "item": "ftbic:enderium_rod"
   }

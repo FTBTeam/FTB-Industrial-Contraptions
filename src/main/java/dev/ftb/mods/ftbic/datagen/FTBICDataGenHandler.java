@@ -11,10 +11,28 @@ import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.SprayPaintable;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICArmorRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICBatteryRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICCableRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICComponentRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICCraftingRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICEnergyStorageRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICExtrudingRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICFurnaceRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICGeneratorFuelRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICGeneratorRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICMaceratingRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICMachineRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICNuclearRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICRollingRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICToolRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICUpgradeRecipes;
+import dev.ftb.mods.ftbic.datagen.recipies.FTBICVanillaRecipes;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
 import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.world.ICBiomeTags;
 import dev.ftb.mods.ftbic.world.ResourceElements;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
@@ -22,9 +40,11 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -85,36 +105,39 @@ public class FTBICDataGenHandler {
 		ExistingFileHelper efh = event.getExistingFileHelper();
 
 		if (event.includeClient()) {
-			gen.addProvider(new FTBICLang(gen, MODID, "en_us"));
-			gen.addProvider(new FTBICTextures(gen, MODID, efh));
-			gen.addProvider(new FTBICBlockModels(gen, MODID, efh));
-			gen.addProvider(new FTBICBlockStates(gen, MODID, efh));
-			gen.addProvider(new FTBICItemModels(gen, MODID, efh));
+			gen.addProvider(event.includeServer(), new FTBICLang(gen, MODID, "en_us"));
+			gen.addProvider(event.includeServer(), new FTBICTextures(gen, MODID, efh));
+			gen.addProvider(event.includeServer(), new FTBICBlockModels(gen, MODID, efh));
+			gen.addProvider(event.includeServer(), new FTBICBlockStates(gen, MODID, efh));
+			gen.addProvider(event.includeServer(), new FTBICItemModels(gen, MODID, efh));
 		}
 
 		if (event.includeServer()) {
 			ICBlockTags blockTags = new ICBlockTags(gen, MODID, efh);
-			gen.addProvider(blockTags);
-			gen.addProvider(new FTBICItemTags(gen, blockTags, MODID, efh));
-			gen.addProvider(new FTBICComponentRecipes(gen));
-			gen.addProvider(new FTBICUpgradeRecipes(gen));
-			gen.addProvider(new FTBICCableRecipes(gen));
-			gen.addProvider(new FTBICBatteryRecipes(gen));
-			gen.addProvider(new FTBICGeneratorRecipes(gen));
-			gen.addProvider(new FTBICMachineRecipes(gen));
-			gen.addProvider(new FTBICEnergyStorageRecipes(gen));
-			gen.addProvider(new FTBICToolRecipes(gen));
-			gen.addProvider(new FTBICArmorRecipes(gen));
-			gen.addProvider(new FTBICNuclearRecipes(gen));
-			gen.addProvider(new FTBICGeneratorFuelRecipes(gen));
-			gen.addProvider(new FTBICVanillaRecipes(gen));
-			gen.addProvider(new FTBICLootTableProvider(gen));
-			gen.addProvider(new FTBICFurnaceRecipes(gen));
-			gen.addProvider(new FTBICMaceratingRecipes(gen));
-			gen.addProvider(new FTBICCraftingRecipes(gen));
-			gen.addProvider(new FTBICRollingRecipes(gen));
-			gen.addProvider(new FTBICExtrudingRecipes(gen));
+			gen.addProvider(event.includeServer(), blockTags);
+			gen.addProvider(event.includeServer(), new FTBICItemTags(gen, blockTags, MODID, efh));
+			gen.addProvider(event.includeServer(), new ICBiomeTags(gen, MODID, efh));
+			gen.addProvider(event.includeServer(), new FTBICComponentRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICUpgradeRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICCableRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICBatteryRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICGeneratorRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICMachineRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICEnergyStorageRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICToolRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICArmorRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICNuclearRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICGeneratorFuelRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICVanillaRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICLootTableProvider(gen));
+			gen.addProvider(event.includeServer(), new FTBICFurnaceRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICMaceratingRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICCraftingRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICRollingRecipes(gen));
+			gen.addProvider(event.includeServer(), new FTBICExtrudingRecipes(gen));
 		}
+
+		gen.addProvider(event.includeServer(), new FTBICBiomeModifierDataGen(gen, MODID));
 	}
 
 	private static String titleCase(String input) {
@@ -131,11 +154,11 @@ public class FTBICDataGenHandler {
 		}
 
 		private void addBlockWithSuffix(Supplier<Block> block, String suffix) {
-			addBlock(block, Arrays.stream(block.get().getRegistryName().getPath().split("_")).map(FTBICDataGenHandler::titleCase).collect(Collectors.joining(" ")) + suffix);
+			addBlock(block, Arrays.stream(Registry.BLOCK.getKey(block.get()).getPath().split("_")).map(FTBICDataGenHandler::titleCase).collect(Collectors.joining(" ")) + suffix);
 		}
 
 		private void addItemWithSuffix(Supplier<Item> item, String suffix) {
-			addItem(item, Arrays.stream(item.get().getRegistryName().getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")));
+			addItem(item, Arrays.stream(Registry.ITEM.getKey(item.get()).getPath().split("_")).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1)).collect(Collectors.joining(" ")));
 		}
 
 		private void addItem(Supplier<Item> item) {
@@ -453,7 +476,7 @@ public class FTBICDataGenHandler {
 
 			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
 				BaseCableBlock block = (BaseCableBlock) cable.get();
-				String id = block.getRegistryName().getPath();
+				String id = Registry.BLOCK.getKey(block).getPath();
 
 				withExistingParent("block/" + id + "_base", "block/block")
 						.texture("texture", modLoc("block/" + id))
@@ -647,7 +670,7 @@ public class FTBICDataGenHandler {
 
 			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
 				BaseCableBlock block = (BaseCableBlock) cable.get();
-				String id = block.getRegistryName().getPath();
+				String id = Registry.BLOCK.getKey(block).getPath();
 				// simpleBlock(cable.get(), models().getExistingFile(modLoc("block/" + id + "_base")));
 
 				MultiPartBlockStateBuilder builder = getMultipartBuilder(cable.get());
@@ -678,7 +701,7 @@ public class FTBICDataGenHandler {
 
 			// Ores (Taken from EmendatusEnigmatica, thanks guys!)
 			FTBICBlocks.RESOURCE_ORES.forEach((key, value) -> {
-				ResourceLocation registryName = value.get().getRegistryName();
+				ResourceLocation registryName = Registry.BLOCK.getKey(value.get());
 				String overlayTexture = "block/ore_overlays/" + key.getName().replace("deepslate_", ""); // no deepslate textures
 
 				models().getBuilder(registryName.getPath())
@@ -743,17 +766,17 @@ public class FTBICDataGenHandler {
 		}
 
 		private void basicItem(Supplier<? extends Item> item) {
-			String id = item.get().getRegistryName().getPath();
+			String id = Registry.ITEM.getKey(item.get()).getPath();
 			singleTexture(id, mcLoc("item/generated"), "layer0", modLoc("item/" + id));
 		}
 
 		private void handheldItem(Supplier<? extends Item> item) {
-			String id = item.get().getRegistryName().getPath();
+			String id = Registry.ITEM.getKey(item.get()).getPath();
 			singleTexture(id, mcLoc("item/handheld"), "layer0", modLoc("item/" + id));
 		}
 
 		private void basicBlockItem(Supplier<Block> block) {
-			String id = block.get().getRegistryName().getPath();
+			String id = Registry.BLOCK.getKey(block.get()).getPath();
 			withExistingParent(id, modLoc("block/" + id));
 		}
 
@@ -764,10 +787,10 @@ public class FTBICDataGenHandler {
 			basicBlockItem(FTBICBlocks.REINFORCED_GLASS);
 			basicBlockItem(FTBICBlocks.MACHINE_BLOCK);
 			basicBlockItem(FTBICBlocks.ADVANCED_MACHINE_BLOCK);
-			withExistingParent(FTBICBlocks.IRON_FURNACE.get().getRegistryName().getPath(), modLoc("block/iron_furnace_off"));
+			withExistingParent(Registry.BLOCK.getKey(FTBICBlocks.IRON_FURNACE.get()).getPath(), modLoc("block/iron_furnace_off"));
 
 			for (Supplier<Block> cable : FTBICBlocks.CABLES) {
-				String id = cable.get().getRegistryName().getPath();
+				String id = Registry.BLOCK.getKey(cable.get()).getPath();
 				int b0 = ((BaseCableBlock) cable.get()).border;
 				int b1 = 16 - b0;
 
@@ -831,7 +854,7 @@ public class FTBICDataGenHandler {
 			}
 
 			singleTexture("landmark", mcLoc("item/generated"), "layer0", modLoc("block/landmark_ns"));
-			withExistingParent(FTBICBlocks.EXFLUID.get().getRegistryName().getPath(), mcLoc("block/dead_horn_coral_block"));
+			withExistingParent(Registry.BLOCK.getKey(FTBICBlocks.EXFLUID.get()).getPath(), mcLoc("block/dead_horn_coral_block"));
 			basicBlockItem(FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 			basicBlockItem(FTBICBlocks.NUKE);
 			basicBlockItem(FTBICBlocks.ACTIVE_NUKE);
@@ -957,6 +980,22 @@ public class FTBICDataGenHandler {
 			});
 
 			tag(Tags.Blocks.ORES).add(resourceOres);
+		}
+	}
+
+
+	private static class ICBiomeTags extends BiomeTagsProvider {
+		public ICBiomeTags(DataGenerator generatorIn, String modId, ExistingFileHelper existingFileHelper) {
+			super(generatorIn, modId, existingFileHelper);
+		}
+
+		@Override
+		protected void addTags() {
+			tag(dev.ftb.mods.ftbic.world.ICBiomeTags.ORE_SPAWN_BLACKLIST).addTags(
+					BiomeTags.IS_END,
+					BiomeTags.IS_NETHER
+			);
+
 		}
 	}
 

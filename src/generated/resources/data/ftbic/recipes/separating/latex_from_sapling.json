@@ -2,10 +2,10 @@
   "type": "ftbic:separating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "item": "myrtrees:rubberwood_sapling"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

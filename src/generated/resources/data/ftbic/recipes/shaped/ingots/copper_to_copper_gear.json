@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:copper_gear",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_nugget"
+    },
+    "X": {
+      "tag": "forge:ingots/copper"
+    }
+  },
   "pattern": [
     " X ",
     "XIX",
     " X "
   ],
-  "key": {
-    "X": {
-      "tag": "forge:ingots/copper"
-    },
-    "I": {
-      "item": "minecraft:iron_nugget"
-    }
-  },
   "result": {
     "item": "ftbic:copper_gear"
   }

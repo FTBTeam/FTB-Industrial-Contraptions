@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:copper_ingot",
-  "pattern": [
-    "CCC",
-    "TF "
-  ],
   "key": {
     "C": [
       {
@@ -14,6 +10,9 @@
         "tag": "forge:ingots/copper"
       }
     ],
+    "F": {
+      "item": "minecraft:fire_charge"
+    },
     "T": [
       {
         "tag": "forge:dusts/tin"
@@ -21,13 +20,14 @@
       {
         "tag": "forge:ingots/tin"
       }
-    ],
-    "F": {
-      "item": "minecraft:fire_charge"
-    }
+    ]
   },
+  "pattern": [
+    "CCC",
+    "TF "
+  ],
   "result": {
-    "item": "ftbic:bronze_ingot",
-    "count": 4
+    "count": 4,
+    "item": "ftbic:bronze_ingot"
   }
 }

@@ -2,10 +2,10 @@
   "type": "ftbic:macerating",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:ender_pearls"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [

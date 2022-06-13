@@ -3,7 +3,6 @@ package dev.ftb.mods.ftbic.item;
 import dev.ftb.mods.ftbic.FTBIC;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +35,7 @@ public class LocationCardItem extends Item {
 			stack.removeTagKey("PosX");
 			stack.removeTagKey("PosY");
 			stack.removeTagKey("PosZ");
-			player.displayClientMessage(new TextComponent("Location cleared!"), true);
+			player.displayClientMessage(Component.literal("Location cleared!"), true);
 		}
 
 		return InteractionResultHolder.success(stack);
@@ -46,9 +45,9 @@ public class LocationCardItem extends Item {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
 		if (stack.hasTag() && stack.getTag().contains("Dimension")) {
-			list.add(new TextComponent(String.format("X %d Y %d Z %d in %s", stack.getTag().getInt("PosX"), stack.getTag().getInt("PosY"), stack.getTag().getInt("PosZ"), stack.getTag().getString("Dimension"))).withStyle(ChatFormatting.GRAY));
+			list.add(Component.literal(String.format("X %d Y %d Z %d in %s", stack.getTag().getInt("PosX"), stack.getTag().getInt("PosY"), stack.getTag().getInt("PosZ"), stack.getTag().getString("Dimension"))).withStyle(ChatFormatting.GRAY));
 		}
 
-		// list.add(new TextComponent("< " + FTBICConfig.FLUID_CELL_CAPACITY.get() + " mB of ").append(new TranslatableComponent(fluid.getAttributes().getTranslationKey())).append(" >").withStyle(ChatFormatting.GRAY));
+		// list.add(Component.literal("< " + FTBICConfig.FLUID_CELL_CAPACITY.get() + " mB of ").append(Component.translatable(fluid.getAttributes().getTranslationKey())).append(" >").withStyle(ChatFormatting.GRAY));
 	}
 }

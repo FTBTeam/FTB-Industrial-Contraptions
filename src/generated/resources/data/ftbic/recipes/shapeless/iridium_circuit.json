@@ -31,7 +31,7 @@
     }
   ],
   "result": {
-    "item": "ftbic:iridium_circuit",
-    "count": 2
+    "count": 2,
+    "item": "ftbic:iridium_circuit"
   }
 }

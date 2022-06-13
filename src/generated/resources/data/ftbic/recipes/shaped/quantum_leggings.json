@@ -1,25 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:quantum_leggings",
-  "pattern": [
-    "III",
-    "MAM",
-    "G G"
-  ],
   "key": {
     "A": {
       "item": "ftbic:carbon_leggings"
+    },
+    "G": {
+      "tag": "forge:dusts/glowstone"
     },
     "I": {
       "item": "ftbic:iridium_alloy"
     },
     "M": {
       "item": "ftbic:advanced_machine_block"
-    },
-    "G": {
-      "tag": "forge:dusts/glowstone"
     }
   },
+  "pattern": [
+    "III",
+    "MAM",
+    "G G"
+  ],
   "result": {
     "item": "ftbic:quantum_leggings"
   }

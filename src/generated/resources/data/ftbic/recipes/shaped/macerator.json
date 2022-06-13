@@ -1,25 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:macerator",
+  "key": {
+    "C": {
+      "item": "ftbic:electronic_circuit"
+    },
+    "F": {
+      "item": "minecraft:flint"
+    },
+    "M": {
+      "item": "ftbic:machine_block"
+    },
+    "S": {
+      "tag": "forge:cobblestone"
+    }
+  },
   "pattern": [
     "FFF",
     "SMS",
     " C "
   ],
-  "key": {
-    "F": {
-      "item": "minecraft:flint"
-    },
-    "S": {
-      "tag": "forge:cobblestone"
-    },
-    "M": {
-      "item": "ftbic:machine_block"
-    },
-    "C": {
-      "item": "ftbic:electronic_circuit"
-    }
-  },
   "result": {
     "item": "ftbic:macerator"
   }

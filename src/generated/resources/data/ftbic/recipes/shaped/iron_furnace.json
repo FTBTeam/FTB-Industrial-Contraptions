@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "ftbic:iron_furnace",
+  "key": {
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "I": {
+      "tag": "forge:ingots/iron"
+    }
+  },
   "pattern": [
     " I ",
     "I I",
     "IFI"
   ],
-  "key": {
-    "I": {
-      "tag": "forge:ingots/iron"
-    },
-    "F": {
-      "item": "minecraft:furnace"
-    }
-  },
   "result": {
     "item": "ftbic:iron_furnace"
   }

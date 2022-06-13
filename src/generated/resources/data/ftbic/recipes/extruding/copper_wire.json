@@ -2,16 +2,16 @@
   "type": "ftbic:extruding",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:plates/copper"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:copper_wire",
-      "count": 2
+      "count": 2,
+      "item": "ftbic:copper_wire"
     }
   ]
 }

@@ -2,16 +2,16 @@
   "type": "ftbic:extruding",
   "inputItems": [
     {
+      "count": 1,
       "ingredient": {
         "tag": "forge:ingots/enderium"
-      },
-      "count": 1
+      }
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:enderium_rod",
-      "count": 2
+      "count": 2,
+      "item": "ftbic:enderium_rod"
     }
   ]
 }

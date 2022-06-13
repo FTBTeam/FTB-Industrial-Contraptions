@@ -9,14 +9,15 @@ import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
 import dev.ftb.mods.ftbic.screen.MachineMenu;
 import dev.ftb.mods.ftbic.screen.sync.SyncedData;
 import dev.ftb.mods.ftbic.util.MachineProcessingResult;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -27,8 +28,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 	public double progress;
@@ -74,7 +73,7 @@ public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 			output.setStackInSlot(i, outputItems[i].copy());
 		}
 
-		Random random = level != null ? level.random : new Random();
+		RandomSource random = level != null ? level.random : RandomSource.create();
 
 		if (simulate || random.nextDouble() < result.output.chance) {
 			if (!ItemHandlerHelper.insertItemStacked(output, result.output.stack.copy(), false).isEmpty()) {
@@ -220,7 +219,7 @@ public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 			if (serializer != null) {
 				openMenu((ServerPlayer) player, (id, inventory) -> new MachineMenu(id, inventory, this, serializer));
 			} else {
-				player.sendMessage(new TextComponent("No GUI yet!"), Util.NIL_UUID);
+				player.sendSystemMessage(Component.literal("No GUI yet!"));
 			}
 		}
 
@@ -230,7 +229,7 @@ public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
 	@Override
 	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {
 		super.writeMenu(player, buf);
-		buf.writeResourceLocation(getRecipeSerializer().getRegistryName());
+		buf.writeResourceLocation(Registry.RECIPE_SERIALIZER.getKey(getRecipeSerializer()));
 	}
 
 	@Override
