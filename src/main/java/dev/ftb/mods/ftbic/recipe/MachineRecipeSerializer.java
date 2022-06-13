@@ -4,7 +4,10 @@ import com.google.gson.JsonObject;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
+import net.minecraft.Util;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -81,5 +84,13 @@ public class MachineRecipeSerializer implements RecipeSerializer<MachineRecipe> 
 		FTBICUtils.listToNet(recipe.outputFluids, buf, FluidStack::writeToPacket);
 		buf.writeDouble(recipe.processingTime);
 		buf.writeBoolean(recipe.hideFromJEI);
+	}
+
+	public ResourceLocation getId() {
+		return Registry.RECIPE_SERIALIZER.getKey(this);
+	}
+
+	public Component getDescriptionId() {
+		return Component.translatable(Util.makeDescriptionId("recipe", getId()));
 	}
 }

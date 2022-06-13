@@ -72,34 +72,36 @@ repositories {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-//	mappings loom.officialMojangMappings()
+	//	mappings loom.officialMojangMappings()
 
 	mappings loom.layered() {
 		officialMojangMappings()
-//		parchment("org.parchmentmc.data:parchment-1.18.2:2022.03.13")
+		//		parchment("org.parchmentmc.data:parchment-1.18.2:2022.03.13")
 	}
 
 	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 	modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")
 
-//	modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
-//	modCompileOnly("curse.maven:jei-238222:${jei_file}")
-//	modImplementation("curse.maven:jei-238222:${jei_file}")
-
 	modImplementation("io.alwa.mods:myrtrees-forge:${myrtrees_version}")
-	modImplementation("dev.latvian.mods:rhino-forge:${rootProject.rhino_version}")
-	modImplementation("dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}") { transitive = false }
-	modImplementation("dev.ftb.mods:ftb-library-forge:${rootProject.ftblibrary_version}") { transitive = false }
-	modImplementation("dev.ftb.mods:ftb-teams-forge:${rootProject.ftbteams_version}") { transitive = false }
-	modImplementation("dev.ftb.mods:ftb-chunks-forge:${rootProject.ftbchunks_version}") { transitive = false }
-//	modRuntimeOnly ("com.sunekaer.mods:ToolKit:2.3.0-build.9999+mc1.19") // local
 
-//	modRuntime("curse.maven:ctm-267602:3586556")
+	modImplementation("dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}")
+	modImplementation("dev.ftb.mods:ftb-library-forge:${rootProject.ftblibrary_version}") { transitive false }
+	modImplementation("dev.ftb.mods:ftb-teams-forge:${rootProject.ftbteams_version}") { transitive false }
+	modImplementation("dev.ftb.mods:ftb-chunks-forge:${rootProject.ftbchunks_version}") { transitive false }
+
+	// provides the JEI API, so we're good to go
+	modLocalRuntime modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
+	//	modCompileOnly("curse.maven:jei-238222:${jei_file}")
+	//	modImplementation("curse.maven:jei-238222:${jei_file}")
+
+	//	modRuntimeOnly ("com.sunekaer.mods:ToolKit:2.3.0-build.9999+mc1.19") // local
+
+	//	modRuntime("curse.maven:ctm-267602:3586556")
 	// modRuntime("curse.maven:pipez-443900:3525428")
 	// modRuntime("curse.maven:tanky-551182:3542146")
 	// modRuntime("curse.maven:refined-storage-243076:3527504")
 
-//	modImplementation("curse.maven:tool-kit-324888:3671112")
+	//	modImplementation("curse.maven:tool-kit-324888:3671112")
 }
 
 processResources {
