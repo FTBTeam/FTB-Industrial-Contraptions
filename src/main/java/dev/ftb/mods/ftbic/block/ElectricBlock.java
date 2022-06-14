@@ -122,8 +122,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 		if (active || electricBlockInstance.canBurn) {
 			BlockEntity entity = level.getBlockEntity(pos);
 
-			if (entity instanceof ElectricBlockEntity) {
-				ElectricBlockEntity electricBlockEntity = (ElectricBlockEntity) entity;
+			if (entity instanceof ElectricBlockEntity electricBlockEntity) {
 				double x = pos.getX();
 				double y = pos.getY();
 				double z = pos.getZ();
@@ -223,9 +222,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		BlockEntity entity = level.getBlockEntity(pos);
 
-		if (entity instanceof ElectricBlockEntity) {
-			ElectricBlockEntity electricBlockEntity = (ElectricBlockEntity) entity;
-
+		if (entity instanceof ElectricBlockEntity electricBlockEntity) {
 			if (electricBlockEntity.isBurnt()) {
 				if (player.getItemInHand(hand).getItem() == FTBICItems.FUSE.item.get()) {
 					electricBlockEntity.setBurnt(false);

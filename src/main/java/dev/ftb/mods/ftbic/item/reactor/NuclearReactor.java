@@ -83,9 +83,8 @@ public class NuclearReactor {
 			for (int y = 0; y < 6; y++) {
 				ItemStack stack = getAt(x, y);
 
-				if (stack.getItem() instanceof ReactorItem) {
-					ReactorItem reactorItem = (ReactorItem) stack.getItem();
-					reactorItem.reactorTickPre(this, stack, x, y);
+				if (stack.getItem() instanceof ReactorItem reactorItem) {
+                    reactorItem.reactorTickPre(this, stack, x, y);
 
 					if (stack.isEmpty() || reactorItem.isItemBroken(stack)) {
 						setAt(x, y, ItemStack.EMPTY);
@@ -98,9 +97,8 @@ public class NuclearReactor {
 			for (int y = 0; y < 6; y++) {
 				ItemStack stack = getAt(x, y);
 
-				if (stack.getItem() instanceof ReactorItem) {
-					ReactorItem reactorItem = (ReactorItem) stack.getItem();
-					reactorItem.reactorTickPost(this, stack, x, y);
+				if (stack.getItem() instanceof ReactorItem reactorItem) {
+                    reactorItem.reactorTickPost(this, stack, x, y);
 
 					if (stack.isEmpty() || reactorItem.isItemBroken(stack)) {
 						setAt(x, y, ItemStack.EMPTY);
@@ -113,10 +111,8 @@ public class NuclearReactor {
 			for (int y = 0; y < 6; y++) {
 				ItemStack stack = getAt(x, y);
 
-				if (stack.getItem() instanceof ReactorItem) {
-					ReactorItem reactorItem = (ReactorItem) stack.getItem();
-
-					if (stack.isEmpty() || reactorItem.isItemBroken(stack)) {
+				if (stack.getItem() instanceof ReactorItem reactorItem) {
+                    if (stack.isEmpty() || reactorItem.isItemBroken(stack)) {
 						setAt(x, y, ItemStack.EMPTY);
 					} else if (simulation && reactorItem.keepSimulationRunning(stack)) {
 						stopSimulation = false;

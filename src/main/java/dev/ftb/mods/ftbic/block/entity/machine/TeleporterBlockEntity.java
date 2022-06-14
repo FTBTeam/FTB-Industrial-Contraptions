@@ -140,9 +140,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 			} else {
 				BlockEntity entity = linkedLevel.getBlockEntity(linkedPos);
 
-				if (entity instanceof TeleporterBlockEntity) {
-					TeleporterBlockEntity t = (TeleporterBlockEntity) entity;
-
+				if (entity instanceof TeleporterBlockEntity t) {
 					Direction direction = t.getFacing(Direction.NORTH);
 					energy -= use;
 					player.teleportTo(linkedLevel, linkedPos.getX() + 0.5D, linkedPos.getY() + 1.1D, linkedPos.getZ() + 0.5D, direction.toYRot() + 90F, 0F);
@@ -252,8 +250,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 			if (linkedLevel != null && linkedLevel.isLoaded(p)) {
 				BlockEntity entity = linkedLevel.getBlockEntity(p);
 
-				if (entity instanceof TeleporterBlockEntity) {
-					TeleporterBlockEntity t = (TeleporterBlockEntity) entity;
+				if (entity instanceof TeleporterBlockEntity t) {
 
 					if (t.isPublic || t.placerId.equals(player.getUUID())) {
 						linkedDimension = d;

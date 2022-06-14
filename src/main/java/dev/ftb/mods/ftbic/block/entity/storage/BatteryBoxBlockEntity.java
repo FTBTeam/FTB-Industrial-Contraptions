@@ -84,8 +84,7 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 		if (!isBurnt() && !level.isClientSide() && energy < energyCapacity) {
 			ItemStack battery = dischargeBatteryInventory.getStackInSlot(0);
 
-			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler) {
-				EnergyItemHandler item = (EnergyItemHandler) battery.getItem();
+			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler item) {
 				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxInputEnergy * FTBICConfig.MACHINES.ITEM_TRANSFER_EFFICIENCY.get();
 				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, transfer), false);
 
@@ -119,30 +118,26 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	@NotNull
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		switch (slot) {
-			case 0:
-				return chargeBatteryInventory.getStackInSlot(0);
-			case 1:
-				return dischargeBatteryInventory.getStackInSlot(0);
-			default:
-				throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
-		}
+        return switch (slot) {
+            case 0 -> chargeBatteryInventory.getStackInSlot(0);
+            case 1 -> dischargeBatteryInventory.getStackInSlot(0);
+            default -> throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
+        };
 	}
 
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
 		ItemStack prev;
 		switch (slot) {
-			case 0:
+			case 0 -> {
 				prev = chargeBatteryInventory.getStackInSlot(0);
 				chargeBatteryInventory.setStackInSlot(0, stack);
-				break;
-			case 1:
+			}
+			case 1 -> {
 				prev = dischargeBatteryInventory.getStackInSlot(0);
 				dischargeBatteryInventory.setStackInSlot(0, stack);
-				break;
-			default:
-				throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
+			}
+			default -> throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
 		}
 		inventoryChanged(slot, prev);
 	}
@@ -175,12 +170,8 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 			if (existing.isEmpty()) {
 				ItemStack prev = getStackInSlot(slot);
 				switch (slot) {
-					case 0:
-						chargeBatteryInventory.setStackInSlot(0, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
-						break;
-					case 1:
-						dischargeBatteryInventory.setStackInSlot(0, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
-						break;
+					case 0 -> chargeBatteryInventory.setStackInSlot(0, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
+					case 1 -> dischargeBatteryInventory.setStackInSlot(0, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
 				}
 				inventoryChanged(slot, prev);
 			} else {
