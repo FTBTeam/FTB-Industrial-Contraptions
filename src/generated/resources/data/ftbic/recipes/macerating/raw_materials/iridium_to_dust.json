@@ -10,8 +10,11 @@
   ],
   "outputItems": [
     {
+      "item": "ftbic:iridium_dust"
+    },
+    {
       "item": "ftbic:iridium_dust",
-      "count": 2
+      "chance": 0.35
     }
   ]
 }

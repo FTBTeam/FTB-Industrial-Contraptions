@@ -10,8 +10,11 @@
   ],
   "outputItems": [
     {
+      "item": "ftbic:lead_dust"
+    },
+    {
       "item": "ftbic:lead_dust",
-      "count": 2
+      "chance": 0.35
     }
   ]
 }

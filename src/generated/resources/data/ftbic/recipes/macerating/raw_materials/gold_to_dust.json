@@ -10,8 +10,11 @@
   ],
   "outputItems": [
     {
+      "item": "ftbic:gold_dust"
+    },
+    {
       "item": "ftbic:gold_dust",
-      "count": 2
+      "chance": 0.35
     }
   ]
 }
