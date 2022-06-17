@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.item;
 
+import dev.architectury.hooks.fluid.FluidStackHooks;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import net.minecraft.ChatFormatting;
@@ -130,7 +131,7 @@ public class FluidCellItem extends Item {
 		Fluid fluid = getFluid(stack);
 
 		if (fluid != Fluids.EMPTY) {
-			list.add(Component.literal("< " + FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get() + " mB of ").append(Component.translatable(fluid.getAttributes().getTranslationKey())).append(" >").withStyle(ChatFormatting.GRAY));
+			list.add(Component.literal("< " + FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get() + " mB of ").append(fluid.getFluidType().getDescription()).append(" >").withStyle(ChatFormatting.GRAY));
 		}
 	}
 

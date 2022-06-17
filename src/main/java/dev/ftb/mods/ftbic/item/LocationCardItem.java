@@ -47,7 +47,5 @@ public class LocationCardItem extends Item {
 		if (stack.hasTag() && stack.getTag().contains("Dimension")) {
 			list.add(Component.literal(String.format("X %d Y %d Z %d in %s", stack.getTag().getInt("PosX"), stack.getTag().getInt("PosY"), stack.getTag().getInt("PosZ"), stack.getTag().getString("Dimension"))).withStyle(ChatFormatting.GRAY));
 		}
-
-		// list.add(Component.literal("< " + FTBICConfig.FLUID_CELL_CAPACITY.get() + " mB of ").append(Component.translatable(fluid.getAttributes().getTranslationKey())).append(" >").withStyle(ChatFormatting.GRAY));
 	}
 }
