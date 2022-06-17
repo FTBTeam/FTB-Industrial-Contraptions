@@ -1,7 +1,7 @@
 modLoader = "javafml" #mandatory
 loaderVersion = "[41,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 license = "All rights reserved"
-issueTrackerURL="https://github.com/FTBTeam/FTB-Mods-Issues/issues" #optional
+issueTrackerURL = "https://github.com/FTBTeam/FTB-Mods-Issues/issues" #optional
 [[mods]] #mandatory
 modId = "ftbic" #mandatory
 version = "${version}" #mandatory
@@ -14,7 +14,7 @@ FTB Industrial Contraptions
 [[dependencies.ftbic]] #optional
 modId = "forge" #mandatory
 mandatory = true #mandatory
-versionRange = "[41,)" #mandatory
+versionRange = "[41.0.30,)" #mandatory
 ordering = "NONE"
 side = "BOTH"
 

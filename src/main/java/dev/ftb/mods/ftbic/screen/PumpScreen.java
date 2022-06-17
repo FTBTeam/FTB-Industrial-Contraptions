@@ -7,8 +7,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundContainerButtonClickPacket;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 
 public class PumpScreen extends ElectricBlockScreen<PumpMenu> {
 	private Fluid prevFilter = null;
@@ -30,8 +30,8 @@ public class PumpScreen extends ElectricBlockScreen<PumpMenu> {
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, title, (float)this.titleLabelX, (float)this.titleLabelY, 0x404040);
-		this.font.draw(poseStack, this.playerInventoryTitle, (float)this.inventoryLabelX, (float)this.inventoryLabelY, 0x404040);
+		this.font.draw(poseStack, title, (float) this.titleLabelX, (float) this.titleLabelY, 0x404040);
+		this.font.draw(poseStack, this.playerInventoryTitle, (float) this.inventoryLabelX, (float) this.inventoryLabelY, 0x404040);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class PumpScreen extends ElectricBlockScreen<PumpMenu> {
 
 		if (prevFilter != menu.entity.filter) {
 			prevFilter = menu.entity.filter;
-			filterStack = new FluidStack(prevFilter, FluidAttributes.BUCKET_VOLUME);
+			filterStack = new FluidStack(prevFilter, FluidType.BUCKET_VOLUME);
 		}
 
 		drawFluidSlot(poseStack, leftPos + 20, topPos + 34, filterStack);
