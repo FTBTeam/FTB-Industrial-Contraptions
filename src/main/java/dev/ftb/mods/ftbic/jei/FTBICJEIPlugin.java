@@ -5,21 +5,24 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.FluidCellItem;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
+import dev.ftb.mods.ftbic.recipe.MachineRecipe;
+import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
 import dev.ftb.mods.ftbic.recipe.RecipeCache;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.ingredients.subtypes.UidContext;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IRecipeTransferRegistration;
-import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author LatvianModder
@@ -28,6 +31,12 @@ import net.minecraft.world.level.Level;
 public class FTBICJEIPlugin implements IModPlugin {
 	public static final ResourceLocation ID = new ResourceLocation(FTBIC.MOD_ID, "jei");
 
+	private static final Map<MachineRecipeSerializer, RecipeType<MachineRecipe>> RECIPE_TYPES = new HashMap<>();
+
+	public static RecipeType<MachineRecipe> getMachineRecipeType(MachineRecipeSerializer serializer) {
+		return RECIPE_TYPES.computeIfAbsent(serializer, key -> new RecipeType<>(key.getRegistryName(), MachineRecipe.class));
+	}
+
 	@Override
 	public ResourceLocation getPluginUid() {
 		return ID;
@@ -35,7 +44,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistration r) {
-		r.registerSubtypeInterpreter(FTBICItems.FLUID_CELL.get(), FTBICJEIPlugin::getSubtype);
+		r.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, FTBICItems.FLUID_CELL.get(), FTBICJEIPlugin::getSubtype);
 
 		r.useNbtForSubtypes(
 				FTBICItems.MECHANICAL_ELYTRA.get(),
@@ -56,29 +65,26 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration r) {
-		r.addRecipeTransferHandler(new PoweredCraftingTableTransferHandler(r.getTransferHelper()), VanillaRecipeCategoryUid.CRAFTING);
+		r.addRecipeTransferHandler(new PoweredCraftingTableTransferHandler(r.getTransferHelper()), RecipeTypes.CRAFTING);
 	}
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration r) {
-		r.addRecipeCatalyst(new ItemStack(FTBICItems.IRON_FURNACE.get()), VanillaRecipeCategoryUid.FURNACE);
-		r.addRecipeCatalyst(new ItemStack(FTBICItems.IRON_FURNACE.get()), VanillaRecipeCategoryUid.FUEL);
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.POWERED_FURNACE.item.get()), VanillaRecipeCategoryUid.FURNACE);
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.POWERED_FURNACE.item.get()), VanillaRecipeCategoryUid.FUEL);
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.POWERED_FURNACE.item.get()), FTBICRecipes.SMELTING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.MACERATOR.item.get()), FTBICRecipes.MACERATING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.CENTRIFUGE.item.get()), FTBICRecipes.SEPARATING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.COMPRESSOR.item.get()), FTBICRecipes.COMPRESSING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.REPROCESSOR.item.get()), FTBICRecipes.REPROCESSING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.CANNING_MACHINE.item.get()), FTBICRecipes.CANNING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ROLLER.item.get()), FTBICRecipes.ROLLING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.EXTRUDER.item.get()), FTBICRecipes.EXTRUDING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.item.get()), FTBICRecipes.SMELTING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.item.get()), VanillaRecipeCategoryUid.FURNACE);
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.item.get()), VanillaRecipeCategoryUid.FUEL);
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_MACERATOR.item.get()), FTBICRecipes.MACERATING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_CENTRIFUGE.item.get()), FTBICRecipes.SEPARATING.get().getRegistryName());
-		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_COMPRESSOR.item.get()), FTBICRecipes.COMPRESSING.get().getRegistryName());
+		r.addRecipeCatalyst(new ItemStack(FTBICItems.IRON_FURNACE.get()), RecipeTypes.SMELTING, RecipeTypes.FUELING);
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.POWERED_FURNACE.item.get()), RecipeTypes.SMELTING, RecipeTypes.FUELING);
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.POWERED_FURNACE.item.get()), getMachineRecipeType(FTBICRecipes.SMELTING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.MACERATOR.item.get()), getMachineRecipeType(FTBICRecipes.MACERATING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.CENTRIFUGE.item.get()), getMachineRecipeType(FTBICRecipes.SEPARATING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.COMPRESSOR.item.get()), getMachineRecipeType(FTBICRecipes.COMPRESSING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.REPROCESSOR.item.get()), getMachineRecipeType(FTBICRecipes.REPROCESSING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.CANNING_MACHINE.item.get()), getMachineRecipeType(FTBICRecipes.CANNING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ROLLER.item.get()), getMachineRecipeType(FTBICRecipes.ROLLING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.EXTRUDER.item.get()), getMachineRecipeType(FTBICRecipes.EXTRUDING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.item.get()), getMachineRecipeType(FTBICRecipes.SMELTING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_POWERED_FURNACE.item.get()), RecipeTypes.SMELTING, RecipeTypes.FUELING);
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_MACERATOR.item.get()), getMachineRecipeType(FTBICRecipes.MACERATING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_CENTRIFUGE.item.get()), getMachineRecipeType(FTBICRecipes.SEPARATING.get()));
+		r.addRecipeCatalyst(new ItemStack(FTBICElectricBlocks.ADVANCED_COMPRESSOR.item.get()), getMachineRecipeType(FTBICRecipes.COMPRESSING.get()));
 	}
 
 	@Override
@@ -91,14 +97,14 @@ public class FTBICJEIPlugin implements IModPlugin {
 			return;
 		}
 
-		r.addRecipes(cache.smelting.getAllRealAndVisibleRecipes(level), FTBICRecipes.SMELTING.get().getRegistryName());
-		r.addRecipes(cache.macerating.getAllVisibleRecipes(level), FTBICRecipes.MACERATING.get().getRegistryName());
-		r.addRecipes(cache.compressing.getAllVisibleRecipes(level), FTBICRecipes.COMPRESSING.get().getRegistryName());
-		r.addRecipes(cache.separating.getAllVisibleRecipes(level), FTBICRecipes.SEPARATING.get().getRegistryName());
-		r.addRecipes(cache.reprocessing.getAllVisibleRecipes(level), FTBICRecipes.REPROCESSING.get().getRegistryName());
-		r.addRecipes(cache.canning.getAllVisibleRecipes(level), FTBICRecipes.CANNING.get().getRegistryName());
-		r.addRecipes(cache.rolling.getAllVisibleRecipes(level), FTBICRecipes.ROLLING.get().getRegistryName());
-		r.addRecipes(cache.extruding.getAllVisibleRecipes(level), FTBICRecipes.EXTRUDING.get().getRegistryName());
+		r.addRecipes(getMachineRecipeType(FTBICRecipes.SMELTING.get()), cache.smelting.getAllRealAndVisibleRecipes(level));
+		r.addRecipes(getMachineRecipeType(FTBICRecipes.MACERATING.get()), cache.macerating.getAllVisibleRecipes(level));
+		r.addRecipes(getMachineRecipeType(FTBICRecipes.COMPRESSING.get()), cache.compressing.getAllVisibleRecipes(level));
+		r.addRecipes(getMachineRecipeType(FTBICRecipes.SEPARATING.get()), cache.separating.getAllVisibleRecipes(level));
+		r.addRecipes(getMachineRecipeType(FTBICRecipes.REPROCESSING.get()), cache.reprocessing.getAllVisibleRecipes(level));
+		r.addRecipes(getMachineRecipeType(FTBICRecipes.CANNING.get()), cache.canning.getAllVisibleRecipes(level));
+		r.addRecipes(getMachineRecipeType(FTBICRecipes.ROLLING.get()), cache.rolling.getAllVisibleRecipes(level));
+		r.addRecipes(getMachineRecipeType(FTBICRecipes.EXTRUDING.get()), cache.extruding.getAllVisibleRecipes(level));
 	}
 
 	@Override
