@@ -1,4 +1,4 @@
-package dev.ftb.mods.ftbic.datagen.recipies;
+package dev.ftb.mods.ftbic.datagen.recipes;
 
 import dev.ftb.mods.ftbic.datagen.FTBICRecipesGen;
 import dev.ftb.mods.ftbic.item.FTBICItems;
@@ -10,7 +10,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Consumer;
 
 import static dev.ftb.mods.ftbic.world.ResourceElements.*;
-import static dev.ftb.mods.ftbic.world.ResourceType.GEAR;
 import static dev.ftb.mods.ftbic.world.ResourceType.PLATE;
 
 public class FTBICRollingRecipes extends FTBICRecipesGen {
