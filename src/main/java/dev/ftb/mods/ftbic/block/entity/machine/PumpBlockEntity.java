@@ -21,8 +21,8 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -84,7 +84,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 
 	@Override
 	public void digBlock(BlockState state, BlockPos miningPos, double lx, double ly, double lz) {
-		if (state.getBlock() instanceof BucketPickup bucketPickup && fluidStack.getAmount() + FluidAttributes.BUCKET_VOLUME <= getCapacity()) {
+		if (state.getBlock() instanceof BucketPickup bucketPickup && fluidStack.getAmount() + FluidType.BUCKET_VOLUME <= getCapacity()) {
 			FluidStack fluidStack2 = FluidUtil.getFluidContained(bucketPickup.pickupBlock(level, miningPos, state)).orElse(FluidStack.EMPTY);
 
 			if (!fluidStack2.isEmpty()) {
@@ -95,9 +95,9 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 				}
 
 				if (fluidStack.isEmpty()) {
-					fluidStack = new FluidStack(filter, FluidAttributes.BUCKET_VOLUME);
+					fluidStack = new FluidStack(filter, FluidType.BUCKET_VOLUME);
 				} else {
-					fluidStack.setAmount(fluidStack.getAmount() + FluidAttributes.BUCKET_VOLUME);
+					fluidStack.setAmount(fluidStack.getAmount() + FluidType.BUCKET_VOLUME);
 				}
 
 				level.setBlock(miningPos, FTBICBlocks.EXFLUID.get().defaultBlockState(), 2);

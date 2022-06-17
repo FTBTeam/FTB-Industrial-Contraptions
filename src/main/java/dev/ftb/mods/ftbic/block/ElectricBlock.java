@@ -25,11 +25,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -234,7 +230,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 
 					return InteractionResult.sidedSuccess(level.isClientSide());
 				} else if (!level.isClientSide()) {
-					player.sendSystemMessage(Component.translatable("ftbic.fuse_info"));
+					player.displayClientMessage(Component.translatable("ftbic.fuse_info"), true);
 				}
 
 				return InteractionResult.SUCCESS;

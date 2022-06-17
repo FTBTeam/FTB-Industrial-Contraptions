@@ -20,8 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -137,12 +137,12 @@ public class FTBICUtils {
 		} else if (element.isJsonObject()) {
 			JsonObject o = element.getAsJsonObject();
 			Fluid fluid = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(o.get("fluid").getAsString()));
-			int amount = o.has("amount") ? o.get("amount").getAsInt() : FluidAttributes.BUCKET_VOLUME;
+			int amount = o.has("amount") ? o.get("amount").getAsInt() : FluidType.BUCKET_VOLUME;
 			return new FluidStack(fluid, amount);
 		}
 
 		Fluid fluid = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(element.getAsString()));
-		return new FluidStack(fluid, FluidAttributes.BUCKET_VOLUME);
+		return new FluidStack(fluid, FluidType.BUCKET_VOLUME);
 	}
 
 	public static JsonElement fluidToJson(FluidStack stack) {

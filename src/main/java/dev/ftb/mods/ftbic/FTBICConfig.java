@@ -14,7 +14,7 @@ import net.minecraftforge.common.ForgeConfigSpec.Builder;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.ForgeConfigSpec.LongValue;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITag;
 import org.jetbrains.annotations.Nullable;
@@ -29,8 +29,8 @@ public class FTBICConfig {
 	public static Component ENERGY_FORMAT = Component.literal("⚡").withStyle(ChatFormatting.BOLD);
 	public static Component HEAT_FORMAT = Component.literal("\uD83D\uDD25");
 
-    static final ForgeConfigSpec COMMON_CONFIG;
-    private static final Builder COMMON =  new Builder();
+	static final ForgeConfigSpec COMMON_CONFIG;
+	private static final Builder COMMON = new Builder();
 
 	public static final Energy ENERGY;
 	public static final Machines MACHINES;
@@ -252,7 +252,7 @@ public class FTBICConfig {
 			PUMP_USE = b().comment("Energy usage of the Pump").defineInRange("Pump use", 3D, 0D, 100_000D);
 			PUMP_MINE_TICKS = b().comment("Duration taken to mine a fluid using the pump").defineInRange("Pump mine ticks", 40L, 0L, 100_000L);
 			PUMP_MOVE_TICKS = b().comment("Duration taken to move the pump to a new location").defineInRange("Pump move ticks", 10L, 0L, 100_000L);
-			PUMP_TANK_CAPACITY = b().comment("Amount of energy stored in the Pump Tank").defineInRange("Pump tank capacity", FluidAttributes.BUCKET_VOLUME * 128, 1, 100_000);
+			PUMP_TANK_CAPACITY = b().comment("Amount of energy stored in the Pump Tank").defineInRange("Pump tank capacity", FluidType.BUCKET_VOLUME * 128, 1, 100_000);
 			ITEM_TRANSFER_EFFICIENCY = b().comment("Determines how effective an item can transport energy to something else").defineInRange("Item transfer efficiency", 20.0D, 0D, Double.POSITIVE_INFINITY);
 			STATE_UPDATE_TICKS = b().comment("To reduce lag, we only update a state of a block every X ticks. This controls how many ticks we wait to update the blocks state.").defineInRange("State update ticks", 6, 1, 1_000);
 			UPGRADE_LIMIT_PER_SLOT = b().comment("Amount of upgrades allowed in each slot of a machine").defineInRange("Upgrade limit per slot", 4, 1, 64);
@@ -281,7 +281,7 @@ public class FTBICConfig {
 			NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS = b().comment("The starting radius for a nuclear reactor explosion").defineInRange("Base Nuclear blast radius", 10D, 1D, 1_000D);
 			NUCLEAR_REACTOR_EXPLOSION_MULTIPLIER = b().comment("How much to multiple the above base radius of the explosion").defineInRange("Nuclear blast radius multiplier", 0.5D, 0.001D, 100D);
 			NUCLEAR_REACTOR_EXPLOSION_LIMIT = b().comment("The limit of how large an explosion can be").defineInRange("Nuclear blast limit", 80D, 1D, 10_000D);
-			FLUID_CELL_CAPACITY = b().comment("How much fluid a fluid cell can contain").defineInRange("Fluid cell capacity", FluidAttributes.BUCKET_VOLUME, 1, 100_000);
+			FLUID_CELL_CAPACITY = b().comment("How much fluid a fluid cell can contain").defineInRange("Fluid cell capacity", FluidType.BUCKET_VOLUME, 1, 100_000);
 			ADD_ALL_FLUID_CELLS = b().comment("Add all fluid cells to creative tab").define("Add all fluid cells", false);
 			NUCLEAR_EXPLOSION_DAEMON_THREAD = b().comment("Spawn a deamon thread to handle the explosion calculation (experimental)").define("Explosion uses deamon thread", false);
 

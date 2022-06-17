@@ -75,7 +75,7 @@
   "ftbic.energy_capacity": "Energy Capacity: %s",
   "ftbic.energy_output": "Energy Output: %s",
   "ftbic.energy_usage": "Energy Usage: %s",
-  "ftbic.fuse_info": "Right-click with a Fuse on this machine to repair it!",
+  "ftbic.fuse_info": "This machine's fuse has blown! Right-click it with a fresh one to repair it!",
   "ftbic.max_input": "Max Input: %s",
   "ftbic.requires_chestplate": "Requires Chestplate to function",
   "ftbic.zap_to_fe_conversion": "Allows one-way conversion of %1$s to FE (1 %1$s = %2$s FE)",
