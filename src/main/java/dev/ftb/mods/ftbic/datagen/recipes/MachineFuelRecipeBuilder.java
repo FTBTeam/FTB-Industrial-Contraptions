@@ -1,4 +1,4 @@
-package dev.ftb.mods.ftbic.datagen.recipies;
+package dev.ftb.mods.ftbic.datagen.recipes;
 
 import com.google.gson.JsonObject;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
