@@ -1,21 +1,25 @@
 package dev.ftb.mods.ftbic.jei;
 
+import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu;
+import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.transfer.IRecipeTransferError;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandlerHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Optional;
 
-public class PoweredCraftingTableTransferHandler implements IRecipeTransferHandler<PoweredCraftingTableMenu, Recipe> {
+public class PoweredCraftingTableTransferHandler implements IRecipeTransferHandler<PoweredCraftingTableMenu, CraftingRecipe> {
 	private IRecipeTransferHandlerHelper transferHelper;
 
 	public PoweredCraftingTableTransferHandler(IRecipeTransferHandlerHelper transferHelper) {
@@ -28,13 +32,18 @@ public class PoweredCraftingTableTransferHandler implements IRecipeTransferHandl
 	}
 
 	@Override
-	public Class<Recipe> getRecipeClass() {
-		return Recipe.class;
+	public Optional<MenuType<PoweredCraftingTableMenu>> getMenuType() {
+		return Optional.of(FTBICMenus.POWERED_CRAFTING_TABLE.get());
+	}
+
+	@Override
+	public mezz.jei.api.recipe.RecipeType<CraftingRecipe> getRecipeType() {
+		return RecipeTypes.CRAFTING;
 	}
 
 	@Nullable
 	@Override
-	public IRecipeTransferError transferRecipe(PoweredCraftingTableMenu container, Recipe recipe, IRecipeSlotsView recipeLayout, Player player, boolean maxTransfer, boolean doTransfer) {
+	public IRecipeTransferError transferRecipe(PoweredCraftingTableMenu container, CraftingRecipe recipe, IRecipeSlotsView recipeLayout, Player player, boolean maxTransfer, boolean doTransfer) {
 		if (recipe.getType() == RecipeType.CRAFTING) {
 			NonNullList<Ingredient> list = recipe.getIngredients();
 

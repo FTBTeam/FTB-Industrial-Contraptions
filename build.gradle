@@ -91,6 +91,7 @@ dependencies {
 
 	// provides the JEI API, so we're good to go
 	modLocalRuntime modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
+	modLocalRuntime modCompileOnly("me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:${rootProject.rei_version}")
 
 	modImplementation("curse.maven:charging-gadgets-399757:3828008")
 

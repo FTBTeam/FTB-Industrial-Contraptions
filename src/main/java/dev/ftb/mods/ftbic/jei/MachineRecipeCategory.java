@@ -7,27 +7,24 @@ import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
 import dev.ftb.mods.ftbic.screen.MachineScreen;
-import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.forge.ForgeTypes;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
-import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * @author LatvianModder
@@ -44,7 +41,7 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 		serializer = s.get();
 		electricBlockInstance = item;
 		background = guiHelper.createBlankDrawable(serializer.guiWidth, serializer.guiHeight);
-		icon = guiHelper.createDrawableIngredient(new ItemStack(item.item.get()));
+		icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(item.item.get()));
 		arrowOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 87, 167, 24, 17).setTextureSize(256, 256).build();
 		arrowOn = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 87, 185, 24, 17).setTextureSize(256, 256).buildAnimated(Mth.ceil(FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get()), IDrawableAnimated.StartDirection.LEFT, false);
 		powerOff = guiHelper.drawableBuilder(MachineScreen.BASE_TEXTURE, 1, 240, 14, 14).setTextureSize(256, 256).build();
@@ -54,13 +51,8 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 	}
 
 	@Override
-	public ResourceLocation getUid() {
-		return serializer.getId();
-	}
-
-	@Override
-	public Class<? extends MachineRecipe> getRecipeClass() {
-		return MachineRecipe.class;
+	public RecipeType<MachineRecipe> getRecipeType() {
+		return FTBICJEIPlugin.getMachineRecipeType(serializer);
 	}
 
 	@Override
@@ -94,60 +86,37 @@ public class MachineRecipeCategory implements IRecipeCategory<MachineRecipe> {
 	}
 
 	@Override
-	public void setIngredients(MachineRecipe recipe, IIngredients ingredients) {
-		List<List<ItemStack>> inputItems = new ArrayList<>();
-
-		for (IngredientWithCount i : recipe.inputItems) {
-			List<ItemStack> stackList = new ArrayList<>();
-
-			for (ItemStack is : i.ingredient.getItems()) {
-				ItemStack is1 = is.copy();
-				is1.setCount(i.count);
-				stackList.add(is1);
-			}
-
-			inputItems.add(stackList);
-		}
-
-		ingredients.setInputLists(VanillaTypes.ITEM, inputItems);
-		ingredients.setInputs(VanillaTypes.FLUID, recipe.inputFluids);
-		ingredients.setOutputs(VanillaTypes.ITEM, recipe.outputItems.stream().map(i -> i.stack).collect(Collectors.toList()));
-		ingredients.setOutputs(VanillaTypes.FLUID, recipe.outputFluids);
-	}
-
-	@Override
-	public void setRecipe(IRecipeLayout layout, MachineRecipe recipe, IIngredients ingredients) {
-		IGuiItemStackGroup itemStacks = layout.getItemStacks();
-		IGuiFluidStackGroup fluidStacks = layout.getFluidStacks();
-
+	public void setRecipe(IRecipeLayoutBuilder builder, MachineRecipe recipe, IFocusGroup focuses) {
 		for (int i = 0; i < recipe.inputFluids.size(); i++) {
-			fluidStacks.init(i, true, 1 + i * 18, 1);
+			builder.addSlot(RecipeIngredientRole.INPUT, 2 + i * 18, 2)
+					.addIngredient(ForgeTypes.FLUID_STACK, recipe.inputFluids.get(i));
 		}
 
 		for (int i = 0; i < recipe.inputItems.size(); i++) {
-			itemStacks.init(i, true, (i + recipe.inputFluids.size()) * 18, 0);
+			var input = recipe.inputItems.get(i);
+			var slot = builder.addSlot(RecipeIngredientRole.INPUT, 1+(i + recipe.inputFluids.size()) * 18, 1);
+			for (var stack : input.ingredient.getItems()) {
+				slot.addIngredient(VanillaTypes.ITEM_STACK, Util.make(stack.copy(), s -> s.setCount(input.count)));
+			}
 		}
 
 		for (int i = 0; i < recipe.outputFluids.size(); i++) {
-			fluidStacks.init(i + recipe.inputFluids.size(), false, serializer.outputX + 5 + i * 25, serializer.outputY + 5);
+			builder.addSlot(RecipeIngredientRole.OUTPUT, serializer.outputX + 6 + i * 25, serializer.outputY + 6)
+					.addIngredient(ForgeTypes.FLUID_STACK, recipe.outputFluids.get(i));
 		}
 
 		for (int i = 0; i < recipe.outputItems.size(); i++) {
-			itemStacks.init(i + recipe.inputItems.size(), false, serializer.outputX + 4 + (i + recipe.outputFluids.size()) * 25, serializer.outputY + 4);
+			var output = recipe.outputItems.get(i);
+			builder.addSlot(RecipeIngredientRole.OUTPUT, serializer.outputX + 5 + (i + recipe.outputFluids.size()) * 25, serializer.outputY + 5)
+					.addItemStack(output.stack)
+					.addTooltipCallback((slot, tooltip) -> {
+						var chance = output.chance;
+						if (chance < 1D) {
+							String s = String.valueOf(chance * 100D);
+							tooltip.add(Component.literal("Chance: ").append(Component.literal((s.endsWith(".0") ? s.substring(0, s.length() - 2) : s) + "%")
+									.withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.GRAY));
+						}
+					});
 		}
-
-		itemStacks.set(ingredients);
-		fluidStacks.set(ingredients);
-
-		itemStacks.addTooltipCallback((idx, input, stack, tooltip) -> {
-			if (!input) {
-				double chance = recipe.outputItems.get(idx - recipe.inputItems.size()).chance;
-
-				if (chance < 1D) {
-					String s = String.valueOf(chance * 100D);
-					tooltip.add(Component.literal("Chance: ").append(Component.literal((s.endsWith(".0") ? s.substring(0, s.length() - 2) : s) + "%").withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.GRAY));
-				}
-			}
-		});
 	}
 }
