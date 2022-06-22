@@ -60,6 +60,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -943,6 +944,8 @@ public class FTBICDataGenHandler {
 					FTBICBlocks.NUKE.get()
 			);
 
+			tag(Tags.Blocks.STORAGE_BLOCKS).add(blockOfResources);
+
 			Block[] cables = FTBICBlocks.CABLES.stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(cables);
 
@@ -996,13 +999,15 @@ public class FTBICDataGenHandler {
 			tag(ALUMINUM_BLOCK).add(FTBICItems.getResourceFromType(ALUMINUM, BLOCK).orElseThrow().get());
 			tag(BRONZE_BLOCK).add(FTBICItems.getResourceFromType(BRONZE, BLOCK).orElseThrow().get());
 
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(TIN_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(LEAD_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(URANIUM_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(IRIDIUM_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(ENDERIUM_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(ALUMINUM_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(BRONZE_BLOCK);
+			Item[] blockOfResources = FTBICBlocks.RESOURCE_BLOCKS_OF
+					.keySet()
+					.stream()
+					.map(e -> FTBICItems.getResourceFromType(e, BLOCK))
+					.filter(Optional::isPresent)
+					.map(e -> e.get().get())
+					.toArray(Item[]::new);
+
+			tag(Tags.Items.STORAGE_BLOCKS).add(blockOfResources);
 
 			//CHUNKS
 			tag(TIN_CHUNK).add(FTBICItems.getResourceFromType(TIN, CHUNK).orElseThrow().get());
