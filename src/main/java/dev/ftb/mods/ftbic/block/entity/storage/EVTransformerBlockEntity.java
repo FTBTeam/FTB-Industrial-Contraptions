@@ -6,6 +6,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class EVTransformerBlockEntity extends TransformerBlockEntity {
 	public EVTransformerBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.HV_TRANSFORMER, pos, state);
+		super(FTBICElectricBlocks.EV_TRANSFORMER, pos, state);
 	}
 }
