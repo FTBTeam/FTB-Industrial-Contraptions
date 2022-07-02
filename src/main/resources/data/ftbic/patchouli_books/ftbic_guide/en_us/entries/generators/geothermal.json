@@ -1,0 +1,18 @@
+{
+    "name":"Geothermal Generator",
+    "icon":"ftbic:basic_generator",
+    "category":"ftbic:generators",
+    "sortnum":1,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Geothermal Generator$() generates Zaps using Lava."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:geothermal_generator",
+            "text":"1,000mB of Lava generates 20,000⚡.",
+            "link_recipe":true
+        }
+    ]
+}
