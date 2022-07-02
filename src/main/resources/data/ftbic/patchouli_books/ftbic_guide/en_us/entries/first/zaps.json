@@ -11,7 +11,7 @@
         {
             "type":"patchouli:text",
             "title":"Voltage",
-            "text":"Like IC2's EU, Zaps have a Voltage tier system. The higher Voltage, the more ⚡/t can be transferred.$(br2)There are 5 tiers:$(li)Low Voltage (LV) - 32⚡/t$(li)Medium Voltage (MV) - 128⚡/t$(li)High Voltage (HV)512⚡/t$(li)Extreme Voltage (EV) - 2,048⚡/t$(li)Insane Voltage (IV) - 8,192⚡/t"
+            "text":"Like IC2's EU, Zaps have a Voltage tier system. The higher Voltage, the more ⚡/t can be transferred.$(br2)There are 5 tiers:$(li)Low Voltage (LV) - 32⚡/t$(li)Medium Voltage (MV) - 128⚡/t$(li)High Voltage (HV)512⚡/t$(li)Extreme Voltage (EV) - 2,048⚡/t$(li)Insane Voltage (IV) - 8,192⚡/t$(br2)Some machines cannot handle higher Voltage, but you can always use lower ones."
         },
         {
             "type":"patchouli:spotlight",

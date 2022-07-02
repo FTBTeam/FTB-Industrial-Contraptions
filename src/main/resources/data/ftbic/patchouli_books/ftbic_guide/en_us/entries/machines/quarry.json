@@ -1,0 +1,26 @@
+{
+    "name":"Quarry",
+    "icon":"ftbic:quarry",
+    "category":"ftbic:machines",
+    "sortnum":9,
+    "pages": [
+        {
+            "type":"patchouli:text",
+            "text": "The $(item)Quarry$() uses Zaps to mine an area.$(br2)Mined items will be collected into the Quarry's inventory.$(br2)You can install $(item)Overclocker Upgrades$() to make it work faster."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:quarry",
+            "text":"It costs a little over 150⚡ to mine each block."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:landmark",
+            "text":"By default, the Quarry only mines a 7x7 area. You can increase this using $(item)Landmarks$().$(br2)Place up to 3 Landmarks to set the boundary, and place the Quarry so it's inline with all of them."
+        },
+        {
+            "type":"patchouli:image",
+            "images":["ftbic:textures/patchouli/quarry.png"]
+        }
+    ]
+}
