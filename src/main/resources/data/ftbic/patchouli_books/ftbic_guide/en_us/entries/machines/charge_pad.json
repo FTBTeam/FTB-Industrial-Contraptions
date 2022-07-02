@@ -1,0 +1,17 @@
+{
+    "name":"Charge Pad",
+    "icon":"ftbic:charge_pad",
+    "category":"ftbic:machines",
+    "sortnum":8,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Charge Pad$() will use its Zaps to charge items in your inventory when you stand on it."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:charge_pad",
+            "link_recipe":true
+        }
+    ]
+}

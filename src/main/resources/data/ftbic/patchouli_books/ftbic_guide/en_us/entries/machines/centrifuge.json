@@ -1,0 +1,18 @@
+{
+    "name":"Centrifuge",
+    "icon":"ftbic:centrifuge",
+    "category":"ftbic:machines",
+    "sortnum":2,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Centrifuge$() uses Zaps to separate items into their components, and has some other recipes."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:centrifuge",
+            "text":"Some recipes only have a chance to make a second item. For example, Sea Pickles have a 3%% chance of making Glowstone.$(br2)It costs 400⚡ to separate an item.",
+            "link_recipe":true
+        }
+    ]
+}

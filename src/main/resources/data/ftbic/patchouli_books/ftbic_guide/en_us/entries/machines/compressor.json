@@ -1,0 +1,18 @@
+{
+    "name":"Compressor",
+    "icon":"ftbic:compressor",
+    "category":"ftbic:machines",
+    "sortnum":3,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Compressor$() uses Zaps to compress items into other items. This is usually more efficient than other crafting recipes."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:compressor",
+            "text":"It costs 400⚡ to compress an item.",
+            "link_recipe":true
+        }
+    ]
+}

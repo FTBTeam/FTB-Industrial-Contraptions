@@ -1,6 +1,6 @@
 {
     "name":"Items",
-    "description":"The information necessary for starting out with the mod.",
+    "description":"The items of the mod explained",
     "icon":"ftbic:antimatter",
     "sortnum":3
 }
