@@ -63,6 +63,10 @@ repositories {
 		url = 'https://maven.parchmentmc.org'
 	}
 
+	maven {
+		url 'https://maven.blamejared.com'
+	}
+
 	mavenLocal()
 }
 
@@ -96,6 +100,9 @@ dependencies {
 	// modRuntime("curse.maven:refined-storage-243076:3527504")
 
 //	modImplementation("curse.maven:tool-kit-324888:3671112")
+
+	modApi "vazkii.patchouli:Patchouli:${patchouli_version}:api"
+	modRuntimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
 }
 
 processResources {
