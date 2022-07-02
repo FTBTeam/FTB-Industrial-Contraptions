@@ -1,0 +1,13 @@
+{
+    "name": "Industrious Instructions",
+    "landing_text": "The guidebook to $(major)FTB Industrial Contraptions$()!",
+    "subtitle":"FTB Industrial Contraptions",
+    "version": 1,
+    "macros":{
+        "$(major)":"$(5)",
+        "$(item)":"$(1)",
+        "$(red)":"$(c)"
+    },
+    "show_progress":false,
+    "creative_tab":"ftbic"
+}

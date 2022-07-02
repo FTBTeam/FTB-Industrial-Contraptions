@@ -1,0 +1,18 @@
+{
+    "name":"Using Machines",
+    "icon":"ftbic:macerator",
+    "category":"ftbic:first",
+    "sortnum":2,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"To generalize, there are 4 categories of \"machine\":$(li)Generators make energy$(li)Cables move energy$(li)Battery Boxes store energy$(li)Machines spend energy$(br2)On the right, a $(item)Basic Generator$() is making Zaps, $(item)LV Cables$() are sending it to an $(item)LV Battery Box$(), and then to a $(item)Macerator$() and $(item)Powered Furnace$()."
+        },
+        {
+            "type":"patchouli:image",
+            "images":["ftbic:textures/patchouli/machine_setup.png"],
+            "border":true,
+            "title":"Machine Setup"
+        }
+    ]
+}
