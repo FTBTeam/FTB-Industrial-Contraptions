@@ -1,0 +1,17 @@
+{
+    "name":"Nuclear Reactor",
+    "icon":"ftbic:nuclear_reactor",
+    "category":"ftbic:generators",
+    "sortnum":4,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Nuclear Reactor$()"
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:nuclear_reactor",
+            "link_recipe":true
+        }
+    ]
+}
