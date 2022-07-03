@@ -2,7 +2,7 @@
     "name":"Reprocessor",
     "icon":"ftbic:reprocessor",
     "category":"ftbic:machines",
-    "sortnum":4,
+    "sortnum":5,
     "pages":[
         {
             "type":"patchouli:text",
@@ -11,8 +11,7 @@
         {
             "type":"patchouli:spotlight",
             "item":"ftbic:reprocessor",
-            "text":"It costs 600⚡ to recycle an item into Scrap.",
-            "link_recipe":true
+            "text":"It costs 600⚡ to recycle an item into Scrap.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only up to MV current."
         }
     ]
 }

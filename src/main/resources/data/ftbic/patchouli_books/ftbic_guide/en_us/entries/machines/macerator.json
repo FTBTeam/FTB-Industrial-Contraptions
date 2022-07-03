@@ -2,7 +2,7 @@
     "name":"Macerator",
     "icon":"ftbic:macerator",
     "category":"ftbic:machines",
-    "sortnum":1,
+    "sortnum":2,
     "pages":[
         {
             "type":"patchouli:text",
@@ -11,8 +11,7 @@
         {
             "type":"patchouli:spotlight",
             "item":"ftbic:macerator",
-            "text":"Some recipes have a chance to make a second item. For example, Raw Iron has a 35%% chance of making a second Iron Dust.$(br2)It costs 400⚡ to crush an item.",
-            "link_recipe":true
+            "text":"Some recipes have a chance to make a second item. For example, Raw Iron has a 35% chance of making a second Iron Dust.$(br2)It costs 400⚡ to crush an item.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only LV current."
         }
     ]
 }

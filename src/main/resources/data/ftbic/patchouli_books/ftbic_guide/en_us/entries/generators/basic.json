@@ -11,8 +11,7 @@
         {
             "type":"patchouli:spotlight",
             "item":"ftbic:basic_generator",
-            "text":"For every 1 item a fuel would smelt, it generates 2,000⚡.$(br2)For example, Coal smelts 8 items and generates 16,000⚡.",
-            "link_recipe":true
+            "text":"For every 1 item a fuel would smelt, it generates 2,000⚡.$(br2)For example, Coal smelts 8 items and generates 16,000⚡.$(br2)As the Generator only outputs at 10⚡/t, it is LV."
         }
     ]
 }

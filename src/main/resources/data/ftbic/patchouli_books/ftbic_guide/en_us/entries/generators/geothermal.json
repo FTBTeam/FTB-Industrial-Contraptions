@@ -11,8 +11,7 @@
         {
             "type":"patchouli:spotlight",
             "item":"ftbic:geothermal_generator",
-            "text":"1,000mB of Lava generates 20,000⚡.",
-            "link_recipe":true
+            "text":"1,000mB of Lava generates 20,000⚡.$(br2)As the Generator only outputs at 20⚡/t, it is LV."
         }
     ]
 }

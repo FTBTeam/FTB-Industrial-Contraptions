@@ -2,25 +2,16 @@
     "name":"Pump",
     "icon":"ftbic:pump",
     "category":"ftbic:machines",
-    "sortnum":10,
+    "sortnum":11,
     "pages": [
         {
             "type":"patchouli:text",
-            "text": "The $(item)Quarry$() uses Zaps to mine an area.$(br2)Mined items will be collected into the Quarry's inventory.$(br2)You can install $(item)Overclocker Upgrades$() to make it work faster."
+            "text": "The $(item)Pump$() uses Zaps to collect fluid in an area.$(br2)You can extract Fluid from the Pump using $(l:ftbic:items/fluid_cell)Fluid Cells$(), Buckets, or using fluid pipes from another mod."
         },
         {
             "type":"patchouli:spotlight",
-            "item":"ftbic:quarry",
-            "text":"It costs a little over 150⚡ to mine each block."
-        },
-        {
-            "type":"patchouli:spotlight",
-            "item":"ftbic:landmark",
-            "text":"By default, the Quarry only mines a 7x7 area. You can increase this using $(item)Landmarks$().$(br2)Place up to 3 Landmarks to set the boundary, and place the Quarry so it's inline with all of them."
-        },
-        {
-            "type":"patchouli:image",
-            "images":["ftbic:textures/patchouli/quarry.png"]
+            "item":"ftbic:pump",
+            "text":"Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only up to HV current.$(br2)By default, the Pump drains a 7x7 area, all the way down to the bottom of the pool. You can extend this area with $(l:ftbic:machines/quarry#landmarks)Landmarks$()."
         }
     ]
 }
