@@ -10,8 +10,7 @@
         },
         {
             "type":"patchouli:spotlight",
-            "item":"ftbic:nuclear_reactor",
-            "link_recipe":true
+            "item":"ftbic:nuclear_reactor"
         }
     ]
 }

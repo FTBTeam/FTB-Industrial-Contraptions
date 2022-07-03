@@ -2,7 +2,7 @@
     "name":"Canning Machine",
     "icon":"ftbic:canning_machine",
     "category":"ftbic:machines",
-    "sortnum":4,
+    "sortnum":5,
     "pages":[
         {
             "type":"patchouli:text",
@@ -11,8 +11,7 @@
         {
             "type":"patchouli:spotlight",
             "item":"ftbic:canning_machine",
-            "text":"It costs 200⚡ to recycle an item into Scrap.",
-            "link_recipe":true
+            "text":"It costs 200⚡ to fill a Can.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only LV current."
         }
     ]
 }

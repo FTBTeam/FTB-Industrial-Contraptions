@@ -11,7 +11,6 @@
         {
             "type":"patchouli:spotlight",
             "item":"ftbic:lv_solar_panel",
-            "link_recipe":true,
             "text":"Each Panel and their speed:$(li)LV - 1⚡/t$(li)MV - 8⚡/t$(li)HV - 64⚡/t$(li)EV - 512⚡/t"
         }
     ]

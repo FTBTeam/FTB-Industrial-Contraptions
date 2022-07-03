@@ -2,17 +2,16 @@
     "name":"Extruder",
     "icon":"ftbic:extruder",
     "category":"ftbic:machines",
-    "sortnum":7,
+    "sortnum":8,
     "pages":[
         {
             "type":"patchouli:text",
-            "text":"The $(item)Extruder$() uses Zaps to shape Ingots and Plates into Gears, Rods, and Wires."
+            "text":"The $(item)Extruder$() uses Zaps to $(major)shape Ingots and Plates into Gears, Rods, and Wires$()."
         },
         {
             "type":"patchouli:spotlight",
             "item":"ftbic:extruder",
-            "text":"It costs 600⚡ to roll an item.",
-            "link_recipe":true
+            "text":"It costs 600⚡ to roll an item.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only LV current."
         }
     ]
 }

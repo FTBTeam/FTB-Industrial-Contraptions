@@ -11,7 +11,6 @@
         {
             "type":"patchouli:spotlight",
             "item":"ftbic:wind_mill",
-            "link_recipe":true,
             "text":"It makes a rather pitiful amount of ⚡/t, but it works passively for free."
         }
     ]

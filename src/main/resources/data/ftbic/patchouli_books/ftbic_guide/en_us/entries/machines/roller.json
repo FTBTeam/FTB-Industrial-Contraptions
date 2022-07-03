@@ -2,7 +2,7 @@
     "name":"Roller",
     "icon":"ftbic:roller",
     "category":"ftbic:machines",
-    "sortnum":6,
+    "sortnum":7,
     "pages":[
         {
             "type":"patchouli:text",
@@ -10,9 +10,8 @@
         },
         {
             "type":"patchouli:spotlight",
-            "item":"ftbic:reprocessor",
-            "text":"It costs 600⚡ to roll an item.",
-            "link_recipe":true
+            "item":"ftbic:roller",
+            "text":"It costs 600⚡ to roll an item.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only MV current."
         }
     ]
 }

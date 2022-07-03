@@ -16,8 +16,7 @@
         {
             "type":"patchouli:spotlight",
             "item":"ftbic:fuse",
-            "text":"When you give a machine a Voltage higher than it can handle, it will $(red)stop working$().$(br2)To repair it, right-click it with a $(item)Fuse$() to repair it. Mining a burnt machine will drop a Machine Block rather than the machine itself.$(br2)Likewise, a lower-Voltage Cable will burn. Burnt Cables can be recycled into Scrap, but $(red)cannot carry a current$().",
-            "link_recipe":true
+            "text":"When you give a machine a Voltage higher than it can handle, it will $(red)stop working$().$(br2)To repair it, right-click it with a $(item)Fuse$() to repair it. Mining a burnt machine will drop a Machine Block rather than the machine itself.$(br2)Likewise, a lower-Voltage Cable will burn. Burnt Cables can be recycled into Scrap, but $(red)cannot carry a current$()."
         },
         {
             "type":"patchouli:image",
@@ -31,7 +30,7 @@
             "item":"ftbic:lv_transformer",
             "title":"Transformers",
             "text":"$(item)Transformers$() allow you to convert between different Voltages.$(br2)A Transformer will convert between its tier and the tier above; that is, an LV Transformer will convert between LV and MV.$(br2)Transformers have 1 input face and 5 outputs.",
-            "link_recipe":true
+            "anchor":"transformers"
         },
         {
             "type":"patchouli:image",
