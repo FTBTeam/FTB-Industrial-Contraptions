@@ -6,7 +6,7 @@
     "pages":[
         {
             "type":"patchouli:text",
-            "text":"The $(item)Reprocessor$() uses Zaps to make Scrap out of any other item."
+            "text":"The $(item)Reprocessor$() uses Zaps to make Scrap out of any other item.$(br2)Scrap and Scrap Boxes can be used in the $(l:ftbic:machines/antimatter_constructor)Antimatter Constructor$() to make Antimatter cheaper."
         },
         {
             "type":"patchouli:spotlight",

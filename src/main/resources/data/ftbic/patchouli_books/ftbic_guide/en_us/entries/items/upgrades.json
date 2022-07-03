@@ -1,0 +1,32 @@
+{
+    "name":"Upgrades",
+    "icon":"ftbic:overclocker_upgrade",
+    "category":"ftbic:items",
+    "sortnum":2,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Upgrades$() allow machines to work better. They do not change what the machines do, just makes them better at it."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:overclocker_upgrade",
+            "text":"The $(item)Overclocker Upgrade$() makes machines work faster, but also makes them use more Zaps.$(br2)You can have up to 4 in a slot, and you can fill as many upgrade slots as you want.$(br2)12 Overclocker Upgrades in a Powered Furnace makes it work near instantly, though at a $(l)much$() greater cost."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:energy_storage_upgrade",
+            "text":"The $(item)Energy Storage Upgrade$() allows machines to store more energy. Each adds about 10,000 Zaps.$(br2)You can have up to 4 in a slot, and you can fill as many upgrade slots as you want."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:transformer_upgrade",
+            "text":"The $(item)Transformer Upgrade$() allows machines to accept higher voltage currents. Each increases the voltage tier by 1."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:ejector_upgrade",
+            "text":"The $(item)Ejector Upgrade$() will make machines eject their output to an adjacent inventory.$(br2)In order of priority, it tries to push out the right face, then back, left, front, top, then bottom.$(br2)You can have multiple, but like... why would you?"
+        }
+    ]
+}
