@@ -1,0 +1,17 @@
+{
+    "name":"Quantum Powerarmor",
+    "icon":"ftbic:quantum_helmet",
+    "category":"ftbic:items",
+    "sortnum":5,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Quantum Powerarmor$() is an upgrade to $(l:ftbic:items/carbon_armor)Carbon Powerarmor$().$(br2)With all pieces worn and charged, it has complete damage reduction from most sources.$(br2)5,000⚡ are drained per point of damage taken; a single full charge $(major)can absorb 3,000 points of damage$()."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:quantum_chestplate",
+            "text":"Like Carbon Powerarmor, all pieces require the $(item)Quantum Chestplate$() to work.$(br2)The Quantum Chestplate also works as a $(l:ftbic:items/mechanical_elytra)Mechanical Elytra$(), but does not recharge with solar power."
+        }
+    ]
+}

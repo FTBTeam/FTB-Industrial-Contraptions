@@ -1,0 +1,17 @@
+{
+    "name":"Carbon Powerarmor",
+    "icon":"ftbic:carbon_helmet",
+    "category":"ftbic:items",
+    "sortnum":3,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Carbon Powerarmor$() provides $(major)complete damage reduction$() from almost all sources while charged, and while all parts are worn.$(br2)If not all parts are worn, there is still significant (but not complete) damage reduction."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:carbon_chestplate",
+            "text":"The $(item)Carbon Chestplate$() is the most important part. All other parts rely on it to work.$(br2)Each half-heart of damage absorbed will remove 5,000⚡ from the Chestplate, assuming all pieces are worn.$(br2)As it can hold 1,000,000⚡, you can take up to 100 hearts of damage before the armor is fully discharged. No armor is provided without a charge."
+        }
+    ]
+}
