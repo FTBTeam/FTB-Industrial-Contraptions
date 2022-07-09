@@ -1,0 +1,17 @@
+{
+    "name":"Neutron Reflectors",
+    "icon":"ftbic:neutron_reflector",
+    "category":"ftbic:nuclear",
+    "sortnum":7,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Neutron Reflectors$() reflect back $(l:ftbic:generators/nuclear/fuel#pulse)Neutron Pulses$() back to the Fuel Rod that created them.$(br2)A single Fuel Rod surrounded by 4 Neutron Reflectors will receive 4 Neutron Pulses."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:neutron_reflector",
+            "text":"Neutron Reflectors have $(c)durability$(). They lose one durability per second. $(br2)$(item)Thick Neutron Reflectors$() last 4 times longer, and $(item)Iridium Neutron Reflectors$() have unlimited durability."
+        }
+    ]
+}

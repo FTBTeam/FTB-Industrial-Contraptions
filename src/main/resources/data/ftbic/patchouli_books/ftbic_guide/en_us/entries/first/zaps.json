@@ -29,7 +29,7 @@
             "type":"patchouli:spotlight",
             "item":"ftbic:lv_transformer",
             "title":"Transformers",
-            "text":"$(item)Transformers$() allow you to convert between different Voltages.$(br2)A Transformer will convert between its tier and the tier above; that is, an LV Transformer will convert between LV and MV.$(br2)Transformers have 1 input face and 5 outputs.",
+            "text":"$(item)Transformers$() allow you to convert between different Voltages.$(br2)Transformers have 1 input face and 5 outputs. A Transformer will convert between its tier and the tier above.$(li)Give the input LV, and the outputs will send MV.$(li)Give the input MV, and the outputs will send LV.",
             "anchor":"transformers"
         },
         {

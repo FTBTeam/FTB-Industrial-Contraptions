@@ -1,0 +1,17 @@
+{
+    "name":"Coolant",
+    "icon":"ftbic:small_coolant_cell",
+    "category":"ftbic:nuclear",
+    "sortnum":3,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Coolant$() is a property of certain Reactor Components that allows them to absorb heat.$(br2)Think of it like $(major)durability$(); the more Coolant the item has, the more Heat it can absorb.$(br2)As the Component absorbs Heat, it loses its Coolant. When it runs out, the Component is broken, and vanishes from the Reactor."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:small_coolant_cell",
+            "text":"$(item)Coolant Cells$() are the most basic Reactor Component for absorbing Heat. Simply put, they just have a large amount of Coolant and nothing else.$(br2)Place it next to a Heat source, and it will absorb it until its Coolant runs dry.$(br2)There are three tiers, each holding more Coolant than the last."
+        }
+    ]
+}

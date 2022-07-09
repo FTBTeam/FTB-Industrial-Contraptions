@@ -1,0 +1,17 @@
+{
+    "name":"Reactor Plating",
+    "icon":"ftbic:reactor_plating",
+    "category":"ftbic:nuclear",
+    "sortnum":6,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Reactor Plating$() increases a Reactor's Heat capacity, and lowers the meltdown explosion radius.$(br2)Reactor Plating has no Coolant, and only serves to modify the Reactor itself."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:reactor_plating",
+            "text":"There are two specialized upgrades:$(li)$(item)Containment Reactor Plating$() is much better at reducing the meltdown explosion, but adds less to the Heat Capacity$(li)$(item)Heat-Capacity Reactor Plating$() adds a lot more to the Heat Capacity, but reduces the meltdown explosion radius by a lot less"
+        }
+    ]
+}
