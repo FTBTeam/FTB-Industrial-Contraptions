@@ -1,0 +1,17 @@
+{
+    "name":"Nuclear Reactor",
+    "icon":"ftbic:nuclear_reactor",
+    "category":"ftbic:nuclear",
+    "sortnum":0,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"FTBIC's $(item)Nuclear Reactor$() works almost identically to $(major)Industrial Craft$()'s, with a handful of quality-of-life changes.$(br2)The Nuclear Reactor's GUI has 9x6 inventory slots, 2 gauges, and 2 buttons.$(br2)The top gauge shows the ⚡/t being generated, and the bottom shows the Reactor's current $(l:ftbic:generators/nuclear/heat)heat$()."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:nuclear_reactor",
+            "text":"The first button allows you to $(major)simulate$() the Reactor, using the Reactor's contents. This tells you:$(li)How long the Reactor will run$(li)If the Reactor will explode, and the explosion radius$(li)The ⚡/t generated$(li)The total ⚡ generated$(br)The second button pauses/unpauses the Reactor."
+        }
+    ]
+}

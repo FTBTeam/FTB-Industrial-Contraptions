@@ -1,0 +1,27 @@
+{
+    "name":"Heat Exchangers",
+    "icon":"ftbic:heat_exchanger",
+    "category":"ftbic:nuclear",
+    "sortnum":5,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Heat Exchangers$() do not dissipate Heat, but move it.$(br2)Heat Exchangers will try to move Heat so everything it interacts with is the same percentage cooled.$(br2)If the Reactor has 6250 heat, the Exchanger will absorb 1250 heat, leaving 5000 heat in the Reactor. This results in both being at 50% heat capacity."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:heat_exchanger",
+            "text":"The $(item)Advanced Heat Exchanger$() works the same, but has a higher Coolant and moves heat faster."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:reactor_heat_exchanger",
+            "text":"The $(item)Reactor Heat Exchanger$() excels at exchanging Heat with the Reactor, but cannot exchange Heat with other Components on its own.$(br2)Other Components can pull its Heat, or Cool it directly."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:component_heat_exchanger",
+            "text":"The $(item)Component Heat Exchanger$() excels at exchanging Heat with adjacent Components, but cannot exchange Heat with the Reactor.$(br2)These work well as a sort of \"Heat wire\", providing more access for Vents etc."
+        }
+    ]
+}

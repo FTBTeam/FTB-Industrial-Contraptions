@@ -1,0 +1,6 @@
+{
+    "name":"Nuclear Reactor",
+    "description":"Nuclear Reactors!",
+    "icon":"ftbic:nuclear_reactor",
+    "parent":"ftbic:generators"
+}

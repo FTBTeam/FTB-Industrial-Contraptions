@@ -1,0 +1,39 @@
+{
+    "name":"Fuel Rods",
+    "icon":"ftbic:uranium_fuel_rod",
+    "category":"ftbic:nuclear",
+    "sortnum":2,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Uranium Fuel Rods$() generate Zaps and Heat. Zaps are good, $(l:ftbic:generators/nuclear/heat)Heat$() is bad."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:quad_uranium_fuel_rod",
+            "text":"There are three tiers of Fuel Rod, each increasing the rate that Zaps and Heat are generated."
+        },
+        {
+            "type":"patchouli:text",
+            "text":"Fuel Rods work much faster when they're next to other Fuel Rods.$(br2)Fuel Rods gain 5⚡/t per adjacent Fuel Rod. Two adjacent Fuel Rods will go from 5⚡/t each to 10⚡/t each, for a total of 20⚡/t.",
+            "title":"Neutron Pulse",
+            "anchor":"pulse"
+        },
+        {
+            "type":"patchouli:image",
+            "images":["ftbic:textures/patchouli/reactor_pulse_1.png","ftbic:textures/patchouli/reactor_pulse_2.png","ftbic:textures/patchouli/reactor_pulse_3.png","ftbic:textures/patchouli/reactor_pulse_4.png"],
+            "text":"The tooltip in the Reactor GUI updates for adjacent Rods.",
+            "title":"Neutron Pulse"
+        },
+        {
+            "type":"patchouli:text",
+            "text":"However, $(c)Heat also raises dramatically$(). The equation is a bit more complex:$(br2)    $(8)n(n+1)*r$()$(br)$(li)n=amount of adjacent rods$(li)r=rod multiplier$(li2)r=2 for normal Rods$(li2)r=4 for Dual Rods$(li2)r=8 for Quad Rods",
+            "title":"Neutron Pulse"
+        },
+        {
+            "type":"patchouli:text",
+            "text":"$(l:ftbic:generators/nuclear/reflectors)Neutron Reflectors$() can reflect Neutron Pulses back towards the Fuel Rods that created them.",
+            "title":"Neutron Reflectors"
+        }
+    ]
+}
