@@ -1,0 +1,18 @@
+{
+    "name":"Nuke",
+    "icon":"ftbic:nuke",
+    "category":"ftbic:items",
+    "sortnum":6,
+    "pages":[
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:nuke",
+            "text":"$(item)Nukes$(). You know what they are. You know what they do.$(br2)Nukes have a 36 block radius by default. Launch a Nuke by right-clicking it."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:nuke_arrow",
+            "text":"$(item)Nuke Arrows$()! Nukes on Arrows!$(br2)$(l:ftbic:generators/nuclear/heat#reinforced)Reinforced Stone$() can resist nuclear explosions."
+        }
+    ]
+}
