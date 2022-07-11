@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:extruding",
+  "inputItems": [
+    {
+      "ingredient": {
+        "tag": "forge:rods/copper"
+      },
+      "count": 1
+    }
+  ],
+  "outputItems": [
+    {
+      "item": "ftbic:copper_wire",
+      "count": 2
+    }
+  ]
+}
