@@ -15,10 +15,12 @@ import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.ForgeConfigSpec.LongValue;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITag;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -421,6 +423,23 @@ public class FTBICConfig {
 		return current;
 	}
 
+	public static <T extends Object> T getRaw(ForgeConfigSpec.ConfigValue<T> configValue) {
+		Field spec = ObfuscationReflectionHelper.findField(ForgeConfigSpec.ConfigValue.class, "spec");
+
+		try {
+			ForgeConfigSpec configSpec = (ForgeConfigSpec) spec.get(configValue);
+			if (!configSpec.isLoaded()) {
+				return configValue.getDefault();
+			}
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+
+		return configValue.get();
+	}
+
 	public static void init() {
 	}
+
+
 }

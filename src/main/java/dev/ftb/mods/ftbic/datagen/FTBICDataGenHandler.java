@@ -1198,7 +1198,7 @@ public class FTBICDataGenHandler {
 			tag(Tags.Items.ORES).addTag(IRIDIUM_ORE);
 			tag(Tags.Items.ORES).addTag(ALUMINUM_ORE);
 
-			tag(SILICON).add(SILICON_ITEM);
+			tag(SILICON).add(SILICON_ITEM.get());
 		}
 	}
 
