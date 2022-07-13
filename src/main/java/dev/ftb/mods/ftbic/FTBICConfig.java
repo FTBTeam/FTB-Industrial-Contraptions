@@ -48,7 +48,6 @@ public class FTBICConfig {
 		COMMON_CONFIG = COMMON.build();
 	}
 
-
 	public static final class Equipment {
 		public final DoubleValue CARBON_ARMOR_CAPACITY;
 		public final DoubleValue QUANTUM_ARMOR_CAPACITY;
