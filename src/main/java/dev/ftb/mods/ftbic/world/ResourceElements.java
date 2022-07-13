@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.world;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -32,7 +33,7 @@ public enum ResourceElements {
 	COAL(Requirements.builder().add(DUST)),
 	CHARCOAL(Requirements.builder().add(DUST));
 
-    public static final List<ResourceElements> VALUES = Arrays.asList(values());
+    public static final List<ResourceElements> VALUES = Arrays.stream(values()).sorted(Comparator.comparing(ResourceElements::getName)).toList();
 
 	/**
 	 * Creates a map of the resource types which link together the elements that the resource contains.
