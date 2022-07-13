@@ -14,6 +14,7 @@ public class SyncedData implements ContainerData {
 	public static final SyncedDataKey<Integer> BAR = new SyncedDataKey<>("bar", 0);
 	public static final SyncedDataKey<Integer> ACCELERATION = new SyncedDataKey<>("acceleration", 0);
 	public static final SyncedDataKey<Boolean> PAUSED = new SyncedDataKey<>("paused", false);
+	public static final SyncedDataKey<Boolean> ALLOW_REDSTONE_CONTROL = new SyncedDataKey<>("allow_redstone_control", false);
 
 	private final Map<SyncedDataKey<?>, SyncedDataValue<?>> values;
 	private int[] data;
