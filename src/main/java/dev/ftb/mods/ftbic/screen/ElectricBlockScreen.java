@@ -184,6 +184,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 			BufferUploader.end(lv);
 		}
 
+
 		RenderSystem.setShaderTexture(0, BASE_TEXTURE);
 		blit(poseStack, x, y, 68, 167, 18, 54);
 	}
