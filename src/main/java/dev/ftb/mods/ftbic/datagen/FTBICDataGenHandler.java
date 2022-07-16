@@ -67,6 +67,7 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
+import net.minecraftforge.client.model.generators.loaders.CompositeModelBuilder;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -718,9 +719,9 @@ public class FTBICDataGenHandler {
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
 						.end()
-						.customLoader(MultiLayerModelBuilder::begin)
-						.submodel(RenderType.solid(), this.models().nested().parent(this.models().getExistingFile(key.getName().contains("deepslate") ? mcLoc("block/deepslate") : mcLoc("block/stone"))))
-						.submodel(RenderType.translucent(), this.models().nested().parent(this.models().getExistingFile(mcLoc("block/cube_all"))).texture("all", modLoc(overlayTexture))						)
+						.customLoader(CompositeModelBuilder::begin)
+						.child(RenderType.solid().toString(), this.models().nested().parent(this.models().getExistingFile(key.getName().contains("deepslate") ? mcLoc("block/deepslate") : mcLoc("block/stone"))).renderType(RenderType.solid().toString()))
+						.child(RenderType.translucent().toString(), this.models().nested().parent(this.models().getExistingFile(mcLoc("block/cube_all"))).texture("all", modLoc(overlayTexture)).renderType(RenderType.translucent().toString()))
 						.end();
 
 				simpleBlock(value.get(), new ModelFile.UncheckedModelFile(modLoc("block/" + registryName.getPath())));
