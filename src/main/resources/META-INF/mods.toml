@@ -14,7 +14,7 @@ FTB Industrial Contraptions
 [[dependencies.ftbic]] #optional
 modId = "forge" #mandatory
 mandatory = true #mandatory
-versionRange = "[41.0.30,)" #mandatory
+versionRange = "[41.0.98,)" #mandatory
 ordering = "NONE"
 side = "BOTH"
 

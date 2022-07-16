@@ -80,7 +80,8 @@ dependencies {
 	}
 
 	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
-	modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")
+	modApi("me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}")
+    modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")
 
 	modImplementation("io.alwa.mods:myrtrees-forge:${myrtrees_version}")
 
