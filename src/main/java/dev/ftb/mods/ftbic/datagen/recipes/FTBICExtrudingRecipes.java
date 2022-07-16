@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Consumer;
 
 import static dev.ftb.mods.ftbic.world.ResourceElements.*;
+import static dev.ftb.mods.ftbic.world.ResourceType.WIRE;
 import static dev.ftb.mods.ftbic.world.ResourceType.GEAR;
 import static dev.ftb.mods.ftbic.world.ResourceType.ROD;
 
@@ -119,5 +120,26 @@ public class FTBICExtrudingRecipes extends FTBICRecipesGen {
 				.unlockedBy("has_item", has(BRONZE_PLATE))
 				.io(Ingredient.of(BRONZE_PLATE), 4, new ItemStack(FTBICItems.getResourceFromType(BRONZE, GEAR).orElseThrow().get(), 1))
 				.save(consumer, extrudingLoc(BRONZE_PLATE.location().getPath() + "_to_" + FTBICItems.getResourceFromType(BRONZE, GEAR).orElseThrow().get()));
+
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(COPPER_ROD))
+				.io(Ingredient.of(COPPER_ROD), 1, new ItemStack(FTBICItems.getResourceFromType(COPPER, WIRE).orElseThrow().get(), 2))
+				.save(consumer, extrudingLoc(COPPER_ROD.location().getPath() + "_to_" + FTBICItems.getResourceFromType(COPPER, WIRE).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(GOLD_ROD))
+				.io(Ingredient.of(GOLD_ROD), 1, new ItemStack(FTBICItems.getResourceFromType(GOLD, WIRE).orElseThrow().get(), 2))
+				.save(consumer, extrudingLoc(GOLD_ROD.location().getPath() + "_to_" + FTBICItems.getResourceFromType(GOLD, WIRE).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(ALUMINUM_ROD))
+				.io(Ingredient.of(ALUMINUM_ROD), 1, new ItemStack(FTBICItems.getResourceFromType(ALUMINUM, WIRE).orElseThrow().get(), 2))
+				.save(consumer, extrudingLoc(ALUMINUM_ROD.location().getPath() + "_to_" + FTBICItems.getResourceFromType(ALUMINUM, WIRE).orElseThrow().get()));
+
+		MachineRecipeBuilder.extruding()
+				.unlockedBy("has_item", has(ENDERIUM_ROD))
+				.io(Ingredient.of(ENDERIUM_ROD), 1, new ItemStack(FTBICItems.getResourceFromType(ENDERIUM, WIRE).orElseThrow().get(), 2))
+				.save(consumer, extrudingLoc(ENDERIUM_ROD.location().getPath() + "_to_" + FTBICItems.getResourceFromType(ENDERIUM, WIRE).orElseThrow().get()));
 	}
 }

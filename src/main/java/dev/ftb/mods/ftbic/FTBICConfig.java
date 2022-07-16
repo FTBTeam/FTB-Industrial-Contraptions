@@ -429,6 +429,7 @@ public class FTBICConfig {
 		try {
 			ForgeConfigSpec configSpec = (ForgeConfigSpec) spec.get(configValue);
 			if (!configSpec.isLoaded()) {
+				FTBIC.LOGGER.warn("Tried to get config value " + configValue.toString() + " before the associated config spec was loaded!");
 				return configValue.getDefault();
 			}
 		} catch (IllegalAccessException e) {

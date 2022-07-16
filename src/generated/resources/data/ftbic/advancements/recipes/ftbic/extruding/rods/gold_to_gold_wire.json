@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:plates/aluminum"
+            "tag": "forge:rods/gold"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ftbic:extruding/aluminum_wire"
+        "recipe": "ftbic:extruding/rods/gold_to_gold_wire"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ftbic:extruding/aluminum_wire"
+      "ftbic:extruding/rods/gold_to_gold_wire"
     ]
   }
 }

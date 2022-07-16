@@ -146,31 +146,5 @@ public class FTBICCableRecipes extends FTBICRecipesGen {
 				.group(MODID + ":scrap")
 				.requires(BURNT_CABLE.get())
 				.save(consumer, shapelessLoc("scrap_from_burnt_cable"));
-
-		// Wire extruding
-
-		MachineRecipeBuilder.extruding()
-				.unlockedBy("has_item", tagKeyHas.apply(COPPER_PLATE))
-				.inputItem(Ingredient.of(COPPER_PLATE))
-				.outputItem(new ItemStack(COPPER_WIRE.get(), 2))
-				.save(consumer, extrudingLoc("copper_wire"));
-
-		MachineRecipeBuilder.extruding()
-				.unlockedBy("has_item", tagKeyHas.apply(GOLD_PLATE))
-				.inputItem(Ingredient.of(GOLD_PLATE))
-				.outputItem(new ItemStack(GOLD_WIRE.get(), 2))
-				.save(consumer, extrudingLoc("gold_wire"));
-
-		MachineRecipeBuilder.extruding()
-				.unlockedBy("has_item", tagKeyHas.apply(ALUMINUM_PLATE))
-				.inputItem(Ingredient.of(ALUMINUM_PLATE))
-				.outputItem(new ItemStack(ALUMINUM_WIRE.get(), 2))
-				.save(consumer, extrudingLoc("aluminum_wire"));
-
-		MachineRecipeBuilder.extruding()
-				.unlockedBy("has_item", tagKeyHas.apply(ENDERIUM_PLATE))
-				.inputItem(Ingredient.of(ENDERIUM_PLATE))
-				.outputItem(new ItemStack(ENDERIUM_WIRE.get(), 2))
-				.save(consumer, extrudingLoc("enderium_wire"));
 	}
 }

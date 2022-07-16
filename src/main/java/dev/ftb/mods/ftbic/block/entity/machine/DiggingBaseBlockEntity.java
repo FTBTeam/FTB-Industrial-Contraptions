@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.net.MoveLaserMessage;
@@ -47,6 +48,11 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 
 	public DiggingBaseBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
 	}
 
 	@Override

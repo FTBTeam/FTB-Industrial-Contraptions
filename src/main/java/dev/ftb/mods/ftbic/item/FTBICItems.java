@@ -84,10 +84,6 @@ public interface FTBICItems {
 	MaterialItem RUBBER = material("rubber");
 	MaterialItem SILICON = material("silicon");
 	MaterialItem FUSE = material("fuse");
-	MaterialItem COPPER_WIRE = material("copper_wire");
-	MaterialItem GOLD_WIRE = material("gold_wire");
-	MaterialItem ALUMINUM_WIRE = material("aluminum_wire");
-	MaterialItem ENDERIUM_WIRE = material("enderium_wire");
 	MaterialItem COPPER_COIL = material("copper_coil");
 	MaterialItem MIXED_METAL_BLEND = material("mixed_metal_blend");
 	MaterialItem ADVANCED_ALLOY = material("advanced_alloy");

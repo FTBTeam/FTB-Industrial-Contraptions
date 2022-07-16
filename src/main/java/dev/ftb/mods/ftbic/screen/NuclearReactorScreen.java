@@ -40,6 +40,7 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 		drawHeatBar(poseStack, leftPos + 115, topPos + 127, Mth.clamp(menu.data.get(NuclearReactorBlockEntity.HEAT) / (float) menu.data.get(NuclearReactorBlockEntity.MAX_HEAT), 0F, 1F));
 		drawSmallPauseButton(poseStack, leftPos + 105, topPos + 5, mouseX, mouseY, menu.data.get(SyncedData.PAUSED));
 		drawSmallQuestionButton(poseStack, leftPos + 94, topPos + 5, mouseX, mouseY);
+		drawSmallRedstoneButton(poseStack, leftPos + 105, topPos + 127, mouseX, mouseY, menu.data.get(SyncedData.ALLOW_REDSTONE_CONTROL));
 	}
 
 	@Override
@@ -54,6 +55,9 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		if (isIn((int) mouseX, (int) mouseY, leftPos + 105, topPos + 5, 9, 10)) {
 			minecraft.player.connection.send(new ServerboundContainerButtonClickPacket(menu.containerId, 0));
+			return true;
+		} else if (isIn((int) mouseX, (int) mouseY, leftPos + 105, topPos + 127, 9, 10)) {
+			minecraft.player.connection.send(new ServerboundContainerButtonClickPacket(menu.containerId, 1));
 			return true;
 		} else if (isIn((int) mouseX, (int) mouseY, leftPos + 94, topPos + 5, 9, 10)) {
 			List<Component> info = new ArrayList<>();

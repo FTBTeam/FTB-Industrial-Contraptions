@@ -194,6 +194,8 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 			if (entity instanceof ElectricBlockEntity) {
 				((ElectricBlockEntity) entity).onBroken(level, pos);
 			}
+
+			level.updateNeighbourForOutputSignal(pos, this);
 		}
 
 		super.onRemove(state, level, pos, state1, b);
@@ -301,5 +303,25 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 				((ElectricBlockEntity) blockEntity).stepOn((ServerPlayer) entity);
 			}
 		}
+	}
+
+	@Override
+	@Deprecated
+	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+		if (!level.isClientSide()) {
+			BlockEntity entity = level.getBlockEntity(pos);
+
+			if (entity instanceof ElectricBlockEntity) {
+				return ((ElectricBlockEntity) entity).getRedstoneOutputSignalEnergyStorage();
+			}
+		}
+
+		return 0;
+	}
+
+	@Override
+	@Deprecated
+	public boolean hasAnalogOutputSignal(BlockState state) {
+		return true;
 	}
 }
