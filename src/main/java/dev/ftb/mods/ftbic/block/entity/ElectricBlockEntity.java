@@ -703,4 +703,5 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	public static <T extends BlockEntity> void ticker(Level level, BlockPos pos, BlockState state, T entity) {
 		((ElectricBlockEntity) entity).tick();
 	}
+
 }
