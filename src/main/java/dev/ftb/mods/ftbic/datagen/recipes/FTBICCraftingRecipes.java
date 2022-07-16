@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.datagen.recipes;
 
 import dev.ftb.mods.ftbic.datagen.FTBICRecipesGen;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.util.RegistryUtil;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -47,7 +48,7 @@ public class FTBICCraftingRecipes extends FTBICRecipesGen {
 
 		ShapedRecipeBuilder.shaped(FTBICItems.getResourceFromType(ENDERIUM, DUST).orElseThrow().get(), 2)
 				.unlockedBy("has_item", has(DIAMOND_DUST))
-				.group(MODID + ":" + ENDER_DUST_ITEM)
+				.group(MODID + ":" + RegistryUtil.getKey(ENDER_DUST_ITEM).getPath())
 				.pattern("LLL")
 				.pattern("DEE")
 				.define('L', LEAD_DUST)
@@ -57,7 +58,7 @@ public class FTBICCraftingRecipes extends FTBICRecipesGen {
 
 		ShapedRecipeBuilder.shaped(FTBICItems.getResourceFromType(ENDERIUM, DUST).orElseThrow().get(), 2)
 				.unlockedBy("has_item", has(DIAMOND_DUST))
-				.group(MODID + ":" + ENDER_DUST_ITEM)
+				.group(MODID + ":" + RegistryUtil.getKey(ENDER_DUST_ITEM).getPath())
 				.pattern("LLL")
 				.pattern("DEE")
 				.define('L', LEAD_DUST)
@@ -67,7 +68,7 @@ public class FTBICCraftingRecipes extends FTBICRecipesGen {
 
 		ShapedRecipeBuilder.shaped(FTBICItems.getResourceFromType(ENDERIUM, INGOT).orElseThrow().get(), 2)
 				.unlockedBy("has_item", has(DIAMOND_DUST))
-				.group(MODID + ":" + ENDER_DUST_ITEM)
+				.group(MODID + ":" + RegistryUtil.getKey(ENDER_DUST_ITEM).getPath())
 				.pattern("LLL")
 				.pattern("DEE")
 				.pattern("F  ")
@@ -79,7 +80,7 @@ public class FTBICCraftingRecipes extends FTBICRecipesGen {
 
 		ShapedRecipeBuilder.shaped(FTBICItems.getResourceFromType(BRONZE, DUST).orElseThrow().get(), 4)
 				.unlockedBy("has_item", has(COPPER_DUST))
-				.group(MODID + ":" + FTBICItems.getResourceFromType(COPPER, DUST).orElseThrow().get())
+				.group(MODID + ":" + RegistryUtil.getKey(FTBICItems.getResourceFromType(COPPER, DUST).orElseThrow()).getPath())
 				.pattern("CC ")
 				.pattern("CT ")
 				.define('C', COPPER_DUST)
@@ -88,7 +89,7 @@ public class FTBICCraftingRecipes extends FTBICRecipesGen {
 
 		ShapedRecipeBuilder.shaped(FTBICItems.getResourceFromType(BRONZE, INGOT).orElseThrow().get(), 4)
 				.unlockedBy("has_item", has(COPPER_INGOT))
-				.group(MODID + ":" + Items.COPPER_INGOT)
+				.group(MODID + ":" + RegistryUtil.getKey(Items.COPPER_INGOT).getPath())
 				.pattern("CCC")
 				.pattern("TF ")
 				.define('C', Ingredient.merge(Arrays.asList(Ingredient.of(COPPER_DUST), Ingredient.of(COPPER_INGOT))))
@@ -122,56 +123,56 @@ public class FTBICCraftingRecipes extends FTBICRecipesGen {
 	private static void gearFromTag(TagKey<Item> inputTag, Item output, Consumer<FinishedRecipe> consumer) {
 		ShapedRecipeBuilder.shaped(output)
 				.unlockedBy("has_item", has(inputTag))
-				.group(MODID + ":" + output)
+				.group(MODID + ":" + RegistryUtil.getKey(output).getPath())
 				.pattern(" X ")
 				.pattern("XIX")
 				.pattern(" X ")
 				.define('X', inputTag)
 				.define('I', IRON_NUGGET)
-				.save(consumer, shapedLoc(inputTag.location().getPath() + "_to_" + output));
+				.save(consumer, shapedLoc(inputTag.location().getPath() + "_to_" + RegistryUtil.getKey(output).getPath()));
 	}
 
 	private static void rodFromTag(TagKey<Item> inputTag, Item output, Consumer<FinishedRecipe> consumer) {
 		ShapedRecipeBuilder.shaped(output)
 				.unlockedBy("has_item", has(inputTag))
-				.group(MODID + ":" + output)
+				.group(MODID + ":" + RegistryUtil.getKey(output).getPath())
 				.pattern(" X ")
 				.pattern(" X ")
 				.define('X', inputTag)
-				.save(consumer, shapedLoc(inputTag.location().getPath() + "_to_" + output));
+				.save(consumer, shapedLoc(inputTag.location().getPath() + "_to_" + RegistryUtil.getKey(output).getPath()));
 	}
 
 	private static void ingotToNuggetAndBack(TagKey<Item> ingotTag, Item ingotItem, TagKey<Item> nuggetTag, Item nuggetItem, Consumer<FinishedRecipe> consumer) {
 		ShapelessRecipeBuilder.shapeless(nuggetItem, 9)
 			.unlockedBy("has_item", has(ingotTag))
-			.group(MODID + ":" + nuggetItem)
+			.group(MODID + ":" + RegistryUtil.getKey(nuggetItem).getPath())
 			.requires(ingotTag)
-			.save(consumer, shapelessLoc(ingotItem + "_to_" + nuggetItem));
+			.save(consumer, shapelessLoc(ingotItem + "_to_" + RegistryUtil.getKey(nuggetItem).getPath()));
 
 		ShapedRecipeBuilder.shaped(ingotItem)
 				.unlockedBy("has_item", has(nuggetTag))
-				.group(MODID + ":" + ingotItem)
+				.group(MODID + ":" + RegistryUtil.getKey(ingotItem).getPath())
 				.pattern("XXX")
 				.pattern("XXX")
 				.pattern("XXX")
 				.define('X', nuggetTag)
-				.save(consumer, shapedLoc(nuggetTag.location().getPath() + "_to_" + ingotItem));
+				.save(consumer, shapedLoc(nuggetTag.location().getPath() + "_to_" + RegistryUtil.getKey(ingotItem).getPath()));
 	}
 
 	private static void ingotToBlockAndBack(TagKey<Item> ingotTag, Item ingotItem, TagKey<Item> blockTag, Item blockItem, Consumer<FinishedRecipe> consumer) {
 		ShapelessRecipeBuilder.shapeless(ingotItem, 9)
 				.unlockedBy("has_item", has(blockTag))
-				.group(MODID + ":" + ingotItem)
+				.group(MODID + ":" + RegistryUtil.getKey(ingotItem).getPath())
 				.requires(blockTag)
-				.save(consumer, shapelessLoc(blockItem + "_to_" + ingotItem));
+				.save(consumer, shapelessLoc(blockItem + "_to_" + RegistryUtil.getKey(ingotItem).getPath()));
 
 		ShapedRecipeBuilder.shaped(blockItem)
 				.unlockedBy("has_item", has(ingotTag))
-				.group(MODID + ":" + blockItem)
+				.group(MODID + ":" + RegistryUtil.getKey(blockItem).getPath())
 				.pattern("XXX")
 				.pattern("XXX")
 				.pattern("XXX")
 				.define('X', ingotTag)
-				.save(consumer, shapedLoc(ingotItem + "_to_" + blockItem));
+				.save(consumer, shapedLoc(ingotItem + "_to_" + RegistryUtil.getKey(blockItem).getPath()));
 	}
 }
