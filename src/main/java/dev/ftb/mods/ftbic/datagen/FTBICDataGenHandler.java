@@ -260,7 +260,7 @@ public class FTBICDataGenHandler {
 			add("ftbic.energy_capacity", "Energy Capacity: %s");
 			add("ftbic.energy_usage", "Energy Usage: %s");
 			add("ftbic.max_input", "Max Input: %s");
-			add("ftbic.fuse_info", "Right-click with a Fuse on this machine to repair it!");
+			add("ftbic.fuse_info", "This machine's fuse has blown! Right-click it with a fresh one to repair it!");
 			add("ftbic.any_item", "Any Item");
 			add("ftbic.requires_chestplate", "Requires Chestplate to function");
 			add("ftbic.zap_to_fe_conversion", "Allows one-way conversion of %1$s to FE (1 %1$s = %2$s FE)");
