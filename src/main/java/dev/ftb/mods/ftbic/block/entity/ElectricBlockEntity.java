@@ -57,7 +57,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
-		// TODO: Possibly implement some kind of localized network change counter. But for now, this works
+		// TODO: Possibly implement some kind of localized network change counter. But for now, this works 
 		ELECTRIC_NETWORK_CHANGES.incrementAndGet();
 	}
 
