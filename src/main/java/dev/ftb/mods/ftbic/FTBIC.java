@@ -88,10 +88,10 @@ public class FTBIC {
 		// Register all the registries
 		REGISTERS.forEach(e -> e.register(modEventBus));
 
+		FTBICConfig.init();
 		FTBICElectricBlocks.init();
 		FTBICUtils.init();
 		FTBICNet.init();
-		FTBICConfig.init();
 
 		PROXY.init();
 	}

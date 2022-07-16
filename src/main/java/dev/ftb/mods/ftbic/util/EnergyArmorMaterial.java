@@ -8,15 +8,17 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import java.util.function.Supplier;
+
 public class EnergyArmorMaterial implements ArmorMaterial {
-	public static final EnergyArmorMaterial ELYTRA = new EnergyArmorMaterial(FTBIC.MOD_ID + ":elytra", FTBICConfig.getRaw(FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_CAPACITY));
-	public static final EnergyArmorMaterial CARBON = new EnergyArmorMaterial(FTBIC.MOD_ID + ":carbon", FTBICConfig.getRaw(FTBICConfig.EQUIPMENT.CARBON_ARMOR_CAPACITY));
-	public static final EnergyArmorMaterial QUANTUM = new EnergyArmorMaterial(FTBIC.MOD_ID + ":quantum", FTBICConfig.getRaw(FTBICConfig.EQUIPMENT.QUANTUM_ARMOR_CAPACITY));
+	public static final EnergyArmorMaterial ELYTRA = new EnergyArmorMaterial(FTBIC.MOD_ID + ":elytra", FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_CAPACITY);
+	public static final EnergyArmorMaterial CARBON = new EnergyArmorMaterial(FTBIC.MOD_ID + ":carbon", FTBICConfig.EQUIPMENT.CARBON_ARMOR_CAPACITY);
+	public static final EnergyArmorMaterial QUANTUM = new EnergyArmorMaterial(FTBIC.MOD_ID + ":quantum", FTBICConfig.EQUIPMENT.QUANTUM_ARMOR_CAPACITY);
 
 	private final String name;
-	public final double capacity;
+	public final Supplier<Double> capacity;
 
-	public EnergyArmorMaterial(String n, double c) {
+	public EnergyArmorMaterial(String n, Supplier<Double> c) {
 		name = n;
 		capacity = c;
 	}

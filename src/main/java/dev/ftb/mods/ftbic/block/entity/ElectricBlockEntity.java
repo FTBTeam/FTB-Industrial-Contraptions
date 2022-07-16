@@ -605,8 +605,8 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	}
 
 	public void initProperties() {
-		energyCapacity = electricBlockInstance.energyCapacity;
-		maxInputEnergy = electricBlockInstance.maxEnergyInput;
+		energyCapacity = electricBlockInstance.energyCapacity.get();
+		maxInputEnergy = electricBlockInstance.maxEnergyInput.get();
 		autoEject = false;
 	}
 
@@ -617,7 +617,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	}
 
 	public double getTotalPossibleEnergyCapacity() {
-		return electricBlockInstance.energyCapacity;
+		return electricBlockInstance.energyCapacity.get();
 	}
 
 	public void addSyncData(SyncedData data) {

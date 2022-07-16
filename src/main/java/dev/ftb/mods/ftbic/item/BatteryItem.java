@@ -15,10 +15,12 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Supplier;
+
 public class BatteryItem extends ElectricItem {
 	public final BatteryType batteryType;
 
-	public BatteryItem(BatteryType b, EnergyTier t, double cap) {
+	public BatteryItem(BatteryType b, EnergyTier t, Supplier<Double> cap) {
 		super(t, cap);
 		batteryType = b;
 	}
@@ -30,7 +32,7 @@ public class BatteryItem extends ElectricItem {
 			CompoundTag t = stack.getOrCreateTag();
 
 			if (!t.contains("Energy")) {
-				t.putDouble("Energy", capacity);
+				t.putDouble("Energy", capacity.get());
 			}
 		}
 
