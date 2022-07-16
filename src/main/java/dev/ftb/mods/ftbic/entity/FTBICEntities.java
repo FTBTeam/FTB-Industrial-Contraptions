@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Supplier;
 
 public interface FTBICEntities {
-	DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITIES, FTBIC.MOD_ID);
+	DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, FTBIC.MOD_ID);
 
 	static <T extends Entity> Supplier<EntityType<T>> register(String id, EntityType.Builder<T> builder) {
 		return REGISTRY.register(id, () -> builder.build(id));
