@@ -1,10 +1,10 @@
 {
 	"parent": "forge:item/default",
-	"loader": "forge:bucket",
+	"loader": "forge:fluid_container",
 	"textures": {
 		"base": "ftbic:item/fluid_cell",
 		"fluid": "ftbic:item/fluid_cell_overlay"
 	},
-	"flipGas": false,
+	"flip_gas": false,
 	"fluid": "minecraft:empty"
 }
