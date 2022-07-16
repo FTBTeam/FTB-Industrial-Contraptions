@@ -20,7 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.client.RenderProperties;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.Collections;
@@ -157,10 +157,10 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		double d = fluid.getAmount() / (double) capacity;
 		int h = Mth.ceil(d * 52);
 		if (h > 0) {
-			var renderProps = RenderProperties.get(fluid.getFluid());
+			var renderProps = IClientFluidTypeExtensions.of(fluid.getFluid().getFluidType());
 			TextureAtlasSprite sprite = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(renderProps.getStillTexture(fluid));
 
-			int color = renderProps.getColorTint(fluid);
+			int color = renderProps.getTintColor(fluid);
 			int r = (color >> 16) & 255;
 			int g = (color >> 8) & 255;
 			int b = (color >> 0) & 255;
@@ -194,10 +194,10 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		if (!fluid.isEmpty()) {
 			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 
-			var renderProps = RenderProperties.get(fluid.getFluid());
+			var renderProps = IClientFluidTypeExtensions.of(fluid.getFluid());
 			TextureAtlasSprite sprite = minecraft.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(renderProps.getStillTexture(fluid));
 
-			int color = renderProps.getColorTint(fluid);
+			int color = renderProps.getTintColor(fluid);
 			int r = (color >> 16) & 255;
 			int g = (color >> 8) & 255;
 			int b = (color >> 0) & 255;
