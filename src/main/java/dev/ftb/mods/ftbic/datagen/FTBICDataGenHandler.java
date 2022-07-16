@@ -34,6 +34,7 @@ import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.world.ResourceElements;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
@@ -66,13 +67,12 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
-import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.LanguageProvider;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -434,7 +434,7 @@ public class FTBICDataGenHandler {
 			withExistingParent("block/orientable_2d", "block/block")
 					.texture("particle", "#side")
 					.transforms()
-					.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+					.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 					.rotation(0F, 135F, 0F)
 					.translation(0F, 0F, 0F)
 					.scale(0.4F, 0.4F, 0.4F)
@@ -455,7 +455,7 @@ public class FTBICDataGenHandler {
 			withExistingParent("block/orientable_3d", "block/block")
 					.texture("particle", "#side")
 					.transforms()
-					.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+					.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 					.rotation(0F, 135F, 0F)
 					.translation(0F, 0F, 0F)
 					.scale(0.4F, 0.4F, 0.4F)
@@ -707,12 +707,12 @@ public class FTBICDataGenHandler {
 						.parent(new ModelFile.UncheckedModelFile(mcLoc("block/block")))
 						.texture("particle", modLoc(overlayTexture))
 						.transforms()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 2.5F, 0)
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 2.5F, 0)
 						.scale(0.375F, 0.375F, 0.375F)
@@ -797,34 +797,34 @@ public class FTBICDataGenHandler {
 						.texture("particle", modLoc("block/" + id))
 						.texture("cable", modLoc("block/" + id))
 						.transforms()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 1.5F, 0F)
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 1.5F, 0F)
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
-						.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+						.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 						.rotation(0F, 45F, 0F)
 						.scale(0.4F, 0.4F, 0.4F)
 						.end()
-						.transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
+						.transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
 						.rotation(0F, 225F, 0F)
 						.scale(0.4F, 0.4F, 0.4F)
 						.end()
-						.transform(ModelBuilder.Perspective.GROUND)
+						.transform(ItemTransforms.TransformType.GROUND)
 						.translation(0F, 3F, 0F)
 						.scale(0.25F, 0.25F, 0.25F)
 						.end()
-						.transform(ModelBuilder.Perspective.GUI)
+						.transform(ItemTransforms.TransformType.GUI)
 						.rotation(45F, 45F, 90F)
 						.translation(1.75F, 1F, 0F)
 						.scale(0.625F, 0.625F, 0.625F)
 						.end()
-						.transform(ModelBuilder.Perspective.FIXED)
+						.transform(ItemTransforms.TransformType.FIXED)
 						.translation(0F, -1.5F, 0F)
 						.scale(0.5F, 0.5F, 0.5F)
 						.end()
