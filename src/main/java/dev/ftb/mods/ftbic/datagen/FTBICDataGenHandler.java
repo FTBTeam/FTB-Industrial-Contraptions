@@ -720,8 +720,8 @@ public class FTBICDataGenHandler {
 						.end()
 						.end()
 						.customLoader(CompositeModelBuilder::begin)
-						.child(RenderType.solid().toString(), this.models().nested().parent(this.models().getExistingFile(key.getName().contains("deepslate") ? mcLoc("block/deepslate") : mcLoc("block/stone"))).renderType(RenderType.solid().toString()))
-						.child(RenderType.translucent().toString(), this.models().nested().parent(this.models().getExistingFile(mcLoc("block/cube_all"))).texture("all", modLoc(overlayTexture)).renderType(RenderType.translucent().toString()))
+						.child("solid", this.models().nested().parent(this.models().getExistingFile(key.getName().contains("deepslate") ? mcLoc("block/deepslate") : mcLoc("block/stone"))).renderType("solid"))
+						.child("translucent", this.models().nested().parent(this.models().getExistingFile(mcLoc("block/cube_all"))).texture("all", modLoc(overlayTexture)).renderType("translucent"))
 						.end();
 
 				simpleBlock(value.get(), new ModelFile.UncheckedModelFile(modLoc("block/" + registryName.getPath())));
