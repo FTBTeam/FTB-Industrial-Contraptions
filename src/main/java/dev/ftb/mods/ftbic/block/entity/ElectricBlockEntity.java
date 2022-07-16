@@ -301,7 +301,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	}
 
 	public void openMenu(ServerPlayer player, OpenMenuFactory openMenuFactory) {
-		NetworkHooks.openGui(player, new MenuProvider() {
+		NetworkHooks.openScreen(player, new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
 				return createDisplayName();
