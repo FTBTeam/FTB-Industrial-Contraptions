@@ -111,14 +111,14 @@ public class FTBIC {
 //	}
 
 	private static boolean isDummyArmor(LivingDamageEvent event, EquipmentSlot slot, ArmorMaterial material) {
-		Item item = event.getEntityLiving().getItemBySlot(slot).getItem();
+		Item item = event.getEntity().getItemBySlot(slot).getItem();
 		return item instanceof DummyEnergyArmorItem && ((DummyEnergyArmorItem) item).getMaterial() == material;
 	}
 
 	@SubscribeEvent
 	public static void playerDamage(LivingDamageEvent event) {
-		if (!event.getSource().isBypassInvul() && event.getEntityLiving() instanceof Player) {
-			ItemStack stack = event.getEntityLiving().getItemBySlot(EquipmentSlot.CHEST);
+		if (!event.getSource().isBypassInvul() && event.getEntity() instanceof Player) {
+			ItemStack stack = event.getEntity().getItemBySlot(EquipmentSlot.CHEST);
 
 			if (stack.getItem() instanceof EnergyArmorItem armorItem) {
 				if (armorItem.getEnergy(stack) > 0D) {
