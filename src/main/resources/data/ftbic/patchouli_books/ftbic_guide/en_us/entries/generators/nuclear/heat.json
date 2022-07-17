@@ -15,6 +15,12 @@
             "title":"Reactor Meltdown"
         },
         {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:reinforced_stone",
+            "text":"$(item)Reinforced Stone$() is $(l)VERY$() resistant to explosions, including those from the Wither, Ender Dragon, and even Nuclear meltdowns!$(br2)Also comes in $(item)Reinforced Glass$() form, which functions identically.",
+            "anchor":"reinforced"
+        },
+        {
             "type":"patchouli:text",
             "text":"Heat in the Reactor works on a grid-based system. Each slot can interact with the 4 slots it touches.$(br2)As a Fuel Rod generates heat, it will see if an adjacent item can absorb it. If it can, it does so. If there isn't one, the Reactor itself heats up.$(br2)This is what causes explosion and whatnot, so try to avoid that.",
             "title":"Heat Distribution"

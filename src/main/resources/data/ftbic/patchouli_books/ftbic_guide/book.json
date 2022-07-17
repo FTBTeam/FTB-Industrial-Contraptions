@@ -9,5 +9,7 @@
         "$(red)":"$(c)"
     },
     "show_progress":false,
-    "creative_tab":"ftbic"
+    "creative_tab":"ftbic",
+	  "book_texture": "ftbic:textures/patchouli/gui.png",
+	  "model": "ftbic:book"
 }
