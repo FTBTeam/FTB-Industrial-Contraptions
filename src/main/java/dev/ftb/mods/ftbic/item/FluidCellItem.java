@@ -50,12 +50,13 @@ public class FluidCellItem extends Item {
 	}
 
 	@Override
-	public boolean hasContainerItem(ItemStack stack) {
+	public boolean hasCraftingRemainingItem(ItemStack stack) {
 		return getFluid(stack) != Fluids.EMPTY;
 	}
 
+	@Nullable
 	@Override
-	public ItemStack getContainerItem(ItemStack stack) {
+	public ItemStack getCraftingRemainingItem(ItemStack stack) {
 		Fluid fluid = getFluid(stack);
 		if (fluid != Fluids.EMPTY) {
 			return new ItemStack(this);

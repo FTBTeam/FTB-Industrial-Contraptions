@@ -4,14 +4,14 @@
     {
       "count": 1,
       "ingredient": {
-        "tag": "forge:plates/gold"
+        "tag": "forge:rods/copper"
       }
     }
   ],
   "outputItems": [
     {
       "count": 2,
-      "item": "ftbic:gold_wire"
+      "item": "ftbic:copper_wire"
     }
   ]
 }

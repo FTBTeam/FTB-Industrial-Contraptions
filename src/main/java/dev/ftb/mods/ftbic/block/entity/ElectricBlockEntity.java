@@ -57,7 +57,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
-		// TODO: Possibly implement some kind of localized network change counter. But for now, this works
+		// TODO: Possibly implement some kind of localized network change counter. But for now, this works 
 		ELECTRIC_NETWORK_CHANGES.incrementAndGet();
 	}
 
@@ -259,6 +259,10 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 				active = false;
 			}
 
+			if (level != null && !getBlockState().isAir()) {
+				level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+			}
+
 			changeStateTicks = FTBICConfig.MACHINES.STATE_UPDATE_TICKS.get();
 
 			if (changed) {
@@ -281,6 +285,10 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 		level.blockEntityChanged(worldPosition);
 	}
 
+	public int getRedstoneOutputSignalEnergyStorage() {
+		return Math.round((float) ((energy / energyCapacity) * 15));
+	}
+
 	@Override
 	public final double getEnergyCapacity() {
 		return energyCapacity;
@@ -301,7 +309,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	}
 
 	public void openMenu(ServerPlayer player, OpenMenuFactory openMenuFactory) {
-		NetworkHooks.openGui(player, new MenuProvider() {
+		NetworkHooks.openScreen(player, new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
 				return createDisplayName();
@@ -597,8 +605,8 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	}
 
 	public void initProperties() {
-		energyCapacity = electricBlockInstance.energyCapacity;
-		maxInputEnergy = electricBlockInstance.maxEnergyInput;
+		energyCapacity = electricBlockInstance.energyCapacity.get();
+		maxInputEnergy = electricBlockInstance.maxEnergyInput.get();
 		autoEject = false;
 	}
 
@@ -609,7 +617,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	}
 
 	public double getTotalPossibleEnergyCapacity() {
-		return electricBlockInstance.energyCapacity;
+		return electricBlockInstance.energyCapacity.get();
 	}
 
 	public void addSyncData(SyncedData data) {
@@ -695,4 +703,5 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	public static <T extends BlockEntity> void ticker(Level level, BlockPos pos, BlockState state, T entity) {
 		((ElectricBlockEntity) entity).tick();
 	}
+
 }

@@ -30,8 +30,8 @@ public abstract class BaseReactorItem extends Item implements ReactorItem {
 	}
 
 	@Override
-	public int getItemStackLimit(ItemStack stack) {
-		return stack.getDamageValue() == 0 ? noDamageStack : super.getItemStackLimit(stack);
+	public int getMaxStackSize(ItemStack stack) {
+		return stack.getDamageValue() == 0 ? noDamageStack : super.getMaxStackSize(stack);
 	}
 
 	@Override

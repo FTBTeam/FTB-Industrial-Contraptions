@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:plates/copper"
+            "tag": "forge:rods/copper"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ftbic:extruding/copper_wire"
+        "recipe": "ftbic:extruding/rods/copper_to_copper_wire"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ftbic:extruding/copper_wire"
+      "ftbic:extruding/rods/copper_to_copper_wire"
     ]
   }
 }

@@ -15,10 +15,12 @@ import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.ForgeConfigSpec.LongValue;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITag;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -135,6 +137,10 @@ public class FTBICConfig {
 		public final DoubleValue MV_SOLAR_PANEL_OUTPUT;
 		public final DoubleValue HV_SOLAR_PANEL_OUTPUT;
 		public final DoubleValue EV_SOLAR_PANEL_OUTPUT;
+		public final DoubleValue LV_SOLAR_PANEL_CAPACITY;
+		public final DoubleValue MV_SOLAR_PANEL_CAPACITY;
+		public final DoubleValue HV_SOLAR_PANEL_CAPACITY;
+		public final DoubleValue EV_SOLAR_PANEL_CAPACITY;
 		public final DoubleValue NUCLEAR_REACTOR_CAPACITY;
 		public final DoubleValue MACHINE_RECIPE_BASE_TICKS;
 		public final DoubleValue POWERED_FURNACE_CAPACITY;
@@ -208,6 +214,10 @@ public class FTBICConfig {
 			MV_SOLAR_PANEL_OUTPUT = b().comment("Energy created from the Mv solar panel").defineInRange("Mv solar panel output", 8D, 1D, 100_000D);
 			HV_SOLAR_PANEL_OUTPUT = b().comment("Energy created from the Hv solar panel").defineInRange("Hv solar panel output", 64D, 1D, 100_000D);
 			EV_SOLAR_PANEL_OUTPUT = b().comment("Energy created from the Ev solar panel").defineInRange("Ev solar panel output", 512D, 1D, 100_000D);
+			LV_SOLAR_PANEL_CAPACITY = b().comment("Amount of energy stored in the Lv solar panel").defineInRange("Lv solar panel capacity", 60D, 1D, 100_000D);
+			MV_SOLAR_PANEL_CAPACITY = b().comment("Amount of energy stored in the Mv solar panel").defineInRange("Mv solar panel capacity", 480D, 1D, 100_000D);
+			HV_SOLAR_PANEL_CAPACITY = b().comment("Amount of energy stored inm the Hv solar panel").defineInRange("Hv solar panel capacity", 3840D, 1D, 100_000D);
+			EV_SOLAR_PANEL_CAPACITY = b().comment("Amount of energy stored in the Ev solar panel").defineInRange("Ev solar panel capacity", 30720D, 1D, 100_000D);
 			NUCLEAR_REACTOR_CAPACITY = b().comment("Amount of energy stored in the Nuclear Reactor").defineInRange("Nuclear reactor capacity", 50_000D, 1D, 100_000D);
 			MACHINE_RECIPE_BASE_TICKS = b().comment("Base lengths in ticks a machine takes to process a recipe").defineInRange("Machine recipe base ticks", 200D, 1D, 100_000D);
 			POWERED_FURNACE_CAPACITY = b().comment("Amount of energy stored in the Powered Furnace").defineInRange("Powered furnace capacity", 1_200D, 1D, 100_000D);

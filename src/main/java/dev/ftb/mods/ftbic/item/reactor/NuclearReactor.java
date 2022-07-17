@@ -10,6 +10,7 @@ public class NuclearReactor {
 	public final ItemStack[] inputItems;
 
 	public boolean paused;
+	public boolean allowRedstoneControl;
 	public boolean simulation;
 	public int heat;
 
@@ -21,6 +22,7 @@ public class NuclearReactor {
 	public NuclearReactor(ItemStack[] is) {
 		inputItems = is;
 		paused = true;
+		allowRedstoneControl = false;
 		simulation = false;
 		energyOutput = 0D;
 		heat = 0;

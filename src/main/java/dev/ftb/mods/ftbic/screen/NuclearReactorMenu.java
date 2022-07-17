@@ -37,6 +37,12 @@ public class NuclearReactorMenu extends ElectricBlockMenu<NuclearReactorBlockEnt
 			return true;
 		}
 
+		if (button == 1) {
+			entity.reactor.allowRedstoneControl = !entity.reactor.allowRedstoneControl;
+			entity.setChanged();
+			return true;
+		}
+
 		return false;
 	}
 }

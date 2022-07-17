@@ -26,11 +26,11 @@ public class ElectricBlockInstance {
 	public final Supplier<Block> block;
 	public final Supplier<BlockItem> item;
 	public final Supplier<BlockEntityType<?>> blockEntity;
-	public double energyCapacity = 0D;
-	public double maxEnergyOutput = 0D;
-	public double energyUsage = 0D;
+	public Supplier<Double> energyCapacity = () -> 0D;
+	public Supplier<Double> maxEnergyOutput = () -> 0D;
+	public Supplier<Double> energyUsage = () -> 0D;
 	public boolean energyUsageIsPerTick = false;
-	public double maxEnergyInput = 0D;
+	public Supplier<Double> maxEnergyInput = () -> 0D;
 	public boolean wip = false;
 	public int inputItemCount = 0;
 	public int outputItemCount = 0;
@@ -87,22 +87,22 @@ public class ElectricBlockInstance {
 		return this;
 	}
 
-	public ElectricBlockInstance maxEnergyOutput(double d) {
+	public ElectricBlockInstance maxEnergyOutput(Supplier<Double> d) {
 		maxEnergyOutput = d;
 		return this;
 	}
 
-	public ElectricBlockInstance energyCapacity(double d) {
+	public ElectricBlockInstance energyCapacity(Supplier<Double> d) {
 		energyCapacity = d;
 		return this;
 	}
 
-	public ElectricBlockInstance energyUsage(double d) {
+	public ElectricBlockInstance energyUsage(Supplier<Double> d) {
 		energyUsage = d;
 		return this;
 	}
 
-	public ElectricBlockInstance maxEnergyInput(double d) {
+	public ElectricBlockInstance maxEnergyInput(Supplier<Double> d) {
 		maxEnergyInput = d;
 		return this;
 	}

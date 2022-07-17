@@ -34,6 +34,7 @@ import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.world.ResourceElements;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
@@ -66,13 +67,13 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
-import net.minecraftforge.client.model.generators.loaders.MultiLayerModelBuilder;
+import net.minecraftforge.client.model.generators.loaders.CompositeModelBuilder;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.LanguageProvider;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -259,7 +260,7 @@ public class FTBICDataGenHandler {
 			add("ftbic.energy_capacity", "Energy Capacity: %s");
 			add("ftbic.energy_usage", "Energy Usage: %s");
 			add("ftbic.max_input", "Max Input: %s");
-			add("ftbic.fuse_info", "Right-click with a Fuse on this machine to repair it!");
+			add("ftbic.fuse_info", "This machine's fuse has blown! Right-click it with a fresh one to repair it!");
 			add("ftbic.any_item", "Any Item");
 			add("ftbic.requires_chestplate", "Requires Chestplate to function");
 			add("ftbic.zap_to_fe_conversion", "Allows one-way conversion of %1$s to FE (1 %1$s = %2$s FE)");
@@ -434,7 +435,7 @@ public class FTBICDataGenHandler {
 			withExistingParent("block/orientable_2d", "block/block")
 					.texture("particle", "#side")
 					.transforms()
-					.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+					.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 					.rotation(0F, 135F, 0F)
 					.translation(0F, 0F, 0F)
 					.scale(0.4F, 0.4F, 0.4F)
@@ -455,7 +456,7 @@ public class FTBICDataGenHandler {
 			withExistingParent("block/orientable_3d", "block/block")
 					.texture("particle", "#side")
 					.transforms()
-					.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+					.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 					.rotation(0F, 135F, 0F)
 					.translation(0F, 0F, 0F)
 					.scale(0.4F, 0.4F, 0.4F)
@@ -707,20 +708,20 @@ public class FTBICDataGenHandler {
 						.parent(new ModelFile.UncheckedModelFile(mcLoc("block/block")))
 						.texture("particle", modLoc(overlayTexture))
 						.transforms()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 2.5F, 0)
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 2.5F, 0)
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
 						.end()
-						.customLoader(MultiLayerModelBuilder::begin)
-						.submodel(RenderType.solid(), this.models().nested().parent(this.models().getExistingFile(key.getName().contains("deepslate") ? mcLoc("block/deepslate") : mcLoc("block/stone"))))
-						.submodel(RenderType.translucent(), this.models().nested().parent(this.models().getExistingFile(mcLoc("block/cube_all"))).texture("all", modLoc(overlayTexture))						)
+						.customLoader(CompositeModelBuilder::begin)
+						.child("solid", this.models().nested().parent(this.models().getExistingFile(key.getName().contains("deepslate") ? mcLoc("block/deepslate") : mcLoc("block/stone"))).renderType("solid"))
+						.child("translucent", this.models().nested().parent(this.models().getExistingFile(mcLoc("block/cube_all"))).texture("all", modLoc(overlayTexture)).renderType("translucent"))
 						.end();
 
 				simpleBlock(value.get(), new ModelFile.UncheckedModelFile(modLoc("block/" + registryName.getPath())));
@@ -797,34 +798,34 @@ public class FTBICDataGenHandler {
 						.texture("particle", modLoc("block/" + id))
 						.texture("cable", modLoc("block/" + id))
 						.transforms()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 1.5F, 0F)
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 1.5F, 0F)
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
-						.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+						.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 						.rotation(0F, 45F, 0F)
 						.scale(0.4F, 0.4F, 0.4F)
 						.end()
-						.transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
+						.transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
 						.rotation(0F, 225F, 0F)
 						.scale(0.4F, 0.4F, 0.4F)
 						.end()
-						.transform(ModelBuilder.Perspective.GROUND)
+						.transform(ItemTransforms.TransformType.GROUND)
 						.translation(0F, 3F, 0F)
 						.scale(0.25F, 0.25F, 0.25F)
 						.end()
-						.transform(ModelBuilder.Perspective.GUI)
+						.transform(ItemTransforms.TransformType.GUI)
 						.rotation(45F, 45F, 90F)
 						.translation(1.75F, 1F, 0F)
 						.scale(0.625F, 0.625F, 0.625F)
 						.end()
-						.transform(ModelBuilder.Perspective.FIXED)
+						.transform(ItemTransforms.TransformType.FIXED)
 						.translation(0F, -1.5F, 0F)
 						.scale(0.5F, 0.5F, 0.5F)
 						.end()
@@ -1198,7 +1199,7 @@ public class FTBICDataGenHandler {
 			tag(Tags.Items.ORES).addTag(IRIDIUM_ORE);
 			tag(Tags.Items.ORES).addTag(ALUMINUM_ORE);
 
-			tag(SILICON).add(SILICON_ITEM);
+			tag(SILICON).add(SILICON_ITEM.get());
 		}
 	}
 

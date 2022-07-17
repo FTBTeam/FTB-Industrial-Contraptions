@@ -84,10 +84,6 @@ public interface FTBICItems {
 	MaterialItem RUBBER = material("rubber");
 	MaterialItem SILICON = material("silicon");
 	MaterialItem FUSE = material("fuse");
-	MaterialItem COPPER_WIRE = material("copper_wire");
-	MaterialItem GOLD_WIRE = material("gold_wire");
-	MaterialItem ALUMINUM_WIRE = material("aluminum_wire");
-	MaterialItem ENDERIUM_WIRE = material("enderium_wire");
 	MaterialItem COPPER_COIL = material("copper_coil");
 	MaterialItem MIXED_METAL_BLEND = material("mixed_metal_blend");
 	MaterialItem ADVANCED_ALLOY = material("advanced_alloy");
@@ -109,12 +105,12 @@ public interface FTBICItems {
 	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
 	MaterialItem DENSE_COPPER_PLATE = material("dense_copper_plate");
 
-	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, EnergyTier.LV, FTBICConfig.ENERGY.SINGLE_USE_BATTERY_CAPACITY.get()));
-	Supplier<Item> LV_BATTERY = REGISTRY.register("lv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.LV, FTBICConfig.ENERGY.LV_BATTERY_CAPACITY.get()));
-	Supplier<Item> MV_BATTERY = REGISTRY.register("mv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.MV, FTBICConfig.ENERGY.MV_BATTERY_CAPACITY.get()));
-	Supplier<Item> HV_BATTERY = REGISTRY.register("hv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.HV, FTBICConfig.ENERGY.HV_BATTERY_CAPACITY.get()));
-	Supplier<Item> EV_BATTERY = REGISTRY.register("ev_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.EV, FTBICConfig.ENERGY.EV_BATTERY_CAPACITY.get()));
-	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, EnergyTier.IV, Integer.MAX_VALUE));
+	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, EnergyTier.LV, FTBICConfig.ENERGY.SINGLE_USE_BATTERY_CAPACITY));
+	Supplier<Item> LV_BATTERY = REGISTRY.register("lv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.LV, FTBICConfig.ENERGY.LV_BATTERY_CAPACITY));
+	Supplier<Item> MV_BATTERY = REGISTRY.register("mv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.MV, FTBICConfig.ENERGY.MV_BATTERY_CAPACITY));
+	Supplier<Item> HV_BATTERY = REGISTRY.register("hv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.HV, FTBICConfig.ENERGY.HV_BATTERY_CAPACITY));
+	Supplier<Item> EV_BATTERY = REGISTRY.register("ev_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.EV, FTBICConfig.ENERGY.EV_BATTERY_CAPACITY));
+	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, EnergyTier.IV, () -> (double)Integer.MAX_VALUE));
 	Supplier<Item> FLUID_CELL = REGISTRY.register("fluid_cell", FluidCellItem::new);
 	Supplier<Item> SMALL_COOLANT_CELL = REGISTRY.register("small_coolant_cell", () -> new CoolantItem(10_000));
 	Supplier<Item> MEDIUM_COOLANT_CELL = REGISTRY.register("medium_coolant_cell", () -> new CoolantItem(30_000));

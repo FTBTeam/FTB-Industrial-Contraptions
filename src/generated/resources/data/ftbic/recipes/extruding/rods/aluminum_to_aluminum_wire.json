@@ -4,14 +4,14 @@
     {
       "count": 1,
       "ingredient": {
-        "tag": "forge:plates/enderium"
+        "tag": "forge:rods/aluminum"
       }
     }
   ],
   "outputItems": [
     {
       "count": 2,
-      "item": "ftbic:enderium_wire"
+      "item": "ftbic:aluminum_wire"
     }
   ]
 }

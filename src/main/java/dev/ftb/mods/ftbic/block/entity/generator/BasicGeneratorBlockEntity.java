@@ -74,7 +74,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 
 				if (maxFuelTicks > 0) {
 					if (inputItems[0].getCount() == 1) {
-						inputItems[0] = inputItems[0].getContainerItem();
+						inputItems[0] = inputItems[0].getCraftingRemainingItem();
 					} else {
 						inputItems[0].shrink(1);
 					}
