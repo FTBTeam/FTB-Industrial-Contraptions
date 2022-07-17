@@ -71,14 +71,14 @@ public interface FTBICElectricBlocks {
 			.name("LV Solar Panel")
 			.noRotation()
 			.cantBeActive()
-			.energyCapacity(FTBICConfig.MACHINES.LV_SOLAR_PANEL_OUTPUT.get() * 60)
+			.energyCapacity(FTBICConfig.MACHINES.LV_SOLAR_PANEL_CAPACITY.get() * 60)
 			.maxEnergyOutput(FTBICConfig.MACHINES.LV_SOLAR_PANEL_OUTPUT.get());
 
 	ElectricBlockInstance MV_SOLAR_PANEL = register("mv_solar_panel", MVSolarPanelBlockEntity::new)
 			.name("MV Solar Panel")
 			.noRotation()
 			.cantBeActive()
-			.energyCapacity(FTBICConfig.MACHINES.MV_SOLAR_PANEL_OUTPUT.get() * 60)
+			.energyCapacity(FTBICConfig.MACHINES.MV_SOLAR_PANEL_CAPACITY.get() * 60)
 			.maxEnergyOutput(FTBICConfig.MACHINES.MV_SOLAR_PANEL_OUTPUT.get());
 
 	ElectricBlockInstance HV_SOLAR_PANEL = register("hv_solar_panel", HVSolarPanelBlockEntity::new)
@@ -86,7 +86,7 @@ public interface FTBICElectricBlocks {
 			.name("HV Solar Panel")
 			.noRotation()
 			.cantBeActive()
-			.energyCapacity(FTBICConfig.MACHINES.HV_SOLAR_PANEL_OUTPUT.get() * 60)
+			.energyCapacity(FTBICConfig.MACHINES.HV_SOLAR_PANEL_CAPACITY.get() * 60)
 			.maxEnergyOutput(FTBICConfig.MACHINES.HV_SOLAR_PANEL_OUTPUT.get());
 
 	ElectricBlockInstance EV_SOLAR_PANEL = register("ev_solar_panel", EVSolarPanelBlockEntity::new)
@@ -94,7 +94,7 @@ public interface FTBICElectricBlocks {
 			.name("EV Solar Panel")
 			.noRotation()
 			.cantBeActive()
-			.energyCapacity(FTBICConfig.MACHINES.EV_SOLAR_PANEL_OUTPUT.get() * 60)
+			.energyCapacity(FTBICConfig.MACHINES.EV_SOLAR_PANEL_CAPACITY.get() * 60)
 			.maxEnergyOutput(FTBICConfig.MACHINES.EV_SOLAR_PANEL_OUTPUT.get());
 
 	ElectricBlockInstance NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorBlockEntity::new)
