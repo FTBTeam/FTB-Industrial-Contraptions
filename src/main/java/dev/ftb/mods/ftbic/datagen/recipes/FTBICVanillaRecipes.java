@@ -69,13 +69,13 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", tagKeyHas.apply(OBSIDIAN))
 				.inputItem(Ingredient.of(OBSIDIAN))
-				.outputItem(new ItemStack(OBSIDIAN_DUST_ITEM))
+				.outputItem(new ItemStack(OBSIDIAN_DUST_ITEM.get()))
 				.save(consumer, maceratingLoc("obsidian_dust"));
 
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", tagKeyHas.apply(ENDER_PEARL))
 				.inputItem(Ingredient.of(ENDER_PEARL))
-				.outputItem(new ItemStack(ENDER_DUST_ITEM))
+				.outputItem(new ItemStack(ENDER_DUST_ITEM.get()))
 				.save(consumer, maceratingLoc("ender_dust"));
 
 //		MachineRecipeBuilder.macerating()
@@ -87,13 +87,13 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", has(Items.COAL))
 				.inputItem(Ingredient.of(Items.COAL))
-				.outputItem(new ItemStack(COAL_DUST_ITEM))
+				.outputItem(new ItemStack(COAL_DUST_ITEM.get()))
 				.save(consumer, maceratingLoc("coal_dust"));
 
 		MachineRecipeBuilder.macerating()
 				.unlockedBy("has_item", has(Items.CHARCOAL))
 				.inputItem(Ingredient.of(Items.CHARCOAL))
-				.outputItem(new ItemStack(CHARCOAL_DUST_ITEM))
+				.outputItem(new ItemStack(CHARCOAL_DUST_ITEM.get()))
 				.save(consumer, maceratingLoc("charcoal_dust"));
 
 		MachineRecipeBuilder.separating()
@@ -105,14 +105,14 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", tagKeyHas.apply(QUARTZ))
 				.inputItem(Ingredient.of(QUARTZ))
-				.outputItem(new ItemStack(SILICON_ITEM, 3))
+				.outputItem(new ItemStack(SILICON_ITEM.get(), 3))
 				.save(consumer, separatingLoc("silicon_from_quartz"));
 
 		MachineRecipeBuilder.separating()
 				.unlockedBy("has_item", tagKeyHas.apply(SAND))
 				.inputItem(Ingredient.of(SAND))
-				.outputItem(new ItemStack(SILICON_ITEM), 0.20)
-				.outputItem(new ItemStack(SILICON_ITEM), 0.05)
+				.outputItem(new ItemStack(SILICON_ITEM.get()), 0.20)
+				.outputItem(new ItemStack(SILICON_ITEM.get()), 0.05)
 				.save(consumer, separatingLoc("silicon_from_sand"));
 
 		MachineRecipeBuilder.separating()
@@ -137,7 +137,7 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.save(consumer, separatingLoc("sugar"));
 
 		MachineRecipeBuilder.compressing()
-				.unlockedBy("has_item", has(FLUID_CELL))
+				.unlockedBy("has_item", has(FLUID_CELL.get()))
 				.inputItem(waterCell())
 				.outputItem(new ItemStack(Items.SNOWBALL))
 				.save(consumer, compressingLoc("snowball"));
@@ -149,8 +149,8 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.save(consumer, compressingLoc("ice"));
 
 		MachineRecipeBuilder.compressing()
-				.unlockedBy("has_item", has(GRAPHENE))
-				.inputItem(Ingredient.of(GRAPHENE))
+				.unlockedBy("has_item", has(GRAPHENE.get()))
+				.inputItem(Ingredient.of(GRAPHENE.get()))
 				.outputItem(new ItemStack(Items.DIAMOND))
 				.save(consumer, compressingLoc("diamond"));
 
@@ -161,22 +161,22 @@ public class FTBICVanillaRecipes extends FTBICRecipesGen {
 				.save(consumer, compressingLoc("paper"));
 
 		MachineRecipeBuilder.separating()
-				.unlockedBy("has_item", has(RUBBERWOOD_LOG))
-				.inputItem(Ingredient.of(RUBBERWOOD_LOG))
-				.outputItem(new ItemStack(LATEX), 0.80)
+				.unlockedBy("has_item", has(RUBBERWOOD_LOG.get()))
+				.inputItem(Ingredient.of(RUBBERWOOD_LOG.get()))
+				.outputItem(new ItemStack(LATEX.get()), 0.80)
 				.save(consumer, separatingLoc("latex_from_log"));
 
 		MachineRecipeBuilder.separating()
-				.unlockedBy("has_item", has(RUBBERWOOD_SAPLING))
-				.inputItem(Ingredient.of(RUBBERWOOD_SAPLING))
-				.outputItem(new ItemStack(LATEX))
+				.unlockedBy("has_item", has(RUBBERWOOD_SAPLING.get()))
+				.inputItem(Ingredient.of(RUBBERWOOD_SAPLING.get()))
+				.outputItem(new ItemStack(LATEX.get()))
 				.save(consumer, separatingLoc("latex_from_sapling"));
 
 		MachineRecipeBuilder.separating()
-				.unlockedBy("has_item", has(RUBBERWOOD_LEAVES))
-				.inputItem(Ingredient.of(RUBBERWOOD_LEAVES))
-				.outputItem(new ItemStack(LATEX), 0.35)
-				.outputItem(new ItemStack(RUBBERWOOD_SAPLING), 0.05)
+				.unlockedBy("has_item", has(RUBBERWOOD_LEAVES.get()))
+				.inputItem(Ingredient.of(RUBBERWOOD_LEAVES.get()))
+				.outputItem(new ItemStack(LATEX.get()), 0.35)
+				.outputItem(new ItemStack(RUBBERWOOD_SAPLING.get()), 0.05)
 				.save(consumer, separatingLoc("latex_from_leaves"));
 
 //		MachineRecipeBuilder.separating()

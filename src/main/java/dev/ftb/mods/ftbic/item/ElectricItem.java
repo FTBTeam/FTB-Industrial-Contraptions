@@ -15,12 +15,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class ElectricItem extends Item implements EnergyItemHandler {
 	public final EnergyTier tier;
-	public final double capacity;
+	public final Supplier<Double> capacity;
 
-	public ElectricItem(EnergyTier t, double cap) {
+	public ElectricItem(EnergyTier t, Supplier<Double> cap) {
 		super(new Properties().stacksTo(1).tab(FTBIC.TAB));
 		tier = t;
 		capacity = cap;
@@ -28,7 +29,7 @@ public class ElectricItem extends Item implements EnergyItemHandler {
 
 	@Override
 	public double getEnergyCapacity(ItemStack stack) {
-		return capacity;
+		return capacity.get();
 	}
 
 	@Override

@@ -194,6 +194,8 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 			if (entity instanceof ElectricBlockEntity) {
 				((ElectricBlockEntity) entity).onBroken(level, pos);
 			}
+
+			level.updateNeighbourForOutputSignal(pos, this);
 		}
 
 		super.onRemove(state, level, pos, state1, b);
@@ -249,28 +251,28 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 			list.add(Component.literal("WIP!").withStyle(ChatFormatting.RED));
 		}
 
-		if (electricBlockInstance.maxEnergyOutput > 0D) {
-			list.add(Component.translatable("ftbic.energy_output", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyOutput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		if (electricBlockInstance.maxEnergyOutput.get() > 0D) {
+			list.add(Component.translatable("ftbic.energy_output", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyOutput.get()).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 			var feRatio = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 			if (feRatio > 0D) {
 				list.add(Component.translatable("ftbic.zap_to_fe_conversion", FTBICConfig.ENERGY_FORMAT, feRatio).withStyle(ChatFormatting.DARK_GRAY));
 			}
 		}
 
-		if (electricBlockInstance.energyUsage > 0D) {
+		if (electricBlockInstance.energyUsage.get() > 0D) {
 			if (electricBlockInstance.energyUsageIsPerTick) {
-				list.add(Component.translatable("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+				list.add(Component.translatable("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage.get()).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 			} else {
-				list.add(Component.translatable("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+				list.add(Component.translatable("ftbic.energy_usage", FTBICUtils.formatEnergy(electricBlockInstance.energyUsage.get()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 			}
 		}
 
-		if (electricBlockInstance.maxEnergyInput > 0D) {
-			list.add(Component.translatable("ftbic.max_input", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyInput).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		if (electricBlockInstance.maxEnergyInput.get() > 0D) {
+			list.add(Component.translatable("ftbic.max_input", FTBICUtils.formatEnergy(electricBlockInstance.maxEnergyInput.get()).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 		}
 
-		if (electricBlockInstance.energyCapacity > 0D && Screen.hasShiftDown()) {
-			list.add(Component.translatable("ftbic.energy_capacity", FTBICUtils.formatEnergy(electricBlockInstance.energyCapacity).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		if (electricBlockInstance.energyCapacity.get() > 0D && Screen.hasShiftDown()) {
+			list.add(Component.translatable("ftbic.energy_capacity", FTBICUtils.formatEnergy(electricBlockInstance.energyCapacity.get()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 		}
 
 		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", 10)) {
@@ -301,5 +303,25 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 				((ElectricBlockEntity) blockEntity).stepOn((ServerPlayer) entity);
 			}
 		}
+	}
+
+	@Override
+	@Deprecated
+	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+		if (!level.isClientSide()) {
+			BlockEntity entity = level.getBlockEntity(pos);
+
+			if (entity instanceof ElectricBlockEntity) {
+				return ((ElectricBlockEntity) entity).getRedstoneOutputSignalEnergyStorage();
+			}
+		}
+
+		return 0;
+	}
+
+	@Override
+	@Deprecated
+	public boolean hasAnalogOutputSignal(BlockState state) {
+		return true;
 	}
 }

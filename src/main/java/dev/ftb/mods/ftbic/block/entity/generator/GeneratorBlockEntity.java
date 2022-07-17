@@ -42,7 +42,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		maxEnergyOutput = electricBlockInstance.maxEnergyOutput;
+		maxEnergyOutput = electricBlockInstance.maxEnergyOutput.get();
 		maxEnergyOutputTransfer = FTBICConfig.ENERGY.LV_TRANSFER_RATE.get();
 	}
 
@@ -117,7 +117,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			for (CachedEnergyStorage storage : blocks) {
 				if (storage.isInvalid() || !storage.shouldReceiveEnergy()) {
 					continue;
-				} else if (storage.origin.cableTier != null && storage.origin.cableTier.transferRate < e) {
+				} else if (storage.origin.cableTier != null && storage.origin.cableTier.transferRate.get() < e) {
 					level.setBlock(storage.origin.cablePos, BurntCableBlock.getBurntCable(level.getBlockState(storage.origin.cablePos)), 3);
 					level.levelEvent(1502, storage.origin.cablePos, 0);
 					storage.origin.cableBurnt = true;
@@ -203,7 +203,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 		if (state.getBlock() instanceof CableBlock cableBlock) {
 
-			if (origin.cableTier == null || cableBlock.tier.transferRate < origin.cableTier.transferRate) {
+			if (origin.cableTier == null || cableBlock.tier.transferRate.get() < origin.cableTier.transferRate.get()) {
 				origin.cableTier = cableBlock.tier;
 				origin.cablePos = pos;
 			}

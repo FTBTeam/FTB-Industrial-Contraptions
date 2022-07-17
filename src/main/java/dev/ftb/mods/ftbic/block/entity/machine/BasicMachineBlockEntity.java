@@ -99,7 +99,7 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		energyUse = electricBlockInstance.energyUsage;
+		energyUse = electricBlockInstance.energyUsage.get();
 		progressSpeed = 1D;
 		autoEject = false;
 	}

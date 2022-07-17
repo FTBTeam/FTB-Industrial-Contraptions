@@ -72,7 +72,6 @@ repositories {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	//	mappings loom.officialMojangMappings()
 
 	mappings loom.layered() {
 		officialMojangMappings()
@@ -80,7 +79,8 @@ dependencies {
 	}
 
 	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
-	modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")
+	modApi("me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}")
+    modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")
 
 	modImplementation("io.alwa.mods:myrtrees-forge:${myrtrees_version}")
 
@@ -92,29 +92,23 @@ dependencies {
 	// provides the JEI API, so we're good to go
 	modLocalRuntime modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
 	modLocalRuntime modCompileOnly("me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:${rootProject.rei_version}")
-
-	modImplementation("curse.maven:charging-gadgets-399757:3828008")
-
-	//	modCompileOnly("curse.maven:jei-238222:${jei_file}")
-	//	modImplementation("curse.maven:jei-238222:${jei_file}")
-
-	//	modRuntimeOnly ("com.sunekaer.mods:ToolKit:2.3.0-build.9999+mc1.19") // local
-
-	//	modRuntime("curse.maven:ctm-267602:3586556")
-	// modRuntime("curse.maven:pipez-443900:3525428")
-	// modRuntime("curse.maven:tanky-551182:3542146")
-	// modRuntime("curse.maven:refined-storage-243076:3527504")
-
-	//	modImplementation("curse.maven:tool-kit-324888:3671112")
 }
 
 processResources {
+	exclude '.cache'
+
 	inputs.property "version", project.version
 
 	filesMatching("META-INF/mods.toml") {
-		expand "version": project.version
+		expand "version": project.version,
+				"archversion": project.architectury_version,
+				"forgeversion": project.forge_version,
+				"forgeshortversion": project.forge_version.split("\\.")[0],
+				"mcversion": project.minecraft_version,
+				"mytreesversion": project.minecraft_version
 	}
 }
+
 
 compileJava {
 	options.encoding = "UTF-8"

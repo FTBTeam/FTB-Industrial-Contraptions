@@ -17,23 +17,23 @@ public class FTBICToolRecipes extends FTBICRecipesGen {
 	@Override
 	public void add(Consumer<FinishedRecipe> consumer) {
 		MachineRecipeBuilder.canning()
-				.unlockedBy("has_item", has(FLUID_CELL))
+				.unlockedBy("has_item", has(FLUID_CELL.get()))
 				.inputItem(waterCell())
 				.inputItem(Ingredient.of(Tags.Items.DYES_WHITE))
-				.outputItem(new ItemStack(LIGHT_SPRAY_CAN))
+				.outputItem(new ItemStack(LIGHT_SPRAY_CAN.get()))
 				.save(consumer, canningLoc("light_spray_can"));
 
 		MachineRecipeBuilder.canning()
-				.unlockedBy("has_item", has(FLUID_CELL))
+				.unlockedBy("has_item", has(FLUID_CELL.get()))
 				.inputItem(waterCell())
 				.inputItem(Ingredient.of(Tags.Items.DYES_BLACK))
-				.outputItem(new ItemStack(DARK_SPRAY_CAN))
+				.outputItem(new ItemStack(DARK_SPRAY_CAN.get()))
 				.save(consumer, canningLoc("dark_spray_can"));
 
 		MachineRecipeBuilder.compressing()
-				.unlockedBy("has_item", has(CANNED_FOOD))
-				.inputItem(Ingredient.of(CANNED_FOOD))
-				.outputItem(new ItemStack(PROTEIN_BAR))
+				.unlockedBy("has_item", has(CANNED_FOOD.get()))
+				.inputItem(Ingredient.of(CANNED_FOOD.get()))
+				.outputItem(new ItemStack(PROTEIN_BAR.get()))
 				.save(consumer, compressingLoc("protein_bar"));
 
 		/*

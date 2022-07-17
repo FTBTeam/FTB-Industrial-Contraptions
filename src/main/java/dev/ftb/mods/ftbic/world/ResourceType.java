@@ -12,7 +12,8 @@ public enum ResourceType {
 	PLATE(6),
 	ROD(7),
 	GEAR(8),
-	BLOCK(9);
+	WIRE(9),
+	BLOCK(10);
 
 	public static final List<ResourceType> VALUES = Arrays.stream(ResourceType.values()).toList();
 

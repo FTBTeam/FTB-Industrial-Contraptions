@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 import static dev.ftb.mods.ftbic.world.ResourceType.*;
 
 public enum ResourceElements {
-    TIN,
-    LEAD,
-    URANIUM,
-    IRIDIUM,
-    ALUMINUM,
+	TIN(Requirements.builder().all().remove(WIRE)),
+	LEAD(Requirements.builder().all().remove(WIRE)),
+	URANIUM(Requirements.builder().all().remove(WIRE)),
+	IRIDIUM(Requirements.builder().all().remove(WIRE)),
+	ALUMINUM,
     DEEPSLATE_TIN(Requirements.builder().add(ORE)),
     DEEPSLATE_LEAD(Requirements.builder().add(ORE)),
     DEEPSLATE_URANIUM(Requirements.builder().add(ORE)),
@@ -23,8 +23,8 @@ public enum ResourceElements {
     DEEPSLATE_ALUMINUM(Requirements.builder().add(ORE)),
     ENDERIUM(Requirements.builder().all().remove(ORE, CHUNK)),
 	DIAMOND(Requirements.builder().add(DUST)),
-	BRONZE(Requirements.builder().all().remove(ORE, CHUNK)),
-	IRON(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET)),
+	BRONZE(Requirements.builder().all().remove(ORE, CHUNK, WIRE)),
+	IRON(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET, WIRE)),
 	COPPER(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK)),
 	GOLD(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET)),
 	OBSIDIAN(Requirements.builder().add(DUST)),

@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.FTBICBlockEntities;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftblibrary.snbt.config.DoubleValue;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,11 +27,11 @@ public class ElectricBlockInstance {
 	public final Supplier<Block> block;
 	public final Supplier<BlockItem> item;
 	public final Supplier<BlockEntityType<?>> blockEntity;
-	public double energyCapacity = 0D;
-	public double maxEnergyOutput = 0D;
-	public double energyUsage = 0D;
+	public Supplier<Double> energyCapacity = () -> 0D;
+	public Supplier<Double> maxEnergyOutput = () -> 0D;
+	public Supplier<Double> energyUsage = () -> 0D;
 	public boolean energyUsageIsPerTick = false;
-	public double maxEnergyInput = 0D;
+	public Supplier<Double> maxEnergyInput = () -> 0D;
 	public boolean wip = false;
 	public int inputItemCount = 0;
 	public int outputItemCount = 0;
@@ -87,23 +88,43 @@ public class ElectricBlockInstance {
 		return this;
 	}
 
-	public ElectricBlockInstance maxEnergyOutput(double d) {
+	public ElectricBlockInstance maxEnergyOutput(Supplier<Double> d) {
 		maxEnergyOutput = d;
 		return this;
 	}
 
-	public ElectricBlockInstance energyCapacity(double d) {
+	public ElectricBlockInstance maxEnergyOutput(DoubleValue d) {
+		maxEnergyOutput = d::get;
+		return this;
+	}
+
+	public ElectricBlockInstance energyCapacity(Supplier<Double> d) {
 		energyCapacity = d;
 		return this;
 	}
 
-	public ElectricBlockInstance energyUsage(double d) {
+	public ElectricBlockInstance energyCapacity(DoubleValue d) {
+		energyCapacity = d::get;
+		return this;
+	}
+
+	public ElectricBlockInstance energyUsage(Supplier<Double> d) {
 		energyUsage = d;
 		return this;
 	}
 
-	public ElectricBlockInstance maxEnergyInput(double d) {
+	public ElectricBlockInstance energyUsage(DoubleValue d) {
+		energyUsage = d::get;
+		return this;
+	}
+
+	public ElectricBlockInstance maxEnergyInput(Supplier<Double> d) {
 		maxEnergyInput = d;
+		return this;
+	}
+
+	public ElectricBlockInstance maxEnergyInput(DoubleValue d) {
+		maxEnergyInput = d::get;
 		return this;
 	}
 

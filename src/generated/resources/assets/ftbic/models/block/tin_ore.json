@@ -1,5 +1,18 @@
 {
   "parent": "minecraft:block/block",
+  "children": {
+    "solid": {
+      "parent": "minecraft:block/stone",
+      "render_type": "minecraft:solid"
+    },
+    "translucent": {
+      "parent": "minecraft:block/cube_all",
+      "render_type": "minecraft:translucent",
+      "textures": {
+        "all": "ftbic:block/ore_overlays/tin"
+      }
+    }
+  },
   "display": {
     "thirdperson_lefthand": {
       "rotation": [
@@ -36,18 +49,11 @@
       ]
     }
   },
-  "layers": {
-    "solid": {
-      "parent": "minecraft:block/stone"
-    },
-    "translucent": {
-      "parent": "minecraft:block/cube_all",
-      "textures": {
-        "all": "ftbic:block/ore_overlays/tin"
-      }
-    }
-  },
-  "loader": "forge:multi-layer",
+  "item_render_order": [
+    "solid",
+    "translucent"
+  ],
+  "loader": "forge:composite",
   "textures": {
     "particle": "ftbic:block/ore_overlays/tin"
   }

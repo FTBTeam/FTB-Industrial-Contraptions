@@ -114,7 +114,7 @@ public class CableBlock extends BaseCableBlock {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> list, TooltipFlag flag) {
-		list.add(Component.translatable("ftbic.max_input", FTBICUtils.formatEnergy(tier.transferRate).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
+		list.add(Component.translatable("ftbic.max_input", FTBICUtils.formatEnergy(tier.transferRate.get()).append("/t").withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.DARK_GRAY));
 		var feRatio = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 		if (feRatio > 0D) {
 			list.add(Component.translatable("ftbic.zap_to_fe_conversion", FTBICConfig.ENERGY_FORMAT, feRatio).withStyle(ChatFormatting.DARK_GRAY));

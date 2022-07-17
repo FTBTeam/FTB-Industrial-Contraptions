@@ -47,7 +47,7 @@ public class MechanicalElytraItem extends ArmorItem implements EnergyItemHandler
 
 	@Override
 	public double getEnergyCapacity(ItemStack stack) {
-		return ((EnergyArmorMaterial) material).capacity;
+		return ((EnergyArmorMaterial) material).capacity.get();
 	}
 
 	@Override

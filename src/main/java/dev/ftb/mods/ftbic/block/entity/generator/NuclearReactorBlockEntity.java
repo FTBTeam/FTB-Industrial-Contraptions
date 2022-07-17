@@ -74,6 +74,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		super.writeData(tag);
 		tag.putInt("TimeUntilNextCycle", timeUntilNextCycle);
 		tag.putBoolean("Paused", reactor.paused);
+		tag.putBoolean("AllowRedstoneControl", reactor.allowRedstoneControl);
 		tag.putDouble("EnergyOutput", reactor.energyOutput);
 		tag.putInt("Heat", reactor.heat);
 
@@ -103,6 +104,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		super.readData(tag);
 		timeUntilNextCycle = tag.getInt("TimeUntilNextCycle");
 		reactor.paused = tag.getBoolean("Paused");
+		reactor.allowRedstoneControl = tag.getBoolean("AllowRedstoneControl");
 		reactor.energyOutput = tag.getDouble("EnergyOutput");
 		reactor.heat = tag.getInt("Heat");
 		debugSpeed = tag.getInt("DebugSpeed");
@@ -149,6 +151,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public void addSyncData(SyncedData data) {
 		super.addSyncData(data);
 		data.addBoolean(SyncedData.PAUSED, () -> reactor.paused);
+		data.addBoolean(SyncedData.ALLOW_REDSTONE_CONTROL, () -> reactor.allowRedstoneControl);
 		data.addDouble(ENERGY_OUTPUT, () -> reactor.energyOutput);
 		data.addInt(HEAT, () -> reactor.heat);
 		data.addInt(MAX_HEAT, () -> reactor.maxHeat);
@@ -161,6 +164,12 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		}
 
 		return InteractionResult.SUCCESS;
+	}
+
+	private void checkPoweredState(Level level, BlockPos pos, BlockState state) {
+		if (reactor.allowRedstoneControl) {
+			reactor.paused = !level.hasNeighborSignal(pos);
+		}
 	}
 
 	@Override
@@ -184,6 +193,10 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		if (reactor.energyOutput > 0) {
 			active = true;
 			energy += Math.min(reactor.energyOutput, energyCapacity - energy);
+		}
+
+		if (level != null) {
+			checkPoweredState(level, worldPosition, getBlockState());
 		}
 
 		if (level == null || level.isClientSide() || reactor.heat <= 0 || reactor.maxHeat <= 0) {

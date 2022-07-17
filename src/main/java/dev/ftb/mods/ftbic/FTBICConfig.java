@@ -1,6 +1,11 @@
 package dev.ftb.mods.ftbic;
 
 import dev.ftb.mods.ftbic.util.CraftingMaterial;
+import dev.ftb.mods.ftblibrary.snbt.config.BooleanValue;
+import dev.ftb.mods.ftblibrary.snbt.config.DoubleValue;
+import dev.ftb.mods.ftblibrary.snbt.config.IntValue;
+import dev.ftb.mods.ftblibrary.snbt.config.LongValue;
+import dev.ftb.mods.ftblibrary.snbt.config.SNBTConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
@@ -8,12 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.Builder;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.ForgeConfigSpec.LongValue;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITag;
@@ -26,11 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 public class FTBICConfig {
+	public static SNBTConfig CONFIG = SNBTConfig.create(FTBIC.MOD_ID).comment("FTB Industrial Contraptions config file");
+
 	public static Component ENERGY_FORMAT = Component.literal("⚡").withStyle(ChatFormatting.BOLD);
 	public static Component HEAT_FORMAT = Component.literal("\uD83D\uDD25");
-
-	static final ForgeConfigSpec COMMON_CONFIG;
-	private static final Builder COMMON = new Builder();
 
 	public static final Energy ENERGY;
 	public static final Machines MACHINES;
@@ -44,12 +42,12 @@ public class FTBICConfig {
 		NUCLEAR = new Nuclear();
 		EQUIPMENT = new Equipment();
 		RECIPES = new Recipes();
-
-		COMMON_CONFIG = COMMON.build();
 	}
 
 
 	public static final class Equipment {
+		private static SNBTConfig EQUIPMENT = CONFIG.getGroup("Equipment");
+
 		public final DoubleValue CARBON_ARMOR_CAPACITY;
 		public final DoubleValue QUANTUM_ARMOR_CAPACITY;
 		public final DoubleValue MECHANICAL_ELYTRA_CAPACITY;
@@ -60,22 +58,20 @@ public class FTBICConfig {
 		public final DoubleValue ARMOR_FLIGHT_STOP;
 
 		public Equipment() {
-			b().push("Equipment");
-
-			CARBON_ARMOR_CAPACITY = b().comment("Max energy the Carbon armor can contain").defineInRange("Carbon armor capacity", 1_000_000D, 0D, Double.POSITIVE_INFINITY);
-			QUANTUM_ARMOR_CAPACITY = b().comment("Max energy the Quantum armor can contain").defineInRange("Quantum armor capacity", 15_000_000D, 0D, Double.POSITIVE_INFINITY);
-			MECHANICAL_ELYTRA_CAPACITY = b().comment("Max energy that the elytra can contain").defineInRange("Mechanical elytra capacity", 50_000D, 0D, Double.POSITIVE_INFINITY);
-			MECHANICAL_ELYTRA_RECHARGE = b().comment("How much power is recharged passively").defineInRange("Mechanical elytra recharge", 1D, 0D, 100_000D);
-			ARMOR_DAMAGE_ENERGY = b().comment("Armor damage energy").defineInRange("Armor damage energy", 5_000D, 0D, Double.POSITIVE_INFINITY);
-			ARMOR_FLIGHT_ENERGY = b().comment("Armor flight engery").defineInRange("Armor flight energy", 5D, 0D, Double.POSITIVE_INFINITY);
-			ARMOR_FLIGHT_BOOST = b().comment("Boost gained from wearing the armor during flight").defineInRange("Armor flight boost", 50D, 0D, 100_000D);
-			ARMOR_FLIGHT_STOP = b().comment("Force used to stop flight").defineInRange("Armor flight stop", 15D, 0D, 100_000D);
-
-			b().pop();
+			CARBON_ARMOR_CAPACITY = EQUIPMENT.getDouble("Carbon armor capacity", 1_000_000D, 0D, Double.POSITIVE_INFINITY).comment("Max energy the Carbon armor can contain");
+			QUANTUM_ARMOR_CAPACITY = EQUIPMENT.getDouble("Quantum armor capacity", 15_000_000D, 0D, Double.POSITIVE_INFINITY).comment("Max energy the Quantum armor can contain");
+			MECHANICAL_ELYTRA_CAPACITY = EQUIPMENT.getDouble("Mechanical elytra capacity", 50_000D, 0D, Double.POSITIVE_INFINITY).comment("Max energy that the elytra can contain");
+			MECHANICAL_ELYTRA_RECHARGE = EQUIPMENT.getDouble("Mechanical elytra recharge", 1D, 0D, 100_000D).comment("How much power is recharged passively");
+			ARMOR_DAMAGE_ENERGY = EQUIPMENT.getDouble("Armor damage energy", 5_000D, 0D, Double.POSITIVE_INFINITY).comment("Armor damage energy");
+			ARMOR_FLIGHT_ENERGY = EQUIPMENT.getDouble("Armor flight energy", 5D, 0D, Double.POSITIVE_INFINITY).comment("Armor flight engery");
+			ARMOR_FLIGHT_BOOST = EQUIPMENT.getDouble("Armor flight boost", 50D, 0D, 100_000D).comment("Boost gained from wearing the armor during flight");
+			ARMOR_FLIGHT_STOP = EQUIPMENT.getDouble("Armor flight stop", 15D, 0D, 100_000D).comment("Force used to stop flight");
 		}
 	}
 
 	public static final class Energy {
+		private static final SNBTConfig ENERGY = CONFIG.getGroup("Energy");
+
 		public final DoubleValue LV_TRANSFER_RATE;
 		public final DoubleValue MV_TRANSFER_RATE;
 		public final DoubleValue HV_TRANSFER_RATE;
@@ -94,30 +90,28 @@ public class FTBICConfig {
 		public final IntValue MAX_CABLE_LENGTH;
 
 		public Energy() {
-			b().push("Energy");
-
-			LV_TRANSFER_RATE = b().comment("Lv Transfer Rate (how much energy is transferred per tick)").defineInRange("Lv Transfer Rate", 32D, 1D, Double.POSITIVE_INFINITY);
-			MV_TRANSFER_RATE = b().comment("Mv Transfer Rate (how much energy is transferred per tick)").defineInRange("Mv Transfer Rate", 128D, 1D, Double.POSITIVE_INFINITY);
-			HV_TRANSFER_RATE = b().comment("Hv Transfer Rate (how much energy is transferred per tick)").defineInRange("Hv Transfer Rate", 512D, 1D, Double.POSITIVE_INFINITY);
-			EV_TRANSFER_RATE = b().comment("Ev Transfer Rate (how much energy is transferred per tick)").defineInRange("Ev Transfer Rate", 2_048D, 1D, Double.POSITIVE_INFINITY);
-			IV_TRANSFER_RATE = b().comment("Iv Transfer Rate (how much energy is transferred per tick)").defineInRange("Iv Transfer Rate", 8_192D, 1D, Double.POSITIVE_INFINITY);
-			ZAP_TO_FE_CONVERSION_RATE = b().comment("The amount of Zaps to FE").defineInRange("Zap To Fe Conversion Rate", 4.0D, 0D, Double.POSITIVE_INFINITY);
-			SINGLE_USE_BATTERY_CAPACITY = b().comment("The amount of energy a single use battery can contain").defineInRange("Single Use Battery Capacity", 2_400D, 1D, Double.POSITIVE_INFINITY);
-			LV_BATTERY_CAPACITY = b().comment("Energy a Lv Battery can contain").defineInRange("Lv Battery Capacity", 4_000D, 1D, Double.POSITIVE_INFINITY);
-			MV_BATTERY_CAPACITY = b().comment("Energy a Mv Battery can contain").defineInRange("Mv Battery Capacity", 40_000D, 1D, Double.POSITIVE_INFINITY);
-			HV_BATTERY_CAPACITY = b().comment("Energy a Hv Battery can contain").defineInRange("Hv Battery Capacity", 400_000D, 1D, Double.POSITIVE_INFINITY);
-			EV_BATTERY_CAPACITY = b().comment("Energy a Ev Battery can contain").defineInRange("Ev Battery Capacity", 10_000_000D, 1D, Double.POSITIVE_INFINITY);
-			LV_BATTERY_BOX_CAPACITY = b().comment("Energy a Lv Battery Box can contain").defineInRange("Lv Battery Box Capacity", 40_000D, 1D, Double.POSITIVE_INFINITY);
-			MV_BATTERY_BOX_CAPACITY = b().comment("Energy a Mv Battery Box can contain").defineInRange("Mv Battery Box Capacity", 400_000D, 1D, Double.POSITIVE_INFINITY);
-			HV_BATTERY_BOX_CAPACITY = b().comment("Energy a Hv Battery Box can contain").defineInRange("Hv Battery Box Capacity", 4_000_000D, 1D, Double.POSITIVE_INFINITY);
-			EV_BATTERY_BOX_CAPACITY = b().comment("Energy a Ev Battery Box can contain").defineInRange("Ev Battery Box Capacity", 40_000_000D, 1D, Double.POSITIVE_INFINITY);
-			MAX_CABLE_LENGTH = b().comment("Max length of a cable chain", "The higher the number, the more tick lag will likely present.").defineInRange("Max Cable Length", 300, 1, 100_000);
-
-			b().pop();
+			LV_TRANSFER_RATE = ENERGY.getDouble("Lv Transfer Rate", 32D, 1D, Double.POSITIVE_INFINITY).comment("Lv Transfer Rate (how much energy is transferred per tick)");
+			MV_TRANSFER_RATE = ENERGY.getDouble("Mv Transfer Rate", 128D, 1D, Double.POSITIVE_INFINITY).comment("Mv Transfer Rate (how much energy is transferred per tick)");
+			HV_TRANSFER_RATE = ENERGY.getDouble("Hv Transfer Rate", 512D, 1D, Double.POSITIVE_INFINITY).comment("Hv Transfer Rate (how much energy is transferred per tick)");
+			EV_TRANSFER_RATE = ENERGY.getDouble("Ev Transfer Rate", 2_048D, 1D, Double.POSITIVE_INFINITY).comment("Ev Transfer Rate (how much energy is transferred per tick)");
+			IV_TRANSFER_RATE = ENERGY.getDouble("Iv Transfer Rate", 8_192D, 1D, Double.POSITIVE_INFINITY).comment("Iv Transfer Rate (how much energy is transferred per tick)");
+			ZAP_TO_FE_CONVERSION_RATE = ENERGY.getDouble("Zap To Fe Conversion Rate", 4.0D, 0D, Double.POSITIVE_INFINITY).comment("The amount of Zaps to FE");
+			SINGLE_USE_BATTERY_CAPACITY = ENERGY.getDouble("Single Use Battery Capacity", 2_400D, 1D, Double.POSITIVE_INFINITY).comment("The amount of energy a single use battery can contain");
+			LV_BATTERY_CAPACITY = ENERGY.getDouble("Lv Battery Capacity", 4_000D, 1D, Double.POSITIVE_INFINITY).comment("Energy a Lv Battery can contain");
+			MV_BATTERY_CAPACITY = ENERGY.getDouble("Mv Battery Capacity", 40_000D, 1D, Double.POSITIVE_INFINITY).comment("Energy a Mv Battery can contain");
+			HV_BATTERY_CAPACITY = ENERGY.getDouble("Hv Battery Capacity", 400_000D, 1D, Double.POSITIVE_INFINITY).comment("Energy a Hv Battery can contain");
+			EV_BATTERY_CAPACITY = ENERGY.getDouble("Ev Battery Capacity", 10_000_000D, 1D, Double.POSITIVE_INFINITY).comment("Energy a Ev Battery can contain");
+			LV_BATTERY_BOX_CAPACITY = ENERGY.getDouble("Lv Battery Box Capacity", 40_000D, 1D, Double.POSITIVE_INFINITY).comment("Energy a Lv Battery Box can contain");
+			MV_BATTERY_BOX_CAPACITY = ENERGY.getDouble("Mv Battery Box Capacity", 400_000D, 1D, Double.POSITIVE_INFINITY).comment("Energy a Mv Battery Box can contain");
+			HV_BATTERY_BOX_CAPACITY = ENERGY.getDouble("Hv Battery Box Capacity", 4_000_000D, 1D, Double.POSITIVE_INFINITY).comment("Energy a Hv Battery Box can contain");
+			EV_BATTERY_BOX_CAPACITY = ENERGY.getDouble("Ev Battery Box Capacity", 40_000_000D, 1D, Double.POSITIVE_INFINITY).comment("Energy a Ev Battery Box can contain");
+			MAX_CABLE_LENGTH = ENERGY.getInt("Max Cable Length", 300, 1, 100_000).comment("Max length of a cable chain", "The higher the number, the more tick lag will likely present.");
 		}
 	}
 
 	public static final class Machines {
+		private static final SNBTConfig MACHINES = CONFIG.getGroup("Machines");
+
 		public final IntValue IRON_FURNACE_ITEMS_PER_COAL;
 		public final DoubleValue BASIC_GENERATOR_CAPACITY;
 		public final DoubleValue BASIC_GENERATOR_OUTPUT;
@@ -135,6 +129,10 @@ public class FTBICConfig {
 		public final DoubleValue MV_SOLAR_PANEL_OUTPUT;
 		public final DoubleValue HV_SOLAR_PANEL_OUTPUT;
 		public final DoubleValue EV_SOLAR_PANEL_OUTPUT;
+		public final DoubleValue LV_SOLAR_PANEL_CAPACITY;
+		public final DoubleValue MV_SOLAR_PANEL_CAPACITY;
+		public final DoubleValue HV_SOLAR_PANEL_CAPACITY;
+		public final DoubleValue EV_SOLAR_PANEL_CAPACITY;
 		public final DoubleValue NUCLEAR_REACTOR_CAPACITY;
 		public final DoubleValue MACHINE_RECIPE_BASE_TICKS;
 		public final DoubleValue POWERED_FURNACE_CAPACITY;
@@ -189,83 +187,85 @@ public class FTBICConfig {
 		public final DoubleValue SCRAP_CHANCE;
 
 		public Machines() {
-			b().push("Machines");
-
-			IRON_FURNACE_ITEMS_PER_COAL = b().comment("How many items are processed per fuel in the Iron Furnace").defineInRange("Items processed per fuel", 12, 1, 1_000);
-			BASIC_GENERATOR_CAPACITY = b().comment("Amount of energy is stored in the Basic generator").defineInRange("Basic generator capacity", 4_000D, 1D, 100_000D);
-			BASIC_GENERATOR_OUTPUT = b().comment("Energy created from the Basic generator").defineInRange("Basic generator output", 10D, 1D, 100_000D);
-			GEOTHERMAL_GENERATOR_TANK_SIZE = b().comment("The internal size of the Geothermal generator").defineInRange("Geothermal generator tank size", 8_000, 1_000, 10_000);
-			GEOTHERMAL_GENERATOR_CAPACITY = b().comment("Amount of energy stored in the Geothermal Generator").defineInRange("Geothermal generator capacity", 2_400D, 1D, 100_000D);
-			GEOTHERMAL_GENERATOR_OUTPUT = b().comment("Energy created from the Geothermal generator").defineInRange("Geothermal generator output", 20D, 1D, 100_000D);
-			WIND_MILL_CAPACITY = b().comment("Amount of energy stored in the Wind Mill").defineInRange("Wind mill capacity", 100D, 1D, 100_000D);
-			WIND_MILL_MIN_OUTPUT = b().comment("The min amount of energy the wind mill can output").defineInRange("Wind mill min output", 0.3D, 0.001D, 100_000D);
-			WIND_MILL_MAX_OUTPUT = b().comment("The max amount of energy the wind mill can output").defineInRange("Wind mill max output", 6.5D, 0.001D, 1000_000D);
-			WIND_MILL_MIN_Y = b().comment("Minimum height that the windmill is effective from").defineInRange("Wind mill min y", 64, 0, 250);
-			WIND_MILL_MAX_Y = b().comment("Maximum height that the windmill is effective from ").defineInRange("Wind mill max y", 320, 0, 320);
-			WIND_MILL_RAIN_MODIFIER = b().comment("How much rain effects the energy production").defineInRange("Wind mill rain modifier", 1.2D, 0.001D, 5_000D);
-			WIND_MILL_THUNDER_MODIFIER = b().comment("How much thunder effects the energy production").defineInRange("Wind mill thunder modifier", 1.5D, 0.001D, 5_000D);
-			LV_SOLAR_PANEL_OUTPUT = b().comment("Energy created from the Lv solar panel").defineInRange("Lv solar panel output", 1D, 1D, 100_000D);
-			MV_SOLAR_PANEL_OUTPUT = b().comment("Energy created from the Mv solar panel").defineInRange("Mv solar panel output", 8D, 1D, 100_000D);
-			HV_SOLAR_PANEL_OUTPUT = b().comment("Energy created from the Hv solar panel").defineInRange("Hv solar panel output", 64D, 1D, 100_000D);
-			EV_SOLAR_PANEL_OUTPUT = b().comment("Energy created from the Ev solar panel").defineInRange("Ev solar panel output", 512D, 1D, 100_000D);
-			NUCLEAR_REACTOR_CAPACITY = b().comment("Amount of energy stored in the Nuclear Reactor").defineInRange("Nuclear reactor capacity", 50_000D, 1D, 100_000D);
-			MACHINE_RECIPE_BASE_TICKS = b().comment("Base lengths in ticks a machine takes to process a recipe").defineInRange("Machine recipe base ticks", 200D, 1D, 100_000D);
-			POWERED_FURNACE_CAPACITY = b().comment("Amount of energy stored in the Powered Furnace").defineInRange("Powered furnace capacity", 1_200D, 1D, 100_000D);
-			POWERED_FURNACE_USE = b().comment("Energy usage per operation of the powered furnace").defineInRange("Powered furnace use", 3D, 0D, 100_000D);
-			MACERATOR_CAPACITY = b().comment("Amount of energy stored in the Macerator").defineInRange("Macerator capacity", 1_200D, 1D, 100_000D);
-			MACERATOR_USE = b().comment("Energy usage of the Macerator").defineInRange("Macerator use", 2D, 0D, 100_000D);
-			CENTRIFUGE_CAPACITY = b().comment("Amount of energy stored in the Centrifuge").defineInRange("Centrifuge capacity", 1_200D, 1D, 100_000D);
-			CENTRIFUGE_USE = b().comment("Energy usage of the Centrifuge").defineInRange("Centrifuge use", 2D, 0D, 100_000D);
-			COMPRESSOR_CAPACITY = b().comment("Amount of energy stored in the Compressor").defineInRange("Compressor capacity", 1_200D, 1D, 100_000D);
-			COMPRESSOR_USE = b().comment("Energy usage of the Compressor").defineInRange("Compressor use", 2D, 0D, 100_000D);
-			REPROCESSOR_CAPACITY = b().comment("Amount of energy stored in the Reprocessor").defineInRange("Reprocessor capacity", 4_000D, 1D, 100_000D);
-			REPROCESSOR_USE = b().comment("Energy usage of the Reprocessor").defineInRange("Reprocessor use", 8D, 0D, 100_000D);
-			CANNING_MACHINE_CAPACITY = b().comment("Amount of energy stored in the Canning Machine").defineInRange("Canning machine capacity", 1_200D, 1D, 100_000D);
-			CANNING_MACHINE_USE = b().comment("Energy usage of the Canning machine").defineInRange("Canning machine use", 1D, 0D, 100_000D);
-			ROLLER_CAPACITY = b().comment("Amount of energy stored in the Roller").defineInRange("Roller capacity", 1_200D, 1D, 100_000D);
-			ROLLER_USE = b().comment("Energy usage of the Roller").defineInRange("Roller use", 3D, 0D, 100_000D);
-			EXTRUDER_CAPACITY = b().comment("Amount of energy stored in the Extruder").defineInRange("Extruder capacity", 1_200D, 1D, 100_000D);
-			EXTRUDER_USE = b().comment("Energy usage of the Extruder").defineInRange("Extruder use", 3D, 0D, 100_000D);
-			ANTIMATTER_CONSTRUCTOR_CAPACITY = b().comment("Amount of energy stored in the Antimatter Constructor").defineInRange("Antimatter constructor capacity", 1_000_000D, 1D, 100_000D);
-			ANTIMATTER_CONSTRUCTOR_BOOST = b().comment("Construction boost multiplier").defineInRange("Antimatter constructor boost", 6D, 1D, 100_000D);
-			ADVANCED_POWERED_FURNACE_CAPACITY = b().comment("Amount of energy stored in the Advanced Powered Furnace").defineInRange("Advanced powered furnace capacity", 10_000D, 1D, 100_000D);
-			ADVANCED_POWERED_FURNACE_USE = b().comment("Energy usage of the Advanced powered furnace").defineInRange("Advanced powered furnace use", 16D, 0D, 100_000D);
-			ADVANCED_MACERATOR_CAPACITY = b().comment("Amount of energy stored in the Advanced Macerator").defineInRange("Advanced macerator capacity", 10_000D, 1D, 100_000D);
-			ADVANCED_MACERATOR_USE = b().comment("Energy usage of the Advanced macerator").defineInRange("Advanced macerator use", 16D, 0D, 100_000D);
-			ADVANCED_CENTRIFUGE_CAPACITY = b().comment("Amount of energy stored in the Advanced Centrifuge").defineInRange("Advanced centrifuge capacity", 10_000D, 1D, 100_000D);
-			ADVANCED_CENTRIFUGE_USE = b().comment("Energy usage of the Advanced centrifuge").defineInRange("Advanced centrifuge use", 16D, 0D, 100_000D);
-			ADVANCED_COMPRESSOR_CAPACITY = b().comment("Amount of energy stored in the Advanced Compressor").defineInRange("Advanced compressor capacity", 10_000D, 1D, 100_000D);
-			ADVANCED_COMPRESSOR_USE = b().comment("Energy usage of the Advanced compressor").defineInRange("Advanced compressor use", 16D, 0D, 100_000D);
-			TELEPORTER_CAPACITY = b().comment("Amount of energy stored in the Teleporter").defineInRange("Teleporter capacity", 1_000_000D, 1D, 100_000D);
-			TELEPORTER_MIN_USE = b().comment("Energy usage of the Teleporter min").defineInRange("Teleporter min use", 100D, 0D, 100_000D);
-			TELEPORTER_MIN_DISTANCE = b().comment("Min distance a teleporter can work over").defineInRange("Teleporter min distance", 16D, 1D, 100_000D);
-			TELEPORTER_MAX_USE = b().comment("Energy usage of the Teleporter max").defineInRange("Teleporter max use", 10_000D, 0D, 100_000D);
-			TELEPORTER_MAX_DISTANCE = b().comment("Max distance a teleporter can work over").defineInRange("Teleporter max distance", 1_200D, 1D, 100_000D);
-			CHARGE_PAD_CAPACITY = b().comment("Amount of energy stored in the Charge Pad").defineInRange("Charge pad capacity", 1_000_000D, 1D, 100_000D);
-			POWERED_CRAFTING_TABLE_CAPACITY = b().comment("Amount of energy stored in the Powered Crafting Table").defineInRange("Powered crafting table capacity", 1_200D, 1D, 100_000D);
-			POWERED_CRAFTING_TABLE_USE = b().comment("Energy usage of the Powered crafting table").defineInRange("Powered crafting table use", 1D, 0D, 100_000D);
-			QUARRY_CAPACITY = b().comment("Amount of energy stored in the Quarry").defineInRange("Quarry capacity", 10_000D, 1D, 100_000D);
-			QUARRY_USE = b().comment("Energy usage of the Quarry").defineInRange("Quarry use", 3D, 0D, 100_000D);
-			QUARRY_MINE_TICKS = b().comment("Duration taken to mine a block using the quarry").defineInRange("Quarry mine ticks", 40L, 0L, 100_000L);
-			QUARRY_MOVE_TICKS = b().comment("Duration taken to move the quarry to a new location").defineInRange("Quarry move ticks", 10L, 0L, 100_000L);
-			PUMP_CAPACITY = b().comment("Amount of energy stored in the Pump").defineInRange("Pump capacity", 10_000D, 1D, 100_000D);
-			PUMP_USE = b().comment("Energy usage of the Pump").defineInRange("Pump use", 3D, 0D, 100_000D);
-			PUMP_MINE_TICKS = b().comment("Duration taken to mine a fluid using the pump").defineInRange("Pump mine ticks", 40L, 0L, 100_000L);
-			PUMP_MOVE_TICKS = b().comment("Duration taken to move the pump to a new location").defineInRange("Pump move ticks", 10L, 0L, 100_000L);
-			PUMP_TANK_CAPACITY = b().comment("Amount of energy stored in the Pump Tank").defineInRange("Pump tank capacity", FluidType.BUCKET_VOLUME * 128, 1, 100_000);
-			ITEM_TRANSFER_EFFICIENCY = b().comment("Determines how effective an item can transport energy to something else").defineInRange("Item transfer efficiency", 20.0D, 0D, Double.POSITIVE_INFINITY);
-			STATE_UPDATE_TICKS = b().comment("To reduce lag, we only update a state of a block every X ticks. This controls how many ticks we wait to update the blocks state.").defineInRange("State update ticks", 6, 1, 1_000);
-			UPGRADE_LIMIT_PER_SLOT = b().comment("Amount of upgrades allowed in each slot of a machine").defineInRange("Upgrade limit per slot", 4, 1, 64);
-			OVERCLOCKER_SPEED = b().comment("Speed increase from a single overclocking upgrade").defineInRange("Overclocker speed", 1.45D, 0D, 100_000D);
-			OVERCLOCKER_ENERGY_USE = b().comment("Energy usage of the Overclocker").defineInRange("Overclocker energy use", 1.6D, 0D, 100_000D);
-			STORAGE_UPGRADE = b().comment("Energy cost per storage").defineInRange("Storage upgrade", 10_000D, 0D, 100_000D);
-			SCRAP_CHANCE = b().comment("Chance of producing scrap").defineInRange("Scrap chance", 0.125D, 0D, 1D);
-
-			b().pop();
+			IRON_FURNACE_ITEMS_PER_COAL = MACHINES.getInt("Items processed per fuel", 12, 1, 1_000).comment("How many items are processed per fuel in the Iron Furnace");
+			BASIC_GENERATOR_CAPACITY = MACHINES.getDouble("Basic generator capacity", 4_000D, 1D, 100_000D).comment("Amount of energy is stored in the Basic generator");
+			BASIC_GENERATOR_OUTPUT = MACHINES.getDouble("Basic generator output", 10D, 1D, 100_000D).comment("Energy created from the Basic generator");
+			GEOTHERMAL_GENERATOR_TANK_SIZE = MACHINES.getInt("Geothermal generator tank size", 8_000, 1_000, 10_000).comment("The internal size of the Geothermal generator");
+			GEOTHERMAL_GENERATOR_CAPACITY = MACHINES.getDouble("Geothermal generator capacity", 2_400D, 1D, 100_000D).comment("Amount of energy stored in the Geothermal Generator");
+			GEOTHERMAL_GENERATOR_OUTPUT = MACHINES.getDouble("Geothermal generator output", 20D, 1D, 100_000D).comment("Energy created from the Geothermal generator");
+			WIND_MILL_CAPACITY = MACHINES.getDouble("Wind mill capacity", 100D, 1D, 100_000D).comment("Amount of energy stored in the Wind Mill");
+			WIND_MILL_MIN_OUTPUT = MACHINES.getDouble("Wind mill min output", 0.3D, 0.001D, 100_000D).comment("The min amount of energy the wind mill can output");
+			WIND_MILL_MAX_OUTPUT = MACHINES.getDouble("Wind mill max output", 6.5D, 0.001D, 1000_000D).comment("The max amount of energy the wind mill can output");
+			WIND_MILL_MIN_Y = MACHINES.getInt("Wind mill min y", 64, 0, 250).comment("Minimum height that the windmill is effective from");
+			WIND_MILL_MAX_Y = MACHINES.getInt("Wind mill max y", 320, 0, 320).comment("Maximum height that the windmill is effective from ");
+			WIND_MILL_RAIN_MODIFIER = MACHINES.getDouble("Wind mill rain modifier", 1.2D, 0.001D, 5_000D).comment("How much rain effects the energy production");
+			WIND_MILL_THUNDER_MODIFIER = MACHINES.getDouble("Wind mill thunder modifier", 1.5D, 0.001D, 5_000D).comment("How much thunder effects the energy production");
+			LV_SOLAR_PANEL_OUTPUT = MACHINES.getDouble("Lv solar panel output", 1D, 1D, 100_000D).comment("Energy created from the Lv solar panel");
+			MV_SOLAR_PANEL_OUTPUT = MACHINES.getDouble("Mv solar panel output", 8D, 1D, 100_000D).comment("Energy created from the Mv solar panel");
+			HV_SOLAR_PANEL_OUTPUT = MACHINES.getDouble("Hv solar panel output", 64D, 1D, 100_000D).comment("Energy created from the Hv solar panel");
+			EV_SOLAR_PANEL_OUTPUT = MACHINES.getDouble("Ev solar panel output", 512D, 1D, 100_000D).comment("Energy created from the Ev solar panel");
+			LV_SOLAR_PANEL_CAPACITY = MACHINES.getDouble("Lv solar panel capacity", 60D, 1D, 100_000D).comment("Amount of energy stored in the Lv solar panel");
+			MV_SOLAR_PANEL_CAPACITY = MACHINES.getDouble("Mv solar panel capacity", 480D, 1D, 100_000D).comment("Amount of energy stored in the Mv solar panel");
+			HV_SOLAR_PANEL_CAPACITY = MACHINES.getDouble("Hv solar panel capacity", 3840D, 1D, 100_000D).comment("Amount of energy stored inm the Hv solar panel");
+			EV_SOLAR_PANEL_CAPACITY = MACHINES.getDouble("Ev solar panel capacity", 30720D, 1D, 100_000D).comment("Amount of energy stored in the Ev solar panel");
+			NUCLEAR_REACTOR_CAPACITY = MACHINES.getDouble("Nuclear reactor capacity", 50_000D, 1D, 100_000D).comment("Amount of energy stored in the Nuclear Reactor");
+			MACHINE_RECIPE_BASE_TICKS = MACHINES.getDouble("Machine recipe base ticks", 200D, 1D, 100_000D).comment("Base lengths in ticks a machine takes to process a recipe");
+			POWERED_FURNACE_CAPACITY = MACHINES.getDouble("Powered furnace capacity", 1_200D, 1D, 100_000D).comment("Amount of energy stored in the Powered Furnace");
+			POWERED_FURNACE_USE = MACHINES.getDouble("Powered furnace use", 3D, 0D, 100_000D).comment("Energy usage per operation of the powered furnace");
+			MACERATOR_CAPACITY = MACHINES.getDouble("Macerator capacity", 1_200D, 1D, 100_000D).comment("Amount of energy stored in the Macerator");
+			MACERATOR_USE = MACHINES.getDouble("Macerator use", 2D, 0D, 100_000D).comment("Energy usage of the Macerator");
+			CENTRIFUGE_CAPACITY = MACHINES.getDouble("Centrifuge capacity", 1_200D, 1D, 100_000D).comment("Amount of energy stored in the Centrifuge");
+			CENTRIFUGE_USE = MACHINES.getDouble("Centrifuge use", 2D, 0D, 100_000D).comment("Energy usage of the Centrifuge");
+			COMPRESSOR_CAPACITY = MACHINES.getDouble("Compressor capacity", 1_200D, 1D, 100_000D).comment("Amount of energy stored in the Compressor");
+			COMPRESSOR_USE = MACHINES.getDouble("Compressor use", 2D, 0D, 100_000D).comment("Energy usage of the Compressor");
+			REPROCESSOR_CAPACITY = MACHINES.getDouble("Reprocessor capacity", 4_000D, 1D, 100_000D).comment("Amount of energy stored in the Reprocessor");
+			REPROCESSOR_USE = MACHINES.getDouble("Reprocessor use", 8D, 0D, 100_000D).comment("Energy usage of the Reprocessor");
+			CANNING_MACHINE_CAPACITY = MACHINES.getDouble("Canning machine capacity", 1_200D, 1D, 100_000D).comment("Amount of energy stored in the Canning Machine");
+			CANNING_MACHINE_USE = MACHINES.getDouble("Canning machine use", 1D, 0D, 100_000D).comment("Energy usage of the Canning machine");
+			ROLLER_CAPACITY = MACHINES.getDouble("Roller capacity", 1_200D, 1D, 100_000D).comment("Amount of energy stored in the Roller");
+			ROLLER_USE = MACHINES.getDouble("Roller use", 3D, 0D, 100_000D).comment("Energy usage of the Roller");
+			EXTRUDER_CAPACITY = MACHINES.getDouble("Extruder capacity", 1_200D, 1D, 100_000D).comment("Amount of energy stored in the Extruder");
+			EXTRUDER_USE = MACHINES.getDouble("Extruder use", 3D, 0D, 100_000D).comment("Energy usage of the Extruder");
+			ANTIMATTER_CONSTRUCTOR_CAPACITY = MACHINES.getDouble("Antimatter constructor capacity", 1_000_000D, 1D, 100_000D).comment("Amount of energy stored in the Antimatter Constructor");
+			ANTIMATTER_CONSTRUCTOR_BOOST = MACHINES.getDouble("Antimatter constructor boost", 6D, 1D, 100_000D).comment("Construction boost multiplier");
+			ADVANCED_POWERED_FURNACE_CAPACITY = MACHINES.getDouble("Advanced powered furnace capacity", 10_000D, 1D, 100_000D).comment("Amount of energy stored in the Advanced Powered Furnace");
+			ADVANCED_POWERED_FURNACE_USE = MACHINES.getDouble("Advanced powered furnace use", 16D, 0D, 100_000D).comment("Energy usage of the Advanced powered furnace");
+			ADVANCED_MACERATOR_CAPACITY = MACHINES.getDouble("Advanced macerator capacity", 10_000D, 1D, 100_000D).comment("Amount of energy stored in the Advanced Macerator");
+			ADVANCED_MACERATOR_USE = MACHINES.getDouble("Advanced macerator use", 16D, 0D, 100_000D).comment("Energy usage of the Advanced macerator");
+			ADVANCED_CENTRIFUGE_CAPACITY = MACHINES.getDouble("Advanced centrifuge capacity", 10_000D, 1D, 100_000D).comment("Amount of energy stored in the Advanced Centrifuge");
+			ADVANCED_CENTRIFUGE_USE = MACHINES.getDouble("Advanced centrifuge use", 16D, 0D, 100_000D).comment("Energy usage of the Advanced centrifuge");
+			ADVANCED_COMPRESSOR_CAPACITY = MACHINES.getDouble("Advanced compressor capacity", 10_000D, 1D, 100_000D).comment("Amount of energy stored in the Advanced Compressor");
+			ADVANCED_COMPRESSOR_USE = MACHINES.getDouble("Advanced compressor use", 16D, 0D, 100_000D).comment("Energy usage of the Advanced compressor");
+			TELEPORTER_CAPACITY = MACHINES.getDouble("Teleporter capacity", 1_000_000D, 1D, 100_000D).comment("Amount of energy stored in the Teleporter");
+			TELEPORTER_MIN_USE = MACHINES.getDouble("Teleporter min use", 100D, 0D, 100_000D).comment("Energy usage of the Teleporter min");
+			TELEPORTER_MIN_DISTANCE = MACHINES.getDouble("Teleporter min distance", 16D, 1D, 100_000D).comment("Min distance a teleporter can work over");
+			TELEPORTER_MAX_USE = MACHINES.getDouble("Teleporter max use", 10_000D, 0D, 100_000D).comment("Energy usage of the Teleporter max");
+			TELEPORTER_MAX_DISTANCE = MACHINES.getDouble("Teleporter max distance", 1_200D, 1D, 100_000D).comment("Max distance a teleporter can work over");
+			CHARGE_PAD_CAPACITY = MACHINES.getDouble("Charge pad capacity", 1_000_000D, 1D, 100_000D).comment("Amount of energy stored in the Charge Pad");
+			POWERED_CRAFTING_TABLE_CAPACITY = MACHINES.getDouble("Powered crafting table capacity", 1_200D, 1D, 100_000D).comment("Amount of energy stored in the Powered Crafting Table");
+			POWERED_CRAFTING_TABLE_USE = MACHINES.getDouble("Powered crafting table use", 1D, 0D, 100_000D).comment("Energy usage of the Powered crafting table");
+			QUARRY_CAPACITY = MACHINES.getDouble("Quarry capacity", 10_000D, 1D, 100_000D).comment("Amount of energy stored in the Quarry");
+			QUARRY_USE = MACHINES.getDouble("Quarry use", 3D, 0D, 100_000D).comment("Energy usage of the Quarry");
+			QUARRY_MINE_TICKS = MACHINES.getLong("Quarry mine ticks", 40L, 0L, 100_000L).comment("Duration taken to mine a block using the quarry");
+			QUARRY_MOVE_TICKS = MACHINES.getLong("Quarry move ticks", 10L, 0L, 100_000L).comment("Duration taken to move the quarry to a new location");
+			PUMP_CAPACITY = MACHINES.getDouble("Pump capacity", 10_000D, 1D, 100_000D).comment("Amount of energy stored in the Pump");
+			PUMP_USE = MACHINES.getDouble("Pump use", 3D, 0D, 100_000D).comment("Energy usage of the Pump");
+			PUMP_MINE_TICKS = MACHINES.getLong("Pump mine ticks", 40L, 0L, 100_000L).comment("Duration taken to mine a fluid using the pump");
+			PUMP_MOVE_TICKS = MACHINES.getLong("Pump move ticks", 10L, 0L, 100_000L).comment("Duration taken to move the pump to a new location");
+			PUMP_TANK_CAPACITY = MACHINES.getInt("Pump tank capacity", FluidType.BUCKET_VOLUME * 128, 1, 100_000).comment("Amount of energy stored in the Pump Tank");
+			ITEM_TRANSFER_EFFICIENCY = MACHINES.getDouble("Item transfer efficiency", 20.0D, 0D, Double.POSITIVE_INFINITY).comment("Determines how effective an item can transport energy to something else");
+			STATE_UPDATE_TICKS = MACHINES.getInt("State update ticks", 6, 1, 1_000).comment("To reduce lag, we only update a state of a block every X ticks. This controls how many ticks we wait to update the blocks state.");
+			UPGRADE_LIMIT_PER_SLOT = MACHINES.getInt("Upgrade limit per slot", 4, 1, 64).comment("Amount of upgrades allowed in each slot of a machine");
+			OVERCLOCKER_SPEED = MACHINES.getDouble("Overclocker speed", 1.45D, 0D, 100_000D).comment("Speed increase from a single overclocking upgrade");
+			OVERCLOCKER_ENERGY_USE = MACHINES.getDouble("Overclocker energy use", 1.6D, 0D, 100_000D).comment("Energy usage of the Overclocker");
+			STORAGE_UPGRADE = MACHINES.getDouble("Storage upgrade", 10_000D, 0D, 100_000D).comment("Energy cost per storage");
+			SCRAP_CHANCE = MACHINES.getDouble("Scrap chance", 0.125D, 0D, 1D).comment("Chance of producing scrap");
 		}
 	}
 
 	public static final class Nuclear {
+		SNBTConfig NUCLEAR = CONFIG.getGroup("Nuclear");
+
 		public final DoubleValue NUKE_RADIUS;
 		public final DoubleValue NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS;
 		public final DoubleValue NUCLEAR_REACTOR_EXPLOSION_MULTIPLIER;
@@ -275,21 +275,19 @@ public class FTBICConfig {
 		public final BooleanValue NUCLEAR_EXPLOSION_DAEMON_THREAD;
 
 		public Nuclear() {
-			b().push("Nuclear");
-
-			NUKE_RADIUS = b().comment("How many blocks in a circular radius the nuke will effect").defineInRange("Nuke Radius", 36D, 1D, 1_000D);
-			NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS = b().comment("The starting radius for a nuclear reactor explosion").defineInRange("Base Nuclear blast radius", 10D, 1D, 1_000D);
-			NUCLEAR_REACTOR_EXPLOSION_MULTIPLIER = b().comment("How much to multiple the above base radius of the explosion").defineInRange("Nuclear blast radius multiplier", 0.5D, 0.001D, 100D);
-			NUCLEAR_REACTOR_EXPLOSION_LIMIT = b().comment("The limit of how large an explosion can be").defineInRange("Nuclear blast limit", 80D, 1D, 10_000D);
-			FLUID_CELL_CAPACITY = b().comment("How much fluid a fluid cell can contain").defineInRange("Fluid cell capacity", FluidType.BUCKET_VOLUME, 1, 100_000);
-			ADD_ALL_FLUID_CELLS = b().comment("Add all fluid cells to creative tab").define("Add all fluid cells", false);
-			NUCLEAR_EXPLOSION_DAEMON_THREAD = b().comment("Spawn a deamon thread to handle the explosion calculation (experimental)").define("Explosion uses deamon thread", false);
-
-			b().pop();
+			NUKE_RADIUS = NUCLEAR.getDouble("Nuke Radius", 36D, 1D, 1_000D).comment("How many blocks in a circular radius the nuke will effect");
+			NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS = NUCLEAR.getDouble("Base Nuclear blast radius", 10D, 1D, 1_000D).comment("The starting radius for a nuclear reactor explosion");
+			NUCLEAR_REACTOR_EXPLOSION_MULTIPLIER = NUCLEAR.getDouble("Nuclear blast radius multiplier", 0.5D, 0.001D, 100D).comment("How much to multiple the above base radius of the explosion");
+			NUCLEAR_REACTOR_EXPLOSION_LIMIT = NUCLEAR.getDouble("Nuclear blast limit", 80D, 1D, 10_000D).comment("The limit of how large an explosion can be");
+			FLUID_CELL_CAPACITY = NUCLEAR.getInt("Fluid cell capacity", FluidType.BUCKET_VOLUME, 1, 100_000).comment("How much fluid a fluid cell can contain");
+			ADD_ALL_FLUID_CELLS = NUCLEAR.getBoolean("Add all fluid cells", false).comment("Add all fluid cells to creative tab");
+			NUCLEAR_EXPLOSION_DAEMON_THREAD = NUCLEAR.getBoolean("Explosion uses deamon thread", false).comment("Spawn a deamon thread to handle the explosion calculation (experimental)");
 		}
 	}
 
 	public static final class Recipes {
+		SNBTConfig RECIPES = CONFIG.getGroup("Recipes");
+
 		public final BooleanValue ADD_DUST_FROM_ORE_RECIPES;
 		public final BooleanValue ADD_DUST_FROM_MATERIAL_RECIPES;
 		public final BooleanValue ADD_GEM_FROM_ORE_RECIPES;
@@ -299,22 +297,14 @@ public class FTBICConfig {
 		public final BooleanValue ADD_CANNED_FOOD_RECIPES;
 
 		public Recipes() {
-			b().push("Recipe Generation");
-
-			ADD_DUST_FROM_ORE_RECIPES = b().comment("Automatically generate dust from ore recipes").define("Create dust from ore recipes", true);
-			ADD_DUST_FROM_MATERIAL_RECIPES = b().comment("Automatically generate dust from material recipes").define("Create dust from material recipes", true);
-			ADD_GEM_FROM_ORE_RECIPES = b().comment("Automatically generate gem from ore recipes").define("Create gem from ore recipes", true);
-			ADD_ROD_RECIPES = b().comment("Automatically generate rod recipes").define("Create rod recipes", true);
-			ADD_PLATE_RECIPES = b().comment("Automatically generate plate recipes").define("Create plate recipes", true);
-			ADD_GEAR_RECIPES = b().comment("Automatically generate gear recipes").define("Create gear recipes", true);
-			ADD_CANNED_FOOD_RECIPES = b().comment("Automatically canned food recipes").define("Create canned food recipes", true);
-
-			b().pop();
+			ADD_DUST_FROM_ORE_RECIPES = RECIPES.getBoolean("Create dust from ore recipes", true).comment("Automatically generate dust from ore recipes");
+			ADD_DUST_FROM_MATERIAL_RECIPES = RECIPES.getBoolean("Create dust from material recipes", true).comment("Automatically generate dust from material recipes");
+			ADD_GEM_FROM_ORE_RECIPES = RECIPES.getBoolean("Create gem from ore recipes", true).comment("Automatically generate gem from ore recipes");
+			ADD_ROD_RECIPES = RECIPES.getBoolean("Create rod recipes", true).comment("Automatically generate rod recipes");
+			ADD_PLATE_RECIPES = RECIPES.getBoolean("Create plate recipes", true).comment("Automatically generate plate recipes");
+			ADD_GEAR_RECIPES = RECIPES.getBoolean("Create gear recipes", true).comment("Automatically generate gear recipes");
+			ADD_CANNED_FOOD_RECIPES = RECIPES.getBoolean("Create canned food recipes", true).comment("Automatically canned food recipes");
 		}
-	}
-
-	private static Builder b() {
-		return COMMON;
 	}
 
 	public static final List<String> MOD_MATERIAL_PRIORITY = new ArrayList<>(Arrays.asList(

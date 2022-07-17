@@ -7,6 +7,7 @@ import dev.latvian.mods.kubejs.fluid.FluidStackJS;
 import dev.latvian.mods.kubejs.item.ItemStackJS;
 import dev.latvian.mods.kubejs.item.ingredient.IngredientJS;
 import dev.latvian.mods.kubejs.item.ingredient.IngredientStackJS;
+import dev.latvian.mods.kubejs.recipe.RecipeArguments;
 import dev.latvian.mods.kubejs.recipe.RecipeJS;
 import dev.latvian.mods.kubejs.util.ListJS;
 
@@ -18,7 +19,7 @@ public class MachineRecipeJS extends RecipeJS {
 	public List<FluidStackJS> outputFluids = new ArrayList<>();
 
 	@Override
-	public void create(ListJS args) {
+	public void create(RecipeArguments args) {
 		for (Object o : ListJS.orSelf(args.get(0))) {
 			if (o instanceof FluidStackJS) {
 				outputFluids.add((FluidStackJS) o);

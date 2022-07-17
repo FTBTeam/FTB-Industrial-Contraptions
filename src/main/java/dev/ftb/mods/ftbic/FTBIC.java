@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic;
 
 import com.mojang.serialization.Codec;
+import dev.architectury.platform.Platform;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.FTBICBlockEntities;
@@ -29,9 +30,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -40,6 +39,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @Mod(FTBIC.MOD_ID)
@@ -79,8 +79,10 @@ public class FTBIC {
 	public FTBIC() {
 		PROXY = DistExecutor.safeRunForDist(() -> FTBICClient::new, () -> FTBICCommon::new);
 
+		Path configPath = Platform.getConfigFolder().resolve("ftbic-common.snbt");
+		FTBICConfig.CONFIG.load(configPath);
+
 		// Config setup
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_CONFIG);
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		modEventBus.addListener(this::setup);
@@ -88,10 +90,10 @@ public class FTBIC {
 		// Register all the registries
 		REGISTERS.forEach(e -> e.register(modEventBus));
 
+		FTBICConfig.init();
 		FTBICElectricBlocks.init();
 		FTBICUtils.init();
 		FTBICNet.init();
-		FTBICConfig.init();
 
 		PROXY.init();
 	}
@@ -111,14 +113,14 @@ public class FTBIC {
 //	}
 
 	private static boolean isDummyArmor(LivingDamageEvent event, EquipmentSlot slot, ArmorMaterial material) {
-		Item item = event.getEntityLiving().getItemBySlot(slot).getItem();
+		Item item = event.getEntity().getItemBySlot(slot).getItem();
 		return item instanceof DummyEnergyArmorItem && ((DummyEnergyArmorItem) item).getMaterial() == material;
 	}
 
 	@SubscribeEvent
 	public static void playerDamage(LivingDamageEvent event) {
-		if (!event.getSource().isBypassInvul() && event.getEntityLiving() instanceof Player) {
-			ItemStack stack = event.getEntityLiving().getItemBySlot(EquipmentSlot.CHEST);
+		if (!event.getSource().isBypassInvul() && event.getEntity() instanceof Player) {
+			ItemStack stack = event.getEntity().getItemBySlot(EquipmentSlot.CHEST);
 
 			if (stack.getItem() instanceof EnergyArmorItem armorItem) {
 				if (armorItem.getEnergy(stack) > 0D) {

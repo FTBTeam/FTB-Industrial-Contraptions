@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:plates/enderium"
+            "tag": "forge:rods/aluminum"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ftbic:extruding/enderium_wire"
+        "recipe": "ftbic:extruding/rods/aluminum_to_aluminum_wire"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ftbic:extruding/enderium_wire"
+      "ftbic:extruding/rods/aluminum_to_aluminum_wire"
     ]
   }
 }
