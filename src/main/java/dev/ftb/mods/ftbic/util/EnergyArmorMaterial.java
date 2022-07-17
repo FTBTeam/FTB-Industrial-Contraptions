@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.util;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftblibrary.snbt.config.DoubleValue;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,9 +19,9 @@ public class EnergyArmorMaterial implements ArmorMaterial {
 	private final String name;
 	public final Supplier<Double> capacity;
 
-	public EnergyArmorMaterial(String n, Supplier<Double> c) {
+	public EnergyArmorMaterial(String n, DoubleValue c) {
 		name = n;
-		capacity = c;
+		capacity = c::get;
 	}
 
 	@Override

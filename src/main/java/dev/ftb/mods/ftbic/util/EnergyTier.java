@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.util;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftblibrary.snbt.config.DoubleValue;
 
 import java.util.function.Supplier;
 
@@ -17,10 +18,10 @@ public enum EnergyTier {
 	private final int up;
 	public final Supplier<Double> transferRate;
 
-	EnergyTier(String n, int u, Supplier<Double> t) {
+	EnergyTier(String n, int u, DoubleValue t) {
 		name = n;
 		up = u;
-		transferRate = t;
+		transferRate = t::get;
 	}
 
 	public EnergyTier up() {

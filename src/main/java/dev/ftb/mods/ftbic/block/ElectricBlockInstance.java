@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.FTBICBlockEntities;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftblibrary.snbt.config.DoubleValue;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -92,8 +93,18 @@ public class ElectricBlockInstance {
 		return this;
 	}
 
+	public ElectricBlockInstance maxEnergyOutput(DoubleValue d) {
+		maxEnergyOutput = d::get;
+		return this;
+	}
+
 	public ElectricBlockInstance energyCapacity(Supplier<Double> d) {
 		energyCapacity = d;
+		return this;
+	}
+
+	public ElectricBlockInstance energyCapacity(DoubleValue d) {
+		energyCapacity = d::get;
 		return this;
 	}
 
@@ -102,8 +113,18 @@ public class ElectricBlockInstance {
 		return this;
 	}
 
+	public ElectricBlockInstance energyUsage(DoubleValue d) {
+		energyUsage = d::get;
+		return this;
+	}
+
 	public ElectricBlockInstance maxEnergyInput(Supplier<Double> d) {
 		maxEnergyInput = d;
+		return this;
+	}
+
+	public ElectricBlockInstance maxEnergyInput(DoubleValue d) {
+		maxEnergyInput = d::get;
 		return this;
 	}
 
