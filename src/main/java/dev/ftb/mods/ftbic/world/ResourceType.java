@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.world;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public enum ResourceType {
@@ -12,9 +13,10 @@ public enum ResourceType {
 	PLATE(6),
 	ROD(7),
 	GEAR(8),
-	BLOCK(9);
+	WIRE(9),
+	BLOCK(10);
 
-	public static final List<ResourceType> VALUES = Arrays.stream(ResourceType.values()).toList();
+	public static final List<ResourceType> VALUES = Arrays.stream(ResourceType.values()).sorted(Comparator.comparing(e -> e.index)).toList();
 
 	final int index;
 	final int bit;

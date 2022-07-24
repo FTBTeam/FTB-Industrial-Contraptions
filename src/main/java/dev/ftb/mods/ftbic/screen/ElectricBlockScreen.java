@@ -184,6 +184,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 			BufferUploader.end(lv);
 		}
 
+
 		RenderSystem.setShaderTexture(0, BASE_TEXTURE);
 		blit(poseStack, x, y, 68, 167, 18, 54);
 	}
@@ -277,11 +278,31 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu<?>> extends Abstrac
 		blit(poseStack, x, y, 144, 201, 9, 10);
 	}
 
+	public void drawSmallButtonRedstoneDisabled(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 154, 201, 9, 10);
+	}
+
+	public void drawSmallButtonRedstoneEnabled(PoseStack poseStack, int x, int y) {
+		blit(poseStack, x, y, 164, 201, 9, 10);
+	}
+
 	public void drawSmallPauseButton(PoseStack poseStack, int x, int y, int mouseX, int mouseY, boolean paused) {
 		if (paused) {
 			drawSmallButtonStart(poseStack, x, y);
 		} else {
 			drawSmallButtonPause(poseStack, x, y);
+		}
+
+		if (isIn(mouseX, mouseY, x, y, 9, 10)) {
+			drawSmallButtonFrame(poseStack, x, y);
+		}
+	}
+
+	public void drawSmallRedstoneButton(PoseStack poseStack, int x, int y, int mouseX, int mouseY, boolean allowRedstoneControl) {
+		if (allowRedstoneControl) {
+			drawSmallButtonRedstoneEnabled(poseStack, x, y);
+		} else {
+			drawSmallButtonRedstoneDisabled(poseStack, x, y);
 		}
 
 		if (isIn(mouseX, mouseY, x, y, 9, 10)) {

@@ -259,6 +259,10 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 				active = false;
 			}
 
+			if (level != null && !getBlockState().isAir()) {
+				level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+			}
+
 			changeStateTicks = FTBICConfig.MACHINES.STATE_UPDATE_TICKS.get();
 
 			if (changed) {
@@ -279,6 +283,10 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	public void setChangedNow() {
 		changed = false;
 		level.blockEntityChanged(worldPosition);
+	}
+
+	public int getRedstoneOutputSignalEnergyStorage() {
+		return Math.round((float) ((energy / energyCapacity) * 15));
 	}
 
 	@Override

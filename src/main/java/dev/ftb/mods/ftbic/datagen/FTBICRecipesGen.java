@@ -180,10 +180,10 @@ public abstract class FTBICRecipesGen extends RecipeProvider implements IConditi
 	public static final Item INDUSTRIAL_GRADE_METAL = FTBICItems.INDUSTRIAL_GRADE_METAL.item.get();
 	public static final Item RUBBER = FTBICItems.RUBBER.item.get();
 	public static final Item FUSE = FTBICItems.FUSE.item.get();
-	public static final Item COPPER_WIRE = FTBICItems.COPPER_WIRE.item.get();
-	public static final Item GOLD_WIRE = FTBICItems.GOLD_WIRE.item.get();
-	public static final Item ALUMINUM_WIRE = FTBICItems.ALUMINUM_WIRE.item.get();
-	public static final Item ENDERIUM_WIRE = FTBICItems.ENDERIUM_WIRE.item.get();
+	public static final Item COPPER_WIRE = FTBICItems.getResourceFromType(ResourceElements.COPPER, ResourceType.WIRE).orElseThrow().get();
+	public static final Item GOLD_WIRE = FTBICItems.getResourceFromType(ResourceElements.GOLD, ResourceType.WIRE).orElseThrow().get();
+	public static final Item ALUMINUM_WIRE = FTBICItems.getResourceFromType(ResourceElements.ALUMINUM, ResourceType.WIRE).orElseThrow().get();
+	public static final Item ENDERIUM_WIRE = FTBICItems.getResourceFromType(ResourceElements.ENDERIUM, ResourceType.WIRE).orElseThrow().get();
 	public static final Item COPPER_COIL = FTBICItems.COPPER_COIL.item.get();
 	public static final Item MIXED_METAL_BLEND = FTBICItems.MIXED_METAL_BLEND.item.get();
 	public static final Item ADVANCED_ALLOY = FTBICItems.ADVANCED_ALLOY.item.get();

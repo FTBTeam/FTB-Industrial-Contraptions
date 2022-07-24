@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.world;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -11,10 +12,10 @@ import java.util.stream.Collectors;
 import static dev.ftb.mods.ftbic.world.ResourceType.*;
 
 public enum ResourceElements {
-    TIN,
-    LEAD,
-    URANIUM,
-    IRIDIUM,
+    TIN(Requirements.builder().all().remove(WIRE)),
+    LEAD(Requirements.builder().all().remove(WIRE)),
+    URANIUM(Requirements.builder().all().remove(WIRE)),
+    IRIDIUM(Requirements.builder().all().remove(WIRE)),
     ALUMINUM,
     DEEPSLATE_TIN(Requirements.builder().add(ORE)),
     DEEPSLATE_LEAD(Requirements.builder().add(ORE)),
@@ -23,8 +24,8 @@ public enum ResourceElements {
     DEEPSLATE_ALUMINUM(Requirements.builder().add(ORE)),
     ENDERIUM(Requirements.builder().all().remove(ORE, CHUNK)),
 	DIAMOND(Requirements.builder().add(DUST)),
-	BRONZE(Requirements.builder().all().remove(ORE, CHUNK)),
-	IRON(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET)),
+	BRONZE(Requirements.builder().all().remove(ORE, CHUNK, WIRE)),
+	IRON(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET, WIRE)),
 	COPPER(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK)),
 	GOLD(Requirements.builder().all().remove(ORE, INGOT, BLOCK, CHUNK, NUGGET)),
 	OBSIDIAN(Requirements.builder().add(DUST)),
@@ -32,7 +33,7 @@ public enum ResourceElements {
 	COAL(Requirements.builder().add(DUST)),
 	CHARCOAL(Requirements.builder().add(DUST));
 
-    public static final List<ResourceElements> VALUES = Arrays.asList(values());
+    public static final List<ResourceElements> VALUES = Arrays.stream(values()).sorted(Comparator.comparing(ResourceElements::getName)).toList();
 
 	/**
 	 * Creates a map of the resource types which link together the elements that the resource contains.

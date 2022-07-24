@@ -3,14 +3,14 @@
   "inputItems": [
     {
       "ingredient": {
-        "tag": "forge:plates/aluminum"
+        "tag": "forge:rods/gold"
       },
       "count": 1
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:aluminum_wire",
+      "item": "ftbic:gold_wire",
       "count": 2
     }
   ]

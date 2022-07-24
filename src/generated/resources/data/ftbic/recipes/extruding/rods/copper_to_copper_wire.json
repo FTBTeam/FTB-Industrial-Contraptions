@@ -3,14 +3,14 @@
   "inputItems": [
     {
       "ingredient": {
-        "tag": "forge:plates/enderium"
+        "tag": "forge:rods/copper"
       },
       "count": 1
     }
   ],
   "outputItems": [
     {
-      "item": "ftbic:enderium_wire",
+      "item": "ftbic:copper_wire",
       "count": 2
     }
   ]

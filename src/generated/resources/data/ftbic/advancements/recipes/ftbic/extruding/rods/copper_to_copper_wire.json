@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "ftbic:extruding/aluminum_wire"
+      "ftbic:extruding/rods/copper_to_copper_wire"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:plates/aluminum"
+            "tag": "forge:rods/copper"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "ftbic:extruding/aluminum_wire"
+        "recipe": "ftbic:extruding/rods/copper_to_copper_wire"
       }
     }
   },

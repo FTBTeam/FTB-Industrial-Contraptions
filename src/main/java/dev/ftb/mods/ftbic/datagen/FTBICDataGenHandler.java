@@ -17,6 +17,7 @@ import dev.ftb.mods.ftbic.util.BurntBlockCondition;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.world.ResourceElements;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
@@ -57,6 +58,7 @@ import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -412,7 +414,7 @@ public class FTBICDataGenHandler {
 			withExistingParent("block/orientable_2d", "block/block")
 					.texture("particle", "#side")
 					.transforms()
-					.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+					.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 					.rotation(0F, 135F, 0F)
 					.translation(0F, 0F, 0F)
 					.scale(0.4F, 0.4F, 0.4F)
@@ -433,7 +435,7 @@ public class FTBICDataGenHandler {
 			withExistingParent("block/orientable_3d", "block/block")
 					.texture("particle", "#side")
 					.transforms()
-					.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+					.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 					.rotation(0F, 135F, 0F)
 					.translation(0F, 0F, 0F)
 					.scale(0.4F, 0.4F, 0.4F)
@@ -685,12 +687,12 @@ public class FTBICDataGenHandler {
 						.parent(new ModelFile.UncheckedModelFile(mcLoc("block/block")))
 						.texture("particle", modLoc(overlayTexture))
 						.transforms()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 2.5F, 0)
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 2.5F, 0)
 						.scale(0.375F, 0.375F, 0.375F)
@@ -775,34 +777,34 @@ public class FTBICDataGenHandler {
 						.texture("particle", modLoc("block/" + id))
 						.texture("cable", modLoc("block/" + id))
 						.transforms()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 1.5F, 0F)
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
-						.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+						.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
 						.rotation(75F, 45F, 0F)
 						.translation(0F, 1.5F, 0F)
 						.scale(0.375F, 0.375F, 0.375F)
 						.end()
-						.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+						.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 						.rotation(0F, 45F, 0F)
 						.scale(0.4F, 0.4F, 0.4F)
 						.end()
-						.transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
+						.transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
 						.rotation(0F, 225F, 0F)
 						.scale(0.4F, 0.4F, 0.4F)
 						.end()
-						.transform(ModelBuilder.Perspective.GROUND)
+						.transform(ItemTransforms.TransformType.GROUND)
 						.translation(0F, 3F, 0F)
 						.scale(0.25F, 0.25F, 0.25F)
 						.end()
-						.transform(ModelBuilder.Perspective.GUI)
+						.transform(ItemTransforms.TransformType.GUI)
 						.rotation(45F, 45F, 90F)
 						.translation(1.75F, 1F, 0F)
 						.scale(0.625F, 0.625F, 0.625F)
 						.end()
-						.transform(ModelBuilder.Perspective.FIXED)
+						.transform(ItemTransforms.TransformType.FIXED)
 						.translation(0F, -1.5F, 0F)
 						.scale(0.5F, 0.5F, 0.5F)
 						.end()
@@ -925,7 +927,7 @@ public class FTBICDataGenHandler {
 			tag(BlockTags.WITHER_IMMUNE).add(FTBICBlocks.REINFORCED_STONE.get(), FTBICBlocks.REINFORCED_GLASS.get());
 
 			// Ore tags (Make them minable)
-			Block[] resourceOres = FTBICBlocks.RESOURCE_ORES.values().stream().map(Supplier::get).toArray(Block[]::new);
+			Block[] resourceOres = FTBICBlocks.RESOURCE_ORES.values().stream().map(Supplier::get).sorted(Comparator.comparing(a -> a.getRegistryName().toString())).toArray(Block[]::new);
 			Block[] blockOfResources = FTBICBlocks.RESOURCE_BLOCKS_OF.values().stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(resourceOres);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(blockOfResources);
@@ -942,6 +944,8 @@ public class FTBICDataGenHandler {
 					FTBICBlocks.EXFLUID.get(),
 					FTBICBlocks.NUKE.get()
 			);
+
+			tag(Tags.Blocks.STORAGE_BLOCKS).add(blockOfResources);
 
 			Block[] cables = FTBICBlocks.CABLES.stream().map(Supplier::get).toArray(Block[]::new);
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(cables);
@@ -995,14 +999,6 @@ public class FTBICDataGenHandler {
 			tag(ENDERIUM_BLOCK).add(FTBICItems.getResourceFromType(ENDERIUM, BLOCK).orElseThrow().get());
 			tag(ALUMINUM_BLOCK).add(FTBICItems.getResourceFromType(ALUMINUM, BLOCK).orElseThrow().get());
 			tag(BRONZE_BLOCK).add(FTBICItems.getResourceFromType(BRONZE, BLOCK).orElseThrow().get());
-
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(TIN_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(LEAD_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(URANIUM_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(IRIDIUM_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(ENDERIUM_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(ALUMINUM_BLOCK);
-			tag(Tags.Items.STORAGE_BLOCKS).addTag(BRONZE_BLOCK);
 
 			//CHUNKS
 			tag(TIN_CHUNK).add(FTBICItems.getResourceFromType(TIN, CHUNK).orElseThrow().get());
