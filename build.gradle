@@ -64,6 +64,12 @@ repositories {
 	}
 
 	maven {
+		url "https://maven.nanite.dev"
+		content {
+			includeGroup "com.sunekaer.mods"
+		}
+	}
+	maven {
 		url 'https://maven.blamejared.com'
 	}
 
