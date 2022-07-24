@@ -6,7 +6,7 @@
     "pages":[
         {
             "type":"patchouli:text",
-            "text":"To generalize, there are 4 categories of \"machine\":$(li)Generators make energy$(li)Cables move energy$(li)Battery Boxes store energy$(li)Machines spend energy$(br2)On the right, a $(item)Basic Generator$() is making Zaps, $(item)LV Cables$() are sending it to an $(item)LV Battery Box$(), and then to a $(item)Macerator$() and $(item)Powered Furnace$()."
+            "text":"To generalize, there are 4 categories of \"machine\":$(li)Generators make energy$(li)Cables move energy$(li)Battery Boxes store energy$(li)Machines spend energy$(br2)On the right, a $(l:ftbic:generators/basic)Basic Generator$() is making Zaps, $(item)LV Cables$() are sending it to an $(l:ftbic:machines/battery_box)LV Battery Box$(), and then to a $(l:ftbic:machines/macerator)Macerator$() and $(l:ftbic:machines/powered_furnace)Powered Furnace$()."
         },
         {
             "type":"patchouli:image",
