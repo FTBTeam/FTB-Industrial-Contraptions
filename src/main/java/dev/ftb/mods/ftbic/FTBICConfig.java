@@ -250,7 +250,7 @@ public class FTBICConfig {
 			QUARRY_USE = MACHINES.getDouble("Quarry use", 3D, 0D, 100_000D).comment("Energy usage of the Quarry");
 			QUARRY_MINE_TICKS = MACHINES.getLong("Quarry mine ticks", 40L, 0L, 100_000L).comment("Duration taken to mine a block using the quarry");
 			QUARRY_MOVE_TICKS = MACHINES.getLong("Quarry move ticks", 10L, 0L, 100_000L).comment("Duration taken to move the quarry to a new location");
-			QUARRY_REPLACE_FLUID_EXFLUID = MACHINES.getBoolean("Quarry replace fluid with exfluid", true).comment("Whether fluid sources are replaced with exfluid on dig");
+			QUARRY_REPLACE_FLUID_EXFLUID = MACHINES.getBoolean("Quarry replace fluid with exfluid", true).comment("Whether blocks under fluid sources are replaced with exfluid on dig");
 			PUMP_CAPACITY = MACHINES.getDouble("Pump capacity", 10_000D, 1D, 100_000D).comment("Amount of energy stored in the Pump");
 			PUMP_USE = MACHINES.getDouble("Pump use", 3D, 0D, 100_000D).comment("Energy usage of the Pump");
 			PUMP_MINE_TICKS = MACHINES.getLong("Pump mine ticks", 40L, 0L, 100_000L).comment("Duration taken to mine a fluid using the pump");
