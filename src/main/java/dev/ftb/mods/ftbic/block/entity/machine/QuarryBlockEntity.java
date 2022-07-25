@@ -15,6 +15,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -90,7 +91,8 @@ public class QuarryBlockEntity extends DiggingBaseBlockEntity {
 
 		for (Direction direction : FTBICUtils.DIRECTIONS) {
 			if (direction != Direction.DOWN && level.getFluidState(miningPos.relative(direction)).getType() != Fluids.EMPTY) {
-				level.setBlock(miningPos, FTBICBlocks.EXFLUID.get().defaultBlockState(), 2);
+				BlockState replaceState = (FTBICConfig.MACHINES.QUARRY_REPLACE_FLUID_EXFLUID.get()) ? FTBICBlocks.EXFLUID.get().defaultBlockState() : Blocks.AIR.defaultBlockState();
+				level.setBlock(miningPos, replaceState, 2);
 				break;
 			}
 		}
