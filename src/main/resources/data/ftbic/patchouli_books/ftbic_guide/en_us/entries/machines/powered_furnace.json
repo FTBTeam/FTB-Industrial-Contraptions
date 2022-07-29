@@ -1,0 +1,17 @@
+{
+    "name":"Powered Furnace",
+    "icon":"ftbic:powered_furnace",
+    "category":"ftbic:machines",
+    "sortnum":1,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Powered Furnace$() uses Zaps to $(major)smelt items$().$(br2)It is much more efficient to burn fuel into Zaps to smelt items, rather than using a Furnace. 1 Coal makes enough Zaps to smelt 53.3 items."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:powered_furnace",
+            "text":"Each item smelted costs 300⚡.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only LV current."
+        }
+    ]
+}

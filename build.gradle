@@ -64,6 +64,10 @@ repositories {
 	}
 
 	maven {
+		url 'https://maven.blamejared.com'
+	}
+
+	maven {
 		url "https://maven.nanite.dev/"
 	}
 
@@ -92,6 +96,9 @@ dependencies {
 	// provides the JEI API, so we're good to go
 	modLocalRuntime modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
 	modLocalRuntime modCompileOnly("me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:${rootProject.rei_version}")
+
+	modApi "vazkii.patchouli:Patchouli:${patchouli_version}:api"
+	modRuntimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
 }
 
 processResources {

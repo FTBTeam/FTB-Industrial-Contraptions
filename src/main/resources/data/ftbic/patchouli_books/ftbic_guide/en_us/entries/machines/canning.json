@@ -1,0 +1,17 @@
+{
+    "name":"Canning Machine",
+    "icon":"ftbic:canning_machine",
+    "category":"ftbic:machines",
+    "sortnum":5,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Canning Machine$() uses Zaps to fill Cans.$(br2)$(item)Canned Food$() fills 4 points of hunger and saturation each. The empty Can is returned after eating.$(br2)$(item)Spray Paint$() allows you to paint machines from their default white theme to black and back."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:canning_machine",
+            "text":"It costs 200⚡ to fill a Can.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only LV current."
+        }
+    ]
+}

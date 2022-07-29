@@ -1,0 +1,29 @@
+{
+    "name":"Resources",
+    "icon":"ftbic:tin_chunk",
+    "category":"ftbic:first",
+    "sortnum":0,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(major)FTB Industrial Contraptions$() adds several resources to the world. The new ores added are:$(item)$(li)Tin$(li)Lead$(li)Aluminum$(li)Uranium$(li)Iridium$()"
+        },
+        {
+            "type":"patchouli:image",
+            "images":["ftbic:textures/patchouli/ores.png"],
+            "border":true,
+            "title":"Ores"
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"myrtrees:rubberwood_sapling",
+            "title":"Rubberwood Trees",
+            "text":"The mod $(major)Myrtrees$() adds $(item)Rubber Trees$(), which can be used to collect $(item)Latex$() for Rubber.$(br2)If you can't find a Rubber Tree, you can get Rubber from any other Slime Ball."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"myrtrees:tree_tap",
+            "text":"Place a $(item)Tree Tap$() on Rubberwood Logs, and then place a $(item)Wooden Bucket$() directly below.$(br2)The Bucket will slowly fill with liquid Latex. Right-click to collect 1,000mB as a Latex item. The Bucket can only hold up to 2,000mB."
+        }
+    ]
+}

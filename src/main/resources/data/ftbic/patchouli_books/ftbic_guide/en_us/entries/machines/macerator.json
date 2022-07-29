@@ -1,0 +1,17 @@
+{
+    "name":"Macerator",
+    "icon":"ftbic:macerator",
+    "category":"ftbic:machines",
+    "sortnum":2,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Macerator$() uses Zaps to crush items. This can be used to $(major)get more from ores$() and other items, make dusts, and separate items like Wool into String."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:macerator",
+            "text":"Some recipes have a chance to make a second item. For example, Raw Iron has a 35% chance of making a second Iron Dust.$(br2)It costs 400⚡ to crush an item.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only LV current."
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "name":"Battery Boxes",
+    "icon":"ftbic:lv_battery_box",
+    "category":"ftbic:machines",
+    "sortnum":0,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Battery Boxes$() $(major)store Zaps$(). Higher tier Battery Boxes store more Zaps, and input/output higher Voltage.$(br2)Battery Boxes have 5 input faces and 1 output face.$(br2)Battery Boxes can $(major)charge and discharge items$() like $(l:ftbic:items/battery)Batteries$() in their GUIs."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:lv_battery_box",
+            "text":"Similar to Battery Boxes are Transformers, which are mentioned $(l:ftbic:first/zaps#transformers)here$().$(br2)$(red)$(l)Stored energy is lost if the Battery Box is broken.$()"
+        }
+    ]
+}

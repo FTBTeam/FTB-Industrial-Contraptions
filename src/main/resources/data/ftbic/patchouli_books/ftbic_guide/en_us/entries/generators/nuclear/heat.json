@@ -1,0 +1,35 @@
+{
+    "name":"Heat",
+    "icon":"ftbic:fluid_cell{Fluid:'minecraft:lava'}",
+    "category":"ftbic:nuclear",
+    "sortnum":1,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The Nuclear Reactor generates Zaps by burning $(l:ftbic:generators/nuclear/fuel)Uranium Fuel Rods$(). As they are burned, they create Zaps, but also $(c)Heat$().$(br2)If Heat reaches 10,000, the Reactor will explode. The faster it was heating (heat/s), the bigger the explosion.$(br2)Heat is generated at the end of every second, rather than every tick."
+        },
+        {
+            "type":"patchouli:image",
+            "images":["ftbic:textures/patchouli/reactor_meltdown.png"],
+            "text":"A 42 block radius explosion, from a Reactor with 16 Quad Fuel Cells and no coolant.",
+            "title":"Reactor Meltdown"
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:reinforced_stone",
+            "text":"$(item)Reinforced Stone$() is $(l)VERY$() resistant to explosions, including those from the Wither, Ender Dragon, and even Nuclear meltdowns!$(br2)Also comes in $(item)Reinforced Glass$() form, which functions identically.",
+            "anchor":"reinforced"
+        },
+        {
+            "type":"patchouli:text",
+            "text":"Heat in the Reactor works on a grid-based system. Each slot can interact with the 4 slots it touches.$(br2)As a Fuel Rod generates heat, it will see if an adjacent item can absorb it. If it can, it does so. If there isn't one, the Reactor itself heats up.$(br2)This is what causes explosion and whatnot, so try to avoid that.",
+            "title":"Heat Distribution"
+        },
+        {
+            "type":"patchouli:image",
+            "images":["ftbic:textures/patchouli/simplest_reactor.png"],
+            "title":"The Simplest Reactor",
+            "text":"Since they are touching, the $(l:ftbic:generators/nuclear/sus)Heat Vent$() can absorb the Heat from the Fuel Rod."
+        }
+    ]
+}

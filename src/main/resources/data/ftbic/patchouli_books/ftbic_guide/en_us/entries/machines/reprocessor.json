@@ -1,0 +1,17 @@
+{
+    "name":"Reprocessor",
+    "icon":"ftbic:reprocessor",
+    "category":"ftbic:machines",
+    "sortnum":5,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Reprocessor$() uses Zaps to make Scrap out of any other item.$(br2)Scrap and Scrap Boxes can be used in the $(l:ftbic:machines/antimatter_constructor)Antimatter Constructor$() to make Antimatter cheaper."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:reprocessor",
+            "text":"It costs 600⚡ to recycle an item into Scrap.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only up to MV current."
+        }
+    ]
+}

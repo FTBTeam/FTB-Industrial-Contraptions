@@ -1,0 +1,17 @@
+{
+    "name":"Batteries",
+    "icon":"ftbic:ev_battery",
+    "category":"ftbic:items",
+    "sortnum":1,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Batteries$() $(major)store Zaps$(). Higher tier Batteries store more Zaps.$(br2)$(o)Technically$(), Batteries do not have Voltages. You can use an EV Battery on an LV machine without trouble.$(br2)You can fill Batteries in Generators or Battery Boxes, and drain them in all non-generator machines."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:lv_battery",
+            "text":"The $(item)Single-Use Battery$() is full when crafted, and vanishes when drained."
+        }
+    ]
+}

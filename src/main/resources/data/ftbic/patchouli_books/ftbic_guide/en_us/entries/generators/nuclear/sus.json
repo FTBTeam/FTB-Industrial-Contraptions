@@ -1,0 +1,33 @@
+{
+    "name":"Heat Vents",
+    "icon":"ftbic:heat_vent",
+    "category":"ftbic:nuclear",
+    "sortnum":4,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Heat Vents$() are another Reactor Component for manipulating Heat.$(br2)Unlike $(l:ftbic:generators/nuclear/coolant)Coolant Cells$(), Heat Vents will $(major)repair themselves over time$()."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:heat_vent",
+            "text":"The $(item)Advanced Heat Vent$() is simply a superior version of the normal Vent. It cools itself twice as fast."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:reactor_heat_vent",
+            "text":"The $(item)Reactor Heat Vent$() cools both itself and the Reactor at the same time, though at a slower rate.$(br2)These can be placed anywhere, if you only want it to cool the Reactor instead of absorbing Heat itself."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:overclocked_heat_vent",
+            "text":"The $(item)Overclocked Heat Vent$() is the upgraded form, working much faster."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:component_heat_vent",
+            "text":"The $(item)Component Heat Vent$() cannot absorb Heat, but instead cools all 4 adjacent Components.$(br2)Best used with $(l:ftbic:generators/nuclear/exchangers)Heat Exchangers$().",
+            "anchor":"component"
+        }
+    ]
+}

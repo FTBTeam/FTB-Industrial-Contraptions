@@ -1,0 +1,28 @@
+{
+    "name":"Quarry",
+    "icon":"ftbic:quarry",
+    "category":"ftbic:machines",
+    "sortnum":10,
+    "pages": [
+        {
+            "type":"patchouli:text",
+            "text": "The $(item)Quarry$() uses Zaps to $(major)mine an area$().$(br2)By default, the Quarry mines in a 7x7 area, all the way down to Bedrock.$(br2)Mined items will be collected into the Quarry's inventory.$(br2)To prevent lag, Ex-Fluids will be placed around fluids to prevent them from flowing."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:quarry",
+            "text":"It costs a little over 150⚡ to mine each block.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only up to HV current."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:landmark",
+            "text":"By default, the Quarry only mines a 7x7 area. You can increase this using $(item)Landmarks$().$(br2)Place up to 3 Landmarks to set the boundary, and place the Quarry so it's inline with all of them.",
+            "anchor":"landmarks"
+        },
+        {
+            "type":"patchouli:image",
+            "images":["ftbic:textures/patchouli/quarry.png"],
+            "title":"Placing Landmarks"
+        }
+    ]
+}

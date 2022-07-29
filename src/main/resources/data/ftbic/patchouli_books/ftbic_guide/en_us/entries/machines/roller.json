@@ -1,0 +1,17 @@
+{
+    "name":"Roller",
+    "icon":"ftbic:roller",
+    "category":"ftbic:machines",
+    "sortnum":7,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Roller$() uses Zaps to flatten Ingots into Plates."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:roller",
+            "text":"It costs 600⚡ to roll an item.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only MV current."
+        }
+    ]
+}

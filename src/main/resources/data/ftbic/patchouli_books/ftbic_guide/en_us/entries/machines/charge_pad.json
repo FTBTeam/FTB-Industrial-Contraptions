@@ -1,0 +1,17 @@
+{
+    "name":"Charge Pad",
+    "icon":"ftbic:charge_pad",
+    "category":"ftbic:machines",
+    "sortnum":9,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Charge Pad$() will use its Zaps to $(major)charge items in your inventory$() when you stand on it."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:charge_pad",
+            "text":"It can accept up to IV current."
+        }
+    ]
+}
