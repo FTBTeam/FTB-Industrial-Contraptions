@@ -32,29 +32,6 @@ loom {
 	}
 }
 
-dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-
-	mappings loom.layered() {
-		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.18.2:2022.07.03")
-	}
-
-	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
-	modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")
-
-	modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
-
-	modImplementation("io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}")
-	modImplementation("dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}")
-	modImplementation("dev.ftb.mods:ftb-library-forge:${rootProject.ftblibrary_version}") { transitive = false }
-	modImplementation("dev.ftb.mods:ftb-teams-forge:${rootProject.ftbteams_version}") { transitive = false }
-	modImplementation("dev.ftb.mods:ftb-chunks-forge:${rootProject.ftbchunks_version}") { transitive = false }
-
-	// Mods
-	modRuntimeOnly ("com.sunekaer.mods:ToolKit:2.2.1-build.4+mc1.18.2") // local
-}
-
 repositories {
 	maven {
 		url "https://maven.architectury.dev/"
@@ -82,18 +59,46 @@ repositories {
 	}
 
 	maven {
+		name = 'ParchmentMC'
+		url = 'https://maven.parchmentmc.org'
+	}
+
+	maven {
 		url "https://maven.nanite.dev"
 		content {
 			includeGroup "com.sunekaer.mods"
 		}
 	}
-
 	maven {
-		name = 'ParchmentMC'
-		url = 'https://maven.parchmentmc.org'
+		url 'https://maven.blamejared.com'
 	}
 
 	mavenLocal()
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-1.18.2:2022.07.03")
+	}
+
+	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+	modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")
+
+	modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
+
+	modImplementation("io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}")
+	modImplementation("dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}")
+	modImplementation("dev.ftb.mods:ftb-library-forge:${rootProject.ftblibrary_version}") { transitive = false }
+	modImplementation("dev.ftb.mods:ftb-teams-forge:${rootProject.ftbteams_version}") { transitive = false }
+	modImplementation("dev.ftb.mods:ftb-chunks-forge:${rootProject.ftbchunks_version}") { transitive = false }
+
+	// Mods
+	modRuntimeOnly ("com.sunekaer.mods:ToolKit:2.2.1-build.4+mc1.18.2") // local
+	modApi "vazkii.patchouli:Patchouli:${patchouli_version}:api"
+	modRuntimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
 }
 
 processResources {

@@ -1,0 +1,42 @@
+{
+    "name":"Zaps",
+    "icon":"ftbic:ev_battery",
+    "category":"ftbic:first",
+    "sortnum":1,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(major)FTB Industrial Contraptions$() does not use $(red)FE$(), but uses its own energy system: $(item)Zaps$() (⚡)!$(br2)You $(red)cannot use FE$() on FTB:IC machines. However, you $(o)can$() convert Zaps to FE. One Zap is equal to 4 FE.$(br2)Generators, Cables, and Battery Boxes will connect to FE-using blocks, and will automatically convert their Zaps to FE to power the block."
+        },
+        {
+            "type":"patchouli:text",
+            "title":"Voltage",
+            "text":"Like IC2's EU, Zaps have a Voltage tier system. The higher Voltage, the more ⚡/t can be transferred.$(br2)There are 5 tiers:$(li)Low Voltage (LV) - 32⚡/t$(li)Medium Voltage (MV) - 128⚡/t$(li)High Voltage (HV)512⚡/t$(li)Extreme Voltage (EV) - 2,048⚡/t$(li)Insane Voltage (IV) - 8,192⚡/t$(br2)Some machines cannot handle higher Voltage, but you can always use lower ones."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:fuse",
+            "text":"When you give a machine a Voltage higher than it can handle, it will $(red)stop working$().$(br2)To repair it, right-click it with a $(item)Fuse$() to repair it. Mining a burnt machine will drop a Machine Block rather than the machine itself.$(br2)Likewise, a lower-Voltage Cable will burn. Burnt Cables can be recycled into Scrap, but $(red)cannot carry a current$()."
+        },
+        {
+            "type":"patchouli:image",
+            "images":["ftbic:textures/patchouli/burnt_cable.png","ftbic:textures/patchouli/blown_fuse.png"],
+            "text":"An LV Cable and machine after being given EV power.",
+            "title":"Voltage Mismatch",
+            "border":true
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:lv_transformer",
+            "title":"Transformers",
+            "text":"$(item)Transformers$() allow you to convert between different Voltages.$(br2)Transformers have 1 input face and 5 outputs. A Transformer will convert between its tier and the tier above.$(li)Give the input LV, and the outputs will send MV.$(li)Give the input MV, and the outputs will send LV.",
+            "anchor":"transformers"
+        },
+        {
+            "type":"patchouli:image",
+            "images":["ftbic:textures/patchouli/transformers.png","ftbic:textures/patchouli/transformers2.png"],
+            "text":"The arrow points in the direction that has the output face, opposite of the flow of current.",
+            "border":true
+        }
+    ]
+}

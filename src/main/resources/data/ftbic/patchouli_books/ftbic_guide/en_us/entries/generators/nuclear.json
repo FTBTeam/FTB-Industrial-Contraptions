@@ -1,0 +1,12 @@
+{
+    "name":"Nuclear Reactor",
+    "icon":"ftbic:nuclear_reactor",
+    "category":"ftbic:generators",
+    "sortnum":4,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Nuclear Reactor$() is definitely the most complex part of the mod, so it has been given an $(l:ftbic:nuclear)entire category$() for itself."
+        }
+    ]
+}

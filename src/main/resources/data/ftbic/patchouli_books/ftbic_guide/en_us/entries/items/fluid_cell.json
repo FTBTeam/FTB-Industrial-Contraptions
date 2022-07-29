@@ -1,0 +1,16 @@
+{
+    "name":"Fluid Cells",
+    "icon":"ftbic:fluid_cell",
+    "category":"ftbic:items",
+    "sortnum":0,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"$(item)Fluid Cells$() $(major)store fluids$(), but unlike Buckets can $(major)stack up to 16$().$(br2)Fluid Cells can collect fluid sources, but cannot pour them back out."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:fluid_cell"
+        }
+    ]
+}

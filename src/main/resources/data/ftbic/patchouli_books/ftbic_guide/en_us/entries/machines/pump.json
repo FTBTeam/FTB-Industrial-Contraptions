@@ -1,0 +1,17 @@
+{
+    "name":"Pump",
+    "icon":"ftbic:pump",
+    "category":"ftbic:machines",
+    "sortnum":11,
+    "pages": [
+        {
+            "type":"patchouli:text",
+            "text": "The $(item)Pump$() uses Zaps to collect fluid in an area.$(br2)You can extract Fluid from the Pump using $(l:ftbic:items/fluid_cell)Fluid Cells$(), Buckets, or using fluid pipes from another mod."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:pump",
+            "text":"Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only up to HV current.$(br2)By default, the Pump drains a 7x7 area, all the way down to the bottom of the pool. You can extend this area with $(l:ftbic:machines/quarry#landmarks)Landmarks$()."
+        }
+    ]
+}

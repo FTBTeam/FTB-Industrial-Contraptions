@@ -1,0 +1,18 @@
+{
+    "name":"Antimatter Constructor",
+    "icon":"ftbic:antimatter_constructor",
+    "category":"ftbic:machines",
+    "sortnum":9,
+    "pages":[
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:antimatter_constructor",
+            "text":"The $(item)Antimatter Constructor$() uses Zaps to conjure Antimatter.$(br2)It costs 1,000,000⚡ to roll an item.$(br2)It can accept up to IV current."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:antimatter",
+            "text":"$(item)Antimatter$() is used in a handful of endgame recipes.$(br2)You can put $(l:ftbic:machines/reprocessor)Scrap and Scrap Boxes$() in the left slot to make Antimatter cheaper."
+        }
+    ]
+}

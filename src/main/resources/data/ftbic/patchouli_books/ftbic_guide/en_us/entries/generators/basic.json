@@ -1,0 +1,17 @@
+{
+    "name":"Basic Generator",
+    "icon":"ftbic:basic_generator",
+    "category":"ftbic:generators",
+    "sortnum":0,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Basic Generator$() generates Zaps using furnace fuel. The longer a fuel would burn, the more Zaps it makes."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:basic_generator",
+            "text":"For every 1 item a fuel would smelt, it generates 2,000⚡.$(br2)For example, Coal smelts 8 items and generates 16,000⚡.$(br2)As the Generator only outputs at 10⚡/t, it is LV."
+        }
+    ]
+}

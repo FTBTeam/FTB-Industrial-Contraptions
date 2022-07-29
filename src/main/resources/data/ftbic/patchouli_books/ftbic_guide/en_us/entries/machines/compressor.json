@@ -1,0 +1,17 @@
+{
+    "name":"Compressor",
+    "icon":"ftbic:compressor",
+    "category":"ftbic:machines",
+    "sortnum":4,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Compressor$() uses Zaps to compress items into other items."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:compressor",
+            "text":"It costs 400⚡ to compress an item.$(br2)Without $(l:ftbic:items/upgrades)upgrades$(), it accepts only LV current."
+        }
+    ]
+}

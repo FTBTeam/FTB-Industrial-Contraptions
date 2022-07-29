@@ -1,0 +1,17 @@
+{
+    "name":"Mechanical Elytra",
+    "icon":"ftbic:mechanical_elytra",
+    "category":"ftbic:items",
+    "sortnum":4,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"The $(item)Mechanical Elytra$() works as an Elytra, but much more advanced.$(br2)While gliding, you can sprint forward to gain a constant $(major)speed boost$() using Zaps.$(br2)Sneaking midair will halt you, floating where you were. This also uses Zaps."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:mechanical_elytra",
+            "text":"The Mechanical Elytra $(red)is not armor$() and provides no damage reduction. It also does not power Carbon Powerarmor.$(br2)While not flying, the Mechanical Elytra will recharge using solar power."
+        }
+    ]
+}

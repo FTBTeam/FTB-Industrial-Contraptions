@@ -1,0 +1,17 @@
+{
+    "name":"Solar Panels",
+    "icon":"ftbic:lv_solar_panel",
+    "category":"ftbic:generators",
+    "sortnum":3,
+    "pages":[
+        {
+            "type":"patchouli:text",
+            "text":"There are four tiers of $(item)Solar Panel$(), for the first 4 Voltages.$(br2)Solar Panels passively produce Zaps when they have access to sunlight.$(br2)Each tier makes 8 times more ⚡/t than the previous."
+        },
+        {
+            "type":"patchouli:spotlight",
+            "item":"ftbic:lv_solar_panel",
+            "text":"Each Panel and their speed:$(li)LV - 1⚡/t$(li)MV - 8⚡/t$(li)HV - 64⚡/t$(li)EV - 512⚡/t"
+        }
+    ]
+}
