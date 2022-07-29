@@ -16,6 +16,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
@@ -103,7 +104,8 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHan
 					fluidStack.setAmount(fluidStack.getAmount() + FluidType.BUCKET_VOLUME);
 				}
 
-				level.setBlock(miningPos, FTBICBlocks.EXFLUID.get().defaultBlockState(), 2);
+				BlockState replaceState = (FTBICConfig.MACHINES.PUMP_REPLACE_FLUID_EXFLUID.get()) ? FTBICBlocks.EXFLUID.get().defaultBlockState() : Blocks.AIR.defaultBlockState();
+				level.setBlock(miningPos, replaceState, 2);
 				setChanged();
 			}
 		}

@@ -173,10 +173,12 @@ public class FTBICConfig {
 		public final DoubleValue QUARRY_USE;
 		public final LongValue QUARRY_MINE_TICKS;
 		public final LongValue QUARRY_MOVE_TICKS;
+		public final BooleanValue QUARRY_REPLACE_FLUID_EXFLUID;
 		public final DoubleValue PUMP_CAPACITY;
 		public final DoubleValue PUMP_USE;
 		public final LongValue PUMP_MINE_TICKS;
 		public final LongValue PUMP_MOVE_TICKS;
+		public final BooleanValue PUMP_REPLACE_FLUID_EXFLUID;
 		public final IntValue PUMP_TANK_CAPACITY;
 		public final DoubleValue ITEM_TRANSFER_EFFICIENCY;
 		public final IntValue STATE_UPDATE_TICKS;
@@ -248,10 +250,12 @@ public class FTBICConfig {
 			QUARRY_USE = MACHINES.getDouble("Quarry use", 3D, 0D, 100_000D).comment("Energy usage of the Quarry");
 			QUARRY_MINE_TICKS = MACHINES.getLong("Quarry mine ticks", 40L, 0L, 100_000L).comment("Duration taken to mine a block using the quarry");
 			QUARRY_MOVE_TICKS = MACHINES.getLong("Quarry move ticks", 10L, 0L, 100_000L).comment("Duration taken to move the quarry to a new location");
+			QUARRY_REPLACE_FLUID_EXFLUID = MACHINES.getBoolean("Quarry replace fluid with exfluid", true).comment("Whether blocks under fluid sources are replaced with exfluid on dig");
 			PUMP_CAPACITY = MACHINES.getDouble("Pump capacity", 10_000D, 1D, 100_000D).comment("Amount of energy stored in the Pump");
 			PUMP_USE = MACHINES.getDouble("Pump use", 3D, 0D, 100_000D).comment("Energy usage of the Pump");
 			PUMP_MINE_TICKS = MACHINES.getLong("Pump mine ticks", 40L, 0L, 100_000L).comment("Duration taken to mine a fluid using the pump");
 			PUMP_MOVE_TICKS = MACHINES.getLong("Pump move ticks", 10L, 0L, 100_000L).comment("Duration taken to move the pump to a new location");
+			PUMP_REPLACE_FLUID_EXFLUID = MACHINES.getBoolean("Pump replace fluid with exfluid", true).comment("Whether fluid sources are replaced with exfluid on pump");
 			PUMP_TANK_CAPACITY = MACHINES.getInt("Pump tank capacity", FluidType.BUCKET_VOLUME * 128, 1, 100_000).comment("Amount of energy stored in the Pump Tank");
 			ITEM_TRANSFER_EFFICIENCY = MACHINES.getDouble("Item transfer efficiency", 20.0D, 0D, Double.POSITIVE_INFINITY).comment("Determines how effective an item can transport energy to something else");
 			STATE_UPDATE_TICKS = MACHINES.getInt("State update ticks", 6, 1, 1_000).comment("To reduce lag, we only update a state of a block every X ticks. This controls how many ticks we wait to update the blocks state.");
