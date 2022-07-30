@@ -105,7 +105,12 @@ processResources {
 	inputs.property "version", project.version
 
 	filesMatching("META-INF/mods.toml") {
-		expand "version": project.version
+		expand "version": project.version,
+				"archversion": project.architectury_version,
+				"ftblibversion": project.ftblibrary_version,
+				"mcversion": project.minecraft_version,
+				"forgeversion": project.forge_version,
+				"forgeshortversion": project.forge_version.split('\\.')[0]
 	}
 }
 
@@ -177,6 +182,7 @@ if (ENV.CURSEFORGE_KEY) {
 			relations {
 				requiredDependency 'architectury-api'
 				requiredDependency 'myrtrees'
+				requiredDependency 'ftb-library-forge'
 			}
 			changelog = getGitChangelog
 			changelogType = 'markdown'
