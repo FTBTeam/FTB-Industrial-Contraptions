@@ -1,5 +1,5 @@
 modLoader = "javafml" #mandatory
-loaderVersion = "[40,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion = "[${forgeshortversion},)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 license = "All rights reserved"
 issueTrackerURL="https://github.com/FTBTeam/FTB-Mods-Issues/issues" #optional
 [[mods]] #mandatory
@@ -14,21 +14,28 @@ FTB Industrial Contraptions
 [[dependencies.ftbic]] #optional
 modId = "forge" #mandatory
 mandatory = true #mandatory
-versionRange = "[40,)" #mandatory
+versionRange = "[${forgeversion},)" #mandatory
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.ftbic]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.18.2,)"
+versionRange = "[${mcversion},)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.ftbic]]
 modId = "architectury"
 mandatory = true
-versionRange = "[1,)"
+versionRange = "[${archversion},)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.ftbic]]
+modId = "ftblibrary"
+mandatory = true
+versionRange = "[${ftblibversion},)"
 ordering = "AFTER"
 side = "BOTH"
 
