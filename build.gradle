@@ -112,7 +112,8 @@ processResources {
 				"forgeversion": project.forge_version,
 				"forgeshortversion": project.forge_version.split("\\.")[0],
 				"mcversion": project.minecraft_version,
-				"mytreesversion": project.minecraft_version
+				"mytreesversion": project.minecraft_version,
+				"ftblibversion": project.ftblibrary_version
 	}
 }
 
@@ -185,6 +186,7 @@ if (ENV.CURSEFORGE_KEY) {
 			relations {
 				requiredDependency 'architectury-api'
 				requiredDependency 'myrtrees'
+				requiredDependency 'ftb-library-forge'
 			}
 			changelog = getGitChangelog
 			changelogType = 'markdown'

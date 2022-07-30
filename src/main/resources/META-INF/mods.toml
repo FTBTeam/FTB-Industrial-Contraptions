@@ -32,6 +32,13 @@ versionRange = "[${archversion},)"
 ordering = "AFTER"
 side = "BOTH"
 
+[[dependencies.ftbic]]
+modId = "ftblibrary"
+mandatory = true
+versionRange = "[${ftblibversion},)"
+ordering = "AFTER"
+side = "BOTH"
+
 #[[dependencies.ftbic]]
 #modId = "emendatusenigmatica"
 #mandatory = false
