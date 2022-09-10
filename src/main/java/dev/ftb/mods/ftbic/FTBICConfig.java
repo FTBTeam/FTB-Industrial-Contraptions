@@ -122,6 +122,8 @@ public class FTBICConfig {
 		public final DoubleValue WIND_MILL_CAPACITY;
 		public final DoubleValue WIND_MILL_MIN_OUTPUT;
 		public final DoubleValue WIND_MILL_MAX_OUTPUT;
+
+		public final DoubleValue NUCLEAR_GENERATOR_OUTPUT;
 		public final IntValue WIND_MILL_MIN_Y;
 		public final IntValue WIND_MILL_MAX_Y;
 		public final DoubleValue WIND_MILL_RAIN_MODIFIER;
@@ -212,6 +214,7 @@ public class FTBICConfig {
 			HV_SOLAR_PANEL_CAPACITY = MACHINES.getDouble("Hv solar panel capacity", 3840D, 1D, 100_000D).comment("Amount of energy stored inm the Hv solar panel");
 			EV_SOLAR_PANEL_CAPACITY = MACHINES.getDouble("Ev solar panel capacity", 30720D, 1D, 100_000D).comment("Amount of energy stored in the Ev solar panel");
 			NUCLEAR_REACTOR_CAPACITY = MACHINES.getDouble("Nuclear reactor capacity", 50_000D, 1D, 100_000D).comment("Amount of energy stored in the Nuclear Reactor");
+			NUCLEAR_GENERATOR_OUTPUT = MACHINES.getDouble("Nuclear Reactor output multiplier", 1D,.1D,100).comment("Energy or Steam multiplier for Nuclear Reactor Output");
 			MACHINE_RECIPE_BASE_TICKS = MACHINES.getDouble("Machine recipe base ticks", 200D, 1D, 100_000D).comment("Base lengths in ticks a machine takes to process a recipe");
 			POWERED_FURNACE_CAPACITY = MACHINES.getDouble("Powered furnace capacity", 1_200D, 1D, 100_000D).comment("Amount of energy stored in the Powered Furnace");
 			POWERED_FURNACE_USE = MACHINES.getDouble("Powered furnace use", 3D, 0D, 100_000D).comment("Energy usage per operation of the powered furnace");
