@@ -51,6 +51,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public static final int[] OFFSET_Y = {-1, 1, 0, 0};
 
 	public static final SyncedDataKey<Double> ENERGY_OUTPUT = new SyncedDataKey<>("energy_output", 0D);
+	public static final double ENERGY_MULTIPLIER = FTBICConfig.MACHINES.NUCLEAR_GENERATOR_OUTPUT.get();
 	public static final SyncedDataKey<Integer> HEAT = new SyncedDataKey<>("heat", 0);
 	public static final SyncedDataKey<Integer> MAX_HEAT = new SyncedDataKey<>("max_heat", 0);
 
@@ -153,7 +154,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		super.addSyncData(data);
 		data.addBoolean(SyncedData.PAUSED, () -> reactor.paused);
 		data.addBoolean(SyncedData.ALLOW_REDSTONE_CONTROL, () -> reactor.allowRedstoneControl);
-		data.addDouble(ENERGY_OUTPUT, () -> reactor.energyOutput);
+		data.addDouble(ENERGY_OUTPUT, () -> (reactor.energyOutput * ENERGY_MULTIPLIER));
 		data.addInt(HEAT, () -> reactor.heat);
 		data.addInt(MAX_HEAT, () -> reactor.maxHeat);
 	}
@@ -194,6 +195,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		if (reactor.energyOutput > 0) {
 			active = true;
 			energy += Math.min(reactor.energyOutput, energyCapacity - energy);
+			energy *= ENERGY_MULTIPLIER;
 		}
 
 		if (level != null) {
