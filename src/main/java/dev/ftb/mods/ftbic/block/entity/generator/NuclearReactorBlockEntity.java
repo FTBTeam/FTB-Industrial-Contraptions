@@ -51,7 +51,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public static final int[] OFFSET_Y = {-1, 1, 0, 0};
 
 	public static final SyncedDataKey<Double> ENERGY_OUTPUT = new SyncedDataKey<>("energy_output", 0D);
-	public static final double ENERGY_MULTIPLIER = FTBICConfig.MACHINES.NUCLEAR_GENERATOR_OUTPUT.get();
+	public double ENERGY_MULTIPLIER = FTBICConfig.MACHINES.NUCLEAR_GENERATOR_OUTPUT.get();
 	public static final SyncedDataKey<Integer> HEAT = new SyncedDataKey<>("heat", 0);
 	public static final SyncedDataKey<Integer> MAX_HEAT = new SyncedDataKey<>("max_heat", 0);
 
