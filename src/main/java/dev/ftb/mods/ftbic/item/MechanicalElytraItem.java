@@ -109,7 +109,7 @@ public class MechanicalElytraItem extends ArmorItem implements EnergyItemHandler
 
 	@Override
 	public void onArmorTick(ItemStack stack, Level level, Player player) {
-		if (FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_RECHARGE.get() > 0D && !level.isClientSide() && !player.isFallFlying() && level.isDay() && level.canSeeSky(new BlockPos(player.getEyePosition(1F)))) {
+		if (FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_RECHARGE.get() > 0D && !level.isClientSide() && !player.isFallFlying() && level.getSkyDarken() < 4 && level.canSeeSky(new BlockPos(player.getEyePosition(1F)))) {
 			insertEnergy(stack, FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_RECHARGE.get(), false);
 		}
 	}

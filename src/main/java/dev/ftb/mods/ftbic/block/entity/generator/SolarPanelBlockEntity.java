@@ -25,7 +25,7 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public void handleGeneration() {
-		if (energy < energyCapacity && level.isDay() && level.canSeeSky(worldPosition.above())) {
+		if (energy < energyCapacity && level.getSkyDarken() < 4 && level.canSeeSky(worldPosition.above())) {
 			energy += Math.min(energyCapacity - energy, maxEnergyOutput);
 		}
 	}
@@ -42,6 +42,6 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public void addSyncData(SyncedData data) {
 		super.addSyncData(data);
-		data.addShort(SyncedData.BAR, () -> level.isDay() && level.canSeeSky(worldPosition.above()) ? 14 : 0);
+		data.addShort(SyncedData.BAR, () -> level.getSkyDarken() < 4 && level.canSeeSky(worldPosition.above()) ? 14 : 0);
 	}
 }
