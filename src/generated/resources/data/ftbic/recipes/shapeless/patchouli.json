@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:patchouli",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+		{
+			"tag": "forge:gears/tin"
+		}
+  ],
+  "result": {
+		"item": "patchouli:guide_book",
+		"nbt":
+			{
+				"patchouli:book": "ftbic:ftbic_guide"
+			}
+  }
+}
