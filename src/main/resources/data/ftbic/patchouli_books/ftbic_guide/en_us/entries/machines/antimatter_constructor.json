@@ -7,7 +7,7 @@
         {
             "type":"patchouli:spotlight",
             "item":"ftbic:antimatter_constructor",
-            "text":"The $(item)Antimatter Constructor$() uses Zaps to conjure Antimatter.$(br2)It costs 1,000,000⚡ to roll an item.$(br2)It can accept up to IV current."
+            "text":"The $(item)Antimatter Constructor$() uses Zaps to conjure Antimatter.$(br2)Each Antimatter costs 1,000,000⚡.$(br2)It can accept up to IV current."
         },
         {
             "type":"patchouli:spotlight",
