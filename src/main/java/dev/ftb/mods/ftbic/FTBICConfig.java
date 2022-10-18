@@ -232,7 +232,7 @@ public class FTBICConfig {
 			ROLLER_USE = MACHINES.getDouble("Roller use", 3D, 0D, 100_000D).comment("Energy usage of the Roller");
 			EXTRUDER_CAPACITY = MACHINES.getDouble("Extruder capacity", 1_200D, 1D, 100_000D).comment("Amount of energy stored in the Extruder");
 			EXTRUDER_USE = MACHINES.getDouble("Extruder use", 3D, 0D, 100_000D).comment("Energy usage of the Extruder");
-			ANTIMATTER_CONSTRUCTOR_CAPACITY = MACHINES.getDouble("Antimatter constructor capacity", 1_000_000D, 1D, 100_000D).comment("Amount of energy stored in the Antimatter Constructor");
+			ANTIMATTER_CONSTRUCTOR_CAPACITY = MACHINES.getDouble("Antimatter constructor capacity", 1_000_000D, 1D, 1_000_000D).comment("Amount of energy stored in the Antimatter Constructor");
 			ANTIMATTER_CONSTRUCTOR_BOOST = MACHINES.getDouble("Antimatter constructor boost", 6D, 1D, 100_000D).comment("Construction boost multiplier");
 			ADVANCED_POWERED_FURNACE_CAPACITY = MACHINES.getDouble("Advanced powered furnace capacity", 10_000D, 1D, 100_000D).comment("Amount of energy stored in the Advanced Powered Furnace");
 			ADVANCED_POWERED_FURNACE_USE = MACHINES.getDouble("Advanced powered furnace use", 16D, 0D, 100_000D).comment("Energy usage of the Advanced powered furnace");
