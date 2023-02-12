@@ -178,6 +178,7 @@ if (ENV.CURSEFORGE_KEY) {
 				requiredDependency 'architectury-forge'
 				requiredDependency 'myrtrees'
 				requiredDependency 'emendatus-enigmatica'
+				requiredDependency 'ftb-library-forge'
 			}
 			changelog = getGitChangelog
 			changelogType = 'markdown'
