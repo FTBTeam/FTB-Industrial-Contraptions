@@ -27,6 +27,15 @@ public class QuarryScreen extends ElectricBlockScreen<QuarryMenu> {
 	}
 
 	@Override
+	protected void extractOverlayTooltips(GuiGraphicsExtractor g, int mouseX, int mouseY) {
+		if (isIn(mouseX, mouseY, leftPos + 124, topPos + 17, 9, 10)) {
+			g.setTooltipForNextFrame(
+					Component.literal(this.menu.isPaused() ? "Paused — click to resume" : "Running — click to pause"),
+					mouseX, mouseY);
+		}
+	}
+
+	@Override
 	public boolean mouseClicked(MouseButtonEvent event, boolean dragging) {
 		int mx = (int) event.x();
 		int my = (int) event.y();

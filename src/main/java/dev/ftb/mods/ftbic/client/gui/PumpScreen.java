@@ -44,6 +44,11 @@ public class PumpScreen extends ElectricBlockScreen<PumpMenu> {
 		};
 		FluidStack stored = fluid == Fluids.EMPTY ? FluidStack.EMPTY : new FluidStack(fluid, this.menu.getFluidAmount());
 		tankTooltip(g, leftPos + 79, topPos + 16, mouseX, mouseY, stored, 128_000);
+		if (isIn(mouseX, mouseY, leftPos + 106, topPos + 17, 9, 10)) {
+			g.setTooltipForNextFrame(
+					Component.literal(this.menu.isPaused() ? "Paused — click to resume" : "Running — click to pause"),
+					mouseX, mouseY);
+		}
 	}
 
 	@Override

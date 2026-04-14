@@ -34,8 +34,14 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 	}
 
 	@Override
+	protected void init() {
+		super.init();
+		this.titleLabelX = 8;
+	}
+
+	@Override
 	protected void extractOverlays(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
-drawNuclearBar(g, leftPos + 115, topPos + 5, this.menu.isRunning() && !this.menu.isPaused());
+		drawNuclearBar(g, leftPos + 115, topPos + 5, this.menu.isRunning() && !this.menu.isPaused());
 		drawHeatBar(g, leftPos + 115, topPos + 127, this.menu.getHeatFraction());
 		drawSmallPauseButton(g, leftPos + 105, topPos + 5, mouseX, mouseY, this.menu.isPaused());
 		drawSmallQuestionButton(g, leftPos + 94, topPos + 5, mouseX, mouseY);
@@ -46,6 +52,20 @@ drawNuclearBar(g, leftPos + 115, topPos + 5, this.menu.isRunning() && !this.menu
 				leftPos + 142, topPos + 6, 0xFFFFFF);
 		g.centeredText(font, Component.literal(Math.round(this.menu.getHeatFraction() * 100F) + "%")
 				.withStyle(ChatFormatting.WHITE), leftPos + 142, topPos + 128, 0xFFFFFF);
+	}
+
+	@Override
+	protected void extractOverlayTooltips(GuiGraphicsExtractor g, int mouseX, int mouseY) {
+		if (isIn(mouseX, mouseY, leftPos + 115, topPos + 5, 54, 10)) {
+			Component label = this.menu.isPaused()
+					? Component.literal("Paused (" + this.menu.getEnergyOutput() + " z/t when active)")
+					: Component.literal("Output: " + this.menu.getEnergyOutput() + " z/t");
+			g.setTooltipForNextFrame(label, mouseX, mouseY);
+		}
+		if (isIn(mouseX, mouseY, leftPos + 115, topPos + 127, 54, 10)) {
+			int pct = Math.round(this.menu.getHeatFraction() * 100F);
+			g.setTooltipForNextFrame(Component.translatable("ftbic.jade.reactor_heat", pct), mouseX, mouseY);
+		}
 	}
 
 	@Override
