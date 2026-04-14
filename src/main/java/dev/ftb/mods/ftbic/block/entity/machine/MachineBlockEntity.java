@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
+import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeType;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
@@ -8,7 +9,12 @@ import dev.ftb.mods.ftbic.util.StackWithChance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -85,8 +91,34 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 				return mr;
 			}
 		}
+		if (recipeType == FTBICRecipes.SMELTING && inputItems.length > 0 && !inputItems[0].isEmpty()) {
+			for (RecipeHolder<SmeltingRecipe> holder : server.recipeAccess().recipeMap().byType(RecipeType.SMELTING)) {
+				SmeltingRecipe sr = holder.value();
+				if (sr.input().test(inputItems[0])) {
+					MachineRecipe synthetic = adaptCooking(sr, inputItems[0]);
+					if (canFitOutputs(synthetic)) {
+						cachedRecipe = synthetic;
+						return synthetic;
+					}
+				}
+			}
+		}
 		cachedRecipe = null;
 		return null;
+	}
+
+	private MachineRecipe adaptCooking(AbstractCookingRecipe sr, ItemStack inputStack) {
+		ItemStack result = sr.assemble(new SingleRecipeInput(inputStack));
+		ItemStackTemplate template = new ItemStackTemplate(
+				result.typeHolder(), result.getCount(), result.getComponentsPatch());
+		return new MachineRecipe(
+				recipeType,
+				List.of(new IngredientWithCount(sr.input(), 1)),
+				List.of(),
+				List.of(new StackWithChance(template, 1D)),
+				List.of(),
+				(double) sr.cookingTime(),
+				false);
 	}
 
 	private boolean recipeMatchesInputs(MachineRecipe mr) {
