@@ -6,14 +6,20 @@
     "TF "
   ],
   "key": {
-    "C": [
-      "#c:dusts/copper",
-      "#c:ingots/copper"
-    ],
-    "T": [
-      "#c:dusts/tin",
-      "#c:ingots/tin"
-    ],
+    "C": {
+      "neoforge:ingredient_type": "neoforge:compound",
+      "children": [
+        "#c:dusts/copper",
+        "#c:ingots/copper"
+      ]
+    },
+    "T": {
+      "neoforge:ingredient_type": "neoforge:compound",
+      "children": [
+        "#c:dusts/tin",
+        "#c:ingots/tin"
+      ]
+    },
     "F": "minecraft:fire_charge"
   },
   "result": {

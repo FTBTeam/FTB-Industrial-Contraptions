@@ -75,6 +75,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 				@SuppressWarnings("deprecation")
 				net.minecraft.world.item.ItemStackTemplate template = inputItems[0].getItem().getCraftingRemainder();
 				ItemStack remainder = template == null ? ItemStack.EMPTY : template.create();
+				int beforeCount = inputItems[0].getCount();
 				if (inputItems[0].getCount() == 1) {
 					inputItems[0] = remainder.isEmpty() ? ItemStack.EMPTY : remainder;
 				} else {
@@ -83,6 +84,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 						net.minecraft.world.level.block.Block.popResource(level, worldPosition, remainder);
 					}
 				}
+				dev.ftb.mods.ftbic.FTBIC.LOGGER.info("BasicGenerator consumed 1 fuel (count {} -> {}) at {}, fuelTicks={}", beforeCount, inputItems.length > 0 ? inputItems[0].getCount() : 0, worldPosition, fuelTicks);
 				active = true;
 				setChanged();
 			}

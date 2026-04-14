@@ -7,10 +7,13 @@
     "F  "
   ],
   "key": {
-    "L": [
-      "#c:dusts/lead",
-      "#c:ingots/lead"
-    ],
+    "L": {
+      "neoforge:ingredient_type": "neoforge:compound",
+      "children": [
+        "#c:dusts/lead",
+        "#c:ingots/lead"
+      ]
+    },
     "D": "#c:dusts/diamond",
     "E": "#c:dusts/ender",
     "F": "minecraft:fire_charge"

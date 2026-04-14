@@ -10,7 +10,7 @@
             "amount": 1000
           }
         },
-        "type": "neoforge:components"
+        "neoforge:ingredient_type": "neoforge:components"
       },
       "count": 1
     }
