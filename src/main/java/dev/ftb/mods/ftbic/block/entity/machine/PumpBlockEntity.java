@@ -90,7 +90,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity {
 
 		storedFluid = f;
 		fluidAmount += 1000;
-		level.removeBlock(miningPos, false);
+		level.setBlock(miningPos, dev.ftb.mods.ftbic.block.FTBICBlocks.EXFLUID.get().defaultBlockState(), 3);
 		setChanged();
 
 		// Opportunistically fill a player-supplied empty bucket.
