@@ -33,6 +33,7 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 
 	private final IDrawableAnimated arrow;
 	private final IDrawable machineIcon;
+	private final ElectricBlockInstance machine;
 
 	public MachineRecipeCategory(MachineRecipeType type, ElectricBlockInstance machine, IGuiHelper helper) {
 		super(jeiRecipeType(type),
@@ -40,6 +41,7 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 				buildIcon(machine, helper),
 				WIDTH,
 				HEIGHT);
+		this.machine = machine;
 		// Animated 24×17 arrow filling left-to-right over 50 ticks, reading from the in-world GUI atlas.
 		IDrawable staticArrow = helper.drawableBuilder(BASE_TEXTURE, 87, 185, 24, 17)
 				.setTextureSize(256, 256).build();
@@ -84,5 +86,13 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 		int arrowX = WIDTH / 2 - 12;
 		arrow.draw(graphics, arrowX, 14);
 		machineIcon.draw(graphics, arrowX - 22, 14);
+
+		double baseTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
+		double ticks = recipe.value().processingTime * baseTicks;
+		double energyPerTick = machine.energyUsage.get();
+		double zaps = ticks * energyPerTick;
+		String cost = String.format("%.0f zaps", zaps);
+		net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
+		graphics.text(font, cost, WIDTH / 2 - font.width(cost) / 2, 38, 0x404040, false);
 	}
 }

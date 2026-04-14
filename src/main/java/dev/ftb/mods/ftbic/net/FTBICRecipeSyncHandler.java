@@ -43,6 +43,7 @@ public final class FTBICRecipeSyncHandler {
 		for (RecipeType<?> t : types) {
 			out.addAll((java.util.Collection<? extends RecipeHolder<?>>) map.byType((RecipeType) t));
 		}
+		out.addAll((java.util.Collection<? extends RecipeHolder<?>>) map.byType((RecipeType) RecipeType.SMELTING));
 		return out;
 	}
 

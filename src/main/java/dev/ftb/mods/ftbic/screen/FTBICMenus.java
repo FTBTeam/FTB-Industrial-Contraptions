@@ -28,4 +28,5 @@ public interface FTBICMenus {
 	Supplier<MenuType<QuarryMenu>> QUARRY = register("quarry", QuarryMenu::new);
 	Supplier<MenuType<PumpMenu>> PUMP = register("pump", PumpMenu::new);
 	Supplier<MenuType<TeleporterMenu>> TELEPORTER = register("teleporter", TeleporterMenu::new);
+	Supplier<MenuType<IronFurnaceMenu>> IRON_FURNACE = register("iron_furnace", IronFurnaceMenu::new);
 }

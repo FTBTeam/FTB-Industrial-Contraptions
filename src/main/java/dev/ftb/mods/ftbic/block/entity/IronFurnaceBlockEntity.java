@@ -4,8 +4,8 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import dev.ftb.mods.ftbic.screen.IronFurnaceMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.FurnaceMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
@@ -24,7 +24,7 @@ public class IronFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 
 	@Override
 	protected AbstractContainerMenu createMenu(int id, Inventory inv) {
-		return new FurnaceMenu(id, inv, this, this.dataAccess);
+		return new IronFurnaceMenu(id, inv, this, this.dataAccess);
 	}
 
 	@Override

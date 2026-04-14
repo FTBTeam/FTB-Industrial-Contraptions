@@ -5,6 +5,7 @@ import dev.ftb.mods.ftbic.client.gui.AntimatterConstructorScreen;
 import dev.ftb.mods.ftbic.client.gui.BasicGeneratorScreen;
 import dev.ftb.mods.ftbic.client.gui.BatteryBoxScreen;
 import dev.ftb.mods.ftbic.client.gui.GeothermalGeneratorScreen;
+import dev.ftb.mods.ftbic.client.gui.IronFurnaceScreen;
 import dev.ftb.mods.ftbic.client.gui.MachineScreen;
 import dev.ftb.mods.ftbic.client.gui.NuclearReactorScreen;
 import dev.ftb.mods.ftbic.client.gui.PoweredCraftingTableScreen;
@@ -44,6 +45,7 @@ public final class FTBICClient {
 		event.register(FTBICMenus.QUARRY.get(), QuarryScreen::new);
 		event.register(FTBICMenus.PUMP.get(), PumpScreen::new);
 		event.register(FTBICMenus.TELEPORTER.get(), TeleporterScreen::new);
+		event.register(FTBICMenus.IRON_FURNACE.get(), IronFurnaceScreen::new);
 	}
 
 	@SubscribeEvent

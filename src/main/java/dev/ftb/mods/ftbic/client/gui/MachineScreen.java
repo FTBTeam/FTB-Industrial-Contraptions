@@ -54,9 +54,9 @@ public class MachineScreen extends ElectricBlockScreen<MachineMenu> {
 		int mx = (int) event.x();
 		int my = (int) event.y();
 		if (drawDefaultArrow && isIn(mx, my, leftPos + 80, topPos + 34, 24, 17)) {
-			RecipeType<?> type = this.menu.getJeiRecipeType();
-			if (type != null) {
-				ClientRecipeCache.showRecipesForType(type);
+			java.util.List<RecipeType<?>> types = this.menu.getJeiRecipeTypes();
+			if (!types.isEmpty()) {
+				ClientRecipeCache.showRecipesForTypes(types);
 				return true;
 			}
 		}
