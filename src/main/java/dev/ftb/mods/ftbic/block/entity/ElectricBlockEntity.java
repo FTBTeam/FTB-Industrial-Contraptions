@@ -152,6 +152,11 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
+	@Override
+	public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider registries) {
+		return saveCustomOnly(registries);
+	}
+
 	// --- EnergyHandler ---
 
 	@Override
