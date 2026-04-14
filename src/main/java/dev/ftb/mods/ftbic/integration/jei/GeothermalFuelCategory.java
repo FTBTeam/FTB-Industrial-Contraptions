@@ -33,7 +33,7 @@ public class GeothermalFuelCategory extends AbstractRecipeCategory<GeothermalFue
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, Entry entry, IFocusGroup focuses) {
 		builder.addSlot(RecipeIngredientRole.INPUT, 4, 9)
-				.addFluidStack(Fluids.LAVA, 1000);
+				.add(Fluids.LAVA, 1000);
 	}
 
 	@Override
