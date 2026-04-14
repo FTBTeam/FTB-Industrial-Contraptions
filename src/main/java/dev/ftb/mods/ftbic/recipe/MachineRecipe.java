@@ -69,6 +69,11 @@ public class MachineRecipe implements Recipe<NoInput> {
 	}
 
 	@Override
+	public boolean isSpecial() {
+		return true;
+	}
+
+	@Override
 	public RecipeSerializer<? extends Recipe<NoInput>> getSerializer() {
 		return machineType.SERIALIZER.get();
 	}

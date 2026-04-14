@@ -111,6 +111,15 @@ public interface FTBICItems {
 	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
 	MaterialItem DENSE_COPPER_PLATE = material("dense_copper_plate");
 
+	MaterialItem ENDERIUM_INGOT = material("enderium_ingot");
+	MaterialItem ENDERIUM_NUGGET = material("enderium_nugget");
+	MaterialItem ENDERIUM_DUST = material("enderium_dust");
+	MaterialItem ENDERIUM_PLATE = material("enderium_plate");
+	MaterialItem ENDERIUM_ROD = material("enderium_rod");
+	MaterialItem ENDERIUM_GEAR = material("enderium_gear");
+	MaterialItem ENDERIUM_WIRE = material("enderium_wire");
+	Supplier<BlockItem> ENDERIUM_BLOCK = blockItem("enderium_block", FTBICBlocks.ENDERIUM_BLOCK);
+
 	// Batteries — capacities resolved lazily so datagen can register without a loaded config.
 	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery",
 			name -> new BatteryItem(props(name), BatteryType.SINGLE_USE, EnergyTier.LV, safeGet(FTBICConfig.ENERGY.SINGLE_USE_BATTERY_CAPACITY, 8_000D)));

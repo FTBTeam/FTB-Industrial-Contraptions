@@ -19,7 +19,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 
 public class BasicGeneratorFuelCategory extends AbstractRecipeCategory<RecipeHolder<BasicGeneratorFuelRecipe>> {
-	public static final int WIDTH = 110;
+	public static final int WIDTH = 160;
 	public static final int HEIGHT = 36;
 
 	public BasicGeneratorFuelCategory(IGuiHelper helper) {
@@ -43,8 +43,13 @@ public class BasicGeneratorFuelCategory extends AbstractRecipeCategory<RecipeHol
 	public void draw(RecipeHolder<BasicGeneratorFuelRecipe> holder, mezz.jei.api.gui.ingredient.IRecipeSlotsView slots,
 			GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
 		Font font = Minecraft.getInstance().font;
-		double seconds = holder.value().ticks() / 20.0;
-		String text = String.format("Burns %.1fs", seconds);
-		graphics.text(font, text, 30, 14, 0x404040, false);
+		int ticks = holder.value().ticks();
+		double seconds = ticks / 20.0;
+		double zapsPerTick = dev.ftb.mods.ftbic.item.FTBICItems.safeGet(
+				dev.ftb.mods.ftbic.FTBICConfig.MACHINES.BASIC_GENERATOR_OUTPUT, 10D);
+		long totalZaps = Math.round(zapsPerTick * ticks);
+		graphics.text(font, String.format("Burns %.1fs", seconds), 26, 2, 0x404040, false);
+		graphics.text(font, String.format("%.0f z/t", zapsPerTick), 26, 13, 0x404040, false);
+		graphics.text(font, String.format("%d zaps total", totalZaps), 26, 24, 0x404040, false);
 	}
 }

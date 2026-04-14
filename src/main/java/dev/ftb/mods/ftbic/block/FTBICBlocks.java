@@ -68,4 +68,7 @@ public interface FTBICBlocks {
 			name -> new Block(props(name).sound(SoundType.GRASS).strength(-1F, 10_000_000_000F).noLootTable()));
 
 	List<DeferredBlock<CableBlock>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE);
+
+	DeferredBlock<Block> ENDERIUM_BLOCK = REGISTRY.register("enderium_block",
+			name -> new Block(props(name).requiresCorrectToolForDrops().strength(5.0f, 6.0f).sound(SoundType.METAL)));
 }

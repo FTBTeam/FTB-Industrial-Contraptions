@@ -38,6 +38,7 @@ public final class ModCreativeTabs {
 						out.accept(FTBICItems.EXFLUID.get());
 						out.accept(FTBICItems.NUCLEAR_REACTOR_CHAMBER.get());
 						out.accept(FTBICItems.NUKE.get());
+						out.accept(FTBICItems.ENDERIUM_BLOCK.get());
 
 						for (MaterialItem mat : FTBICItems.MATERIALS) {
 							if (mat.item != null) {

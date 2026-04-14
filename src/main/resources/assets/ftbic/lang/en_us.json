@@ -1,5 +1,13 @@
 {
   "itemGroup.ftbic": "FTB Industrial Contraptions",
+  "block.ftbic.enderium_block": "Block of Enderium",
+  "item.ftbic.enderium_ingot": "Enderium Ingot",
+  "item.ftbic.enderium_nugget": "Enderium Nugget",
+  "item.ftbic.enderium_dust": "Enderium Dust",
+  "item.ftbic.enderium_plate": "Enderium Plate",
+  "item.ftbic.enderium_rod": "Enderium Rod",
+  "item.ftbic.enderium_gear": "Enderium Gear",
+  "item.ftbic.enderium_wire": "Enderium Wire",
   "ftbic.any_item": "Any Item",
   "ftbic.energy_capacity": "Capacity: %s",
   "ftbic.energy_output": "Output: %s",

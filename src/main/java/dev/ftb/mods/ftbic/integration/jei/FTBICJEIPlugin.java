@@ -57,14 +57,13 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.ROLLING, FTBICElectricBlocks.ROLLER, helper));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.EXTRUDING, FTBICElectricBlocks.EXTRUDER, helper));
 		r.addRecipeCategories(new BasicGeneratorFuelCategory(helper));
+		r.addRecipeCategories(new GeothermalFuelCategory(helper));
 		r.addRecipeCategories(new AntimatterBoostCategory(helper));
 	}
 
 	@Override
 	public void registerRecipes(IRecipeRegistration r) {
-		// Recipes are pushed into the runtime recipe manager by ClientRecipeCache as soon as the
-		// server ships us the RecipeMap (via RecipesReceivedEvent). Registering them here at plugin
-		// init would be too early — the client hasn't received recipes from the server yet.
+		r.addRecipes(GeothermalFuelCategory.TYPE, java.util.List.of(GeothermalFuelCategory.defaultEntry()));
 	}
 
 	@Override
@@ -96,6 +95,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addCraftingStation(catalystType(FTBICRecipes.EXTRUDING), FTBICElectricBlocks.EXTRUDER.block.get());
 		r.addCraftingStation(RecipeTypes.CRAFTING, FTBICElectricBlocks.POWERED_CRAFTING_TABLE.block.get());
 		r.addCraftingStation(basicGeneratorFuelType(), FTBICElectricBlocks.BASIC_GENERATOR.block.get());
+		r.addCraftingStation(GeothermalFuelCategory.TYPE, FTBICElectricBlocks.GEOTHERMAL_GENERATOR.block.get());
 		r.addCraftingStation(antimatterBoostType(), FTBICElectricBlocks.ANTIMATTER_CONSTRUCTOR.block.get());
 	}
 
