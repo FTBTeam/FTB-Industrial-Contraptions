@@ -3,14 +3,8 @@
   "inputs": [
     {
       "ingredient": {
-        "items": "ftbic:fluid_cell",
-        "components": {
-          "ftbic:fluid_cell_content": {
-            "id": "minecraft:water",
-            "amount": 1000
-          }
-        },
-        "neoforge:ingredient_type": "neoforge:components"
+        "neoforge:ingredient_type": "ftbic:fluid_cell",
+        "fluid": "minecraft:water"
       },
       "count": 1
     }

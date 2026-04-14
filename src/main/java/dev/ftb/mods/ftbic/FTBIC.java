@@ -51,6 +51,7 @@ public class FTBIC {
 		FTBICMenus.REGISTRY.register(eventBus);
 		FTBICRecipes.SERIALIZERS.register(eventBus);
 		FTBICRecipes.TYPES.register(eventBus);
+		dev.ftb.mods.ftbic.util.FTBICIngredientTypes.REGISTRY.register(eventBus);
 
 		container.registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_SPEC);
 		FTBICConfig.init();
