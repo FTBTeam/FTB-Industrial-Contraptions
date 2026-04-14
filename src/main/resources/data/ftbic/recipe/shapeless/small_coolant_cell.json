@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:small_coolant_cell",
+  "ingredients": [
+    "ftbic:fluid_cell",
+    "minecraft:water_bucket",
+    "#c:ingots/tin",
+    "#c:ingots/tin",
+    "#c:ingots/tin",
+    "#c:ingots/tin"
+  ],
+  "result": {
+    "id": "ftbic:small_coolant_cell",
+    "count": 1
+  }
+}
