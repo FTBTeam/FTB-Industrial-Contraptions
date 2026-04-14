@@ -71,21 +71,20 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 	}
 
 	/**
-	 * Walk every loaded {@link TeleporterBlockEntity} in the same level and return one entry per
+	 * Walk every loaded {@link TeleporterBlockEntity} across dimensions and return one entry per
 	 * unique destination the calling player is allowed to use (their own + public ones), excluding
 	 * this BE itself and any unnamed teleporters (so the GUI stays uncluttered).
 	 */
 	private java.util.List<dev.ftb.mods.ftbic.util.TeleporterEntry> collectPeers(ServerPlayer player) {
 		java.util.List<dev.ftb.mods.ftbic.util.TeleporterEntry> out = new java.util.ArrayList<>();
 		if (level == null) return out;
-		ResourceKey<Level> myDim = level.dimension();
 		for (TeleporterBlockEntity t : ALL_LOADED) {
 			if (t == this || t.level == null || t.isRemoved()) continue;
-			if (t.level.dimension() != myDim) continue;
 			if (!t.isPublic && !t.placerId.equals(player.getUUID())) continue;
 			if (t.name.isEmpty()) continue;
+			ResourceKey<Level> peerDim = t.level.dimension();
 			out.add(new dev.ftb.mods.ftbic.util.TeleporterEntry(
-					myDim, t.getBlockPos(), t.name, getEnergyUse(myDim, t.getBlockPos())));
+					peerDim, t.getBlockPos(), t.name, getEnergyUse(peerDim, t.getBlockPos())));
 		}
 		return out;
 	}
@@ -210,6 +209,37 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 				FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get());
 	}
 
+	/** Called by ConfigureTeleporterPayload server-handler to update name + public flag. */
+	public void configure(ServerPlayer player, String newName, boolean newPublic) {
+		if (!placerId.equals(player.getUUID())) {
+			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED));
+			return;
+		}
+		String trimmed = newName == null ? "" : newName.trim();
+		if (trimmed.length() > 32) trimmed = trimmed.substring(0, 32);
+		name = trimmed;
+		isPublic = newPublic;
+		setChanged();
+		if (level != null) {
+			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+		}
+	}
+
+	/** Called by SelectTeleporterPayload (with a null position) to clear the current link. */
+	public void unlink(ServerPlayer player) {
+		if (!placerId.equals(player.getUUID())) {
+			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED));
+			return;
+		}
+		linkedDimension = null;
+		linkedPos = null;
+		linkedName = "";
+		setChanged();
+		if (level != null) {
+			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+		}
+	}
+
 	/** Called by SelectTeleporterPayload server-handler to bind a destination. */
 	public void select(ServerPlayer player, ResourceKey<Level> d, BlockPos p) {
 		if (!placerId.equals(player.getUUID())) {
@@ -230,6 +260,7 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 			linkedPos = p;
 			linkedName = t.name;
 			setChanged();
+			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 		}
 	}
 }

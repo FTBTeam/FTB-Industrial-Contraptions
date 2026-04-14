@@ -34,6 +34,11 @@ public final class FTBICNet {
 				SelectCraftingRecipePayload.STREAM_CODEC,
 				SelectCraftingRecipePayload::handleOnServer);
 
+		registrar.playToServer(
+				ConfigureTeleporterPayload.TYPE,
+				ConfigureTeleporterPayload.STREAM_CODEC,
+				ConfigureTeleporterPayload::handleOnServer);
+
 		registrar.playToClient(
 				TeleporterListPayload.TYPE,
 				TeleporterListPayload.STREAM_CODEC,

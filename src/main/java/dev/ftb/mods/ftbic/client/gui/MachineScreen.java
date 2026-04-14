@@ -36,7 +36,7 @@ public class MachineScreen extends ElectricBlockScreen<MachineMenu> {
 		}
 		drawSlot(g, leftPos + 7, topPos + 52);
 		for (int i = 0; i < 4; i++) {
-			drawSlot(g, leftPos + 151, topPos + 12 + i * 18);
+			drawSlot(g, leftPos + 151, topPos + 7 + i * 18);
 		}
 	}
 

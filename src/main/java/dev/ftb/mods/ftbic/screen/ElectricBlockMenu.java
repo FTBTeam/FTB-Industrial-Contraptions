@@ -84,7 +84,7 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 	}
 
 	protected void addUpgradeSlots(int x) {
-		addUpgradeSlots(x, 13);
+		addUpgradeSlots(x, 8);
 	}
 
 	protected void addUpgradeSlots(int x, int yStart) {

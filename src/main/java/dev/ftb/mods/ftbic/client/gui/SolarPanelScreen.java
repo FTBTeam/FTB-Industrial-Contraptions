@@ -9,7 +9,7 @@ public class SolarPanelScreen extends ElectricBlockScreen<SolarPanelMenu> {
 	public SolarPanelScreen(SolarPanelMenu menu, Inventory inv, Component title) {
 		super(menu, inv, title);
 		energyX = 99;
-		energyY = 27;
+		energyY = 36;
 		drawDefaultArrow = false;
 	}
 

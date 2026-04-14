@@ -24,7 +24,7 @@ public class QuarryScreen extends ElectricBlockScreen<QuarryMenu> {
 			}
 		}
 		for (int i = 0; i < 4; i++) {
-			drawSlot(g, leftPos + 151, topPos + 12 + i * 18);
+			drawSlot(g, leftPos + 151, topPos + 7 + i * 18);
 		}
 		drawSlot(g, leftPos + 124, topPos + 52);
 		drawSmallPauseButton(g, leftPos + 124, topPos + 17, mouseX, mouseY, this.menu.isPaused());
