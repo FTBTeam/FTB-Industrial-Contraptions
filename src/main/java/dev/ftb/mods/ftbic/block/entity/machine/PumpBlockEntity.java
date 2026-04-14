@@ -123,7 +123,6 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		// Regularly try to fill buckets even when the laser is between mining cycles.
-		if (level != null && !level.isClientSide()) tryFillBucket();
+		if (level != null && !level.isClientSide() && !isEffectivelyPaused()) tryFillBucket();
 	}
 }

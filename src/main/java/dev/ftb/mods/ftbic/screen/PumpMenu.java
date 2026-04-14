@@ -41,6 +41,8 @@ public class PumpMenu extends ElectricBlockMenu {
 		if (inputs > 0) addSlot(new Slot(container, 0, 53, 17));
 		if (outputs > 0) addSlot(new OutputSlot(container, inputs, 53, 53));
 		machineSlotCount = inputs + outputs;
+		addBatterySlot(107, 53);
+		addUpgradeSlots(152);
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class PumpMenu extends ElectricBlockMenu {
 			if (pump.storedFluid == Fluids.WATER) kind = 1;
 			else if (pump.storedFluid == Fluids.LAVA) kind = 2;
 			fluidKind.set(kind);
-			pausedSlot.set(pump.paused ? 1 : 0);
+			pausedSlot.set(pump.isEffectivelyPaused() ? 1 : 0);
 		}
 	}
 
@@ -63,6 +65,13 @@ public class PumpMenu extends ElectricBlockMenu {
 	@Override
 	public boolean clickMenuButton(Player player, int id) {
 		if (id == 0 && blockEntity instanceof PumpBlockEntity pump) {
+			if (pump.redstonePaused) {
+				if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+					sp.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+							"Pause is currently overridden by an active redstone signal"), true);
+				}
+				return true;
+			}
 			pump.paused = !pump.paused;
 			pump.setChanged();
 			return true;

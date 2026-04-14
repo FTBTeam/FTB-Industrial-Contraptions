@@ -250,8 +250,8 @@ public final class FTBICConfig {
 			POWERED_CRAFTING_TABLE_USE = b.defineInRange("powered_crafting_table_use", 1D, 0D, 100_000D);
 			QUARRY_CAPACITY = b.defineInRange("quarry_capacity", 10_000D, 1D, 100_000D);
 			QUARRY_USE = b.defineInRange("quarry_use", 3D, 0D, 100_000D);
-			QUARRY_MINE_TICKS = b.defineInRange("quarry_mine_ticks", 40L, 0L, 100_000L);
-			QUARRY_MOVE_TICKS = b.defineInRange("quarry_move_ticks", 10L, 0L, 100_000L);
+			QUARRY_MINE_TICKS = b.defineInRange("quarry_mine_ticks", 8L, 0L, 100_000L);
+			QUARRY_MOVE_TICKS = b.defineInRange("quarry_move_ticks", 2L, 0L, 100_000L);
 			QUARRY_REPLACE_FLUID_EXFLUID = b.define("quarry_replace_fluid_with_exfluid", true);
 			PUMP_CAPACITY = b.defineInRange("pump_capacity", 10_000D, 1D, 100_000D);
 			PUMP_USE = b.defineInRange("pump_use", 3D, 0D, 100_000D);

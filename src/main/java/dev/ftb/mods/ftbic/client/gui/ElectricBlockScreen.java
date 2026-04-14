@@ -53,6 +53,17 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 	}
 
 	protected void extractOverlayTooltips(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+		extractMachineSlotTooltips(graphics, mouseX, mouseY);
+	}
+
+	protected void extractMachineSlotTooltips(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+		net.minecraft.world.inventory.Slot slot = this.hoveredSlot;
+		if (slot == null || slot.hasItem()) return;
+		if (slot instanceof dev.ftb.mods.ftbic.screen.UpgradeSlot) {
+			graphics.setTooltipForNextFrame(Component.literal("Upgrade Slot"), mouseX, mouseY);
+		} else if (slot instanceof dev.ftb.mods.ftbic.screen.BatterySlot) {
+			graphics.setTooltipForNextFrame(Component.literal("Battery Slot"), mouseX, mouseY);
+		}
 	}
 
 	protected void tankTooltip(GuiGraphicsExtractor g, int x, int y, int mouseX, int mouseY, FluidStack fluid, int capacity) {

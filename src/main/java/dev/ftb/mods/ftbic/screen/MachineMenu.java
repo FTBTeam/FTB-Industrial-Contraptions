@@ -15,6 +15,13 @@ public class MachineMenu extends ElectricBlockMenu {
 		super(FTBICMenus.MACHINE.get(), id, playerInv, be);
 	}
 
+	@Override
+	protected void addMachineSlots(Inventory playerInv) {
+		super.addMachineSlots(playerInv);
+		addBatterySlot(8, 53);
+		addUpgradeSlots(152);
+	}
+
 	public RecipeType<?> getJeiRecipeType() {
 		if (blockEntity instanceof MachineBlockEntity m) {
 			return m.recipeType.TYPE.get();

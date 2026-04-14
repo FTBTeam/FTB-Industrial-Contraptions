@@ -34,10 +34,15 @@ public class MachineScreen extends ElectricBlockScreen<MachineMenu> {
 			int row = i / 2, col = i % 2;
 			drawSlot(g, leftPos + 107 + col * 18, topPos + oyStart - 1 + row * 18);
 		}
+		drawSlot(g, leftPos + 7, topPos + 52);
+		for (int i = 0; i < 4; i++) {
+			drawSlot(g, leftPos + 151, topPos + 12 + i * 18);
+		}
 	}
 
 	@Override
 	protected void extractOverlayTooltips(GuiGraphicsExtractor g, int mouseX, int mouseY) {
+		super.extractOverlayTooltips(g, mouseX, mouseY);
 		if (drawDefaultArrow && isIn(mouseX, mouseY, leftPos + 80, topPos + 34, 24, 17)) {
 			int pct = Math.round(this.menu.getProgressFraction() * 100F);
 			g.setTooltipForNextFrame(Component.literal("Progress: " + pct + "% — Click to show recipes"), mouseX, mouseY);

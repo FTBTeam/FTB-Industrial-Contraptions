@@ -23,6 +23,10 @@ public class PumpScreen extends ElectricBlockScreen<PumpMenu> {
 	protected void extractOverlays(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
 		drawSlot(g, leftPos + 52, topPos + 16);
 		drawSlot(g, leftPos + 52, topPos + 52);
+		for (int i = 0; i < 4; i++) {
+			drawSlot(g, leftPos + 151, topPos + 12 + i * 18);
+		}
+		drawSlot(g, leftPos + 106, topPos + 52);
 
 		Fluid fluid = switch (this.menu.getFluidKind()) {
 			case 1 -> Fluids.WATER;
@@ -37,6 +41,7 @@ public class PumpScreen extends ElectricBlockScreen<PumpMenu> {
 
 	@Override
 	protected void extractOverlayTooltips(GuiGraphicsExtractor g, int mouseX, int mouseY) {
+		super.extractOverlayTooltips(g, mouseX, mouseY);
 		Fluid fluid = switch (this.menu.getFluidKind()) {
 			case 1 -> Fluids.WATER;
 			case 2 -> Fluids.LAVA;

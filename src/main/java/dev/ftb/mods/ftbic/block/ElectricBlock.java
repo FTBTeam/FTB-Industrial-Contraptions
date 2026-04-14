@@ -124,6 +124,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 		}
 	}
 
+
 	@Override
 	protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
 		super.onPlace(state, level, pos, state1, b);

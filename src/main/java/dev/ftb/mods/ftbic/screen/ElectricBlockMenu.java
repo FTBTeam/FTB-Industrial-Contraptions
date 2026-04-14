@@ -83,7 +83,26 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		machineSlotCount = inputs + outputs;
 	}
 
-	/** Output slots reject player insertion — items can only leave them. */
+	protected void addUpgradeSlots(int x) {
+		addUpgradeSlots(x, 13);
+	}
+
+	protected void addUpgradeSlots(int x, int yStart) {
+		if (!(blockEntity instanceof dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity bm)) return;
+		UpgradeInventoryContainer c = new UpgradeInventoryContainer(bm.upgradeInventory);
+		for (int i = 0; i < bm.upgradeInventory.getSlots(); i++) {
+			addSlot(new UpgradeSlot(c, i, x, yStart + i * 18));
+			machineSlotCount++;
+		}
+	}
+
+	protected void addBatterySlot(int x, int y) {
+		if (!(blockEntity instanceof dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity bm)) return;
+		BatteryInventoryContainer c = new BatteryInventoryContainer(bm.batteryInventory);
+		addSlot(new BatterySlot(c, 0, x, y));
+		machineSlotCount++;
+	}
+
 	protected static class OutputSlot extends Slot {
 		public OutputSlot(Container container, int index, int x, int y) {
 			super(container, index, x, y);
@@ -150,13 +169,32 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		int playerEnd = slots.size();
 
 		if (index < machineEnd) {
-			// From machine -> player inventory.
 			if (!moveItemStackTo(stack, playerStart, playerEnd, true)) return ItemStack.EMPTY;
 		} else {
-			// From player -> first available machine input (if any).
-			int inputStart = 0;
+			int batteryStart = -1, batteryEnd = -1;
+			int upgradeStart = -1, upgradeEnd = -1;
+			for (int i = 0; i < machineEnd; i++) {
+				Slot s = slots.get(i);
+				if (s instanceof BatterySlot) {
+					if (batteryStart < 0) batteryStart = i;
+					batteryEnd = i + 1;
+				} else if (s instanceof UpgradeSlot) {
+					if (upgradeStart < 0) upgradeStart = i;
+					upgradeEnd = i + 1;
+				}
+			}
 			int inputEnd = blockEntity == null ? 0 : blockEntity.inputItems.length;
-			if (inputEnd == 0 || !moveItemStackTo(stack, inputStart, inputEnd, false)) return ItemStack.EMPTY;
+			boolean moved = false;
+			if (batteryStart >= 0 && slots.get(batteryStart).mayPlace(stack)) {
+				moved = moveItemStackTo(stack, batteryStart, batteryEnd, false);
+			}
+			if (!moved && upgradeStart >= 0 && slots.get(upgradeStart).mayPlace(stack)) {
+				moved = moveItemStackTo(stack, upgradeStart, upgradeEnd, false);
+			}
+			if (!moved && inputEnd > 0) {
+				moved = moveItemStackTo(stack, 0, inputEnd, false);
+			}
+			if (!moved) return ItemStack.EMPTY;
 		}
 
 		if (stack.isEmpty()) slot.set(ItemStack.EMPTY);

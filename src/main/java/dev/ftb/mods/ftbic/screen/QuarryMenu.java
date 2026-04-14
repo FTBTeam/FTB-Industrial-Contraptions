@@ -35,13 +35,15 @@ public class QuarryMenu extends ElectricBlockMenu {
 			addSlot(new OutputSlot(container, inputs + i, 8 + col * 18, 17 + row * 18));
 		}
 		machineSlotCount = inputs + outputs;
+		addBatterySlot(125, 53);
+		addUpgradeSlots(152);
 	}
 
 	@Override
 	public void broadcastChanges() {
 		super.broadcastChanges();
 		if (blockEntity instanceof QuarryBlockEntity q) {
-			pausedSlot.set(q.paused ? 1 : 0);
+			pausedSlot.set(q.isEffectivelyPaused() ? 1 : 0);
 		}
 	}
 
@@ -50,6 +52,13 @@ public class QuarryMenu extends ElectricBlockMenu {
 	@Override
 	public boolean clickMenuButton(Player player, int id) {
 		if (id == 0 && blockEntity instanceof QuarryBlockEntity q) {
+			if (q.redstonePaused) {
+				if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+					sp.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+							"Pause is currently overridden by an active redstone signal"), true);
+				}
+				return true;
+			}
 			q.paused = !q.paused;
 			q.setChanged();
 			return true;

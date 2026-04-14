@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbic.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -76,7 +75,7 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			triggerNearbyResize(level, pos);
+			triggerNearbyResize(level, pos, player);
 		}
 		return InteractionResult.SUCCESS;
 	}
@@ -84,34 +83,57 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	@Override
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.@org.jetbrains.annotations.Nullable LivingEntity placer, net.minecraft.world.item.ItemStack stack) {
 		super.setPlacedBy(level, pos, state, placer, stack);
+		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("Landmark.setPlacedBy at {} side={} placer={}",
+				pos, level.isClientSide() ? "CLIENT" : "SERVER", placer);
 		if (!level.isClientSide()) {
-			triggerNearbyResize(level, pos);
+			triggerNearbyResize(level, pos, placer instanceof Player p ? p : null);
 		}
 	}
 
 	@Override
 	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean movedByPiston) {
 		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
-		triggerNearbyResize(level, pos);
+		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("Landmark.affectNeighborsAfterRemoval at {}", pos);
+		triggerNearbyResize(level, pos, null);
 	}
 
-	private static void triggerNearbyResize(Level level, BlockPos pos) {
-		for (Direction dir : dev.ftb.mods.ftbic.util.FTBICUtils.HORIZONTAL_DIRECTIONS) {
-			for (int i = 1; i < 65; i++) {
-				if (level.getBlockEntity(pos.relative(dir, i)) instanceof dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity dig) {
-					dig.resize();
+	private static void triggerNearbyResize(Level level, BlockPos pos, @org.jetbrains.annotations.Nullable Player player) {
+		if (!(level instanceof net.minecraft.server.level.ServerLevel server)) return;
+		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("Landmark.triggerNearbyResize at {}", pos);
+		int radius = 128;
+		int hits = 0;
+		int minChunkX = (pos.getX() - radius) >> 4;
+		int maxChunkX = (pos.getX() + radius) >> 4;
+		int minChunkZ = (pos.getZ() - radius) >> 4;
+		int maxChunkZ = (pos.getZ() + radius) >> 4;
+		for (int cx = minChunkX; cx <= maxChunkX; cx++) {
+			for (int cz = minChunkZ; cz <= maxChunkZ; cz++) {
+				net.minecraft.world.level.chunk.LevelChunk chunk = server.getChunkSource().getChunkNow(cx, cz);
+				if (chunk == null) continue;
+				for (BlockPos bePos : chunk.getBlockEntitiesPos()) {
+					if (Math.abs(bePos.getX() - pos.getX()) > radius) continue;
+					if (Math.abs(bePos.getZ() - pos.getZ()) > radius) continue;
+					if (Math.abs(bePos.getY() - pos.getY()) > 128) continue;
+					if (chunk.getBlockEntity(bePos) instanceof dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity dig) {
+						if (!dig.hasAnchorLandmark()) {
+							dev.ftb.mods.ftbic.FTBIC.LOGGER.info("  found DiggingBase at {} but no anchor landmark; skipping", bePos);
+							continue;
+						}
+						hits++;
+						dev.ftb.mods.ftbic.FTBIC.LOGGER.info("  found DiggingBase at {} with anchor; calling resize()", bePos);
+						dig.resize();
+						if (player != null) {
+							String machine = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(dig.getBlockState().getBlock()).getPath();
+							player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+									String.format("%s at %d,%d,%d area: %d × %d",
+											machine, bePos.getX(), bePos.getY(), bePos.getZ(),
+											dig.sizeX, dig.sizeZ)));
+						}
+					}
 				}
 			}
 		}
+		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("Landmark.triggerNearbyResize done — {} machines updated", hits);
 	}
 
-	@Override
-	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-		if (random.nextInt(4) == 0) {
-			double dx = pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.2;
-			double dy = pos.getY() + 0.6 + random.nextDouble() * 0.1;
-			double dz = pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.2;
-			level.addParticle(ParticleTypes.HAPPY_VILLAGER, dx, dy, dz, 0D, 0.02D, 0D);
-		}
-	}
 }

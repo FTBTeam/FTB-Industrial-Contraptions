@@ -12,7 +12,7 @@ public class QuarryScreen extends ElectricBlockScreen<QuarryMenu> {
 	public QuarryScreen(QuarryMenu menu, Inventory inv, Component title) {
 		super(menu, inv, title);
 		energyX = 126;
-		energyY = 53;
+		energyY = 33;
 		drawDefaultArrow = false;
 	}
 
@@ -23,12 +23,17 @@ public class QuarryScreen extends ElectricBlockScreen<QuarryMenu> {
 				drawSlot(g, leftPos + 7 + x * 18, topPos + 16 + y * 18);
 			}
 		}
+		for (int i = 0; i < 4; i++) {
+			drawSlot(g, leftPos + 151, topPos + 12 + i * 18);
+		}
+		drawSlot(g, leftPos + 124, topPos + 52);
 		drawSmallPauseButton(g, leftPos + 124, topPos + 17, mouseX, mouseY, this.menu.isPaused());
 	}
 
 	@Override
 	protected void extractOverlayTooltips(GuiGraphicsExtractor g, int mouseX, int mouseY) {
-		if (isIn(mouseX, mouseY, leftPos + 124, topPos + 17, 9, 10)) {
+		super.extractOverlayTooltips(g, mouseX, mouseY);
+		if (isIn(mouseX, mouseY, leftPos + 129, topPos + 17, 9, 10)) {
 			g.setTooltipForNextFrame(
 					Component.literal(this.menu.isPaused() ? "Paused — click to resume" : "Running — click to pause"),
 					mouseX, mouseY);
@@ -39,7 +44,7 @@ public class QuarryScreen extends ElectricBlockScreen<QuarryMenu> {
 	public boolean mouseClicked(MouseButtonEvent event, boolean dragging) {
 		int mx = (int) event.x();
 		int my = (int) event.y();
-		if (isIn(mx, my, leftPos + 124, topPos + 17, 9, 10)) {
+		if (isIn(mx, my, leftPos + 129, topPos + 17, 9, 10)) {
 			Minecraft.getInstance().player.connection.send(
 					new ServerboundContainerButtonClickPacket(menu.containerId, 0));
 			return true;
