@@ -187,6 +187,15 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 	}
 
 	@Override
+	public void stepOn(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.Entity entity) {
+		if (!level.isClientSide() && entity instanceof net.minecraft.server.level.ServerPlayer sp
+				&& level.getBlockEntity(pos) instanceof ElectricBlockEntity be && !be.isBurnt()) {
+			be.stepOn(sp);
+		}
+		super.stepOn(level, pos, state, entity);
+	}
+
+	@Override
 	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
 		if (!level.isClientSide() && level.getBlockEntity(pos) instanceof ElectricBlockEntity be) {
 			return be.getRedstoneOutputSignalEnergyStorage();

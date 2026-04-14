@@ -81,10 +81,10 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 		for (TeleporterBlockEntity t : ALL_LOADED) {
 			if (t == this || t.level == null || t.isRemoved()) continue;
 			if (!t.isPublic && !t.placerId.equals(player.getUUID())) continue;
-			if (t.name.isEmpty()) continue;
 			ResourceKey<Level> peerDim = t.level.dimension();
+			String display = t.name.isEmpty() ? "Unnamed" : t.name;
 			out.add(new dev.ftb.mods.ftbic.util.TeleporterEntry(
-					peerDim, t.getBlockPos(), t.name, getEnergyUse(peerDim, t.getBlockPos())));
+					peerDim, t.getBlockPos(), display, getEnergyUse(peerDim, t.getBlockPos())));
 		}
 		return out;
 	}

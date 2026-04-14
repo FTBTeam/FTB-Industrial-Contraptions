@@ -6,6 +6,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.RecipeType;
 
+import java.util.List;
+
 public class MachineMenu extends ElectricBlockMenu {
 	public MachineMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
 		super(FTBICMenus.MACHINE.get(), id, playerInv, buf);
@@ -27,5 +29,10 @@ public class MachineMenu extends ElectricBlockMenu {
 			return m.recipeType.TYPE.get();
 		}
 		return null;
+	}
+
+	public List<RecipeType<?>> getJeiRecipeTypes() {
+		if (!(blockEntity instanceof MachineBlockEntity m)) return List.of();
+		return List.of(m.recipeType.TYPE.get());
 	}
 }

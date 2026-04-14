@@ -22,4 +22,9 @@ public class TeleporterMenu extends ElectricBlockMenu {
 	protected void addMachineSlots(Inventory playerInv) {
 		machineSlotCount = 0;
 	}
+
+	@Override
+	protected int getPlayerSlotOffset() {
+		return 114;
+	}
 }
