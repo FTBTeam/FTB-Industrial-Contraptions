@@ -111,13 +111,14 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 		ItemStack result = sr.assemble(new SingleRecipeInput(inputStack));
 		ItemStackTemplate template = new ItemStackTemplate(
 				result.typeHolder(), result.getCount(), result.getComponentsPatch());
+		double baseTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
 		return new MachineRecipe(
 				recipeType,
 				List.of(new IngredientWithCount(sr.input(), 1)),
 				List.of(),
 				List.of(new StackWithChance(template, 1D)),
 				List.of(),
-				(double) sr.cookingTime(),
+				sr.cookingTime() / baseTicks,
 				false);
 	}
 
@@ -175,10 +176,10 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 			return;
 		}
 
-		maxProgress = (int) recipe.processingTime;
+		double speed = Math.max(1D, progressSpeed);
+		maxProgress = Math.max(1, (int) (recipe.processingTime * dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get() / speed));
 		energy -= energyUse;
-		// progressSpeed is the overclocker multiplier (1.0 default, 1.45^N after N overclockers).
-		progress += Math.max(1, (int) Math.round(progressSpeed));
+		progress++;
 		active = true;
 
 		if (progress >= maxProgress) {
