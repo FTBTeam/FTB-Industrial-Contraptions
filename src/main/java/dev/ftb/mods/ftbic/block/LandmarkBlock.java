@@ -76,15 +76,33 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			for (Direction dir : dev.ftb.mods.ftbic.util.FTBICUtils.HORIZONTAL_DIRECTIONS) {
-				for (int i = 1; i < 61; i++) {
-					if (level.getBlockEntity(pos.relative(dir, i)) instanceof dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity dig) {
-						dig.resize();
-					}
+			triggerNearbyResize(level, pos);
+		}
+		return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.@org.jetbrains.annotations.Nullable LivingEntity placer, net.minecraft.world.item.ItemStack stack) {
+		super.setPlacedBy(level, pos, state, placer, stack);
+		if (!level.isClientSide()) {
+			triggerNearbyResize(level, pos);
+		}
+	}
+
+	@Override
+	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean movedByPiston) {
+		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+		triggerNearbyResize(level, pos);
+	}
+
+	private static void triggerNearbyResize(Level level, BlockPos pos) {
+		for (Direction dir : dev.ftb.mods.ftbic.util.FTBICUtils.HORIZONTAL_DIRECTIONS) {
+			for (int i = 1; i < 65; i++) {
+				if (level.getBlockEntity(pos.relative(dir, i)) instanceof dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity dig) {
+					dig.resize();
 				}
 			}
 		}
-		return InteractionResult.SUCCESS;
 	}
 
 	@Override
