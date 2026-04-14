@@ -2,7 +2,7 @@
   "type": "ftbic:reprocessing",
   "inputs": [
     {
-      "ingredient": "minecraft:tuff",
+      "ingredient": "#ftbic:scrappable",
       "count": 1
     }
   ],
