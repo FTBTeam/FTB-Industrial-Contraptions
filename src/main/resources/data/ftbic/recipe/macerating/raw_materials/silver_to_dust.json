@@ -1,0 +1,24 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:raw_materials/silver",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:silver_dust",
+        "count": 1
+      }
+    },
+    {
+      "item": {
+        "id": "ftbmaterials:silver_dust",
+        "count": 1
+      },
+      "chance": 0.35
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "ftbic:reprocessing",
+  "inputs": [
+    {
+      "ingredient": "minecraft:basalt",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:scrap",
+        "count": 1
+      },
+      "chance": 0.125
+    }
+  ]
+}

@@ -38,6 +38,11 @@ public final class FTBICNet {
 				TeleporterListPayload.TYPE,
 				TeleporterListPayload.STREAM_CODEC,
 				TeleporterListPayload::handleOnClient);
+
+		registrar.playToClient(
+				FTBICRecipeSyncPayload.TYPE,
+				FTBICRecipeSyncPayload.STREAM_CODEC,
+				FTBICRecipeSyncPayload::handleOnClient);
 	}
 
 	public static void sendToPlayer(ServerPlayer player, CustomPacketPayload payload) {
