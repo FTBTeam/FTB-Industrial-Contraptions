@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": "#c:ingots/iron",
+  "result": {
+    "id": "ftbic:industrial_grade_metal",
+    "count": 1
+  },
+  "experience": 0.0,
+  "cookingtime": 400
+}

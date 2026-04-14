@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/aluminum",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:aluminum_dust",
+        "count": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:rods/enderium",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:enderium_wire",
+        "count": 2
+      }
+    }
+  ]
+}

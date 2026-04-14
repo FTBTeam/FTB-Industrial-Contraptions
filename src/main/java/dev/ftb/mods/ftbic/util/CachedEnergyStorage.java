@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.util;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public final class CachedEnergyStorage {
@@ -10,13 +11,14 @@ public final class CachedEnergyStorage {
 	public BlockEntity blockEntity;
 	public EnergyHandler energyHandler;
 
+	@Override
 	public int hashCode() {
 		return blockEntity.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		return o == this || o instanceof CachedEnergyStorage && blockEntity == ((CachedEnergyStorage) o).blockEntity;
+		return o == this || o instanceof CachedEnergyStorage e && blockEntity == e.blockEntity;
 	}
 
 	public boolean isInvalid() {
@@ -25,7 +27,11 @@ public final class CachedEnergyStorage {
 
 	@Override
 	public String toString() {
-		return String.format("%s@%d,%d,%d", blockEntity.getType().getRegistryName(), blockEntity.getBlockPos().getX(), blockEntity.getBlockPos().getY(), blockEntity.getBlockPos().getZ());
+		return String.format("%s@%d,%d,%d",
+				BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(blockEntity.getType()),
+				blockEntity.getBlockPos().getX(),
+				blockEntity.getBlockPos().getY(),
+				blockEntity.getBlockPos().getZ());
 	}
 
 	public boolean shouldReceiveEnergy() {

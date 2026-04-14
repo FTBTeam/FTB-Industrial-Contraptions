@@ -2,80 +2,98 @@ package dev.ftb.mods.ftbic.recipe;
 
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MachineRecipe implements Recipe<NoContainer> {
-	public final MachineRecipeSerializer serializer;
-	public final ResourceLocation id;
-	public boolean realRecipe;
-	public List<IngredientWithCount> inputItems;
-	public List<FluidStack> inputFluids;
-	public List<StackWithChance> outputItems;
-	public List<FluidStack> outputFluids;
-	public double processingTime;
-	public boolean hideFromJEI;
+/**
+ * Data-carrier recipe type for all FTBIC machines (macerator, compressor, centrifuge, etc.).
+ *
+ * Machine BEs call `matches(NoInput, level)` symbolically; the actual input-slot check happens inside
+ * the BE's process loop by scanning `inputs` against its internal ItemStack array. This matches the
+ * 1.18.2 behaviour where MachineRecipe.matches always returned false (recipes are looked up by
+ * scanning the BE's input buffer, not by Minecraft's recipe manager).
+ */
+public class MachineRecipe implements Recipe<NoInput> {
+	public final MachineRecipeType machineType;
+	public final List<IngredientWithCount> inputs;
+	public final List<SizedFluidIngredient> inputFluids;
+	public final List<StackWithChance> outputs;
+	public final List<FluidStack> outputFluids;
+	public final double processingTime;
+	public final boolean hideFromJEI;
 
-	public MachineRecipe(MachineRecipeSerializer s, ResourceLocation i) {
-		serializer = s;
-		id = i;
-		realRecipe = false;
-		inputItems = new ArrayList<>(1);
-		inputFluids = new ArrayList<>(0);
-		outputItems = new ArrayList<>(1);
-		outputFluids = new ArrayList<>(0);
-		processingTime = 1D;
-		hideFromJEI = false;
+	public MachineRecipe(MachineRecipeType machineType,
+			List<IngredientWithCount> inputs,
+			List<SizedFluidIngredient> inputFluids,
+			List<StackWithChance> outputs,
+			List<FluidStack> outputFluids,
+			double processingTime,
+			boolean hideFromJEI) {
+		this.machineType = machineType;
+		this.inputs = inputs;
+		this.inputFluids = inputFluids;
+		this.outputs = outputs;
+		this.outputFluids = outputFluids;
+		this.processingTime = processingTime;
+		this.hideFromJEI = hideFromJEI;
 	}
 
 	@Override
-	public boolean matches(NoContainer container, Level level) {
+	public boolean matches(NoInput input, Level level) {
 		return false;
 	}
 
 	@Override
-	public ItemStack assemble(NoContainer container) {
-		return getResultItem().copy();
+	public ItemStack assemble(NoInput input) {
+		return outputs.isEmpty() ? ItemStack.EMPTY : outputs.get(0).stack().copy();
 	}
 
 	@Override
-	public boolean canCraftInDimensions(int width, int height) {
+	public String group() {
+		return "";
+	}
+
+	@Override
+	public boolean showNotification() {
 		return false;
 	}
 
 	@Override
-	public ItemStack getResultItem() {
-		return outputItems.isEmpty() ? ItemStack.EMPTY : outputItems.get(0).stack;
+	public boolean isSpecial() {
+		return true;
 	}
 
 	@Override
-	public ResourceLocation getId() {
-		return id;
+	public RecipeSerializer<? extends Recipe<NoInput>> getSerializer() {
+		return machineType.SERIALIZER.get();
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return serializer;
+	public RecipeType<? extends Recipe<NoInput>> getType() {
+		return machineType.TYPE.get();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
-		return serializer.recipeType;
+	public PlacementInfo placementInfo() {
+		return PlacementInfo.NOT_PLACEABLE;
+	}
+
+	@Override
+	public RecipeBookCategory recipeBookCategory() {
+		return RecipeBookCategories.CRAFTING_MISC;
 	}
 
 	public boolean isVisibleJEI() {
 		return !hideFromJEI;
-	}
-
-	public boolean isRealAndVisibleJEI() {
-		return realRecipe && !hideFromJEI;
 	}
 }

@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:plates/quartz",
+      "count": 4
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:quartz_gear",
+        "count": 1
+      }
+    }
+  ]
+}

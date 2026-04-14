@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:stones",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:cobblestone",
+        "count": 1
+      }
+    }
+  ]
+}

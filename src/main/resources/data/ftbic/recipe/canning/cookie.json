@@ -1,0 +1,21 @@
+{
+  "type": "ftbic:canning",
+  "inputs": [
+    {
+      "ingredient": "minecraft:cookie",
+      "count": 1
+    },
+    {
+      "ingredient": "ftbic:empty_can",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:canned_food",
+        "count": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/zinc",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:zinc_rod",
+        "count": 2
+      }
+    }
+  ]
+}

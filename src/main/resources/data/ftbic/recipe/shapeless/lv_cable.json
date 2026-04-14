@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:lv_cable",
+  "ingredients": [
+    "#c:wires/copper",
+    "ftbic:rubber"
+  ],
+  "result": {
+    "id": "ftbic:lv_cable",
+    "count": 1
+  }
+}

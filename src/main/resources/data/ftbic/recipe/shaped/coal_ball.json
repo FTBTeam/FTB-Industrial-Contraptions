@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:coal_ball",
+  "pattern": [
+    "CCC",
+    "CFC",
+    "CCC"
+  ],
+  "key": {
+    "C": "#minecraft:coals",
+    "F": "minecraft:flint"
+  },
+  "result": {
+    "id": "ftbic:coal_ball",
+    "count": 1
+  }
+}

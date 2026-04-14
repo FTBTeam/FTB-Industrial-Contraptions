@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:rods/iridium",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:iridium_wire",
+        "count": 2
+      }
+    }
+  ]
+}

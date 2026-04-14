@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:rods/refined_glowstone",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:refined_glowstone_wire",
+        "count": 2
+      }
+    }
+  ]
+}

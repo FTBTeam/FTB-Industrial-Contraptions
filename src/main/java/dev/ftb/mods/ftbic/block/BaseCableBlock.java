@@ -3,17 +3,18 @@ package dev.ftb.mods.ftbic.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -38,8 +39,8 @@ public class BaseCableBlock extends Block implements SimpleWaterloggedBlock {
 	public final VoxelShape shapeE;
 	public final VoxelShape[] shapes;
 
-	public BaseCableBlock(int b, SoundType soundType) {
-		super(Properties.of(Material.METAL).strength(0.9F).sound(soundType));
+	public BaseCableBlock(BlockBehaviour.Properties props, int b, SoundType soundType) {
+		super(props.strength(0.9F).sound(soundType));
 		border = b;
 		int B0 = border;
 		int B1 = 16 - border;
@@ -59,39 +60,19 @@ public class BaseCableBlock extends Block implements SimpleWaterloggedBlock {
 				.setValue(CONNECTION[2], false)
 				.setValue(CONNECTION[3], false)
 				.setValue(CONNECTION[4], false)
-				.setValue(CONNECTION[5], false)
-		);
+				.setValue(CONNECTION[5], false));
 	}
 
 	public VoxelShape getShape(int i) {
 		if (shapes[i] == null) {
 			shapes[i] = shapeCenter;
-
-			if (((i >> 0) & 1) != 0) {
-				shapes[i] = Shapes.or(shapes[i], shapeD);
-			}
-
-			if (((i >> 1) & 1) != 0) {
-				shapes[i] = Shapes.or(shapes[i], shapeU);
-			}
-
-			if (((i >> 2) & 1) != 0) {
-				shapes[i] = Shapes.or(shapes[i], shapeN);
-			}
-
-			if (((i >> 3) & 1) != 0) {
-				shapes[i] = Shapes.or(shapes[i], shapeS);
-			}
-
-			if (((i >> 4) & 1) != 0) {
-				shapes[i] = Shapes.or(shapes[i], shapeW);
-			}
-
-			if (((i >> 5) & 1) != 0) {
-				shapes[i] = Shapes.or(shapes[i], shapeE);
-			}
+			if (((i >> 0) & 1) != 0) shapes[i] = Shapes.or(shapes[i], shapeD);
+			if (((i >> 1) & 1) != 0) shapes[i] = Shapes.or(shapes[i], shapeU);
+			if (((i >> 2) & 1) != 0) shapes[i] = Shapes.or(shapes[i], shapeN);
+			if (((i >> 3) & 1) != 0) shapes[i] = Shapes.or(shapes[i], shapeS);
+			if (((i >> 4) & 1) != 0) shapes[i] = Shapes.or(shapes[i], shapeW);
+			if (((i >> 5) & 1) != 0) shapes[i] = Shapes.or(shapes[i], shapeE);
 		}
-
 		return shapes[i];
 	}
 
@@ -101,43 +82,36 @@ public class BaseCableBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	@Deprecated
-	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
+	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
 		int index = 0;
-
 		for (Direction direction : Direction.values()) {
 			if (state.getValue(CONNECTION[direction.ordinal()])) {
 				index |= 1 << direction.ordinal();
 			}
 		}
-
 		return getShape(index);
 	}
 
 	@Override
-	@Deprecated
-	public FluidState getFluidState(BlockState state) {
+	protected FluidState getFluidState(BlockState state) {
 		return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
-	@Deprecated
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos pos, BlockPos facingPos) {
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction facing, BlockPos facingPos, BlockState facingState, net.minecraft.util.RandomSource random) {
 		if (state.getValue(BlockStateProperties.WATERLOGGED)) {
-			level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+			ticks.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 		}
-
 		return state;
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+	protected boolean propagatesSkylightDown(BlockState state) {
 		return !state.getValue(BlockStateProperties.WATERLOGGED);
 	}
 
 	@Override
-	@Deprecated
-	public boolean isPathfindable(BlockState arg, BlockGetter arg2, BlockPos arg3, PathComputationType arg4) {
+	protected boolean isPathfindable(BlockState state, PathComputationType type) {
 		return false;
 	}
 }

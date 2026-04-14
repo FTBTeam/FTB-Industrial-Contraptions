@@ -1,0 +1,5 @@
+{
+  "type": "ftbic:antimatter_boost",
+  "ingredient": "ftbic:scrap_box",
+  "boost": 45000.0
+}

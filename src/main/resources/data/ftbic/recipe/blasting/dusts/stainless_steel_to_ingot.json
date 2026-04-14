@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": "#c:dusts/stainless_steel",
+  "result": {
+    "id": "ftbmaterials:stainless_steel_ingot",
+    "count": 1
+  },
+  "experience": 0.7,
+  "cookingtime": 100
+}

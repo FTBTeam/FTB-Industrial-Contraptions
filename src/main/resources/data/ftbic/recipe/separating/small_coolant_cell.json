@@ -1,0 +1,26 @@
+{
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": {
+        "items": "ftbic:fluid_cell",
+        "components": {
+          "ftbic:fluid_cell_content": {
+            "id": "minecraft:water",
+            "amount": 1000
+          }
+        },
+        "neoforge:ingredient_type": "neoforge:components"
+      },
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:small_coolant_cell",
+        "count": 1
+      }
+    }
+  ]
+}

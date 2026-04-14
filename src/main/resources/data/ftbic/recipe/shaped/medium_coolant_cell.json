@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:medium_coolant_cell",
+  "pattern": [
+    "TTT",
+    "CCC",
+    "TTT"
+  ],
+  "key": {
+    "T": "#c:ingots/tin",
+    "C": "ftbic:small_coolant_cell"
+  },
+  "result": {
+    "id": "ftbic:medium_coolant_cell",
+    "count": 1
+  }
+}

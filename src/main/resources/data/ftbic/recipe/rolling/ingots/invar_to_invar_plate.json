@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:rolling",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/invar",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:invar_plate",
+        "count": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:raw_materials/platinum",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:platinum_dust",
+        "count": 1
+      }
+    },
+    {
+      "item": {
+        "id": "ftbmaterials:platinum_dust",
+        "count": 1
+      },
+      "chance": 0.35
+    }
+  ]
+}

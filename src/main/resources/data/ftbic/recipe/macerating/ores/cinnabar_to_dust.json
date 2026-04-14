@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ores/cinnabar",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:cinnabar_dust",
+        "count": 2
+      }
+    }
+  ]
+}

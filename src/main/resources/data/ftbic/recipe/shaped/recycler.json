@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:recycler",
+  "pattern": [
+    "MDM",
+    "MCM"
+  ],
+  "key": {
+    "D": "minecraft:composter",
+    "C": "ftbic:compressor",
+    "M": "ftbic:industrial_grade_metal"
+  },
+  "result": {
+    "id": "ftbic:reprocessor",
+    "count": 1
+  }
+}

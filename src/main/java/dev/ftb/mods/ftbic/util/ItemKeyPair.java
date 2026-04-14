@@ -12,7 +12,9 @@ public final class ItemKeyPair {
 
 	@Override
 	public boolean equals(Object o) {
-		ItemKeyPair e = (ItemKeyPair) o;
+		if (!(o instanceof ItemKeyPair e)) {
+			return false;
+		}
 		return a.equals(e.a) && b.equals(e.b);
 	}
 

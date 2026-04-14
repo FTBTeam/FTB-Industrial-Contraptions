@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:lv_solar_panel",
+  "pattern": [
+    "LLL",
+    "DSD",
+    "CGC"
+  ],
+  "key": {
+    "L": "#c:glass_blocks/colorless",
+    "D": "#c:dusts/coal",
+    "S": "#c:silicon",
+    "G": "ftbic:basic_generator",
+    "C": "ftbic:electronic_circuit"
+  },
+  "result": {
+    "id": "ftbic:lv_solar_panel",
+    "count": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:gems/diamond",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:diamond_dust",
+        "count": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "ftbic:canning",
+  "inputs": [
+    {
+      "ingredient": "minecraft:cooked_mutton",
+      "count": 1
+    },
+    {
+      "ingredient": "ftbic:empty_can",
+      "count": 3
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:canned_food",
+        "count": 3
+      }
+    }
+  ]
+}

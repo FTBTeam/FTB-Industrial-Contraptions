@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/plutonium",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:plutonium_dust",
+        "count": 1
+      }
+    }
+  ]
+}

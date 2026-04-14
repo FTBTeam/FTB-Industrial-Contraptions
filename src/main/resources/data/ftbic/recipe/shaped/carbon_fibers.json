@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:carbon_fibers",
+  "pattern": [
+    "DD",
+    "DD"
+  ],
+  "key": {
+    "D": "#c:dusts/coal"
+  },
+  "result": {
+    "id": "ftbic:carbon_fibers",
+    "count": 1
+  }
+}

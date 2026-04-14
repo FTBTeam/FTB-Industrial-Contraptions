@@ -1,33 +1,21 @@
 package dev.ftb.mods.ftbic.item.reactor;
 
-import dev.ftb.mods.ftbic.util.FTBICUtils;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
+/** Raises the reactor's `maxHeat` and multiplies its explosion radius by a modifier (typically <1). */
 public class ReactorPlatingItem extends BaseReactorItem {
-	public final int maxHeatBonus;
-	public final double explosionModifier;
+	public final int heatCapacity;
+	public final double explosionResistance;
 
-	public ReactorPlatingItem(int h, double e) {
-		super(0);
-		maxHeatBonus = h;
-		explosionModifier = e;
-	}
-
-	@Override
-	public void reactorInfo(ItemStack stack, List<Component> list, boolean shift, boolean advanced, @Nullable NuclearReactor reactor, int x, int y) {
-		list.add(new TextComponent("Max Heat: +").append(FTBICUtils.formatHeat(maxHeatBonus)).withStyle(ChatFormatting.GRAY));
-		list.add(new TextComponent("Explosion Size: -" + (int) (100D - explosionModifier * 100D) + "%").withStyle(ChatFormatting.GRAY));
+	public ReactorPlatingItem(Properties props, int heatCapacity, double explosionResistance) {
+		super(props);
+		this.heatCapacity = heatCapacity;
+		this.explosionResistance = explosionResistance;
 	}
 
 	@Override
 	public void reactorTickPre(NuclearReactor reactor, ItemStack stack, int x, int y) {
-		reactor.maxHeat += maxHeatBonus;
-		reactor.explosionModifier *= explosionModifier;
+		reactor.maxHeat += heatCapacity;
+		reactor.explosionModifier *= explosionResistance;
 	}
 }

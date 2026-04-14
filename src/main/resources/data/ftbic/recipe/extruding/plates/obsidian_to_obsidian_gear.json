@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:plates/obsidian",
+      "count": 4
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:obsidian_gear",
+        "count": 1
+      }
+    }
+  ]
+}

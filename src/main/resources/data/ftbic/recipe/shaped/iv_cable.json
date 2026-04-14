@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:iv_cable",
+  "pattern": [
+    "GGG",
+    " C ",
+    "GGG"
+  ],
+  "key": {
+    "G": "#c:glass_blocks/colorless",
+    "C": "ftbic:energy_crystal"
+  },
+  "result": {
+    "id": "ftbic:iv_cable",
+    "count": 6
+  }
+}

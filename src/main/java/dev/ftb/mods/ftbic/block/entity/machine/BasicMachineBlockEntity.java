@@ -4,21 +4,32 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
-import dev.ftb.mods.ftbic.util.EnergyItemHandler;
+import dev.ftb.mods.ftbic.util.BatterySlotHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
+/**
+ * Adds an upgrade-slot inventory + drain-battery-to-buffer slot to the base electric BE.
+ *
+ * Upgrade effects (applied in {@link #upgradesChanged()}):
+ *  - Overclocker: *speed* multiplier on progress, *energy-use* multiplier on per-tick drain
+ *  - Transformer: *4 per stack on maxEnergyInput (capped at IV tier)
+ *  - Storage: +STORAGE_UPGRADE zaps per stack on capacity
+ *  - Ejector: flips `autoEject = true`
+ */
+public class BasicMachineBlockEntity extends ElectricBlockEntity {
 	public final UpgradeInventory upgradeInventory;
 	public final BatteryInventory batteryInventory;
 
 	public double energyUse;
 	public double progressSpeed;
+	/** Cached config value refreshed in {@link #initProperties()} — avoids per-tick ConfigValue.get(). */
+	protected double itemTransferEfficiency;
 
 	public BasicMachineBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -27,81 +38,104 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 	}
 
 	@Override
-	public void writeData(CompoundTag tag) {
-		super.writeData(tag);
-
-		tag.put("Upgrades", upgradeInventory.serializeNBT().getList("Items", Tag.TAG_COMPOUND));
-
-		if (!batteryInventory.getStackInSlot(0).isEmpty()) {
-			tag.put("Battery", batteryInventory.getStackInSlot(0).serializeNBT());
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		upgradeInventory.serialize(output.child("Upgrades"));
+		ItemStack battery = batteryInventory.getStackInSlot(0);
+		if (!battery.isEmpty()) {
+			output.store("Battery", ItemStack.CODEC, battery);
 		}
 	}
 
 	@Override
-	public void readData(CompoundTag tag) {
-		super.readData(tag);
-
-		CompoundTag tag1 = new CompoundTag();
-		tag1.put("Items", tag.getList("Upgrades", Tag.TAG_COMPOUND));
-		upgradeInventory.deserializeNBT(tag1);
-
-		if (tag.contains("Battery")) {
-			batteryInventory.loadItem(ItemStack.of(tag.getCompound("Battery")));
-		} else {
-			batteryInventory.loadItem(ItemStack.EMPTY);
-		}
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		input.child("Upgrades").ifPresent(upgradeInventory::deserialize);
+		batteryInventory.loadItem(input.read("Battery", ItemStack.CODEC).orElse(ItemStack.EMPTY));
 	}
 
 	@Override
 	public void tick() {
-		if (!isBurnt() && !level.isClientSide() && energy < energyCapacity) {
+		super.tick();
+		if (level == null || level.isClientSide()) {
+			return;
+		}
+
+		// Drain battery slot into our energy buffer.
+		if (!isBurnt()) {
 			ItemStack battery = batteryInventory.getStackInSlot(0);
+			double drained = BatterySlotHelper.drainBatteryToBuffer(this, battery, maxInputEnergy, itemTransferEfficiency);
+			if (drained > 0D && battery.isEmpty()) {
+				batteryInventory.setStackInSlot(0, ItemStack.EMPTY);
+			}
+		}
 
-			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler item) {
-				double transfer = item.isCreativeEnergyItem() ? Double.POSITIVE_INFINITY : maxInputEnergy * FTBICConfig.MACHINES.ITEM_TRANSFER_EFFICIENCY.get();
-				double e = item.extractEnergy(battery, Math.min(energyCapacity - energy, transfer), false);
+		if (autoEject) {
+			ejectOutputs();
+		}
+	}
 
-				if (e > 0) {
-					energy += e;
+	/**
+	 * Push output items into adjacent neighbours via {@code Capabilities.Item.BLOCK} (the modern
+	 * {@code ResourceHandler<ItemResource>} API). NeoForge exposes vanilla {@code Container} block
+	 * entities (chests, hoppers, barrels) through this capability automatically, so no separate
+	 * Container fallback is needed.
+	 */
+	private void ejectOutputs() {
+		if (!(level instanceof net.minecraft.server.level.ServerLevel serverLevel) || outputItems.length == 0) return;
 
-					if (battery.isEmpty()) {
-						batteryInventory.setStackInSlot(0, ItemStack.EMPTY);
-					}
+		for (int i = 0; i < outputItems.length; i++) {
+			if (outputItems[i].isEmpty()) continue;
 
+			for (net.minecraft.core.Direction dir : net.minecraft.core.Direction.values()) {
+				if (outputItems[i].isEmpty()) break;
+				net.minecraft.core.BlockPos neighbor = worldPosition.relative(dir);
+
+				var handler = serverLevel.getCapability(
+						net.neoforged.neoforge.capabilities.Capabilities.Item.BLOCK,
+						neighbor, dir.getOpposite());
+				if (handler == null) continue;
+
+				ItemStack stack = outputItems[i];
+				var resource = net.neoforged.neoforge.transfer.item.ItemResource.of(stack);
+				int inserted;
+				try (var txn = net.neoforged.neoforge.transfer.transaction.Transaction.openRoot()) {
+					inserted = handler.insert(resource, stack.getCount(), txn);
+					if (inserted > 0) txn.commit();
+				}
+				if (inserted > 0) {
+					stack.shrink(inserted);
+					if (stack.getCount() <= 0) outputItems[i] = ItemStack.EMPTY;
 					setChanged();
 				}
 			}
 		}
-
-		handleProcessing();
-		handleChanges();
 	}
 
-	@Override
+	/** Tooltip helper: max possible capacity with every upgrade slot full of storage upgrades. */
 	public double getTotalPossibleEnergyCapacity() {
-		return super.getTotalPossibleEnergyCapacity() + upgradeInventory.getSlots() * Math.min(FTBICConfig.MACHINES.UPGRADE_LIMIT_PER_SLOT.get(), FTBICItems.ENERGY_STORAGE_UPGRADE.get().getMaxStackSize()) * FTBICConfig.MACHINES.STORAGE_UPGRADE.get();
-	}
-
-	public void handleProcessing() {
+		return electricBlockInstance.energyCapacity.get()
+				+ upgradeInventory.getSlots()
+				* FTBICConfig.MACHINES.UPGRADE_LIMIT_PER_SLOT.get()
+				* FTBICConfig.MACHINES.STORAGE_UPGRADE.get();
 	}
 
 	@Override
 	public void onBroken(Level level, BlockPos pos) {
 		super.onBroken(level, pos);
-
 		for (int i = 0; i < upgradeInventory.getSlots(); i++) {
 			Block.popResource(level, pos, upgradeInventory.getStackInSlot(i));
 		}
-
 		Block.popResource(level, pos, batteryInventory.getStackInSlot(0));
 	}
 
 	@Override
 	public void initProperties() {
 		super.initProperties();
-		energyUse = electricBlockInstance.energyUsage;
+		energyUse = electricBlockInstance.energyUsage.get();
 		progressSpeed = 1D;
 		autoEject = false;
+		itemTransferEfficiency = FTBICConfig.MACHINES.ITEM_TRANSFER_EFFICIENCY.get();
 	}
 
 	@Override
@@ -109,24 +143,23 @@ public abstract class BasicMachineBlockEntity extends ElectricBlockEntity {
 		super.upgradesChanged();
 
 		int overclockers = upgradeInventory.countUpgrades(FTBICItems.OVERCLOCKER_UPGRADE.get());
-
 		for (int i = 0; i < overclockers; i++) {
 			energyUse *= FTBICConfig.MACHINES.OVERCLOCKER_ENERGY_USE.get();
 			progressSpeed *= FTBICConfig.MACHINES.OVERCLOCKER_SPEED.get();
 		}
 
 		int transformers = upgradeInventory.countUpgrades(FTBICItems.TRANSFORMER_UPGRADE.get());
-
 		while (transformers > 0) {
 			transformers--;
 			maxInputEnergy *= 4D;
 		}
-
-		if (maxInputEnergy > FTBICConfig.ENERGY.IV_TRANSFER_RATE.get()) {
-			maxInputEnergy = FTBICConfig.ENERGY.IV_TRANSFER_RATE.get();
+		double ivCap = FTBICConfig.ENERGY.IV_TRANSFER_RATE.get();
+		if (maxInputEnergy > ivCap) {
+			maxInputEnergy = ivCap;
 		}
 
-		energyCapacity += upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get()) * FTBICConfig.MACHINES.STORAGE_UPGRADE.get();
+		energyCapacity += upgradeInventory.countUpgrades(FTBICItems.ENERGY_STORAGE_UPGRADE.get())
+				* FTBICConfig.MACHINES.STORAGE_UPGRADE.get();
 		if (energy > energyCapacity) {
 			energy = energyCapacity;
 		}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:iridium_alloy",
+  "pattern": [
+    "IAI",
+    "ADA",
+    "IAI"
+  ],
+  "key": {
+    "I": "#c:ingots/iridium",
+    "A": "ftbic:advanced_alloy",
+    "D": "#c:gems/diamond"
+  },
+  "result": {
+    "id": "ftbic:iridium_alloy",
+    "count": 1
+  }
+}

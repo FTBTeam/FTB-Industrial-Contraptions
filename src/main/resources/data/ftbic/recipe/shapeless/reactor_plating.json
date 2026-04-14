@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:reactor_plating",
+  "ingredients": [
+    "ftbic:advanced_alloy",
+    "#c:plates/lead",
+    "#c:plates/lead"
+  ],
+  "result": {
+    "id": "ftbic:reactor_plating",
+    "count": 1
+  }
+}

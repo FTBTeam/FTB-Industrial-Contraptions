@@ -1,0 +1,5 @@
+{
+  "type": "ftbic:basic_generator_fuel",
+  "ingredient": "#minecraft:saplings",
+  "ticks": 100
+}

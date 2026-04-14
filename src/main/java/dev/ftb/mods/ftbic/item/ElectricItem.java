@@ -1,29 +1,29 @@
 package dev.ftb.mods.ftbic.item;
 
-import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
-import dev.ftb.mods.ftbic.util.FTBICUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.item.component.TooltipDisplay;
 
-import java.util.List;
+import java.util.function.Consumer;
 
+/**
+ * Base electric item — stores energy in a DataComponent (see ModDataComponents.ENERGY).
+ */
 public class ElectricItem extends Item implements EnergyItemHandler {
 	public final EnergyTier tier;
 	public final double capacity;
 
-	public ElectricItem(EnergyTier t, double cap) {
-		super(new Properties().stacksTo(1).tab(FTBIC.TAB));
-		tier = t;
-		capacity = cap;
+	public ElectricItem(Properties props, EnergyTier tier, double capacity) {
+		super(props.stacksTo(1));
+		this.tier = tier;
+		this.capacity = capacity;
 	}
 
 	@Override
@@ -32,25 +32,38 @@ public class ElectricItem extends Item implements EnergyItemHandler {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-		if (!isCreativeEnergyItem()) {
-			list.add(FTBICUtils.energyTooltip(stack, this));
-		}
-	}
-
-	@Override
 	public boolean isBarVisible(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().contains("Energy");
+		return !isCreativeEnergyItem() && stack.has(ModDataComponents.ENERGY.get());
 	}
 
 	@Override
 	public int getBarWidth(ItemStack stack) {
-		return Math.round((float) Mth.clamp((getEnergy(stack) / getEnergyCapacity(stack)) * 13D, 0D, 13D));
+		double cap = getEnergyCapacity(stack);
+		if (cap <= 0D) return 0;
+		return (int) Math.round(Mth.clamp((getEnergy(stack) / cap) * 13D, 0D, 13D));
 	}
 
 	@Override
 	public int getBarColor(ItemStack stack) {
-		return 0xFFFF0000;
+		return 0xFFEE3030;
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display,
+			Consumer<Component> tooltip, TooltipFlag flag) {
+		super.appendHoverText(stack, context, display, tooltip, flag);
+		if (isCreativeEnergyItem()) {
+			tooltip.accept(Component.translatable("item.ftbic.tooltip.creative_energy")
+					.withStyle(ChatFormatting.LIGHT_PURPLE));
+		} else {
+			double energy = getEnergy(stack);
+			double cap = getEnergyCapacity(stack);
+			tooltip.accept(Component.translatable("item.ftbic.tooltip.energy",
+							EnergyItemHandler.formatEnergy(energy), EnergyItemHandler.formatEnergy(cap))
+					.withStyle(ChatFormatting.GRAY));
+			tooltip.accept(Component.translatable("item.ftbic.tooltip.tier", tier.name)
+					.withStyle(ChatFormatting.DARK_GRAY));
+		}
 	}
 }

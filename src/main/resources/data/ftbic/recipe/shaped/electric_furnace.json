@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:electric_furnace",
+  "pattern": [
+    " C ",
+    "RFR"
+  ],
+  "key": {
+    "C": "ftbic:electronic_circuit",
+    "R": "#c:dusts/redstone",
+    "F": "ftbic:iron_furnace"
+  },
+  "result": {
+    "id": "ftbic:powered_furnace",
+    "count": 1
+  }
+}

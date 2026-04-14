@@ -1,191 +1,145 @@
 plugins {
-	id "dev.architectury.loom" version "0.12.0-SNAPSHOT"
-	id 'maven-publish'
-	id "com.matthewprenger.cursegradle" version "1.4.0"
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.141'
+    id 'me.modmuss50.mod-publish-plugin' version '1.1.0'
 }
 
-apply from: 'https://files.latmod.com/public/markdown-git-changelog.gradle'
-
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = 17
-
-def ENV = System.getenv()
-version = "${mod_version}-build.${ENV.GITHUB_RUN_NUMBER ?: 'preview'}"
-archivesBaseName = project.archives_base_name
+version = "${minecraft_version}-${project.mod_version}"
 group = project.maven_group
 
-loom {
-	silentMojangMappingsLicense()
-
-	forge {
-		mixinConfigs = [
-		]
-
-		dataGen {
-			mod project.mod_id
-		}
-
-		launches {
-			data {
-				arg "--existing", file("src/main/resources").absolutePath
-			}
-		}
-	}
+base {
+    archivesName = project.archives_base_name
 }
 
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
+neoForge {
+    version = project.neoforge_full_version
+
+    runs {
+        configureEach {
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+
+        client {
+            client()
+        }
+
+        server {
+            server()
+            programArguments.add('--nogui')
+        }
+
+        clientData {
+            clientData()
+            programArguments.addAll('--mod', project.mod_id, '--all',
+                '--output', file('src/generated/resources/').absolutePath,
+                '--existing', file('src/main/resources/').absolutePath)
+        }
+    }
+
+    mods {
+        "${project.mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
 repositories {
-	maven {
-		url "https://maven.architectury.dev/"
-		content {
-			includeGroup "dev.architectury"
-			includeGroup "me.shedaniel"
-			includeGroup "me.shedaniel.cloth"
-		}
-	}
+    maven {
+        name = "Jared's Maven"
+        url = "https://maven.blamejared.com/"
+        content {
+            includeGroup "mezz.jei"
+        }
+    }
 
-	maven {
-		url "https://www.cursemaven.com"
-		content {
-			includeGroup "curse.maven"
-		}
-	}
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
 
-	maven {
-		url "https://maven.saps.dev/minecraft"
-		content {
-			includeGroup "dev.latvian.mods"
-			includeGroup "dev.ftb.mods"
-			includeGroup "io.alwa.mods"
-		}
-	}
+    maven {
+        name = "CurseMaven"
+        url = "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 
-	maven {
-		name = 'ParchmentMC'
-		url = 'https://maven.parchmentmc.org'
-	}
-
-	maven {
-		url "https://maven.nanite.dev"
-		content {
-			includeGroup "com.sunekaer.mods"
-		}
-	}
-	maven {
-		url 'https://maven.blamejared.com'
-	}
-
-	mavenLocal()
+    maven {
+        name = "FTB"
+        url = "https://maven.ftb.dev/snapshots"
+        content {
+            includeGroup "dev.ftb.mods"
+        }
+    }
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    // JEI - wired up for Phase 6 integration; safe to leave as compileOnly until then
+    compileOnly("mezz.jei:jei-26.1.1-neoforge-api:29.4.0.23")
+    runtimeOnly("mezz.jei:jei-26.1.1-neoforge:29.4.0.23")
 
-	mappings loom.layered() {
-		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-1.18.2:2022.07.03")
-	}
+    // Jade - block-info tooltips. Compile against the CurseForge jar; same coordinates as
+    // the auroral reference project.
+    implementation("curse.maven:jade-324717:7817285")
 
-	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
-	modApi("dev.architectury:architectury-forge:${rootProject.architectury_version}")
-
-	modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.rei_version}")
-
-	modImplementation("io.alwa.mods:myrtrees-forge:${rootProject.myrtrees_version}")
-	modImplementation("dev.latvian.mods:kubejs-forge:${rootProject.kubejs_version}")
-	modImplementation("dev.ftb.mods:ftb-library-forge:${rootProject.ftblibrary_version}") { transitive = false }
-	modImplementation("dev.ftb.mods:ftb-teams-forge:${rootProject.ftbteams_version}") { transitive = false }
-	modImplementation("dev.ftb.mods:ftb-chunks-forge:${rootProject.ftbchunks_version}") { transitive = false }
-
-	// Mods
-	modRuntimeOnly ("com.sunekaer.mods:ToolKit:2.2.1-build.4+mc1.18.2") // local
-	modApi "vazkii.patchouli:Patchouli:${patchouli_version}:api"
-	modRuntimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+    // FTB Materials - hard dependency; provides ores/raw materials/ingots/nuggets/dusts/plates/rods/gears/wires
+    // so FTBIC stops registering its own duplicates. Dense plates remain in FTBIC.
+    implementation("dev.ftb.mods:ftb-materials:26.1.1.1-SNAPSHOT")
 }
 
-processResources {
-	inputs.property "version", project.version
+tasks.withType(ProcessResources).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            neoforge_loader_version: neoforge_loader_version,
+            neoforge_full_version  : neoforge_full_version,
+            version                : version,
+            neo_version_range      : neo_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_author             : mod_author
+    ]
 
-	filesMatching("META-INF/mods.toml") {
-		expand "version": project.version,
-				"archversion": project.architectury_version,
-				"ftblibversion": project.ftblibrary_version,
-				"mcversion": project.minecraft_version,
-				"forgeversion": project.forge_version,
-				"forgeshortversion": project.forge_version.split('\\.')[0]
-	}
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
 }
 
-compileJava {
-	options.encoding = "UTF-8"
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
 }
 
-java {
-	withSourcesJar()
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }
 
-jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}" }
-	}
+publishMods {
+    file = jar.archiveFile
+    changelog = "Release ${version}"
+    type = BETA
+    modLoaders.add("neoforge")
 
-	manifest {
-		attributes([
-				"Specification-Title"     : project.mod_id,
-				"Specification-Vendor"    : project.mod_author,
-				"Specification-Version"   : "1",
-				"Implementation-Title"    : project.name,
-				"Implementation-Version"  : version,
-				"Implementation-Vendor"   : project.mod_author,
-				"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-		])
-	}
-}
-
-publishing {
-	publications {
-		mavenForge(MavenPublication) {
-			artifactId = rootProject.archivesBaseName
-			from components.java
-		}
-	}
-
-	repositories {
-		if (ENV.FTB_MAVEN_TOKEN) {
-			maven {
-				url "https://maven.ftb.dev/release"
-				credentials {
-					username = "ftb"
-					password = "${ENV.FTB_MAVEN_TOKEN}"
-				}
-			}
-		}
-
-		if (ENV.SAPS_TOKEN) {
-			maven {
-				url "https://maven.saps.dev/minecraft"
-				credentials {
-					username = "ftb"
-					password = "${ENV.SAPS_TOKEN}"
-				}
-			}
-		}
-	}
-}
-
-if (ENV.CURSEFORGE_KEY) {
-	curseforge {
-		apiKey = ENV.CURSEFORGE_KEY
-		project {
-			id = project.curseforge_id
-			releaseType = project.curseforge_type
-			addGameVersion project.minecraft_version
-			mainArtifact(remapJar.archivePath)
-			relations {
-				requiredDependency 'architectury-api'
-				requiredDependency 'myrtrees'
-				requiredDependency 'ftb-library-forge'
-			}
-			changelog = getGitChangelog
-			changelogType = 'markdown'
-		}
-	}
+    curseforge {
+        projectId = project.curseforge_id
+        projectSlug = "ftb-industrial-contraptions"
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        minecraftVersions.add(minecraft_version)
+        optional("jei")
+    }
 }

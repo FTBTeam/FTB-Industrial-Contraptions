@@ -2,6 +2,11 @@ package dev.ftb.mods.ftbic.item.reactor;
 
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * Shared behaviour interface for every item that can live in a Nuclear Reactor grid. Each method
+ * matches the 1.18.2 `ReactorItem` interface — `reactorTickPre` runs first across every grid cell,
+ * then `reactorTickPost`, matching the original two-pass simulation.
+ */
 public interface ReactorItem {
 	default int getRods(ItemStack stack) {
 		return 0;
@@ -28,18 +33,13 @@ public interface ReactorItem {
 		return isHeatAcceptor(stack);
 	}
 
+	/** Applies `damage` to the item's durability (negative values heal). Returns the overflow clamped amount. */
 	default int damageReactorItem(ItemStack stack, int damage) {
 		if (damage != 0 && stack.isDamageableItem()) {
 			int max = stack.getMaxDamage();
-
-			if (max <= 0) {
-				return damage;
-			}
-
+			if (max <= 0) return damage;
 			int extra = 0;
-			int newDamage = stack.getDamageValue();
-			newDamage += damage;
-
+			int newDamage = stack.getDamageValue() + damage;
 			if (newDamage > max) {
 				extra = max - newDamage + 1;
 				newDamage = max;
@@ -47,11 +47,9 @@ public interface ReactorItem {
 				extra = newDamage;
 				newDamage = 0;
 			}
-
 			stack.setDamageValue(newDamage);
 			return extra;
 		}
-
 		return damage;
 	}
 

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:advanced_circuit",
+  "ingredients": [
+    "#c:dusts/redstone",
+    "#c:dusts/glowstone",
+    "#c:dusts/redstone",
+    "#c:silicon",
+    "ftbic:electronic_circuit",
+    "#c:silicon",
+    "#c:dusts/redstone",
+    "#c:dusts/glowstone",
+    "#c:dusts/redstone"
+  ],
+  "result": {
+    "id": "ftbic:advanced_circuit",
+    "count": 1
+  }
+}

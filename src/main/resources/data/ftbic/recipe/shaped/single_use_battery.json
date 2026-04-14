@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:single_use_battery",
+  "pattern": [
+    "C",
+    "R",
+    "O"
+  ],
+  "key": {
+    "C": "ftbic:lv_cable",
+    "O": "#minecraft:coals",
+    "R": "#c:dusts/redstone"
+  },
+  "result": {
+    "id": "ftbic:single_use_battery",
+    "count": 1
+  }
+}

@@ -1,248 +1,239 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
-import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
-import dev.ftb.mods.ftbic.recipe.MachineRecipeResults;
-import dev.ftb.mods.ftbic.recipe.MachineRecipeSerializer;
-import dev.ftb.mods.ftbic.recipe.RecipeCache;
-import dev.ftb.mods.ftbic.recipe.SimpleMachineRecipeResults;
-import dev.ftb.mods.ftbic.screen.MachineMenu;
-import dev.ftb.mods.ftbic.screen.sync.SyncedData;
-import dev.ftb.mods.ftbic.util.MachineProcessingResult;
-import net.minecraft.Util;
+import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
+import dev.ftb.mods.ftbic.recipe.MachineRecipe;
+import dev.ftb.mods.ftbic.recipe.MachineRecipeType;
+import dev.ftb.mods.ftbic.util.IngredientWithCount;
+import dev.ftb.mods.ftbic.util.StackWithChance;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
+import java.util.List;
 
-public abstract class MachineBlockEntity extends BasicMachineBlockEntity {
-	public double progress;
-	public double maxProgress;
-	public int acceleration;
-	private boolean checkProcessing;
+/**
+ * Recipe-driven machine base. Subclasses declare their {@link MachineRecipeType} (e.g. MACERATING);
+ * the tick loop finds a matching recipe based on the input buffer, consumes energy, advances progress,
+ * and emits outputs when progress hits the recipe's processingTime. Upgrade-slot effects and the
+ * battery-slot charging loop live in {@link BasicMachineBlockEntity}; output-chance RNG is honoured
+ * by {@link #addOutputs} via the {@link dev.ftb.mods.ftbic.util.StackWithChance} list.
+ */
+public class MachineBlockEntity extends BasicMachineBlockEntity {
+	public final MachineRecipeType recipeType;
+	public int progress;
+	public int maxProgress;
 
-	public boolean shouldAccelerate;
+	@Nullable
+	private MachineRecipe cachedRecipe;
+	/**
+	 * Set whenever input slots change — forces a full recipe-map scan on the next findRecipe() call.
+	 * Without this, an idle machine (no matching recipe, non-empty inputs) would iterate the whole
+	 * recipe map every tick. We only scan when something about the inputs has actually changed.
+	 */
+	private boolean recipeDirty = true;
 
-	public MachineBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+	public MachineBlockEntity(ElectricBlockInstance type, MachineRecipeType recipeType,
+			BlockPos pos, BlockState state) {
 		super(type, pos, state);
-		progress = 0;
-		maxProgress = 0D;
-		acceleration = 0;
-		checkProcessing = true;
+		this.recipeType = recipeType;
 	}
 
 	@Override
-	public void writeData(CompoundTag tag) {
-		super.writeData(tag);
-		tag.putDouble("MaxProgress", maxProgress);
-		tag.putDouble("Progress", progress);
-
-		if (acceleration > 0) {
-			tag.putInt("Acceleration", acceleration);
+	public void setStackInSlot(int slot, ItemStack stack) {
+		if (slot < inputItems.length) {
+			recipeDirty = true;
 		}
+		super.setStackInSlot(slot, stack);
 	}
 
 	@Override
-	public void readData(CompoundTag tag) {
-		super.readData(tag);
-		maxProgress = tag.getDouble("MaxProgress");
-		progress = tag.getDouble("Progress");
-		acceleration = tag.getInt("Acceleration");
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		if (progress > 0) output.putInt("Progress", progress);
+		if (maxProgress > 0) output.putInt("MaxProgress", maxProgress);
+	}
+
+	@Override
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		progress = input.getIntOr("Progress", 0);
+		maxProgress = input.getIntOr("MaxProgress", 0);
 	}
 
 	@Nullable
-	private ItemStackHandler getOutput(MachineProcessingResult result, boolean simulate) {
-		// Best way to check if output inventory fits all items is to just copy the current output array and try to insert all items
-		ItemStackHandler output = new ItemStackHandler(NonNullList.withSize(outputItems.length, ItemStack.EMPTY));
-
-		for (int i = 0; i < outputItems.length; i++) {
-			output.setStackInSlot(i, outputItems[i].copy());
+	private MachineRecipe findRecipe() {
+		if (level == null || !(level instanceof ServerLevel server)) {
+			return null;
 		}
-
-		Random random = level != null ? level.random : new Random();
-
-		if (simulate || random.nextDouble() < result.output.chance) {
-			if (!ItemHandlerHelper.insertItemStacked(output, result.output.stack.copy(), false).isEmpty()) {
-				return null;
+		if (cachedRecipe != null && recipeMatchesInputs(cachedRecipe)) {
+			return cachedRecipe;
+		}
+		// Only scan the full recipe map when inputs actually changed — otherwise an idle machine
+		// with non-matching inputs would iterate every recipe every tick.
+		if (!recipeDirty) {
+			return null;
+		}
+		recipeDirty = false;
+		for (RecipeHolder<?> holder : server.recipeAccess().recipeMap().byType(recipeType.TYPE.get())) {
+			if (holder.value() instanceof MachineRecipe mr && recipeMatchesInputs(mr)) {
+				cachedRecipe = mr;
+				return mr;
 			}
 		}
-
-		for (int i = 0; i < result.extra.length; i++) {
-			if (result.extra[i].chance >= 1D) {
-				if (!ItemHandlerHelper.insertItemStacked(output, result.extra[i].stack.copy(), false).isEmpty()) {
-					return null;
-				}
-			} else if (!simulate && random.nextDouble() < result.extra[i].chance) {
-				if (!ItemHandlerHelper.insertItemStacked(output, result.extra[i].stack.copy(), false).isEmpty()) {
-					return null;
+		if (recipeType == FTBICRecipes.SMELTING && inputItems.length > 0 && !inputItems[0].isEmpty()) {
+			for (RecipeHolder<SmeltingRecipe> holder : server.recipeAccess().recipeMap().byType(RecipeType.SMELTING)) {
+				SmeltingRecipe sr = holder.value();
+				if (sr.input().test(inputItems[0])) {
+					MachineRecipe synthetic = adaptCooking(sr, inputItems[0]);
+					if (canFitOutputs(synthetic)) {
+						cachedRecipe = synthetic;
+						return synthetic;
+					}
 				}
 			}
 		}
+		cachedRecipe = null;
+		return null;
+	}
 
-		return output;
+	private MachineRecipe adaptCooking(AbstractCookingRecipe sr, ItemStack inputStack) {
+		ItemStack result = sr.assemble(new SingleRecipeInput(inputStack));
+		ItemStackTemplate template = new ItemStackTemplate(
+				result.typeHolder(), result.getCount(), result.getComponentsPatch());
+		double baseTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
+		return new MachineRecipe(
+				recipeType,
+				List.of(new IngredientWithCount(sr.input(), 1)),
+				List.of(),
+				List.of(new StackWithChance(template, 1D)),
+				List.of(),
+				sr.cookingTime() / baseTicks,
+				false);
+	}
+
+	private boolean recipeMatchesInputs(MachineRecipe mr) {
+		if (mr.inputs.isEmpty() || inputItems.length == 0) {
+			return false;
+		}
+		// Every ingredient must be satisfied by some input slot.
+		boolean[] used = new boolean[inputItems.length];
+		for (IngredientWithCount need : mr.inputs) {
+			boolean found = false;
+			for (int i = 0; i < inputItems.length; i++) {
+				if (used[i]) continue;
+				if (need.matches(inputItems[i])) {
+					used[i] = true;
+					found = true;
+					break;
+				}
+			}
+			if (!found) return false;
+		}
+		return canFitOutputs(mr);
+	}
+
+	private boolean canFitOutputs(MachineRecipe mr) {
+		if (mr.outputs.isEmpty() || outputItems.length == 0) {
+			return true;
+		}
+		// Simple heuristic: at least one output slot empty or stackable with a primary output.
+		ItemStack primary = mr.outputs.get(0).stack();
+		for (ItemStack out : outputItems) {
+			if (out.isEmpty()) return true;
+			if (ItemStack.isSameItemSameComponents(out, primary) && out.getCount() + primary.getCount() <= out.getMaxStackSize()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
-	public void handleProcessing() {
-		if (isBurnt() || level.isClientSide()) {
+	public void tick() {
+		super.tick();
+		if (level == null || level.isClientSide()) {
 			return;
 		}
 
-		if (maxProgress > 0D && progress < maxProgress) {
-			int eu = Mth.ceil(energyUse);
+		MachineRecipe recipe = findRecipe();
 
-			if (eu > 0 && energy >= eu) {
-				progress += progressSpeed;
-				energy -= eu;
-				active = true;
-
-				if (energy < eu) {
-					setChanged();
-				}
-
-				if (shouldAccelerate) {
-					acceleration++;
-				}
-			}
-
-			if (progress >= maxProgress) {
-				progress = 0D;
+		if (recipe == null || energy < energyUse) {
+			if (progress != 0) {
+				progress = 0;
 				setChanged();
-				shiftInputs();
-				MachineProcessingResult result = getResult(inputItems, true);
+			}
+			active = false;
+			return;
+		}
 
-				if (result.exists()) {
-					ItemStackHandler out = getOutput(result, false);
+		double speed = Math.max(1D, progressSpeed);
+		maxProgress = Math.max(1, (int) (recipe.processingTime * dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get() / speed));
+		energy -= energyUse;
+		progress++;
+		active = true;
 
-					if (out != null) {
-						for (int i = 0; i < result.consume.length; i++) {
-							inputItems[i].shrink(result.consume[i]);
+		if (progress >= maxProgress) {
+			consumeInputs(recipe);
+			produceOutputs(recipe);
+			progress = 0;
+			cachedRecipe = null;
+			recipeDirty = true;
+		}
+		// Persist progress + energy changes so a chunk unload / server stop mid-recipe doesn't lose them.
+		setChanged();
+	}
 
-							if (inputItems[i].isEmpty()) {
-								inputItems[i] = ItemStack.EMPTY;
-							}
-						}
-
-						for (int i = 0; i < outputItems.length; i++) {
-							outputItems[i] = out.getStackInSlot(i);
-						}
-
-						shiftInputs();
-						ejectOutputItems();
+	private void consumeInputs(MachineRecipe mr) {
+		for (IngredientWithCount need : mr.inputs) {
+			for (int i = 0; i < inputItems.length; i++) {
+				if (need.matches(inputItems[i])) {
+					inputItems[i].shrink(need.count());
+					if (inputItems[i].getCount() <= 0) {
+						inputItems[i] = ItemStack.EMPTY;
 					}
+					break;
 				}
-
-				checkProcessing = true;
-			}
-		}
-
-		if (checkProcessing) {
-			checkProcessing = false;
-
-			MachineProcessingResult result = getResult(inputItems, true);
-			boolean hasResult = result.exists() && getOutput(result, true) != null;
-
-			if (!hasResult) {
-				progress = 0D;
-				maxProgress = 0D;
-				setChanged();
-			} else if (progress <= 0D) {
-				maxProgress = result.time * FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
-				active = true;
-				setChanged();
-			}
-		}
-
-		if (acceleration > 0) {
-			acceleration--;
-
-			if (acceleration == 0) {
-				setChanged();
 			}
 		}
 	}
 
-	@Override
-	public void inventoryChanged(int slot, @Nullable ItemStack prev) {
-		super.inventoryChanged(slot, prev);
-		checkProcessing = true;
-	}
+	private void produceOutputs(MachineRecipe mr) {
+		List<StackWithChance> outs = mr.outputs;
+		if (outs.isEmpty() || outputItems.length == 0) return;
 
-	@Override
-	public void energyChanged(int prev) {
-		super.energyChanged(prev);
-
-		if (energyUse != 0 && prev < energyUse && energy >= energyUse) {
-			checkProcessing = true;
-		}
-	}
-
-	public abstract MachineRecipeResults getRecipes(RecipeCache cache);
-
-	public MachineProcessingResult getResult(ItemStack[] items, boolean checkCount) {
-		RecipeCache cache = getRecipeCache();
-		return cache != null ? getRecipes(cache).getResult(level, items, checkCount) : MachineProcessingResult.NONE;
-	}
-
-	@Override
-	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-		RecipeCache cache = getRecipeCache();
-		return cache != null && getRecipes(cache).canInsert(level, slot, stack);
-	}
-
-	@Nullable
-	public MachineRecipeSerializer getRecipeSerializer() {
-		RecipeCache cache = getRecipeCache();
-		MachineRecipeResults results = cache == null ? null : getRecipes(cache);
-		return results instanceof SimpleMachineRecipeResults ? ((SimpleMachineRecipeResults) results).recipeSerializer.get() : null;
-	}
-
-	@Override
-	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!level.isClientSide()) {
-			MachineRecipeSerializer serializer = getRecipeSerializer();
-
-			if (serializer != null) {
-				openMenu((ServerPlayer) player, (id, inventory) -> new MachineMenu(id, inventory, this, serializer));
-			} else {
-				player.sendMessage(new TextComponent("No GUI yet!"), Util.NIL_UUID);
+		for (StackWithChance swc : outs) {
+			if (swc.chance() < 1D && level.getRandom().nextDouble() >= swc.chance()) {
+				continue;
+			}
+			ItemStack toAdd = swc.stack().copy();
+			// Find a slot that can stack with it first.
+			for (int i = 0; i < outputItems.length && !toAdd.isEmpty(); i++) {
+				ItemStack existing = outputItems[i];
+				if (existing.isEmpty()) {
+					outputItems[i] = toAdd;
+					toAdd = ItemStack.EMPTY;
+				} else if (ItemStack.isSameItemSameComponents(existing, toAdd)) {
+					int room = existing.getMaxStackSize() - existing.getCount();
+					int move = Math.min(room, toAdd.getCount());
+					existing.grow(move);
+					toAdd.shrink(move);
+				}
+			}
+			// Leftover overflow — if the output slots are full, pop the rest into the world so the
+			// machine doesn't stall and the recipe can continue next tick.
+			if (!toAdd.isEmpty() && level != null) {
+				net.minecraft.world.level.block.Block.popResource(level, worldPosition, toAdd);
 			}
 		}
-
-		return InteractionResult.SUCCESS;
-	}
-
-	@Override
-	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {
-		super.writeMenu(player, buf);
-		buf.writeResourceLocation(getRecipeSerializer().getRegistryName());
-	}
-
-	@Override
-	public void addSyncData(SyncedData data) {
-		super.addSyncData(data);
-		data.addShort(SyncedData.BAR, () -> energyUse == 0 ? 0 : Mth.clamp(Mth.ceil(progress * 24D / maxProgress), 0, 24));
-		data.addShort(SyncedData.ACCELERATION, () -> acceleration);
-	}
-
-	@Override
-	public void initProperties() {
-		super.initProperties();
-		shouldAccelerate = false;
 	}
 }

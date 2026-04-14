@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:plates/copper",
+      "count": 4
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:copper_gear",
+        "count": 1
+      }
+    }
+  ]
+}

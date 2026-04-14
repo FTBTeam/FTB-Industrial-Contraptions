@@ -1,16 +1,61 @@
 package dev.ftb.mods.ftbic.net;
 
-import dev.architectury.networking.simple.MessageType;
-import dev.architectury.networking.simple.SimpleNetworkManager;
 import dev.ftb.mods.ftbic.FTBIC;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
-public interface FTBICNet {
-	SimpleNetworkManager NET = SimpleNetworkManager.create(FTBIC.MOD_ID);
+/**
+ * Central networking hub. Registers all FTBIC payloads at mod init and provides send helpers.
+ */
+@EventBusSubscriber(modid = FTBIC.MOD_ID)
+public final class FTBICNet {
 
-	MessageType MOVE_LASER = NET.registerS2C("move_laser", MoveLaserMessage::new);
-	MessageType SELECT_TELEPORTER = NET.registerC2S("select_teleporter", SelectTeleporterMessage::new);
-	MessageType SELECT_CRAFTING_RECIPE = NET.registerC2S("select_crafting_recipe", SelectCraftingRecipeMessage::new);
+	@SubscribeEvent
+	public static void registerPayloads(RegisterPayloadHandlersEvent event) {
+		var registrar = event.registrar(FTBIC.MOD_ID);
 
-	static void init() {
+		registrar.playToClient(
+				MoveLaserPayload.TYPE,
+				MoveLaserPayload.STREAM_CODEC,
+				MoveLaserPayload::handleOnClient);
+
+		registrar.playToServer(
+				SelectTeleporterPayload.TYPE,
+				SelectTeleporterPayload.STREAM_CODEC,
+				SelectTeleporterPayload::handleOnServer);
+
+		registrar.playToServer(
+				SelectCraftingRecipePayload.TYPE,
+				SelectCraftingRecipePayload.STREAM_CODEC,
+				SelectCraftingRecipePayload::handleOnServer);
+
+		registrar.playToClient(
+				TeleporterListPayload.TYPE,
+				TeleporterListPayload.STREAM_CODEC,
+				TeleporterListPayload::handleOnClient);
+
+		registrar.playToClient(
+				FTBICRecipeSyncPayload.TYPE,
+				FTBICRecipeSyncPayload.STREAM_CODEC,
+				FTBICRecipeSyncPayload::handleOnClient);
 	}
+
+	public static void sendToPlayer(ServerPlayer player, CustomPacketPayload payload) {
+		PacketDistributor.sendToPlayer(player, payload);
+	}
+
+	public static void sendToAll(CustomPacketPayload payload) {
+		PacketDistributor.sendToAllPlayers(payload);
+	}
+
+	public static void sendToServer(CustomPacketPayload payload) {
+		ClientPacketDistributor.sendToServer(payload);
+	}
+
+	private FTBICNet() {}
 }

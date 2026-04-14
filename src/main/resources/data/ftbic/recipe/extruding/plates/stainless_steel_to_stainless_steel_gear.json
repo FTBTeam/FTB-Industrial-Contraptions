@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:plates/stainless_steel",
+      "count": 4
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:stainless_steel_gear",
+        "count": 1
+      }
+    }
+  ]
+}

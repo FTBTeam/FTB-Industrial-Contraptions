@@ -1,115 +1,102 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
-import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
-import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe;
+import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.item.FTBICItems;
-import dev.ftb.mods.ftbic.recipe.RecipeCache;
-import dev.ftb.mods.ftbic.screen.AntimatterConstructorMenu;
-import dev.ftb.mods.ftbic.screen.sync.SyncedData;
-import dev.ftb.mods.ftbic.screen.sync.SyncedDataKey;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-public class AntimatterConstructorBlockEntity extends ElectricBlockEntity {
-	public static final SyncedDataKey<Boolean> HAS_BOOST = new SyncedDataKey<>("has_boost", false);
-
-	public double boost = 0D;
-	private boolean hasBoost = false;
+/**
+ * Consumes energy to slowly produce Antimatter items. Boost items in the input slot accelerate
+ * production; each item provides a finite "boost charge" (its recipe's {@code boost()} value)
+ * which decrements as production progresses, then the next item is consumed to refill the charge.
+ * One antimatter is produced per {@link #PRODUCTION_THRESHOLD} of accumulated progress; while a
+ * boost is active, progress accumulates at {@code energyUsage * boost} per tick instead of just
+ * {@code energyUsage}.
+ */
+public class AntimatterConstructorBlockEntity extends ElectricBlockEntityRef {
+	public double progress = 0D;
+	/** Remaining boost-units from the last consumed input-slot item; 0 means the next item will be consumed. */
+	public double boostCharge = 0D;
+	public static final double PRODUCTION_THRESHOLD = 1_000_000D;
 
 	public AntimatterConstructorBlockEntity(BlockPos pos, BlockState state) {
 		super(FTBICElectricBlocks.ANTIMATTER_CONSTRUCTOR, pos, state);
 	}
 
 	@Override
-	public void writeData(CompoundTag tag) {
-		super.writeData(tag);
-		tag.putDouble("Boost", boost);
+	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+		return new dev.ftb.mods.ftbic.screen.AntimatterConstructorMenu(id, inv, this);
 	}
 
 	@Override
-	public void readData(CompoundTag tag) {
-		super.readData(tag);
-		boost = tag.getDouble("Boost");
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		if (progress > 0D) output.putDouble("Progress", progress);
+		if (boostCharge > 0D) output.putDouble("BoostCharge", boostCharge);
+	}
+
+	@Override
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		progress = input.getDoubleOr("Progress", 0D);
+		boostCharge = input.getDoubleOr("BoostCharge", 0D);
+	}
+
+	private double boostFor(ItemStack stack) {
+		if (stack.isEmpty() || !(level instanceof ServerLevel server)) return 0D;
+		@SuppressWarnings("unchecked")
+		net.minecraft.world.item.crafting.RecipeType<AntimatterBoostRecipe> type =
+				(net.minecraft.world.item.crafting.RecipeType<AntimatterBoostRecipe>) (net.minecraft.world.item.crafting.RecipeType<?>) FTBICRecipes.ANTIMATTER_BOOST.get();
+		for (RecipeHolder<AntimatterBoostRecipe> holder : server.recipeAccess().recipeMap().byType(type)) {
+			if (holder.value().ingredient().test(stack)) {
+				return holder.value().boost();
+			}
+		}
+		return 0D;
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
+		if (level == null || level.isClientSide()) return;
 
-		if (energy >= energyCapacity) {
-			if (outputItems[0].isEmpty()) {
-				outputItems[0] = new ItemStack(FTBICItems.ANTIMATTER.item.get());
-				energy -= energyCapacity;
-				setChanged();
-			} else if (outputItems[0].getCount() < outputItems[0].getMaxStackSize()) {
-				outputItems[0].grow(1);
-				energy -= energyCapacity;
-				setChanged();
-			}
-		} else if (boost <= 0D) {
-			boost = getBoost(inputItems[0]);
-
-			if (boost > 0) {
+		// Refill boost charge from the input slot if depleted.
+		if (boostCharge <= 0D && inputItems.length > 0 && !inputItems[0].isEmpty()) {
+			double newBoost = boostFor(inputItems[0]);
+			if (newBoost > 0D) {
+				boostCharge = newBoost;
 				inputItems[0].shrink(1);
-
-				if (inputItems[0].isEmpty()) {
-					inputItems[0] = ItemStack.EMPTY;
-				}
-
+				if (inputItems[0].getCount() <= 0) inputItems[0] = ItemStack.EMPTY;
 				setChanged();
 			}
 		}
 
-		hasBoost = boost > 0D;
-	}
+		double use = electricBlockInstance.energyUsage.get();
+		if (energy < use) return;
 
-	@Override
-	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-		return slot == 0 && getBoost(stack) > 0D;
-	}
+		double effectiveBoost = boostCharge > 0D ? Math.max(1D, boostCharge) : 1D;
+		energy -= use;
+		progress += use * effectiveBoost;
+		if (boostCharge > 0D) boostCharge = Math.max(0D, boostCharge - use);
+		active = true;
 
-	private double getBoost(ItemStack item) {
-		RecipeCache recipeCache = getRecipeCache();
-		return recipeCache == null ? 0D : recipeCache.getAntimatterBoost(level, item);
-	}
-
-	@Override
-	public double insertEnergy(double maxInsert, boolean simulate) {
-		if (energy >= energyCapacity) {
-			return 0D;
+		if (progress >= PRODUCTION_THRESHOLD) {
+			ItemStack result = new ItemStack(FTBICItems.ANTIMATTER.item.get());
+			if (outputItems.length > 0 && (outputItems[0].isEmpty()
+					|| (outputItems[0].getItem() == result.getItem()
+							&& outputItems[0].getCount() < outputItems[0].getMaxStackSize()))) {
+				if (outputItems[0].isEmpty()) outputItems[0] = result;
+				else outputItems[0].grow(1);
+				progress -= PRODUCTION_THRESHOLD;
+				setChanged();
+			}
 		}
-
-		if (!simulate) {
-			double boosted = Math.min(boost, maxInsert);
-			boost -= boosted;
-			maxInsert -= boosted;
-			energy += boosted * FTBICConfig.MACHINES.ANTIMATTER_CONSTRUCTOR_BOOST.get() + maxInsert;
-		}
-
-		return maxInsert;
-	}
-
-	@Override
-	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!level.isClientSide()) {
-			openMenu((ServerPlayer) player, (id, inventory) -> new AntimatterConstructorMenu(id, inventory, this));
-		}
-
-		return InteractionResult.SUCCESS;
-	}
-
-	@Override
-	public void addSyncData(SyncedData data) {
-		super.addSyncData(data);
-		data.addBoolean(HAS_BOOST, () -> hasBoost);
 	}
 }
