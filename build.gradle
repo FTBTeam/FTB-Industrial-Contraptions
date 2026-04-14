@@ -83,7 +83,7 @@ dependencies {
 
     // Jade - block-info tooltips. Compile against the CurseForge jar; same coordinates as
     // the auroral reference project.
-    implementation("curse.maven:jade-324717:7815579")
+    implementation("curse.maven:jade-324717:7817285")
 }
 
 tasks.withType(ProcessResources).configureEach {

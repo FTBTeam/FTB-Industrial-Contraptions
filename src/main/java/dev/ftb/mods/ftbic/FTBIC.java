@@ -56,16 +56,5 @@ public class FTBIC {
 		FTBICConfig.init();
 		FTBICUtils.init();
 
-		// Jade 26.0.5 ships Jade.registerGameRules() but never calls it; without this the server NPEs on every look-at packet.
-		eventBus.addListener(net.neoforged.neoforge.registries.RegisterEvent.class, event -> {
-			if (event.getRegistryKey().equals(net.minecraft.core.registries.Registries.GAME_RULE)) {
-				try {
-					Class.forName("snownee.jade.Jade").getMethod("registerGameRules").invoke(null);
-				} catch (ClassNotFoundException ignored) {
-				} catch (Throwable t) {
-					LOGGER.warn("Failed to pre-initialize Jade GameRules", t);
-				}
-			}
-		});
 	}
 }
