@@ -72,6 +72,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 				maxFuelTicks = ticks;
 				fuelTicks = ticks;
 
+				@SuppressWarnings("deprecation")
 				net.minecraft.world.item.ItemStackTemplate template = inputItems[0].getItem().getCraftingRemainder();
 				ItemStack remainder = template == null ? ItemStack.EMPTY : template.create();
 				if (inputItems[0].getCount() == 1) {

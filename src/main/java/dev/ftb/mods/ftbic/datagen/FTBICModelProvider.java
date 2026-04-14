@@ -54,7 +54,7 @@ public class FTBICModelProvider extends ModelProvider {
 		for (MaterialItem m : FTBICItems.MATERIALS) {
 			if (m.item == null) continue;
 			Item i = m.item.get();
-			if (i != null && seen.add(i)) items.add(i.builtInRegistryHolder());
+			if (i != null && seen.add(i)) items.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.wrapAsHolder(i));
 		}
 		// Also include all resource items (tin_ingot, tin_dust, tin_chunk, etc.) — every entry of
 		// RESOURCE_TYPE_MAP except the BlockItems for ORE/BLOCK (those are wired off the block side).
@@ -63,7 +63,7 @@ public class FTBICModelProvider extends ModelProvider {
 			if (type == ResourceType.ORE || type == ResourceType.BLOCK) continue;
 			for (var sup : typeEntry.getValue().values()) {
 				Item i = sup.get();
-				if (i != null && seen.add(i)) items.add(i.builtInRegistryHolder());
+				if (i != null && seen.add(i)) items.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.wrapAsHolder(i));
 			}
 		}
 		return items.stream();

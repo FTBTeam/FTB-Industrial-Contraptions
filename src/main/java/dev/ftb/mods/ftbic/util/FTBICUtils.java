@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 public final class FTBICUtils {
-	public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().setLenient().create();
+	public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().setStrictness(com.google.gson.Strictness.LENIENT).create();
 	public static final TagKey<Block> REINFORCED = TagKey.create(Registries.BLOCK, FTBIC.id("reinforced"));
 	public static final TagKey<Item> UNCANNABLE_FOOD = TagKey.create(Registries.ITEM, FTBIC.id("uncannable_food"));
 	public static final TagKey<Item> NO_AUTO_RECIPE = TagKey.create(Registries.ITEM, FTBIC.id("no_auto_recipe"));

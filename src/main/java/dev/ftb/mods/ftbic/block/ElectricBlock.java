@@ -87,9 +87,9 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 
 	@Override
 	protected BlockState mirror(BlockState state, Mirror mirror) {
-		return electricBlockInstance.facingProperty == null
-				? state
-				: state.rotate(mirror.getRotation(state.getValue(electricBlockInstance.facingProperty)));
+		if (electricBlockInstance.facingProperty == null) return state;
+		Rotation rotation = mirror.getRotation(state.getValue(electricBlockInstance.facingProperty));
+		return state.setValue(electricBlockInstance.facingProperty, rotation.rotate(state.getValue(electricBlockInstance.facingProperty)));
 	}
 
 	@Override
