@@ -4,12 +4,12 @@ import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.generator.GeneratorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 
+/**
+ * Accepts higher-tier input on its back face (facing) and emits lower-tier output on all other faces.
+ * Per-tier subclasses configure capacity + max-input/output via the ElectricBlockInstance declaration.
+ */
 public class TransformerBlockEntity extends GeneratorBlockEntity {
 	public TransformerBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -29,10 +29,5 @@ public class TransformerBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public boolean isValidEnergyInputSide(Direction direction) {
 		return direction == getFacing(Direction.NORTH);
-	}
-
-	@Override
-	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		return InteractionResult.SUCCESS;
 	}
 }

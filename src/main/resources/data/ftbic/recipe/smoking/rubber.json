@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": "#c:slime_balls",
+  "result": {
+    "id": "ftbic:rubber",
+    "count": 1
+  },
+  "experience": 0.0,
+  "cookingtime": 150
+}

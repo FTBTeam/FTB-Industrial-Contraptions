@@ -1,0 +1,26 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "ingredient": {
+        "items": "ftbic:fluid_cell",
+        "components": {
+          "ftbic:fluid_cell_content": {
+            "id": "minecraft:water",
+            "amount": 1000
+          }
+        },
+        "type": "neoforge:components"
+      },
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:snowball",
+        "count": 1
+      }
+    }
+  ]
+}

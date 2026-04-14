@@ -1,43 +1,41 @@
 package dev.ftb.mods.ftbic.block;
 
-import com.mojang.math.Vector3f;
-import dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity;
-import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.TorchBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.Random;
+public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
+	private static final VoxelShape SHAPE = Shapes.box(0.4375, 0.0, 0.4375, 0.5625, 0.5, 0.5625);
 
-public class LandmarkBlock extends TorchBlock implements SimpleWaterloggedBlock {
-	public LandmarkBlock() {
-		super(Properties.of(Material.WOOD).strength(0.1F).sound(SoundType.WOOD).noCollission().noOcclusion().lightLevel(value -> 8), new DustParticleOptions(new Vector3f(Vec3.fromRGB24(0x0000FF)), 1F));
-
+	public LandmarkBlock(BlockBehaviour.Properties props) {
+		super(props.strength(0.1F).sound(SoundType.WOOD).noCollision().noOcclusion().lightLevel(v -> 8));
 		registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.WATERLOGGED, false));
+	}
+
+	@Override
+	protected VoxelShape getShape(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos, CollisionContext ctx) {
+		return SHAPE;
 	}
 
 	@Override
@@ -46,58 +44,56 @@ public class LandmarkBlock extends TorchBlock implements SimpleWaterloggedBlock 
 	}
 
 	@Override
-	@Deprecated
-	public FluidState getFluidState(BlockState state) {
+	protected FluidState getFluidState(BlockState state) {
 		return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
-	@Deprecated
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos pos, BlockPos facingPos) {
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction facing, BlockPos facingPos, BlockState facingState, net.minecraft.util.RandomSource random) {
 		if (state.getValue(BlockStateProperties.WATERLOGGED)) {
-			level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+			ticks.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 		}
-
-		return facing == Direction.DOWN && !canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState() : state;
+		return state;
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+	protected boolean propagatesSkylightDown(BlockState state) {
 		return !state.getValue(BlockStateProperties.WATERLOGGED);
 	}
 
 	@Override
-	@Deprecated
-	public boolean isPathfindable(BlockState arg, BlockGetter arg2, BlockPos arg3, PathComputationType arg4) {
+	protected boolean isPathfindable(BlockState state, PathComputationType type) {
 		return false;
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		Level world = context.getLevel();
-		BlockPos pos = context.getClickedPos();
-		BlockState state = defaultBlockState();
-		return state.setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER);
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		Level world = ctx.getLevel();
+		BlockPos pos = ctx.getClickedPos();
+		return defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER);
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
-	}
-
-	@Override
-	@Deprecated
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		for (Direction direction : FTBICUtils.HORIZONTAL_DIRECTIONS) {
-			for (int i = 1; i < 61; i++) {
-				BlockEntity entity = level.getBlockEntity(pos.relative(direction, i));
-
-				if (entity instanceof DiggingBaseBlockEntity) {
-					((DiggingBaseBlockEntity) entity).resize();
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+		if (!level.isClientSide()) {
+			for (Direction dir : dev.ftb.mods.ftbic.util.FTBICUtils.HORIZONTAL_DIRECTIONS) {
+				for (int i = 1; i < 61; i++) {
+					if (level.getBlockEntity(pos.relative(dir, i)) instanceof dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity dig) {
+						dig.resize();
+					}
 				}
 			}
 		}
-
 		return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+		if (random.nextInt(4) == 0) {
+			double dx = pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.2;
+			double dy = pos.getY() + 0.6 + random.nextDouble() * 0.1;
+			double dz = pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.2;
+			level.addParticle(ParticleTypes.HAPPY_VILLAGER, dx, dy, dz, 0D, 0.02D, 0D);
+		}
 	}
 }

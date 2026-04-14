@@ -1,225 +1,129 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
-import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
-import dev.ftb.mods.ftbic.screen.PumpMenu;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.IFluidTank;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-public class PumpBlockEntity extends DiggingBaseBlockEntity implements IFluidHandler, IFluidTank {
-	private static final float[] LASER_COLOR = {0.2F, 0.5F, 1F};
-	public FluidStack fluidStack;
-	public Fluid filter;
+/**
+ * Fluid-source pump — walks the same 5×5 column grid as the Quarry, but instead of breaking blocks
+ * it targets fluid source blocks (water, lava) and accumulates them into an internal fluid tank
+ * ({@link #fluidAmount} mB of {@link #storedFluid}). The tank is exposed via a
+ * {@code ResourceHandler<FluidResource>} (see {@code PumpTankHandler}) so foreign pipes can drain
+ * the accumulated fluid out.
+ *
+ * Convenience behaviour: an empty bucket in input slot 0 will be auto-filled with 1000 mB from the
+ * tank (matching fluid type) and pushed to the output slot, preserving the 1.18.2 bucket workflow.
+ */
+public class PumpBlockEntity extends DiggingBaseBlockEntity {
+	public Fluid storedFluid = Fluids.EMPTY;
+	public int fluidAmount = 0;
 
 	public PumpBlockEntity(BlockPos pos, BlockState state) {
 		super(FTBICElectricBlocks.PUMP, pos, state);
-		fluidStack = FluidStack.EMPTY;
-		filter = Fluids.EMPTY;
 	}
 
 	@Override
-	public void initProperties() {
-		super.initProperties();
-		diggingMineTicks = FTBICConfig.MACHINES.PUMP_MINE_TICKS.get();
-		diggingMoveTicks = FTBICConfig.MACHINES.PUMP_MOVE_TICKS.get();
+	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+		return new dev.ftb.mods.ftbic.screen.PumpMenu(id, inv, this);
+	}
+
+	public int getTankCapacity() {
+		return FTBICConfig.MACHINES.PUMP_TANK_CAPACITY.get();
 	}
 
 	@Override
-	public void writeData(CompoundTag tag) {
-		super.writeData(tag);
-		tag.put("Fluid", fluidStack.writeToNBT(new CompoundTag()));
-		tag.putString("Filter", filter.getRegistryName().toString());
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		if (fluidAmount > 0 && storedFluid != Fluids.EMPTY) {
+			output.putInt("FluidAmount", fluidAmount);
+			Identifier fluidId = BuiltInRegistries.FLUID.getKey(storedFluid);
+			output.putString("Fluid", fluidId.toString());
+		}
 	}
 
 	@Override
-	public void readData(CompoundTag tag) {
-		super.readData(tag);
-		fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid"));
-		filter = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(tag.getString("Filter")));
-	}
-
-	@Override
-	public void readNetData(CompoundTag tag) {
-		super.readNetData(tag);
-		fluidStack = FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid"));
-		filter = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(tag.getString("Filter")));
-	}
-
-	@Override
-	public void writeNetData(CompoundTag tag) {
-		super.writeNetData(tag);
-		tag.put("Fluid", fluidStack.writeToNBT(new CompoundTag()));
-		tag.putString("Filter", filter.getRegistryName().toString());
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		fluidAmount = input.getIntOr("FluidAmount", 0);
+		String fluidStr = input.getStringOr("Fluid", "");
+		if (!fluidStr.isEmpty()) {
+			Identifier id = Identifier.parse(fluidStr);
+			storedFluid = BuiltInRegistries.FLUID.getValue(ResourceKey.create(net.minecraft.core.registries.Registries.FLUID, id));
+			if (storedFluid == null) storedFluid = Fluids.EMPTY;
+		} else {
+			storedFluid = Fluids.EMPTY;
+			fluidAmount = 0;
+		}
 	}
 
 	@Override
 	public boolean isValidBlock(BlockState state, BlockPos pos) {
-		return state.getMaterial().isLiquid() && state.getBlock() instanceof BucketPickup && (filter == Fluids.EMPTY || filter.isSame(state.getFluidState().getType())) && state.getFluidState().isSource();
+		if (level == null) return false;
+		FluidState fluidState = state.getFluidState();
+		if (!fluidState.isSource()) return false;
+		Fluid f = fluidState.getType();
+		if (f != Fluids.WATER && f != Fluids.LAVA) return false;
+		// Reject fluids that don't match whatever is already in the tank.
+		if (storedFluid != Fluids.EMPTY && f != storedFluid) return false;
+		return fluidAmount + 1000 <= getTankCapacity();
 	}
 
 	@Override
-	public void digBlock(BlockState state, BlockPos miningPos, double lx, double ly, double lz) {
-		if (state.getBlock() instanceof BucketPickup bucketPickup && fluidStack.getAmount() + FluidAttributes.BUCKET_VOLUME <= getCapacity()) {
-			FluidStack fluidStack2 = FluidUtil.getFluidContained(bucketPickup.pickupBlock(level, miningPos, state)).orElse(FluidStack.EMPTY);
+	public void digBlock(BlockState state, BlockPos miningPos) {
+		if (level == null) return;
+		FluidState fluidState = state.getFluidState();
+		Fluid f = fluidState.getType();
+		if (f != Fluids.WATER && f != Fluids.LAVA) return;
+		if (storedFluid != Fluids.EMPTY && f != storedFluid) return;
+		if (fluidAmount + 1000 > getTankCapacity()) return;
 
-			if (!fluidStack2.isEmpty()) {
-				if (filter == Fluids.EMPTY) {
-					filter = fluidStack2.getFluid();
-				} else if (filter != fluidStack2.getFluid()) {
-					return;
-				}
+		storedFluid = f;
+		fluidAmount += 1000;
+		level.removeBlock(miningPos, false);
+		setChanged();
 
-				if (fluidStack.isEmpty()) {
-					fluidStack = new FluidStack(filter, FluidAttributes.BUCKET_VOLUME);
-				} else {
-					fluidStack.setAmount(fluidStack.getAmount() + FluidAttributes.BUCKET_VOLUME);
-				}
+		// Opportunistically fill a player-supplied empty bucket.
+		tryFillBucket();
+	}
 
-				BlockState replaceState = (FTBICConfig.MACHINES.PUMP_REPLACE_FLUID_EXFLUID.get()) ? FTBICBlocks.EXFLUID.get().defaultBlockState() : Blocks.AIR.defaultBlockState();
-				level.setBlock(miningPos, replaceState, 2);
-				setChanged();
-			}
-		}
+	/**
+	 * If input slot 0 has an empty bucket and the tank has ≥ 1000 mB, swap it into a filled bucket
+	 * in the output slot.
+	 */
+	public void tryFillBucket() {
+		if (fluidAmount < 1000 || storedFluid == Fluids.EMPTY) return;
+		if (inputItems.length == 0 || inputItems[0].isEmpty()) return;
+		if (inputItems[0].getItem() != Items.BUCKET) return;
+
+		ItemStack filled;
+		if (storedFluid == Fluids.WATER) filled = new ItemStack(Items.WATER_BUCKET);
+		else if (storedFluid == Fluids.LAVA) filled = new ItemStack(Items.LAVA_BUCKET);
+		else return;
+
+		ItemStack leftover = addToOutputs(filled);
+		if (!leftover.isEmpty()) return;
+		inputItems[0].shrink(1);
+		if (inputItems[0].getCount() <= 0) inputItems[0] = ItemStack.EMPTY;
+		fluidAmount -= 1000;
+		if (fluidAmount == 0) storedFluid = Fluids.EMPTY;
+		setChanged();
 	}
 
 	@Override
-	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-		return cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ? getThisOptional().cast() : super.getCapability(cap, side);
-	}
-
-	@Override
-	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!level.isClientSide()) {
-			if (player.isCrouching()) {
-				paused = !paused;
-				syncBlock();
-			} else {
-				openMenu((ServerPlayer) player, (id, inventory) -> new PumpMenu(id, inventory, this));
-			}
-		}
-
-		return InteractionResult.SUCCESS;
-	}
-
-	@Override
-	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {
-		super.writeMenu(player, buf);
-		buf.writeResourceLocation(filter.getRegistryName());
-		fluidStack.writeToPacket(buf);
-	}
-
-	@Override
-	public float[] getLaserColor() {
-		return LASER_COLOR;
-	}
-
-	@NotNull
-	@Override
-	public FluidStack getFluid() {
-		return fluidStack;
-	}
-
-	@Override
-	public int getFluidAmount() {
-		return fluidStack.getAmount();
-	}
-
-	@Override
-	public int getCapacity() {
-		return FTBICConfig.MACHINES.PUMP_TANK_CAPACITY.get();
-	}
-
-	@Override
-	public boolean isFluidValid(FluidStack fluidStack) {
-		return false;
-	}
-
-	@Override
-	public int getTanks() {
-		return 1;
-	}
-
-	@NotNull
-	@Override
-	public FluidStack getFluidInTank(int i) {
-		return fluidStack;
-	}
-
-	@Override
-	public int getTankCapacity(int i) {
-		return FTBICConfig.MACHINES.PUMP_TANK_CAPACITY.get();
-	}
-
-	@Override
-	public boolean isFluidValid(int i, @NotNull FluidStack fluidStack) {
-		return false;
-	}
-
-	@Override
-	public int fill(FluidStack fluidStack, FluidAction fluidAction) {
-		return 0;
-	}
-
-	@NotNull
-	@Override
-	public FluidStack drain(FluidStack resource, FluidAction action) {
-		if (level == null || level.isClientSide() || resource.isEmpty() || !resource.isFluidEqual(fluidStack)) {
-			return FluidStack.EMPTY;
-		}
-
-		return drain(resource.getAmount(), action);
-	}
-
-	@NotNull
-	@Override
-	public FluidStack drain(int maxDrain, FluidAction action) {
-		if (level == null || level.isClientSide()) {
-			return FluidStack.EMPTY;
-		}
-
-		int drained = maxDrain;
-
-		if (fluidStack.getAmount() < drained) {
-			drained = fluidStack.getAmount();
-		}
-
-		FluidStack stack = new FluidStack(fluidStack, drained);
-
-		if (action.execute() && drained > 0) {
-			fluidStack.shrink(drained);
-			setChanged();
-
-			if (fluidStack.isEmpty() && paused) {
-				paused = false;
-				syncBlock();
-			}
-		}
-
-		return stack;
+	public void tick() {
+		super.tick();
+		// Regularly try to fill buckets even when the laser is between mining cycles.
+		if (level != null && !level.isClientSide()) tryFillBucket();
 	}
 }

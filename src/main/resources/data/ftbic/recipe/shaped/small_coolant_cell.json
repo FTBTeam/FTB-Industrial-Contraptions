@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:small_coolant_cell",
+  "pattern": [
+    " T ",
+    "TCT",
+    " T "
+  ],
+  "key": {
+    "T": "#c:ingots/tin",
+    "C": {
+      "items": "ftbic:fluid_cell",
+      "components": {
+        "ftbic:fluid_cell_content": {
+          "id": "minecraft:water",
+          "amount": 1000
+        }
+      },
+      "type": "neoforge:components"
+    }
+  },
+  "result": {
+    "id": "ftbic:small_coolant_cell",
+    "count": 1
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:copper_dust",
+  "pattern": [
+    "CC ",
+    "CT "
+  ],
+  "key": {
+    "C": "#c:dusts/copper",
+    "T": "#c:dusts/tin"
+  },
+  "result": {
+    "id": "ftbic:bronze_dust",
+    "count": 4
+  }
+}

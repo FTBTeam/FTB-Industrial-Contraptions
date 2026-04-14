@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:electronic_circuit",
+  "ingredients": [
+    "ftbic:lv_cable",
+    "ftbic:lv_cable",
+    "ftbic:lv_cable",
+    "#c:dusts/redstone",
+    "ftbic:industrial_grade_metal",
+    "#c:dusts/redstone",
+    "ftbic:lv_cable",
+    "ftbic:lv_cable",
+    "ftbic:lv_cable"
+  ],
+  "result": {
+    "id": "ftbic:electronic_circuit",
+    "count": 1
+  }
+}

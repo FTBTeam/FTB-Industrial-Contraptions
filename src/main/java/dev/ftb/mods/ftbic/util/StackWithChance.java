@@ -1,60 +1,26 @@
 package dev.ftb.mods.ftbic.util;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.crafting.CraftingHelper;
 
-public class StackWithChance {
+/**
+ * An output ItemStack paired with a drop chance [0.0, 1.0]. Chance of 1.0 is a guaranteed output.
+ */
+public record StackWithChance(ItemStack stack, double chance) {
 	public static final StackWithChance EMPTY = new StackWithChance(ItemStack.EMPTY, 0D);
 
-	public final ItemStack stack;
-	public final double chance;
+	public static final Codec<StackWithChance> CODEC = RecordCodecBuilder.create(i -> i.group(
+			ItemStack.CODEC.fieldOf("item").forGetter(StackWithChance::stack),
+			Codec.DOUBLE.optionalFieldOf("chance", 1D).forGetter(StackWithChance::chance)
+	).apply(i, StackWithChance::new));
 
-	public StackWithChance(ItemStack s, double c) {
-		stack = s;
-		chance = c;
-	}
-
-	public StackWithChance(JsonElement element) {
-		JsonObject json = element.getAsJsonObject();
-		stack = CraftingHelper.getItemStack(json, true);
-		chance = json.has("chance") ? json.get("chance").getAsDouble() : 1D;
-	}
-
-	public StackWithChance(FriendlyByteBuf buf) {
-		stack = buf.readItem();
-		chance = buf.readDouble();
-	}
-
-	public JsonObject toJson() {
-		JsonObject json = new JsonObject();
-		json.addProperty("item", stack.getItem().getRegistryName().toString());
-
-		if (stack.getCount() > 1) {
-			json.addProperty("count", stack.getCount());
-		}
-
-		if (stack.hasTag()) {
-			CompoundTag tag = stack.getTag().copy();
-			tag.remove("Damage");
-
-			if (!tag.isEmpty()) {
-				json.addProperty("nbt", tag.toString());
-			}
-		}
-
-		if (chance != 1D) {
-			json.addProperty("chance", chance);
-		}
-
-		return json;
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		buf.writeItem(stack);
-		buf.writeDouble(chance);
-	}
+	public static final StreamCodec<RegistryFriendlyByteBuf, StackWithChance> STREAM_CODEC = StreamCodec.composite(
+			ItemStack.STREAM_CODEC, StackWithChance::stack,
+			ByteBufCodecs.DOUBLE, StackWithChance::chance,
+			StackWithChance::new
+	);
 }

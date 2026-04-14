@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:antimatter_fabricator",
+  "pattern": [
+    "GCG",
+    "MEM",
+    "GCG"
+  ],
+  "key": {
+    "G": "#c:dusts/glowstone",
+    "M": "ftbic:advanced_machine_block",
+    "C": "ftbic:iridium_circuit",
+    "E": "minecraft:nether_star"
+  },
+  "result": {
+    "id": "ftbic:antimatter_constructor",
+    "count": 1
+  }
+}

@@ -4,7 +4,7 @@ import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.UpgradeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class UpgradeInventory extends ItemStackHandler {
@@ -38,15 +38,12 @@ public class UpgradeInventory extends ItemStackHandler {
 
 	public int countUpgrades(Item item) {
 		int count = 0;
-
 		for (int i = 0; i < getSlots(); i++) {
 			ItemStack stack = getStackInSlot(i);
-
 			if (stack.getItem() == item) {
 				count += stack.getCount();
 			}
 		}
-
 		return count;
 	}
 }

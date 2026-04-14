@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "#c:gears/tin",
+    "#c:gears/lead",
+    "#c:gears/uranium",
+    "#c:gears/iridium",
+    "#c:gears/enderium",
+    "#c:gears/aluminum",
+    "#c:gears/iron",
+    "#c:gears/gold",
+    "#c:gears/copper",
+    "#c:gears/bronze"
+  ]
+}

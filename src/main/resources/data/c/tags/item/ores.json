@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#c:ores/tin",
+    "#c:ores/lead",
+    "#c:ores/uranium",
+    "#c:ores/iridium",
+    "#c:ores/aluminum"
+  ]
+}

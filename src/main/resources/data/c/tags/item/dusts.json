@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "#c:dusts/tin",
+    "#c:dusts/lead",
+    "#c:dusts/uranium",
+    "#c:dusts/iridium",
+    "#c:dusts/enderium",
+    "#c:dusts/aluminum",
+    "#c:dusts/diamond",
+    "#c:dusts/iron",
+    "#c:dusts/copper",
+    "#c:dusts/gold",
+    "#c:dusts/bronze",
+    "#c:dusts/obsidian",
+    "#c:dusts/coal",
+    "#c:dusts/charcoal",
+    "#c:dusts/ender"
+  ]
+}

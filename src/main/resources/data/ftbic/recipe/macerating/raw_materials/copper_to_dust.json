@@ -1,0 +1,24 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:raw_materials/copper",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:copper_dust",
+        "count": 1
+      }
+    },
+    {
+      "item": {
+        "id": "ftbic:copper_dust",
+        "count": 1
+      },
+      "chance": 0.35
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:ev_solar_panel",
+  "pattern": [
+    "SAS",
+    "SCS",
+    "SNS"
+  ],
+  "key": {
+    "S": "ftbic:hv_solar_panel",
+    "A": "ftbic:antimatter",
+    "C": "ftbic:large_coolant_cell",
+    "N": "minecraft:netherite_block"
+  },
+  "result": {
+    "id": "ftbic:ev_solar_panel",
+    "count": 1
+  }
+}

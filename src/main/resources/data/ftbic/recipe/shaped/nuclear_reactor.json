@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:nuclear_reactor",
+  "pattern": [
+    "HCH",
+    "HHH",
+    "HGH"
+  ],
+  "key": {
+    "H": "ftbic:nuclear_reactor_chamber",
+    "C": "ftbic:iridium_circuit",
+    "G": "ftbic:basic_generator"
+  },
+  "result": {
+    "id": "ftbic:nuclear_reactor",
+    "count": 1
+  }
+}

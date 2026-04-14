@@ -1,0 +1,24 @@
+{
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "myrtrees:rubberwood_log",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "myrtrees:latex",
+        "count": 1
+      },
+      "chance": 0.8
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "myrtrees"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#c:raw_materials/aluminum",
+    "#c:raw_materials/iridium",
+    "#c:raw_materials/lead",
+    "#c:raw_materials/tin",
+    "#c:raw_materials/uranium"
+  ]
+}

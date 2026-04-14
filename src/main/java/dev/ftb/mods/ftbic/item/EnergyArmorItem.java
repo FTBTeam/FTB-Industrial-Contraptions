@@ -1,123 +1,59 @@
 package dev.ftb.mods.ftbic.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
-import dev.ftb.mods.ftbic.util.FTBICUtils;
-import net.minecraft.core.NonNullList;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.item.component.TooltipDisplay;
 
-import java.util.List;
 import java.util.function.Consumer;
 
-public class EnergyArmorItem extends ArmorItem implements EnergyItemHandler {
-	public EnergyArmorItem(EnergyArmorMaterial m) {
-		super(m, EquipmentSlot.CHEST, new Properties().tab(FTBIC.TAB).fireResistant());
+/**
+ * Energised chestplate. Item-side properties are configured via {@code Item.Properties.humanoidArmor(...)}
+ * in {@link FTBICItems} (DIAMOND base for Carbon, NETHERITE for Quantum); per-tick damage absorption
+ * + zap drain happens in {@link dev.ftb.mods.ftbic.events.EnergyArmorDamageHandler}.
+ */
+public class EnergyArmorItem extends Item implements EnergyItemHandler {
+	public final EnergyArmorMaterial material;
+
+	public EnergyArmorItem(Properties props, EnergyArmorMaterial material) {
+		super(props.stacksTo(1));
+		this.material = material;
+	}
+
+	public EnergyArmorMaterial getMaterial() {
+		return material;
 	}
 
 	public void damageEnergyItem(ItemStack stack, double amount) {
-		double energy = getEnergy(stack);
-		double e = Math.min(energy, amount);
-		setEnergy(stack, energy - e);
-	}
-
-	@Override
-	public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-		damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_DAMAGE_ENERGY.get() * amount);
-		return 0;
+		setEnergy(stack, Math.max(0D, getEnergy(stack) - amount));
 	}
 
 	@Override
 	public double getEnergyCapacity(ItemStack stack) {
-		return ((EnergyArmorMaterial) material).capacity;
+		return switch (material) {
+			case CARBON -> FTBICConfig.EQUIPMENT.CARBON_ARMOR_CAPACITY.get();
+			case QUANTUM -> FTBICConfig.EQUIPMENT.QUANTUM_ARMOR_CAPACITY.get();
+		};
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot s) {
-		return ImmutableMultimap.of();
-	}
-
-	@Override
-	public boolean isValidRepairItem(ItemStack stack, ItemStack item) {
-		return false;
-	}
-
-	@Override
-	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
-		if (allowdedIn(tab)) {
-			list.add(new ItemStack(this));
-
-			ItemStack full = new ItemStack(this);
-			setEnergyRaw(full, getEnergyCapacity(full));
-			list.add(full);
-		}
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-		list.add(FTBICUtils.energyTooltip(stack, this));
-	}
-
-	@Override
-	public boolean canElytraFly(ItemStack stack, LivingEntity entity) {
-		return material == EnergyArmorMaterial.QUANTUM && getEnergy(stack) >= FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_ENERGY.get();
-	}
-
-	@Override
-	public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
-		if (!entity.level.isClientSide) {
-			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_ENERGY.get());
-		}
-
-		if (flightTicks >= 3 && entity.isCrouching()) {
-			Vec3 m = entity.getDeltaMovement();
-			double d = Math.max(Math.abs(m.y), Math.max(Math.abs(m.x), Math.abs(m.z)));
-			d = Math.min(d, 1D);
-			d = d * 0.91D;
-			entity.setDeltaMovement(m.multiply(d, d, d));
-			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_STOP.get());
-		} else if (flightTicks >= 5 && entity.isSprinting()) {
-			Vec3 v = entity.getLookAngle();
-			double d0 = 1.5D;
-			double d1 = 0.1D;
-			Vec3 m = entity.getDeltaMovement();
-			entity.setDeltaMovement(m.add(v.x * d1 + (v.x * d0 - m.x) * 0.5D, v.y * d1 + (v.y * d0 - m.y) * 0.5D, v.z * d1 + (v.z * d0 - m.z) * 0.5D));
-			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_BOOST.get());
-		}
-
+	public boolean canExtractEnergy() {
 		return true;
 	}
 
 	@Override
-	public boolean isBarVisible(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().contains("Energy");
-	}
-
-	@Override
-	public int getBarWidth(ItemStack stack) {
-		return Math.round((float) Mth.clamp((getEnergy(stack) / getEnergyCapacity(stack)) * 13D, 0D, 13D));
-	}
-
-	@Override
-	public int getBarColor(ItemStack stack) {
-		return 0xFFFF0000;
+	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display,
+			Consumer<Component> tooltip, TooltipFlag flag) {
+		super.appendHoverText(stack, context, display, tooltip, flag);
+		double energy = getEnergy(stack);
+		double cap = getEnergyCapacity(stack);
+		tooltip.accept(Component.translatable("item.ftbic.tooltip.energy",
+						EnergyItemHandler.formatEnergy(energy), EnergyItemHandler.formatEnergy(cap))
+				.withStyle(ChatFormatting.GRAY));
 	}
 }

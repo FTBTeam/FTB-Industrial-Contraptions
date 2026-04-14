@@ -1,7 +1,11 @@
 package dev.ftb.mods.ftbic.util;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
+/**
+ * Maps a material id to its common tags. Since 1.20.2 NeoForge uses the "c" namespace for common tags
+ * rather than "forge".
+ */
 public class CraftingMaterial {
 	public final String id;
 	public final ItemTagKeyWrapper ore;
@@ -14,16 +18,12 @@ public class CraftingMaterial {
 
 	public CraftingMaterial(String s) {
 		id = s;
-		ore = ItemTagKeyWrapper.create(new ResourceLocation("forge", "ores/" + id));
-		ingot = ItemTagKeyWrapper.create(new ResourceLocation("forge", "ingots/" + id));
-		gem = ItemTagKeyWrapper.create(new ResourceLocation("forge", "gems/" + id));
-		dust = ItemTagKeyWrapper.create(new ResourceLocation("forge", "dusts/" + id));
-		plate = ItemTagKeyWrapper.create(new ResourceLocation("forge", "plates/" + id));
-		gear = ItemTagKeyWrapper.create(new ResourceLocation("forge", "gears/" + id));
-		rod = ItemTagKeyWrapper.create(new ResourceLocation("forge", "rods/" + id));
+		ore = ItemTagKeyWrapper.create(Identifier.fromNamespaceAndPath("c", "ores/" + id));
+		ingot = ItemTagKeyWrapper.create(Identifier.fromNamespaceAndPath("c", "ingots/" + id));
+		gem = ItemTagKeyWrapper.create(Identifier.fromNamespaceAndPath("c", "gems/" + id));
+		dust = ItemTagKeyWrapper.create(Identifier.fromNamespaceAndPath("c", "dusts/" + id));
+		plate = ItemTagKeyWrapper.create(Identifier.fromNamespaceAndPath("c", "plates/" + id));
+		gear = ItemTagKeyWrapper.create(Identifier.fromNamespaceAndPath("c", "gears/" + id));
+		rod = ItemTagKeyWrapper.create(Identifier.fromNamespaceAndPath("c", "rods/" + id));
 	}
-//
-//	public boolean isGem() {
-//		return !gem.getValues().isEmpty();
-//	}
 }

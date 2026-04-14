@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:mv_cable",
+  "ingredients": [
+    "ftbic:aluminum_wire",
+    "ftbic:rubber"
+  ],
+  "result": {
+    "id": "ftbic:mv_cable",
+    "count": 1
+  }
+}

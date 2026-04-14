@@ -13,12 +13,14 @@ import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.world.ResourceElements;
 import dev.ftb.mods.ftbic.world.ResourceType;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +32,39 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public interface FTBICItems {
-	DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, FTBIC.MOD_ID);
+	DeferredRegister.Items REGISTRY = DeferredRegister.createItems(FTBIC.MOD_ID);
 	List<MaterialItem> MATERIALS = new ArrayList<>();
 
-	static Supplier<BlockItem> blockItem(String id, Supplier<Block> sup) {
-		return REGISTRY.register(id, () -> new BlockItem(sup.get(), new Item.Properties().tab(FTBIC.TAB)));
+	static Item.Properties props(net.minecraft.resources.Identifier name) {
+		return new Item.Properties().setId(ResourceKey.create(Registries.ITEM, name));
+	}
+
+	/**
+	 * Resolves a config value or returns a fallback if configs aren't loaded yet (datagen context).
+	 * Battery items take a final {@code double} capacity at registration; during {@code runData} the
+	 * config files don't exist yet, so calling {@code .get()} eagerly would crash.
+	 */
+	static double safeGet(net.neoforged.neoforge.common.ModConfigSpec.DoubleValue value, double fallback) {
+		try {
+			return value.get();
+		} catch (IllegalStateException e) {
+			return fallback;
+		}
+	}
+
+	static Supplier<BlockItem> blockItem(String id, Supplier<? extends Block> sup) {
+		DeferredItem<BlockItem> registered = REGISTRY.register(id, name -> new BlockItem(sup.get(), props(name)));
+		return () -> registered.get();
+	}
+
+	static Supplier<BlockItem> electricBlockItem(String id, dev.ftb.mods.ftbic.block.ElectricBlockInstance instance) {
+		DeferredItem<BlockItem> registered = REGISTRY.register(id, name -> new ElectricBlockItem(instance, props(name)));
+		return () -> registered.get();
 	}
 
 	static Supplier<Item> basicItem(String id) {
-		return REGISTRY.register(id, () -> new Item(new Item.Properties().tab(FTBIC.TAB)));
+		DeferredItem<Item> reg = REGISTRY.register(id, name -> new Item(props(name)));
+		return () -> reg.get();
 	}
 
 	static MaterialItem material(String id) {
@@ -48,20 +74,14 @@ public interface FTBICItems {
 		return m;
 	}
 
-	/**
-	 * Allows you to get an element from the registry based on the element type and the resource element specifically
-	 *
-	 * @param element the resource element, lead, tin, etc
-	 * @param type    the type of the resource you want, dust, chunk, rod, etc
-	 *
-	 * @return an {@link Optional<Supplier<Item>>} of the item. Sometimes empty if the item does not exist.
-	 */
 	static Optional<Supplier<Item>> getResourceFromType(ResourceElements element, ResourceType type) {
-		return RESOURCE_TYPE_MAP.get(type).entrySet().stream().filter(e -> e.getKey() == element)
+		return RESOURCE_TYPE_MAP.get(type).entrySet().stream()
+				.filter(e -> e.getKey() == element)
 				.findFirst()
 				.map(Map.Entry::getValue);
 	}
 
+	// Block items (mirrors FTBICBlocks entries)
 	Supplier<BlockItem> RUBBER_SHEET = blockItem("rubber_sheet", FTBICBlocks.RUBBER_SHEET);
 	Supplier<BlockItem> REINFORCED_STONE = blockItem("reinforced_stone", FTBICBlocks.REINFORCED_STONE);
 	Supplier<BlockItem> REINFORCED_GLASS = blockItem("reinforced_glass", FTBICBlocks.REINFORCED_GLASS);
@@ -80,6 +100,7 @@ public interface FTBICItems {
 	Supplier<BlockItem> NUKE = blockItem("nuke", FTBICBlocks.NUKE);
 	Supplier<BlockItem> ACTIVE_NUKE = blockItem("active_nuke", FTBICBlocks.ACTIVE_NUKE);
 
+	// Materials
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");
 	MaterialItem SILICON = material("silicon");
@@ -105,58 +126,107 @@ public interface FTBICItems {
 	MaterialItem ENERGY_CRYSTAL = material("energy_crystal");
 	MaterialItem DENSE_COPPER_PLATE = material("dense_copper_plate");
 
-	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery", () -> new BatteryItem(BatteryType.SINGLE_USE, EnergyTier.LV, FTBICConfig.ENERGY.SINGLE_USE_BATTERY_CAPACITY.get()));
-	Supplier<Item> LV_BATTERY = REGISTRY.register("lv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.LV, FTBICConfig.ENERGY.LV_BATTERY_CAPACITY.get()));
-	Supplier<Item> MV_BATTERY = REGISTRY.register("mv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.MV, FTBICConfig.ENERGY.MV_BATTERY_CAPACITY.get()));
-	Supplier<Item> HV_BATTERY = REGISTRY.register("hv_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.HV, FTBICConfig.ENERGY.HV_BATTERY_CAPACITY.get()));
-	Supplier<Item> EV_BATTERY = REGISTRY.register("ev_battery", () -> new BatteryItem(BatteryType.RECHARGEABLE, EnergyTier.EV, FTBICConfig.ENERGY.EV_BATTERY_CAPACITY.get()));
-	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery", () -> new BatteryItem(BatteryType.CREATIVE, EnergyTier.IV, Integer.MAX_VALUE));
-	Supplier<Item> FLUID_CELL = REGISTRY.register("fluid_cell", FluidCellItem::new);
-	Supplier<Item> SMALL_COOLANT_CELL = REGISTRY.register("small_coolant_cell", () -> new CoolantItem(10_000));
-	Supplier<Item> MEDIUM_COOLANT_CELL = REGISTRY.register("medium_coolant_cell", () -> new CoolantItem(30_000));
-	Supplier<Item> LARGE_COOLANT_CELL = REGISTRY.register("large_coolant_cell", () -> new CoolantItem(60_000));
-	Supplier<Item> URANIUM_FUEL_ROD = REGISTRY.register("uranium_fuel_rod", () -> new FuelRodItem(20_000, 1, 5, 2));
-	Supplier<Item> DUAL_URANIUM_FUEL_ROD = REGISTRY.register("dual_uranium_fuel_rod", () -> new FuelRodItem(20_000, 2, 10, 4));
-	Supplier<Item> QUAD_URANIUM_FUEL_ROD = REGISTRY.register("quad_uranium_fuel_rod", () -> new FuelRodItem(20_000, 4, 20, 8));
-	Supplier<Item> HEAT_VENT = REGISTRY.register("heat_vent", () -> new HeatVentItem(1_000, 6, 0, 0));
-	Supplier<Item> ADVANCED_HEAT_VENT = REGISTRY.register("advanced_heat_vent", () -> new HeatVentItem(1_000, 12, 0, 0));
-	Supplier<Item> REACTOR_HEAT_VENT = REGISTRY.register("reactor_heat_vent", () -> new HeatVentItem(1_000, 5, 5, 0));
-	Supplier<Item> COMPONENT_HEAT_VENT = REGISTRY.register("component_heat_vent", () -> new HeatVentItem(0, 0, 0, 4));
-	Supplier<Item> OVERCLOCKED_HEAT_VENT = REGISTRY.register("overclocked_heat_vent", () -> new HeatVentItem(1_000, 20, 36, 0));
-	Supplier<Item> HEAT_EXCHANGER = REGISTRY.register("heat_exchanger", () -> new HeatExchangerItem(2_500, 12, 4));
-	Supplier<Item> ADVANCED_HEAT_EXCHANGER = REGISTRY.register("advanced_heat_exchanger", () -> new HeatExchangerItem(10_000, 24, 8));
-	Supplier<Item> REACTOR_HEAT_EXCHANGER = REGISTRY.register("reactor_heat_exchanger", () -> new HeatExchangerItem(5_000, 0, 72));
-	Supplier<Item> COMPONENT_HEAT_EXCHANGER = REGISTRY.register("component_heat_exchanger", () -> new HeatExchangerItem(5_000, 36, 0));
-	Supplier<Item> REACTOR_PLATING = REGISTRY.register("reactor_plating", () -> new ReactorPlatingItem(1_000, 0.95));
-	Supplier<Item> CONTAINMENT_REACTOR_PLATING = REGISTRY.register("containment_reactor_plating", () -> new ReactorPlatingItem(500, 0.90));
-	Supplier<Item> HEAT_CAPACITY_REACTOR_PLATING = REGISTRY.register("heat_capacity_reactor_plating", () -> new ReactorPlatingItem(1_700, 0.99));
-	Supplier<Item> NEUTRON_REFLECTOR = REGISTRY.register("neutron_reflector", () -> new NeutronReflectorItem(30_000));
-	Supplier<Item> THICK_NEUTRON_REFLECTOR = REGISTRY.register("thick_neutron_reflector", () -> new NeutronReflectorItem(120_000));
-	Supplier<Item> IRIDIUM_NEUTRON_REFLECTOR = REGISTRY.register("iridium_neutron_reflector", () -> new NeutronReflectorItem(0));
-	Supplier<Item> CANNED_FOOD = REGISTRY.register("canned_food", CannedFoodItem::new);
-	Supplier<Item> PROTEIN_BAR = REGISTRY.register("protein_bar", ProteinBarItem::new);
-	Supplier<Item> DARK_SPRAY_PAINT_CAN = REGISTRY.register("dark_spray_paint_can", () -> new SprayPaintCanItem(true));
-	Supplier<Item> LIGHT_SPRAY_PAINT_CAN = REGISTRY.register("light_spray_paint_can", () -> new SprayPaintCanItem(false));
-	Supplier<Item> OVERCLOCKER_UPGRADE = REGISTRY.register("overclocker_upgrade", () -> new UpgradeItem(16));
-	Supplier<Item> ENERGY_STORAGE_UPGRADE = REGISTRY.register("energy_storage_upgrade", () -> new UpgradeItem(8));
-	Supplier<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", () -> new UpgradeItem(4));
-	Supplier<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", () -> new UpgradeItem(1));
-	Supplier<Item> MECHANICAL_ELYTRA = REGISTRY.register("mechanical_elytra", MechanicalElytraItem::new);
-	Supplier<Item> CARBON_HELMET = REGISTRY.register("carbon_helmet", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.CARBON, EquipmentSlot.HEAD));
-	Supplier<Item> CARBON_CHESTPLATE = REGISTRY.register("carbon_chestplate", () -> new EnergyArmorItem(EnergyArmorMaterial.CARBON));
-	Supplier<Item> CARBON_LEGGINGS = REGISTRY.register("carbon_leggings", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.CARBON, EquipmentSlot.LEGS));
-	Supplier<Item> CARBON_BOOTS = REGISTRY.register("carbon_boots", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.CARBON, EquipmentSlot.FEET));
-	Supplier<Item> QUANTUM_HELMET = REGISTRY.register("quantum_helmet", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.HEAD));
-	Supplier<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", () -> new EnergyArmorItem(EnergyArmorMaterial.QUANTUM));
-	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
-	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", () -> new DummyEnergyArmorItem(EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
-	Supplier<Item> NUKE_ARROW = REGISTRY.register("nuke_arrow", NukeArrowItem::new);
+	// Batteries — capacities resolved lazily so datagen can register without a loaded config.
+	Supplier<Item> SINGLE_USE_BATTERY = REGISTRY.register("single_use_battery",
+			name -> new BatteryItem(props(name), BatteryType.SINGLE_USE, EnergyTier.LV, safeGet(FTBICConfig.ENERGY.SINGLE_USE_BATTERY_CAPACITY, 8_000D)));
+	Supplier<Item> LV_BATTERY = REGISTRY.register("lv_battery",
+			name -> new BatteryItem(props(name), BatteryType.RECHARGEABLE, EnergyTier.LV, safeGet(FTBICConfig.ENERGY.LV_BATTERY_CAPACITY, 10_000D)));
+	Supplier<Item> MV_BATTERY = REGISTRY.register("mv_battery",
+			name -> new BatteryItem(props(name), BatteryType.RECHARGEABLE, EnergyTier.MV, safeGet(FTBICConfig.ENERGY.MV_BATTERY_CAPACITY, 100_000D)));
+	Supplier<Item> HV_BATTERY = REGISTRY.register("hv_battery",
+			name -> new BatteryItem(props(name), BatteryType.RECHARGEABLE, EnergyTier.HV, safeGet(FTBICConfig.ENERGY.HV_BATTERY_CAPACITY, 1_000_000D)));
+	Supplier<Item> EV_BATTERY = REGISTRY.register("ev_battery",
+			name -> new BatteryItem(props(name), BatteryType.RECHARGEABLE, EnergyTier.EV, safeGet(FTBICConfig.ENERGY.EV_BATTERY_CAPACITY, 10_000_000D)));
+	Supplier<Item> CREATIVE_BATTERY = REGISTRY.register("creative_battery",
+			name -> new BatteryItem(props(name), BatteryType.CREATIVE, EnergyTier.IV, Integer.MAX_VALUE));
 
-	/**
-	 * This goes over all the resource types, finds the resources we require for each element, then registers them for us! so helpful...
-	 */
-	Map<ResourceType, Map<ResourceElements, Supplier<Item>>> RESOURCE_TYPE_MAP = ResourceType.VALUES.stream().collect(Collectors.toMap(Function.identity(), e -> {
-		var elementsForType = ResourceElements.RESOURCES_BY_REQUIREMENT.get(e);
-		return elementsForType.stream().collect(Collectors.toMap(Function.identity(), a -> REGISTRY.register(a.getName() + "_" + e.name().toLowerCase(Locale.ENGLISH), () -> e == ResourceType.ORE || e == ResourceType.BLOCK ? new BlockItem((e == ResourceType.BLOCK ? FTBICBlocks.RESOURCE_BLOCKS_OF.get(a) : FTBICBlocks.RESOURCE_ORES.get(a)).get(), new Item.Properties().tab(FTBIC.TAB)) : new ResourceItem(e))));
-	}));
+	Supplier<Item> FLUID_CELL = REGISTRY.register("fluid_cell", name -> new FluidCellItem(props(name)));
+
+	// Reactor components
+	Supplier<Item> SMALL_COOLANT_CELL = REGISTRY.register("small_coolant_cell", name -> new CoolantItem(props(name), 10_000));
+	Supplier<Item> MEDIUM_COOLANT_CELL = REGISTRY.register("medium_coolant_cell", name -> new CoolantItem(props(name), 30_000));
+	Supplier<Item> LARGE_COOLANT_CELL = REGISTRY.register("large_coolant_cell", name -> new CoolantItem(props(name), 60_000));
+	Supplier<Item> URANIUM_FUEL_ROD = REGISTRY.register("uranium_fuel_rod", name -> new FuelRodItem(props(name), 20_000, 1, 5, 2));
+	Supplier<Item> DUAL_URANIUM_FUEL_ROD = REGISTRY.register("dual_uranium_fuel_rod", name -> new FuelRodItem(props(name), 20_000, 2, 10, 4));
+	Supplier<Item> QUAD_URANIUM_FUEL_ROD = REGISTRY.register("quad_uranium_fuel_rod", name -> new FuelRodItem(props(name), 20_000, 4, 20, 8));
+	Supplier<Item> HEAT_VENT = REGISTRY.register("heat_vent", name -> new HeatVentItem(props(name), 1_000, 6, 0, 0));
+	Supplier<Item> ADVANCED_HEAT_VENT = REGISTRY.register("advanced_heat_vent", name -> new HeatVentItem(props(name), 1_000, 12, 0, 0));
+	Supplier<Item> REACTOR_HEAT_VENT = REGISTRY.register("reactor_heat_vent", name -> new HeatVentItem(props(name), 1_000, 5, 5, 0));
+	Supplier<Item> COMPONENT_HEAT_VENT = REGISTRY.register("component_heat_vent", name -> new HeatVentItem(props(name), 0, 0, 0, 4));
+	Supplier<Item> OVERCLOCKED_HEAT_VENT = REGISTRY.register("overclocked_heat_vent", name -> new HeatVentItem(props(name), 1_000, 20, 36, 0));
+	Supplier<Item> HEAT_EXCHANGER = REGISTRY.register("heat_exchanger", name -> new HeatExchangerItem(props(name), 2_500, 12, 4));
+	Supplier<Item> ADVANCED_HEAT_EXCHANGER = REGISTRY.register("advanced_heat_exchanger", name -> new HeatExchangerItem(props(name), 10_000, 24, 8));
+	Supplier<Item> REACTOR_HEAT_EXCHANGER = REGISTRY.register("reactor_heat_exchanger", name -> new HeatExchangerItem(props(name), 5_000, 0, 72));
+	Supplier<Item> COMPONENT_HEAT_EXCHANGER = REGISTRY.register("component_heat_exchanger", name -> new HeatExchangerItem(props(name), 5_000, 36, 0));
+	Supplier<Item> REACTOR_PLATING = REGISTRY.register("reactor_plating", name -> new ReactorPlatingItem(props(name), 1_000, 0.95));
+	Supplier<Item> CONTAINMENT_REACTOR_PLATING = REGISTRY.register("containment_reactor_plating", name -> new ReactorPlatingItem(props(name), 500, 0.90));
+	Supplier<Item> HEAT_CAPACITY_REACTOR_PLATING = REGISTRY.register("heat_capacity_reactor_plating", name -> new ReactorPlatingItem(props(name), 1_700, 0.99));
+	Supplier<Item> NEUTRON_REFLECTOR = REGISTRY.register("neutron_reflector", name -> new NeutronReflectorItem(props(name), 30_000));
+	Supplier<Item> THICK_NEUTRON_REFLECTOR = REGISTRY.register("thick_neutron_reflector", name -> new NeutronReflectorItem(props(name), 120_000));
+	Supplier<Item> IRIDIUM_NEUTRON_REFLECTOR = REGISTRY.register("iridium_neutron_reflector", name -> new NeutronReflectorItem(props(name), 0));
+
+	// Food
+	Supplier<Item> CANNED_FOOD = REGISTRY.register("canned_food", name -> new CannedFoodItem(props(name)));
+	Supplier<Item> PROTEIN_BAR = REGISTRY.register("protein_bar", name -> new ProteinBarItem(props(name)));
+
+	// Spray paint
+	Supplier<Item> DARK_SPRAY_PAINT_CAN = REGISTRY.register("dark_spray_paint_can", name -> new SprayPaintCanItem(props(name), true));
+	Supplier<Item> LIGHT_SPRAY_PAINT_CAN = REGISTRY.register("light_spray_paint_can", name -> new SprayPaintCanItem(props(name), false));
+
+	// Upgrades
+	Supplier<Item> OVERCLOCKER_UPGRADE = REGISTRY.register("overclocker_upgrade", name -> new UpgradeItem(props(name), 16));
+	Supplier<Item> ENERGY_STORAGE_UPGRADE = REGISTRY.register("energy_storage_upgrade", name -> new UpgradeItem(props(name), 8));
+	Supplier<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", name -> new UpgradeItem(props(name), 4));
+	Supplier<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", name -> new UpgradeItem(props(name), 1));
+
+	// Armor + elytra — use Item.Properties.humanoidArmor() so the items equip into the right slot
+	// without needing the legacy ArmorItem class. Material picks vanilla DIAMOND for Carbon and
+	// NETHERITE for Quantum (durability + base defense values); per-tick energy absorption is
+	// applied on top by EnergyArmorDamageHandler.
+	Supplier<Item> MECHANICAL_ELYTRA = REGISTRY.register("mechanical_elytra", name ->
+			new MechanicalElytraItem(props(name)
+					.component(net.minecraft.core.component.DataComponents.GLIDER, net.minecraft.util.Unit.INSTANCE)
+					.humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.IRON,
+							net.minecraft.world.item.equipment.ArmorType.CHESTPLATE)));
+	Supplier<Item> CARBON_HELMET = REGISTRY.register("carbon_helmet", name ->
+			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.DIAMOND,
+					net.minecraft.world.item.equipment.ArmorType.HELMET), EnergyArmorMaterial.CARBON, EquipmentSlot.HEAD));
+	Supplier<Item> CARBON_CHESTPLATE = REGISTRY.register("carbon_chestplate", name ->
+			new EnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.DIAMOND,
+					net.minecraft.world.item.equipment.ArmorType.CHESTPLATE), EnergyArmorMaterial.CARBON));
+	Supplier<Item> CARBON_LEGGINGS = REGISTRY.register("carbon_leggings", name ->
+			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.DIAMOND,
+					net.minecraft.world.item.equipment.ArmorType.LEGGINGS), EnergyArmorMaterial.CARBON, EquipmentSlot.LEGS));
+	Supplier<Item> CARBON_BOOTS = REGISTRY.register("carbon_boots", name ->
+			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.DIAMOND,
+					net.minecraft.world.item.equipment.ArmorType.BOOTS), EnergyArmorMaterial.CARBON, EquipmentSlot.FEET));
+	Supplier<Item> QUANTUM_HELMET = REGISTRY.register("quantum_helmet", name ->
+			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.NETHERITE,
+					net.minecraft.world.item.equipment.ArmorType.HELMET), EnergyArmorMaterial.QUANTUM, EquipmentSlot.HEAD));
+	Supplier<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", name ->
+			new EnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.NETHERITE,
+					net.minecraft.world.item.equipment.ArmorType.CHESTPLATE), EnergyArmorMaterial.QUANTUM));
+	Supplier<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", name ->
+			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.NETHERITE,
+					net.minecraft.world.item.equipment.ArmorType.LEGGINGS), EnergyArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
+	Supplier<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", name ->
+			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.NETHERITE,
+					net.minecraft.world.item.equipment.ArmorType.BOOTS), EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
+	Supplier<Item> NUKE_ARROW = REGISTRY.register("nuke_arrow", name -> new NukeArrowItem(props(name)));
+
+	Map<ResourceType, Map<ResourceElements, Supplier<Item>>> RESOURCE_TYPE_MAP = ResourceType.VALUES.stream()
+			.collect(Collectors.toMap(Function.identity(), resourceType -> {
+				var elementsForType = ResourceElements.RESOURCES_BY_REQUIREMENT.get(resourceType);
+				return elementsForType.stream().collect(Collectors.toMap(Function.identity(), element -> {
+					String id = resourceType.idFor(element);
+					return REGISTRY.register(id, name -> {
+						if (resourceType == ResourceType.ORE) {
+							return new BlockItem(FTBICBlocks.RESOURCE_ORES.get(element).get(), props(name));
+						} else if (resourceType == ResourceType.BLOCK) {
+							return new BlockItem(FTBICBlocks.RESOURCE_BLOCKS_OF.get(element).get(), props(name));
+						}
+						return new ResourceItem(props(name), resourceType);
+					});
+				}));
+			}));
 }

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:hv_battery",
+  "ingredients": [
+    "ftbic:mv_battery",
+    "ftbic:graphene"
+  ],
+  "result": {
+    "id": "ftbic:hv_battery",
+    "count": 1
+  }
+}

@@ -1,14 +1,21 @@
 package dev.ftb.mods.ftbic.util;
 
-import net.minecraft.nbt.DoubleTag;
+import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.extensions.IForgeItem;
 
-public interface EnergyItemHandler extends IForgeItem {
+/**
+ * Item-stack energy storage. Ported from the 1.18.2 IForgeItem-based interface; energy is now stored in a
+ * DataComponent rather than CompoundTag NBT.
+ */
+public interface EnergyItemHandler {
 	double getEnergyCapacity(ItemStack stack);
 
 	default double getEnergy(ItemStack stack) {
-		return isCreativeEnergyItem() ? getEnergyCapacity(stack) / 2D : stack.hasTag() ? stack.getTag().getDouble("Energy") : 0D;
+		if (isCreativeEnergyItem()) {
+			return getEnergyCapacity(stack) / 2D;
+		}
+		Double stored = stack.get(ModDataComponents.ENERGY.get());
+		return stored == null ? 0D : stored;
 	}
 
 	default void setEnergy(ItemStack stack, double energy) {
@@ -22,7 +29,7 @@ public interface EnergyItemHandler extends IForgeItem {
 
 	default void setEnergyRaw(ItemStack stack, double energy) {
 		if (!isCreativeEnergyItem()) {
-			stack.addTagElement("Energy", DoubleTag.valueOf(energy));
+			stack.set(ModDataComponents.ENERGY.get(), energy);
 		}
 	}
 
@@ -75,5 +82,11 @@ public interface EnergyItemHandler extends IForgeItem {
 	}
 
 	default void energyChanged(ItemStack stack, double prevEnergy) {
+	}
+
+	static String formatEnergy(double value) {
+		if (value >= 1_000_000D) return String.format("%.1fM", value / 1_000_000D);
+		if (value >= 1_000D) return String.format("%.1fk", value / 1_000D);
+		return String.format("%.0f", value);
 	}
 }

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:tin_ingot",
+  "ingredients": [
+    "#c:storage_blocks/tin"
+  ],
+  "result": {
+    "id": "ftbic:tin_ingot",
+    "count": 9
+  }
+}

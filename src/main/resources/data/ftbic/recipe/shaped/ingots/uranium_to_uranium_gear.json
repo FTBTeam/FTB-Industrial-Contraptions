@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:uranium_gear",
+  "pattern": [
+    " X ",
+    "XIX",
+    " X "
+  ],
+  "key": {
+    "X": "#c:ingots/uranium",
+    "I": "minecraft:iron_nugget"
+  },
+  "result": {
+    "id": "ftbic:uranium_gear",
+    "count": 1
+  }
+}

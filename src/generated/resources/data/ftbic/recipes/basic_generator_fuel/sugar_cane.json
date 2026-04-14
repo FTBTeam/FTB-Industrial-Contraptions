@@ -1,7 +1,0 @@
-{
-  "type": "ftbic:basic_generator_fuel",
-  "ingredient": {
-    "item": "minecraft:sugar_cane"
-  },
-  "ticks": 48
-}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:reactor_heat_exchanger",
+  "pattern": [
+    "P",
+    "V",
+    "P"
+  ],
+  "key": {
+    "P": "#c:plates/lead",
+    "V": "ftbic:heat_exchanger"
+  },
+  "result": {
+    "id": "ftbic:reactor_heat_exchanger",
+    "count": 1
+  }
+}

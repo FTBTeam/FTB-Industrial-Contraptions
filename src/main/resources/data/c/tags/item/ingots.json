@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#c:ingots/tin",
+    "#c:ingots/lead",
+    "#c:ingots/uranium",
+    "#c:ingots/iridium",
+    "#c:ingots/enderium",
+    "#c:ingots/aluminum",
+    "#c:ingots/bronze"
+  ]
+}

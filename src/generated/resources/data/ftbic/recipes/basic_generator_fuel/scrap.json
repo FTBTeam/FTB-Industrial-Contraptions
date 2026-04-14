@@ -1,7 +1,0 @@
-{
-  "type": "ftbic:basic_generator_fuel",
-  "ingredient": {
-    "item": "ftbic:scrap"
-  },
-  "ticks": 348
-}

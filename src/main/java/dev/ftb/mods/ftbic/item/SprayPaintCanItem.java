@@ -1,51 +1,39 @@
 package dev.ftb.mods.ftbic.item;
 
-import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.SprayPaintable;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
+/**
+ * Right-click a {@link SprayPaintable} block to toggle its `DARK` state. Dark=true repaints the
+ * block to the dark variant; light version does the inverse. Matches the 1.18.2 reference: stacks
+ * to 1, no durability, unlimited uses (paint cans never run out).
+ */
 public class SprayPaintCanItem extends Item {
 	public final boolean dark;
 
-	public SprayPaintCanItem(boolean d) {
-		super(new Properties().stacksTo(1).tab(FTBIC.TAB));
-		dark = d;
+	public SprayPaintCanItem(Properties props, boolean dark) {
+		super(props.stacksTo(1));
+		this.dark = dark;
 	}
 
 	@Override
-	public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-		BlockState state = context.getLevel().getBlockState(context.getClickedPos());
-
-		if (state.getBlock() instanceof SprayPaintable) {
-			if (((SprayPaintable) state.getBlock()).paint(state, context.getLevel(), context.getClickedPos(), dark) && context.getLevel().isClientSide()) {
-				context.getLevel().playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.REDSTONE_TORCH_BURNOUT, SoundSource.BLOCKS, 0.5F, 2.6F + (context.getLevel().random.nextFloat() - context.getLevel().random.nextFloat()) * 0.8F);
+	public InteractionResult useOn(UseOnContext ctx) {
+		BlockState state = ctx.getLevel().getBlockState(ctx.getClickedPos());
+		if (state.getBlock() instanceof SprayPaintable paintable) {
+			if (paintable.paint(state, ctx.getLevel(), ctx.getClickedPos(), dark)
+					&& ctx.getLevel().isClientSide()) {
+				float pitch = 2.6F + (ctx.getLevel().getRandom().nextFloat() - ctx.getLevel().getRandom().nextFloat()) * 0.8F;
+				ctx.getLevel().playSound(ctx.getPlayer(), ctx.getClickedPos(),
+						SoundEvents.REDSTONE_TORCH_BURNOUT, SoundSource.BLOCKS, 0.5F, pitch);
 			}
-
 			return InteractionResult.SUCCESS;
 		}
-
 		return InteractionResult.PASS;
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-		list.add(new TranslatableComponent("item.ftbic.spray_paint_can.tooltip").withStyle(ChatFormatting.GRAY));
 	}
 }

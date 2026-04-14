@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "#c:rods/tin",
+    "#c:rods/lead",
+    "#c:rods/uranium",
+    "#c:rods/iridium",
+    "#c:rods/enderium",
+    "#c:rods/aluminum",
+    "#c:rods/iron",
+    "#c:rods/copper",
+    "#c:rods/gold",
+    "#c:rods/bronze"
+  ]
+}

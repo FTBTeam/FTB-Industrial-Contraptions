@@ -1,130 +1,80 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
-import com.google.gson.JsonElement;
-import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
-import dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu;
-import dev.ftb.mods.ftbic.screen.sync.SyncedData;
-import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.NonNullList;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
+import java.util.Optional;
 
+/**
+ * Electric crafting table — first 9 input slots are a 3×3 crafting grid. Each tick, if there's a
+ * matching vanilla CraftingRecipe AND enough energy, consumes 1 of each ingredient, produces the
+ * result into the first output slot, drains `POWERED_CRAFTING_TABLE_USE` zaps.
+ *
+ * JEI "?" recipe-click dispatches `SelectCraftingRecipePayload` which populates the 9 input slots
+ * from the player's inventory via `PoweredCraftingTableMenu.setIngredients`.
+ */
 public class PoweredCraftingTableBlockEntity extends BasicMachineBlockEntity {
-	public final Ingredient[] ingredients;
-	private ResourceLocation matchedRecipe;
-	public double progress;
-
 	public PoweredCraftingTableBlockEntity(BlockPos pos, BlockState state) {
 		super(FTBICElectricBlocks.POWERED_CRAFTING_TABLE, pos, state);
-		ingredients = new Ingredient[9];
-		Arrays.fill(ingredients, Ingredient.EMPTY);
 	}
 
 	@Override
-	public void writeData(CompoundTag tag) {
-		super.writeData(tag);
+	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+		return new dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu(id, inv, this);
+	}
 
+	@Override
+	public void tick() {
+		super.tick();
+		if (level == null || level.isClientSide() || !(level instanceof ServerLevel server)) return;
+		if (inputItems.length < 9 || outputItems.length < 1) return;
+		if (energy < energyUse) return;
+
+		NonNullList<ItemStack> grid = NonNullList.withSize(9, ItemStack.EMPTY);
+		boolean anyInput = false;
 		for (int i = 0; i < 9; i++) {
-			if (ingredients[i] != Ingredient.EMPTY) {
-				tag.putString("Ingredient" + (i + 1), FTBICUtils.GSON.toJson(ingredients[i].toJson()));
-			}
+			grid.set(i, inputItems[i]);
+			if (!inputItems[i].isEmpty()) anyInput = true;
 		}
-	}
+		if (!anyInput) return;
 
-	@Override
-	public void readData(CompoundTag tag) {
-		super.readData(tag);
-		Arrays.fill(ingredients, Ingredient.EMPTY);
+		CraftingInput craft = CraftingInput.of(3, 3, grid);
+		@SuppressWarnings("unchecked")
+		RecipeType<CraftingRecipe> craftingType = (RecipeType<CraftingRecipe>) (RecipeType<?>) RecipeType.CRAFTING;
+		Optional<RecipeHolder<CraftingRecipe>> match = server.recipeAccess().recipeMap()
+				.getRecipesFor(craftingType, craft, level).findFirst();
+		if (match.isEmpty()) return;
 
-		for (int i = 0; i < 9; i++) {
-			String s = tag.getString("Ingredient" + (i + 1));
-			ingredients[i] = s.isEmpty() ? Ingredient.EMPTY : Ingredient.fromJson(FTBICUtils.GSON.fromJson(s, JsonElement.class));
-		}
+		CraftingRecipe recipe = match.get().value();
+		ItemStack result = recipe.assemble(craft);
+		if (result.isEmpty()) return;
 
-		matchedRecipe = null;
-	}
-
-	@Override
-	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-		return slot >= 0 && slot < 9 && ingredients[slot] != Ingredient.EMPTY && ingredients[slot].test(stack);
-	}
-
-	@Override
-	public int getSlotLimit(int slot) {
-		return slot < 9 ? 1 : 64;
-	}
-
-	@Override
-	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {
-		super.writeMenu(player, buf);
-
-		for (int i = 0; i < 9; i++) {
-			ingredients[i].toNetwork(buf);
-		}
-	}
-
-	@Override
-	public void handleProcessing() {
-		if (energy < energyUse) {
+		if (outputItems[0].isEmpty()) {
+			outputItems[0] = result;
+		} else if (ItemStack.isSameItemSameComponents(outputItems[0], result)
+				&& outputItems[0].getCount() + result.getCount() <= outputItems[0].getMaxStackSize()) {
+			outputItems[0].grow(result.getCount());
+		} else {
 			return;
 		}
 
-		boolean hasRecipe = false;
-
-		for (int i = 0; i < ingredients.length; i++) {
-			if (ingredients[i] == Ingredient.EMPTY) {
-				if (!inputItems[i].isEmpty()) {
-					return;
-				}
-			} else {
-				hasRecipe = true;
-
-				if (inputItems[i].isEmpty() || !ingredients[i].test(inputItems[i])) {
-					return;
-				}
-			}
-		}
-
-		if (!hasRecipe) {
-			return;
-		}
-
-		progress += progressSpeed;
 		energy -= energyUse;
+		active = true;
 
-		if (progress >= 100D) {
-			progress = 0D;
-			FTBIC.LOGGER.info("Success!");
-			setChanged();
+		for (int i = 0; i < 9; i++) {
+			if (!inputItems[i].isEmpty()) {
+				inputItems[i].shrink(1);
+				if (inputItems[i].getCount() <= 0) inputItems[i] = ItemStack.EMPTY;
+			}
 		}
-	}
-
-	@Override
-	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!level.isClientSide()) {
-			openMenu((ServerPlayer) player, (id, inventory) -> new PoweredCraftingTableMenu(id, inventory, this));
-		}
-
-		return InteractionResult.SUCCESS;
-	}
-
-	@Override
-	public void addSyncData(SyncedData data) {
-		super.addSyncData(data);
-		data.addShort(SyncedData.BAR, () -> Mth.ceil(progress * 22D / 100D));
+		setChanged();
 	}
 }

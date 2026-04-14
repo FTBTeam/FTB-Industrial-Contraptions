@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:hv_cable",
+  "ingredients": [
+    "ftbic:gold_wire",
+    "ftbic:rubber"
+  ],
+  "result": {
+    "id": "ftbic:hv_cable",
+    "count": 1
+  }
+}

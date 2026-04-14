@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:aluminum_ingot",
+  "ingredients": [
+    "#c:storage_blocks/aluminum"
+  ],
+  "result": {
+    "id": "ftbic:aluminum_ingot",
+    "count": 9
+  }
+}

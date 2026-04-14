@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:tin_ingot",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": "#c:nuggets/tin"
+  },
+  "result": {
+    "id": "ftbic:tin_ingot",
+    "count": 1
+  }
+}

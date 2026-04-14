@@ -1,0 +1,23 @@
+{
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "myrtrees:latex",
+      "count": 1
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:rubber",
+        "count": 3
+      }
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "myrtrees"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:bronze_gear",
+  "pattern": [
+    " X ",
+    "XIX",
+    " X "
+  ],
+  "key": {
+    "X": "#c:ingots/bronze",
+    "I": "minecraft:iron_nugget"
+  },
+  "result": {
+    "id": "ftbic:bronze_gear",
+    "count": 1
+  }
+}

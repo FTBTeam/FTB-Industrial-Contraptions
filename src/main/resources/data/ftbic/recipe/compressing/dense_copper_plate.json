@@ -1,0 +1,17 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "ingredient": "#c:plates/copper",
+      "count": 8
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:dense_copper_plate",
+        "count": 1
+      }
+    }
+  ]
+}

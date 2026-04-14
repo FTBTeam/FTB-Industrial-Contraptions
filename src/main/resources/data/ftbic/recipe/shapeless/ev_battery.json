@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:ev_battery",
+  "ingredients": [
+    "ftbic:hv_battery",
+    "ftbic:iridium_alloy"
+  ],
+  "result": {
+    "id": "ftbic:ev_battery",
+    "count": 1
+  }
+}

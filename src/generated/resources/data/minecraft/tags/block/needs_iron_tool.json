@@ -1,0 +1,21 @@
+{
+  "values": [
+    "ftbic:aluminum_ore",
+    "ftbic:aluminum_block",
+    "ftbic:bronze_block",
+    "ftbic:deepslate_aluminum_ore",
+    "ftbic:deepslate_iridium_ore",
+    "ftbic:deepslate_lead_ore",
+    "ftbic:deepslate_tin_ore",
+    "ftbic:deepslate_uranium_ore",
+    "ftbic:enderium_block",
+    "ftbic:iridium_ore",
+    "ftbic:iridium_block",
+    "ftbic:lead_ore",
+    "ftbic:lead_block",
+    "ftbic:tin_ore",
+    "ftbic:tin_block",
+    "ftbic:uranium_ore",
+    "ftbic:uranium_block"
+  ]
+}

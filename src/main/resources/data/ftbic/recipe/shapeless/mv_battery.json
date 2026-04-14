@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:mv_battery",
+  "ingredients": [
+    "ftbic:lv_battery",
+    "ftbic:energy_crystal"
+  ],
+  "result": {
+    "id": "ftbic:mv_battery",
+    "count": 1
+  }
+}

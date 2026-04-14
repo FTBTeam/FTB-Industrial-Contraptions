@@ -1,203 +1,93 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
-import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
-import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
-import dev.ftb.mods.ftbic.util.TeleporterEntry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-import java.util.ArrayList;
-import java.util.List;
+/**
+ * Step-on teleporter. Binds to another TeleporterBlockEntity via dimension + position; when a player
+ * steps on it, consumes scaled energy based on distance and teleports them to the linked teleporter.
+ * Right-clicking opens the destination-picker GUI (TeleporterMenu/Screen) — server collects all
+ * loaded teleporters owned by the player (or marked public) within the same dimension, ships them
+ * via {@link dev.ftb.mods.ftbic.net.TeleporterListPayload}, and the screen renders a clickable list.
+ */
+public class TeleporterBlockEntity extends ElectricBlockEntityRef {
+	/** All loaded teleporters across all dimensions; populated on setLevel, drained on setRemoved. */
+	private static final java.util.Set<TeleporterBlockEntity> ALL_LOADED =
+			java.util.Collections.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<>());
 
-public class TeleporterBlockEntity extends ElectricBlockEntity {
 	public BlockPos linkedPos;
 	public ResourceKey<Level> linkedDimension;
-	public String linkedName;
+	public String linkedName = "";
 	public int warmup;
 	public int cooldown;
 	public boolean isPublic;
-	public String name;
+	public String name = "";
 
 	public TeleporterBlockEntity(BlockPos pos, BlockState state) {
 		super(FTBICElectricBlocks.TELEPORTER, pos, state);
-		linkedPos = null;
-		linkedDimension = null;
-		linkedName = null;
-		warmup = 0;
-		cooldown = 0;
-		isPublic = false;
-		name = "";
 	}
 
 	@Override
-	public void writeData(CompoundTag tag) {
-		super.writeData(tag);
-
-		if (linkedPos != null && linkedDimension != null) {
-			tag.putInt("LinkedX", linkedPos.getX());
-			tag.putInt("LinkedY", linkedPos.getY());
-			tag.putInt("LinkedZ", linkedPos.getZ());
-			tag.putString("LinkedDimension", linkedDimension.location().toString());
-			tag.putString("LinkedName", linkedName);
-		}
-
-		if (warmup > 0) {
-			tag.putInt("Warmup", warmup);
-		}
-
-		if (cooldown > 0) {
-			tag.putInt("Cooldown", cooldown);
-		}
-
-		if (isPublic) {
-			tag.putBoolean("Public", true);
-		}
-
-		if (!name.isEmpty()) {
-			tag.putString("Name", name);
-		}
+	public void setLevel(Level level) {
+		super.setLevel(level);
+		if (!level.isClientSide()) ALL_LOADED.add(this);
 	}
 
 	@Override
-	public void readData(CompoundTag tag) {
-		super.readData(tag);
-
-		linkedPos = null;
-		linkedDimension = null;
-		linkedName = "";
-
-		if (tag.contains("LinkedDimension")) {
-			linkedPos = new BlockPos(tag.getInt("LinkedX"), tag.getInt("LinkedY"), tag.getInt("LinkedZ"));
-			linkedDimension = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(tag.getString("LinkedDimension")));
-			linkedName = tag.getString("LinkedName");
-		}
-
-		warmup = tag.getInt("Warmup");
-		cooldown = tag.getInt("Cooldown");
-		isPublic = tag.getBoolean("Public");
-		name = tag.getString("Name");
+	public void setRemoved() {
+		super.setRemoved();
+		ALL_LOADED.remove(this);
 	}
 
 	@Override
-	public void writeNetData(CompoundTag tag) {
-		super.writeNetData(tag);
-
-		if (linkedName != null && !linkedName.isEmpty()) {
-			tag.putString("LinkedName", linkedName);
-		}
+	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+		return new dev.ftb.mods.ftbic.screen.TeleporterMenu(id, inv, this);
 	}
 
 	@Override
-	public void readNetData(CompoundTag tag) {
-		super.readNetData(tag);
-		if (tag == null) {
-			return;
-		}
-
-		if (tag.contains("LinkedName")) {
-			linkedName = tag.getString("LinkedName");
-		}
+	public void openMenu(ServerPlayer player) {
+		super.openMenu(player);
+		// Ship the destination list immediately after the menu opens.
+		java.util.List<dev.ftb.mods.ftbic.util.TeleporterEntry> peers = collectPeers(player);
+		net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player,
+				new dev.ftb.mods.ftbic.net.TeleporterListPayload(peers));
 	}
 
-	@Override
-	public void stepOn(ServerPlayer player) {
-		if (cooldown > 0 || linkedDimension == null || linkedPos == null) {
-			return;
+	/**
+	 * Walk every loaded {@link TeleporterBlockEntity} in the same level and return one entry per
+	 * unique destination the calling player is allowed to use (their own + public ones), excluding
+	 * this BE itself and any unnamed teleporters (so the GUI stays uncluttered).
+	 */
+	private java.util.List<dev.ftb.mods.ftbic.util.TeleporterEntry> collectPeers(ServerPlayer player) {
+		java.util.List<dev.ftb.mods.ftbic.util.TeleporterEntry> out = new java.util.ArrayList<>();
+		if (level == null) return out;
+		ResourceKey<Level> myDim = level.dimension();
+		for (TeleporterBlockEntity t : ALL_LOADED) {
+			if (t == this || t.level == null || t.isRemoved()) continue;
+			if (t.level.dimension() != myDim) continue;
+			if (!t.isPublic && !t.placerId.equals(player.getUUID())) continue;
+			if (t.name.isEmpty()) continue;
+			out.add(new dev.ftb.mods.ftbic.util.TeleporterEntry(
+					myDim, t.getBlockPos(), t.name, getEnergyUse(myDim, t.getBlockPos())));
 		}
-
-		double use = getEnergyUse(linkedDimension, linkedPos);
-
-		if (energy < use) {
-			return;
-		}
-
-		ServerLevel linkedLevel = player.server.getLevel(linkedDimension);
-
-		if (linkedLevel != null && linkedLevel.isLoaded(linkedPos)) {
-			if (warmup < 10) {
-				warmup += 2;
-			} else {
-				BlockEntity entity = linkedLevel.getBlockEntity(linkedPos);
-
-				if (entity instanceof TeleporterBlockEntity t) {
-					Direction direction = t.getFacing(Direction.NORTH);
-					energy -= use;
-					player.teleportTo(linkedLevel, linkedPos.getX() + 0.5D, linkedPos.getY() + 1.1D, linkedPos.getZ() + 0.5D, direction.toYRot() + 90F, 0F);
-					level.playSound(null, worldPosition.getX() + 0.5D, worldPosition.getY() + 1.5D, worldPosition.getZ() + 0.5D, SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1F, 1F);
-					level.playSound(null, player.getX(), player.getEyeY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1F, 1F);
-					cooldown = 20;
-					warmup = 0;
-					setChanged();
-
-					t.cooldown = 60;
-					t.setChanged();
-
-					if (linkedName != null && !linkedName.equals(t.name)) {
-						linkedName = t.name;
-						syncBlock();
-					}
-
-					FTBIC.LOGGER.debug(player.getScoreboardName() + " used teleporter to " + linkedDimension.location() + ":" + linkedPos);
-				} else {
-					linkedName = "";
-					syncBlock();
-				}
-			}
-		} else {
-			player.displayClientMessage(new TranslatableComponent("block.ftbic.teleporter.load_error").withStyle(ChatFormatting.RED), true);
-		}
-	}
-
-	@Override
-	public void tick() {
-		if (cooldown > 0) {
-			cooldown--;
-		}
-
-		if (warmup > 0) {
-			warmup--;
-		}
-
-		if (cooldown <= 0 && linkedDimension != null && linkedPos != null && energy >= getEnergyUse(linkedDimension, linkedPos)) {
-			active = true;
-		}
-
-		super.tick();
-	}
-
-	@Override
-	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!level.isClientSide()) {
-			if (placerId.equals(player.getUUID())) {
-				// TODO: add gui here
-				// open gui
-			} else {
-				player.displayClientMessage(new TranslatableComponent("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED), true);
-			}
-		}
-
-		return InteractionResult.SUCCESS;
+		return out;
 	}
 
 	@Override
@@ -205,67 +95,141 @@ public class TeleporterBlockEntity extends ElectricBlockEntity {
 		return true;
 	}
 
-	public double getEnergyUse(ResourceKey<Level> d, BlockPos p) {
-		if (d != level.dimension()) {
-			return FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get();
+	@Override
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		if (linkedPos != null && linkedDimension != null) {
+			output.putInt("LinkedX", linkedPos.getX());
+			output.putInt("LinkedY", linkedPos.getY());
+			output.putInt("LinkedZ", linkedPos.getZ());
+			output.putString("LinkedDimension", linkedDimension.identifier().toString());
+			if (linkedName != null && !linkedName.isEmpty()) {
+				output.putString("LinkedName", linkedName);
+			}
 		}
-
-		double mind = FTBICConfig.MACHINES.TELEPORTER_MIN_DISTANCE.get();
-		double maxd = FTBICConfig.MACHINES.TELEPORTER_MAX_DISTANCE.get();
-		double dx = p.getX() - worldPosition.getX();
-		double dz = p.getZ() - worldPosition.getZ();
-
-		double dist = Mth.clamp(dx * dx + dz * dz, mind, maxd);
-		return Mth.lerp((dist - mind) / (maxd - mind), FTBICConfig.MACHINES.TELEPORTER_MIN_USE.get(), FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get());
+		if (warmup > 0) output.putInt("Warmup", warmup);
+		if (cooldown > 0) output.putInt("Cooldown", cooldown);
+		if (isPublic) output.putBoolean("Public", true);
+		if (!name.isEmpty()) output.putString("Name", name);
 	}
 
 	@Override
-	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {
-		super.writeMenu(player, buf);
-
-		List<TeleporterEntry> list = new ArrayList<>();
-
-		// fixme
-//		for (BlockEntity entity : level.blockEntityList) {
-//			if (entity instanceof TeleporterBlockEntity) {
-//				TeleporterBlockEntity teleporter = (TeleporterBlockEntity) entity;
-//
-//				if (teleporter.isPublic || teleporter.placerId.equals(player.getUUID())) {
-//					list.add(new TeleporterEntry(teleporter, getEnergyUse(teleporter.level.dimension(), teleporter.worldPosition)));
-//				}
-//			}
-//		}
-
-		buf.writeVarInt(list.size());
-
-		for (TeleporterEntry e : list) {
-			e.write(buf);
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		linkedPos = null;
+		linkedDimension = null;
+		linkedName = "";
+		String dim = input.getStringOr("LinkedDimension", "");
+		if (!dim.isEmpty()) {
+			Identifier id = Identifier.tryParse(dim);
+			if (id != null) {
+				linkedPos = new BlockPos(
+						input.getIntOr("LinkedX", 0),
+						input.getIntOr("LinkedY", 0),
+						input.getIntOr("LinkedZ", 0));
+				linkedDimension = ResourceKey.create(Registries.DIMENSION, id);
+				linkedName = input.getStringOr("LinkedName", "");
+			}
 		}
+		warmup = input.getIntOr("Warmup", 0);
+		cooldown = input.getIntOr("Cooldown", 0);
+		isPublic = input.getBooleanOr("Public", false);
+		name = input.getStringOr("Name", "");
 	}
 
+	@Override
+	public void stepOn(ServerPlayer player) {
+		if (cooldown > 0 || linkedDimension == null || linkedPos == null || level == null) return;
+
+		double use = getEnergyUse(linkedDimension, linkedPos);
+		if (energy < use) return;
+
+		ServerLevel linkedLevel = player.level().getServer().getLevel(linkedDimension);
+		if (linkedLevel == null || !linkedLevel.isLoaded(linkedPos)) {
+			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.load_error").withStyle(ChatFormatting.RED));
+			return;
+		}
+
+		if (warmup < 10) {
+			warmup += 2;
+			return;
+		}
+
+		BlockEntity entity = linkedLevel.getBlockEntity(linkedPos);
+		if (!(entity instanceof TeleporterBlockEntity t)) {
+			linkedName = "";
+			setChanged();
+			return;
+		}
+
+		Direction direction = t.getFacing(Direction.NORTH);
+		energy -= use;
+		player.teleportTo(linkedLevel,
+				linkedPos.getX() + 0.5D, linkedPos.getY() + 1.1D, linkedPos.getZ() + 0.5D,
+				java.util.Collections.emptySet(),
+				direction.toYRot() + 90F, 0F, true);
+		level.playSound(null, worldPosition.getX() + 0.5, worldPosition.getY() + 1.5, worldPosition.getZ() + 0.5,
+				SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1F, 1F);
+		linkedLevel.playSound(null, player.getX(), player.getEyeY(), player.getZ(),
+				SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1F, 1F);
+		cooldown = 20;
+		warmup = 0;
+		t.cooldown = 60;
+		t.setChanged();
+		if (linkedName != null && !linkedName.equals(t.name)) {
+			linkedName = t.name;
+		}
+		setChanged();
+	}
+
+	@Override
+	public void tick() {
+		if (cooldown > 0) cooldown--;
+		if (warmup > 0) warmup--;
+		if (cooldown <= 0 && linkedDimension != null && linkedPos != null
+				&& level != null && energy >= getEnergyUse(linkedDimension, linkedPos)) {
+			active = true;
+		}
+		super.tick();
+	}
+
+	public double getEnergyUse(ResourceKey<Level> d, BlockPos p) {
+		if (level == null || d != level.dimension()) {
+			return FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get();
+		}
+		double mind = FTBICConfig.MACHINES.TELEPORTER_MIN_DISTANCE.get();
+		double maxd = FTBICConfig.MACHINES.TELEPORTER_MAX_DISTANCE.get();
+		if (maxd <= mind) {
+			return FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get();
+		}
+		double dx = p.getX() - worldPosition.getX();
+		double dz = p.getZ() - worldPosition.getZ();
+		double dist = Mth.clamp(Math.sqrt(dx * dx + dz * dz), mind, maxd);
+		return Mth.lerp((dist - mind) / (maxd - mind),
+				FTBICConfig.MACHINES.TELEPORTER_MIN_USE.get(),
+				FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get());
+	}
+
+	/** Called by SelectTeleporterPayload server-handler to bind a destination. */
 	public void select(ServerPlayer player, ResourceKey<Level> d, BlockPos p) {
-		if (placerId.equals(player.getUUID())) {
-			ServerLevel linkedLevel = player.server.getLevel(d);
-
-			if (linkedLevel != null && linkedLevel.isLoaded(p)) {
-				BlockEntity entity = linkedLevel.getBlockEntity(p);
-
-				if (entity instanceof TeleporterBlockEntity t) {
-
-					if (t.isPublic || t.placerId.equals(player.getUUID())) {
-						linkedDimension = d;
-						linkedPos = p;
-						linkedName = t.name;
-						syncBlock();
-					}
-				} else {
-					player.displayClientMessage(new TranslatableComponent("block.ftbic.teleporter.load_error").withStyle(ChatFormatting.RED), true);
-				}
-			} else {
-				player.displayClientMessage(new TranslatableComponent("block.ftbic.teleporter.load_error").withStyle(ChatFormatting.RED), true);
-			}
-		} else {
-			player.displayClientMessage(new TranslatableComponent("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED), true);
+		if (!placerId.equals(player.getUUID())) {
+			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED));
+			return;
+		}
+		ServerLevel linkedLevel = player.level().getServer().getLevel(d);
+		if (linkedLevel == null || !linkedLevel.isLoaded(p)) {
+			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.load_error").withStyle(ChatFormatting.RED));
+			return;
+		}
+		if (!(linkedLevel.getBlockEntity(p) instanceof TeleporterBlockEntity t)) {
+			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.load_error").withStyle(ChatFormatting.RED));
+			return;
+		}
+		if (t.isPublic || net.minecraft.util.Util.NIL_UUID.equals(t.placerId) || t.placerId.equals(player.getUUID())) {
+			linkedDimension = d;
+			linkedPos = p;
+			linkedName = t.name;
+			setChanged();
 		}
 	}
 }

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:landmark",
+  "ingredients": [
+    "minecraft:redstone_torch",
+    "#c:gems/lapis"
+  ],
+  "result": {
+    "id": "ftbic:landmark",
+    "count": 1
+  }
+}

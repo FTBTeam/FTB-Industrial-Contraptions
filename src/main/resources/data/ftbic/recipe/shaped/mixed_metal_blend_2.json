@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:mixed_metal_blend",
+  "pattern": [
+    "III",
+    "OOO",
+    "PPP"
+  ],
+  "key": {
+    "I": [
+      "#c:dusts/iron",
+      "#c:dusts/lead"
+    ],
+    "O": "#c:dusts/electrum",
+    "P": [
+      "#c:dusts/tin",
+      "#c:dusts/aluminum"
+    ]
+  },
+  "result": {
+    "id": "ftbic:mixed_metal_blend",
+    "count": 3
+  },
+  "neoforge:conditions": [
+    {
+      "value": {
+        "tag": "c:dusts/electrum",
+        "type": "neoforge:tag_empty"
+      },
+      "type": "neoforge:not"
+    }
+  ]
+}

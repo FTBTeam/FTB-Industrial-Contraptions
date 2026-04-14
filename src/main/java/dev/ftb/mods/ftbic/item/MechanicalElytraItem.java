@@ -1,131 +1,117 @@
 package dev.ftb.mods.ftbic.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
-import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
-import dev.ftb.mods.ftbic.util.FTBICUtils;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.function.Consumer;
 
-public class MechanicalElytraItem extends ArmorItem implements EnergyItemHandler {
-	public MechanicalElytraItem() {
-		super(EnergyArmorMaterial.ELYTRA, EquipmentSlot.CHEST, new Properties().tab(FTBIC.TAB));
+/**
+ * Electric elytra. Fall-flight is enabled via the vanilla {@code minecraft:glider} data component.
+ * While flying, drains energy each tick; sneaking engages a brake (decelerates); sprinting boosts
+ * speed in the look direction. Passively recharges when the wearer is stood in daylight and not
+ * flying. Runs out of energy mid-flight → forces {@code stopFallFlying()} so the player can't glide
+ * indefinitely on a dead battery.
+ */
+public class MechanicalElytraItem extends Item implements EnergyItemHandler {
+	public MechanicalElytraItem(Properties props) {
+		super(props.stacksTo(1));
 	}
 
 	public void damageEnergyItem(ItemStack stack, double amount) {
 		double energy = getEnergy(stack);
-		double e = Math.min(energy, amount);
-		setEnergy(stack, energy - e);
-	}
-
-	@Override
-	public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-		return 0;
+		setEnergy(stack, Math.max(0D, energy - Math.min(energy, amount)));
 	}
 
 	@Override
 	public double getEnergyCapacity(ItemStack stack) {
-		return ((EnergyArmorMaterial) material).capacity;
+		return FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_CAPACITY.get();
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot s) {
-		return ImmutableMultimap.of();
-	}
-
-	@Override
-	public boolean isValidRepairItem(ItemStack stack, ItemStack item) {
-		return false;
-	}
-
-	@Override
-	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
-		if (allowdedIn(tab)) {
-			list.add(new ItemStack(this));
-
-			ItemStack full = new ItemStack(this);
-			setEnergyRaw(full, getEnergyCapacity(full));
-			list.add(full);
-		}
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-		list.add(FTBICUtils.energyTooltip(stack, this));
-	}
-
-	@Override
-	public boolean canElytraFly(ItemStack stack, LivingEntity entity) {
-		return getEnergy(stack) >= FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_ENERGY.get();
-	}
-
-	@Override
-	public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
-		if (!entity.level.isClientSide) {
-			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_ENERGY.get());
-		}
-
-		if (flightTicks >= 3 && entity.isCrouching()) {
-			Vec3 m = entity.getDeltaMovement();
-			double d = Math.max(Math.abs(m.y), Math.max(Math.abs(m.x), Math.abs(m.z)));
-			d = Math.min(d, 1D);
-			d = d * 0.91D;
-			entity.setDeltaMovement(m.multiply(d, d, d));
-			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_STOP.get());
-		} else if (flightTicks >= 5 && entity.isSprinting()) {
-			Vec3 v = entity.getLookAngle();
-			double d0 = 1.5D;
-			double d1 = 0.1D;
-			Vec3 m = entity.getDeltaMovement();
-			entity.setDeltaMovement(m.add(v.x * d1 + (v.x * d0 - m.x) * 0.5D, v.y * d1 + (v.y * d0 - m.y) * 0.5D, v.z * d1 + (v.z * d0 - m.z) * 0.5D));
-			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_BOOST.get());
-		}
-
+	public boolean canExtractEnergy() {
 		return true;
 	}
 
 	@Override
-	public void onArmorTick(ItemStack stack, Level level, Player player) {
-		if (FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_RECHARGE.get() > 0D && !level.isClientSide() && !player.isFallFlying() && level.isDay() && level.canSeeSky(new BlockPos(player.getEyePosition(1F)))) {
-			insertEnergy(stack, FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_RECHARGE.get(), false);
+	public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
+		if (slot != net.minecraft.world.entity.EquipmentSlot.CHEST) return;
+		if (!(entity instanceof LivingEntity le)) return;
+
+		if (le.isFallFlying()) {
+			tickFlight(stack, le);
+			return;
+		}
+
+		double rechargeRate = FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_RECHARGE.get();
+		if (rechargeRate <= 0D) return;
+		if (!level.isBrightOutside()) return;
+		if (!level.canSeeSky(le.blockPosition())) return;
+		insertEnergy(stack, rechargeRate, false);
+	}
+
+	/**
+	 * Per-flight-tick drain + modifiers. Called only while {@code isFallFlying()} is true.
+	 * Runs on both client and server; server is authoritative for energy + forced landings.
+	 */
+	private void tickFlight(ItemStack stack, LivingEntity le) {
+		double drain = FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_ENERGY.get();
+		if (drain > 0D && !isCreativeEnergyItem()) {
+			double available = getEnergy(stack);
+			if (available < drain) {
+				setEnergy(stack, 0D);
+				le.stopFallFlying();
+				return;
+			}
+			setEnergy(stack, available - drain);
+		}
+
+		if (!(le instanceof Player player)) return;
+
+		Vec3 velocity = player.getDeltaMovement();
+		if (player.isShiftKeyDown()) {
+			double brake = FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_STOP.get();
+			double damp = Math.max(0D, 1D - brake / 100D);
+			player.setDeltaMovement(velocity.x * damp, velocity.y * damp, velocity.z * damp);
+		} else if (player.isSprinting()) {
+			double boost = FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_BOOST.get() / 2000D;
+			Vec3 look = player.getLookAngle();
+			player.setDeltaMovement(velocity.add(look.scale(boost)));
 		}
 	}
 
 	@Override
 	public boolean isBarVisible(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().contains("Energy");
+		return stack.has(dev.ftb.mods.ftbic.registry.ModDataComponents.ENERGY.get());
 	}
 
 	@Override
 	public int getBarWidth(ItemStack stack) {
-		return Math.round((float) Mth.clamp((getEnergy(stack) / getEnergyCapacity(stack)) * 13D, 0D, 13D));
+		return (int) Math.round(Mth.clamp((getEnergy(stack) / getEnergyCapacity(stack)) * 13D, 0D, 13D));
 	}
 
 	@Override
 	public int getBarColor(ItemStack stack) {
 		return 0xFFFF0000;
+	}
+
+	@Override
+	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display,
+			Consumer<Component> tooltip, TooltipFlag flag) {
+		super.appendHoverText(stack, context, display, tooltip, flag);
+		double energy = getEnergy(stack);
+		double cap = getEnergyCapacity(stack);
+		tooltip.accept(Component.translatable("item.ftbic.tooltip.energy",
+						EnergyItemHandler.formatEnergy(energy), EnergyItemHandler.formatEnergy(cap))
+				.withStyle(ChatFormatting.GRAY));
 	}
 }

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:dual_uranium_fuel_rod",
+  "pattern": [
+    "RMR"
+  ],
+  "key": {
+    "R": "ftbic:uranium_fuel_rod",
+    "M": "ftbic:dense_copper_plate"
+  },
+  "result": {
+    "id": "ftbic:dual_uranium_fuel_rod",
+    "count": 1
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:bronze_block",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": "#c:ingots/bronze"
+  },
+  "result": {
+    "id": "ftbic:bronze_block",
+    "count": 1
+  }
+}

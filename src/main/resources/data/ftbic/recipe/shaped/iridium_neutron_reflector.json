@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:iridium_neutron_reflector",
+  "pattern": [
+    "NNN",
+    "NPN",
+    "NNN"
+  ],
+  "key": {
+    "N": "ftbic:thick_neutron_reflector",
+    "P": "ftbic:iridium_alloy"
+  },
+  "result": {
+    "id": "ftbic:iridium_neutron_reflector",
+    "count": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:ejector_upgrade",
+  "pattern": [
+    "T T",
+    " P ",
+    "T T"
+  ],
+  "key": {
+    "P": "minecraft:piston",
+    "T": "#c:ingots/tin"
+  },
+  "result": {
+    "id": "ftbic:ejector_upgrade",
+    "count": 1
+  }
+}

@@ -13,7 +13,6 @@ public interface SprayPaintable {
 			level.setBlock(pos, state.setValue(DARK, dark), 3);
 			return true;
 		}
-
 		return false;
 	}
 }

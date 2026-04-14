@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:iron_rod",
+  "pattern": [
+    " X ",
+    " X "
+  ],
+  "key": {
+    "X": "#c:ingots/iron"
+  },
+  "result": {
+    "id": "ftbic:iron_rod",
+    "count": 1
+  }
+}

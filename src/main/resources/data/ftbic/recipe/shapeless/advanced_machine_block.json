@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:advanced_machine_block",
+  "ingredients": [
+    "ftbic:copper_coil",
+    "ftbic:carbon_plate",
+    "ftbic:copper_coil",
+    "ftbic:advanced_alloy",
+    "ftbic:machine_block",
+    "ftbic:advanced_alloy",
+    "ftbic:copper_coil",
+    "ftbic:carbon_plate",
+    "ftbic:copper_coil"
+  ],
+  "result": {
+    "id": "ftbic:advanced_machine_block",
+    "count": 1
+  }
+}

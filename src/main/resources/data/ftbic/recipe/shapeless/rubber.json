@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "ftbic:rubber",
+  "ingredients": [
+    "ftbic:rubber_sheet"
+  ],
+  "result": {
+    "id": "ftbic:rubber",
+    "count": 3
+  }
+}

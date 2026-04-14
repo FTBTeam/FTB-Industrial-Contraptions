@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:iron_furnace",
+  "pattern": [
+    " I ",
+    "I I",
+    "IFI"
+  ],
+  "key": {
+    "I": "#c:ingots/iron",
+    "F": "minecraft:furnace"
+  },
+  "result": {
+    "id": "ftbic:iron_furnace",
+    "count": 1
+  }
+}
