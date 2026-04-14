@@ -74,6 +74,14 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+
+    maven {
+        name = "FTB"
+        url = "https://maven.ftb.dev/snapshots"
+        content {
+            includeGroup "dev.ftb.mods"
+        }
+    }
 }
 
 dependencies {
@@ -84,6 +92,10 @@ dependencies {
     // Jade - block-info tooltips. Compile against the CurseForge jar; same coordinates as
     // the auroral reference project.
     implementation("curse.maven:jade-324717:7817285")
+
+    // FTB Materials - hard dependency; provides ores/raw materials/ingots/nuggets/dusts/plates/rods/gears/wires
+    // so FTBIC stops registering its own duplicates. Dense plates remain in FTBIC.
+    implementation("dev.ftb.mods:ftb-materials:26.1.1.1-SNAPSHOT")
 }
 
 tasks.withType(ProcessResources).configureEach {

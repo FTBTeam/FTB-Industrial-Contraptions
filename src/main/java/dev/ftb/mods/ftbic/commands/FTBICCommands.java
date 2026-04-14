@@ -7,8 +7,6 @@ import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
-import dev.ftb.mods.ftbic.world.ResourceElements;
-import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -112,13 +110,6 @@ public final class FTBICCommands {
 	private static List<Block> collectShowcaseBlocks() {
 		Set<Block> seen = new HashSet<>();
 		List<Block> out = new ArrayList<>();
-
-		for (ResourceElements el : ResourceElements.VALUES) {
-			var ore = FTBICBlocks.RESOURCE_ORES.get(el);
-			if (ore != null && seen.add(ore.get())) out.add(ore.get());
-			var rb = FTBICBlocks.RESOURCE_BLOCKS_OF.get(el);
-			if (rb != null && seen.add(rb.get())) out.add(rb.get());
-		}
 		Block[] statics = {
 				FTBICBlocks.RUBBER_SHEET.get(), FTBICBlocks.REINFORCED_STONE.get(),
 				FTBICBlocks.REINFORCED_GLASS.get(), FTBICBlocks.MACHINE_BLOCK.get(),
@@ -144,14 +135,6 @@ public final class FTBICCommands {
 			if (m.item == null) continue;
 			Item i = m.item.get();
 			if (i != null && seen.add(i)) out.add(new ItemStack(i));
-		}
-		for (var typeEntry : FTBICItems.RESOURCE_TYPE_MAP.entrySet()) {
-			ResourceType type = typeEntry.getKey();
-			if (type == ResourceType.ORE || type == ResourceType.BLOCK) continue;
-			for (var sup : typeEntry.getValue().values()) {
-				Item i = sup.get();
-				if (i != null && seen.add(i)) out.add(new ItemStack(i));
-			}
 		}
 		for (Item item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
 			net.minecraft.resources.Identifier id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);

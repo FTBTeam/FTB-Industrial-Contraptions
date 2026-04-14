@@ -4,8 +4,8 @@
     "discard_chance_on_air_exposure": 0.0,
     "size": 9,
     "targets": [
-      {"target": {"predicate_type": "minecraft:tag_match", "tag": "minecraft:stone_ore_replaceables"},      "state": {"Name": "ftbic:uranium_ore"}},
-      {"target": {"predicate_type": "minecraft:tag_match", "tag": "minecraft:deepslate_ore_replaceables"}, "state": {"Name": "ftbic:deepslate_uranium_ore"}}
+      {"target": {"predicate_type": "minecraft:tag_match", "tag": "minecraft:stone_ore_replaceables"},      "state": {"Name": "ftbmaterials:uranium_stone_ore"}},
+      {"target": {"predicate_type": "minecraft:tag_match", "tag": "minecraft:deepslate_ore_replaceables"}, "state": {"Name": "ftbmaterials:uranium_deepslate_ore"}}
     ]
   }
 }

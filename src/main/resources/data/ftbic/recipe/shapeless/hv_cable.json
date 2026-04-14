@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "group": "ftbic:hv_cable",
   "ingredients": [
-    "ftbic:gold_wire",
+    "#c:wires/gold",
     "ftbic:rubber"
   ],
   "result": {

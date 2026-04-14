@@ -11,11 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-/**
- * Main creative tab. Registers every FTBIC item/block in roughly the same order as the 1.18.2 build.
- * Replaces the 1.18.2 `FTBIC.TAB = new CreativeModeTab(...)` pattern which no longer works in 26.1
- * (tabs are registry-based now).
- */
 public final class ModCreativeTabs {
 	public static final DeferredRegister<CreativeModeTab> TABS =
 			DeferredRegister.create(Registries.CREATIVE_MODE_TAB, FTBIC.MOD_ID);
@@ -25,10 +20,8 @@ public final class ModCreativeTabs {
 					.title(Component.translatable("itemGroup." + FTBIC.MOD_ID))
 					.icon(() -> new ItemStack(FTBICElectricBlocks.POWERED_FURNACE.item.get()))
 					.displayItems((params, out) -> {
-						// Electric blocks (generators + machines + storage)
 						FTBICElectricBlocks.ALL.forEach(inst -> out.accept(inst.item.get()));
 
-						// Simple blocks
 						out.accept(FTBICItems.RUBBER_SHEET.get());
 						out.accept(FTBICItems.REINFORCED_STONE.get());
 						out.accept(FTBICItems.REINFORCED_GLASS.get());
@@ -46,18 +39,12 @@ public final class ModCreativeTabs {
 						out.accept(FTBICItems.NUCLEAR_REACTOR_CHAMBER.get());
 						out.accept(FTBICItems.NUKE.get());
 
-						// Resource blocks + ores (generated via RESOURCE_TYPE_MAP)
-						FTBICItems.RESOURCE_TYPE_MAP.forEach((type, elements) ->
-								elements.forEach((element, supplier) -> out.accept(supplier.get())));
-
-						// Materials
 						for (MaterialItem mat : FTBICItems.MATERIALS) {
 							if (mat.item != null) {
 								out.accept(mat.item.get());
 							}
 						}
 
-						// Batteries + fluid cell
 						out.accept(FTBICItems.SINGLE_USE_BATTERY.get());
 						out.accept(FTBICItems.LV_BATTERY.get());
 						out.accept(FTBICItems.MV_BATTERY.get());
@@ -66,7 +53,6 @@ public final class ModCreativeTabs {
 						out.accept(FTBICItems.CREATIVE_BATTERY.get());
 						out.accept(FTBICItems.FLUID_CELL.get());
 
-						// Reactor components
 						out.accept(FTBICItems.SMALL_COOLANT_CELL.get());
 						out.accept(FTBICItems.MEDIUM_COOLANT_CELL.get());
 						out.accept(FTBICItems.LARGE_COOLANT_CELL.get());
@@ -89,11 +75,9 @@ public final class ModCreativeTabs {
 						out.accept(FTBICItems.THICK_NEUTRON_REFLECTOR.get());
 						out.accept(FTBICItems.IRIDIUM_NEUTRON_REFLECTOR.get());
 
-						// Food
 						out.accept(FTBICItems.CANNED_FOOD.get());
 						out.accept(FTBICItems.PROTEIN_BAR.get());
 
-						// Tools + utilities
 						out.accept(FTBICItems.DARK_SPRAY_PAINT_CAN.get());
 						out.accept(FTBICItems.LIGHT_SPRAY_PAINT_CAN.get());
 						out.accept(FTBICItems.OVERCLOCKER_UPGRADE.get());
@@ -101,7 +85,6 @@ public final class ModCreativeTabs {
 						out.accept(FTBICItems.TRANSFORMER_UPGRADE.get());
 						out.accept(FTBICItems.EJECTOR_UPGRADE.get());
 
-						// Armor + elytra + arrow
 						out.accept(FTBICItems.MECHANICAL_ELYTRA.get());
 						out.accept(FTBICItems.CARBON_HELMET.get());
 						out.accept(FTBICItems.CARBON_CHESTPLATE.get());

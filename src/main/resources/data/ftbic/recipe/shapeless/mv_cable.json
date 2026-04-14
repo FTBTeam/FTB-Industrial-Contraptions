@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "group": "ftbic:mv_cable",
   "ingredients": [
-    "ftbic:aluminum_wire",
+    "#c:wires/aluminum",
     "ftbic:rubber"
   ],
   "result": {

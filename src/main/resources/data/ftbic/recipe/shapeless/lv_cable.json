@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "group": "ftbic:lv_cable",
   "ingredients": [
-    "ftbic:copper_wire",
+    "#c:wires/copper",
     "ftbic:rubber"
   ],
   "result": {

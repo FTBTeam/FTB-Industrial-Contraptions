@@ -2,8 +2,6 @@ package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.util.EnergyTier;
-import dev.ftb.mods.ftbic.world.ResourceElements;
-import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
@@ -14,9 +12,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public interface FTBICBlocks {
 	DeferredRegister.Blocks REGISTRY = DeferredRegister.createBlocks(FTBIC.MOD_ID);
@@ -73,14 +68,4 @@ public interface FTBICBlocks {
 			name -> new Block(props(name).sound(SoundType.GRASS).strength(-1F, 10_000_000_000F).noLootTable()));
 
 	List<DeferredBlock<CableBlock>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE);
-
-	Map<ResourceElements, DeferredBlock<ResourceBlock>> RESOURCE_ORES = ResourceElements.VALUES.stream()
-			.filter(e -> e.requirements().has(ResourceType.ORE))
-			.collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_ore",
-					name -> new ResourceBlock(props(name), e.getName().contains("deepslate")))));
-
-	Map<ResourceElements, DeferredBlock<Block>> RESOURCE_BLOCKS_OF = ResourceElements.VALUES.stream()
-			.filter(e -> e.requirements().has(ResourceType.BLOCK))
-			.collect(Collectors.toMap(Function.identity(), e -> REGISTRY.register(e.getName() + "_block",
-					name -> new Block(props(name).requiresCorrectToolForDrops().strength(5.0f, 6.0f).sound(SoundType.METAL)))));
 }

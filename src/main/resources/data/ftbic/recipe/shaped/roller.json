@@ -6,7 +6,7 @@
     "PMP"
   ],
   "key": {
-    "H": "ftbic:aluminum_gear",
+    "H": "#c:gears/aluminum",
     "P": "minecraft:piston",
     "M": "ftbic:machine_block",
     "C": "ftbic:electronic_circuit"

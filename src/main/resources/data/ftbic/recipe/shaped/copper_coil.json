@@ -7,7 +7,7 @@
     "WWW"
   ],
   "key": {
-    "W": "ftbic:copper_wire",
+    "W": "#c:wires/copper",
     "R": "#c:rods/iron"
   },
   "result": {

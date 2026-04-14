@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "group": "ftbic:ev_cable",
   "ingredients": [
-    "ftbic:enderium_wire",
+    "#c:wires/enderium",
     "ftbic:rubber"
   ],
   "result": {

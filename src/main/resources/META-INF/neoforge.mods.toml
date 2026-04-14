@@ -24,3 +24,10 @@ type = "required"
 versionRange = "[${minecraft_version},)"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.ftbic]]
+modId = "ftbmaterials"
+type = "required"
+versionRange = "[26.1.1.1,)"
+ordering = "BEFORE"
+side = "BOTH"

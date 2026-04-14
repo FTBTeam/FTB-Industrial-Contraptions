@@ -11,8 +11,6 @@ import dev.ftb.mods.ftbic.item.reactor.NeutronReflectorItem;
 import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
-import dev.ftb.mods.ftbic.world.ResourceElements;
-import dev.ftb.mods.ftbic.world.ResourceType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -24,12 +22,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public interface FTBICItems {
 	DeferredRegister.Items REGISTRY = DeferredRegister.createItems(FTBIC.MOD_ID);
@@ -74,14 +67,6 @@ public interface FTBICItems {
 		return m;
 	}
 
-	static Optional<Supplier<Item>> getResourceFromType(ResourceElements element, ResourceType type) {
-		return RESOURCE_TYPE_MAP.get(type).entrySet().stream()
-				.filter(e -> e.getKey() == element)
-				.findFirst()
-				.map(Map.Entry::getValue);
-	}
-
-	// Block items (mirrors FTBICBlocks entries)
 	Supplier<BlockItem> RUBBER_SHEET = blockItem("rubber_sheet", FTBICBlocks.RUBBER_SHEET);
 	Supplier<BlockItem> REINFORCED_STONE = blockItem("reinforced_stone", FTBICBlocks.REINFORCED_STONE);
 	Supplier<BlockItem> REINFORCED_GLASS = blockItem("reinforced_glass", FTBICBlocks.REINFORCED_GLASS);
@@ -213,20 +198,4 @@ public interface FTBICItems {
 			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.NETHERITE,
 					net.minecraft.world.item.equipment.ArmorType.BOOTS), EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
 	Supplier<Item> NUKE_ARROW = REGISTRY.register("nuke_arrow", name -> new NukeArrowItem(props(name)));
-
-	Map<ResourceType, Map<ResourceElements, Supplier<Item>>> RESOURCE_TYPE_MAP = ResourceType.VALUES.stream()
-			.collect(Collectors.toMap(Function.identity(), resourceType -> {
-				var elementsForType = ResourceElements.RESOURCES_BY_REQUIREMENT.get(resourceType);
-				return elementsForType.stream().collect(Collectors.toMap(Function.identity(), element -> {
-					String id = resourceType.idFor(element);
-					return REGISTRY.register(id, name -> {
-						if (resourceType == ResourceType.ORE) {
-							return new BlockItem(FTBICBlocks.RESOURCE_ORES.get(element).get(), props(name));
-						} else if (resourceType == ResourceType.BLOCK) {
-							return new BlockItem(FTBICBlocks.RESOURCE_BLOCKS_OF.get(element).get(), props(name));
-						}
-						return new ResourceItem(props(name), resourceType);
-					});
-				}));
-			}));
 }
