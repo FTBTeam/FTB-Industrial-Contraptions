@@ -42,13 +42,13 @@ public class DiggingBeamRenderer implements BlockEntityRenderer<DiggingBaseBlock
 	@Override
 	public void submit(DiggingBeamRenderState state, PoseStack pose, SubmitNodeCollector buffers, CameraRenderState camera) {
 		if (state.paused || state.beamHeight <= 0F) return;
-		// Translate down by beamHeight so the beam's anchor sits at the bottom of the mining column,
-		// then render upward through the BE block. submitBeaconBeam draws upward from the anchor.
+		int height = (int) Math.ceil(state.beamHeight);
+		float animationTime = Math.floorMod(state.gameTime, 40L);
 		pose.pushPose();
 		pose.translate(0F, -state.beamHeight, 0F);
 		BeaconRenderer.submitBeaconBeam(pose, buffers, BeaconRenderer.BEAM_LOCATION,
-				1.0F, 1.0F, (int) Math.ceil(state.beamHeight),
-				state.colorRGB, (int) state.gameTime, 0.15F, 0.20F);
+				1.0F, animationTime, 0, height,
+				state.colorRGB, 0.15F, 0.20F);
 		pose.popPose();
 	}
 
