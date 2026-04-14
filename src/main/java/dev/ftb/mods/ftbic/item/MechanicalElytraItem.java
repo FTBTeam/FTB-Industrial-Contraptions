@@ -75,17 +75,29 @@ public class MechanicalElytraItem extends Item implements EnergyItemHandler {
 			setEnergy(stack, available - drain);
 		}
 
-		if (!(le instanceof Player player)) return;
+		if (flightTicks >= 3 && entity.isCrouching()) {
+			Vec3 m = entity.getDeltaMovement();
+			double d = Math.max(Math.abs(m.y), Math.max(Math.abs(m.x), Math.abs(m.z)));
+			d = Math.min(d, 1D);
+			d = d * 0.91D;
+			entity.setDeltaMovement(m.multiply(d, d, d));
+			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_STOP.get());
+		} else if (flightTicks >= 5 && entity.isSprinting()) {
+			Vec3 v = entity.getLookAngle();
+			double d0 = 1.5D;
+			double d1 = 0.1D;
+			Vec3 m = entity.getDeltaMovement();
+			entity.setDeltaMovement(m.add(v.x * d1 + (v.x * d0 - m.x) * 0.5D, v.y * d1 + (v.y * d0 - m.y) * 0.5D, v.z * d1 + (v.z * d0 - m.z) * 0.5D));
+			damageEnergyItem(stack, FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_BOOST.get());
+		}
 
-		Vec3 velocity = player.getDeltaMovement();
-		if (player.isShiftKeyDown()) {
-			double brake = FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_STOP.get();
-			double damp = Math.max(0D, 1D - brake / 100D);
-			player.setDeltaMovement(velocity.x * damp, velocity.y * damp, velocity.z * damp);
-		} else if (player.isSprinting()) {
-			double boost = FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_BOOST.get() / 2000D;
-			Vec3 look = player.getLookAngle();
-			player.setDeltaMovement(velocity.add(look.scale(boost)));
+		return true;
+	}
+
+	@Override
+	public void onArmorTick(ItemStack stack, Level level, Player player) {
+		if (FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_RECHARGE.get() > 0D && !level.isClientSide() && !player.isFallFlying() && level.getSkyDarken() < 4 && level.canSeeSky(new BlockPos(player.getEyePosition(1F)))) {
+			insertEnergy(stack, FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_RECHARGE.get(), false);
 		}
 	}
 
