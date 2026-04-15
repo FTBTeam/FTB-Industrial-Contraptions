@@ -5,14 +5,12 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -41,14 +39,18 @@ public class GeothermalFuelCategory extends AbstractRecipeCategory<GeothermalFue
 	}
 
 	@Override
-	public void draw(Entry entry, mezz.jei.api.gui.ingredient.IRecipeSlotsView slots,
-			GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
-		Font font = Minecraft.getInstance().font;
+	public void createRecipeExtras(IRecipeExtrasBuilder builder, Entry entry, IFocusGroup focuses) {
 		double zapsPerMb = FTBICItems.safeGet(FTBICConfig.MACHINES.GEOTHERMAL_GENERATOR_OUTPUT, 20D);
 		int tankCap = FTBICConfig.MACHINES.GEOTHERMAL_GENERATOR_TANK_SIZE.get();
 		long zapsPerBucket = Math.round(zapsPerMb * 1000D);
-		graphics.text(font, String.format("%.0f z/mB · %d z/bucket", zapsPerMb, zapsPerBucket), 26, 4, 0x404040, false);
-		graphics.text(font, String.format("Tank %d mB", tankCap), 26, 14, 0x404040, false);
+		long zapsPerTank = Math.round(zapsPerMb * tankCap);
+
+		builder.addText(Component.literal(String.format("%.0f z/mB @ %,d z/bucket", zapsPerMb, zapsPerBucket)), 120, 9)
+				.setPosition(26, 3)
+				.setColor(0xFF404040);
+		builder.addText(Component.literal(String.format("= %,d zaps / full tank (%d mB)", zapsPerTank, tankCap)), 120, 9)
+				.setPosition(26, 14)
+				.setColor(0xFF0A7F0A);
 	}
 
 	public static Entry defaultEntry() {

@@ -4,14 +4,12 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -41,10 +39,10 @@ public class AntimatterBoostCategory extends AbstractRecipeCategory<RecipeHolder
 	}
 
 	@Override
-	public void draw(RecipeHolder<AntimatterBoostRecipe> holder, mezz.jei.api.gui.ingredient.IRecipeSlotsView slots,
-			GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
-		Font font = Minecraft.getInstance().font;
-		String text = String.format("+%.0f zaps", holder.value().boost());
-		graphics.text(font, text, 26, 9, 0x404040, false);
+	public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<AntimatterBoostRecipe> holder, IFocusGroup focuses) {
+		String text = String.format("+%,.0f zaps boost", holder.value().boost());
+		builder.addText(Component.literal(text), 80, 9)
+				.setPosition(26, 9)
+				.setColor(0xFF0A7F0A);
 	}
 }

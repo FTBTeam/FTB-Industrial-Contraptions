@@ -7,14 +7,13 @@ import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
-import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -28,7 +27,6 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 	public static final int WIDTH = 112;
 	public static final int HEIGHT = 26;
 
-	private static final int INPUT_X_0 = 4;
 	private static final int INPUT_X_1 = 22;
 	private static final int ARROW_X = 44;
 	private static final int ARROW_Y = 5;
@@ -37,7 +35,6 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 	private static final int OUTPUT_X_0 = 72;
 	private static final int SLOT_Y = 4;
 
-	private final IDrawableAnimated arrow;
 	private final ElectricBlockInstance machine;
 
 	public MachineRecipeCategory(MachineRecipeType type, ElectricBlockInstance machine, IGuiHelper helper) {
@@ -47,7 +44,6 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 				WIDTH,
 				HEIGHT);
 		this.machine = machine;
-		this.arrow = helper.createAnimatedRecipeArrow(50);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -82,9 +78,8 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 	}
 
 	@Override
-	public void draw(RecipeHolder<MachineRecipe> recipe, IRecipeSlotsView slots,
-			GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
-		arrow.draw(graphics, ARROW_X, ARROW_Y);
+	public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<MachineRecipe> holder, IFocusGroup focuses) {
+		builder.addAnimatedRecipeArrow(50).setPosition(ARROW_X, ARROW_Y);
 	}
 
 	@Override
@@ -95,7 +90,7 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 			double energyPerTick = machine.energyUsage.get();
 			long zaps = Math.round(ticks * energyPerTick);
 			double seconds = ticks / 20.0D;
-			tooltip.add(Component.literal(String.format("%.1fs · %d zaps", seconds, zaps)));
+			tooltip.add(Component.literal(String.format("%.1fs · %,d zaps", seconds, zaps)));
 			tooltip.add(Component.literal(String.format("%.0f z/t", energyPerTick))
 					.withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
 		}

@@ -4,15 +4,12 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.BasicGeneratorFuelRecipe;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -22,14 +19,11 @@ public class BasicGeneratorFuelCategory extends AbstractRecipeCategory<RecipeHol
 	public static final int WIDTH = 148;
 	public static final int HEIGHT = 26;
 
-	private final IDrawableAnimated flame;
-
 	public BasicGeneratorFuelCategory(IGuiHelper helper) {
 		super(jeiType(),
 				Component.translatable("block.ftbic.basic_generator"),
 				helper.createDrawableItemStack(new ItemStack(FTBICElectricBlocks.BASIC_GENERATOR.item.get())),
 				WIDTH, HEIGHT);
-		this.flame = helper.createAnimatedRecipeFlame(300);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -45,17 +39,20 @@ public class BasicGeneratorFuelCategory extends AbstractRecipeCategory<RecipeHol
 	}
 
 	@Override
-	public void draw(RecipeHolder<BasicGeneratorFuelRecipe> holder, mezz.jei.api.gui.ingredient.IRecipeSlotsView slots,
-			GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
-		flame.draw(graphics, 26, 5);
-
-		Font font = Minecraft.getInstance().font;
+	public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<BasicGeneratorFuelRecipe> holder, IFocusGroup focuses) {
 		int ticks = holder.value().ticks();
 		double seconds = ticks / 20.0D;
 		double zapsPerTick = dev.ftb.mods.ftbic.item.FTBICItems.safeGet(
 				dev.ftb.mods.ftbic.FTBICConfig.MACHINES.BASIC_GENERATOR_OUTPUT, 10D);
 		long totalZaps = Math.round(zapsPerTick * ticks);
-		graphics.text(font, String.format("%.1fs · %.0f z/t", seconds, zapsPerTick), 44, 4, 0x404040, false);
-		graphics.text(font, String.format("%d zaps total", totalZaps), 44, 14, 0x404040, false);
+
+		builder.addAnimatedRecipeFlame(300).setPosition(26, 5);
+
+		builder.addText(Component.literal(String.format("%.1fs @ %.0f z/t", seconds, zapsPerTick)), 100, 9)
+				.setPosition(44, 3)
+				.setColor(0xFF404040);
+		builder.addText(Component.literal(String.format("= %,d zaps", totalZaps)), 100, 9)
+				.setPosition(44, 14)
+				.setColor(0xFF0A7F0A);
 	}
 }
