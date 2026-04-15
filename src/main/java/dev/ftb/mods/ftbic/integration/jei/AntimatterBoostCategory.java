@@ -9,9 +9,9 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -19,7 +19,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 
 public class AntimatterBoostCategory extends AbstractRecipeCategory<RecipeHolder<AntimatterBoostRecipe>> {
 	public static final int WIDTH = 110;
-	public static final int HEIGHT = 36;
+	public static final int HEIGHT = 26;
 
 	public AntimatterBoostCategory(IGuiHelper helper) {
 		super(jeiType(),
@@ -35,7 +35,9 @@ public class AntimatterBoostCategory extends AbstractRecipeCategory<RecipeHolder
 
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<AntimatterBoostRecipe> holder, IFocusGroup focuses) {
-		builder.addInputSlot(4, 9).add(holder.value().ingredient());
+		builder.addInputSlot(4, 4)
+				.setStandardSlotBackground()
+				.add(holder.value().ingredient());
 	}
 
 	@Override
@@ -43,6 +45,6 @@ public class AntimatterBoostCategory extends AbstractRecipeCategory<RecipeHolder
 			GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
 		Font font = Minecraft.getInstance().font;
 		String text = String.format("+%.0f zaps", holder.value().boost());
-		graphics.text(font, text, 30, 14, 0x404040, false);
+		graphics.text(font, text, 26, 9, 0x404040, false);
 	}
 }

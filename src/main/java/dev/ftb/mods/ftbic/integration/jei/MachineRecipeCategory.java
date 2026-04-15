@@ -1,14 +1,14 @@
 package dev.ftb.mods.ftbic.integration.jei;
 
-import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeType;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
@@ -16,40 +16,38 @@ import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
- * JEI recipe category for FTBIC machine recipes. One instance per {@link MachineRecipeType}; renders
- * up to 2 input slots + up to 4 output slots, an animated progress arrow blitted from the shared
- * {@code textures/gui/base.png} atlas (the same arrow the in-world machine GUIs use), and a static
- * machine icon to the right of the arrow as a visual hint of which machine produces the recipe.
+ * JEI recipe category for FTBIC machine recipes. Tight 26-pixel row with input slot(s), an animated
+ * JEI recipe arrow, output slot(s). Cost information is delivered via a tooltip on the arrow so
+ * the layout stays dense (4–5 recipes per JEI page).
  */
 public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<MachineRecipe>> {
-	public static final int WIDTH = 164;
-	public static final int HEIGHT = 60;
-	private static final Identifier BASE_TEXTURE = FTBIC.id("textures/gui/base.png");
+	public static final int WIDTH = 112;
+	public static final int HEIGHT = 26;
+
+	private static final int INPUT_X_0 = 4;
+	private static final int INPUT_X_1 = 22;
+	private static final int ARROW_X = 44;
+	private static final int ARROW_Y = 5;
+	private static final int ARROW_W = 24;
+	private static final int ARROW_H = 17;
+	private static final int OUTPUT_X_0 = 72;
+	private static final int SLOT_Y = 4;
 
 	private final IDrawableAnimated arrow;
-	private final IDrawable machineIcon;
 	private final ElectricBlockInstance machine;
 
 	public MachineRecipeCategory(MachineRecipeType type, ElectricBlockInstance machine, IGuiHelper helper) {
 		super(jeiRecipeType(type),
 				Component.literal(machine.name),
-				buildIcon(machine, helper),
+				helper.createDrawableItemStack(new ItemStack(machine.item.get())),
 				WIDTH,
 				HEIGHT);
 		this.machine = machine;
-		// Animated 24×17 arrow filling left-to-right over 50 ticks, reading from the in-world GUI atlas.
-		IDrawable staticArrow = helper.drawableBuilder(BASE_TEXTURE, 87, 185, 24, 17)
-				.setTextureSize(256, 256).build();
-		this.arrow = helper.drawableBuilder(BASE_TEXTURE, 87, 185, 24, 17)
-				.setTextureSize(256, 256)
-				.buildAnimated(50, IDrawableAnimated.StartDirection.LEFT, false);
-		// Decorative machine icon next to the arrow.
-		this.machineIcon = helper.createDrawableItemStack(new ItemStack(machine.item.get()));
+		this.arrow = helper.createAnimatedRecipeArrow(50);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -57,42 +55,49 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 		return IRecipeType.create((net.minecraft.world.item.crafting.RecipeType<MachineRecipe>) (net.minecraft.world.item.crafting.RecipeType<?>) type.TYPE.get());
 	}
 
-	private static IDrawable buildIcon(ElectricBlockInstance machine, IGuiHelper helper) {
-		return helper.createDrawableItemStack(new ItemStack(machine.item.get()));
-	}
-
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<MachineRecipe> holder, IFocusGroup focuses) {
 		MachineRecipe recipe = holder.value();
 
-		int x = 4;
+		int inputCount = Math.min(2, recipe.inputs.size());
+		int idx = 0;
 		for (IngredientWithCount in : recipe.inputs) {
-			builder.addInputSlot(x, 14).add(in.ingredient());
-			x += 20;
+			int x = INPUT_X_1 - (inputCount - 1 - idx) * 18;
+			builder.addInputSlot(x, SLOT_Y)
+					.setStandardSlotBackground()
+					.add(in.ingredient());
+			idx++;
+			if (idx >= 2) break;
 		}
 
-		int ox = WIDTH - 4 - 16;
+		int ox = OUTPUT_X_0;
 		for (StackWithChance out : recipe.outputs) {
 			ItemStack stack = out.stack();
 			if (stack.isEmpty()) continue;
-			builder.addOutputSlot(ox, 14).add(stack);
-			ox -= 20;
+			builder.addOutputSlot(ox, SLOT_Y)
+					.setOutputSlotBackground()
+					.add(stack);
+			ox += 18;
 		}
 	}
 
 	@Override
-	public void draw(RecipeHolder<MachineRecipe> recipe, mezz.jei.api.gui.ingredient.IRecipeSlotsView slots,
+	public void draw(RecipeHolder<MachineRecipe> recipe, IRecipeSlotsView slots,
 			GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
-		int arrowX = WIDTH / 2 - 12;
-		arrow.draw(graphics, arrowX, 14);
-		machineIcon.draw(graphics, arrowX - 22, 14);
+		arrow.draw(graphics, ARROW_X, ARROW_Y);
+	}
 
-		double baseTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
-		double ticks = recipe.value().processingTime * baseTicks;
-		double energyPerTick = machine.energyUsage.get();
-		double zaps = ticks * energyPerTick;
-		String cost = String.format("%.0f zaps", zaps);
-		net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
-		graphics.text(font, cost, WIDTH / 2 - font.width(cost) / 2, 38, 0x404040, false);
+	@Override
+	public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<MachineRecipe> recipe, IRecipeSlotsView slots, double mouseX, double mouseY) {
+		if (mouseX >= ARROW_X && mouseX < ARROW_X + ARROW_W && mouseY >= ARROW_Y && mouseY < ARROW_Y + ARROW_H) {
+			double baseTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
+			double ticks = recipe.value().processingTime * baseTicks;
+			double energyPerTick = machine.energyUsage.get();
+			long zaps = Math.round(ticks * energyPerTick);
+			double seconds = ticks / 20.0D;
+			tooltip.add(Component.literal(String.format("%.1fs · %d zaps", seconds, zaps)));
+			tooltip.add(Component.literal(String.format("%.0f z/t", energyPerTick))
+					.withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+		}
 	}
 }

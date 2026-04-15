@@ -20,6 +20,9 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public class GeothermalFuelCategory extends AbstractRecipeCategory<GeothermalFuelCategory.Entry> {
+	public static final int WIDTH = 148;
+	public static final int HEIGHT = 26;
+
 	public static final IRecipeType<Entry> TYPE = IRecipeType.create(
 			Identifier.fromNamespaceAndPath(FTBIC.MOD_ID, "geothermal_fuel"), Entry.class);
 
@@ -27,12 +30,13 @@ public class GeothermalFuelCategory extends AbstractRecipeCategory<GeothermalFue
 		super(TYPE,
 				Component.translatable("block.ftbic.geothermal_generator"),
 				helper.createDrawableItemStack(new ItemStack(FTBICElectricBlocks.GEOTHERMAL_GENERATOR.item.get())),
-				160, 40);
+				WIDTH, HEIGHT);
 	}
 
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, Entry entry, IFocusGroup focuses) {
-		builder.addSlot(RecipeIngredientRole.INPUT, 4, 9)
+		builder.addSlot(RecipeIngredientRole.INPUT, 4, 4)
+				.setStandardSlotBackground()
 				.add(Fluids.LAVA, 1000);
 	}
 
@@ -40,12 +44,11 @@ public class GeothermalFuelCategory extends AbstractRecipeCategory<GeothermalFue
 	public void draw(Entry entry, mezz.jei.api.gui.ingredient.IRecipeSlotsView slots,
 			GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
 		Font font = Minecraft.getInstance().font;
-		double zapsPerTick = FTBICItems.safeGet(FTBICConfig.MACHINES.GEOTHERMAL_GENERATOR_OUTPUT, 20D);
+		double zapsPerMb = FTBICItems.safeGet(FTBICConfig.MACHINES.GEOTHERMAL_GENERATOR_OUTPUT, 20D);
 		int tankCap = FTBICConfig.MACHINES.GEOTHERMAL_GENERATOR_TANK_SIZE.get();
-		long zapsPerBucket = Math.round(zapsPerTick * 1000);
-		graphics.text(font, String.format("%.0f z/mB", zapsPerTick), 30, 2, 0x404040, false);
-		graphics.text(font, String.format("%d z per bucket", zapsPerBucket), 30, 13, 0x404040, false);
-		graphics.text(font, String.format("Tank %d mB", tankCap), 30, 24, 0x404040, false);
+		long zapsPerBucket = Math.round(zapsPerMb * 1000D);
+		graphics.text(font, String.format("%.0f z/mB · %d z/bucket", zapsPerMb, zapsPerBucket), 26, 4, 0x404040, false);
+		graphics.text(font, String.format("Tank %d mB", tankCap), 26, 14, 0x404040, false);
 	}
 
 	public static Entry defaultEntry() {

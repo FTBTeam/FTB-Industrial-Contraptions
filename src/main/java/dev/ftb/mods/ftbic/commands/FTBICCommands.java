@@ -5,8 +5,12 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
+import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -24,6 +28,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -100,11 +105,124 @@ public final class FTBICCommands {
 			placedFrames++;
 		}
 
+		boolean reactorBuilt = buildTestReactor(level, centre, y0);
+
 		String summary = String.format(
-				"FTBIC showcase built: %d floor blocks, %d sample blocks, %d items in frames",
-				placedFloor, placedBlocks, placedFrames);
+				"FTBIC showcase built: %d floor blocks, %d sample blocks, %d items in frames%s",
+				placedFloor, placedBlocks, placedFrames,
+				reactorBuilt ? ", test reactor + 6 chambers online" : "");
 		src.sendSuccess(() -> Component.literal(summary), true);
 		return 1;
+	}
+
+	/**
+	 * Places a nuclear reactor floating above the far corner of the platform, attaches 6 chambers
+	 * (one per face) to unlock the full 9×3 = 27-slot grid, populates every slot with a stable
+	 * 3-single-rod layout covering every reactor-component item, and starts the reactor.
+	 * Dual/quad rods are displayed in adjacent item frames since they exceed the cooling budget of
+	 * this minimal test setup.
+	 */
+	private static boolean buildTestReactor(ServerLevel level, BlockPos centre, int floorTopY) {
+		BlockPos reactorPos = new BlockPos(centre.getX() + PLATFORM_HALF - 4, floorTopY + 2, centre.getZ() + PLATFORM_HALF - 4);
+
+		// Clear a 5×5×5 working volume centered on the reactor.
+		BlockState air = Blocks.AIR.defaultBlockState();
+		for (int dx = -2; dx <= 2; dx++) {
+			for (int dz = -2; dz <= 2; dz++) {
+				for (int dy = -2; dy <= 2; dy++) {
+					level.setBlock(reactorPos.offset(dx, dy, dz), air, Block.UPDATE_CLIENTS);
+				}
+			}
+		}
+
+		// Place the reactor core first, then the 6 chambers. setBlock with UPDATE_NEIGHBORS will
+		// fire neighborChanged on the reactor each time, so its pendingChamberRecompute flag is
+		// already set by the time we populate slots.
+		BlockState reactorState = FTBICElectricBlocks.NUCLEAR_REACTOR.block.get().defaultBlockState();
+		level.setBlock(reactorPos, reactorState, Block.UPDATE_CLIENTS | Block.UPDATE_NEIGHBORS);
+
+		BlockState chamberState = FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get().defaultBlockState();
+		for (Direction dir : Direction.values()) {
+			level.setBlock(reactorPos.relative(dir), chamberState, Block.UPDATE_CLIENTS | Block.UPDATE_NEIGHBORS);
+		}
+
+		BlockEntity be = level.getBlockEntity(reactorPos);
+		if (!(be instanceof NuclearReactorBlockEntity reactor)) return false;
+		reactor.recomputeActiveColumns();
+		populateReactor(reactor);
+		reactor.reactor.paused = false;
+		reactor.reactor.allowRedstoneControl = false;
+		reactor.setChanged();
+		level.sendBlockUpdated(reactorPos, reactorState, reactorState, 3);
+
+		// Dual and quad rods on display shelves next to the reactor — they need heavier cooling
+		// than this 3-single-rod test build provides, so we frame them instead of inserting.
+		BlockPos shelfBase = reactorPos.offset(0, 4, 0);
+		level.setBlock(shelfBase, FTBICBlocks.REINFORCED_STONE.get().defaultBlockState(),
+				Block.UPDATE_CLIENTS | Block.UPDATE_NEIGHBORS);
+		level.setBlock(shelfBase.east(), FTBICBlocks.REINFORCED_STONE.get().defaultBlockState(),
+				Block.UPDATE_CLIENTS | Block.UPDATE_NEIGHBORS);
+		spawnFrame(level, shelfBase, Direction.UP,
+				new ItemStack(FTBICItems.DUAL_URANIUM_FUEL_ROD.get()));
+		spawnFrame(level, shelfBase.east(), Direction.UP,
+				new ItemStack(FTBICItems.QUAD_URANIUM_FUEL_ROD.get()));
+
+		return true;
+	}
+
+	private static void spawnFrame(ServerLevel level, BlockPos backingPos, Direction facing, ItemStack item) {
+		BlockPos framePos = backingPos.relative(facing);
+		ItemFrame frame = new ItemFrame(level, framePos, facing);
+		frame.setItem(item, false);
+		level.addFreshEntity(frame);
+	}
+
+	/**
+	 * Stable 3-single-rod layout covering every in-grid reactor component. Rod at (1,1) has 1
+	 * iridium reflector for a 2-pulse boost; rods at (4,1) and (7,1) run unboosted with fully
+	 * acceptor-tiled neighbors so all rod heat is absorbed by surrounding coolant/vent/exchanger
+	 * items — reactor-pool heat stays near zero.
+	 */
+	private static void populateReactor(NuclearReactorBlockEntity reactor) {
+		ItemStack[] grid = reactor.reactor.inputItems;
+		Arrays.fill(grid, ItemStack.EMPTY);
+
+		Item p = FTBICItems.REACTOR_PLATING.get();
+		Item P = FTBICItems.CONTAINMENT_REACTOR_PLATING.get();
+		Item H = FTBICItems.HEAT_CAPACITY_REACTOR_PLATING.get();
+		Item nRef = FTBICItems.NEUTRON_REFLECTOR.get();
+		Item tRef = FTBICItems.THICK_NEUTRON_REFLECTOR.get();
+		Item iRef = FTBICItems.IRIDIUM_NEUTRON_REFLECTOR.get();
+		Item cSm = FTBICItems.SMALL_COOLANT_CELL.get();
+		Item cMd = FTBICItems.MEDIUM_COOLANT_CELL.get();
+		Item cLg = FTBICItems.LARGE_COOLANT_CELL.get();
+		Item hVent = FTBICItems.HEAT_VENT.get();
+		Item aVent = FTBICItems.ADVANCED_HEAT_VENT.get();
+		Item rVent = FTBICItems.REACTOR_HEAT_VENT.get();
+		Item oVent = FTBICItems.OVERCLOCKED_HEAT_VENT.get();
+		Item cVent = FTBICItems.COMPONENT_HEAT_VENT.get();
+		Item heX = FTBICItems.HEAT_EXCHANGER.get();
+		Item eXAdv = FTBICItems.ADVANCED_HEAT_EXCHANGER.get();
+		Item eXRec = FTBICItems.REACTOR_HEAT_EXCHANGER.get();
+		Item eXCmp = FTBICItems.COMPONENT_HEAT_EXCHANGER.get();
+		Item rod = FTBICItems.URANIUM_FUEL_ROD.get();
+
+		//         col 0   1   2   3   4   5   6   7   8
+		put(grid, 0, 0, p);   put(grid, 1, 0, hVent);put(grid, 2, 0, P);
+		put(grid, 3, 0, nRef);put(grid, 4, 0, aVent);put(grid, 5, 0, tRef);
+		put(grid, 6, 0, H);   put(grid, 7, 0, eXRec);put(grid, 8, 0, H);
+
+		put(grid, 0, 1, iRef);put(grid, 1, 1, rod);  put(grid, 2, 1, cSm);
+		put(grid, 3, 1, heX); put(grid, 4, 1, rod);  put(grid, 5, 1, cLg);
+		put(grid, 6, 1, rVent);put(grid, 7, 1, rod); put(grid, 8, 1, eXCmp);
+
+		put(grid, 0, 2, P);   put(grid, 1, 2, cMd); put(grid, 2, 2, p);
+		put(grid, 3, 2, tRef);put(grid, 4, 2, oVent);put(grid, 5, 2, nRef);
+		put(grid, 6, 2, H);   put(grid, 7, 2, cVent);put(grid, 8, 2, eXAdv);
+	}
+
+	private static void put(ItemStack[] grid, int col, int row, Item item) {
+		grid[NuclearReactor.slotIndex(col, row)] = new ItemStack(item);
 	}
 
 	private static List<Block> collectShowcaseBlocks() {
