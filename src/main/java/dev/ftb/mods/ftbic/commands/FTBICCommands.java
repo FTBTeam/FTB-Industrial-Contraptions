@@ -105,27 +105,45 @@ public final class FTBICCommands {
 			placedFrames++;
 		}
 
-		boolean reactorBuilt = buildTestReactor(level, centre, y0);
+		boolean demoBuilt = buildTestReactor(level, centre, y0);
+		BlockPos optimalPos = new BlockPos(centre.getX() + PLATFORM_HALF - 4 - 5, y0 + 2, centre.getZ() + PLATFORM_HALF - 4);
+		boolean optimalBuilt = buildReactor(level, optimalPos, FTBICCommands::populateQuadRodOptimalReactor, true);
 
 		String summary = String.format(
-				"FTBIC showcase built: %d floor blocks, %d sample blocks, %d items in frames%s",
+				"FTBIC showcase built: %d floor blocks, %d sample blocks, %d items in frames%s%s",
 				placedFloor, placedBlocks, placedFrames,
-				reactorBuilt ? ", test reactor + 6 chambers online" : "");
+				demoBuilt ? ", demo reactor online" : "",
+				optimalBuilt ? ", optimal quad-rod reactor online" : "");
 		src.sendSuccess(() -> Component.literal(summary), true);
 		return 1;
 	}
 
 	/**
-	 * Places a nuclear reactor floating above the far corner of the platform, attaches 6 chambers
-	 * (one per face) to unlock the full 9×3 = 27-slot grid, populates every slot with a stable
-	 * 3-single-rod layout covering every reactor-component item, and starts the reactor.
-	 * Dual/quad rods are displayed in adjacent item frames since they exceed the cooling budget of
-	 * this minimal test setup.
+	 * Builds the reference demo reactor (6-single-rod stable layout exercising every component) at
+	 * the far corner of the platform, with dual/quad rods on a display shelf.
 	 */
 	private static boolean buildTestReactor(ServerLevel level, BlockPos centre, int floorTopY) {
 		BlockPos reactorPos = new BlockPos(centre.getX() + PLATFORM_HALF - 4, floorTopY + 2, centre.getZ() + PLATFORM_HALF - 4);
+		if (!buildReactor(level, reactorPos, FTBICCommands::populateReactor, false)) return false;
 
-		// Clear a 5×5×5 working volume centered on the reactor.
+		// Dual and quad rods on a display shelf — this demo only drives single rods.
+		BlockPos shelfBase = reactorPos.offset(0, 4, 0);
+		level.setBlock(shelfBase, FTBICBlocks.REINFORCED_STONE.get().defaultBlockState(),
+				Block.UPDATE_CLIENTS | Block.UPDATE_NEIGHBORS);
+		level.setBlock(shelfBase.east(), FTBICBlocks.REINFORCED_STONE.get().defaultBlockState(),
+				Block.UPDATE_CLIENTS | Block.UPDATE_NEIGHBORS);
+		spawnFrame(level, shelfBase, Direction.UP, new ItemStack(FTBICItems.DUAL_URANIUM_FUEL_ROD.get()));
+		spawnFrame(level, shelfBase.east(), Direction.UP, new ItemStack(FTBICItems.QUAD_URANIUM_FUEL_ROD.get()));
+		return true;
+	}
+
+	/**
+	 * Clears a 5×5×5 volume at {@code reactorPos}, places the reactor core + 6 chambers, runs the
+	 * given populator over the inventory grid, and un-pauses it. Returns false if the BE couldn't
+	 * be resolved.
+	 */
+	private static boolean buildReactor(ServerLevel level, BlockPos reactorPos,
+			java.util.function.Consumer<NuclearReactorBlockEntity> populator, boolean allowRedstone) {
 		BlockState air = Blocks.AIR.defaultBlockState();
 		for (int dx = -2; dx <= 2; dx++) {
 			for (int dz = -2; dz <= 2; dz++) {
@@ -135,9 +153,6 @@ public final class FTBICCommands {
 			}
 		}
 
-		// Place the reactor core first, then the 6 chambers. setBlock with UPDATE_NEIGHBORS will
-		// fire neighborChanged on the reactor each time, so its pendingChamberRecompute flag is
-		// already set by the time we populate slots.
 		BlockState reactorState = FTBICElectricBlocks.NUCLEAR_REACTOR.block.get().defaultBlockState();
 		level.setBlock(reactorPos, reactorState, Block.UPDATE_CLIENTS | Block.UPDATE_NEIGHBORS);
 
@@ -149,25 +164,57 @@ public final class FTBICCommands {
 		BlockEntity be = level.getBlockEntity(reactorPos);
 		if (!(be instanceof NuclearReactorBlockEntity reactor)) return false;
 		reactor.recomputeActiveColumns();
-		populateReactor(reactor);
+		populator.accept(reactor);
 		reactor.reactor.paused = false;
-		reactor.reactor.allowRedstoneControl = false;
+		reactor.reactor.allowRedstoneControl = allowRedstone;
 		reactor.setChanged();
 		level.sendBlockUpdated(reactorPos, reactorState, reactorState, 3);
-
-		// Dual and quad rods on display shelves next to the reactor — they need heavier cooling
-		// than this 3-single-rod test build provides, so we frame them instead of inserting.
-		BlockPos shelfBase = reactorPos.offset(0, 4, 0);
-		level.setBlock(shelfBase, FTBICBlocks.REINFORCED_STONE.get().defaultBlockState(),
-				Block.UPDATE_CLIENTS | Block.UPDATE_NEIGHBORS);
-		level.setBlock(shelfBase.east(), FTBICBlocks.REINFORCED_STONE.get().defaultBlockState(),
-				Block.UPDATE_CLIENTS | Block.UPDATE_NEIGHBORS);
-		spawnFrame(level, shelfBase, Direction.UP,
-				new ItemStack(FTBICItems.DUAL_URANIUM_FUEL_ROD.get()));
-		spawnFrame(level, shelfBase.east(), Direction.UP,
-				new ItemStack(FTBICItems.QUAD_URANIUM_FUEL_ROD.get()));
-
 		return true;
+	}
+
+	/**
+	 * Maximum-sustained-output quad-rod layout with zero support-component degradation.
+	 *
+	 * <p>Design: 3 quad fuel rods at (1,1), (4,1), (7,1), each with 4 iridium neutron reflectors as
+	 * cardinal neighbors (reflectors never degrade). Rod heat (8×7×8 = 448/cycle per rod) goes
+	 * entirely to the reactor pool since all 4 rod neighbors are reflectors, not heat acceptors.
+	 * The remaining 39 slots are overclocked heat vents that drain the pool via their reactorCool
+	 * pathway (36/cycle each) — vents take no adjacent-rod damage and self-heal, so they stay at
+	 * full durability indefinitely. Total: 39 × 36 = 1,404 cycle cooling vs 3 × 448 = 1,344 heat
+	 * input. Small surplus keeps reactor pool oscillating around 0.
+	 *
+	 * <p>Output: 3 rods × 7 pulses × 20 energy/pulse = 420 zap/tick (8,400 zap/s per 20-tick cycle).
+	 * Only fuel rods themselves wear down (inherent fuel consumption, ~5.5 hours per rod).
+	 */
+	private static void populateQuadRodOptimalReactor(NuclearReactorBlockEntity reactor) {
+		ItemStack[] grid = reactor.reactor.inputItems;
+		Arrays.fill(grid, ItemStack.EMPTY);
+
+		Item rod = FTBICItems.QUAD_URANIUM_FUEL_ROD.get();
+		Item iRef = FTBICItems.IRIDIUM_NEUTRON_REFLECTOR.get();
+		Item oVent = FTBICItems.OVERCLOCKED_HEAT_VENT.get();
+
+		// Row 0: vent, reflector above rod, vent, vent, reflector, vent, vent, reflector, vent
+		put(grid, 0, 0, oVent); put(grid, 1, 0, iRef); put(grid, 2, 0, oVent);
+		put(grid, 3, 0, oVent); put(grid, 4, 0, iRef); put(grid, 5, 0, oVent);
+		put(grid, 6, 0, oVent); put(grid, 7, 0, iRef); put(grid, 8, 0, oVent);
+
+		// Row 1: reflector, rod, reflector (shared), reflector, rod, reflector (shared), ...
+		put(grid, 0, 1, iRef);  put(grid, 1, 1, rod);  put(grid, 2, 1, iRef);
+		put(grid, 3, 1, iRef);  put(grid, 4, 1, rod);  put(grid, 5, 1, iRef);
+		put(grid, 6, 1, iRef);  put(grid, 7, 1, rod);  put(grid, 8, 1, iRef);
+
+		// Row 2: reflectors below rods; vents elsewhere
+		put(grid, 0, 2, oVent); put(grid, 1, 2, iRef); put(grid, 2, 2, oVent);
+		put(grid, 3, 2, oVent); put(grid, 4, 2, iRef); put(grid, 5, 2, oVent);
+		put(grid, 6, 2, oVent); put(grid, 7, 2, iRef); put(grid, 8, 2, oVent);
+
+		// Rows 3-5: fully tiled with overclocked heat vents (27 vents)
+		for (int row = 3; row <= 5; row++) {
+			for (int col = 0; col < NuclearReactor.MAX_COLUMNS; col++) {
+				put(grid, col, row, oVent);
+			}
+		}
 	}
 
 	private static void spawnFrame(ServerLevel level, BlockPos backingPos, Direction facing, ItemStack item) {
@@ -178,10 +225,11 @@ public final class FTBICCommands {
 	}
 
 	/**
-	 * Stable 3-single-rod layout covering every in-grid reactor component. Rod at (1,1) has 1
-	 * iridium reflector for a 2-pulse boost; rods at (4,1) and (7,1) run unboosted with fully
-	 * acceptor-tiled neighbors so all rod heat is absorbed by surrounding coolant/vent/exchanger
-	 * items — reactor-pool heat stays near zero.
+	 * Stable 6-single-rod layout for the classic 9×6 IC2 grid. Rods sit at (1,1), (4,1), (7,1),
+	 * (1,4), (4,4), (7,4), each with one neutron reflector and three heat-acceptor neighbors so rod
+	 * heat is absorbed by surrounding cooling items — reactor-pool heat stays near zero. Every
+	 * reactor-component item type is placed somewhere in the grid so the showcase exercises the
+	 * full simulation.
 	 */
 	private static void populateReactor(NuclearReactorBlockEntity reactor) {
 		ItemStack[] grid = reactor.reactor.inputItems;
@@ -207,18 +255,30 @@ public final class FTBICCommands {
 		Item eXCmp = FTBICItems.COMPONENT_HEAT_EXCHANGER.get();
 		Item rod = FTBICItems.URANIUM_FUEL_ROD.get();
 
-		//         col 0   1   2   3   4   5   6   7   8
-		put(grid, 0, 0, p);   put(grid, 1, 0, hVent);put(grid, 2, 0, P);
-		put(grid, 3, 0, nRef);put(grid, 4, 0, aVent);put(grid, 5, 0, tRef);
-		put(grid, 6, 0, H);   put(grid, 7, 0, eXRec);put(grid, 8, 0, H);
+		//         col 0      1      2      3      4      5      6      7      8
+		put(grid, 0, 0, p);     put(grid, 1, 0, hVent); put(grid, 2, 0, p);
+		put(grid, 3, 0, H);     put(grid, 4, 0, aVent); put(grid, 5, 0, H);
+		put(grid, 6, 0, P);     put(grid, 7, 0, rVent); put(grid, 8, 0, P);
 
-		put(grid, 0, 1, iRef);put(grid, 1, 1, rod);  put(grid, 2, 1, cSm);
-		put(grid, 3, 1, heX); put(grid, 4, 1, rod);  put(grid, 5, 1, cLg);
-		put(grid, 6, 1, rVent);put(grid, 7, 1, rod); put(grid, 8, 1, eXCmp);
+		put(grid, 0, 1, iRef);  put(grid, 1, 1, rod);   put(grid, 2, 1, cSm);
+		put(grid, 3, 1, nRef);  put(grid, 4, 1, rod);   put(grid, 5, 1, cMd);
+		put(grid, 6, 1, tRef);  put(grid, 7, 1, rod);   put(grid, 8, 1, cLg);
 
-		put(grid, 0, 2, P);   put(grid, 1, 2, cMd); put(grid, 2, 2, p);
-		put(grid, 3, 2, tRef);put(grid, 4, 2, oVent);put(grid, 5, 2, nRef);
-		put(grid, 6, 2, H);   put(grid, 7, 2, cVent);put(grid, 8, 2, eXAdv);
+		put(grid, 0, 2, H);     put(grid, 1, 2, heX);   put(grid, 2, 2, p);
+		put(grid, 3, 2, P);     put(grid, 4, 2, eXRec); put(grid, 5, 2, H);
+		put(grid, 6, 2, p);     put(grid, 7, 2, eXCmp); put(grid, 8, 2, P);
+
+		put(grid, 0, 3, p);     put(grid, 1, 3, eXAdv); put(grid, 2, 3, H);
+		put(grid, 3, 3, P);     put(grid, 4, 3, oVent); put(grid, 5, 3, p);
+		put(grid, 6, 3, H);     put(grid, 7, 3, cMd);   put(grid, 8, 3, P);
+
+		put(grid, 0, 4, nRef);  put(grid, 1, 4, rod);   put(grid, 2, 4, cSm);
+		put(grid, 3, 4, tRef);  put(grid, 4, 4, rod);   put(grid, 5, 4, cMd);
+		put(grid, 6, 4, iRef);  put(grid, 7, 4, rod);   put(grid, 8, 4, cLg);
+
+		put(grid, 0, 5, p);     put(grid, 1, 5, cVent); put(grid, 2, 5, P);
+		put(grid, 3, 5, H);     put(grid, 4, 5, hVent); put(grid, 5, 5, P);
+		put(grid, 6, 5, p);     put(grid, 7, 5, aVent); put(grid, 8, 5, H);
 	}
 
 	private static void put(ItemStack[] grid, int col, int row, Item item) {

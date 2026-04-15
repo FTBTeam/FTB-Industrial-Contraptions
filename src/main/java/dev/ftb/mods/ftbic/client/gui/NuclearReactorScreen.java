@@ -12,18 +12,21 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * Nuclear reactor screen — uses the dedicated {@code textures/gui/nuclear_reactor.png} background
- * (256×256 atlas with a custom 176×222 frame at 0,0). Renders heat bar + nuclear-output bar +
- * pause/redstone toggle buttons; clicks dispatch {@code ServerboundContainerButtonClickPacket}s
- * which the menu's {@link NuclearReactorMenu#clickMenuButton} handles server-side.
+ * Nuclear reactor screen — 9×6 component grid split by the texture's middle info bar. The upper
+ * three rows sit at y=18/36/54, then an 18-pixel info bar (heat + output readouts) at y=72..89,
+ * then the lower three rows at y=90/108/126. Player inventory begins at y=150.
  */
 public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu> {
 	public static final Identifier NUCLEAR_REACTOR_TEXTURE = FTBIC.id("textures/gui/nuclear_reactor.png");
 
+	private static final int GRID_TOP = 17;
+	private static final int UPPER_BOTTOM = GRID_TOP + 3 * 18;   // y=71, end of upper 3-row grid
+	private static final int LOWER_TOP    = UPPER_BOTTOM + 18;    // y=89, start of lower 3-row grid
+	private static final int LOWER_BOTTOM = LOWER_TOP + 3 * 18;   // y=143, end of lower grid
+
 	public NuclearReactorScreen(NuclearReactorMenu menu, Inventory inv, Component title) {
-		super(menu, inv, title, 176, 222);
+		super(menu, inv, title, 176, 232);
 		drawDefaultArrow = false;
-		// Energy bar handled inline below.
 		energyX = -1;
 		energyY = -1;
 	}
@@ -37,35 +40,39 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 	protected void init() {
 		super.init();
 		this.titleLabelX = 8;
+		// Vanilla positions the "Inventory" label relative to imageHeight; keep it above the hotbar.
+		this.inventoryLabelY = this.imageHeight - 94;
 	}
 
 	@Override
 	protected void extractOverlays(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
-		// Mask the bottom 3 rows of the 9×6 background grid that we no longer use, plus any inactive
-		// columns in the top-3-row region based on the current chamber count.
 		int activeColumns = this.menu.getActiveColumns();
 		int gridLeft = leftPos + 7;
-		int gridTop = topPos + 17;
 		int slotSize = 18;
 		int overlayColor = 0xFF8B8B8B;
+
+		// Mask inactive right columns across the upper and lower halves of the grid.
 		if (activeColumns < 9) {
 			int maskX = gridLeft + 1 + activeColumns * slotSize;
 			int maskW = (9 - activeColumns) * slotSize;
-			g.fill(maskX, gridTop + 1, maskX + maskW, gridTop + 1 + 3 * slotSize, overlayColor);
+			g.fill(maskX, topPos + GRID_TOP + 1, maskX + maskW, topPos + UPPER_BOTTOM + 1, overlayColor);
+			g.fill(maskX, topPos + LOWER_TOP + 1, maskX + maskW, topPos + LOWER_BOTTOM + 1, overlayColor);
 		}
-		g.fill(gridLeft + 1, gridTop + 1 + 3 * slotSize, gridLeft + 1 + 9 * slotSize, topPos + 139, overlayColor);
 
+		// Output bar + pause/question buttons in the top-right corner of the content area.
 		drawNuclearBar(g, leftPos + 115, topPos + 5, this.menu.isRunning() && !this.menu.isPaused());
-		drawHeatBar(g, leftPos + 115, topPos + 127, this.menu.getHeatFraction());
 		drawSmallPauseButton(g, leftPos + 105, topPos + 5, mouseX, mouseY, this.menu.isPaused());
 		drawSmallQuestionButton(g, leftPos + 94, topPos + 5, mouseX, mouseY);
-		drawSmallRedstoneButton(g, leftPos + 105, topPos + 127, mouseX, mouseY, this.menu.allowRedstone());
+
+		// Heat bar + redstone toggle in the middle info strip (y=72..89), between upper/lower grids.
+		drawHeatBar(g, leftPos + 115, topPos + 76, this.menu.getHeatFraction());
+		drawSmallRedstoneButton(g, leftPos + 105, topPos + 76, mouseX, mouseY, this.menu.allowRedstone());
 
 		String energyLabel = this.menu.isPaused() ? "Paused" : (this.menu.getEnergyOutput() + " z/t");
 		g.centeredText(font, Component.literal(energyLabel).withStyle(ChatFormatting.WHITE),
 				leftPos + 142, topPos + 6, 0xFFFFFF);
 		g.centeredText(font, Component.literal(Math.round(this.menu.getHeatFraction() * 100F) + "%")
-				.withStyle(ChatFormatting.WHITE), leftPos + 142, topPos + 128, 0xFFFFFF);
+				.withStyle(ChatFormatting.WHITE), leftPos + 142, topPos + 77, 0xFFFFFF);
 	}
 
 	@Override
@@ -76,7 +83,7 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 					: Component.literal("Output: " + this.menu.getEnergyOutput() + " z/t");
 			g.setTooltipForNextFrame(label, mouseX, mouseY);
 		}
-		if (isIn(mouseX, mouseY, leftPos + 115, topPos + 127, 54, 10)) {
+		if (isIn(mouseX, mouseY, leftPos + 115, topPos + 76, 54, 10)) {
 			int pct = Math.round(this.menu.getHeatFraction() * 100F);
 			g.setTooltipForNextFrame(Component.translatable("ftbic.jade.reactor_heat", pct), mouseX, mouseY);
 		}
@@ -93,7 +100,7 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 			send(0);
 			return true;
 		}
-		if (isIn(mx, my, leftPos + 105, topPos + 127, 9, 10)) {
+		if (isIn(mx, my, leftPos + 105, topPos + 76, 9, 10)) {
 			send(1);
 			return true;
 		}

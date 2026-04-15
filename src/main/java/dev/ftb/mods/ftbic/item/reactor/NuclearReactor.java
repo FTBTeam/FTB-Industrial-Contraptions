@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 3-row dynamic-width reactor grid. Width = 3 + chamberCount (3..9). Array is always sized
- * {@value MAX_COLUMNS} * {@value ROWS} = 27; cells beyond {@link #activeColumns} are forced empty
- * by the BE. Simulation iterates only the active region.
+ * 6-row dynamic-width reactor grid matching the classic IC2 9×6 layout. Width = 3 + chamberCount
+ * (3..9). Array is always sized {@value MAX_COLUMNS} × {@value ROWS} = 54; cells beyond
+ * {@link #activeColumns} are forced empty by the BE. Simulation iterates only the active region.
  */
 public class NuclearReactor {
 	public static final int MAX_COLUMNS = 9;
-	public static final int ROWS = 3;
+	public static final int ROWS = 6;
 	public static final int MAX_SLOTS = MAX_COLUMNS * ROWS;
 
 	public final ItemStack[] inputItems;

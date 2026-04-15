@@ -44,7 +44,15 @@ public class NuclearReactorMenu extends ElectricBlockMenu {
 
 	@Override
 	protected int getPlayerSlotOffset() {
-		return 140;
+		return 150;
+	}
+
+	/**
+	 * Slot Y = 18 + row*18, but rows 3..5 skip 18 pixels of texture "middle info bar" that sits
+	 * between the top and bottom halves of the 9×6 grid. Produces {18, 36, 54, 90, 108, 126}.
+	 */
+	public static int slotScreenY(int row) {
+		return 18 + row * 18 + (row >= 3 ? 18 : 0);
 	}
 
 	@Override
@@ -66,7 +74,7 @@ public class NuclearReactorMenu extends ElectricBlockMenu {
 			for (int col = 0; col < activeColumns; col++) {
 				int idx = NuclearReactor.slotIndex(col, row);
 				addSlot(new NuclearReactorSlot(container, blockEntity, idx,
-						8 + col * 18, 18 + row * 18));
+						8 + col * 18, slotScreenY(row)));
 			}
 		}
 
