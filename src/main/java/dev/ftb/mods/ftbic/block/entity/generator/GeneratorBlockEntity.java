@@ -256,6 +256,13 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 
+		if (state.getBlock() instanceof dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock) {
+			for (Direction dir : FTBICUtils.DIRECTIONS) {
+				find(traversed, set, origin, distance + 1, pos, dir);
+			}
+			return;
+		}
+
 		if (!state.hasBlockEntity()) {
 			return;
 		}

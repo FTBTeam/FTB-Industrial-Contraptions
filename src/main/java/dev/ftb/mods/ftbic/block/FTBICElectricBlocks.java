@@ -79,7 +79,7 @@ public interface FTBICElectricBlocks {
 			.advanced()
 			.energyCapacity(FTBICConfig.MACHINES.NUCLEAR_REACTOR_CAPACITY)
 			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY)
-			.io(54, 0);
+			.io(dev.ftb.mods.ftbic.item.reactor.NuclearReactor.MAX_SLOTS, 0);
 
 	// Machines //
 

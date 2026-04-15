@@ -36,7 +36,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 	@Override
 	protected void init() {
 		super.init();
-		this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
+		this.titleLabelX = 8;
 	}
 
 	@Override

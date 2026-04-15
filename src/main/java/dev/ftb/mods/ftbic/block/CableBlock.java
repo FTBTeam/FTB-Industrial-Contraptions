@@ -51,6 +51,9 @@ public class CableBlock extends BaseCableBlock {
 		if (state.getBlock() instanceof ElectricBlock) {
 			return true;
 		}
+		if (state.getBlock() instanceof NuclearReactorChamberBlock) {
+			return true;
+		}
 		if (!state.isAir()) {
 			BlockEntity be = world.getBlockEntity(pos);
 			if (be instanceof EnergyHandler) {

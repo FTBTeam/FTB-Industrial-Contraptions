@@ -25,7 +25,7 @@ public class MachineScreen extends ElectricBlockScreen<MachineMenu> {
 		int yStart = 35 - ((inputRows - 1) * 9);
 		for (int i = 0; i < inputs; i++) {
 			int row = i / 2, col = i % 2;
-			drawSlot(g, leftPos + 47 + col * 18, topPos + yStart - 1 + row * 18);
+			drawSlot(g, leftPos + 41 + col * 18, topPos + yStart - 1 + row * 18);
 		}
 
 		int outputRows = Math.max(1, (int) Math.ceil(outputs / 2D));

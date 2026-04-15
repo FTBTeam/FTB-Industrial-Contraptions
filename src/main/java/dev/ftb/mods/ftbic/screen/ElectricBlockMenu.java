@@ -52,8 +52,9 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 	}
 
 	/**
-	 * Default machine-slot layout: input slots in column at x=56, output slots in column at x=116.
-	 * Per-machine menus can override this for bespoke layouts (e.g. 2-input canning, 9-slot crafting grid).
+	 * Default machine-slot layout: inputs at x=42/60, arrow at x=80..104 (centered), outputs at
+	 * x=108/126. This keeps slot backgrounds clear of the animated arrow while staying symmetric
+	 * around the screen mid-line.
 	 */
 	protected void addMachineSlots(Inventory playerInv) {
 		if (blockEntity == null || blockEntity.getSlotCount() == 0) {
@@ -66,11 +67,11 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		int outputs = blockEntity.outputItems.length;
 
 		int inputRows = Math.max(1, (int) Math.ceil(inputs / 2D));
-		int yStart = 35 - ((inputRows - 1) * 9); // centre vertically against y=35
+		int yStart = 35 - ((inputRows - 1) * 9);
 
 		for (int i = 0; i < inputs; i++) {
 			int row = i / 2, col = i % 2;
-			addSlot(new Slot(container, i, 48 + col * 18, yStart + row * 18));
+			addSlot(new Slot(container, i, 42 + col * 18, yStart + row * 18));
 		}
 
 		int outputRows = Math.max(1, (int) Math.ceil(outputs / 2D));

@@ -66,6 +66,11 @@ public class ElectricBlockEntityContainer implements Container {
 	}
 
 	@Override
+	public boolean canPlaceItem(int slot, ItemStack stack) {
+		return be.isItemValid(slot, stack);
+	}
+
+	@Override
 	public void setChanged() {
 		be.setChanged();
 	}

@@ -105,6 +105,14 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		}
 	}
 
+	/**
+	 * Subclasses override to gate slot placement from automation and menu shift-click. Default allows
+	 * any item into any input slot; output slots are insert-rejected by the resource handler.
+	 */
+	public boolean isItemValid(int slot, ItemStack stack) {
+		return slot >= 0 && slot < inputItems.length;
+	}
+
 	@Override
 	protected void saveAdditional(ValueOutput output) {
 		super.saveAdditional(output);

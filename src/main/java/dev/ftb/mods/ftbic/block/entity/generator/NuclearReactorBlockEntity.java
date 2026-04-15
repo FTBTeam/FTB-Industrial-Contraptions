@@ -5,6 +5,7 @@ import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
 import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
+import dev.ftb.mods.ftbic.item.reactor.ReactorItem;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -12,9 +13,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
@@ -22,14 +26,14 @@ import java.util.Arrays;
 
 /**
  * Nuclear reactor — runs the full 1.18.2-style two-pass simulation via {@link NuclearReactor}.
- * Plating raises maxHeat and shrinks explosion, heat vents dissipate, exchangers balance, coolants
- * buffer, fuel rods produce energy and heat. If heat reaches maxHeat the reactor detonates and
- * nearby chamber blocks also explode.
+ * The active component grid is 3 rows × (3..9) columns; extra columns unlock one-per-chamber
+ * from neighboring {@link NuclearReactorChamberBlock}s (max 6 → 27 slots total).
  */
 public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public final NuclearReactor reactor;
 	public int timeUntilNextCycle;
 	public int debugSpeed;
+	private boolean pendingChamberRecompute = true;
 
 	public NuclearReactorBlockEntity(BlockPos pos, BlockState state) {
 		super(FTBICElectricBlocks.NUCLEAR_REACTOR, pos, state);
@@ -53,6 +57,99 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
+	public boolean isItemValid(int slot, ItemStack stack) {
+		if (slot < 0 || slot >= reactor.inputItems.length) return false;
+		int col = slot % NuclearReactor.MAX_COLUMNS;
+		int row = slot / NuclearReactor.MAX_COLUMNS;
+		if (row >= NuclearReactor.ROWS) return false;
+		if (col >= reactor.activeColumns) return false;
+		return stack.isEmpty() || stack.getItem() instanceof ReactorItem;
+	}
+
+	public int countAttachedChambers() {
+		if (level == null) return 0;
+		int n = 0;
+		for (Direction dir : FTBICUtils.DIRECTIONS) {
+			if (level.getBlockState(worldPosition.relative(dir)).getBlock() instanceof NuclearReactorChamberBlock) {
+				n++;
+			}
+		}
+		return Math.min(6, n);
+	}
+
+	public void recomputeActiveColumns() {
+		if (level == null) return;
+		int target = 3 + countAttachedChambers();
+		if (target == reactor.activeColumns) return;
+		int previous = reactor.activeColumns;
+		reactor.activeColumns = target;
+		if (target < previous) {
+			ejectFromColumns(target, previous);
+		}
+		setChanged();
+		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+	}
+
+	/**
+	 * Samples external faces of the reactor and its attached chambers. Returns 1.0 with no water,
+	 * scaling linearly up to {@code WATER_COOLING_MULTIPLIER} when every outward face is submerged.
+	 */
+	public double computeEnvCooling() {
+		if (level == null) return 1.0D;
+		double max = FTBICConfig.NUCLEAR.WATER_COOLING_MULTIPLIER.get();
+		if (max <= 1.0D) return 1.0D;
+		int waterFaces = 0;
+		int totalFaces = 0;
+		for (Direction dir : FTBICUtils.DIRECTIONS) {
+			BlockPos neighborPos = worldPosition.relative(dir);
+			if (level.getBlockState(neighborPos).getBlock() instanceof NuclearReactorChamberBlock) {
+				for (Direction chamberDir : FTBICUtils.DIRECTIONS) {
+					if (chamberDir == dir.getOpposite()) continue;
+					totalFaces++;
+					if (isWater(level.getFluidState(neighborPos.relative(chamberDir)))) waterFaces++;
+				}
+			} else {
+				totalFaces++;
+				if (isWater(level.getFluidState(neighborPos))) waterFaces++;
+			}
+		}
+		if (totalFaces <= 0) return 1.0D;
+		return 1.0D + ((double) waterFaces / (double) totalFaces) * (max - 1.0D);
+	}
+
+	private static boolean isWater(FluidState fluid) {
+		return !fluid.isEmpty() && fluid.is(FluidTags.WATER);
+	}
+
+	private void ejectFromColumns(int fromCol, int toColExclusive) {
+		if (level == null || level.isClientSide()) return;
+		for (int y = 0; y < NuclearReactor.ROWS; y++) {
+			for (int x = fromCol; x < toColExclusive; x++) {
+				int idx = NuclearReactor.slotIndex(x, y);
+				ItemStack stack = inputItems[idx];
+				if (!stack.isEmpty()) {
+					Containers.dropItemStack(level,
+							worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5,
+							stack);
+					inputItems[idx] = ItemStack.EMPTY;
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onPlacedBy(@org.jetbrains.annotations.Nullable net.minecraft.world.entity.LivingEntity entity, ItemStack stack) {
+		super.onPlacedBy(entity, stack);
+		pendingChamberRecompute = true;
+	}
+
+	@Override
+	public void neighborChanged(BlockPos neighborPos, net.minecraft.world.level.block.Block neighborBlock) {
+		super.neighborChanged(neighborPos, neighborBlock);
+		pendingChamberRecompute = true;
+	}
+
+	@Override
 	protected void saveAdditional(ValueOutput output) {
 		super.saveAdditional(output);
 		output.putInt("TimeUntilNextCycle", timeUntilNextCycle);
@@ -60,6 +157,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		output.putBoolean("AllowRedstoneControl", reactor.allowRedstoneControl);
 		output.putDouble("EnergyOutput", reactor.energyOutput);
 		output.putInt("Heat", reactor.heat);
+		output.putInt("ActiveColumns", reactor.activeColumns);
 		if (debugSpeed > 0) output.putInt("DebugSpeed", debugSpeed);
 	}
 
@@ -71,7 +169,9 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		reactor.allowRedstoneControl = input.getBooleanOr("AllowRedstoneControl", false);
 		reactor.energyOutput = input.getDoubleOr("EnergyOutput", 0D);
 		reactor.heat = input.getIntOr("Heat", 0);
+		reactor.activeColumns = Math.max(3, Math.min(NuclearReactor.MAX_COLUMNS, input.getIntOr("ActiveColumns", 3)));
 		debugSpeed = input.getIntOr("DebugSpeed", 0);
+		pendingChamberRecompute = true;
 	}
 
 	private void checkPoweredState(Level level, BlockPos pos) {
@@ -82,7 +182,11 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public void handleGeneration() {
-		// GeneratorBlockEntity.tick() already gated on level != null && !level.isClientSide().
+		if (pendingChamberRecompute) {
+			pendingChamberRecompute = false;
+			recomputeActiveColumns();
+		}
+
 		timeUntilNextCycle--;
 		if (timeUntilNextCycle <= 0) {
 			timeUntilNextCycle = 20;
@@ -115,6 +219,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	}
 
 	private void runCycle() {
+		reactor.envCoolingMultiplier = computeEnvCooling();
 		double peo = reactor.energyOutput;
 		int ph = reactor.heat;
 		reactor.tick();

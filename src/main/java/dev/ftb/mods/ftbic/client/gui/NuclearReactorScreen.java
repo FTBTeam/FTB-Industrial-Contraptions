@@ -41,6 +41,20 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 
 	@Override
 	protected void extractOverlays(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+		// Mask the bottom 3 rows of the 9×6 background grid that we no longer use, plus any inactive
+		// columns in the top-3-row region based on the current chamber count.
+		int activeColumns = this.menu.getActiveColumns();
+		int gridLeft = leftPos + 7;
+		int gridTop = topPos + 17;
+		int slotSize = 18;
+		int overlayColor = 0xFF8B8B8B;
+		if (activeColumns < 9) {
+			int maskX = gridLeft + 1 + activeColumns * slotSize;
+			int maskW = (9 - activeColumns) * slotSize;
+			g.fill(maskX, gridTop + 1, maskX + maskW, gridTop + 1 + 3 * slotSize, overlayColor);
+		}
+		g.fill(gridLeft + 1, gridTop + 1 + 3 * slotSize, gridLeft + 1 + 9 * slotSize, topPos + 139, overlayColor);
+
 		drawNuclearBar(g, leftPos + 115, topPos + 5, this.menu.isRunning() && !this.menu.isPaused());
 		drawHeatBar(g, leftPos + 115, topPos + 127, this.menu.getHeatFraction());
 		drawSmallPauseButton(g, leftPos + 105, topPos + 5, mouseX, mouseY, this.menu.isPaused());

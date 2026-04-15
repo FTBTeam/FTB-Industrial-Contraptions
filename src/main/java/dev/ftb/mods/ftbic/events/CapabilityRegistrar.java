@@ -1,9 +1,11 @@
 package dev.ftb.mods.ftbic.events;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.GeothermalGeneratorBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.ElectricBlockEnergyHandler;
@@ -68,6 +70,27 @@ public final class CapabilityRegistrar {
 		event.registerItem(Capabilities.Fluid.ITEM,
 				(stack, access) -> new FluidCellHandler(access),
 				FTBICItems.FLUID_CELL.get());
+
+		// Reactor chambers forward item + energy caps to the adjacent reactor so pipes, cables, and
+		// hoppers plugged into a chamber flow straight into the central block.
+		event.registerBlock(Capabilities.Item.BLOCK,
+				(level, pos, state, be, side) -> forwardChamber(Capabilities.Item.BLOCK, level, pos),
+				FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get());
+		event.registerBlock(Capabilities.Energy.BLOCK,
+				(level, pos, state, be, side) -> forwardChamber(Capabilities.Energy.BLOCK, level, pos),
+				FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get());
+	}
+
+	private static <T> T forwardChamber(net.neoforged.neoforge.capabilities.BlockCapability<T, net.minecraft.core.Direction> cap,
+			net.minecraft.world.level.Level level, net.minecraft.core.BlockPos chamberPos) {
+		for (net.minecraft.core.Direction dir : net.minecraft.core.Direction.values()) {
+			net.minecraft.core.BlockPos neighbor = chamberPos.relative(dir);
+			if (level.getBlockEntity(neighbor) instanceof NuclearReactorBlockEntity) {
+				T handler = level.getCapability(cap, neighbor, dir.getOpposite());
+				if (handler != null) return handler;
+			}
+		}
+		return null;
 	}
 
 	private CapabilityRegistrar() {}

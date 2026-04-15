@@ -278,6 +278,7 @@ public final class FTBICConfig {
 		public final ModConfigSpec.IntValue FLUID_CELL_CAPACITY;
 		public final ModConfigSpec.BooleanValue ADD_ALL_FLUID_CELLS;
 		public final ModConfigSpec.BooleanValue NUCLEAR_EXPLOSION_DAEMON_THREAD;
+		public final ModConfigSpec.DoubleValue WATER_COOLING_MULTIPLIER;
 
 		Nuclear(ModConfigSpec.Builder b) {
 			b.push("nuclear");
@@ -288,6 +289,8 @@ public final class FTBICConfig {
 			FLUID_CELL_CAPACITY = b.defineInRange("fluid_cell_capacity", FLUID_BUCKET_VOLUME, 1, 100_000);
 			ADD_ALL_FLUID_CELLS = b.define("add_all_fluid_cells", false);
 			NUCLEAR_EXPLOSION_DAEMON_THREAD = b.comment("Spawn a daemon thread for explosion calc (experimental).").define("nuclear_explosion_daemon_thread", false);
+			WATER_COOLING_MULTIPLIER = b.comment("Max reactor-hull cooling multiplier when every outward face is water-clad. 1.0 disables the bonus; 2.0 doubles cooling; scales linearly with water-adjacent faces.")
+					.defineInRange("water_cooling_multiplier", 2.0D, 1.0D, 10.0D);
 			b.pop();
 		}
 	}
