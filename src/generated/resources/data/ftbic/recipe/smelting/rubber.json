@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:slime_balls"
+      }
+    }
+  ],
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 300,
+  "experience": 0.0,
+  "ingredient": "#c:slime_balls",
+  "result": {
+    "count": 8,
+    "id": "ftbic:rubber"
+  },
+  "show_notification": false
+}

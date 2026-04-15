@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "ingredient": "minecraft:snow_block"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:ice"
+      }
+    }
+  ]
+}

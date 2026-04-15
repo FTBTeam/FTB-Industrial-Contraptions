@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:advanced_machine_block",
+    "C": "ftbic:iridium_circuit",
+    "G": "ftbic:graphene",
+    "S": "ftbic:mv_solar_panel"
+  },
+  "pattern": [
+    "SGS",
+    "SAS",
+    "SCS"
+  ],
+  "result": {
+    "id": "ftbic:hv_solar_panel"
+  },
+  "show_notification": false
+}

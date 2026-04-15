@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:obsidians"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:compressed_coal_ball",
+    "O": "#c:obsidians"
+  },
+  "pattern": [
+    "CCC",
+    "COC",
+    "CCC"
+  ],
+  "result": {
+    "id": "ftbic:graphene"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/refined_obsidian"
+      }
+    }
+  ],
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "ingredient": "#c:dusts/refined_obsidian",
+  "result": {
+    "id": "ftbmaterials:refined_obsidian_ingot"
+  },
+  "show_notification": false
+}

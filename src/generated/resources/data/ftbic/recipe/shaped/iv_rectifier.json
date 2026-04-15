@@ -1,0 +1,28 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/iridium"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:ingots/iridium",
+    "R": "minecraft:redstone_block",
+    "T": "ftbic:ev_rectifier",
+    "W": "ftbic:ev_cable"
+  },
+  "pattern": [
+    "RWR",
+    "PTP",
+    "RWR"
+  ],
+  "result": {
+    "id": "ftbic:iv_rectifier"
+  },
+  "show_notification": false
+}

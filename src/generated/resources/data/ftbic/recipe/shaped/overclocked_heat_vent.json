@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:plates/enderium"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:plates/enderium",
+    "V": "ftbic:reactor_heat_vent"
+  },
+  "pattern": [
+    "P",
+    "V",
+    "P"
+  ],
+  "result": {
+    "id": "ftbic:overclocked_heat_vent"
+  },
+  "show_notification": false
+}

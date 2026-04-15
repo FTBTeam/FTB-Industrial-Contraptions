@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:gems/quartz"
+      }
+    }
+  ],
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "#c:gems/quartz"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 3,
+        "id": "ftbic:silicon"
+      }
+    }
+  ]
+}

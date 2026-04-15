@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:plates/tin"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:plates/tin",
+    "V": "ftbic:heat_exchanger"
+  },
+  "pattern": [
+    " P ",
+    "PVP",
+    " P "
+  ],
+  "result": {
+    "id": "ftbic:component_heat_exchanger"
+  },
+  "show_notification": false
+}

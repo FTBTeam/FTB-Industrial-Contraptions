@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/enderium"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": "#c:ingots/enderium"
+  },
+  "pattern": [
+    " X ",
+    " X "
+  ],
+  "result": {
+    "id": "ftbic:enderium_rod"
+  },
+  "show_notification": false
+}

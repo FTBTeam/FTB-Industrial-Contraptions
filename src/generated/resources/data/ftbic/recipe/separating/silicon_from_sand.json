@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "minecraft:sand"
+      }
+    }
+  ],
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "#minecraft:sand"
+    }
+  ],
+  "outputs": [
+    {
+      "chance": 0.2,
+      "item": {
+        "id": "ftbic:silicon"
+      }
+    },
+    {
+      "chance": 0.05,
+      "item": {
+        "id": "ftbic:silicon"
+      }
+    }
+  ]
+}

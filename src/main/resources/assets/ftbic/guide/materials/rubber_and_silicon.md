@@ -28,8 +28,6 @@ item_ids:
 
 Smelt a vanilla **slime ball** for **8 rubber** — the main production path. Slime farms scale effortlessly, and the 8× yield per smelt keeps cable crafting cheap.
 
-If the **Myrtrees** mod is present, a <ItemLink id="centrifuge" /> can also process latex from rubber trees into rubber (3 per latex) as an alternative source.
-
 <RecipesFor id="rubber" />
 
 <Row>

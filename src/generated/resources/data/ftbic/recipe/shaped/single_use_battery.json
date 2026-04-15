@@ -1,0 +1,34 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "minecraft:coals"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/redstone"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:lv_cable",
+    "O": "#minecraft:coals",
+    "R": "#c:dusts/redstone"
+  },
+  "pattern": [
+    "C",
+    "R",
+    "O"
+  ],
+  "result": {
+    "id": "ftbic:single_use_battery"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:advanced_alloy",
+    "C": "ftbic:advanced_circuit",
+    "D": "minecraft:diamond_pickaxe",
+    "M": "ftbic:advanced_machine_block"
+  },
+  "pattern": [
+    "CMC",
+    "ADA"
+  ],
+  "result": {
+    "id": "ftbic:quarry"
+  },
+  "show_notification": false
+}

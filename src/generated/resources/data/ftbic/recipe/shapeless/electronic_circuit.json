@@ -1,0 +1,35 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/redstone"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/redstone"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ftbic:lv_cable",
+    "ftbic:lv_cable",
+    "ftbic:lv_cable",
+    "#c:dusts/redstone",
+    "ftbic:industrial_grade_metal",
+    "#c:dusts/redstone",
+    "ftbic:lv_cable",
+    "ftbic:lv_cable",
+    "ftbic:lv_cable"
+  ],
+  "result": {
+    "id": "ftbic:electronic_circuit"
+  },
+  "show_notification": false
+}

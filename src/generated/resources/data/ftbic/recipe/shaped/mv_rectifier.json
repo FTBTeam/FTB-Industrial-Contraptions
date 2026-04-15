@@ -1,0 +1,28 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/iron"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:ingots/iron",
+    "R": "minecraft:redstone",
+    "T": "ftbic:mv_transformer",
+    "W": "ftbic:mv_cable"
+  },
+  "pattern": [
+    "RWR",
+    "PTP",
+    "RWR"
+  ],
+  "result": {
+    "id": "ftbic:mv_rectifier"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/tin"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:small_coolant_cell",
+    "T": "#c:ingots/tin"
+  },
+  "pattern": [
+    "TTT",
+    "CCC",
+    "TTT"
+  ],
+  "result": {
+    "id": "ftbic:medium_coolant_cell"
+  },
+  "show_notification": false
+}

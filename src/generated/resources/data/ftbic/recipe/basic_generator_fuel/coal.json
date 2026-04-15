@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "minecraft:coals"
+      }
+    }
+  ],
+  "type": "ftbic:basic_generator_fuel",
+  "ingredient": "#minecraft:coals",
+  "ticks": 1600
+}

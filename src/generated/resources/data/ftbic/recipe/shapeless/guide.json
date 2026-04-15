@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:book",
+    "minecraft:redstone"
+  ],
+  "result": {
+    "components": {
+      "guideme:guide_id": "ftbic:guide"
+    },
+    "id": "guideme:guide"
+  },
+  "show_notification": false
+}

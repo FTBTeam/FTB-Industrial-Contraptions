@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/tin"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "T": "#c:ingots/tin"
+  },
+  "pattern": [
+    " T ",
+    "T T",
+    " T "
+  ],
+  "result": {
+    "count": 4,
+    "id": "ftbic:fluid_cell"
+  },
+  "show_notification": false
+}

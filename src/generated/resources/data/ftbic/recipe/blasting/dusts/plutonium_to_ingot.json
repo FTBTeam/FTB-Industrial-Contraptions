@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/plutonium"
+      }
+    }
+  ],
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "ingredient": "#c:dusts/plutonium",
+  "result": {
+    "id": "ftbmaterials:plutonium_ingot"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:plates/tin"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "minecraft:iron_bars",
+    "P": "#c:plates/tin",
+    "V": "ftbic:heat_vent"
+  },
+  "pattern": [
+    "IPI",
+    "PVP",
+    "IPI"
+  ],
+  "result": {
+    "id": "ftbic:component_heat_vent"
+  },
+  "show_notification": false
+}

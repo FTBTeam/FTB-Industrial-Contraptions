@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/tin"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "minecraft:piston",
+    "T": "#c:ingots/tin"
+  },
+  "pattern": [
+    "T T",
+    " P ",
+    "T T"
+  ],
+  "result": {
+    "id": "ftbic:ejector_upgrade"
+  },
+  "show_notification": false
+}

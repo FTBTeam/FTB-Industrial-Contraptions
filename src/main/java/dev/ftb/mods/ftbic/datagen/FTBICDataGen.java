@@ -11,6 +11,7 @@ public final class FTBICDataGen {
 	@SubscribeEvent
 	public static void gatherClientData(GatherDataEvent.Client event) {
 		event.createProvider(FTBICModelProvider::new);
+		event.createProvider(FTBICRecipeProvider.Runner::new);
 	}
 
 	private FTBICDataGen() {}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "ftbic:mv_battery",
+    "C": "ftbic:carbon_plate",
+    "L": "minecraft:elytra",
+    "S": "ftbic:lv_solar_panel",
+    "V": "ftbic:heat_vent"
+  },
+  "pattern": [
+    "CBC",
+    "CSC",
+    "VLV"
+  ],
+  "result": {
+    "id": "ftbic:mechanical_elytra"
+  },
+  "show_notification": false
+}

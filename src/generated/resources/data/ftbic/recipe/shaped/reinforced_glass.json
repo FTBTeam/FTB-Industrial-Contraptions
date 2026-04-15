@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:glass_blocks/colorless"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "#c:glass_blocks/colorless",
+    "R": "ftbic:reinforced_stone"
+  },
+  "pattern": [
+    "RGR",
+    "G G",
+    "RGR"
+  ],
+  "result": {
+    "count": 4,
+    "id": "ftbic:reinforced_glass"
+  },
+  "show_notification": false
+}

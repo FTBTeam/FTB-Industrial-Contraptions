@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:carbon_chestplate",
+    "B": "ftbic:ev_battery",
+    "E": "ftbic:mechanical_elytra",
+    "I": "ftbic:iridium_alloy",
+    "M": "ftbic:advanced_machine_block",
+    "N": "ftbic:antimatter"
+  },
+  "pattern": [
+    "MBM",
+    "NAN",
+    "IEI"
+  ],
+  "result": {
+    "id": "ftbic:quantum_chestplate"
+  },
+  "show_notification": false
+}

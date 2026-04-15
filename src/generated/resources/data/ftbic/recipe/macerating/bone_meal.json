@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:bone"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 5,
+        "id": "minecraft:bone_meal"
+      }
+    }
+  ]
+}

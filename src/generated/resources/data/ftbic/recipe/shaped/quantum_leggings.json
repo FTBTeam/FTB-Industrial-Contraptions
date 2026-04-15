@@ -1,0 +1,28 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/glowstone"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:carbon_leggings",
+    "G": "#c:dusts/glowstone",
+    "I": "ftbic:iridium_alloy",
+    "M": "ftbic:advanced_machine_block"
+  },
+  "pattern": [
+    "III",
+    "MAM",
+    "G G"
+  ],
+  "result": {
+    "id": "ftbic:quantum_leggings"
+  },
+  "show_notification": false
+}

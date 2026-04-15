@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "ingredient": "ftbic:canned_food"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:protein_bar"
+      }
+    }
+  ]
+}

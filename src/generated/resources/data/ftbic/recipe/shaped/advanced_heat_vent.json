@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:gems/diamond"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": "#c:gems/diamond",
+    "I": "minecraft:iron_bars",
+    "V": "ftbic:heat_vent"
+  },
+  "pattern": [
+    "IVI",
+    "IDI",
+    "IVI"
+  ],
+  "result": {
+    "id": "ftbic:advanced_heat_vent"
+  },
+  "show_notification": false
+}

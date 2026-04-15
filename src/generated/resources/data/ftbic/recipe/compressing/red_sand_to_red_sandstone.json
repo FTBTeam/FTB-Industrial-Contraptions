@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "minecraft:red_sand"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:red_sandstone"
+      }
+    }
+  ]
+}

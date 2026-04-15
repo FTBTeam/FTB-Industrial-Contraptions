@@ -14,7 +14,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="centrifuge" scale="2" />
 
-  Separates materials into their components. Extracts <ItemLink id="silicon" /> from quartz or sand, breaks down gravel, flint, and slime drops, and — if **Myrtrees** is installed — processes latex from rubber trees into bulk <ItemLink id="rubber" />.
+  Separates materials into their components. Extracts <ItemLink id="silicon" /> from quartz or sand, breaks down gravel and flint, and handles slime/magma processing.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -33,7 +33,6 @@ item_ids:
 * Glowstone → glowstone dust
 * Magma Cream → slime ball (+ a chance of blaze powder)
 * Small Coolant Cell from blaze rods and ice
-* **Myrtrees latex → <ItemLink id="rubber" /> (3 per latex), if the mod is loaded**
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:stone"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:gravel"
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:sea_pickle"
+    }
+  ],
+  "outputs": [
+    {
+      "chance": 0.5,
+      "item": {
+        "id": "minecraft:seagrass"
+      }
+    },
+    {
+      "chance": 0.03,
+      "item": {
+        "id": "minecraft:glowstone_dust"
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/tin"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:electronic_circuit",
+    "M": "ftbic:machine_block",
+    "T": "#c:ingots/tin"
+  },
+  "pattern": [
+    "TCT",
+    "TMT",
+    "TTT"
+  ],
+  "result": {
+    "id": "ftbic:canning_machine"
+  },
+  "show_notification": false
+}

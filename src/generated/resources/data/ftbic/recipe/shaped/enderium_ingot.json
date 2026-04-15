@@ -1,0 +1,56 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/lead"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/lead"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/diamond"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ender_pearls"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": "#c:dusts/diamond",
+    "E": "#c:ender_pearls",
+    "F": "minecraft:fire_charge",
+    "L": {
+      "neoforge:ingredient_type": "neoforge:compound",
+      "children": [
+        "#c:dusts/lead",
+        "#c:ingots/lead"
+      ]
+    }
+  },
+  "pattern": [
+    "LLL",
+    "DEE",
+    "F  "
+  ],
+  "result": {
+    "count": 2,
+    "id": "ftbic:enderium_ingot"
+  },
+  "show_notification": false
+}

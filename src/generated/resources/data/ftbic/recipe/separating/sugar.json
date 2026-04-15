@@ -1,0 +1,22 @@
+{
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:sugar_cane"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "minecraft:sugar"
+      }
+    },
+    {
+      "chance": 0.5,
+      "item": {
+        "id": "minecraft:paper"
+      }
+    }
+  ]
+}

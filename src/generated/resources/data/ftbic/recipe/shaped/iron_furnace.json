@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/iron"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": "minecraft:furnace",
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    " I ",
+    "I I",
+    "IFI"
+  ],
+  "result": {
+    "id": "ftbic:iron_furnace"
+  },
+  "show_notification": false
+}

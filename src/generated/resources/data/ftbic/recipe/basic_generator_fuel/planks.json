@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "minecraft:planks"
+      }
+    }
+  ],
+  "type": "ftbic:basic_generator_fuel",
+  "ingredient": "#minecraft:planks",
+  "ticks": 300
+}

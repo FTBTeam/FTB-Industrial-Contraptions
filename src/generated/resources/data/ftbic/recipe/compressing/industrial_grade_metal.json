@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/iron"
+      }
+    }
+  ],
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "count": 3,
+      "ingredient": "#c:ingots/iron"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 3,
+        "id": "ftbic:industrial_grade_metal"
+      }
+    }
+  ]
+}

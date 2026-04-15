@@ -1,5 +1,0 @@
-{
-  "type": "ftbic:basic_generator_fuel",
-  "ingredient": "#c:storage_blocks/coal",
-  "ticks": 14400
-}

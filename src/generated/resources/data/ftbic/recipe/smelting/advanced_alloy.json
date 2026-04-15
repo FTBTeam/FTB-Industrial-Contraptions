@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 400,
+  "experience": 0.0,
+  "ingredient": "ftbic:mixed_metal_blend",
+  "result": {
+    "id": "ftbic:advanced_alloy"
+  },
+  "show_notification": false
+}

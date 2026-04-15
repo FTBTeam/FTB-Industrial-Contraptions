@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ftbic:burnt_cable"
+  ],
+  "result": {
+    "id": "ftbic:scrap"
+  },
+  "show_notification": false
+}

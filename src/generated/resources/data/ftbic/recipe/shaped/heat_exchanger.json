@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:plates/iron"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "ftbic:dense_copper_plate",
+    "C": "ftbic:electronic_circuit",
+    "P": "#c:plates/iron"
+  },
+  "pattern": [
+    " C ",
+    "PBP",
+    " P "
+  ],
+  "result": {
+    "id": "ftbic:heat_exchanger"
+  },
+  "show_notification": false
+}

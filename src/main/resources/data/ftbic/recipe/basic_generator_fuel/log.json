@@ -1,5 +1,0 @@
-{
-  "type": "ftbic:basic_generator_fuel",
-  "ingredient": "#minecraft:logs_that_burn",
-  "ticks": 300
-}

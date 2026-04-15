@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:red_sandstone"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:red_sand"
+      }
+    }
+  ]
+}

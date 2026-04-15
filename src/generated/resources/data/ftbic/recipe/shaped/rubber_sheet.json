@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "ftbic:rubber"
+  },
+  "pattern": [
+    "III"
+  ],
+  "result": {
+    "id": "ftbic:rubber_sheet"
+  },
+  "show_notification": false
+}

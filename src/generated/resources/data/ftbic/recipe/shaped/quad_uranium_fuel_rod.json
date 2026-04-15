@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": "ftbic:dense_copper_plate",
+    "R": "ftbic:dual_uranium_fuel_rod"
+  },
+  "pattern": [
+    " R ",
+    "MMM",
+    " R "
+  ],
+  "result": {
+    "id": "ftbic:quad_uranium_fuel_rod"
+  },
+  "show_notification": false
+}

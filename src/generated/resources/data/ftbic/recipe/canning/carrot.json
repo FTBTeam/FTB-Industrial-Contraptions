@@ -1,0 +1,18 @@
+{
+  "type": "ftbic:canning",
+  "inputs": [
+    {
+      "ingredient": "minecraft:carrot"
+    },
+    {
+      "ingredient": "ftbic:empty_can"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:canned_food"
+      }
+    }
+  ]
+}

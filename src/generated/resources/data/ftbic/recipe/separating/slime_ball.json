@@ -1,0 +1,21 @@
+{
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:magma_cream"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:slime_ball"
+      }
+    },
+    {
+      "chance": 0.25,
+      "item": {
+        "id": "minecraft:blaze_powder"
+      }
+    }
+  ]
+}

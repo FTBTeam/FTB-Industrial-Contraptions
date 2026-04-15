@@ -1,0 +1,41 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/lead"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/diamond"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ender_pearls"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": "#c:dusts/diamond",
+    "E": "#c:ender_pearls",
+    "L": "#c:dusts/lead"
+  },
+  "pattern": [
+    "LLL",
+    "DEE"
+  ],
+  "result": {
+    "count": 2,
+    "id": "ftbic:enderium_dust"
+  },
+  "show_notification": false
+}
