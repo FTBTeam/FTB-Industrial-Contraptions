@@ -66,6 +66,13 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		return stack.isEmpty() || stack.getItem() instanceof ReactorItem;
 	}
 
+	@Override
+	public boolean isSlotExtractable(int slot) {
+		if (slot < 0 || slot >= reactor.inputItems.length) return false;
+		int col = slot % NuclearReactor.MAX_COLUMNS;
+		return col < reactor.activeColumns;
+	}
+
 	public int countAttachedChambers() {
 		if (level == null) return 0;
 		int n = 0;

@@ -21,6 +21,17 @@ public class NuclearReactorChamberBlock extends Block {
 	}
 
 	@Override
+	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor,
+			@org.jetbrains.annotations.Nullable net.minecraft.world.level.redstone.Orientation orientation, boolean movedByPiston) {
+		super.neighborChanged(state, level, pos, neighbor, orientation, movedByPiston);
+		// A reactor being placed or broken next to this chamber changes the caps this chamber forwards,
+		// so refresh the cap cache.
+		if (!level.isClientSide()) {
+			level.invalidateCapabilities(pos);
+		}
+	}
+
+	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		InteractionResult result = openReactor(level, pos, player);
 		return result == InteractionResult.PASS ? InteractionResult.TRY_WITH_EMPTY_HAND : result;

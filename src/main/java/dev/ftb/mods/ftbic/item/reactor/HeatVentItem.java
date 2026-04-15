@@ -27,7 +27,10 @@ public class HeatVentItem extends BaseReactorItem {
 
 	@Override
 	public void reactorTickPre(NuclearReactor reactor, ItemStack stack, int x, int y) {
-		if (reactorCool > 0) reactor.addHeat(-reactorCool);
+		if (reactorCool > 0) {
+			int scaled = (int) Math.round(reactorCool * reactor.envCoolingMultiplier);
+			reactor.addHeat(-Math.max(reactorCool, scaled));
+		}
 		if (selfCool > 0) damageReactorItem(stack, -selfCool);
 		if (componentCool > 0) {
 			for (int i = 0; i < 4; i++) {

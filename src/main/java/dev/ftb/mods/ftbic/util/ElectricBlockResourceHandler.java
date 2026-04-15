@@ -51,12 +51,14 @@ public class ElectricBlockResourceHandler extends SnapshotJournal<ItemStack[]> i
 	@Override
 	public boolean isValid(int index, ItemResource resource) {
 		// Outside code can insert into input slots only; extraction handles output slots.
-		return isInputSlot(index);
+		if (!isInputSlot(index)) return false;
+		return be.isItemValid(index, resource.toStack(1));
 	}
 
 	@Override
 	public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
 		if (!isInputSlot(index) || resource.isEmpty() || amount <= 0) return 0;
+		if (!be.isItemValid(index, resource.toStack(1))) return 0;
 		ItemStack existing = be.getStackInSlot(index);
 		int limit = (int) getCapacityAsLong(index, resource);
 		if (existing.isEmpty()) {
@@ -77,9 +79,9 @@ public class ElectricBlockResourceHandler extends SnapshotJournal<ItemStack[]> i
 	@Override
 	public int extract(int index, ItemResource resource, int amount, TransactionContext transaction) {
 		if (index < 0 || index >= total() || resource.isEmpty() || amount <= 0) return 0;
-		// Only output slots are extractable by foreign code — lets hoppers pull finished products
-		// without unexpectedly draining machine inputs.
-		if (!isOutputSlot(index)) return 0;
+		// Default policy: only output slots are extractable. BE subclasses (e.g. the nuclear reactor)
+		// can override isSlotExtractable to open input slots to automation too.
+		if (!be.isSlotExtractable(index)) return 0;
 		ItemStack existing = be.getStackInSlot(index);
 		if (existing.isEmpty() || !resource.matches(existing)) return 0;
 		int extracted = Math.min(amount, existing.getCount());

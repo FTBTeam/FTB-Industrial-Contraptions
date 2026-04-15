@@ -113,6 +113,14 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		return slot >= 0 && slot < inputItems.length;
 	}
 
+	/**
+	 * Subclasses override to expose input slots to automation extraction (hoppers/pipes). Default is
+	 * output-only — hoppers can pull finished products, but not consume raw machine inputs.
+	 */
+	public boolean isSlotExtractable(int slot) {
+		return slot >= inputItems.length && slot < getSlotCount();
+	}
+
 	@Override
 	protected void saveAdditional(ValueOutput output) {
 		super.saveAdditional(output);

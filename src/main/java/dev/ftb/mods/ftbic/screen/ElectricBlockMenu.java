@@ -66,18 +66,23 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		int inputs = blockEntity.inputItems.length;
 		int outputs = blockEntity.outputItems.length;
 
-		int inputRows = Math.max(1, (int) Math.ceil(inputs / 2D));
+		int inputCols = Math.max(1, Math.min(2, inputs));
+		int inputXStart = 60 - (inputCols - 1) * 18;
+		int inputRows = Math.max(1, (int) Math.ceil(inputs / (double) inputCols));
 		int yStart = 35 - ((inputRows - 1) * 9);
 
 		for (int i = 0; i < inputs; i++) {
-			int row = i / 2, col = i % 2;
-			addSlot(new Slot(container, i, 42 + col * 18, yStart + row * 18));
+			int col = i % inputCols;
+			int row = i / inputCols;
+			addSlot(new Slot(container, i, inputXStart + col * 18, yStart + row * 18));
 		}
 
-		int outputRows = Math.max(1, (int) Math.ceil(outputs / 2D));
+		int outputCols = Math.max(1, Math.min(2, outputs));
+		int outputRows = Math.max(1, (int) Math.ceil(outputs / (double) outputCols));
 		int oyStart = 35 - ((outputRows - 1) * 9);
 		for (int i = 0; i < outputs; i++) {
-			int row = i / 2, col = i % 2;
+			int col = i % outputCols;
+			int row = i / outputCols;
 			addSlot(new OutputSlot(container, inputs + i, 108 + col * 18, oyStart + row * 18));
 		}
 
