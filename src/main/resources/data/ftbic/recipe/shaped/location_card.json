@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ftbic:location_card",
+  "pattern": [
+    " P ",
+    "PCP",
+    " P "
+  ],
+  "key": {
+    "P": "minecraft:paper",
+    "C": "ftbic:electronic_circuit"
+  },
+  "result": {
+    "id": "ftbic:location_card",
+    "count": 1
+  }
+}

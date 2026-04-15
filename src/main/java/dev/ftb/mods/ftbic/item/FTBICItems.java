@@ -136,6 +136,8 @@ public interface FTBICItems {
 
 	Supplier<Item> FLUID_CELL = REGISTRY.register("fluid_cell", name -> new FluidCellItem(props(name)));
 
+	Supplier<Item> LOCATION_CARD = REGISTRY.register("location_card", name -> new LocationCardItem(props(name)));
+
 	// Reactor components
 	Supplier<Item> SMALL_COOLANT_CELL = REGISTRY.register("small_coolant_cell", name -> new CoolantItem(props(name), 10_000));
 	Supplier<Item> MEDIUM_COOLANT_CELL = REGISTRY.register("medium_coolant_cell", name -> new CoolantItem(props(name), 30_000));
