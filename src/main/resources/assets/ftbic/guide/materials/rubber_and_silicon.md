@@ -1,0 +1,52 @@
+---
+navigation:
+  title: Rubber & Silicon
+  icon: ftbic:rubber
+  parent: materials/index.md
+  position: 4
+item_ids:
+  - ftbic:rubber
+  - ftbic:rubber_sheet
+  - ftbic:silicon
+---
+
+# <Color id="gold">Rubber & Silicon</Color>
+
+<Column alignItems="center" fullWidth={true}>
+  <ItemImage id="rubber" scale="2" />
+
+  The two bulk materials you'll run through nearly every machine. Rubber wraps every cable; silicon is the base of every circuit.
+</Column>
+
+<ItemImage id="minecraft:air" scale="0.25"/>
+***
+
+<Row>
+  <ItemImage id="rubber" />
+  ### <Color id="aqua">Rubber</Color>
+</Row>
+
+Smelt a vanilla **slime ball** for **8 rubber** — the main production path. Slime farms scale effortlessly, and the 8× yield per smelt keeps cable crafting cheap.
+
+If the **Myrtrees** mod is present, a <ItemLink id="centrifuge" /> can also process latex from rubber trees into rubber (3 per latex) as an alternative source.
+
+<RecipesFor id="rubber" />
+
+<Row>
+  <ItemImage id="rubber_sheet" />
+  ### <Color id="aqua">Rubber Sheet</Color>
+</Row>
+
+9 rubber → 1 sheet. Decoration block and crafting ingredient for the <ItemLink id="mechanical_elytra" />.
+
+<RecipeFor id="rubber_sheet" />
+
+<ItemImage id="minecraft:air" scale="0.25"/>
+***
+
+<Row>
+  <ItemImage id="silicon" />
+  ### <Color id="aqua">Silicon</Color>
+</Row>
+
+Extracted from sand or quartz in a <ItemLink id="centrifuge" />. Every circuit in the mod starts with silicon.

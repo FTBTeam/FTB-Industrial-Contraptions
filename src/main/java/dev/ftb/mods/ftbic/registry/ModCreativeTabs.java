@@ -2,12 +2,14 @@ package dev.ftb.mods.ftbic.registry;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.integration.guideme.FTBICGuide;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -20,6 +22,17 @@ public final class ModCreativeTabs {
 					.title(Component.translatable("itemGroup." + FTBIC.MOD_ID))
 					.icon(() -> new ItemStack(FTBICElectricBlocks.POWERED_FURNACE.item.get()))
 					.displayItems((params, out) -> {
+						if (ModList.get().isLoaded("guideme")) {
+							try {
+								ItemStack guide = guideme.Guides.createGuideItem(FTBICGuide.GUIDE_ID);
+								if (guide != null && !guide.isEmpty()) {
+									out.accept(guide);
+								}
+							} catch (Exception e) {
+								FTBIC.LOGGER.debug("Could not add GuideME book to creative tab: {}", e.getMessage());
+							}
+						}
+
 						FTBICElectricBlocks.ALL.forEach(inst -> out.accept(inst.item.get()));
 
 						out.accept(FTBICItems.RUBBER_SHEET.get());
@@ -53,6 +66,7 @@ public final class ModCreativeTabs {
 						out.accept(FTBICItems.EV_BATTERY.get());
 						out.accept(FTBICItems.CREATIVE_BATTERY.get());
 						out.accept(FTBICItems.FLUID_CELL.get());
+						out.accept(FTBICItems.LOCATION_CARD.get());
 
 						out.accept(FTBICItems.SMALL_COOLANT_CELL.get());
 						out.accept(FTBICItems.MEDIUM_COOLANT_CELL.get());

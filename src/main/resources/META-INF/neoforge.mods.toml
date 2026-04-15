@@ -31,3 +31,10 @@ type = "required"
 versionRange = "[26.1.1.1,)"
 ordering = "BEFORE"
 side = "BOTH"
+
+[[dependencies.ftbic]]
+modId = "guideme"
+type = "optional"
+versionRange = "[26,)"
+ordering = "AFTER"
+side = "BOTH"
