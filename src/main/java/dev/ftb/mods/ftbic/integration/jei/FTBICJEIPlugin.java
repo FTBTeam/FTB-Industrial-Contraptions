@@ -64,6 +64,15 @@ public class FTBICJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(IRecipeRegistration r) {
 		r.addRecipes(GeothermalFuelCategory.TYPE, java.util.List.of(GeothermalFuelCategory.defaultEntry()));
+
+		// Info entry for the antimatter item — explains it's produced over time by the Antimatter Constructor.
+		long zapsPer = Math.round(dev.ftb.mods.ftbic.block.entity.machine.AntimatterConstructorBlockEntity.PRODUCTION_THRESHOLD);
+		r.addItemStackInfo(
+				new net.minecraft.world.item.ItemStack(dev.ftb.mods.ftbic.item.FTBICItems.ANTIMATTER.item.get()),
+				net.minecraft.network.chat.Component.literal("Produced by the Antimatter Constructor."),
+				net.minecraft.network.chat.Component.literal("Each antimatter requires " + zapsPer + " zaps of progress."),
+				net.minecraft.network.chat.Component.literal("Boost items consumed in the input slot accelerate progress."),
+				net.minecraft.network.chat.Component.literal("See \"Antimatter Constructor\" recipes for boost values."));
 	}
 
 	@Override

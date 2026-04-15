@@ -61,6 +61,12 @@ public final class ClientRecipeCache {
 		showRecipesForTypes(java.util.List.of(vanillaType));
 	}
 
+	/** Opens JEI's ingredient panel filtered by {@code text}. No-op when JEI isn't loaded. */
+	public static synchronized void setSearchFilter(String text) {
+		if (runtime == null) return;
+		runtime.getIngredientFilter().setFilterText(text);
+	}
+
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public static synchronized void showRecipesForTypes(List<RecipeType<?>> vanillaTypes) {
 		if (runtime == null) {

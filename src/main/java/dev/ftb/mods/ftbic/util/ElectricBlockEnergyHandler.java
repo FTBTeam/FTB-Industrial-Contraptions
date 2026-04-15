@@ -15,9 +15,17 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext;
  */
 public class ElectricBlockEnergyHandler extends SnapshotJournal<Double> implements EnergyHandler {
 	private final ElectricBlockEntity be;
+	private final boolean canInsert;
+	private final boolean canExtract;
 
 	public ElectricBlockEnergyHandler(ElectricBlockEntity be) {
+		this(be, true, true);
+	}
+
+	public ElectricBlockEnergyHandler(ElectricBlockEntity be, boolean canInsert, boolean canExtract) {
 		this.be = be;
+		this.canInsert = canInsert;
+		this.canExtract = canExtract;
 	}
 
 	@Override
@@ -32,7 +40,7 @@ public class ElectricBlockEnergyHandler extends SnapshotJournal<Double> implemen
 
 	@Override
 	public int insert(int amount, TransactionContext transaction) {
-		if (amount <= 0 || be.isBurnt() || be.getMaxInputEnergy() <= 0D) return 0;
+		if (!canInsert || amount <= 0 || be.isBurnt() || be.getMaxInputEnergy() <= 0D) return 0;
 		double rate = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 		double asZaps = amount / rate;
 		double acceptable = Math.min(asZaps, be.getEnergyCapacity() - be.getEnergy());
@@ -45,7 +53,7 @@ public class ElectricBlockEnergyHandler extends SnapshotJournal<Double> implemen
 
 	@Override
 	public int extract(int amount, TransactionContext transaction) {
-		if (amount <= 0 || be.getEnergy() <= 0D) return 0;
+		if (!canExtract || amount <= 0 || be.getEnergy() <= 0D) return 0;
 		double rate = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 		double asZaps = amount / rate;
 		double extractable = Math.min(asZaps, be.getEnergy());

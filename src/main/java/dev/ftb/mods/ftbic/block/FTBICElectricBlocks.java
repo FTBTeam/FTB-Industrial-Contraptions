@@ -26,31 +26,36 @@ public interface FTBICElectricBlocks {
 	ElectricBlockInstance BASIC_GENERATOR = register("basic_generator", BasicGeneratorBlockEntity::new)
 			.energyCapacity(FTBICConfig.MACHINES.BASIC_GENERATOR_CAPACITY)
 			.maxEnergyOutput(FTBICConfig.MACHINES.BASIC_GENERATOR_OUTPUT)
+			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY)
 			.io(1, 0);
 
 	ElectricBlockInstance GEOTHERMAL_GENERATOR = register("geothermal_generator", GeothermalGeneratorBlockEntity::new)
 			.energyCapacity(FTBICConfig.MACHINES.GEOTHERMAL_GENERATOR_CAPACITY)
 			.maxEnergyOutput(FTBICConfig.MACHINES.GEOTHERMAL_GENERATOR_OUTPUT)
+			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY)
 			.io(1, 1);
 
 	ElectricBlockInstance WIND_MILL = register("wind_mill", WindMillBlockEntity::new)
 			.cantBeActive()
 			.energyCapacity(FTBICConfig.MACHINES.WIND_MILL_CAPACITY)
-			.maxEnergyOutput(FTBICConfig.MACHINES.WIND_MILL_MAX_OUTPUT);
+			.maxEnergyOutput(FTBICConfig.MACHINES.WIND_MILL_MAX_OUTPUT)
+			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY);
 
 	ElectricBlockInstance LV_SOLAR_PANEL = register("lv_solar_panel", LVSolarPanelBlockEntity::new)
 			.name("LV Solar Panel")
 			.noRotation()
 			.cantBeActive()
 			.energyCapacity(() -> FTBICConfig.MACHINES.LV_SOLAR_PANEL_CAPACITY.get() * 60)
-			.maxEnergyOutput(FTBICConfig.MACHINES.LV_SOLAR_PANEL_OUTPUT);
+			.maxEnergyOutput(FTBICConfig.MACHINES.LV_SOLAR_PANEL_OUTPUT)
+			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY);
 
 	ElectricBlockInstance MV_SOLAR_PANEL = register("mv_solar_panel", MVSolarPanelBlockEntity::new)
 			.name("MV Solar Panel")
 			.noRotation()
 			.cantBeActive()
 			.energyCapacity(() -> FTBICConfig.MACHINES.MV_SOLAR_PANEL_CAPACITY.get() * 60)
-			.maxEnergyOutput(FTBICConfig.MACHINES.MV_SOLAR_PANEL_OUTPUT);
+			.maxEnergyOutput(FTBICConfig.MACHINES.MV_SOLAR_PANEL_OUTPUT)
+			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY);
 
 	ElectricBlockInstance HV_SOLAR_PANEL = register("hv_solar_panel", HVSolarPanelBlockEntity::new)
 			.advanced()
@@ -58,7 +63,8 @@ public interface FTBICElectricBlocks {
 			.noRotation()
 			.cantBeActive()
 			.energyCapacity(() -> FTBICConfig.MACHINES.HV_SOLAR_PANEL_CAPACITY.get() * 60)
-			.maxEnergyOutput(FTBICConfig.MACHINES.HV_SOLAR_PANEL_OUTPUT);
+			.maxEnergyOutput(FTBICConfig.MACHINES.HV_SOLAR_PANEL_OUTPUT)
+			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY);
 
 	ElectricBlockInstance EV_SOLAR_PANEL = register("ev_solar_panel", EVSolarPanelBlockEntity::new)
 			.advanced()
@@ -66,11 +72,13 @@ public interface FTBICElectricBlocks {
 			.noRotation()
 			.cantBeActive()
 			.energyCapacity(() -> FTBICConfig.MACHINES.EV_SOLAR_PANEL_CAPACITY.get() * 60)
-			.maxEnergyOutput(FTBICConfig.MACHINES.EV_SOLAR_PANEL_OUTPUT);
+			.maxEnergyOutput(FTBICConfig.MACHINES.EV_SOLAR_PANEL_OUTPUT)
+			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY);
 
 	ElectricBlockInstance NUCLEAR_REACTOR = register("nuclear_reactor", NuclearReactorBlockEntity::new)
 			.advanced()
 			.energyCapacity(FTBICConfig.MACHINES.NUCLEAR_REACTOR_CAPACITY)
+			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY)
 			.io(54, 0);
 
 	// Machines //
@@ -270,6 +278,43 @@ public interface FTBICElectricBlocks {
 			.energyCapacity(FTBICConfig.ENERGY.IV_TRANSFER_RATE)
 			.maxEnergyInput(FTBICConfig.ENERGY.IV_TRANSFER_RATE)
 			.maxEnergyOutput(FTBICConfig.ENERGY.EV_TRANSFER_RATE);
+
+	// Energy Rectifiers — one-way FE → zaps converters. Input on facing direction; output on the other 5 sides. //
+
+	ElectricBlockInstance LV_RECTIFIER = register("lv_rectifier", LVRectifierBlockEntity::new)
+			.name("LV Energy Rectifier").rotate3D().cantBeActive()
+			.feMode(ElectricBlockInstance.FECapMode.INSERT_ONLY)
+			.energyCapacity(FTBICConfig.ENERGY.LV_TRANSFER_RATE)
+			.maxEnergyInput(FTBICConfig.ENERGY.LV_TRANSFER_RATE)
+			.maxEnergyOutput(FTBICConfig.ENERGY.LV_TRANSFER_RATE);
+
+	ElectricBlockInstance MV_RECTIFIER = register("mv_rectifier", MVRectifierBlockEntity::new)
+			.name("MV Energy Rectifier").rotate3D().cantBeActive()
+			.feMode(ElectricBlockInstance.FECapMode.INSERT_ONLY)
+			.energyCapacity(FTBICConfig.ENERGY.MV_TRANSFER_RATE)
+			.maxEnergyInput(FTBICConfig.ENERGY.MV_TRANSFER_RATE)
+			.maxEnergyOutput(FTBICConfig.ENERGY.MV_TRANSFER_RATE);
+
+	ElectricBlockInstance HV_RECTIFIER = register("hv_rectifier", HVRectifierBlockEntity::new)
+			.advanced().name("HV Energy Rectifier").rotate3D().cantBeActive()
+			.feMode(ElectricBlockInstance.FECapMode.INSERT_ONLY)
+			.energyCapacity(FTBICConfig.ENERGY.HV_TRANSFER_RATE)
+			.maxEnergyInput(FTBICConfig.ENERGY.HV_TRANSFER_RATE)
+			.maxEnergyOutput(FTBICConfig.ENERGY.HV_TRANSFER_RATE);
+
+	ElectricBlockInstance EV_RECTIFIER = register("ev_rectifier", EVRectifierBlockEntity::new)
+			.advanced().name("EV Energy Rectifier").rotate3D().cantBeActive()
+			.feMode(ElectricBlockInstance.FECapMode.INSERT_ONLY)
+			.energyCapacity(FTBICConfig.ENERGY.EV_TRANSFER_RATE)
+			.maxEnergyInput(FTBICConfig.ENERGY.EV_TRANSFER_RATE)
+			.maxEnergyOutput(FTBICConfig.ENERGY.EV_TRANSFER_RATE);
+
+	ElectricBlockInstance IV_RECTIFIER = register("iv_rectifier", IVRectifierBlockEntity::new)
+			.advanced().name("IV Energy Rectifier").rotate3D().cantBeActive()
+			.feMode(ElectricBlockInstance.FECapMode.INSERT_ONLY)
+			.energyCapacity(FTBICConfig.ENERGY.IV_TRANSFER_RATE)
+			.maxEnergyInput(FTBICConfig.ENERGY.IV_TRANSFER_RATE)
+			.maxEnergyOutput(FTBICConfig.ENERGY.IV_TRANSFER_RATE);
 
 	static void init() {
 	}

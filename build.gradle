@@ -86,8 +86,8 @@ repositories {
 
 dependencies {
     // JEI - wired up for Phase 6 integration; safe to leave as compileOnly until then
-    compileOnly("mezz.jei:jei-26.1.1-neoforge-api:29.4.0.23")
-    runtimeOnly("mezz.jei:jei-26.1.1-neoforge:29.4.0.23")
+    compileOnly("mezz.jei:jei-26.1.2-neoforge-api:29.5.0.26")
+    runtimeOnly("mezz.jei:jei-26.1.2-neoforge:29.5.0.26")
 
     // Jade - block-info tooltips. Compile against the CurseForge jar; same coordinates as
     // the auroral reference project.

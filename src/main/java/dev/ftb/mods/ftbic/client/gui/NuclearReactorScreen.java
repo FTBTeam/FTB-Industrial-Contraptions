@@ -66,6 +66,9 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 			int pct = Math.round(this.menu.getHeatFraction() * 100F);
 			g.setTooltipForNextFrame(Component.translatable("ftbic.jade.reactor_heat", pct), mouseX, mouseY);
 		}
+		if (isIn(mouseX, mouseY, leftPos + 94, topPos + 5, 9, 10)) {
+			g.setTooltipForNextFrame(Component.literal("Show reactor components in JEI"), mouseX, mouseY);
+		}
 	}
 
 	@Override
@@ -78,6 +81,10 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 		}
 		if (isIn(mx, my, leftPos + 105, topPos + 127, 9, 10)) {
 			send(1);
+			return true;
+		}
+		if (isIn(mx, my, leftPos + 94, topPos + 5, 9, 10)) {
+			dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache.setSearchFilter("@ftbic reactor");
 			return true;
 		}
 		return super.mouseClicked(event, dragging);

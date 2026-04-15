@@ -31,8 +31,21 @@ public final class CapabilityRegistrar {
 					(net.minecraft.world.level.block.entity.BlockEntityType<ElectricBlockEntity>) (Object) instance.blockEntity.get();
 			event.registerBlockEntity(Capabilities.Item.BLOCK, type,
 					(be, side) -> new ElectricBlockResourceHandler(be));
-			event.registerBlockEntity(Capabilities.Energy.BLOCK, type,
-					(be, side) -> new ElectricBlockEnergyHandler(be));
+
+			switch (instance.feCapMode) {
+				case EXTRACT_ONLY -> event.registerBlockEntity(Capabilities.Energy.BLOCK, type,
+						(be, side) -> new ElectricBlockEnergyHandler(be, false, true));
+				case INSERT_ONLY -> event.registerBlockEntity(Capabilities.Energy.BLOCK, type,
+						(be, side) -> {
+							if (!(be instanceof dev.ftb.mods.ftbic.block.entity.storage.EnergyRectifierBlockEntity rec)) return null;
+							net.minecraft.core.Direction inputFace = be.getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING);
+							if (side != null && side != inputFace) return null;
+							return new dev.ftb.mods.ftbic.util.EnergyRectifierFEHandler(rec);
+						});
+				case NONE -> {
+					// No Energy.BLOCK exposure — internal zaps only.
+				}
+			}
 		}
 
 		// Geothermal generator exposes its lava tank as a FluidResource handler.

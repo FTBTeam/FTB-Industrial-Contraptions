@@ -83,6 +83,9 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 
+		// 0. Push to adjacent foreign FE consumers (cables/machines) directly via Capabilities.Energy.BLOCK.
+		pushFEToNeighbours();
+
 		// 1. Charge slot: drain this BE's buffer into an inserted battery.
 		if (energy > 0D) {
 			ItemStack battery = chargeBatteryInventory.getStackInSlot(0);
@@ -157,6 +160,42 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 	public boolean isValidEnergyOutputSide(Direction direction) {
 		return true;
+	}
+
+	/**
+	 * Push surplus zaps to adjacent foreign FE consumers (other-mod cables/machines) by querying
+	 * {@code Capabilities.Energy.BLOCK} on each neighbour. Skips FTBIC blocks since those are
+	 * handled by the in-network distribution loop below.
+	 */
+	private void pushFEToNeighbours() {
+		if (electricBlockInstance.feCapMode != dev.ftb.mods.ftbic.block.ElectricBlockInstance.FECapMode.EXTRACT_ONLY) return;
+		if (energy <= 0D || maxEnergyOutputTransfer <= 0D) return;
+		double rate = dev.ftb.mods.ftbic.FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
+		for (Direction dir : dev.ftb.mods.ftbic.util.FTBICUtils.DIRECTIONS) {
+			if (!isValidEnergyOutputSide(dir)) continue;
+			BlockPos npos = worldPosition.relative(dir);
+			BlockEntity nbe = level.getBlockEntity(npos);
+			if (nbe instanceof EnergyHandler) continue; // FTBIC neighbour — handled by network distribution
+			net.neoforged.neoforge.transfer.energy.EnergyHandler fe =
+					level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.Energy.BLOCK, npos, dir.getOpposite());
+			if (fe == null) continue;
+			double zapsAvailable = Math.min(energy, maxEnergyOutputTransfer);
+			int feToOffer = (int) Math.min(Integer.MAX_VALUE, Math.floor(zapsAvailable * rate));
+			if (feToOffer <= 0) continue;
+			try (var tx = net.neoforged.neoforge.transfer.transaction.Transaction.openRoot()) {
+				int feAccepted = fe.insert(feToOffer, tx);
+				if (feAccepted > 0) {
+					double zapsConsumed = feAccepted / rate;
+					if (zapsConsumed > energy) zapsConsumed = energy;
+					energy -= zapsConsumed;
+					tx.commit();
+					active = true;
+					setChanged();
+				}
+				// no commit = rollback on close
+			}
+			if (energy <= 0D) return;
+		}
 	}
 
 	@Override

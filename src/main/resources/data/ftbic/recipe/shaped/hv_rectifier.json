@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "ftbic:hv_rectifier",
+  "pattern": [
+    "RWR",
+    "PTP",
+    "RWR"
+  ],
+  "key": {
+    "R": "minecraft:redstone",
+    "W": "ftbic:hv_cable",
+    "P": "#c:ingots/iron",
+    "T": "ftbic:hv_transformer"
+  },
+  "result": {
+    "id": "ftbic:hv_rectifier",
+    "count": 1
+  }
+}

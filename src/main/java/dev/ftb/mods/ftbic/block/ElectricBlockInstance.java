@@ -45,6 +45,10 @@ public class ElectricBlockInstance {
 	public int inputItemCount = 0;
 	public int outputItemCount = 0;
 	public boolean tickClientSide = false;
+	/** FE capability mode — NONE = no Energy.BLOCK exposed; EXTRACT_ONLY = generators provide FE; INSERT_ONLY = rectifier accepts FE on input face. */
+	public FECapMode feCapMode = FECapMode.NONE;
+
+	public enum FECapMode { NONE, EXTRACT_ONLY, INSERT_ONLY }
 
 	public ElectricBlockInstance(String i, BlockEntityType.BlockEntitySupplier<BlockEntity> blockEntitySupplier) {
 		id = i;
@@ -88,4 +92,5 @@ public class ElectricBlockInstance {
 	public ElectricBlockInstance energyUsage(double d) { energyUsage = () -> d; return this; }
 	public ElectricBlockInstance maxEnergyInput(Supplier<Double> d) { maxEnergyInput = d; return this; }
 	public ElectricBlockInstance maxEnergyInput(double d) { maxEnergyInput = () -> d; return this; }
+	public ElectricBlockInstance feMode(FECapMode m) { feCapMode = m; return this; }
 }
