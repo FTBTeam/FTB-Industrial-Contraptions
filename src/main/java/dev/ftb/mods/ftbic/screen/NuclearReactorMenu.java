@@ -7,6 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.Slot;
 
 public class NuclearReactorMenu extends ElectricBlockMenu {
 	public final DataSlot pausedSlot = DataSlot.standalone();
@@ -39,11 +40,27 @@ public class NuclearReactorMenu extends ElectricBlockMenu {
 
 	@Override
 	protected int getPlayerSlotOffset() {
-		return 150;
+		return 144;
+	}
+
+	public static final int HOTBAR_OFFSET_FROM_INV = 54;
+
+	@Override
+	protected void addPlayerInventorySlots(Inventory inv) {
+		int off = getPlayerSlotOffset();
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 9; col++) {
+				addSlot(new Slot(inv, col + row * 9 + 9, 8 + col * 18, off + row * 18));
+			}
+		}
+		int hotbar = off + HOTBAR_OFFSET_FROM_INV;
+		for (int col = 0; col < 9; col++) {
+			addSlot(new Slot(inv, col, 8 + col * 18, hotbar));
+		}
 	}
 
 	public static int slotScreenY(int row) {
-		return 18 + row * 18 + (row >= 3 ? 18 : 0);
+		return 18 + row * 18;
 	}
 
 	@Override
