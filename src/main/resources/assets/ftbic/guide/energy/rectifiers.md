@@ -31,7 +31,7 @@ item_ids:
 
 A rectifier is directional. Its **FE face** accepts Forge Energy from an adjacent FE-producing cable, generator, or storage block. The remaining faces output the converted power as zaps into the FTBIC network.
 
-The conversion rate is **1 zap = 10 FE** by default (configurable). Each tier's rectifier converts at the matching voltage transfer rate:
+The conversion rate is **1 zap = 8 FE** by default (configurable). Each tier's rectifier converts at the matching voltage transfer rate:
 
 | Rectifier | Zap rate |
 |-----------|----------|
