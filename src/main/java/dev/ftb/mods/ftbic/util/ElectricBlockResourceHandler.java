@@ -7,14 +7,6 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-/**
- * ResourceHandler<ItemResource> adapter exposing an `ElectricBlockEntity`'s inputItems + outputItems
- * arrays as a single handler so hoppers and pipes from other mods can interact via the new NeoForge
- * transfer API (`Capabilities.Item.BLOCK`).
- *
- * Slot layout: 0..inputs-1 = input buffer (insert-only from outside), inputs..end = output buffer
- * (extract-only). Transactions are supported via per-slot SnapshotJournal.
- */
 public class ElectricBlockResourceHandler extends SnapshotJournal<ItemStack[]> implements ResourceHandler<ItemResource> {
 	private final ElectricBlockEntity be;
 

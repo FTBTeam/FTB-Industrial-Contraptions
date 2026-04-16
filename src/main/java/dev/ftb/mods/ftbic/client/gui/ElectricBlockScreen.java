@@ -15,6 +15,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
+import dev.ftb.mods.ftbic.screen.BatterySlot;
+import dev.ftb.mods.ftbic.screen.UpgradeSlot;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
 
 public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractContainerScreen<T> {
 	public static final Identifier BASE_TEXTURE = FTBIC.id("textures/gui/base.png");
@@ -59,9 +62,9 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 	protected void extractMachineSlotTooltips(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
 		net.minecraft.world.inventory.Slot slot = this.hoveredSlot;
 		if (slot == null || slot.hasItem()) return;
-		if (slot instanceof dev.ftb.mods.ftbic.screen.UpgradeSlot) {
+		if (slot instanceof UpgradeSlot) {
 			graphics.setTooltipForNextFrame(Component.literal("Upgrade Slot"), mouseX, mouseY);
-		} else if (slot instanceof dev.ftb.mods.ftbic.screen.BatterySlot) {
+		} else if (slot instanceof BatterySlot) {
 			graphics.setTooltipForNextFrame(Component.literal("Battery Slot"), mouseX, mouseY);
 		}
 	}
@@ -93,8 +96,8 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 			double cap = this.menu.blockEntity == null ? 0 : this.menu.blockEntity.getEnergyCapacity();
 			double cur = cap * this.menu.getEnergyFraction();
 			graphics.setTooltipForNextFrame(
-					Component.literal(dev.ftb.mods.ftbic.util.FTBICUtils.formatEnergy(cur).getString()
-							+ " / " + dev.ftb.mods.ftbic.util.FTBICUtils.formatEnergy(cap).getString()),
+					Component.literal(FTBICUtils.formatEnergy(cur).getString()
+							+ " / " + FTBICUtils.formatEnergy(cap).getString()),
 					mouseX, mouseY);
 		}
 		if (drawDefaultArrow && isIn(mouseX, mouseY, leftPos + 80, topPos + 35, 22, 16)) {
@@ -104,18 +107,15 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 	}
 
 
-	/** Draws the {@link #getScreenTexture()} as the 176×166 (or {@link #imageWidth}×{@link #imageHeight}) container frame. */
 	protected void drawBase(GuiGraphicsExtractor graphics) {
 		graphics.blit(RenderPipelines.GUI_TEXTURED, getScreenTexture(),
 				leftPos, topPos, 0F, 0F, this.imageWidth, this.imageHeight, 256, 256);
 	}
 
-	/** Custom screens can override this to use a bespoke background texture. */
 	protected Identifier getScreenTexture() {
 		return BASE_TEXTURE;
 	}
 
-	/** Draws the optional default energy + progress bars (subclasses can disable per-bar). */
 	protected void drawDefaultBars(GuiGraphicsExtractor graphics) {
 		if (energyX >= 0 && energyY >= 0) {
 			float frac = this.menu.getEnergyFraction();
@@ -127,7 +127,6 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 		}
 	}
 
-	// === Atlas helpers — port of 1.18.2 ElectricBlockScreen draw methods. ===
 
 	public void drawEnergy(GuiGraphicsExtractor g, int x, int y, int energy) {
 		int e = Mth.clamp(energy, 0, 14);
@@ -199,7 +198,6 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 		if (p > 0)  g.blit(RenderPipelines.GUI_TEXTURED, BASE_TEXTURE, x, y, 87F, 207F, p, 3, 256, 256);
 	}
 
-	/** 18×54 vertical tank with an in-world fluid sprite filling from the bottom up. */
 	public void drawTank(GuiGraphicsExtractor g, int x, int y, FluidStack fluid, int capacity) {
 		// Backing
 		g.blit(RenderPipelines.GUI_TEXTURED, BASE_TEXTURE, x, y, 49F, 167F, 18, 54, 256, 256);
@@ -232,7 +230,6 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 		g.blit(RenderPipelines.GUI_TEXTURED, BASE_TEXTURE, x, y, 68F, 167F, 18, 54, 256, 256);
 	}
 
-	// === Buttons ===
 
 	public void drawButtonPause(GuiGraphicsExtractor g, int x, int y) {
 		g.blit(RenderPipelines.GUI_TEXTURED, BASE_TEXTURE, x, y, 112F, 167F, 18, 18, 256, 256);
@@ -290,11 +287,6 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 		return mx >= x && mx < x + w && my >= y && my < y + h;
 	}
 
-	/**
-	 * Resolve the still-texture atlas key for the fluids the FTBIC tanks actually accept.
-	 * NeoForge 26.1.1.11 removed {@code IClientFluidTypeExtensions#getStillTexture}; until a
-	 * replacement API lands, extend this switch when adding new accepted fluids.
-	 */
 	private static Identifier stillTextureFor(Fluid fluid) {
 		if (fluid == Fluids.WATER || fluid == Fluids.FLOWING_WATER) return Identifier.parse("minecraft:block/water_still");
 		if (fluid == Fluids.LAVA || fluid == Fluids.FLOWING_LAVA) return Identifier.parse("minecraft:block/lava_still");

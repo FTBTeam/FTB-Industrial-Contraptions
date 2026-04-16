@@ -10,13 +10,6 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-/**
- * {@code ResourceHandler<FluidResource>} bound to a single stack of FluidCellItem. Reads the
- * {@code FLUID_CELL_CONTENT} data component; when modified, writes a new stack back through the
- * {@link ItemAccess} using {@code exchange()} so inventories/container menus see the update.
- *
- * The cell holds exactly {@link FluidCellItem#capacity()} mB of a single fluid or nothing.
- */
 public class FluidCellHandler implements ResourceHandler<FluidResource> {
 	private final ItemAccess access;
 

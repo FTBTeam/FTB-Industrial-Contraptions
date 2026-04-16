@@ -6,11 +6,6 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 6-row dynamic-width reactor grid matching the classic IC2 9×6 layout. Width = 3 + chamberCount
- * (3..9). Array is always sized {@value MAX_COLUMNS} × {@value ROWS} = 54; cells beyond
- * {@link #activeColumns} are forced empty by the BE. Simulation iterates only the active region.
- */
 public class NuclearReactor {
 	public static final int MAX_COLUMNS = 9;
 	public static final int ROWS = 6;
@@ -23,7 +18,6 @@ public class NuclearReactor {
 	public boolean simulation = false;
 	public int heat = 0;
 	public int activeColumns = 3;
-	/** 1.0 = no environmental cooling bonus, 2.0 = fully water-clad (scales reactor-hull cooling). */
 	public double envCoolingMultiplier = 1.0D;
 
 	public double energyOutput = 0D;
@@ -77,7 +71,6 @@ public class NuclearReactor {
 		}
 	}
 
-	/** Runs one reactor cycle. Returns true if the simulation should stop (i.e. no fuel rods active). */
 	public boolean tick() {
 		energyOutput = 0D;
 		maxHeat = 10_000;

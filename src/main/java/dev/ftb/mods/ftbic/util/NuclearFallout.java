@@ -12,16 +12,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
 
-/**
- * Applies post-explosion fallout to the surface around a nuclear blast: grass → podzol, dirt →
- * coarse dirt, stone → magma/basalt/blackstone (random), with occasional fire on top and exfluid
- * pools where liquid used to be. Sync iteration over a column-major scan within a square horizontal
- * radius of {@code radius * 0.85}, picking the topmost surface block via the world's
- * {@link Heightmap.Types#WORLD_SURFACE}. Reinforced + protected blocks are skipped.
- *
- * <p>Replaces the threaded 1.18.2 {@code NuclearExplosion} for now — the vanilla {@code Explosion}
- * handles the actual destruction; this class only paints the resulting surface.
- */
 public final class NuclearFallout {
 	private NuclearFallout() {}
 

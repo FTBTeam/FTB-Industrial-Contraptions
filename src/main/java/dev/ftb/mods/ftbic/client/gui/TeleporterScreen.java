@@ -19,6 +19,7 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
 
 public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 	private static List<TeleporterEntry> CURRENT_ENTRIES = new ArrayList<>();
@@ -266,7 +267,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 				int rowY = y + 1 + i * OVERLAY_ROW_H;
 				if (isIn(mouseX, mouseY, x + 1, rowY, rowWidth, OVERLAY_ROW_H)) {
 					TeleporterEntry e = entries.get(idx);
-					String cost = dev.ftb.mods.ftbic.util.FTBICUtils.formatEnergy(e.energyUse()).getString();
+					String cost = FTBICUtils.formatEnergy(e.energyUse()).getString();
 					g.setTooltipForNextFrame(Component.literal(formatEntry(e.name(), e.pos(), e.dimension())
 							+ "\nCost: " + cost + " per jump\nClick to link"), mouseX, mouseY);
 					break;

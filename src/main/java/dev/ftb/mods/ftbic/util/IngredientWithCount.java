@@ -8,10 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
-/**
- * Ingredient paired with a required count. Used by machine recipes which need "3 of X" inputs.
- * Ported to 26.1 Codec/StreamCodec from the 1.18.2 JSON/FriendlyByteBuf serialisation.
- */
 public record IngredientWithCount(Ingredient ingredient, int count) {
 	public static final IngredientWithCount[] EMPTY = new IngredientWithCount[0];
 

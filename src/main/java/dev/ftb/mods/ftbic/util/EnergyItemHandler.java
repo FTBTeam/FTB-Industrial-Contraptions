@@ -3,10 +3,6 @@ package dev.ftb.mods.ftbic.util;
 import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * Item-stack energy storage. Ported from the 1.18.2 IForgeItem-based interface; energy is now stored in a
- * DataComponent rather than CompoundTag NBT.
- */
 public interface EnergyItemHandler {
 	double getEnergyCapacity(ItemStack stack);
 

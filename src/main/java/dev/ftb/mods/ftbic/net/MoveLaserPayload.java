@@ -8,10 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-/**
- * S2C: update digging-machine laser beam position. Fired by the server when a quarry/pump targets a
- * new block and clients need to animate the beam smoothly.
- */
 public record MoveLaserPayload(BlockPos pos, float x, int y, float z) implements CustomPacketPayload {
 	public static final Type<MoveLaserPayload> TYPE = new Type<>(FTBIC.id("move_laser"));
 

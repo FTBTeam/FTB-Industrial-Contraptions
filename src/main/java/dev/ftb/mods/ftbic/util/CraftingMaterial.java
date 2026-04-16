@@ -2,10 +2,6 @@ package dev.ftb.mods.ftbic.util;
 
 import net.minecraft.resources.Identifier;
 
-/**
- * Maps a material id to its common tags. Since 1.20.2 NeoForge uses the "c" namespace for common tags
- * rather than "forge".
- */
 public class CraftingMaterial {
 	public final String id;
 	public final ItemTagKeyWrapper ore;

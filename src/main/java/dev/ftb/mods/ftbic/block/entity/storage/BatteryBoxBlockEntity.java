@@ -8,13 +8,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import dev.ftb.mods.ftbic.screen.BatteryBoxMenu;
 
-/**
- * Tiered battery buffer. Accepts energy on all faces except the facing (output face). Input slot 0
- * discharges charged battery items into the buffer; the inherited `chargeBatteryInventory` from
- * `GeneratorBlockEntity` charges inserted batteries from the buffer (first output slot is the charge
- * slot; zero output slots means no charge slot available).
- */
 public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	public BatteryBoxBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -22,7 +17,7 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.BatteryBoxMenu(id, inv, this);
+		return new BatteryBoxMenu(id, inv, this);
 	}
 
 	@Override

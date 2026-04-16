@@ -12,11 +12,6 @@ import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
-/**
- * Energised chestplate. Item-side properties are configured via {@code Item.Properties.humanoidArmor(...)}
- * in {@link FTBICItems} (DIAMOND base for Carbon, NETHERITE for Quantum); per-tick damage absorption
- * + zap drain happens in {@link dev.ftb.mods.ftbic.events.EnergyArmorDamageHandler}.
- */
 public class EnergyArmorItem extends Item implements EnergyItemHandler {
 	public final EnergyArmorMaterial material;
 

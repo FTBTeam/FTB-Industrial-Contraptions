@@ -13,9 +13,6 @@ import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
-/**
- * Base electric item — stores energy in a DataComponent (see ModDataComponents.ENERGY).
- */
 public class ElectricItem extends Item implements EnergyItemHandler {
 	public final EnergyTier tier;
 	public final double capacity;

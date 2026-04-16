@@ -38,15 +38,12 @@ import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe;
+import dev.ftb.mods.ftbic.util.FluidCellIngredient;
 
-/**
- * All FTBIC recipes as datagen. Runs via {@link FTBICDataGen} in {@code runClientData} and outputs to
- * {@code src/generated/resources/data/ftbic/recipe/}. Tag-based ingredients automatically pick up
- * a {@code neoforge:not(neoforge:tag_empty)} condition so recipes don't register with no valid items.
- */
 public class FTBICRecipeProvider extends RecipeProvider {
 
-	/** Metals with dust → ingot cooking recipes (covers smelting + blasting). */
 	private static final String[] SMELTABLE_DUSTS = {
 			"aluminum", "antimony", "brass", "bronze", "chromium", "constantan", "electrum",
 			"enderium", "graphite", "invar", "iridium", "lead", "lumium", "nickel", "osmium",
@@ -54,7 +51,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 			"stainless_steel", "steel", "tin", "titanium", "tungsten", "uranium", "zinc",
 	};
 
-	/** Ingot-keyed metals for {@code #c:ingots/X → X_dust} macerating recipes. */
 	private static final String[] MACERATE_INGOTS = {
 			"aluminum", "antimony", "brass", "bronze", "chromium", "constantan", "copper",
 			"electrum", "enderium", "gold", "graphite", "invar", "iridium", "iron", "lead",
@@ -63,7 +59,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 			"tungsten", "uranium", "zinc",
 	};
 
-	/** Ore-keyed entries for {@code #c:ores/X → 2× X_dust}. */
 	private static final String[] MACERATE_ORES = {
 			"aluminum", "antimony", "apatite", "bauxite", "cinnabar", "coal", "copper", "diamond",
 			"emerald", "fluorite", "gold", "iridium", "iron", "lapis_lazuli", "lead", "monazite",
@@ -71,7 +66,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 			"sulfur", "tin", "titanium", "tungsten", "uranium", "zinc",
 	};
 
-	/** Raw-material entries for {@code #c:raw_materials/X → 1 + 35% chance of X_dust}. */
 	private static final String[] MACERATE_RAW = {
 			"aluminum", "antimony", "brass", "chromium", "copper", "gold", "iridium", "iron",
 			"lead", "nickel", "osmium", "platinum", "plutonium", "silicon", "silver", "tin",
@@ -101,7 +95,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shapelessRecipes();
 	}
 
-	// --- Basic Generator Fuels -----------------------------------------------------------------
 
 	private void basicGeneratorFuels() {
 		fuel("coal", tag(ItemTags.COALS), 1600);
@@ -112,7 +105,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		fuel("stick", Ingredient.of(Items.STICK), 100);
 		fuel("sugar_cane", Ingredient.of(Items.SUGAR_CANE), 100);
 		fuel("cactus", Ingredient.of(Items.CACTUS), 200);
-		fuel("scrap", Ingredient.of(dev.ftb.mods.ftbic.item.FTBICItems.SCRAP.item.get()), 400);
+		fuel("scrap", Ingredient.of(FTBICItems.SCRAP.item.get()), 400);
 	}
 
 	private void fuel(String name, Ingredient ingredient, int ticks) {
@@ -121,7 +114,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		output.accept(key, recipe, null, conditionsFor(ingredient));
 	}
 
-	// --- Macerating (ftbic:macerating) ---------------------------------------------------------
 
 	private void maceratingRecipes() {
 		macerate("blaze_powder", commonTag("rods/blaze"), stack(Items.BLAZE_POWDER, 5));
@@ -187,9 +179,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		output.accept(recipeKey("macerating/" + path), recipe, null, conditionsFor(input));
 	}
 
-	// --- Extruding (ftbic:extruding) -----------------------------------------------------------
 
-	/** Ingots with an extruding/ingots/X_to_X_rod recipe: `#c:ingots/X → X_rod×2`. */
 	private static final String[] EXTRUDE_INGOT_METALS = {
 			"aluminum", "brass", "bronze", "chromium", "constantan", "copper", "electrum",
 			"enderium", "gold", "graphite", "invar", "iridium", "iron", "lead", "lumium",
@@ -198,7 +188,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 			"uranium", "zinc",
 	};
 
-	/** Materials with extruding plate→gear and rod→wire chains (30 metals + diamond/obsidian/quartz). */
 	private static final String[] EXTRUDE_PLATE_ROD_MATERIALS = {
 			"aluminum", "brass", "bronze", "chromium", "constantan", "copper", "diamond",
 			"electrum", "enderium", "gold", "graphite", "invar", "iridium", "iron", "lead",
@@ -238,7 +227,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		output.accept(recipeKey("extruding/" + path), recipe, null, conditionsFor(input));
 	}
 
-	/** Enderium has FTBIC-native rod/gear/wire items; everything else uses ftbmaterials. */
 	private ItemStackTemplate resolveShape(String metal, String shape) {
 		if (metal.equals("enderium")) {
 			return modStack("ftbic:enderium_" + shape, 1);
@@ -246,7 +234,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		return ftbmat(metal + "_" + shape, 1);
 	}
 
-	// --- Rolling (ftbic:rolling) ---------------------------------------------------------------
 
 	private void rollingRecipes() {
 		for (String m : EXTRUDE_INGOT_METALS) {
@@ -266,7 +253,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		}
 	}
 
-	// --- Compressing (ftbic:compressing) -------------------------------------------------------
 
 	private void compressingRecipes() {
 		compress("carbon_plate", i("ftbic:carbon_fiber_mesh"), 1, ftbicStack("carbon_plate", 1));
@@ -304,7 +290,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		output.accept(recipeKey("compressing/" + path), recipe, null, conditionsFor(input));
 	}
 
-	// --- Separating (ftbic:separating) ---------------------------------------------------------
 
 	private void separatingRecipes() {
 		// Plain outputs
@@ -380,7 +365,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		output.accept(recipeKey("separating/" + path), recipe, null, conditionsFor(input));
 	}
 
-	// --- Reprocessing (ftbic:reprocessing) -----------------------------------------------------
 
 	private void reprocessingRecipes() {
 		Ingredient input = tag(TagKey.create(Registries.ITEM, FTBIC.id("scrappable")));
@@ -397,7 +381,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		output.accept(recipeKey("reprocessing/scrappable_to_scrap"), recipe, null, conditionsFor(input));
 	}
 
-	// --- Antimatter Boost (ftbic:antimatter_boost) ---------------------------------------------
 
 	private void antimatterBoostRecipes() {
 		antimatterBoost("scrap", i("ftbic:scrap"), 5000D);
@@ -406,14 +389,12 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 	private void antimatterBoost(String path, Ingredient input, double boost) {
 		if (input == null) return;
-		dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe recipe =
-				new dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe(input, boost);
+		AntimatterBoostRecipe recipe =
+				new AntimatterBoostRecipe(input, boost);
 		output.accept(recipeKey("antimatter_boost/" + path), recipe, null, conditionsFor(input));
 	}
 
-	// --- Canning (ftbic:canning) ---------------------------------------------------------------
 
-	/** Foods that get a {food + empty_can → canned_food} recipe. */
 	private static final String[] CANNABLE_FOODS = {
 			"apple", "baked_potato", "beef", "beetroot_soup", "bread", "carrot", "chicken",
 			"chorus_fruit", "cod", "cooked_beef", "cooked_chicken", "cooked_cod", "cooked_mutton",
@@ -423,10 +404,10 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	};
 
 	private void canningRecipes() {
-		Item emptyCan = dev.ftb.mods.ftbic.item.FTBICItems.EMPTY_CAN.item.get();
+		Item emptyCan = FTBICItems.EMPTY_CAN.item.get();
 		Ingredient emptyCanIng = Ingredient.of(emptyCan);
 		ItemStackTemplate cannedFood = new ItemStackTemplate(
-				dev.ftb.mods.ftbic.item.FTBICItems.CANNED_FOOD.get(), 1);
+				FTBICItems.CANNED_FOOD.get(), 1);
 
 		for (String food : CANNABLE_FOODS) {
 			Ingredient foodIng = i("minecraft:" + food);
@@ -437,16 +418,15 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		// Spray paint cans — use a FluidCellIngredient (water).
 		Ingredient waterCell = fluidCell(net.minecraft.world.level.material.Fluids.WATER);
 		canning("light_spray_can", waterCell, commonTag("dyes/white"),
-				new ItemStackTemplate(dev.ftb.mods.ftbic.item.FTBICItems.LIGHT_SPRAY_PAINT_CAN.get(), 1));
+				new ItemStackTemplate(FTBICItems.LIGHT_SPRAY_PAINT_CAN.get(), 1));
 		canning("dark_spray_can", waterCell, commonTag("dyes/black"),
-				new ItemStackTemplate(dev.ftb.mods.ftbic.item.FTBICItems.DARK_SPRAY_PAINT_CAN.get(), 1));
+				new ItemStackTemplate(FTBICItems.DARK_SPRAY_PAINT_CAN.get(), 1));
 
 		// Uranium fuel rod — water cell + uranium dust.
 		canning("uranium_fuel_rod", waterCell, commonTag("dusts/uranium"),
-				new ItemStackTemplate(dev.ftb.mods.ftbic.item.FTBICItems.URANIUM_FUEL_ROD.get(), 1));
+				new ItemStackTemplate(FTBICItems.URANIUM_FUEL_ROD.get(), 1));
 	}
 
-	/** Emits a two-input canning recipe. */
 	private void canning(String path, Ingredient a, Ingredient b, ItemStackTemplate result) {
 		if (a == null || b == null || result == null) return;
 		MachineRecipe recipe = new MachineRecipe(
@@ -460,40 +440,38 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		output.accept(recipeKey("canning/" + path), recipe, null, conditionsFor(a, b));
 	}
 
-	/** Wraps a {@link dev.ftb.mods.ftbic.util.FluidCellIngredient} as a full Ingredient. */
 	private static Ingredient fluidCell(net.minecraft.world.level.material.Fluid fluid) {
-		return new Ingredient(new dev.ftb.mods.ftbic.util.FluidCellIngredient(fluid));
+		return new Ingredient(new FluidCellIngredient(fluid));
 	}
 
-	// --- Smelting / Blasting / Smoking / Campfire ----------------------------------------------
 
 	private void smeltingRecipes() {
-		cookSmelt("rubber", commonTag("slime_balls"), stack(dev.ftb.mods.ftbic.item.FTBICItems.RUBBER.item.get(), 8), 0F, 300);
-		cookSmelt("advanced_alloy", Ingredient.of(dev.ftb.mods.ftbic.item.FTBICItems.MIXED_METAL_BLEND.item.get()),
-				stack(dev.ftb.mods.ftbic.item.FTBICItems.ADVANCED_ALLOY.item.get(), 1), 0F, 400);
+		cookSmelt("rubber", commonTag("slime_balls"), stack(FTBICItems.RUBBER.item.get(), 8), 0F, 300);
+		cookSmelt("advanced_alloy", Ingredient.of(FTBICItems.MIXED_METAL_BLEND.item.get()),
+				stack(FTBICItems.ADVANCED_ALLOY.item.get(), 1), 0F, 400);
 		cookSmelt("industrial_grade_metal", commonTag("ingots/iron"),
-				stack(dev.ftb.mods.ftbic.item.FTBICItems.INDUSTRIAL_GRADE_METAL.item.get(), 1), 0F, 400);
+				stack(FTBICItems.INDUSTRIAL_GRADE_METAL.item.get(), 1), 0F, 400);
 		for (String m : SMELTABLE_DUSTS) {
 			cookSmelt("dusts/" + m + "_to_ingot", commonTag("dusts/" + m), ftbmat(m + "_ingot", 1), 0.7F, 200);
 		}
 	}
 
 	private void blastingRecipes() {
-		cookBlast("advanced_alloy", Ingredient.of(dev.ftb.mods.ftbic.item.FTBICItems.MIXED_METAL_BLEND.item.get()),
-				stack(dev.ftb.mods.ftbic.item.FTBICItems.ADVANCED_ALLOY.item.get(), 1), 0F, 200);
+		cookBlast("advanced_alloy", Ingredient.of(FTBICItems.MIXED_METAL_BLEND.item.get()),
+				stack(FTBICItems.ADVANCED_ALLOY.item.get(), 1), 0F, 200);
 		cookBlast("industrial_grade_metal", commonTag("ingots/iron"),
-				stack(dev.ftb.mods.ftbic.item.FTBICItems.INDUSTRIAL_GRADE_METAL.item.get(), 1), 0F, 200);
+				stack(FTBICItems.INDUSTRIAL_GRADE_METAL.item.get(), 1), 0F, 200);
 		for (String m : SMELTABLE_DUSTS) {
 			cookBlast("dusts/" + m + "_to_ingot", commonTag("dusts/" + m), ftbmat(m + "_ingot", 1), 0.7F, 100);
 		}
 	}
 
 	private void smokingRecipes() {
-		cookSmoke("rubber", commonTag("slime_balls"), stack(dev.ftb.mods.ftbic.item.FTBICItems.RUBBER.item.get(), 8), 0F, 150);
+		cookSmoke("rubber", commonTag("slime_balls"), stack(FTBICItems.RUBBER.item.get(), 8), 0F, 150);
 	}
 
 	private void campfireRecipes() {
-		cookCampfire("rubber", commonTag("slime_balls"), stack(dev.ftb.mods.ftbic.item.FTBICItems.RUBBER.item.get(), 8), 0F, 600);
+		cookCampfire("rubber", commonTag("slime_balls"), stack(FTBICItems.RUBBER.item.get(), 8), 0F, 600);
 	}
 
 	private void cookSmelt(String path, Ingredient input, ItemStackTemplate result, float xp, int ticks) {
@@ -529,7 +507,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	}
 
 
-	// --- Shaped / Shapeless --------------------------------------------------------------------
 
 	private void shapedRecipes() {
 		// The bulk of shaped crafting recipes live here, transpiled from the original JSONs.
@@ -557,7 +534,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		}
 	}
 
-	/** Internal helpers: build an item / tag / compound Ingredient from its string form. */
 	protected Ingredient i(String id) {
 		Identifier rid = Identifier.parse(id);
 		Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(rid);
@@ -585,7 +561,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		return new ItemStackTemplate(item, count);
 	}
 
-	/** Builds a ShapedRecipe from a string pattern + (char, Ingredient) pairs. */
 	protected void shaped(String name, ItemStackTemplate result, String[] pattern, Object... pairs) {
 		if (result == null) return;
 		java.util.Map<Character, Ingredient> key = new java.util.HashMap<>();
@@ -608,7 +583,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		output.accept(recipeKey("shaped/" + name), recipe, null, conditionsFor(allIngredients.toArray(Ingredient[]::new)));
 	}
 
-	/** Builds a ShapelessRecipe from a list of Ingredients. */
 	protected void shapeless(String name, ItemStackTemplate result, Ingredient... ingredients) {
 		if (result == null) return;
 		for (Ingredient ing : ingredients) {
@@ -623,9 +597,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		output.accept(recipeKey("shapeless/" + name), recipe, null, conditionsFor(ingredients));
 	}
 
-	// --- Common helpers ------------------------------------------------------------------------
 
-	/** Emits a single-input, single-output machine recipe with processingTime=1.0 and JEI visible. */
 	private void machineRecipe(String path, MachineRecipeType type, Ingredient input, ItemStackTemplate result) {
 		MachineRecipe recipe = new MachineRecipe(
 				type,
@@ -638,12 +610,10 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		output.accept(recipeKey(path), recipe, null, conditionsFor(input));
 	}
 
-	/** Builds an ItemStackTemplate without needing Item components bound (safe during datagen). */
 	private static ItemStackTemplate stack(Item item, int count) {
 		return new ItemStackTemplate(item, count);
 	}
 
-	/** Gets an ftbmaterials item by path as a template; returns null if not registered. */
 	private ItemStackTemplate ftbmat(String path, int count) {
 		Identifier id = Identifier.fromNamespaceAndPath("ftbmaterials", path);
 		Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(id);
@@ -651,7 +621,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		return new ItemStackTemplate(item, count);
 	}
 
-	/** Raw-material macerating names the dust after the ingot name without a modifier suffix. */
 	private static String oreDustName(String oreName) {
 		return switch (oreName) {
 			case "apatite", "fluorite", "monazite", "niter", "salt", "sulfur",
@@ -661,12 +630,10 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		};
 	}
 
-	/** Builds a tag-backed Ingredient using the HolderGetter exposed by {@link RecipeProvider}. */
 	protected Ingredient tag(TagKey<Item> tag) {
 		return Ingredient.of(items.getOrThrow(tag));
 	}
 
-	/** Shortcut for {@code tag(TagKey.create(ITEM, c:<path>))}. */
 	protected Ingredient commonTag(String path) {
 		return tag(TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", path)));
 	}
@@ -675,7 +642,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		return ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(FTBIC.MOD_ID, path));
 	}
 
-	/** Returns a not(tag_empty) condition for every tag referenced by the given ingredients. */
 	protected static ICondition[] conditionsFor(Ingredient... ingredients) {
 		List<ICondition> conditions = new ArrayList<>();
 		for (Ingredient ing : ingredients) {
@@ -705,7 +671,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		});
 	}
 
-	// --- Shaped / Shapeless batch (transpiled from the original JSONs) -------------------------
 
 	private void shapedBatch() {
 		shaped("advanced_heat_exchanger", ftbicStack("advanced_heat_exchanger", 1), new String[] {"WCW", "VBV", "WCW"}, 'C', i("ftbic:electronic_circuit"), 'B', i("ftbic:dense_copper_plate"), 'V', i("ftbic:heat_exchanger"), 'W', i("ftbic:iv_cable"));
@@ -833,7 +798,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shapeless("small_coolant_cell", ftbicStack("small_coolant_cell", 1), i("ftbic:fluid_cell"), i("minecraft:water_bucket"), commonOrTag("c:ingots/tin"), commonOrTag("c:ingots/tin"), commonOrTag("c:ingots/tin"), commonOrTag("c:ingots/tin"));
 	}
 
-	// --- Factory for GatherDataEvent ------------------------------------------------------------
 
 	public static final class Runner extends RecipeProvider.Runner {
 		public Runner(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

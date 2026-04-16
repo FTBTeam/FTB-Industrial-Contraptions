@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbic.item.reactor;
 
 import net.minecraft.world.item.ItemStack;
 
-/** Bounces neutron pulses back at adjacent fuel rods, adding extra pulses. Consumes durability per adjacent fuel rod. */
 public class NeutronReflectorItem extends BaseReactorItem implements NeutronReflectingReactorItem {
 	public final int maxDurability;
 

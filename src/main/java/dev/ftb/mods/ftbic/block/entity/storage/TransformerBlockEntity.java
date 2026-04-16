@@ -6,10 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
-/**
- * Accepts higher-tier input on its back face (facing) and emits lower-tier output on all other faces.
- * Per-tier subclasses configure capacity + max-input/output via the ElectricBlockInstance declaration.
- */
 public class TransformerBlockEntity extends GeneratorBlockEntity {
 	public TransformerBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);

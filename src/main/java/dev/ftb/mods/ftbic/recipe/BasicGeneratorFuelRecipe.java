@@ -16,10 +16,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-/**
- * Fuel burn-time recipe for the Basic Generator. Tests `ingredient.test(stack)` against the input
- * slot and burns for `ticks` game ticks, producing `BASIC_GENERATOR_OUTPUT` zaps per tick.
- */
 public record BasicGeneratorFuelRecipe(Ingredient ingredient, int ticks) implements Recipe<NoInput> {
 
 	public static final MapCodec<BasicGeneratorFuelRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
@@ -37,6 +33,7 @@ public record BasicGeneratorFuelRecipe(Ingredient ingredient, int ticks) impleme
 	@Override public ItemStack assemble(NoInput input) { return ItemStack.EMPTY; }
 	@Override public String group() { return ""; }
 	@Override public boolean showNotification() { return false; }
+	@Override public boolean isSpecial() { return true; }
 	@Override public RecipeSerializer<? extends Recipe<NoInput>> getSerializer() { return FTBICRecipes.BASIC_GENERATOR_FUEL_SERIALIZER.get(); }
 	@Override public RecipeType<? extends Recipe<NoInput>> getType() {
 		@SuppressWarnings("unchecked")

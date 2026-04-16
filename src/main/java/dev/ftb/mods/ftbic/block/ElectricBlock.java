@@ -24,14 +24,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
+import dev.ftb.mods.ftbic.item.FTBICItems;
 
-/**
- * Block class for any FTBIC electric block. Behaviour is mostly delegated to the block entity; this
- * class handles state definitions, placement, rotation/mirror, cable-network notifications on
- * place/remove, fuse-repair right-click, redstone output, the empty-hand `useWithoutItem` menu open,
- * and client-side `animateTick` particle effects (burnt smoke + active-state sparks). Tooltips are
- * rendered by {@link dev.ftb.mods.ftbic.item.ElectricBlockItem}.
- */
 public class ElectricBlock extends Block implements EntityBlock, SprayPaintable {
 	public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
@@ -160,7 +154,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 		if (!(level.getBlockEntity(pos) instanceof ElectricBlockEntity be)) {
 			return InteractionResult.TRY_WITH_EMPTY_HAND;
 		}
-		if (be.isBurnt() && stack.is(dev.ftb.mods.ftbic.item.FTBICItems.FUSE.item.get())) {
+		if (be.isBurnt() && stack.is(FTBICItems.FUSE.item.get())) {
 			be.setBurnt(false);
 			level.playSound(player, pos, net.minecraft.sounds.SoundEvents.STONE_BUTTON_CLICK_ON,
 					net.minecraft.sounds.SoundSource.BLOCKS, 0.3F, 0.6F);

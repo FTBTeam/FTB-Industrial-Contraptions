@@ -11,10 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-/**
- * Charges energy items in a player's inventory when they step onto the pad. 1.18.2 used the Forge
- * IItemHandler capability; in 26.1 we just scan the player's Inventory directly (main + armor + offhand).
- */
 public class ChargePadBlockEntity extends ElectricBlockEntityRef {
 	public ChargePadBlockEntity(BlockPos pos, BlockState state) {
 		super(FTBICElectricBlocks.CHARGE_PAD, pos, state);

@@ -16,10 +16,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-/**
- * Antimatter constructor boost item — multiplies the machine's construction rate by `boost` when the
- * matching ingredient is present.
- */
 public record AntimatterBoostRecipe(Ingredient ingredient, double boost) implements Recipe<NoInput> {
 
 	public static final MapCodec<AntimatterBoostRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
@@ -37,6 +33,7 @@ public record AntimatterBoostRecipe(Ingredient ingredient, double boost) impleme
 	@Override public ItemStack assemble(NoInput input) { return ItemStack.EMPTY; }
 	@Override public String group() { return ""; }
 	@Override public boolean showNotification() { return false; }
+	@Override public boolean isSpecial() { return true; }
 	@Override public RecipeSerializer<? extends Recipe<NoInput>> getSerializer() { return FTBICRecipes.ANTIMATTER_BOOST_SERIALIZER.get(); }
 	@Override public RecipeType<? extends Recipe<NoInput>> getType() {
 		@SuppressWarnings("unchecked")

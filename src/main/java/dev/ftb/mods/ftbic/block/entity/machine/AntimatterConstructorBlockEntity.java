@@ -11,18 +11,10 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import dev.ftb.mods.ftbic.screen.AntimatterConstructorMenu;
 
-/**
- * Consumes energy to slowly produce Antimatter items. Boost items in the input slot accelerate
- * production; each item provides a finite "boost charge" (its recipe's {@code boost()} value)
- * which decrements as production progresses, then the next item is consumed to refill the charge.
- * One antimatter is produced per {@link #PRODUCTION_THRESHOLD} of accumulated progress; while a
- * boost is active, progress accumulates at {@code energyUsage * boost} per tick instead of just
- * {@code energyUsage}.
- */
 public class AntimatterConstructorBlockEntity extends ElectricBlockEntityRef {
 	public double progress = 0D;
-	/** Remaining boost-units from the last consumed input-slot item; 0 means the next item will be consumed. */
 	public double boostCharge = 0D;
 	public static final double PRODUCTION_THRESHOLD = 1_000_000D;
 
@@ -32,7 +24,7 @@ public class AntimatterConstructorBlockEntity extends ElectricBlockEntityRef {
 
 	@Override
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.AntimatterConstructorMenu(id, inv, this);
+		return new AntimatterConstructorMenu(id, inv, this);
 	}
 
 	@Override

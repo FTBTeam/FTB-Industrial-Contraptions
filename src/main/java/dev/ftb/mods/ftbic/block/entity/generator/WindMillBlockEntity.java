@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 
-/** Altitude-and-weather-driven generator; output scales with clear sky + height + rain/thunder modifiers. */
 public class WindMillBlockEntity extends GeneratorBlockEntity {
 	private int blocksInRadius = -1;
 	public double output = 0D;

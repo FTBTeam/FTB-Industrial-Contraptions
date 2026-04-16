@@ -6,13 +6,6 @@ import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-/**
- * Bridges an `ElectricBlockEntity`'s zap-denominated energy buffer to NeoForge's transfer-API
- * `EnergyHandler` using the config-controlled `ZAP_TO_FE_CONVERSION_RATE` (default 4 FE per zap).
- *
- * Foreign mods insert FE amounts; this handler divides by the conversion rate to add zaps and
- * snapshots the previous energy value for transaction rollback.
- */
 public class ElectricBlockEnergyHandler extends SnapshotJournal<Double> implements EnergyHandler {
 	private final ElectricBlockEntity be;
 	private final boolean canInsert;

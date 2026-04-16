@@ -14,16 +14,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-/**
- * Metadata + registration wrapper for a single electric-block entry. Ported from the 1.18.2 Architectury
- * variant. Config-valued fields are stored as Suppliers so ModConfigSpec values can be passed in without
- * being evaluated at class-initialization time.
- */
 public class ElectricBlockInstance {
 	public static ElectricBlockInstance current;
 
@@ -35,8 +32,8 @@ public class ElectricBlockInstance {
 	public boolean canBeActive = true;
 	public boolean canBurn = false;
 	public final DeferredBlock<ElectricBlock> block;
-	public final Supplier<BlockItem> item;
-	public final Supplier<BlockEntityType<?>> blockEntity;
+	public final DeferredItem<BlockItem> item;
+	public final DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> blockEntity;
 	public Supplier<Double> energyCapacity = () -> 0D;
 	public Supplier<Double> maxEnergyOutput = () -> 0D;
 	public Supplier<Double> energyUsage = () -> 0D;
@@ -45,7 +42,6 @@ public class ElectricBlockInstance {
 	public int inputItemCount = 0;
 	public int outputItemCount = 0;
 	public boolean tickClientSide = false;
-	/** FE capability mode — NONE = no Energy.BLOCK exposed; EXTRACT_ONLY = generators provide FE; INSERT_ONLY = rectifier accepts FE on input face. */
 	public FECapMode feCapMode = FECapMode.NONE;
 
 	public enum FECapMode { NONE, EXTRACT_ONLY, INSERT_ONLY }
@@ -80,7 +76,6 @@ public class ElectricBlockInstance {
 	public ElectricBlockInstance canBurn() { canBurn = true; return this; }
 	public ElectricBlockInstance wip() { wip = true; return this; }
 	public ElectricBlockInstance tickClientSide() { tickClientSide = true; return this; }
-	/** Legacy chainable no-op kept so {@code FTBICElectricBlocks} call sites compile unchanged. */
 	public ElectricBlockInstance energyUsageIsntPerTick() { return this; }
 	public ElectricBlockInstance io(int inItems, int outItems) { inputItemCount = inItems; outputItemCount = outItems; return this; }
 

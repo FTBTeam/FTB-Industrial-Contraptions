@@ -12,16 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
+import dev.ftb.mods.ftbic.screen.GeothermalGeneratorMenu;
 
-/**
- * Consumes lava to produce energy. Exposes a proper {@code ResourceHandler<FluidResource>} tank via
- * {@link dev.ftb.mods.ftbic.events.CapabilityRegistrar} so foreign pipes can fill the tank directly.
- * Lava buckets placed in input slot 0 are also auto-consumed and returned to output slot 0 as empty
- * buckets. Right-clicking the block with a lava bucket drains it straight into the tank.
- *
- * Each tick with fluid present, one mB of lava is consumed and {@code maxEnergyOutput} zaps are
- * produced (default 20 zaps/mB, so a full 8000 mB tank generates 160k zaps).
- */
 public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int fluidAmount = 0;
 
@@ -31,7 +23,7 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.GeothermalGeneratorMenu(id, inv, this);
+		return new GeothermalGeneratorMenu(id, inv, this);
 	}
 
 	public int getTankCapacity() {
@@ -85,10 +77,6 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 		}
 	}
 
-	/**
-	 * Right-click handler — drains a lava bucket in the player's hand straight into the tank when
-	 * there's room; otherwise falls through to the menu-opening default.
-	 */
 	@Override
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (level == null || level.isClientSide()) return InteractionResult.SUCCESS;

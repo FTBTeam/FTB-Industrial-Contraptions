@@ -20,6 +20,8 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import org.slf4j.Logger;
+import dev.ftb.mods.ftbic.integration.guideme.FTBICGuide;
+import dev.ftb.mods.ftbic.util.FTBICIngredientTypes;
 
 @Mod(FTBIC.MOD_ID)
 public class FTBIC {
@@ -52,14 +54,14 @@ public class FTBIC {
 		FTBICMenus.REGISTRY.register(eventBus);
 		FTBICRecipes.SERIALIZERS.register(eventBus);
 		FTBICRecipes.TYPES.register(eventBus);
-		dev.ftb.mods.ftbic.util.FTBICIngredientTypes.REGISTRY.register(eventBus);
+		FTBICIngredientTypes.REGISTRY.register(eventBus);
 
 		container.registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_SPEC);
 		FTBICConfig.init();
 		FTBICUtils.init();
 
 		if (dist.isClient() && ModList.get().isLoaded("guideme")) {
-			dev.ftb.mods.ftbic.integration.guideme.FTBICGuide.init();
+			FTBICGuide.init();
 		}
 	}
 }

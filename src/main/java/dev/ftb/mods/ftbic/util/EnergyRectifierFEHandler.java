@@ -5,10 +5,6 @@ import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-/**
- * FE-side handler for an {@link EnergyRectifierBlockEntity}. Insert-only; pushes FE into the
- * rectifier's small FE buffer where the BE's tick will convert it into internal zaps.
- */
 public class EnergyRectifierFEHandler extends SnapshotJournal<Long> implements EnergyHandler {
 	private final EnergyRectifierBlockEntity be;
 

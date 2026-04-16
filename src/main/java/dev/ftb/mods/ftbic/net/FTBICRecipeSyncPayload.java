@@ -9,6 +9,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.List;
+import dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache;
 
 public record FTBICRecipeSyncPayload(List<RecipeHolder<?>> recipes) implements CustomPacketPayload {
 	public static final Type<FTBICRecipeSyncPayload> TYPE = new Type<>(FTBIC.id("recipe_sync"));
@@ -25,6 +26,6 @@ public record FTBICRecipeSyncPayload(List<RecipeHolder<?>> recipes) implements C
 	}
 
 	public static void handleOnClient(FTBICRecipeSyncPayload p, IPayloadContext ctx) {
-		ctx.enqueueWork(() -> dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache.applySyncedRecipes(p.recipes()));
+		ctx.enqueueWork(() -> ClientRecipeCache.applySyncedRecipes(p.recipes()));
 	}
 }

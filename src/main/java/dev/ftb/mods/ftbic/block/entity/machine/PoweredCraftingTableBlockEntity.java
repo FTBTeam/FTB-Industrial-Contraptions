@@ -12,15 +12,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
+import dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu;
 
-/**
- * Electric crafting table — first 9 input slots are a 3×3 crafting grid. Each tick, if there's a
- * matching vanilla CraftingRecipe AND enough energy, consumes 1 of each ingredient, produces the
- * result into the first output slot, drains `POWERED_CRAFTING_TABLE_USE` zaps.
- *
- * JEI "?" recipe-click dispatches `SelectCraftingRecipePayload` which populates the 9 input slots
- * from the player's inventory via `PoweredCraftingTableMenu.setIngredients`.
- */
 public class PoweredCraftingTableBlockEntity extends BasicMachineBlockEntity {
 	public PoweredCraftingTableBlockEntity(BlockPos pos, BlockState state) {
 		super(FTBICElectricBlocks.POWERED_CRAFTING_TABLE, pos, state);
@@ -28,7 +21,7 @@ public class PoweredCraftingTableBlockEntity extends BasicMachineBlockEntity {
 
 	@Override
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu(id, inv, this);
+		return new PoweredCraftingTableMenu(id, inv, this);
 	}
 
 	@Override

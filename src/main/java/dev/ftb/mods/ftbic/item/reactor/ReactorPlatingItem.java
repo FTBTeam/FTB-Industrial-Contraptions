@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbic.item.reactor;
 
 import net.minecraft.world.item.ItemStack;
 
-/** Raises the reactor's `maxHeat` and multiplies its explosion radius by a modifier (typically <1). */
 public class ReactorPlatingItem extends BaseReactorItem {
 	public final int heatCapacity;
 	public final double explosionResistance;

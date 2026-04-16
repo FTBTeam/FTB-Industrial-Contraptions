@@ -23,6 +23,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity;
 
 public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	private static final VoxelShape SHAPE = Shapes.box(0.4375, 0.0, 0.4375, 0.5625, 0.5, 0.5625);
@@ -114,7 +115,7 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 					if (Math.abs(bePos.getX() - pos.getX()) > radius) continue;
 					if (Math.abs(bePos.getZ() - pos.getZ()) > radius) continue;
 					if (Math.abs(bePos.getY() - pos.getY()) > 128) continue;
-					if (chunk.getBlockEntity(bePos) instanceof dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity dig) {
+					if (chunk.getBlockEntity(bePos) instanceof DiggingBaseBlockEntity dig) {
 						if (!dig.hasAnchorLandmark()) {
 							dev.ftb.mods.ftbic.FTBIC.LOGGER.info("  found DiggingBase at {} but no anchor landmark; skipping", bePos);
 							continue;

@@ -3,11 +3,6 @@ package dev.ftb.mods.ftbic.item.reactor;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * Uranium fuel rod. On each reactor tick, emits `pulses` neutron pulses; each neutron-reflector
- * adjacent adds an extra pulse. Energy output = pulses × energyMultiplier; heat output = heatMultiplier
- * × pulses × (pulses + 1). Rod is damaged by 1 each tick.
- */
 public class FuelRodItem extends BaseReactorItem implements NeutronReflectingReactorItem {
 	public static final int[] OFFSET_X = {0, 0, -1, 1};
 	public static final int[] OFFSET_Y = {-1, 1, 0, 0};

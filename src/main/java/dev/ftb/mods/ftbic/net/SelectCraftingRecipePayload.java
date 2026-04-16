@@ -13,10 +13,6 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * C2S: powered crafting table selected a recipe; ship the 9 ingredient slots back to the server.
- * Slots may be empty (Optional.empty()) for shaped recipes that don't fill the whole 3x3.
- */
 public record SelectCraftingRecipePayload(List<Optional<Ingredient>> ingredients) implements CustomPacketPayload {
 	public static final Type<SelectCraftingRecipePayload> TYPE = new Type<>(FTBIC.id("select_crafting_recipe"));
 

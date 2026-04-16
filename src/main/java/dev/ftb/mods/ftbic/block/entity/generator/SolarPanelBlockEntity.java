@@ -4,8 +4,8 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
+import dev.ftb.mods.ftbic.screen.SolarPanelMenu;
 
-/** Daylight-gated energy producer. */
 public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 	public SolarPanelBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -13,7 +13,7 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.SolarPanelMenu(id, inv, this);
+		return new SolarPanelMenu(id, inv, this);
 	}
 
 	@Override

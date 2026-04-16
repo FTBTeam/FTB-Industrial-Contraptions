@@ -25,10 +25,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
-/**
- * Per-menu screen registration. Each menu type maps to its own bespoke screen subclass, all sharing
- * the {@code ElectricBlockScreen} base for atlas helpers (drawTank/drawHeatBar/drawSlot/etc.).
- */
 @EventBusSubscriber(modid = FTBIC.MOD_ID, value = Dist.CLIENT)
 public final class FTBICClient {
 

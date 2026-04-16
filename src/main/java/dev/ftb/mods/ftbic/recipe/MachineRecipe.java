@@ -15,14 +15,6 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 import java.util.List;
 
-/**
- * Data-carrier recipe type for all FTBIC machines (macerator, compressor, centrifuge, etc.).
- *
- * Machine BEs call `matches(NoInput, level)` symbolically; the actual input-slot check happens inside
- * the BE's process loop by scanning `inputs` against its internal ItemStack array. This matches the
- * 1.18.2 behaviour where MachineRecipe.matches always returned false (recipes are looked up by
- * scanning the BE's input buffer, not by Minecraft's recipe manager).
- */
 public class MachineRecipe implements Recipe<NoInput> {
 	public final MachineRecipeType machineType;
 	public final List<IngredientWithCount> inputs;

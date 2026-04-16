@@ -12,31 +12,19 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.List;
-import java.util.function.Supplier;
 
-/**
- * Holder that owns the paired `RecipeType` + `RecipeSerializer` for a single FTBIC machine recipe
- * flavour (smelting, macerating, canning, …).
- *
- * In 26.1 `RecipeSerializer<T>` is a **record** of `(MapCodec, StreamCodec)` — we can't subclass it to
- * attach per-flavour metadata, so instead this class builds both codecs with captured references back
- * to itself, registers them, and MachineRecipe stores its owning type so `getSerializer()` +
- * `getType()` can hand back the correct registry entries.
- *
- * Flags:
- *  - twoInputs: canning-style recipes that accept two ingredient slots
- *  - extraOutput: macerating/separating which can have chance-based secondary outputs
- */
 public final class MachineRecipeType {
 	public final String id;
 	public final boolean twoInputs;
 	public final boolean extraOutput;
-	public final Supplier<RecipeType<MachineRecipe>> TYPE;
-	public final Supplier<RecipeSerializer<MachineRecipe>> SERIALIZER;
+	public final DeferredHolder<RecipeType<?>, RecipeType<MachineRecipe>> TYPE;
+	public final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<MachineRecipe>> SERIALIZER;
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public MachineRecipeType(String id,
 			boolean twoInputs,
 			boolean extraOutput,
@@ -46,17 +34,12 @@ public final class MachineRecipeType {
 		this.twoInputs = twoInputs;
 		this.extraOutput = extraOutput;
 
-		@SuppressWarnings("unchecked")
-		Supplier<RecipeType<MachineRecipe>> typeSup = (Supplier<RecipeType<MachineRecipe>>) (Supplier<?>)
-				typeRegistry.register(id, () -> new RecipeType<MachineRecipe>() {
-					@Override public String toString() { return "ftbic:" + id; }
-				});
-		this.TYPE = typeSup;
+		this.TYPE = (DeferredHolder) typeRegistry.register(id, () -> new RecipeType<MachineRecipe>() {
+			@Override public String toString() { return "ftbic:" + id; }
+		});
 
-		@SuppressWarnings("unchecked")
-		Supplier<RecipeSerializer<MachineRecipe>> serSup = (Supplier<RecipeSerializer<MachineRecipe>>) (Supplier<?>)
-				serializerRegistry.register(id, () -> new RecipeSerializer<>(buildMapCodec(), buildStreamCodec()));
-		this.SERIALIZER = serSup;
+		this.SERIALIZER = (DeferredHolder) serializerRegistry.register(id,
+				() -> new RecipeSerializer<>(buildMapCodec(), buildStreamCodec()));
 	}
 
 	private MapCodec<MachineRecipe> buildMapCodec() {

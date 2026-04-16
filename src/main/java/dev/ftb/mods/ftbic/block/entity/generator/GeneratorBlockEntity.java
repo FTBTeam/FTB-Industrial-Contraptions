@@ -23,16 +23,8 @@ import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.HashSet;
 import java.util.Set;
+import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
 
-/**
- * Base for generator-style BEs: produces energy and pushes it onto the cable network each tick.
- *
- * Phase 2c/2d port:
- *  - Real electric-network discovery via {@link CachedEnergyStorage} walking cables
- *  - Distribution across connected consumers with cable-burn checks
- *  - FE bridging via {@link ForgeEnergyHandler}
- *  - Charge-slot battery support via {@link BatteryInventory}
- */
 public class GeneratorBlockEntity extends ElectricBlockEntity {
 	public double maxEnergyOutput;
 	public double maxEnergyOutputTransfer;
@@ -74,7 +66,6 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		Block.popResource(level, pos, chargeBatteryInventory.getStackInSlot(0));
 	}
 
-	/** Override to produce energy. */
 	public void handleGeneration() {
 	}
 
@@ -162,16 +153,11 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		return true;
 	}
 
-	/**
-	 * Push surplus zaps to adjacent foreign FE consumers (other-mod cables/machines) by querying
-	 * {@code Capabilities.Energy.BLOCK} on each neighbour. Skips FTBIC blocks since those are
-	 * handled by the in-network distribution loop below.
-	 */
 	private void pushFEToNeighbours() {
-		if (electricBlockInstance.feCapMode != dev.ftb.mods.ftbic.block.ElectricBlockInstance.FECapMode.EXTRACT_ONLY) return;
+		if (electricBlockInstance.feCapMode != ElectricBlockInstance.FECapMode.EXTRACT_ONLY) return;
 		if (energy <= 0D || maxEnergyOutputTransfer <= 0D) return;
 		double rate = dev.ftb.mods.ftbic.FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
-		for (Direction dir : dev.ftb.mods.ftbic.util.FTBICUtils.DIRECTIONS) {
+		for (Direction dir : FTBICUtils.DIRECTIONS) {
 			if (!isValidEnergyOutputSide(dir)) continue;
 			BlockPos npos = worldPosition.relative(dir);
 			BlockEntity nbe = level.getBlockEntity(npos);
@@ -256,7 +242,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 
-		if (state.getBlock() instanceof dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock) {
+		if (state.getBlock() instanceof NuclearReactorChamberBlock) {
 			for (Direction dir : FTBICUtils.DIRECTIONS) {
 				find(traversed, set, origin, distance + 1, pos, dir);
 			}

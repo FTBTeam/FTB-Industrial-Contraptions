@@ -44,7 +44,6 @@ public class GeothermalGeneratorMenu extends ElectricBlockMenu {
 		}
 	}
 
-	/** Client-side: fluid fill fraction 0-1 for bar rendering. */
 	public float getFluidFraction() {
 		return fluidScaled.get() / 1000F;
 	}

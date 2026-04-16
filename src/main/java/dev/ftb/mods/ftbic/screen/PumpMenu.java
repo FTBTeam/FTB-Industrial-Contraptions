@@ -11,7 +11,6 @@ import net.minecraft.world.level.material.Fluids;
 
 public class PumpMenu extends ElectricBlockMenu {
 	public final DataSlot fluidAmount = DataSlot.standalone();
-	/** 0 = empty, 1 = water, 2 = lava. */
 	public final DataSlot fluidKind = DataSlot.standalone();
 	public final DataSlot pausedSlot = DataSlot.standalone();
 

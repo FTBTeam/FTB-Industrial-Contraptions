@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import dev.ftb.mods.ftbic.item.FTBICItems;
 
 public class BasicGeneratorFuelCategory extends AbstractRecipeCategory<RecipeHolder<BasicGeneratorFuelRecipe>> {
 	public static final int WIDTH = 148;
@@ -42,7 +43,7 @@ public class BasicGeneratorFuelCategory extends AbstractRecipeCategory<RecipeHol
 	public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<BasicGeneratorFuelRecipe> holder, IFocusGroup focuses) {
 		int ticks = holder.value().ticks();
 		double seconds = ticks / 20.0D;
-		double zapsPerTick = dev.ftb.mods.ftbic.item.FTBICItems.safeGet(
+		double zapsPerTick = FTBICItems.safeGet(
 				dev.ftb.mods.ftbic.FTBICConfig.MACHINES.BASIC_GENERATOR_OUTPUT, 10D);
 		long totalZaps = Math.round(zapsPerTick * ticks);
 

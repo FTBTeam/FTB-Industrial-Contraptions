@@ -118,10 +118,6 @@ public final class FTBICCommands {
 		return 1;
 	}
 
-	/**
-	 * Builds the reference demo reactor (6-single-rod stable layout exercising every component) at
-	 * the far corner of the platform, with dual/quad rods on a display shelf.
-	 */
 	private static boolean buildTestReactor(ServerLevel level, BlockPos centre, int floorTopY) {
 		BlockPos reactorPos = new BlockPos(centre.getX() + PLATFORM_HALF - 4, floorTopY + 2, centre.getZ() + PLATFORM_HALF - 4);
 		if (!buildReactor(level, reactorPos, FTBICCommands::populateReactor, false)) return false;
@@ -137,11 +133,6 @@ public final class FTBICCommands {
 		return true;
 	}
 
-	/**
-	 * Clears a 5×5×5 volume at {@code reactorPos}, places the reactor core + 6 chambers, runs the
-	 * given populator over the inventory grid, and un-pauses it. Returns false if the BE couldn't
-	 * be resolved.
-	 */
 	private static boolean buildReactor(ServerLevel level, BlockPos reactorPos,
 			java.util.function.Consumer<NuclearReactorBlockEntity> populator, boolean allowRedstone) {
 		BlockState air = Blocks.AIR.defaultBlockState();
@@ -172,20 +163,6 @@ public final class FTBICCommands {
 		return true;
 	}
 
-	/**
-	 * Maximum-sustained-output quad-rod layout with zero support-component degradation.
-	 *
-	 * <p>Design: 3 quad fuel rods at (1,1), (4,1), (7,1), each with 4 iridium neutron reflectors as
-	 * cardinal neighbors (reflectors never degrade). Rod heat (8×7×8 = 448/cycle per rod) goes
-	 * entirely to the reactor pool since all 4 rod neighbors are reflectors, not heat acceptors.
-	 * The remaining 39 slots are overclocked heat vents that drain the pool via their reactorCool
-	 * pathway (36/cycle each) — vents take no adjacent-rod damage and self-heal, so they stay at
-	 * full durability indefinitely. Total: 39 × 36 = 1,404 cycle cooling vs 3 × 448 = 1,344 heat
-	 * input. Small surplus keeps reactor pool oscillating around 0.
-	 *
-	 * <p>Output: 3 rods × 7 pulses × 20 energy/pulse = 420 zap/tick (8,400 zap/s per 20-tick cycle).
-	 * Only fuel rods themselves wear down (inherent fuel consumption, ~5.5 hours per rod).
-	 */
 	private static void populateQuadRodOptimalReactor(NuclearReactorBlockEntity reactor) {
 		ItemStack[] grid = reactor.reactor.inputItems;
 		Arrays.fill(grid, ItemStack.EMPTY);
@@ -224,13 +201,6 @@ public final class FTBICCommands {
 		level.addFreshEntity(frame);
 	}
 
-	/**
-	 * Stable 6-single-rod layout for the classic 9×6 IC2 grid. Rods sit at (1,1), (4,1), (7,1),
-	 * (1,4), (4,4), (7,4), each with one neutron reflector and three heat-acceptor neighbors so rod
-	 * heat is absorbed by surrounding cooling items — reactor-pool heat stays near zero. Every
-	 * reactor-component item type is placed somewhere in the grid so the showcase exercises the
-	 * full simulation.
-	 */
 	private static void populateReactor(NuclearReactorBlockEntity reactor) {
 		ItemStack[] grid = reactor.reactor.inputItems;
 		Arrays.fill(grid, ItemStack.EMPTY);

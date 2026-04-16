@@ -7,10 +7,6 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-/**
- * Key identifying an ItemStack type. Compares Item identity and data components, ignoring count and
- * vanilla damage. Previously keyed on CompoundTag in 1.18.2.
- */
 public final class ItemKey {
 	public final Item item;
 	public final DataComponentMap components;

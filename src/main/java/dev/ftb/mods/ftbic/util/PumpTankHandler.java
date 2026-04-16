@@ -8,11 +8,6 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-/**
- * {@code ResourceHandler<FluidResource>} adapter for the Pump's internal tank. Extract-only from the
- * perspective of foreign pipes — the pump itself fills the tank from nearby source blocks; external
- * callers may only drain whatever the pump has accumulated.
- */
 public class PumpTankHandler extends SnapshotJournal<PumpTankHandler.Snapshot> implements ResourceHandler<FluidResource> {
 	public record Snapshot(Fluid fluid, int amount) {}
 

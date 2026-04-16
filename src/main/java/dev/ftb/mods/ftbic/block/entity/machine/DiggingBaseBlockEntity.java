@@ -15,15 +15,6 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import java.util.List;
 
-/**
- * Base for machines that dig through a 3D region at-or-below the machine position.
- * Each "work tick" (diggingMineTicks / progressSpeed) the machine mines one block at the scan head
- * and moves the head to the next column. Drops go into the output inventory — any overflow is popped
- * into the world.
- *
- * Phase 2 baseline: fixed 5×5 radius (offset -2..+2 in X and Z), no Landmark-bounded regions. The
- * reference tracked a laser beam for client rendering — that's deferred to Phase 4 client work.
- */
 public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	public static final int INVALID_Y = Integer.MIN_VALUE;
 
@@ -204,7 +195,6 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 		return true;
 	}
 
-	/** Adds a stack into the first output slot that can hold it; returns leftover. */
 	protected ItemStack addToOutputs(ItemStack stack) {
 		if (stack.isEmpty() || outputItems.length == 0) return stack;
 		for (int i = 0; i < outputItems.length && !stack.isEmpty(); i++) {

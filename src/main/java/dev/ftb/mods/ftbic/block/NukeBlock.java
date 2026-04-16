@@ -12,14 +12,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import dev.ftb.mods.ftbic.util.NuclearFallout;
 
-/**
- * Triggers a large vanilla {@link net.minecraft.world.level.Explosion} when right-clicked, then
- * paints the surface around the epicentre with {@link dev.ftb.mods.ftbic.util.NuclearFallout}
- * (podzol/coarse-dirt/burnt-stone/exfluid). The full 1.18.2 threaded {@code NuclearExplosion} with
- * gradient destruction + reinforced-block ray-casting is replaced by vanilla's more efficient
- * spherical destruction; the cosmetic surface fallout matches the original mod's feel.
- */
 public class NukeBlock extends Block {
 	public NukeBlock(BlockBehaviour.Properties props) {
 		super(props.instabreak().sound(SoundType.GRASS));
@@ -48,7 +42,7 @@ public class NukeBlock extends Block {
 				true,
 				Level.ExplosionInteraction.BLOCK);
 
-		dev.ftb.mods.ftbic.util.NuclearFallout.apply(server, pos, radius);
+		NuclearFallout.apply(server, pos, radius);
 		return InteractionResult.SUCCESS;
 	}
 }

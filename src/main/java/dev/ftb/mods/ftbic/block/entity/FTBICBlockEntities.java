@@ -10,21 +10,23 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Set;
 import java.util.function.Supplier;
+import dev.ftb.mods.ftbic.block.FTBICBlocks;
 
 public final class FTBICBlockEntities {
 	public static final DeferredRegister<BlockEntityType<?>> REGISTRY =
 			DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, FTBIC.MOD_ID);
 
-	public static <T extends BlockEntity> Supplier<BlockEntityType<?>> register(String id,
+	public static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> register(String id,
 			BlockEntityType.BlockEntitySupplier<T> supplier, Supplier<? extends Block> block) {
-		DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> holder = REGISTRY.register(id, () ->
-				new BlockEntityType<>(supplier, Set.of(block.get())));
-		return holder::get;
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> holder =
+				(DeferredHolder) REGISTRY.register(id, () -> new BlockEntityType<>(supplier, Set.of(block.get())));
+		return holder;
 	}
 
-	public static final Supplier<BlockEntityType<?>> IRON_FURNACE = register(
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> IRON_FURNACE = register(
 			"iron_furnace", IronFurnaceBlockEntity::new,
-			() -> dev.ftb.mods.ftbic.block.FTBICBlocks.IRON_FURNACE.get());
+			() -> FTBICBlocks.IRON_FURNACE.get());
 
 	private FTBICBlockEntities() {}
 }

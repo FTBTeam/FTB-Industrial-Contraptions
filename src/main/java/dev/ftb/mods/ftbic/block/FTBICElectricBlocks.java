@@ -7,11 +7,8 @@ import dev.ftb.mods.ftbic.block.entity.storage.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 
-/**
- * All electric-block entries. Config-valued fields receive ConfigValue suppliers directly (ConfigValue
- * implements Supplier&lt;T&gt;), so values are resolved lazily at first use rather than at class init.
- */
 public interface FTBICElectricBlocks {
 	List<ElectricBlockInstance> ALL = new ArrayList<>();
 
@@ -79,7 +76,7 @@ public interface FTBICElectricBlocks {
 			.advanced()
 			.energyCapacity(FTBICConfig.MACHINES.NUCLEAR_REACTOR_CAPACITY)
 			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY)
-			.io(dev.ftb.mods.ftbic.item.reactor.NuclearReactor.MAX_SLOTS, 0);
+			.io(NuclearReactor.MAX_SLOTS, 0);
 
 	// Machines //
 

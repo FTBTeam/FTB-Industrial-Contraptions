@@ -8,10 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 
-/**
- * Snapshot of one teleporter peer for the destination-selection GUI: dimension key + position +
- * display name + energy cost from the source teleporter's perspective.
- */
 public record TeleporterEntry(ResourceKey<Level> dimension, BlockPos pos, String name, double energyUse) {
 	public static final StreamCodec<RegistryFriendlyByteBuf, TeleporterEntry> STREAM_CODEC = StreamCodec.composite(
 			ResourceKey.streamCodec(Registries.DIMENSION), TeleporterEntry::dimension,

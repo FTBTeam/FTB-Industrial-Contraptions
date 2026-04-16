@@ -8,10 +8,6 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-/**
- * Single-tank lava handler for {@link GeothermalGeneratorBlockEntity}. Accepts LAVA inserts from any
- * foreign pipe; does not allow extraction (lava is consumed by the generator internally).
- */
 public class GeothermalTankHandler extends SnapshotJournal<Integer> implements ResourceHandler<FluidResource> {
 	private final GeothermalGeneratorBlockEntity be;
 

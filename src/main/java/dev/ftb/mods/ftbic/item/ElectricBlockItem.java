@@ -11,10 +11,6 @@ import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
-/**
- * BlockItem wrapper for electric blocks that renders per-tier energy stats on hover.
- * Shows max input / max output / capacity / energy use when each is configured.
- */
 public class ElectricBlockItem extends BlockItem {
 	public final ElectricBlockInstance instance;
 

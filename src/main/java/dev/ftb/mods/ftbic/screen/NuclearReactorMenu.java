@@ -8,11 +8,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
 
-/**
- * 3-row × (3..9) column reactor grid. The BE owns a 27-slot input array; the menu only adds
- * {@code 3 × activeColumns} slots, and {@link NuclearReactorSlot#mayPlace} rejects placements into
- * inactive columns so shift-click and hoppers cannot stash items in the hidden region.
- */
 public class NuclearReactorMenu extends ElectricBlockMenu {
 	public final DataSlot pausedSlot = DataSlot.standalone();
 	public final DataSlot allowRedstoneSlot = DataSlot.standalone();
@@ -47,10 +42,6 @@ public class NuclearReactorMenu extends ElectricBlockMenu {
 		return 150;
 	}
 
-	/**
-	 * Slot Y = 18 + row*18, but rows 3..5 skip 18 pixels of texture "middle info bar" that sits
-	 * between the top and bottom halves of the 9×6 grid. Produces {18, 36, 54, 90, 108, 126}.
-	 */
 	public static int slotScreenY(int row) {
 		return 18 + row * 18 + (row >= 3 ? 18 : 0);
 	}

@@ -22,13 +22,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-/**
- * Recipe-driven machine base. Subclasses declare their {@link MachineRecipeType} (e.g. MACERATING);
- * the tick loop finds a matching recipe based on the input buffer, consumes energy, advances progress,
- * and emits outputs when progress hits the recipe's processingTime. Upgrade-slot effects and the
- * battery-slot charging loop live in {@link BasicMachineBlockEntity}; output-chance RNG is honoured
- * by {@link #addOutputs} via the {@link dev.ftb.mods.ftbic.util.StackWithChance} list.
- */
 public class MachineBlockEntity extends BasicMachineBlockEntity {
 	public final MachineRecipeType recipeType;
 	public int progress;
@@ -36,11 +29,6 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 
 	@Nullable
 	private MachineRecipe cachedRecipe;
-	/**
-	 * Set whenever input slots change — forces a full recipe-map scan on the next findRecipe() call.
-	 * Without this, an idle machine (no matching recipe, non-empty inputs) would iterate the whole
-	 * recipe map every tick. We only scan when something about the inputs has actually changed.
-	 */
 	private boolean recipeDirty = true;
 
 	public MachineBlockEntity(ElectricBlockInstance type, MachineRecipeType recipeType,

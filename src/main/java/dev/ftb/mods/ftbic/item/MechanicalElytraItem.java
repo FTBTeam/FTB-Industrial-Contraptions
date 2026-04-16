@@ -14,14 +14,8 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Consumer;
+import dev.ftb.mods.ftbic.registry.ModDataComponents;
 
-/**
- * Electric elytra. Fall-flight is enabled via the vanilla {@code minecraft:glider} data component.
- * While flying, drains energy each tick; sneaking engages a brake (decelerates); sprinting boosts
- * speed in the look direction. Passively recharges when the wearer is stood in daylight and not
- * flying. Runs out of energy mid-flight → forces {@code stopFallFlying()} so the player can't glide
- * indefinitely on a dead battery.
- */
 public class MechanicalElytraItem extends Item implements EnergyItemHandler {
 	public MechanicalElytraItem(Properties props) {
 		super(props.stacksTo(1));
@@ -59,10 +53,6 @@ public class MechanicalElytraItem extends Item implements EnergyItemHandler {
 		insertEnergy(stack, rechargeRate, false);
 	}
 
-	/**
-	 * Per-flight-tick drain + modifiers. Called only while {@code isFallFlying()} is true.
-	 * Runs on both client and server; server is authoritative for energy + forced landings.
-	 */
 	private void tickFlight(ItemStack stack, LivingEntity le) {
 		double drain = FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_ENERGY.get();
 		if (drain > 0D && !isCreativeEnergyItem()) {
@@ -95,7 +85,7 @@ public class MechanicalElytraItem extends Item implements EnergyItemHandler {
 
 	@Override
 	public boolean isBarVisible(ItemStack stack) {
-		return stack.has(dev.ftb.mods.ftbic.registry.ModDataComponents.ENERGY.get());
+		return stack.has(ModDataComponents.ENERGY.get());
 	}
 
 	@Override

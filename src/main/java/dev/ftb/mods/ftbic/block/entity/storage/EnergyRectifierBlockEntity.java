@@ -8,12 +8,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-/**
- * FE → zaps converter. Foreign mods push FE into the block on its facing/input side; each tick the
- * accumulated FE is converted into the internal zaps buffer at {@code ZAP_TO_FE_CONVERSION_RATE} (10:1
- * by default — 320 FE = 32 zaps for the LV rectifier). Zaps are then provided to the FTBIC electric
- * network via the standard {@link ElectricBlockEntity} energy interface on the other 5 faces.
- */
 public class EnergyRectifierBlockEntity extends GeneratorBlockEntity {
 	public long feBuffer = 0L;
 

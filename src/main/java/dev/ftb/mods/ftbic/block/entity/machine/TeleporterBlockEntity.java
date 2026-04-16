@@ -19,16 +19,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import dev.ftb.mods.ftbic.net.TeleporterListPayload;
+import dev.ftb.mods.ftbic.screen.TeleporterMenu;
+import dev.ftb.mods.ftbic.util.TeleporterEntry;
 
-/**
- * Step-on teleporter. Binds to another TeleporterBlockEntity via dimension + position; when a player
- * steps on it, consumes scaled energy based on distance and teleports them to the linked teleporter.
- * Right-clicking opens the destination-picker GUI (TeleporterMenu/Screen) — server collects all
- * loaded teleporters owned by the player (or marked public) within the same dimension, ships them
- * via {@link dev.ftb.mods.ftbic.net.TeleporterListPayload}, and the screen renders a clickable list.
- */
 public class TeleporterBlockEntity extends ElectricBlockEntityRef {
-	/** All loaded teleporters across all dimensions; populated on setLevel, drained on setRemoved. */
 	private static final java.util.Set<TeleporterBlockEntity> ALL_LOADED =
 			java.util.Collections.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<>());
 
@@ -58,32 +53,27 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 
 	@Override
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.TeleporterMenu(id, inv, this);
+		return new TeleporterMenu(id, inv, this);
 	}
 
 	@Override
 	public void openMenu(ServerPlayer player) {
 		super.openMenu(player);
 		// Ship the destination list immediately after the menu opens.
-		java.util.List<dev.ftb.mods.ftbic.util.TeleporterEntry> peers = collectPeers(player);
+		java.util.List<TeleporterEntry> peers = collectPeers(player);
 		net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player,
-				new dev.ftb.mods.ftbic.net.TeleporterListPayload(peers));
+				new TeleporterListPayload(peers));
 	}
 
-	/**
-	 * Walk every loaded {@link TeleporterBlockEntity} across dimensions and return one entry per
-	 * unique destination the calling player is allowed to use (their own + public ones), excluding
-	 * this BE itself and any unnamed teleporters (so the GUI stays uncluttered).
-	 */
-	private java.util.List<dev.ftb.mods.ftbic.util.TeleporterEntry> collectPeers(ServerPlayer player) {
-		java.util.List<dev.ftb.mods.ftbic.util.TeleporterEntry> out = new java.util.ArrayList<>();
+	private java.util.List<TeleporterEntry> collectPeers(ServerPlayer player) {
+		java.util.List<TeleporterEntry> out = new java.util.ArrayList<>();
 		if (level == null) return out;
 		for (TeleporterBlockEntity t : ALL_LOADED) {
 			if (t == this || t.level == null || t.isRemoved()) continue;
 			if (!t.isPublic && !t.placerId.equals(player.getUUID())) continue;
 			ResourceKey<Level> peerDim = t.level.dimension();
 			String display = t.name.isEmpty() ? "Unnamed" : t.name;
-			out.add(new dev.ftb.mods.ftbic.util.TeleporterEntry(
+			out.add(new TeleporterEntry(
 					peerDim, t.getBlockPos(), display, getEnergyUse(peerDim, t.getBlockPos())));
 		}
 		return out;
@@ -209,7 +199,6 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 				FTBICConfig.MACHINES.TELEPORTER_MAX_USE.get());
 	}
 
-	/** Called by ConfigureTeleporterPayload server-handler to update name + public flag. */
 	public void configure(ServerPlayer player, String newName, boolean newPublic) {
 		if (!placerId.equals(player.getUUID())) {
 			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED));
@@ -225,7 +214,6 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 		}
 	}
 
-	/** Called by SelectTeleporterPayload (with a null position) to clear the current link. */
 	public void unlink(ServerPlayer player) {
 		if (!placerId.equals(player.getUUID())) {
 			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED));
@@ -240,7 +228,6 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 		}
 	}
 
-	/** Called by SelectTeleporterPayload server-handler to bind a destination. */
 	public void select(ServerPlayer player, ResourceKey<Level> d, BlockPos p) {
 		if (!placerId.equals(player.getUUID())) {
 			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED));

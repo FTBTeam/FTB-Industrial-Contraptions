@@ -9,9 +9,6 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
-/**
- * Central networking hub. Registers all FTBIC payloads at mod init and provides send helpers.
- */
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
 public final class FTBICNet {
 

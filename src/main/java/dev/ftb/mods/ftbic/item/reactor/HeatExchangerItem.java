@@ -3,13 +3,6 @@ package dev.ftb.mods.ftbic.item.reactor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * Heat exchanger — moves heat between adjacent heat-acceptor components and the reactor core,
- * proportional to the relative damage gradient between the exchanger and its neighbours. Mirrors
- * the 1.18.2 implementation: each tick we compute heat to push to/pull from each adjacent acceptor
- * (using {@code heatTransferToAdjacent}) and the reactor core (using {@code heatTransferToCore}),
- * then absorb the net delta as durability damage on this exchanger.
- */
 public class HeatExchangerItem extends BaseReactorItem {
 	public final int maxHeat;
 	public final int heatTransferToAdjacent;
@@ -55,11 +48,6 @@ public class HeatExchangerItem extends BaseReactorItem {
 		damageReactorItem(stack, damage);
 	}
 
-	/**
-	 * Reference 1.18.2 transfer-rate formula. Picks a base step from the relative-damage curve
-	 * (low temps move 1 unit, very hot move full transfer rate) then flips sign + zeroes when the
-	 * destination is hotter than the source.
-	 */
 	private static int computeTransfer(double sh, double rh, int max, int transfer) {
 		double hh = rh + sh / 2D;
 		int add = Math.min(Mth.floor(max * hh / 100D), transfer);

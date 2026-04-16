@@ -18,11 +18,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
-/**
- * JEI recipe category for FTBIC machine recipes. Tight 26-pixel row with input slot(s), an animated
- * JEI recipe arrow, output slot(s). Cost information is delivered via a tooltip on the arrow so
- * the layout stays dense (4–5 recipes per JEI page).
- */
 public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<MachineRecipe>> {
 	public static final int WIDTH = 112;
 	public static final int HEIGHT = 26;

@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
+import dev.ftb.mods.ftbic.screen.QuarryMenu;
 
 public class QuarryBlockEntity extends DiggingBaseBlockEntity {
 	public QuarryBlockEntity(BlockPos pos, BlockState state) {
@@ -11,6 +12,6 @@ public class QuarryBlockEntity extends DiggingBaseBlockEntity {
 
 	@Override
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.QuarryMenu(id, inv, this);
+		return new QuarryMenu(id, inv, this);
 	}
 }

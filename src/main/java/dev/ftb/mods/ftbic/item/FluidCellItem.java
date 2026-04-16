@@ -30,11 +30,6 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
 
-/**
- * Portable fluid storage cell. Right-click a fluid source to pick it up (like a bucket), right-click
- * into a tank-exposing block to deposit. Contents are stored in the {@code FLUID_CELL_CONTENT}
- * data component; foreign pipes can also drain via {@code Capabilities.Fluid.ITEM}.
- */
 public class FluidCellItem extends Item {
 	public FluidCellItem(Properties props) {
 		super(props.stacksTo(16));

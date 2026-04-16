@@ -9,11 +9,8 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.List;
+import dev.ftb.mods.ftbic.client.gui.TeleporterScreen;
 
-/**
- * S2C: ships the list of valid teleporter destinations to the client when its source teleporter
- * menu opens. Client populates the destination-picker screen from this payload.
- */
 public record TeleporterListPayload(List<TeleporterEntry> entries) implements CustomPacketPayload {
 	public static final Type<TeleporterListPayload> TYPE = new Type<>(FTBIC.id("teleporter_list"));
 
@@ -28,7 +25,7 @@ public record TeleporterListPayload(List<TeleporterEntry> entries) implements Cu
 
 	public static void handleOnClient(TeleporterListPayload payload, IPayloadContext context) {
 		context.enqueueWork(() -> {
-			dev.ftb.mods.ftbic.client.gui.TeleporterScreen.setEntries(payload.entries);
+			TeleporterScreen.setEntries(payload.entries);
 		});
 	}
 }

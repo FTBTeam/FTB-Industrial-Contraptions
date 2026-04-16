@@ -16,13 +16,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-/**
- * Hand-holdable battery. Single-use variants ship pre-charged to capacity and shrink when drained.
- * Right-clicking toggles the {@code BATTERY_ACTIVE} data component; while active, the battery's
- * {@code inventoryTick} drains itself into every other equipped {@link EnergyItemHandler} item the
- * carrier owns (armour, hand items, hotbar gear) so players can carry a battery to top up their
- * tools/armor on the move.
- */
 public class BatteryItem extends ElectricItem {
 	public final BatteryType batteryType;
 
@@ -80,7 +73,6 @@ public class BatteryItem extends ElectricItem {
 		return InteractionResult.SUCCESS;
 	}
 
-	/** Slots a player can hold an EnergyItemHandler in (armour + hands). Mob-only slots skipped. */
 	private static final EquipmentSlot[] CHARGE_SLOTS = {
 			EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET,
 			EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND

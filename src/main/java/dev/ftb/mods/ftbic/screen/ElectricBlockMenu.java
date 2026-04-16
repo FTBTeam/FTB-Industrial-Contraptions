@@ -12,21 +12,16 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
+import dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity;
 
-/**
- * Base menu for electric block GUIs. Adds synced data slots (energy, progress) and the standard
- * player inventory + hotbar grid at y=84/142. Subclasses add their own machine-specific slots.
- */
 public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 	@Nullable
 	public final ElectricBlockEntity blockEntity;
 
-	/** Energy 0-1000 scaled to keep it inside DataSlot's short range. */
 	public final DataSlot energyScaled = DataSlot.standalone();
 	public final DataSlot progressScaled = DataSlot.standalone();
 	public final DataSlot maxProgressScaled = DataSlot.standalone();
 
-	/** The size of the BE-backed portion of the slot list. Player inventory slots follow after. */
 	protected int machineSlotCount;
 
 	protected ElectricBlockMenu(MenuType<?> type, int id, Inventory playerInv, @Nullable ElectricBlockEntity be) {
@@ -39,7 +34,6 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		addDataSlot(maxProgressScaled);
 	}
 
-	/** Network-side ctor reading the BE position from the payload. */
 	protected ElectricBlockMenu(MenuType<?> type, int id, Inventory playerInv, FriendlyByteBuf buf) {
 		this(type, id, playerInv, resolve(playerInv, buf));
 	}
@@ -51,11 +45,6 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		return inv.player.level().getBlockEntity(pos) instanceof ElectricBlockEntity be ? be : null;
 	}
 
-	/**
-	 * Default machine-slot layout: inputs at x=42/60, arrow at x=80..104 (centered), outputs at
-	 * x=108/126. This keeps slot backgrounds clear of the animated arrow while staying symmetric
-	 * around the screen mid-line.
-	 */
 	protected void addMachineSlots(Inventory playerInv) {
 		if (blockEntity == null || blockEntity.getSlotCount() == 0) {
 			machineSlotCount = 0;
@@ -94,7 +83,7 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 	}
 
 	protected void addUpgradeSlots(int x, int yStart) {
-		if (!(blockEntity instanceof dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity bm)) return;
+		if (!(blockEntity instanceof BasicMachineBlockEntity bm)) return;
 		UpgradeInventoryContainer c = new UpgradeInventoryContainer(bm.upgradeInventory);
 		for (int i = 0; i < bm.upgradeInventory.getSlots(); i++) {
 			addSlot(new UpgradeSlot(c, i, x, yStart + i * 18));
@@ -103,7 +92,7 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 	}
 
 	protected void addBatterySlot(int x, int y) {
-		if (!(blockEntity instanceof dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity bm)) return;
+		if (!(blockEntity instanceof BasicMachineBlockEntity bm)) return;
 		BatteryInventoryContainer c = new BatteryInventoryContainer(bm.batteryInventory);
 		addSlot(new BatterySlot(c, 0, x, y));
 		machineSlotCount++;
@@ -120,7 +109,6 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		}
 	}
 
-	/** Standard 3×9 inventory at (8, 84) + hotbar at (8, 142). */
 	protected int getPlayerSlotOffset() {
 		return 84;
 	}
@@ -150,12 +138,10 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		super.broadcastChanges();
 	}
 
-	/** Client-side: energy fraction 0-1 for progress bar rendering. */
 	public float getEnergyFraction() {
 		return energyScaled.get() / 1000F;
 	}
 
-	/** Client-side: recipe progress fraction 0-1 for progress bar rendering. */
 	public float getProgressFraction() {
 		int max = maxProgressScaled.get();
 		if (max <= 0) return 0F;

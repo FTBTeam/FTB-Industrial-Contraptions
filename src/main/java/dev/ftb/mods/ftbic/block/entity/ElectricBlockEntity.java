@@ -30,17 +30,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
+import dev.ftb.mods.ftbic.screen.MachineMenu;
 
-/**
- * Base electric block entity. Carries energy / inputs / outputs / burnt state / placer UUID; ticks
- * subclass behaviour; saves/loads via {@code ValueInput}/{@code ValueOutput}; advertises itself as
- * an {@link EnergyHandler} to the FTBIC electric-network resolver.
- *
- * Foreign interop is attached externally via {@code CapabilityRegistrar} on the block-entity type
- * (item handler + energy handler + per-BE fluid handler). Subclasses override {@code initProperties}
- * to publish their final energy-capacity / input / output / usage numbers (which may be boosted by
- * upgrade slots — see {@link dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity#upgradesChanged}).
- */
 public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
 
@@ -82,7 +73,6 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		autoEject = false;
 	}
 
-	/** Hook for subclasses (see BasicMachineBlockEntity) to recompute properties from upgrade slots. */
 	public void upgradesChanged() {
 	}
 
@@ -105,18 +95,10 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		}
 	}
 
-	/**
-	 * Subclasses override to gate slot placement from automation and menu shift-click. Default allows
-	 * any item into any input slot; output slots are insert-rejected by the resource handler.
-	 */
 	public boolean isItemValid(int slot, ItemStack stack) {
 		return slot >= 0 && slot < inputItems.length;
 	}
 
-	/**
-	 * Subclasses override to expose input slots to automation extraction (hoppers/pipes). Default is
-	 * output-only — hoppers can pull finished products, but not consume raw machine inputs.
-	 */
 	public boolean isSlotExtractable(int slot) {
 		return slot >= inputItems.length && slot < getSlotCount();
 	}
@@ -173,7 +155,6 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		return saveCustomOnly(registries);
 	}
 
-	// --- EnergyHandler ---
 
 	@Override
 	public double getEnergyCapacity() {
@@ -220,9 +201,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		return burnt;
 	}
 
-	// --- Tick + interaction hooks ---
 
-	/** Ticks between active-state refreshes. Matches 1.18.2's STATE_UPDATE_TICKS throttling. */
 	private int changeStateTicks = 0;
 
 	public void tick() {
@@ -232,11 +211,6 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		handleChanges();
 	}
 
-	/**
-	 * Flushes the `active` flag to the block state every STATE_UPDATE_TICKS ticks. Subclass ticks
-	 * set `active = true` whenever they do meaningful work; this method pushes that back to the
-	 * block state and then clears the flag so the next window starts fresh.
-	 */
 	protected void handleChanges() {
 		if (changeStateTicks > 0) {
 			changeStateTicks--;
@@ -261,10 +235,6 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		return InteractionResult.SUCCESS;
 	}
 
-	/**
-	 * Opens this BE's menu for the given player. Subclasses override {@link #createMenu(int, Inventory)}
-	 * to provide their specific menu type; the default here builds a generic `MachineMenu`.
-	 */
 	public void openMenu(net.minecraft.server.level.ServerPlayer player) {
 		player.openMenu(new net.minecraft.world.SimpleMenuProvider(
 				(id, inv, p) -> createMenu(id, inv),
@@ -272,9 +242,8 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		), buf -> buf.writeBlockPos(worldPosition));
 	}
 
-	/** Subclass hook: returns the specific menu type for this BE (SolarPanelMenu, BasicGeneratorMenu, etc.). */
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.MachineMenu(id, inv, this);
+		return new MachineMenu(id, inv, this);
 	}
 
 	public int getRedstoneOutputSignalEnergyStorage() {
@@ -328,7 +297,6 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		((ElectricBlockEntity) entity).tick();
 	}
 
-	/** Stored inventory entry: slot index + stack. */
 	public record SlotStack(int slot, ItemStack stack) {
 		public static final Codec<SlotStack> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.create(i -> i.group(
 				Codec.INT.fieldOf("Slot").forGetter(SlotStack::slot),

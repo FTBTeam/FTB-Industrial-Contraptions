@@ -18,10 +18,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * FTB Industrial Contraptions configuration. Ported from 1.18.2 SNBTConfig to NeoForge ModConfigSpec.
- * Values are loaded from config/ftbic-common.toml at config load time.
- */
 public final class FTBICConfig {
 	public static final int FLUID_BUCKET_VOLUME = 1000;
 

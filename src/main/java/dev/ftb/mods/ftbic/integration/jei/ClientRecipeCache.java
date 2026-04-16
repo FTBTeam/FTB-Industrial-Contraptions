@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
+import dev.ftb.mods.ftbic.recipe.MachineRecipe;
+import dev.ftb.mods.ftbic.util.IngredientWithCount;
+import dev.ftb.mods.ftbic.util.StackWithChance;
 
 public final class ClientRecipeCache {
 	private static IJeiRuntime runtime;
@@ -29,7 +33,7 @@ public final class ClientRecipeCache {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public static synchronized void applySyncedRecipes(List<RecipeHolder<?>> recipes) {
 		CACHE.clear();
-		RecipeType<?> ftbicSmelting = dev.ftb.mods.ftbic.recipe.FTBICRecipes.SMELTING.TYPE.get();
+		RecipeType<?> ftbicSmelting = FTBICRecipes.SMELTING.TYPE.get();
 		double baseTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
 		for (RecipeHolder<?> h : recipes) {
 			if (h.value() instanceof net.minecraft.world.item.crafting.SmeltingRecipe sr) {
@@ -37,11 +41,11 @@ public final class ClientRecipeCache {
 				if (result.isEmpty()) continue;
 				net.minecraft.world.item.ItemStackTemplate template = new net.minecraft.world.item.ItemStackTemplate(
 						result.typeHolder(), result.getCount(), result.getComponentsPatch());
-				dev.ftb.mods.ftbic.recipe.MachineRecipe mr = new dev.ftb.mods.ftbic.recipe.MachineRecipe(
-						dev.ftb.mods.ftbic.recipe.FTBICRecipes.SMELTING,
-						List.of(new dev.ftb.mods.ftbic.util.IngredientWithCount(sr.input(), 1)),
+				MachineRecipe mr = new MachineRecipe(
+						FTBICRecipes.SMELTING,
+						List.of(new IngredientWithCount(sr.input(), 1)),
 						List.of(),
-						List.of(new dev.ftb.mods.ftbic.util.StackWithChance(template, 1D)),
+						List.of(new StackWithChance(template, 1D)),
 						List.of(),
 						sr.cookingTime() / baseTicks,
 						false);
@@ -61,7 +65,6 @@ public final class ClientRecipeCache {
 		showRecipesForTypes(java.util.List.of(vanillaType));
 	}
 
-	/** Opens JEI's ingredient panel filtered by {@code text}. No-op when JEI isn't loaded. */
 	public static synchronized void setSearchFilter(String text) {
 		if (runtime == null) return;
 		runtime.getIngredientFilter().setFilterText(text);

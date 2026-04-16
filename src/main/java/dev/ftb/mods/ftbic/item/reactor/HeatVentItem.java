@@ -2,10 +2,6 @@ package dev.ftb.mods.ftbic.item.reactor;
 
 import net.minecraft.world.item.ItemStack;
 
-/**
- * Dissipates heat. `selfCooling` repairs the vent's own durability, `reactorCooling` subtracts from
- * the reactor's heat pool, `componentCooling` heals adjacent coolants/exchangers.
- */
 public class HeatVentItem extends BaseReactorItem {
 	public final int maxHeat;
 	public final int selfCool;

@@ -46,10 +46,6 @@ public class PoweredCraftingTableMenu extends ElectricBlockMenu {
 		machineSlotCount = inputs + outputs;
 	}
 
-	/**
-	 * Populate the 3x3 input grid with items from the player's inventory that satisfy the given
-	 * ingredient list. Existing items in the grid that no longer match get returned to the player.
-	 */
 	public void setIngredients(ServerPlayer player, List<Optional<Ingredient>> ingredients) {
 		if (blockEntity == null || blockEntity.inputItems.length < 9) return;
 		Inventory inv = player.getInventory();

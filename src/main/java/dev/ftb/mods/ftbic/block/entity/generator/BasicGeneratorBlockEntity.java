@@ -10,12 +10,12 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import dev.ftb.mods.ftbic.screen.BasicGeneratorMenu;
 
-/** Burns furnace fuel from slot 0 to generate energy. Fuel lookup uses FTBIC's `BasicGeneratorFuelRecipe`. */
 public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.BasicGeneratorMenu(id, inv, this);
+		return new BasicGeneratorMenu(id, inv, this);
 	}
 
 	public int fuelTicks = 0;

@@ -12,12 +12,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
-/**
- * Drains energy from a worn Carbon/Quantum chestplate to absorb a fraction of incoming damage.
- * Helmet/leggings/boots contribute additional protection if they match the chestplate material.
- *
- * Ported from 1.18.2 `FTBIC.playerDamage` — moved into a dedicated event handler class.
- */
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
 public final class EnergyArmorDamageHandler {
 

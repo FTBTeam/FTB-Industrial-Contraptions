@@ -23,12 +23,10 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.Arrays;
+import dev.ftb.mods.ftbic.screen.NuclearReactorMenu;
+import dev.ftb.mods.ftbic.sound.FTBICSounds;
+import dev.ftb.mods.ftbic.util.NuclearFallout;
 
-/**
- * Nuclear reactor — runs the full 1.18.2-style two-pass simulation via {@link NuclearReactor}.
- * The active component grid is 3 rows × (3..9) columns; extra columns unlock one-per-chamber
- * from neighboring {@link NuclearReactorChamberBlock}s (max 6 → 27 slots total).
- */
 public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public final NuclearReactor reactor;
 	public int timeUntilNextCycle;
@@ -42,7 +40,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 
 	@Override
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.NuclearReactorMenu(id, inv, this);
+		return new NuclearReactorMenu(id, inv, this);
 	}
 
 	@Override
@@ -97,10 +95,6 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 	}
 
-	/**
-	 * Samples external faces of the reactor and its attached chambers. Returns 1.0 with no water,
-	 * scaling linearly up to {@code WATER_COOLING_MULTIPLIER} when every outward face is submerged.
-	 */
 	public double computeEnvCooling() {
 		if (level == null) return 1.0D;
 		double max = FTBICConfig.NUCLEAR.WATER_COOLING_MULTIPLIER.get();
@@ -219,7 +213,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		} else if (h >= 0.75F) {
 			if (level.getGameTime() % 25L == 0L && reactor.energyOutput > 0D) {
 				level.playSound(null, worldPosition,
-						dev.ftb.mods.ftbic.sound.FTBICSounds.RADIATION.get(),
+						FTBICSounds.RADIATION.get(),
 						SoundSource.BLOCKS, 0.5F, 1F);
 			}
 		}
@@ -253,7 +247,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 				worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5,
 				(float) reactor.explosionRadius, true, Level.ExplosionInteraction.BLOCK);
 
-		dev.ftb.mods.ftbic.util.NuclearFallout.apply(server, worldPosition, reactor.explosionRadius);
+		NuclearFallout.apply(server, worldPosition, reactor.explosionRadius);
 	}
 
 	@Override

@@ -10,10 +10,9 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
+import dev.ftb.mods.ftbic.screen.TeleporterMenu;
 
-/**
- * C2S: client picked a teleporter destination in the teleporter GUI — server should perform the teleport.
- */
 public record SelectTeleporterPayload(ResourceKey<Level> dimension, BlockPos pos) implements CustomPacketPayload {
 	public static final Type<SelectTeleporterPayload> TYPE = new Type<>(FTBIC.id("select_teleporter"));
 
@@ -36,8 +35,8 @@ public record SelectTeleporterPayload(ResourceKey<Level> dimension, BlockPos pos
 		context.enqueueWork(() -> {
 			if (!(context.player() instanceof net.minecraft.server.level.ServerPlayer sp)) return;
 			// The source teleporter is the BE backing the currently open menu — trust nothing else.
-			if (!(sp.containerMenu instanceof dev.ftb.mods.ftbic.screen.TeleporterMenu menu)) return;
-			if (!(menu.blockEntity instanceof dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity source)) return;
+			if (!(sp.containerMenu instanceof TeleporterMenu menu)) return;
+			if (!(menu.blockEntity instanceof TeleporterBlockEntity source)) return;
 			source.select(sp, payload.dimension, payload.pos);
 		});
 	}

@@ -10,12 +10,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundContainerButtonClickPacket;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache;
 
-/**
- * Nuclear reactor screen — 9×6 component grid split by the texture's middle info bar. The upper
- * three rows sit at y=18/36/54, then an 18-pixel info bar (heat + output readouts) at y=72..89,
- * then the lower three rows at y=90/108/126. Player inventory begins at y=150.
- */
 public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu> {
 	public static final Identifier NUCLEAR_REACTOR_TEXTURE = FTBIC.id("textures/gui/nuclear_reactor.png");
 
@@ -105,7 +101,7 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 			return true;
 		}
 		if (isIn(mx, my, leftPos + 94, topPos + 5, 9, 10)) {
-			dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache.setSearchFilter("@ftbic reactor");
+			ClientRecipeCache.setSearchFilter("@ftbic reactor");
 			return true;
 		}
 		return super.mouseClicked(event, dragging);

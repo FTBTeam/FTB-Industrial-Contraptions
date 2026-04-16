@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbic.item.reactor;
 
 import net.minecraft.world.item.ItemStack;
 
-/** Passive heat buffer. Accepts heat from adjacent fuel rods via `distributeHeat`. */
 public class CoolantItem extends BaseReactorItem {
 	public final int maxHeat;
 

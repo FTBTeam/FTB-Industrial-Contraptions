@@ -12,6 +12,7 @@ public final class FTBICDataGen {
 	public static void gatherClientData(GatherDataEvent.Client event) {
 		event.createProvider(FTBICModelProvider::new);
 		event.createProvider(FTBICRecipeProvider.Runner::new);
+		event.createProvider(FTBICLanguageProvider::new);
 	}
 
 	private FTBICDataGen() {}

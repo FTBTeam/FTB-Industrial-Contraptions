@@ -18,14 +18,12 @@ import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
+import dev.ftb.mods.ftbic.block.entity.machine.AntimatterConstructorBlockEntity;
+import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.item.FluidCellItem;
+import dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe;
+import dev.ftb.mods.ftbic.recipe.BasicGeneratorFuelRecipe;
 
-/**
-/**
- * JEI 29.4.x plugin. Registers one recipe category per FTBIC machine type, ships recipes from the
- * live server recipe map into JEI via {@link ClientRecipeCache}, wires the powered-crafting-table
- * recipe-transfer handler, and tells JEI to differentiate {@code FluidCellItem} stacks by their
- * stored fluid type so each filled cell shows up as its own JEI entry.
- */
 @JeiPlugin
 public class FTBICJEIPlugin implements IModPlugin {
 	public static final Identifier ID = FTBIC.id("jei");
@@ -37,8 +35,8 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistration r) {
-		r.registerSubtypeInterpreter(dev.ftb.mods.ftbic.item.FTBICItems.FLUID_CELL.get(), (stack, ctx) -> {
-			net.neoforged.neoforge.fluids.FluidStack fs = dev.ftb.mods.ftbic.item.FluidCellItem.getStored(stack);
+		r.registerSubtypeInterpreter(FTBICItems.FLUID_CELL.get(), (stack, ctx) -> {
+			net.neoforged.neoforge.fluids.FluidStack fs = FluidCellItem.getStored(stack);
 			if (fs.isEmpty()) return "empty";
 			var id = BuiltInRegistries.FLUID.getKey(fs.getFluid());
 			return id == null ? "unknown" : id.toString();
@@ -66,9 +64,9 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipes(GeothermalFuelCategory.TYPE, java.util.List.of(GeothermalFuelCategory.defaultEntry()));
 
 		// Info entry for the antimatter item — explains it's produced over time by the Antimatter Constructor.
-		long zapsPer = Math.round(dev.ftb.mods.ftbic.block.entity.machine.AntimatterConstructorBlockEntity.PRODUCTION_THRESHOLD);
+		long zapsPer = Math.round(AntimatterConstructorBlockEntity.PRODUCTION_THRESHOLD);
 		r.addItemStackInfo(
-				new net.minecraft.world.item.ItemStack(dev.ftb.mods.ftbic.item.FTBICItems.ANTIMATTER.item.get()),
+				new net.minecraft.world.item.ItemStack(FTBICItems.ANTIMATTER.item.get()),
 				net.minecraft.network.chat.Component.literal("Produced by the Antimatter Constructor."),
 				net.minecraft.network.chat.Component.literal("Each antimatter requires " + zapsPer + " zaps of progress."),
 				net.minecraft.network.chat.Component.literal("Boost items consumed in the input slot accelerate progress."),
@@ -77,45 +75,41 @@ public class FTBICJEIPlugin implements IModPlugin {
 		registerReactorComponentInfo(r);
 	}
 
-	/**
-	 * Adds JEI "info" cards for every nuclear-reactor component item, listing its cooling/heat/pulse
-	 * stats so players can read the numbers without digging through tooltips or source.
-	 */
 	private static void registerReactorComponentInfo(IRecipeRegistration r) {
-		var items = dev.ftb.mods.ftbic.item.FTBICItems.class;
+		var items = FTBICItems.class;
 
 		// Fuel rods
-		rodInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.URANIUM_FUEL_ROD.get(), 1, 5, 2, 20000);
-		rodInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.DUAL_URANIUM_FUEL_ROD.get(), 2, 10, 4, 20000);
-		rodInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.QUAD_URANIUM_FUEL_ROD.get(), 4, 20, 8, 20000);
+		rodInfo(r, FTBICItems.URANIUM_FUEL_ROD.get(), 1, 5, 2, 20000);
+		rodInfo(r, FTBICItems.DUAL_URANIUM_FUEL_ROD.get(), 2, 10, 4, 20000);
+		rodInfo(r, FTBICItems.QUAD_URANIUM_FUEL_ROD.get(), 4, 20, 8, 20000);
 
 		// Coolant cells — passive heat buffer
-		coolantInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.SMALL_COOLANT_CELL.get(), 10_000);
-		coolantInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.MEDIUM_COOLANT_CELL.get(), 30_000);
-		coolantInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.LARGE_COOLANT_CELL.get(), 60_000);
+		coolantInfo(r, FTBICItems.SMALL_COOLANT_CELL.get(), 10_000);
+		coolantInfo(r, FTBICItems.MEDIUM_COOLANT_CELL.get(), 30_000);
+		coolantInfo(r, FTBICItems.LARGE_COOLANT_CELL.get(), 60_000);
 
 		// Heat vents (maxHeat, selfCool, reactorCool, componentCool)
-		ventInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.HEAT_VENT.get(), 1000, 6, 0, 0);
-		ventInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.ADVANCED_HEAT_VENT.get(), 1000, 12, 0, 0);
-		ventInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.REACTOR_HEAT_VENT.get(), 1000, 5, 5, 0);
-		ventInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.COMPONENT_HEAT_VENT.get(), 0, 0, 0, 4);
-		ventInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.OVERCLOCKED_HEAT_VENT.get(), 1000, 20, 36, 0);
+		ventInfo(r, FTBICItems.HEAT_VENT.get(), 1000, 6, 0, 0);
+		ventInfo(r, FTBICItems.ADVANCED_HEAT_VENT.get(), 1000, 12, 0, 0);
+		ventInfo(r, FTBICItems.REACTOR_HEAT_VENT.get(), 1000, 5, 5, 0);
+		ventInfo(r, FTBICItems.COMPONENT_HEAT_VENT.get(), 0, 0, 0, 4);
+		ventInfo(r, FTBICItems.OVERCLOCKED_HEAT_VENT.get(), 1000, 20, 36, 0);
 
 		// Heat exchangers (maxHeat, toAdjacent, toCore)
-		exchangerInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.HEAT_EXCHANGER.get(), 2500, 12, 4);
-		exchangerInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.ADVANCED_HEAT_EXCHANGER.get(), 10_000, 24, 8);
-		exchangerInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.REACTOR_HEAT_EXCHANGER.get(), 5000, 0, 72);
-		exchangerInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.COMPONENT_HEAT_EXCHANGER.get(), 5000, 36, 0);
+		exchangerInfo(r, FTBICItems.HEAT_EXCHANGER.get(), 2500, 12, 4);
+		exchangerInfo(r, FTBICItems.ADVANCED_HEAT_EXCHANGER.get(), 10_000, 24, 8);
+		exchangerInfo(r, FTBICItems.REACTOR_HEAT_EXCHANGER.get(), 5000, 0, 72);
+		exchangerInfo(r, FTBICItems.COMPONENT_HEAT_EXCHANGER.get(), 5000, 36, 0);
 
 		// Plating (heat capacity bonus, explosion multiplier)
-		platingInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.REACTOR_PLATING.get(), 1000, 0.95);
-		platingInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.CONTAINMENT_REACTOR_PLATING.get(), 500, 0.90);
-		platingInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.HEAT_CAPACITY_REACTOR_PLATING.get(), 1700, 0.99);
+		platingInfo(r, FTBICItems.REACTOR_PLATING.get(), 1000, 0.95);
+		platingInfo(r, FTBICItems.CONTAINMENT_REACTOR_PLATING.get(), 500, 0.90);
+		platingInfo(r, FTBICItems.HEAT_CAPACITY_REACTOR_PLATING.get(), 1700, 0.99);
 
 		// Reflectors (durability; 0 = infinite)
-		reflectorInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.NEUTRON_REFLECTOR.get(), 30_000);
-		reflectorInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.THICK_NEUTRON_REFLECTOR.get(), 120_000);
-		reflectorInfo(r, dev.ftb.mods.ftbic.item.FTBICItems.IRIDIUM_NEUTRON_REFLECTOR.get(), 0);
+		reflectorInfo(r, FTBICItems.NEUTRON_REFLECTOR.get(), 30_000);
+		reflectorInfo(r, FTBICItems.THICK_NEUTRON_REFLECTOR.get(), 120_000);
+		reflectorInfo(r, FTBICItems.IRIDIUM_NEUTRON_REFLECTOR.get(), 0);
 	}
 
 	private static void rodInfo(IRecipeRegistration r, net.minecraft.world.item.Item item, int rods, double energyMult, double heatMult, int durability) {
@@ -210,14 +204,14 @@ public class FTBICJEIPlugin implements IModPlugin {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static IRecipeHolderType<dev.ftb.mods.ftbic.recipe.BasicGeneratorFuelRecipe> basicGeneratorFuelType() {
-		return IRecipeType.create((net.minecraft.world.item.crafting.RecipeType<dev.ftb.mods.ftbic.recipe.BasicGeneratorFuelRecipe>)
+	private static IRecipeHolderType<BasicGeneratorFuelRecipe> basicGeneratorFuelType() {
+		return IRecipeType.create((net.minecraft.world.item.crafting.RecipeType<BasicGeneratorFuelRecipe>)
 				(net.minecraft.world.item.crafting.RecipeType<?>) FTBICRecipes.BASIC_GENERATOR_FUEL.get());
 	}
 
 	@SuppressWarnings("unchecked")
-	private static IRecipeHolderType<dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe> antimatterBoostType() {
-		return IRecipeType.create((net.minecraft.world.item.crafting.RecipeType<dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe>)
+	private static IRecipeHolderType<AntimatterBoostRecipe> antimatterBoostType() {
+		return IRecipeType.create((net.minecraft.world.item.crafting.RecipeType<AntimatterBoostRecipe>)
 				(net.minecraft.world.item.crafting.RecipeType<?>) FTBICRecipes.ANTIMATTER_BOOST.get());
 	}
 }

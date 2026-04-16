@@ -17,11 +17,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import dev.ftb.mods.ftbic.block.entity.storage.EnergyRectifierBlockEntity;
+import dev.ftb.mods.ftbic.util.EnergyRectifierFEHandler;
 
-/**
- * Registers item, energy, and (for the Geothermal generator) fluid capability providers so hoppers,
- * cables, and pipes from other mods can interact with FTBIC machines via the new NeoForge transfer API.
- */
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
 public final class CapabilityRegistrar {
 
@@ -39,10 +37,10 @@ public final class CapabilityRegistrar {
 						(be, side) -> new ElectricBlockEnergyHandler(be, false, true));
 				case INSERT_ONLY -> event.registerBlockEntity(Capabilities.Energy.BLOCK, type,
 						(be, side) -> {
-							if (!(be instanceof dev.ftb.mods.ftbic.block.entity.storage.EnergyRectifierBlockEntity rec)) return null;
+							if (!(be instanceof EnergyRectifierBlockEntity rec)) return null;
 							net.minecraft.core.Direction inputFace = be.getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING);
 							if (side != null && side != inputFace) return null;
-							return new dev.ftb.mods.ftbic.util.EnergyRectifierFEHandler(rec);
+							return new EnergyRectifierFEHandler(rec);
 						});
 				case NONE -> {
 					// No Energy.BLOCK exposure — internal zaps only.

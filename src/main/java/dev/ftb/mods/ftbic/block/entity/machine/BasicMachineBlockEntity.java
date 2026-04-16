@@ -13,22 +13,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-/**
- * Adds an upgrade-slot inventory + drain-battery-to-buffer slot to the base electric BE.
- *
- * Upgrade effects (applied in {@link #upgradesChanged()}):
- *  - Overclocker: *speed* multiplier on progress, *energy-use* multiplier on per-tick drain
- *  - Transformer: *4 per stack on maxEnergyInput (capped at IV tier)
- *  - Storage: +STORAGE_UPGRADE zaps per stack on capacity
- *  - Ejector: flips `autoEject = true`
- */
 public class BasicMachineBlockEntity extends ElectricBlockEntity {
 	public final UpgradeInventory upgradeInventory;
 	public final BatteryInventory batteryInventory;
 
 	public double energyUse;
 	public double progressSpeed;
-	/** Cached config value refreshed in {@link #initProperties()} — avoids per-tick ConfigValue.get(). */
 	protected double itemTransferEfficiency;
 
 	public BasicMachineBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
@@ -75,12 +65,6 @@ public class BasicMachineBlockEntity extends ElectricBlockEntity {
 		}
 	}
 
-	/**
-	 * Push output items into adjacent neighbours via {@code Capabilities.Item.BLOCK} (the modern
-	 * {@code ResourceHandler<ItemResource>} API). NeoForge exposes vanilla {@code Container} block
-	 * entities (chests, hoppers, barrels) through this capability automatically, so no separate
-	 * Container fallback is needed.
-	 */
 	private void ejectOutputs() {
 		if (!(level instanceof net.minecraft.server.level.ServerLevel serverLevel) || outputItems.length == 0) return;
 
@@ -112,7 +96,6 @@ public class BasicMachineBlockEntity extends ElectricBlockEntity {
 		}
 	}
 
-	/** Tooltip helper: max possible capacity with every upgrade slot full of storage upgrades. */
 	public double getTotalPossibleEnergyCapacity() {
 		return electricBlockInstance.energyCapacity.get()
 				+ upgradeInventory.getSlots()

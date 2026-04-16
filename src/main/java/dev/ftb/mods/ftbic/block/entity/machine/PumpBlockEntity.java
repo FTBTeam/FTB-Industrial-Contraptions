@@ -14,17 +14,9 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import dev.ftb.mods.ftbic.block.FTBICBlocks;
+import dev.ftb.mods.ftbic.screen.PumpMenu;
 
-/**
- * Fluid-source pump — walks the same 5×5 column grid as the Quarry, but instead of breaking blocks
- * it targets fluid source blocks (water, lava) and accumulates them into an internal fluid tank
- * ({@link #fluidAmount} mB of {@link #storedFluid}). The tank is exposed via a
- * {@code ResourceHandler<FluidResource>} (see {@code PumpTankHandler}) so foreign pipes can drain
- * the accumulated fluid out.
- *
- * Convenience behaviour: an empty bucket in input slot 0 will be auto-filled with 1000 mB from the
- * tank (matching fluid type) and pushed to the output slot, preserving the 1.18.2 bucket workflow.
- */
 public class PumpBlockEntity extends DiggingBaseBlockEntity {
 	public Fluid storedFluid = Fluids.EMPTY;
 	public int fluidAmount = 0;
@@ -35,7 +27,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity {
 
 	@Override
 	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
-		return new dev.ftb.mods.ftbic.screen.PumpMenu(id, inv, this);
+		return new PumpMenu(id, inv, this);
 	}
 
 	public int getTankCapacity() {
@@ -90,17 +82,13 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity {
 
 		storedFluid = f;
 		fluidAmount += 1000;
-		level.setBlock(miningPos, dev.ftb.mods.ftbic.block.FTBICBlocks.EXFLUID.get().defaultBlockState(), 3);
+		level.setBlock(miningPos, FTBICBlocks.EXFLUID.get().defaultBlockState(), 3);
 		setChanged();
 
 		// Opportunistically fill a player-supplied empty bucket.
 		tryFillBucket();
 	}
 
-	/**
-	 * If input slot 0 has an empty bucket and the tank has ≥ 1000 mB, swap it into a filled bucket
-	 * in the output slot.
-	 */
 	public void tryFillBucket() {
 		if (fluidAmount < 1000 || storedFluid == Fluids.EMPTY) return;
 		if (inputItems.length == 0 || inputItems[0].isEmpty()) return;

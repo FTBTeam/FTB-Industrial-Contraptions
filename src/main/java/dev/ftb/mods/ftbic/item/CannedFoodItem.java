@@ -7,9 +7,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-/**
- * Edible canned food. When consumed, drops an empty can into the player's inventory (or world).
- */
 public class CannedFoodItem extends Item {
 	public CannedFoodItem(Properties props) {
 		super(props.stacksTo(24).food(new FoodProperties.Builder()

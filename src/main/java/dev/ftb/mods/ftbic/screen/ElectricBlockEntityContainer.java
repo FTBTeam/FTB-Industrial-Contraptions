@@ -5,11 +5,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * Adapter exposing an ElectricBlockEntity's `inputItems` + `outputItems` arrays as a vanilla Container
- * so Slot objects can read and write them. Slot indices 0..inputs-1 map to inputs; inputs..end map
- * to outputs.
- */
 public class ElectricBlockEntityContainer implements Container {
 	private final ElectricBlockEntity be;
 

@@ -23,11 +23,6 @@ import snownee.jade.api.IWailaPlugin;
 import snownee.jade.api.WailaPlugin;
 import snownee.jade.api.config.IPluginConfig;
 
-/**
- * Jade "Waila" tooltip plugin for FTBIC. Shows energy / capacity / burnt state for any electric
- * block, lava + water tank level for Geothermal/Pump, current recipe progress for processing
- * machines, heat fraction + energy output for the Nuclear Reactor, and cable tier for cables.
- */
 @WailaPlugin
 public class FTBICJadePlugin implements IWailaPlugin {
 	private static final Identifier ENERGY_UID = FTBIC.id("energy");
@@ -44,7 +39,6 @@ public class FTBICJadePlugin implements IWailaPlugin {
 		registration.registerBlockComponent(CableTierProvider.INSTANCE, CableBlock.class);
 	}
 
-	/** Cable tier line — pure client-side from the block class. */
 	public static final class CableTierProvider implements IBlockComponentProvider {
 		public static final CableTierProvider INSTANCE = new CableTierProvider();
 
@@ -62,7 +56,6 @@ public class FTBICJadePlugin implements IWailaPlugin {
 		}
 	}
 
-	/** Server-data provider: writes the energy snapshot into the block accessor's server-data NBT. */
 	public static final class EnergyServerDataProvider implements IServerDataProvider<BlockAccessor> {
 		public static final EnergyServerDataProvider INSTANCE = new EnergyServerDataProvider();
 
@@ -106,7 +99,6 @@ public class FTBICJadePlugin implements IWailaPlugin {
 
 	}
 
-	/** Client-side tooltip provider: reads the energy snapshot and appends tooltip lines. */
 	public static final class EnergyClientProvider implements IBlockComponentProvider {
 		public static final EnergyClientProvider INSTANCE = new EnergyClientProvider();
 

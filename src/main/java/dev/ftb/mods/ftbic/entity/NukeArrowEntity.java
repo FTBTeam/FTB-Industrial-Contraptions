@@ -11,12 +11,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import dev.ftb.mods.ftbic.util.NuclearFallout;
 
-/**
- * Nuclear-tipped arrow. Explodes on impact with a radius equal to the configured nuke radius.
- * Full 1.18.2 `NuclearExplosion` simulation (threaded block destruction + fallout) is deferred —
- * the vanilla Explosion at the configured radius is close enough.
- */
 public final class NukeArrowEntity extends AbstractArrow {
 	public NukeArrowEntity(EntityType<? extends NukeArrowEntity> type, Level level) {
 		super(type, level);
@@ -50,7 +46,7 @@ public final class NukeArrowEntity extends AbstractArrow {
 			double radius = FTBICConfig.NUCLEAR.NUKE_RADIUS.get();
 			server.explode(this, null, null, at.x, at.y, at.z,
 					(float) radius, true, Level.ExplosionInteraction.BLOCK);
-			dev.ftb.mods.ftbic.util.NuclearFallout.apply(server,
+			NuclearFallout.apply(server,
 					net.minecraft.core.BlockPos.containing(at), radius);
 			kill(server);
 		}

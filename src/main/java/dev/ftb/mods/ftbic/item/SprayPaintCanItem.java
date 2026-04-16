@@ -9,11 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.state.BlockState;
 
-/**
- * Right-click a {@link SprayPaintable} block to toggle its `DARK` state. Dark=true repaints the
- * block to the dark variant; light version does the inverse. Matches the 1.18.2 reference: stacks
- * to 1, no durability, unlimited uses (paint cans never run out).
- */
 public class SprayPaintCanItem extends Item {
 	public final boolean dark;
 
