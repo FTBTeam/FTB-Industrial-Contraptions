@@ -14,6 +14,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -61,13 +62,25 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 			if (idx >= 2) break;
 		}
 
+		int visibleOutputs = 0;
+		for (StackWithChance out : recipe.outputs) {
+			if (!out.stack().isEmpty()) visibleOutputs++;
+		}
+		boolean singleOutput = visibleOutputs == 1;
 		int ox = OUTPUT_X_0;
 		for (StackWithChance out : recipe.outputs) {
 			ItemStack stack = out.stack();
 			if (stack.isEmpty()) continue;
-			builder.addOutputSlot(ox, SLOT_Y)
-					.setOutputSlotBackground()
-					.add(stack);
+			var slot = builder.addOutputSlot(ox, SLOT_Y);
+			if (singleOutput) slot.setOutputSlotBackground();
+			else slot.setStandardSlotBackground();
+			slot.add(stack);
+			double chance = out.chance();
+			if (chance < 1.0D) {
+				slot.addRichTooltipCallback((slotView, tooltip) ->
+						tooltip.add(Component.literal(String.format("Chance: %.1f%%", chance * 100D))
+								.withStyle(ChatFormatting.GRAY)));
+			}
 			ox += 18;
 		}
 	}
