@@ -18,13 +18,13 @@
     {
       "chance": 0.2,
       "item": {
-        "id": "ftbic:silicon"
+        "id": "ftbmaterials:silicon_gem"
       }
     },
     {
       "chance": 0.05,
       "item": {
-        "id": "ftbic:silicon"
+        "id": "ftbmaterials:silicon_gem"
       }
     }
   ]

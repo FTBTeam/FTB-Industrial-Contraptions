@@ -7,7 +7,7 @@ navigation:
 item_ids:
   - ftbic:rubber
   - ftbic:rubber_sheet
-  - ftbic:silicon
+  - ftbmaterials:silicon_gem
 ---
 
 # <Color id="gold">Rubber & Silicon</Color>
@@ -43,8 +43,8 @@ Smelt a vanilla **slime ball** for **8 rubber** — the main production path. Sl
 ***
 
 <Row>
-  <ItemImage id="silicon" />
+  <ItemImage id="ftbmaterials:silicon_gem" />
   ### <Color id="aqua">Silicon</Color>
 </Row>
 
-Extracted from sand or quartz in a <ItemLink id="centrifuge" />. Every circuit in the mod starts with silicon.
+Silicon is provided by **FTB Materials**. Extract it from sand or quartz in a <ItemLink id="centrifuge" />. Every circuit in the mod starts with silicon.

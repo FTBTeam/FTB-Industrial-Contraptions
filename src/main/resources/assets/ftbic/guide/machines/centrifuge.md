@@ -14,7 +14,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="centrifuge" scale="2" />
 
-  Separates materials into their components. Extracts <ItemLink id="silicon" /> from quartz or sand, breaks down gravel and flint, and handles slime/magma processing.
+  Separates materials into their components. Extracts <ItemLink id="ftbmaterials:silicon_gem" /> from quartz or sand, breaks down gravel and flint, and handles slime/magma processing.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -28,7 +28,7 @@ item_ids:
   ## <Color id="gold">Notable Separating Recipes</Color>
 </Column>
 
-* Quartz or sand → <ItemLink id="silicon" />
+* Quartz or sand → <ItemLink id="ftbmaterials:silicon_gem" />
 * Gravel → flint
 * Glowstone → glowstone dust
 * Magma Cream → slime ball (+ a chance of blaze powder)

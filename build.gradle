@@ -94,9 +94,7 @@ dependencies {
     // the auroral reference project.
     implementation("curse.maven:jade-324717:7817285")
 
-    // FTB Materials - hard dependency; provides ores/raw materials/ingots/nuggets/dusts/plates/rods/gears/wires
-    // so FTBIC stops registering its own duplicates. Dense plates remain in FTBIC.
-    implementation("dev.ftb.mods:ftb-materials:26.1.1.1-SNAPSHOT")
+    implementation("dev.ftb.mods:ftb-materials:26.1.2.1-SNAPSHOT")
 
     // GuideME - In-game guidebook (optional)
     implementation("org.appliedenergistics:guideme:${guideme_version}")

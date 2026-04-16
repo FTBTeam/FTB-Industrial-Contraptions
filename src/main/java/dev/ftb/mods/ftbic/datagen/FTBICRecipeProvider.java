@@ -292,13 +292,14 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 
 	private void separatingRecipes() {
-		// Plain outputs
-		Item silicon = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(FTBIC.id("silicon"));
+		Item silicon = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("ftbmaterials", "silicon_gem"));
 		separate("flint", commonTag("gravels"), 1, java.util.Arrays.asList(out(Items.FLINT, 1, 1D)));
-		separate("silicon_from_quartz", commonTag("gems/quartz"), 1, java.util.Arrays.asList(out(silicon, 3, 1D)));
-		separate("silicon_from_sand", tag(ItemTags.SAND), 1, List.of(
-				out(silicon, 1, 0.2D),
-				out(silicon, 1, 0.05D)));
+		if (silicon != null && silicon != Items.AIR) {
+			separate("silicon_from_quartz", commonTag("gems/quartz"), 1, java.util.Arrays.asList(out(silicon, 3, 1D)));
+			separate("silicon_from_sand", tag(ItemTags.SAND), 1, List.of(
+					out(silicon, 1, 0.2D),
+					out(silicon, 1, 0.05D)));
+		}
 		separate("slime_ball", Ingredient.of(Items.MAGMA_CREAM), 1, List.of(
 				out(Items.SLIME_BALL, 1, 1D),
 				out(Items.BLAZE_POWDER, 1, 0.25D)));

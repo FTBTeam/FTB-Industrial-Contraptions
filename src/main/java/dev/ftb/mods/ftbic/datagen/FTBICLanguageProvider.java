@@ -217,7 +217,6 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.rubber_sheet", "Rubber Sheet");
 		add("item.ftbic.scrap", "Scrap");
 		add("item.ftbic.scrap_box", "Scrap Box");
-		add("item.ftbic.silicon", "Silicon");
 		add("item.ftbic.single_use_battery", "Single Use Battery");
 		add("item.ftbic.small_coolant_cell", "Small Coolant Cell");
 		add("item.ftbic.spray_paint_can.tooltip", "Right-click on a machine to change its theme");
