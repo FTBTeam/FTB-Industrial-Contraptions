@@ -19,6 +19,18 @@ public final class FTBICRecipeSyncHandler {
 
 	@SubscribeEvent
 	public static void onDatapackSync(OnDatapackSyncEvent event) {
+		event.sendRecipes(
+				FTBICRecipes.SMELTING.TYPE.get(),
+				FTBICRecipes.MACERATING.TYPE.get(),
+				FTBICRecipes.SEPARATING.TYPE.get(),
+				FTBICRecipes.COMPRESSING.TYPE.get(),
+				FTBICRecipes.REPROCESSING.TYPE.get(),
+				FTBICRecipes.CANNING.TYPE.get(),
+				FTBICRecipes.ROLLING.TYPE.get(),
+				FTBICRecipes.EXTRUDING.TYPE.get(),
+				FTBICRecipes.BASIC_GENERATOR_FUEL.get(),
+				FTBICRecipes.ANTIMATTER_BOOST.get());
+
 		MinecraftServer server = event.getPlayerList().getServer();
 		List<RecipeHolder<?>> all = collect(server);
 		if (event.getPlayer() != null) {

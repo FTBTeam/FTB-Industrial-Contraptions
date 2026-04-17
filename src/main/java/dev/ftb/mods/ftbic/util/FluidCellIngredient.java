@@ -43,9 +43,7 @@ public record FluidCellIngredient(Fluid fluid) implements ICustomIngredient {
 
 	@Override
 	public SlotDisplay display() {
-		ItemStack display = new ItemStack(FTBICItems.FLUID_CELL.get());
-		display.set(ModDataComponents.FLUID_CELL_CONTENT.get(), new FluidStack(fluid, 1000));
-		return new SlotDisplay.ItemStackSlotDisplay(net.minecraft.world.item.ItemStackTemplate.fromNonEmptyStack(display));
+		return new SlotDisplay.ItemSlotDisplay(FTBICItems.FLUID_CELL.get().builtInRegistryHolder());
 	}
 
 	@Override
