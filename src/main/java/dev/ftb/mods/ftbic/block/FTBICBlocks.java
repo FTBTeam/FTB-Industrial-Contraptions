@@ -23,12 +23,11 @@ public interface FTBICBlocks {
 	DeferredBlock<RubberSheetBlock> RUBBER_SHEET = REGISTRY.register("rubber_sheet",
 			name -> new RubberSheetBlock(props(name)));
 
-	DeferredBlock<Block> REINFORCED_STONE = REGISTRY.register("reinforced_stone",
-			name -> new Block(props(name).sound(SoundType.STONE).strength(10F, 10_000_000_000F).requiresCorrectToolForDrops()));
+	DeferredBlock<ReinforcedBlock> REINFORCED_STONE = REGISTRY.register("reinforced_stone",
+			name -> new ReinforcedBlock(props(name).sound(SoundType.STONE).strength(10F, 10_000_000_000F).requiresCorrectToolForDrops()));
 
-	DeferredBlock<net.minecraft.world.level.block.HalfTransparentBlock> REINFORCED_GLASS = REGISTRY.register("reinforced_glass",
-			name -> new net.minecraft.world.level.block.HalfTransparentBlock(
-					props(name).sound(SoundType.GLASS).strength(10F, 10_000_000_000F).requiresCorrectToolForDrops().noOcclusion()));
+	DeferredBlock<ReinforcedGlassBlock> REINFORCED_GLASS = REGISTRY.register("reinforced_glass",
+			name -> new ReinforcedGlassBlock(props(name).sound(SoundType.GLASS).strength(10F, 10_000_000_000F).requiresCorrectToolForDrops().noOcclusion()));
 
 	DeferredBlock<Block> MACHINE_BLOCK = REGISTRY.register("machine_block",
 			name -> new Block(props(name).sound(SoundType.METAL).strength(5F, 6F).requiresCorrectToolForDrops()));
