@@ -5,8 +5,10 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeType;
+import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.recipe.IRecipeManager;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
 import mezz.jei.api.constants.RecipeTypes;
@@ -18,11 +20,17 @@ import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import dev.ftb.mods.ftbic.block.entity.machine.AntimatterConstructorBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.FluidCellItem;
 import dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe;
 import dev.ftb.mods.ftbic.recipe.BasicGeneratorFuelRecipe;
+import dev.ftb.mods.ftbic.recipe.MachineRecipe;
+import dev.ftb.mods.ftbic.recipe.MachineRecipeType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @JeiPlugin
 public class FTBICJEIPlugin implements IModPlugin {
@@ -169,6 +177,39 @@ public class FTBICJEIPlugin implements IModPlugin {
 	@Override
 	public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
 		ClientRecipeCache.setRuntime(jeiRuntime);
+		hideEmptyInputRecipes(jeiRuntime);
+	}
+
+	private static void hideEmptyInputRecipes(IJeiRuntime runtime) {
+		IRecipeManager jeiRm = runtime.getRecipeManager();
+		hideEmptyFor(jeiRm, FTBICRecipes.SMELTING);
+		hideEmptyFor(jeiRm, FTBICRecipes.MACERATING);
+		hideEmptyFor(jeiRm, FTBICRecipes.SEPARATING);
+		hideEmptyFor(jeiRm, FTBICRecipes.COMPRESSING);
+		hideEmptyFor(jeiRm, FTBICRecipes.REPROCESSING);
+		hideEmptyFor(jeiRm, FTBICRecipes.CANNING);
+		hideEmptyFor(jeiRm, FTBICRecipes.ROLLING);
+		hideEmptyFor(jeiRm, FTBICRecipes.EXTRUDING);
+	}
+
+	private static void hideEmptyFor(IRecipeManager jeiRm, MachineRecipeType type) {
+		IRecipeHolderType<MachineRecipe> holderType = catalystType(type);
+		List<RecipeHolder<MachineRecipe>> toHide = jeiRm.createRecipeLookup(holderType).get()
+				.filter(h -> !hasResolvableInputs(h.value()))
+				.toList();
+		if (!toHide.isEmpty()) {
+			jeiRm.hideRecipes(holderType, toHide);
+		}
+	}
+
+	private static boolean hasResolvableInputs(MachineRecipe recipe) {
+		for (IngredientWithCount in : recipe.inputs) {
+			var ing = in.ingredient();
+			if (ing.getCustomIngredient() != null) continue;
+			var values = ing.getValues();
+			if (values == null || values.size() == 0) return false;
+		}
+		return true;
 	}
 
 	@Override
