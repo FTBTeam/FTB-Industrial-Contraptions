@@ -13,6 +13,7 @@ import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -20,6 +21,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +36,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	public final BatteryInventory chargeBatteryInventory;
 	private long currentElectricNetwork = -1L;
 	private CachedEnergyStorage[] connectedEnergyBlocks;
+	private BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction>[] fePushCaches;
 
 	public GeneratorBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -128,7 +133,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 				continue;
 			}
 
-			double accepted = storage.energyHandler.insertEnergy(Math.min(share, energy), false);
+			double accepted = storage.insertZaps(Math.min(share, energy));
 			if (accepted > 0D) {
 				energy -= accepted;
 				active = true;
@@ -156,19 +161,19 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	private void pushFEToNeighbours() {
 		if (electricBlockInstance.feCapMode != ElectricBlockInstance.FECapMode.EXTRACT_ONLY) return;
 		if (energy <= 0D || maxEnergyOutputTransfer <= 0D) return;
-		double rate = dev.ftb.mods.ftbic.FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
+		if (!(level instanceof ServerLevel serverLevel)) return;
+		double rate = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 		for (Direction dir : FTBICUtils.DIRECTIONS) {
 			if (!isValidEnergyOutputSide(dir)) continue;
 			BlockPos npos = worldPosition.relative(dir);
 			BlockEntity nbe = level.getBlockEntity(npos);
-			if (nbe instanceof EnergyHandler) continue; // FTBIC neighbour — handled by network distribution
-			net.neoforged.neoforge.transfer.energy.EnergyHandler fe =
-					level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.Energy.BLOCK, npos, dir.getOpposite());
+			if (nbe instanceof EnergyHandler) continue;
+			net.neoforged.neoforge.transfer.energy.EnergyHandler fe = fePushCache(serverLevel, dir).getCapability();
 			if (fe == null) continue;
 			double zapsAvailable = Math.min(energy, maxEnergyOutputTransfer);
 			int feToOffer = (int) Math.min(Integer.MAX_VALUE, Math.floor(zapsAvailable * rate));
 			if (feToOffer <= 0) continue;
-			try (var tx = net.neoforged.neoforge.transfer.transaction.Transaction.openRoot()) {
+			try (Transaction tx = Transaction.openRoot()) {
 				int feAccepted = fe.insert(feToOffer, tx);
 				if (feAccepted > 0) {
 					double zapsConsumed = feAccepted / rate;
@@ -178,10 +183,23 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 					active = true;
 					setChanged();
 				}
-				// no commit = rollback on close
 			}
 			if (energy <= 0D) return;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction> fePushCache(ServerLevel serverLevel, Direction dir) {
+		if (fePushCaches == null) {
+			fePushCaches = new BlockCapabilityCache[FTBICUtils.DIRECTIONS.length];
+		}
+		BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction> c = fePushCaches[dir.ordinal()];
+		if (c == null) {
+			c = BlockCapabilityCache.create(Capabilities.Energy.BLOCK, serverLevel,
+					worldPosition.relative(dir), dir.getOpposite());
+			fePushCaches[dir.ordinal()] = c;
+		}
+		return c;
 	}
 
 	@Override
@@ -257,7 +275,6 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 
-		// Prefer FTBIC-native EnergyHandler.
 		if (entity instanceof EnergyHandler handler && handler != this) {
 			if (handler.getMaxInputEnergy() > 0D && !handler.isBurnt() && handler.isValidEnergyInputSide(direction.getOpposite())) {
 				CachedEnergyStorage s = new CachedEnergyStorage();
@@ -270,8 +287,19 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 
-		// Foreign energy interop (non-FTBIC neighbours) is plumbed via the NeoForge transfer API
-		// elsewhere — see ElectricBlockEnergyHandler + CapabilityRegistrar binding
-		// Capabilities.Energy.BLOCK so other mods see our machines as zap/FE-converting sinks.
+		if (!(level instanceof ServerLevel serverLevel)) {
+			return;
+		}
+		BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction> feCache =
+				BlockCapabilityCache.create(Capabilities.Energy.BLOCK, serverLevel, pos, direction.getOpposite());
+		if (feCache.getCapability() == null) {
+			return;
+		}
+		CachedEnergyStorage s = new CachedEnergyStorage();
+		s.origin = origin;
+		s.distance = distance;
+		s.blockEntity = entity;
+		s.feHandlerCache = feCache;
+		set.add(s);
 	}
 }

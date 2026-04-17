@@ -5,13 +5,21 @@ import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.BatterySlotHelper;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class BasicMachineBlockEntity extends ElectricBlockEntity {
 	public final UpgradeInventory upgradeInventory;
@@ -20,6 +28,7 @@ public class BasicMachineBlockEntity extends ElectricBlockEntity {
 	public double energyUse;
 	public double progressSpeed;
 	protected double itemTransferEfficiency;
+	private BlockCapabilityCache<ResourceHandler<ItemResource>, Direction>[] itemEjectCaches;
 
 	public BasicMachineBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -66,24 +75,20 @@ public class BasicMachineBlockEntity extends ElectricBlockEntity {
 	}
 
 	private void ejectOutputs() {
-		if (!(level instanceof net.minecraft.server.level.ServerLevel serverLevel) || outputItems.length == 0) return;
+		if (!(level instanceof ServerLevel serverLevel) || outputItems.length == 0) return;
 
 		for (int i = 0; i < outputItems.length; i++) {
 			if (outputItems[i].isEmpty()) continue;
 
-			for (net.minecraft.core.Direction dir : net.minecraft.core.Direction.values()) {
+			for (Direction dir : FTBICUtils.DIRECTIONS) {
 				if (outputItems[i].isEmpty()) break;
-				net.minecraft.core.BlockPos neighbor = worldPosition.relative(dir);
-
-				var handler = serverLevel.getCapability(
-						net.neoforged.neoforge.capabilities.Capabilities.Item.BLOCK,
-						neighbor, dir.getOpposite());
+				ResourceHandler<ItemResource> handler = itemEjectCache(serverLevel, dir).getCapability();
 				if (handler == null) continue;
 
 				ItemStack stack = outputItems[i];
-				var resource = net.neoforged.neoforge.transfer.item.ItemResource.of(stack);
+				ItemResource resource = ItemResource.of(stack);
 				int inserted;
-				try (var txn = net.neoforged.neoforge.transfer.transaction.Transaction.openRoot()) {
+				try (Transaction txn = Transaction.openRoot()) {
 					inserted = handler.insert(resource, stack.getCount(), txn);
 					if (inserted > 0) txn.commit();
 				}
@@ -94,6 +99,20 @@ public class BasicMachineBlockEntity extends ElectricBlockEntity {
 				}
 			}
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private BlockCapabilityCache<ResourceHandler<ItemResource>, Direction> itemEjectCache(ServerLevel serverLevel, Direction dir) {
+		if (itemEjectCaches == null) {
+			itemEjectCaches = new BlockCapabilityCache[FTBICUtils.DIRECTIONS.length];
+		}
+		BlockCapabilityCache<ResourceHandler<ItemResource>, Direction> c = itemEjectCaches[dir.ordinal()];
+		if (c == null) {
+			c = BlockCapabilityCache.create(Capabilities.Item.BLOCK, serverLevel,
+					worldPosition.relative(dir), dir.getOpposite());
+			itemEjectCaches[dir.ordinal()] = c;
+		}
+		return c;
 	}
 
 	public double getTotalPossibleEnergyCapacity() {

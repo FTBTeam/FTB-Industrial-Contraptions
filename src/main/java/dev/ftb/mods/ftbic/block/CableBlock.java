@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 public class CableBlock extends BaseCableBlock {
 	public final EnergyTier tier;
@@ -57,6 +58,10 @@ public class CableBlock extends BaseCableBlock {
 		if (!state.isAir()) {
 			BlockEntity be = world.getBlockEntity(pos);
 			if (be instanceof EnergyHandler) {
+				return true;
+			}
+			if (world instanceof Level lvl && !lvl.isClientSide()
+					&& lvl.getCapability(Capabilities.Energy.BLOCK, pos, face) != null) {
 				return true;
 			}
 		}
