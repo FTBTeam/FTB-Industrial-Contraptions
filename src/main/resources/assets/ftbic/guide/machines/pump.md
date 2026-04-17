@@ -6,6 +6,7 @@ navigation:
   position: 11
 item_ids:
   - ftbic:pump
+  - ftbic:exfluid
 ---
 
 # <Color id="gold">Pump</Color>

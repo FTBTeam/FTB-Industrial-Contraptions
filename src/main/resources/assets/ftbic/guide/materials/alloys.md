@@ -9,6 +9,8 @@ item_ids:
   - ftbic:advanced_alloy
   - ftbic:industrial_grade_metal
   - ftbic:iridium_alloy
+  - ftbic:machine_block
+  - ftbic:advanced_machine_block
   - ftbic:enderium_ingot
   - ftbic:enderium_nugget
   - ftbic:enderium_plate
@@ -36,7 +38,7 @@ item_ids:
 
 Iron + copper + tin plates. The raw ingredient for <ItemLink id="industrial_grade_metal" />.
 
-<RecipeFor id="mixed_metal_blend_1" />
+<RecipesFor id="mixed_metal_blend" />
 
 <Row>
   <ItemImage id="industrial_grade_metal" />

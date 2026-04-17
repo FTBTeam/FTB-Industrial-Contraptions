@@ -49,7 +49,7 @@ A cheap throwaway battery. 2,400 zaps. Good for emergencies, useless for infrast
 
 4,000 zap capacity, LV tier. The first rechargeable battery.
 
-<RecipeFor id="battery" />
+<RecipeFor id="lv_battery" />
 
 <Row>
   <ItemImage id="mv_battery" />

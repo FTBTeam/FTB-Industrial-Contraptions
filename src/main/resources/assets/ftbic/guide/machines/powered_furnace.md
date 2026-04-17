@@ -19,7 +19,7 @@ item_ids:
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 
-<RecipeFor id="electric_furnace" />
+<RecipeFor id="powered_furnace" />
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

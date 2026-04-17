@@ -19,7 +19,7 @@ item_ids:
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 
-<RecipeFor id="extractor" />
+<RecipeFor id="centrifuge" />
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

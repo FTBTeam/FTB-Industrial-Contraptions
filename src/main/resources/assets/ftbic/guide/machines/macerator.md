@@ -32,7 +32,7 @@ item_ids:
 * Ingots → 1 dust (for recycling or chain processing).
 * Cobblestone → sand, gravel → flint, etc.
 
-<RecipesFor id="coal_dust" />
+<RecipesFor id="ftbmaterials:coal_dust" />
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

@@ -20,7 +20,7 @@ item_ids:
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 
-<RecipeFor id="recycler" />
+<RecipeFor id="reprocessor" />
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

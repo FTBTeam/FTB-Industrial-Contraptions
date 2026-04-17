@@ -5,11 +5,10 @@ navigation:
   parent: materials/index.md
   position: 1
 item_ids:
-  - ftbic:coal_dust
-  - ftbic:charcoal_dust
-  - ftbic:diamond_dust
-  - ftbic:obsidian_dust
-  - ftbic:ender_dust
+  - ftbmaterials:coal_dust
+  - ftbmaterials:charcoal_dust
+  - ftbmaterials:diamond_dust
+  - ftbmaterials:obsidian_dust
   - ftbic:enderium_dust
   - ftbic:dense_copper_plate
   - ftbic:copper_coil
@@ -34,35 +33,30 @@ item_ids:
 </Column>
 
 <Row>
-  <ItemImage id="coal_dust" />
+  <ItemImage id="ftbmaterials:coal_dust" />
   ### <Color id="aqua">Coal Dust</Color>
 </Row>
 
 Ground coal. Crafting input for carbon fibers and coal balls.
 
-<RecipesFor id="coal_dust" />
+<RecipesFor id="ftbmaterials:coal_dust" />
 
 <Row>
-  <ItemImage id="charcoal_dust" />
+  <ItemImage id="ftbmaterials:charcoal_dust" />
   ### <Color id="aqua">Charcoal Dust</Color>
 </Row>
 
 <Row>
-  <ItemImage id="obsidian_dust" />
+  <ItemImage id="ftbmaterials:obsidian_dust" />
   ### <Color id="aqua">Obsidian Dust</Color>
 </Row>
 
 <Row>
-  <ItemImage id="diamond_dust" />
+  <ItemImage id="ftbmaterials:diamond_dust" />
   ### <Color id="aqua">Diamond Dust</Color>
 </Row>
 
 Grind a diamond in a macerator, compress two dusts back into a diamond — a free +100% when you want diamonds from recycled gear.
-
-<Row>
-  <ItemImage id="ender_dust" />
-  ### <Color id="aqua">Ender Dust</Color>
-</Row>
 
 <Row>
   <ItemImage id="enderium_dust" />
