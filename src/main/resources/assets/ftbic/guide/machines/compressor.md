@@ -7,6 +7,7 @@ navigation:
 item_ids:
   - ftbic:compressor
   - ftbic:advanced_compressor
+  - ftbic:protein_bar
 ---
 
 # <Color id="gold">Compressor</Color>

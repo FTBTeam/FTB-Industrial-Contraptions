@@ -86,4 +86,4 @@ The highest transfer rate in the mod. Reserved for maxed-out reactor designs and
 
 What a cable becomes if it receives too much voltage. Break it, replace it with the correct tier, and grind the burnt remains into <ItemLink id="scrap" />.
 
-<RecipeFor id="scrap_from_burnt_cable" fallbackText="Drop a Burnt Cable in any crafting grid for scrap." />
+<RecipeFor id="scrap" fallbackText="Drop a Burnt Cable in any crafting grid for scrap." />

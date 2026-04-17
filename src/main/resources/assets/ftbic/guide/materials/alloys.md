@@ -97,7 +97,7 @@ Purple-blue magical alloy — used in the <ItemLink id="teleporter" />, <ItemLin
 
 9 ingots → block. Bulk storage.
 
-<RecipeFor id="enderium_ingot_to_enderium_block" />
+<RecipeFor id="enderium_block" />
 
 Enderium comes in every standard shape: <ItemLink id="enderium_nugget" />, <ItemLink id="enderium_plate" />, <ItemLink id="enderium_rod" />, <ItemLink id="enderium_gear" />, <ItemLink id="enderium_wire" />.
 

@@ -20,7 +20,7 @@ item_ids:
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 
-<RecipeFor id="antimatter_fabricator" />
+<RecipeFor id="antimatter_constructor" />
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
