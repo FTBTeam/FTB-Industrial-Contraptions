@@ -45,13 +45,6 @@ import dev.ftb.mods.ftbic.util.FluidCellIngredient;
 
 public class FTBICRecipeProvider extends RecipeProvider {
 
-	private static final String[] SMELTABLE_DUSTS = {
-			"aluminum", "antimony", "brass", "bronze", "chromium", "constantan", "electrum",
-			"enderium", "graphite", "invar", "iridium", "lead", "lumium", "nickel", "osmium",
-			"platinum", "plutonium", "refined_glowstone", "refined_obsidian", "silicon", "silver",
-			"stainless_steel", "steel", "tin", "titanium", "tungsten", "uranium", "zinc",
-	};
-
 	private static final String[] MACERATE_INGOTS = {
 			"aluminum", "antimony", "brass", "bronze", "chromium", "constantan", "copper",
 			"electrum", "enderium", "gold", "graphite", "invar", "iridium", "iron", "lead",
@@ -469,9 +462,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				stack(FTBICItems.ADVANCED_ALLOY.item.get(), 1), 0F, 400);
 		cookSmelt("industrial_grade_metal", commonTag("ingots/iron"),
 				stack(FTBICItems.INDUSTRIAL_GRADE_METAL.item.get(), 1), 0F, 400);
-		for (String m : SMELTABLE_DUSTS) {
-			cookSmelt("dusts/" + m + "_to_ingot", commonTag("dusts/" + m), ftbmat(m + "_ingot", 1), 0.7F, 200);
-		}
 	}
 
 	private void blastingRecipes() {
@@ -479,9 +469,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				stack(FTBICItems.ADVANCED_ALLOY.item.get(), 1), 0F, 200);
 		cookBlast("industrial_grade_metal", commonTag("ingots/iron"),
 				stack(FTBICItems.INDUSTRIAL_GRADE_METAL.item.get(), 1), 0F, 200);
-		for (String m : SMELTABLE_DUSTS) {
-			cookBlast("dusts/" + m + "_to_ingot", commonTag("dusts/" + m), ftbmat(m + "_ingot", 1), 0.7F, 100);
-		}
 	}
 
 	private void smokingRecipes() {
