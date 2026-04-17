@@ -37,6 +37,8 @@ public class ElectricBlockResourceHandler extends SnapshotJournal<ItemStack[]> i
 
 	@Override
 	public long getCapacityAsLong(int index, ItemResource resource) {
+		if (index < 0 || index >= total()) return 0;
+		if (!isInputSlot(index)) return 0;
 		return resource.isEmpty() ? 64 : Math.min(resource.getMaxStackSize(), 64);
 	}
 
@@ -53,18 +55,38 @@ public class ElectricBlockResourceHandler extends SnapshotJournal<ItemStack[]> i
 		if (!be.isItemValid(index, resource.toStack(1))) return 0;
 		ItemStack existing = be.getStackInSlot(index);
 		int limit = (int) getCapacityAsLong(index, resource);
+		int room;
 		if (existing.isEmpty()) {
-			int inserted = Math.min(amount, limit);
-			snapshot(transaction);
-			be.setStackInSlot(index, resource.toStack(inserted));
-			return inserted;
+			room = limit;
+		} else {
+			if (!resource.matches(existing)) return 0;
+			room = limit - existing.getCount();
 		}
-		if (!resource.matches(existing)) return 0;
-		int room = limit - existing.getCount();
-		int inserted = Math.min(amount, room);
-		if (inserted <= 0) return 0;
+		if (room <= 0) return 0;
+		if (amount > room) return 0;
 		snapshot(transaction);
-		existing.grow(inserted);
+		if (existing.isEmpty()) {
+			be.setStackInSlot(index, resource.toStack(amount));
+		} else {
+			ItemStack grown = existing.copy();
+			grown.grow(amount);
+			be.setStackInSlot(index, grown);
+		}
+		return amount;
+	}
+
+	@Override
+	public int insert(ItemResource resource, int amount, TransactionContext transaction) {
+		if (resource.isEmpty() || amount <= 0) return 0;
+		int inserted = 0;
+		int inputs = inputs();
+		for (int i = 0; i < inputs; i++) {
+			int accepted = insert(i, resource, amount - inserted, transaction);
+			if (accepted > 0) {
+				inserted += accepted;
+				if (inserted >= amount) break;
+			}
+		}
 		return inserted;
 	}
 
