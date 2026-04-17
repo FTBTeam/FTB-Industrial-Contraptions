@@ -26,10 +26,12 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 	private static final int INPUT_X_1 = 22;
 	private static final int ARROW_X = 44;
 	private static final int ARROW_Y = 5;
-	private static final int ARROW_W = 24;
-	private static final int ARROW_H = 17;
 	private static final int OUTPUT_X_0 = 72;
 	private static final int SLOT_Y = 4;
+	private static final int ARROW_HIT_X0 = INPUT_X_1 + 18;
+	private static final int ARROW_HIT_X1 = OUTPUT_X_0;
+	private static final int ARROW_HIT_Y0 = SLOT_Y;
+	private static final int ARROW_HIT_Y1 = SLOT_Y + 18;
 
 	private final ElectricBlockInstance machine;
 
@@ -92,7 +94,7 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 
 	@Override
 	public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<MachineRecipe> recipe, IRecipeSlotsView slots, double mouseX, double mouseY) {
-		if (mouseX >= ARROW_X && mouseX < ARROW_X + ARROW_W && mouseY >= ARROW_Y && mouseY < ARROW_Y + ARROW_H) {
+		if (mouseX >= ARROW_HIT_X0 && mouseX < ARROW_HIT_X1 && mouseY >= ARROW_HIT_Y0 && mouseY < ARROW_HIT_Y1) {
 			double baseTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
 			double ticks = recipe.value().processingTime * baseTicks;
 			double energyPerTick = machine.energyUsage.get();
