@@ -122,6 +122,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.electronic_circuit", "Electronic Circuit");
 		add("item.ftbic.empty_can", "Empty Can");
 		add("item.ftbic.ender_dust", "Ender Dust");
+		add("item.ftbic.enderium_block", "Block of Enderium");
 		add("item.ftbic.enderium_dust", "Enderium Dust");
 		add("item.ftbic.enderium_gear", "Enderium Gear");
 		add("item.ftbic.enderium_ingot", "Enderium Ingot");
