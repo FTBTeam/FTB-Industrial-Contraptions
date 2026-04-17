@@ -7,6 +7,7 @@ import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeType;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
+import dev.ftb.mods.ftbmaterials.data.ComponentsAvailableCondition;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -163,7 +164,16 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 	private void macerate(String path, Ingredient input, ItemStackTemplate result) {
 		if (result == null) return;
-		machineRecipe("macerating/" + path, FTBICRecipes.MACERATING, input, result);
+		MachineRecipe recipe = new MachineRecipe(
+				FTBICRecipes.MACERATING,
+				List.of(new IngredientWithCount(input, 1)),
+				List.of(),
+				List.of(new StackWithChance(result, 1D)),
+				List.of(),
+				1D,
+				false);
+		output.accept(recipeKey("macerating/" + path), recipe, null,
+				withOutputConditions(conditionsFor(input), result));
 	}
 
 	private void macerateRaw(String path, Ingredient input, ItemStackTemplate primary, ItemStackTemplate bonus, double chance) {
@@ -176,7 +186,8 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("macerating/" + path), recipe, null, conditionsFor(input));
+		output.accept(recipeKey("macerating/" + path), recipe, null,
+				withOutputConditions(conditionsFor(input), primary, bonus));
 	}
 
 
@@ -216,15 +227,17 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 	private void extrude(String path, Ingredient input, int inputCount, ItemStackTemplate result, int outputCount) {
 		if (result == null) return;
+		ItemStackTemplate scaled = new ItemStackTemplate(result.item(), outputCount);
 		MachineRecipe recipe = new MachineRecipe(
 				FTBICRecipes.EXTRUDING,
 				List.of(new IngredientWithCount(input, inputCount)),
 				List.of(),
-				List.of(new StackWithChance(new ItemStackTemplate(result.item(), outputCount), 1D)),
+				List.of(new StackWithChance(scaled, 1D)),
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("extruding/" + path), recipe, null, conditionsFor(input));
+		output.accept(recipeKey("extruding/" + path), recipe, null,
+				withOutputConditions(conditionsFor(input), scaled));
 	}
 
 	private ItemStackTemplate resolveShape(String metal, String shape) {
@@ -249,7 +262,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 					1D,
 					false);
 			output.accept(recipeKey("rolling/ingots/" + m + "_to_" + m + "_plate"), recipe, null,
-					conditionsFor(input));
+					withOutputConditions(conditionsFor(input), plate));
 		}
 	}
 
@@ -287,7 +300,8 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("compressing/" + path), recipe, null, conditionsFor(input));
+		output.accept(recipeKey("compressing/" + path), recipe, null,
+				withOutputConditions(conditionsFor(input), result));
 	}
 
 
@@ -363,7 +377,9 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("separating/" + path), recipe, null, conditionsFor(input));
+		ItemStackTemplate[] templates = cleaned.stream().map(StackWithChance::template).toArray(ItemStackTemplate[]::new);
+		output.accept(recipeKey("separating/" + path), recipe, null,
+				withOutputConditions(conditionsFor(input), templates));
 	}
 
 
@@ -438,7 +454,8 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("canning/" + path), recipe, null, conditionsFor(a, b));
+		output.accept(recipeKey("canning/" + path), recipe, null,
+				withOutputConditions(conditionsFor(a, b), result));
 	}
 
 	private static Ingredient fluidCell(net.minecraft.world.level.material.Fluid fluid) {
@@ -478,25 +495,29 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	private void cookSmelt(String path, Ingredient input, ItemStackTemplate result, float xp, int ticks) {
 		if (result == null) return;
 		Recipe<?> r = new SmeltingRecipe(cookingCommon(), cookingBook(CookingBookCategory.MISC), input, result, xp, ticks);
-		output.accept(recipeKey("smelting/" + path), r, null, conditionsFor(input));
+		output.accept(recipeKey("smelting/" + path), r, null,
+				withOutputConditions(conditionsFor(input), result));
 	}
 
 	private void cookBlast(String path, Ingredient input, ItemStackTemplate result, float xp, int ticks) {
 		if (result == null) return;
 		Recipe<?> r = new BlastingRecipe(cookingCommon(), cookingBook(CookingBookCategory.MISC), input, result, xp, ticks);
-		output.accept(recipeKey("blasting/" + path), r, null, conditionsFor(input));
+		output.accept(recipeKey("blasting/" + path), r, null,
+				withOutputConditions(conditionsFor(input), result));
 	}
 
 	private void cookSmoke(String path, Ingredient input, ItemStackTemplate result, float xp, int ticks) {
 		if (result == null) return;
 		Recipe<?> r = new SmokingRecipe(cookingCommon(), cookingBook(CookingBookCategory.FOOD), input, result, xp, ticks);
-		output.accept(recipeKey("smoking/" + path), r, null, conditionsFor(input));
+		output.accept(recipeKey("smoking/" + path), r, null,
+				withOutputConditions(conditionsFor(input), result));
 	}
 
 	private void cookCampfire(String path, Ingredient input, ItemStackTemplate result, float xp, int ticks) {
 		if (result == null) return;
 		Recipe<?> r = new CampfireCookingRecipe(cookingCommon(), cookingBook(CookingBookCategory.FOOD), input, result, xp, ticks);
-		output.accept(recipeKey("campfire_cooking/" + path), r, null, conditionsFor(input));
+		output.accept(recipeKey("campfire_cooking/" + path), r, null,
+				withOutputConditions(conditionsFor(input), result));
 	}
 
 	private static Recipe.CommonInfo cookingCommon() {
@@ -608,7 +629,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey(path), recipe, null, conditionsFor(input));
+		output.accept(recipeKey(path), recipe, null, withOutputConditions(conditionsFor(input), result));
 	}
 
 	private static ItemStackTemplate stack(Item item, int count) {
@@ -649,6 +670,24 @@ public class FTBICRecipeProvider extends RecipeProvider {
 			collectTagConditions(ing, conditions);
 		}
 		return conditions.toArray(ICondition[]::new);
+	}
+
+	private static ICondition[] withOutputConditions(ICondition[] base, ItemStackTemplate... outputs) {
+		List<String> materials = new ArrayList<>();
+		for (ItemStackTemplate t : outputs) {
+			if (t == null) continue;
+			Identifier id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(t.item().value());
+			if (id == null || !"ftbmaterials".equals(id.getNamespace())) continue;
+			String path = id.getPath();
+			if (!materials.contains(path)) {
+				materials.add(path);
+			}
+		}
+		if (materials.isEmpty()) return base;
+		ICondition[] combined = new ICondition[base.length + 1];
+		System.arraycopy(base, 0, combined, 0, base.length);
+		combined[base.length] = ComponentsAvailableCondition.of(materials.toArray(String[]::new));
+		return combined;
 	}
 
 	private static void collectTagConditions(Ingredient ingredient, List<ICondition> out) {

@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:storage_blocks/refined_glowstone"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "refined_glowstone_dust"
+      ]
     }
   ],
   "type": "ftbic:macerating",

@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:ores/uranium"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "uranium_dust"
+      ]
     }
   ],
   "type": "ftbic:macerating",

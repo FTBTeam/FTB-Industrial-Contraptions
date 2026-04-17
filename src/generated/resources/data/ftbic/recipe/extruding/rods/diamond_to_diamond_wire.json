@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:rods/diamond"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "diamond_wire"
+      ]
     }
   ],
   "type": "ftbic:extruding",

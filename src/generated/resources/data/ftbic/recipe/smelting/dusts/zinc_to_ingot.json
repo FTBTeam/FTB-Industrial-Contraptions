@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:dusts/zinc"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "zinc_ingot"
+      ]
     }
   ],
   "type": "minecraft:smelting",

@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:ingots/tungsten"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "tungsten_rod"
+      ]
     }
   ],
   "type": "ftbic:extruding",

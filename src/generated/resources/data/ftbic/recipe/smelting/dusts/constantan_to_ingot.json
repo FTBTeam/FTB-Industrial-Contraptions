@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:dusts/constantan"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "constantan_ingot"
+      ]
     }
   ],
   "type": "minecraft:smelting",

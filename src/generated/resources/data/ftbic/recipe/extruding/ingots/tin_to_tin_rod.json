@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:ingots/tin"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "tin_rod"
+      ]
     }
   ],
   "type": "ftbic:extruding",

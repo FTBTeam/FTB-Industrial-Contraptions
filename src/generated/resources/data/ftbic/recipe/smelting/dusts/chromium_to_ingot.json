@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:dusts/chromium"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "chromium_ingot"
+      ]
     }
   ],
   "type": "minecraft:smelting",

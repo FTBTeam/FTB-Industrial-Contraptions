@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:ingots/chromium"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "chromium_plate"
+      ]
     }
   ],
   "type": "ftbic:rolling",

@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:dusts/plutonium"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "plutonium_ingot"
+      ]
     }
   ],
   "type": "minecraft:smelting",

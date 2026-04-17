@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:dusts/steel"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "steel_ingot"
+      ]
     }
   ],
   "type": "minecraft:smelting",

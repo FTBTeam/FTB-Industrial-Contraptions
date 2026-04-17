@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:ingots/aluminum"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "aluminum_rod"
+      ]
     }
   ],
   "type": "ftbic:extruding",

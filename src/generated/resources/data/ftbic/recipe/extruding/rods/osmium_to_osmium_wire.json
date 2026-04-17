@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:rods/osmium"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "osmium_wire"
+      ]
     }
   ],
   "type": "ftbic:extruding",

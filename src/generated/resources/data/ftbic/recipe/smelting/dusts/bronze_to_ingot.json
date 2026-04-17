@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:dusts/bronze"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "bronze_ingot"
+      ]
     }
   ],
   "type": "minecraft:smelting",

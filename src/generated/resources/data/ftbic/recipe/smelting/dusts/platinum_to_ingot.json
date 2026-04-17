@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:dusts/platinum"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "platinum_ingot"
+      ]
     }
   ],
   "type": "minecraft:smelting",

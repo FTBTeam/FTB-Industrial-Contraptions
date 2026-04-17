@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:raw_materials/osmium"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "osmium_dust"
+      ]
     }
   ],
   "type": "ftbic:macerating",

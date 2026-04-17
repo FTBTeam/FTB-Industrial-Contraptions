@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:ingots/nickel"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "nickel_dust"
+      ]
     }
   ],
   "type": "ftbic:macerating",

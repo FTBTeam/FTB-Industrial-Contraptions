@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:raw_materials/zinc"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "zinc_dust"
+      ]
     }
   ],
   "type": "ftbic:macerating",

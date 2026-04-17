@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:gems/diamond"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "diamond_dust"
+      ]
     }
   ],
   "type": "ftbic:macerating",

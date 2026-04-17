@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:plates/gold"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "gold_gear"
+      ]
     }
   ],
   "type": "ftbic:extruding",

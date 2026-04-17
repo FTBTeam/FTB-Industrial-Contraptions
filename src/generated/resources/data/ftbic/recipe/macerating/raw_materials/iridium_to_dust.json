@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:raw_materials/iridium"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "iridium_dust"
+      ]
     }
   ],
   "type": "ftbic:macerating",

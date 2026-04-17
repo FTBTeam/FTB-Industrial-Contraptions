@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:raw_materials/titanium"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "titanium_dust"
+      ]
     }
   ],
   "type": "ftbic:macerating",

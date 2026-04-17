@@ -1,4 +1,12 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "charcoal_dust"
+      ]
+    }
+  ],
   "type": "ftbic:macerating",
   "inputs": [
     {

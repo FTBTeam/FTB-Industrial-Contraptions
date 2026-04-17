@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:rods/obsidian"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "obsidian_wire"
+      ]
     }
   ],
   "type": "ftbic:extruding",

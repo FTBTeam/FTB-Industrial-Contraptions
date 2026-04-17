@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:rods/electrum"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "electrum_wire"
+      ]
     }
   ],
   "type": "ftbic:extruding",

@@ -6,6 +6,12 @@
         "type": "neoforge:tag_empty",
         "tag": "c:rods/quartz"
       }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "quartz_wire"
+      ]
     }
   ],
   "type": "ftbic:extruding",
