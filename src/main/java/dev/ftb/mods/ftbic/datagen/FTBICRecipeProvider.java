@@ -684,6 +684,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("antimatter_fabricator", ftbicStack("antimatter_constructor", 1), new String[] {"GCG", "MEM", "GCG"}, 'G', commonOrTag("c:dusts/glowstone"), 'M', i("ftbic:advanced_machine_block"), 'C', i("ftbic:iridium_circuit"), 'E', i("minecraft:nether_star"));
 		shaped("basic_generator", ftbicStack("basic_generator", 1), new String[] {" B ", "MMM", " F "}, 'B', i("ftbic:lv_battery"), 'M', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:iron_furnace"));
 		shaped("battery", ftbicStack("lv_battery", 1), new String[] {" C ", "TRT", "TRT"}, 'C', i("ftbic:lv_cable"), 'T', commonOrTag("c:ingots/tin"), 'R', commonOrTag("c:dusts/redstone"));
+		shaped("bronze_dust", ftbmat("bronze_dust", 4), new String[] {"CC", "CT"}, 'C', commonOrTag("c:dusts/copper"), 'T', commonOrTag("c:dusts/tin"));
 		shaped("canning_machine", ftbicStack("canning_machine", 1), new String[] {"TCT", "TMT", "TTT"}, 'T', commonOrTag("c:ingots/tin"), 'M', i("ftbic:machine_block"), 'C', i("ftbic:electronic_circuit"));
 		shaped("carbon_boots", ftbicStack("carbon_boots", 1), new String[] {"CEC", "CAC"}, 'C', i("ftbic:carbon_plate"), 'E', i("ftbic:energy_crystal"), 'A', i("minecraft:netherite_boots"));
 		shaped("carbon_chestplate", ftbicStack("carbon_chestplate", 1), new String[] {"CEC", "CAC", "CCC"}, 'C', i("ftbic:carbon_plate"), 'E', i("ftbic:hv_battery"), 'A', i("minecraft:netherite_chestplate"));
@@ -781,8 +782,10 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shapeless("advanced_circuit", ftbicStack("advanced_circuit", 1), commonOrTag("c:dusts/redstone"), commonOrTag("c:dusts/glowstone"), commonOrTag("c:dusts/redstone"), commonOrTag("c:silicon"), i("ftbic:electronic_circuit"), commonOrTag("c:silicon"), commonOrTag("c:dusts/redstone"), commonOrTag("c:dusts/glowstone"), commonOrTag("c:dusts/redstone"));
 		shapeless("advanced_machine_block", ftbicStack("advanced_machine_block", 1), i("ftbic:copper_coil"), i("ftbic:carbon_plate"), i("ftbic:copper_coil"), i("ftbic:advanced_alloy"), i("ftbic:machine_block"), i("ftbic:advanced_alloy"), i("ftbic:copper_coil"), i("ftbic:carbon_plate"), i("ftbic:copper_coil"));
 		shapeless("carbon_fiber_mesh", ftbicStack("carbon_fiber_mesh", 1), i("ftbic:carbon_fibers"), i("ftbic:carbon_fibers"), i("ftbic:carbon_fibers"), i("ftbic:carbon_fibers"));
+		shapeless("constantan_dust", ftbmat("constantan_dust", 2), commonOrTag("c:dusts/copper"), commonOrTag("c:dusts/nickel"));
 		shapeless("containment_reactor_plating", ftbicStack("containment_reactor_plating", 1), i("ftbic:reactor_plating"), i("ftbic:advanced_alloy"), i("ftbic:advanced_alloy"));
 		shapeless("electronic_circuit", ftbicStack("electronic_circuit", 1), i("ftbic:lv_cable"), i("ftbic:lv_cable"), i("ftbic:lv_cable"), commonOrTag("c:dusts/redstone"), i("ftbic:industrial_grade_metal"), commonOrTag("c:dusts/redstone"), i("ftbic:lv_cable"), i("ftbic:lv_cable"), i("ftbic:lv_cable"));
+		shapeless("electrum_dust", ftbmat("electrum_dust", 2), commonOrTag("c:dusts/gold"), commonOrTag("c:dusts/silver"));
 		shapeless("enderium_block_to_enderium_ingot", ftbicStack("enderium_ingot", 9), commonOrTag("c:storage_blocks/enderium"));
 		shapeless("enderium_ingot_to_enderium_nugget", ftbicStack("enderium_nugget", 9), commonOrTag("c:ingots/enderium"));
 		shapeless("energy_crystal", ftbicStack("energy_crystal", 1), commonOrTag("c:dusts/redstone"), commonOrTag("c:dusts/glowstone"), commonOrTag("c:dusts/redstone"), commonOrTag("c:silicon"), commonOrTag("c:gems/diamond"), commonOrTag("c:silicon"), commonOrTag("c:dusts/redstone"), commonOrTag("c:dusts/glowstone"), commonOrTag("c:dusts/redstone"));
