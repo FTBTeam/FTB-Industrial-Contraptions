@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/iron"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    "I",
+    "I"
+  ],
+  "result": {
+    "id": "ftbmaterials:iron_rod"
+  },
+  "show_notification": false
+}

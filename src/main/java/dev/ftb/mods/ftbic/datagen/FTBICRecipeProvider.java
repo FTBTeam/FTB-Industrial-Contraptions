@@ -729,6 +729,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("iridium_alloy", ftbicStack("iridium_alloy", 1), new String[] {"IAI", "ADA", "IAI"}, 'I', commonOrTag("c:ingots/iridium"), 'A', i("ftbic:advanced_alloy"), 'D', commonOrTag("c:gems/diamond"));
 		shaped("iridium_neutron_reflector", ftbicStack("iridium_neutron_reflector", 1), new String[] {"NNN", "NPN", "NNN"}, 'N', i("ftbic:thick_neutron_reflector"), 'P', i("ftbic:iridium_alloy"));
 		shaped("iron_furnace", ftbicStack("iron_furnace", 1), new String[] {" I ", "I I", "IFI"}, 'I', commonOrTag("c:ingots/iron"), 'F', i("minecraft:furnace"));
+		shaped("iron_rod", ftbmat("iron_rod", 1), new String[] {"I", "I"}, 'I', commonOrTag("c:ingots/iron"));
 		shaped("iv_cable", ftbicStack("iv_cable", 6), new String[] {"GGG", " C ", "GGG"}, 'G', commonOrTag("c:glass_blocks/colorless"), 'C', i("ftbic:energy_crystal"));
 		shaped("iv_rectifier", ftbicStack("iv_rectifier", 1), new String[] {"RWR", "PTP", "RWR"}, 'R', i("minecraft:redstone_block"), 'W', i("ftbic:ev_cable"), 'P', commonOrTag("c:ingots/iridium"), 'T', i("ftbic:ev_rectifier"));
 		shaped("large_coolant_cell", ftbicStack("large_coolant_cell", 1), new String[] {"TCT", "TAT", "TCT"}, 'T', commonOrTag("c:ingots/tin"), 'C', i("ftbic:medium_coolant_cell"), 'A', i("ftbic:dense_copper_plate"));
