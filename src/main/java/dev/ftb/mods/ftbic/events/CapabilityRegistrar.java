@@ -1,6 +1,8 @@
 package dev.ftb.mods.ftbic.events;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
@@ -25,12 +27,26 @@ public final class CapabilityRegistrar {
 
 	@SubscribeEvent
 	public static void register(RegisterCapabilitiesEvent event) {
+		boolean fullFE = FTBICConfig.ENERGY.FULL_FE_MODE.get();
+
 		for (var instance : FTBICElectricBlocks.ALL) {
 			@SuppressWarnings("unchecked")
 			net.minecraft.world.level.block.entity.BlockEntityType<ElectricBlockEntity> type =
 					(net.minecraft.world.level.block.entity.BlockEntityType<ElectricBlockEntity>) (Object) instance.blockEntity.get();
 			event.registerBlockEntity(Capabilities.Item.BLOCK, type,
 					(be, side) -> new ElectricBlockResourceHandler(be));
+
+			if (fullFE && instance.feCapMode != ElectricBlockInstance.FECapMode.INSERT_ONLY) {
+				boolean canInsert = instance.maxEnergyInput.get() > 0D;
+				boolean canExtract = instance.maxEnergyOutput.get() > 0D;
+				if (canInsert || canExtract) {
+					final boolean ci = canInsert;
+					final boolean ce = canExtract;
+					event.registerBlockEntity(Capabilities.Energy.BLOCK, type,
+							(be, side) -> new ElectricBlockEnergyHandler(be, ci, ce));
+				}
+				continue;
+			}
 
 			switch (instance.feCapMode) {
 				case EXTRACT_ONLY -> event.registerBlockEntity(Capabilities.Energy.BLOCK, type,
@@ -43,7 +59,6 @@ public final class CapabilityRegistrar {
 							return new EnergyRectifierFEHandler(rec);
 						});
 				case NONE -> {
-					// No Energy.BLOCK exposure — internal zaps only.
 				}
 			}
 		}
