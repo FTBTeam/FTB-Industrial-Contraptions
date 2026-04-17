@@ -675,8 +675,11 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 	private void shapedBatch() {
 		shaped("advanced_centrifuge", ftbicStack("advanced_centrifuge", 1), new String[] {"CCC", "CFC", "WMW"}, 'C', i("ftbic:fluid_cell"), 'F', i("ftbic:centrifuge"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
+		shaped("advanced_compressor", ftbicStack("advanced_compressor", 1), new String[] {"CCC", "CFC", "WMW"}, 'C', i("minecraft:obsidian"), 'F', i("ftbic:compressor"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
 		shaped("advanced_heat_exchanger", ftbicStack("advanced_heat_exchanger", 1), new String[] {"WCW", "VBV", "WCW"}, 'C', i("ftbic:electronic_circuit"), 'B', i("ftbic:dense_copper_plate"), 'V', i("ftbic:heat_exchanger"), 'W', i("ftbic:iv_cable"));
 		shaped("advanced_heat_vent", ftbicStack("advanced_heat_vent", 1), new String[] {"IVI", "IDI", "IVI"}, 'I', i("minecraft:iron_bars"), 'D', commonOrTag("c:gems/diamond"), 'V', i("ftbic:heat_vent"));
+		shaped("advanced_macerator", ftbicStack("advanced_macerator", 1), new String[] {"CCC", "CFC", "WMW"}, 'C', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:macerator"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
+		shaped("advanced_powered_furnace", ftbicStack("advanced_powered_furnace", 1), new String[] {"CCC", "CFC", "WMW"}, 'C', commonOrTag("c:ingots/copper"), 'F', i("ftbic:powered_furnace"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
 		shaped("antimatter_crystal", ftbicStack("antimatter_crystal", 1), new String[] {"AAC", "ANA", "CAA"}, 'A', i("ftbic:antimatter"), 'C', i("ftbic:energy_crystal"), 'N', i("minecraft:nether_star"));
 		shaped("antimatter_fabricator", ftbicStack("antimatter_constructor", 1), new String[] {"GCG", "MEM", "GCG"}, 'G', commonOrTag("c:dusts/glowstone"), 'M', i("ftbic:advanced_machine_block"), 'C', i("ftbic:iridium_circuit"), 'E', i("minecraft:nether_star"));
 		shaped("basic_generator", ftbicStack("basic_generator", 1), new String[] {" B ", "MMM", " F "}, 'B', i("ftbic:lv_battery"), 'M', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:iron_furnace"));
