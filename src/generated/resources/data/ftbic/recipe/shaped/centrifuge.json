@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:electronic_circuit",
+    "G": "minecraft:glass_bottle",
+    "M": "ftbic:machine_block"
+  },
+  "pattern": [
+    "GMG",
+    "GCG"
+  ],
+  "result": {
+    "id": "ftbic:centrifuge"
+  },
+  "show_notification": false
+}

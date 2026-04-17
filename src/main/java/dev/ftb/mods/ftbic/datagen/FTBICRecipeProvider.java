@@ -674,6 +674,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 
 	private void shapedBatch() {
+		shaped("advanced_centrifuge", ftbicStack("advanced_centrifuge", 1), new String[] {"CCC", "CFC", "WMW"}, 'C', i("ftbic:fluid_cell"), 'F', i("ftbic:centrifuge"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
 		shaped("advanced_heat_exchanger", ftbicStack("advanced_heat_exchanger", 1), new String[] {"WCW", "VBV", "WCW"}, 'C', i("ftbic:electronic_circuit"), 'B', i("ftbic:dense_copper_plate"), 'V', i("ftbic:heat_exchanger"), 'W', i("ftbic:iv_cable"));
 		shaped("advanced_heat_vent", ftbicStack("advanced_heat_vent", 1), new String[] {"IVI", "IDI", "IVI"}, 'I', i("minecraft:iron_bars"), 'D', commonOrTag("c:gems/diamond"), 'V', i("ftbic:heat_vent"));
 		shaped("antimatter_crystal", ftbicStack("antimatter_crystal", 1), new String[] {"AAC", "ANA", "CAA"}, 'A', i("ftbic:antimatter"), 'C', i("ftbic:energy_crystal"), 'N', i("minecraft:nether_star"));
@@ -686,6 +687,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("carbon_fibers", ftbicStack("carbon_fibers", 1), new String[] {"DD", "DD"}, 'D', commonOrTag("c:dusts/coal"));
 		shaped("carbon_helmet", ftbicStack("carbon_helmet", 1), new String[] {"CEC", "CAC"}, 'C', i("ftbic:carbon_plate"), 'E', i("ftbic:energy_crystal"), 'A', i("minecraft:netherite_helmet"));
 		shaped("carbon_leggings", ftbicStack("carbon_leggings", 1), new String[] {"CEC", "CAC", "C C"}, 'C', i("ftbic:carbon_plate"), 'E', i("ftbic:energy_crystal"), 'A', i("minecraft:netherite_leggings"));
+		shaped("centrifuge", ftbicStack("centrifuge", 1), new String[] {"GMG", "GCG"}, 'G', i("minecraft:glass_bottle"), 'M', i("ftbic:machine_block"), 'C', i("ftbic:electronic_circuit"));
 		shaped("charge_pad", ftbicStack("charge_pad", 1), new String[] {"WWW", "CMC"}, 'M', i("ftbic:machine_block"), 'C', i("ftbic:advanced_circuit"), 'W', i("ftbic:copper_coil"));
 		shaped("coal_ball", ftbicStack("coal_ball", 1), new String[] {"CCC", "CFC", "CCC"}, 'C', commonOrTag("minecraft:coals"), 'F', i("minecraft:flint"));
 		shaped("component_heat_exchanger", ftbicStack("component_heat_exchanger", 1), new String[] {" P ", "PVP", " P "}, 'P', commonOrTag("c:plates/tin"), 'V', i("ftbic:heat_exchanger"));
