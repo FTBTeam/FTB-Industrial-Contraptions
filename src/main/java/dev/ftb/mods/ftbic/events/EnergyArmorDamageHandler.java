@@ -4,7 +4,9 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.item.DummyEnergyArmorItem;
 import dev.ftb.mods.ftbic.item.EnergyArmorItem;
+import dev.ftb.mods.ftbic.item.MechanicalElytraItem;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -44,6 +46,27 @@ public final class EnergyArmorDamageHandler {
 		double energyCost = FTBICConfig.EQUIPMENT.ARMOR_DAMAGE_ENERGY.get() * absorbed;
 		armor.damageEnergyItem(chest, energyCost);
 		event.setNewDamage(incoming - absorbed);
+	}
+
+	@SubscribeEvent
+	public static void onFlyIntoWall(LivingDamageEvent.Pre event) {
+		if (!event.getSource().is(DamageTypes.FLY_INTO_WALL)) {
+			return;
+		}
+		ItemStack chest = event.getEntity().getItemBySlot(EquipmentSlot.CHEST);
+		if (!(chest.getItem() instanceof MechanicalElytraItem elytra)) {
+			return;
+		}
+		if (!elytra.isCreativeEnergyItem() && elytra.getEnergy(chest) <= 0D) {
+			return;
+		}
+		float incoming = event.getNewDamage();
+		if (incoming <= 0F) {
+			return;
+		}
+		double cost = FTBICConfig.EQUIPMENT.ARMOR_DAMAGE_ENERGY.get() * incoming;
+		elytra.damageEnergyItem(chest, cost);
+		event.setNewDamage(0F);
 	}
 
 	private static boolean isMatchingDummy(Player player, EquipmentSlot slot, EnergyArmorMaterial material) {
