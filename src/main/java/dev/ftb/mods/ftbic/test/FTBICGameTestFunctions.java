@@ -33,6 +33,7 @@ import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PoweredFurnaceBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.FluidCellItem;
+import dev.ftb.mods.ftbic.util.FluidCellIngredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -975,6 +976,20 @@ public class FTBICGameTestFunctions {
 		var stored = FluidCellItem.getStored(afterTransform);
 		helper.assertTrue(!stored.isEmpty() && stored.getFluid() == Fluids.WATER,
 				"Filled cell should carry water (stored=" + stored + ")");
+		helper.succeed();
+	}
+
+	static void fluidCellIngredientDisplaysFilledStack(GameTestHelper helper) {
+		FluidCellIngredient ingredient = new FluidCellIngredient(Fluids.WATER);
+		var display = ingredient.display();
+		var stacks = display.resolveForStacks(net.minecraft.util.context.ContextMap.EMPTY);
+		helper.assertTrue(!stacks.isEmpty(), "Display should resolve to at least one stack");
+		ItemStack first = stacks.get(0);
+		helper.assertTrue(first.getItem() instanceof FluidCellItem,
+				"Displayed stack should be a fluid cell (got " + first + ")");
+		var stored = FluidCellItem.getStored(first);
+		helper.assertTrue(!stored.isEmpty() && stored.getFluid() == Fluids.WATER,
+				"Displayed cell should be prefilled with water (stored=" + stored + ")");
 		helper.succeed();
 	}
 }

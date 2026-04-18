@@ -92,6 +92,7 @@ public class FTBICGameTests {
 		reg(event, "single_use_battery_cannot_be_recharged", FTBICGameTestFunctions::singleUseBatteryCannotBeRecharged, env, 100);
 
 		reg(event, "fluid_cell_fills_from_water_on_use", FTBICGameTestFunctions::fluidCellFillsFromWaterOnUse, env, 100);
+		reg(event, "fluid_cell_ingredient_displays_filled_stack", FTBICGameTestFunctions::fluidCellIngredientDisplaysFilledStack, env, 100);
 	}
 
 	private static void reg(RegisterGameTestsEvent event, String name,
