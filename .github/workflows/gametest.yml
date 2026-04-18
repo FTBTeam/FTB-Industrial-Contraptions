@@ -1,0 +1,46 @@
+name: GameTests
+
+on:
+  push:
+    branches-ignore:
+      - "dependabot/**"
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: gametest-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gametest:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ciskip]')"
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run gametest server
+        run: ./gradlew runGameTestServer --stacktrace --no-daemon
+
+      - name: Upload run logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gametest-logs
+          path: |
+            run/logs/
+            build/reports/
+          if-no-files-found: ignore
+          retention-days: 7

@@ -11,6 +11,7 @@ import dev.ftb.mods.ftbic.registry.ModCreativeTabs;
 import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.sound.FTBICSounds;
+import dev.ftb.mods.ftbic.test.FTBICGameTests;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
@@ -55,6 +56,7 @@ public class FTBIC {
 		FTBICRecipes.SERIALIZERS.register(eventBus);
 		FTBICRecipes.TYPES.register(eventBus);
 		FTBICIngredientTypes.REGISTRY.register(eventBus);
+		FTBICGameTests.TEST_INSTANCE_TYPES.register(eventBus);
 
 		container.registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_SPEC);
 		FTBICConfig.init();
