@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.item.FluidCellItem;
 import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
@@ -25,8 +26,8 @@ public class FluidCellHandler implements ResourceHandler<FluidResource> {
 	private FluidStack currentStored() {
 		ItemStack stack = peekStack();
 		if (stack.isEmpty()) return FluidStack.EMPTY;
-		FluidStack fs = stack.get(ModDataComponents.FLUID_CELL_CONTENT.get());
-		return fs == null ? FluidStack.EMPTY : fs;
+		SimpleFluidContent fs = stack.get(ModDataComponents.FLUID_CELL_CONTENT.get());
+		return fs == null ? FluidStack.EMPTY : fs.copy();
 	}
 
 	@Override

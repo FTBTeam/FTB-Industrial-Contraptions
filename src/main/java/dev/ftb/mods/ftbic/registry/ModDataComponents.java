@@ -7,7 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.Unit;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -50,10 +50,10 @@ public final class ModDataComponents {
 					.persistent(Codec.INT)
 					.networkSynchronized(ByteBufCodecs.VAR_INT));
 
-	public static final DeferredHolder<DataComponentType<?>, DataComponentType<FluidStack>> FLUID_CELL_CONTENT =
+	public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> FLUID_CELL_CONTENT =
 			DATA_COMPONENTS.registerComponentType("fluid_cell_content", b -> b
-					.persistent(FluidStack.CODEC)
-					.networkSynchronized(FluidStack.STREAM_CODEC));
+					.persistent(SimpleFluidContent.CODEC)
+					.networkSynchronized(SimpleFluidContent.STREAM_CODEC));
 
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Unit>> BATTERY_ACTIVE =
 			DATA_COMPONENTS.registerComponentType("battery_active", b -> b

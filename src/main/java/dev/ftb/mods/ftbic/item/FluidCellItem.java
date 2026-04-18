@@ -27,6 +27,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
 
 import java.util.function.Consumer;
 
@@ -36,15 +37,15 @@ public class FluidCellItem extends Item {
 	}
 
 	public static FluidStack getStored(ItemStack stack) {
-		FluidStack fs = stack.get(ModDataComponents.FLUID_CELL_CONTENT.get());
-		return fs == null ? FluidStack.EMPTY : fs;
+		SimpleFluidContent fs = stack.get(ModDataComponents.FLUID_CELL_CONTENT.get());
+		return fs == null ? FluidStack.EMPTY : fs.copy();
 	}
 
 	public static void setStored(ItemStack stack, FluidStack fluid) {
 		if (fluid == null || fluid.isEmpty()) {
 			stack.remove(ModDataComponents.FLUID_CELL_CONTENT.get());
 		} else {
-			stack.set(ModDataComponents.FLUID_CELL_CONTENT.get(), fluid.copy());
+			stack.set(ModDataComponents.FLUID_CELL_CONTENT.get(), SimpleFluidContent.copyOf(fluid));
 		}
 	}
 
@@ -66,7 +67,6 @@ public class FluidCellItem extends Item {
 		}
 
 		BlockState state = level.getBlockState(pos);
-		// Fill the cell from a BucketPickup block.
 		if (stored.isEmpty() && state.getBlock() instanceof BucketPickup bucketPickup) {
 			ItemStack picked = bucketPickup.pickupBlock(player, level, pos, state);
 			if (picked.getItem() instanceof BucketItem bucketItem) {
@@ -81,8 +81,7 @@ public class FluidCellItem extends Item {
 					if (player instanceof ServerPlayer sp) {
 						CriteriaTriggers.FILLED_BUCKET.trigger(sp, picked);
 					}
-					player.setItemInHand(hand, result);
-					return InteractionResult.SUCCESS;
+					return InteractionResult.SUCCESS.heldItemTransformedTo(result);
 				}
 			}
 		}

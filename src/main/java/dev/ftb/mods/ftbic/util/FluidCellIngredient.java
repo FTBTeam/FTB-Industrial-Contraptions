@@ -16,7 +16,7 @@ import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
 
 import java.util.stream.Stream;
 
@@ -32,7 +32,7 @@ public record FluidCellIngredient(Fluid fluid) implements ICustomIngredient {
 	@Override
 	public boolean test(ItemStack stack) {
 		if (!stack.is(FTBICItems.FLUID_CELL.get())) return false;
-		FluidStack stored = stack.get(ModDataComponents.FLUID_CELL_CONTENT.get());
+		SimpleFluidContent stored = stack.get(ModDataComponents.FLUID_CELL_CONTENT.get());
 		return stored != null && stored.getFluid() == fluid && stored.getAmount() >= 1000;
 	}
 
