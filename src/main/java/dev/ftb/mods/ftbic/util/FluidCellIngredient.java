@@ -10,9 +10,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import dev.ftb.mods.ftbic.item.FluidCellItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
@@ -43,7 +46,9 @@ public record FluidCellIngredient(Fluid fluid) implements ICustomIngredient {
 
 	@Override
 	public SlotDisplay display() {
-		return new SlotDisplay.ItemSlotDisplay(FTBICItems.FLUID_CELL.get().builtInRegistryHolder());
+		ItemStack filled = new ItemStack(FTBICItems.FLUID_CELL.get());
+		FluidCellItem.setStored(filled, new FluidStack(fluid, FluidCellItem.capacity()));
+		return new SlotDisplay.ItemStackSlotDisplay(ItemStackTemplate.fromNonEmptyStack(filled));
 	}
 
 	@Override
