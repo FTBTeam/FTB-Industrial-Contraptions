@@ -11,8 +11,8 @@ import net.minecraft.world.entity.player.Inventory;
 public class QuarryScreen extends ElectricBlockScreen<QuarryMenu> {
 	public QuarryScreen(QuarryMenu menu, Inventory inv, Component title) {
 		super(menu, inv, title);
-		energyX = 126;
-		energyY = 33;
+		energyX = 135;
+		energyY = 15;
 		drawDefaultArrow = false;
 	}
 
@@ -26,6 +26,7 @@ public class QuarryScreen extends ElectricBlockScreen<QuarryMenu> {
 		for (int i = 0; i < 4; i++) {
 			drawSlot(g, leftPos + 151, topPos + 7 + i * 18);
 		}
+		drawSlot(g, leftPos + 124, topPos + 34);
 		drawSlot(g, leftPos + 124, topPos + 52);
 		drawSmallPauseButton(g, leftPos + 124, topPos + 17, mouseX, mouseY, this.menu.isPaused());
 	}

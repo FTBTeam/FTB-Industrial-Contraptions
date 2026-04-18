@@ -93,6 +93,11 @@ public class FTBICGameTests {
 
 		reg(event, "fluid_cell_fills_from_water_on_use", FTBICGameTestFunctions::fluidCellFillsFromWaterOnUse, env, 100);
 		reg(event, "fluid_cell_ingredient_displays_filled_stack", FTBICGameTestFunctions::fluidCellIngredientDisplaysFilledStack, env, 100);
+
+		reg(event, "quarry_pickaxe_silk_touch_produces_stone", FTBICGameTestFunctions::quarryPickaxeSilkTouchProducesStone, env, 100);
+		reg(event, "quarry_without_pickaxe_produces_cobble", FTBICGameTestFunctions::quarryWithoutPickaxeProducesCobble, env, 100);
+		reg(event, "quarry_efficiency_pickaxe_speeds_up_mining", FTBICGameTestFunctions::quarryEfficiencyPickaxeSpeedsUpMining, env, 100);
+		reg(event, "quarry_pickaxe_rejects_non_pickaxe", FTBICGameTestFunctions::quarryPickaxeRejectsNonPickaxe, env, 100);
 	}
 
 	private static void reg(RegisterGameTestsEvent event, String name,

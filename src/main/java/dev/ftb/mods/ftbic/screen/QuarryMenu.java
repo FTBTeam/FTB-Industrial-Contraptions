@@ -3,10 +3,12 @@ package dev.ftb.mods.ftbic.screen;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class QuarryMenu extends ElectricBlockMenu {
 	public final DataSlot pausedSlot = DataSlot.standalone();
@@ -35,8 +37,33 @@ public class QuarryMenu extends ElectricBlockMenu {
 			addSlot(new OutputSlot(container, inputs + i, 8 + col * 18, 17 + row * 18));
 		}
 		machineSlotCount = inputs + outputs;
+		if (blockEntity instanceof QuarryBlockEntity q) {
+			addSlot(new PickaxeSlot(q.pickaxeContainer(), 0, 125, 35));
+			machineSlotCount++;
+		}
 		addBatterySlot(125, 53);
 		addUpgradeSlots(152);
+	}
+
+	@Override
+	public ItemStack quickMoveStack(Player player, int index) {
+		Slot slot = slots.get(index);
+		if (!slot.hasItem()) return ItemStack.EMPTY;
+		ItemStack stack = slot.getItem();
+		if (index >= machineSlotCount && stack.is(ItemTags.PICKAXES)) {
+			for (int i = 0; i < machineSlotCount; i++) {
+				if (slots.get(i) instanceof PickaxeSlot pickaxe && pickaxe.mayPlace(stack)) {
+					ItemStack orig = stack.copy();
+					if (moveItemStackTo(stack, i, i + 1, false)) {
+						if (stack.isEmpty()) slot.set(ItemStack.EMPTY);
+						else slot.setChanged();
+						return orig;
+					}
+					break;
+				}
+			}
+		}
+		return super.quickMoveStack(player, index);
 	}
 
 	@Override

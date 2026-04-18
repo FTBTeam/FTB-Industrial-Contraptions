@@ -49,6 +49,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.TagValueInput;
@@ -976,6 +977,101 @@ public class FTBICGameTestFunctions {
 		var stored = FluidCellItem.getStored(afterTransform);
 		helper.assertTrue(!stored.isEmpty() && stored.getFluid() == Fluids.WATER,
 				"Filled cell should carry water (stored=" + stored + ")");
+		helper.succeed();
+	}
+
+	static void quarryPickaxeSilkTouchProducesStone(GameTestHelper helper) {
+		BlockPos ore = new BlockPos(4, 1, 4);
+		BlockPos quarryPos = new BlockPos(4, 2, 4);
+		BlockPos landingPad = new BlockPos(4, 1, 2);
+		helper.setBlock(ore, Blocks.STONE);
+		helper.setBlock(landingPad, Blocks.STONE);
+		helper.setBlock(quarryPos, FTBICElectricBlocks.QUARRY.block.get());
+
+		QuarryBlockEntity quarry = helper.getBlockEntity(quarryPos, QuarryBlockEntity.class);
+		quarry.energy = quarry.energyCapacity;
+
+		ItemStack pickaxe = new ItemStack(Items.DIAMOND_PICKAXE);
+		pickaxe.enchant(helper.getLevel().holderOrThrow(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH), 1);
+		quarry.pickaxeStack = pickaxe;
+		quarry.setChanged();
+
+		BlockState state = helper.getLevel().getBlockState(helper.absolutePos(ore));
+		quarry.digBlock(state, helper.absolutePos(ore));
+
+		boolean stoneFound = false;
+		for (ItemStack out : quarry.outputItems) {
+			if (!out.isEmpty() && out.is(Items.STONE)) {
+				stoneFound = true;
+				break;
+			}
+		}
+		helper.assertTrue(stoneFound, "Silk touch pickaxe should drop stone, not cobblestone");
+		helper.succeed();
+	}
+
+	static void quarryWithoutPickaxeProducesCobble(GameTestHelper helper) {
+		BlockPos ore = new BlockPos(4, 1, 4);
+		BlockPos quarryPos = new BlockPos(4, 2, 4);
+		helper.setBlock(ore, Blocks.STONE);
+		helper.setBlock(quarryPos, FTBICElectricBlocks.QUARRY.block.get());
+
+		QuarryBlockEntity quarry = helper.getBlockEntity(quarryPos, QuarryBlockEntity.class);
+		quarry.energy = quarry.energyCapacity;
+
+		BlockState state = helper.getLevel().getBlockState(helper.absolutePos(ore));
+		quarry.digBlock(state, helper.absolutePos(ore));
+
+		boolean cobbleFound = false;
+		for (ItemStack out : quarry.outputItems) {
+			if (!out.isEmpty() && out.is(Items.COBBLESTONE)) {
+				cobbleFound = true;
+				break;
+			}
+		}
+		helper.assertTrue(cobbleFound, "Quarry without pickaxe should drop cobblestone");
+		helper.succeed();
+	}
+
+	static void quarryEfficiencyPickaxeSpeedsUpMining(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.QUARRY.block.get());
+		QuarryBlockEntity quarry = helper.getBlockEntity(CENTER, QuarryBlockEntity.class);
+
+		double baseSpeed = quarry.progressSpeed;
+
+		ItemStack pickaxe = new ItemStack(Items.DIAMOND_PICKAXE);
+		pickaxe.enchant(helper.getLevel().holderOrThrow(net.minecraft.world.item.enchantment.Enchantments.EFFICIENCY), 3);
+		quarry.pickaxeStack = pickaxe;
+		quarry.initProperties();
+		quarry.upgradesChanged();
+
+		double expected = baseSpeed * 1.3D;
+		helper.assertTrue(Math.abs(quarry.progressSpeed - expected) < 0.0001D,
+				"Efficiency III should give 30% speed bonus (base=" + baseSpeed + ", expected=" + expected + ", got=" + quarry.progressSpeed + ")");
+
+		quarry.pickaxeStack = ItemStack.EMPTY;
+		quarry.initProperties();
+		quarry.upgradesChanged();
+		helper.assertTrue(Math.abs(quarry.progressSpeed - baseSpeed) < 0.0001D,
+				"Removing pickaxe should restore base speed (expected=" + baseSpeed + ", got=" + quarry.progressSpeed + ")");
+		helper.succeed();
+	}
+
+	static void quarryPickaxeRejectsNonPickaxe(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.QUARRY.block.get());
+		QuarryBlockEntity quarry = helper.getBlockEntity(CENTER, QuarryBlockEntity.class);
+
+		var container = quarry.pickaxeContainer();
+		helper.assertFalse(container.canPlaceItem(0, new ItemStack(Items.DIAMOND_SWORD)),
+				"Pickaxe slot should reject swords");
+		helper.assertFalse(container.canPlaceItem(0, new ItemStack(Items.DIAMOND)),
+				"Pickaxe slot should reject raw materials");
+		helper.assertTrue(container.canPlaceItem(0, new ItemStack(Items.DIAMOND_PICKAXE)),
+				"Pickaxe slot should accept diamond pickaxe");
+		helper.assertTrue(container.canPlaceItem(0, new ItemStack(Items.NETHERITE_PICKAXE)),
+				"Pickaxe slot should accept netherite pickaxe");
 		helper.succeed();
 	}
 

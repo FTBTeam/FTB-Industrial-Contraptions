@@ -16,6 +16,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import dev.ftb.mods.ftbic.screen.BatterySlot;
+import dev.ftb.mods.ftbic.screen.PickaxeSlot;
 import dev.ftb.mods.ftbic.screen.UpgradeSlot;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 
@@ -66,6 +67,8 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 			graphics.setTooltipForNextFrame(Component.literal("Upgrade Slot"), mouseX, mouseY);
 		} else if (slot instanceof BatterySlot) {
 			graphics.setTooltipForNextFrame(Component.literal("Battery Slot"), mouseX, mouseY);
+		} else if (slot instanceof PickaxeSlot) {
+			graphics.setTooltipForNextFrame(Component.literal("Pickaxe Slot (applies enchantments to mined blocks)"), mouseX, mouseY);
 		}
 	}
 

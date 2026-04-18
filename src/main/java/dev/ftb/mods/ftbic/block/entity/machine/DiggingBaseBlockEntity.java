@@ -172,7 +172,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 		setChanged();
 	}
 
-	private boolean canFitAllDrops(List<ItemStack> drops) {
+	protected boolean canFitAllDrops(List<ItemStack> drops) {
 		if (drops.isEmpty()) return true;
 		if (outputItems.length == 0) return false;
 		ItemStack[] sim = new ItemStack[outputItems.length];

@@ -173,6 +173,7 @@ public final class FTBICConfig {
 		public final ModConfigSpec.LongValue QUARRY_MINE_TICKS;
 		public final ModConfigSpec.LongValue QUARRY_MOVE_TICKS;
 		public final ModConfigSpec.BooleanValue QUARRY_REPLACE_FLUID_EXFLUID;
+		public final ModConfigSpec.BooleanValue QUARRY_PICKAXE_TAKES_DAMAGE;
 		public final ModConfigSpec.DoubleValue PUMP_CAPACITY;
 		public final ModConfigSpec.DoubleValue PUMP_USE;
 		public final ModConfigSpec.LongValue PUMP_MINE_TICKS;
@@ -252,6 +253,8 @@ public final class FTBICConfig {
 			QUARRY_MINE_TICKS = b.defineInRange("quarry_mine_ticks", 8L, 0L, 100_000L);
 			QUARRY_MOVE_TICKS = b.defineInRange("quarry_move_ticks", 2L, 0L, 100_000L);
 			QUARRY_REPLACE_FLUID_EXFLUID = b.define("quarry_replace_fluid_with_exfluid", true);
+			QUARRY_PICKAXE_TAKES_DAMAGE = b.comment("If true, a pickaxe in the quarry's pickaxe slot takes durability damage each block mined.")
+					.define("quarry_pickaxe_takes_damage", false);
 			PUMP_CAPACITY = b.defineInRange("pump_capacity", 10_000D, 1D, 100_000D);
 			PUMP_USE = b.defineInRange("pump_use", 3D, 0D, 100_000D);
 			PUMP_MINE_TICKS = b.defineInRange("pump_mine_ticks", 40L, 0L, 100_000L);
