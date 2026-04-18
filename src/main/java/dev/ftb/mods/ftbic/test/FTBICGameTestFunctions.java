@@ -32,6 +32,7 @@ import dev.ftb.mods.ftbic.block.entity.machine.MaceratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PoweredFurnaceBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.item.FluidCellItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -42,6 +43,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.clock.WorldClock;
 import net.minecraft.world.clock.WorldClocks;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -920,6 +923,58 @@ public class FTBICGameTestFunctions {
 		helper.assertFalse(h.canInsertEnergy(), "Single-use batteries cannot accept new energy");
 		double inserted = h.insertEnergy(stack, 1000D, false);
 		helper.assertValueEqual(0D, inserted, "insertEnergy must return 0 on single-use battery");
+		helper.succeed();
+	}
+
+	private static net.minecraft.server.level.ServerPlayer mockSurvivalPlayer(GameTestHelper helper) {
+		var cookie = net.minecraft.server.network.CommonListenerCookie.createInitial(
+				new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "test-fluid-cell-player"), false);
+		net.minecraft.server.level.ServerPlayer player = new net.minecraft.server.level.ServerPlayer(
+				helper.getLevel().getServer(), helper.getLevel(), cookie.gameProfile(), cookie.clientInformation()
+		) {
+			@Override
+			public net.minecraft.world.level.GameType gameMode() {
+				return net.minecraft.world.level.GameType.SURVIVAL;
+			}
+		};
+		var connection = new net.minecraft.network.Connection(net.minecraft.network.protocol.PacketFlow.SERVERBOUND);
+		new io.netty.channel.embedded.EmbeddedChannel(connection);
+		try {
+			helper.getLevel().getServer().getPlayerList().placeNewPlayer(connection, player, cookie);
+		} catch (UnsupportedOperationException ignored) {
+		}
+		player.getAbilities().instabuild = false;
+		player.getAbilities().invulnerable = false;
+		return player;
+	}
+
+	static void fluidCellFillsFromWaterOnUse(GameTestHelper helper) {
+		BlockPos waterPos = new BlockPos(4, 2, 4);
+		BlockPos playerPos = new BlockPos(4, 3, 4);
+		helper.setBlock(waterPos.below(), Blocks.STONE);
+		helper.setBlock(waterPos, Blocks.WATER.defaultBlockState().setValue(BlockStateProperties.LEVEL, 0));
+		helper.setBlock(playerPos, Blocks.AIR);
+
+		net.minecraft.server.level.ServerPlayer player = mockSurvivalPlayer(helper);
+		BlockPos absPlayer = helper.absolutePos(playerPos);
+		player.snapTo(absPlayer.getX() + 0.5, absPlayer.getY(), absPlayer.getZ() + 0.5, 0F, 90F);
+
+		ItemStack cell = new ItemStack(FTBICItems.FLUID_CELL.get());
+		player.setItemInHand(InteractionHand.MAIN_HAND, cell);
+
+		InteractionResult result = cell.use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
+		helper.assertTrue(result.consumesAction(), "use() should consume the action for water fill");
+
+		ItemStack afterDirect = player.getItemInHand(InteractionHand.MAIN_HAND);
+		ItemStack afterTransform = result instanceof InteractionResult.Success success && success.heldItemTransformedTo() != null
+				? success.heldItemTransformedTo()
+				: afterDirect;
+
+		helper.assertTrue(afterTransform.getItem() instanceof FluidCellItem,
+				"Result stack should still be a fluid cell (got " + afterTransform + ")");
+		var stored = FluidCellItem.getStored(afterTransform);
+		helper.assertTrue(!stored.isEmpty() && stored.getFluid() == Fluids.WATER,
+				"Filled cell should carry water (stored=" + stored + ")");
 		helper.succeed();
 	}
 }
