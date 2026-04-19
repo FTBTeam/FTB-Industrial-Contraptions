@@ -28,7 +28,7 @@ item_ids:
 </Column>
 
 * Minimum effective **Y=64** — any lower and it produces nothing.
-* Output scales linearly from Y=64 to **Y=320**.
+* Output scales linearly from Y=64 to **Y=319**.
 * Needs clear space around the blades — walls block airflow.
 * **Rain** multiplies output by 1.2×.
 * **Thunderstorms** multiply output by 1.5×.

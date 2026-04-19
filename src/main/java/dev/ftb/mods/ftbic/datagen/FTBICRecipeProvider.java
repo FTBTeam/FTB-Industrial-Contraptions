@@ -32,8 +32,10 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.crafting.SmokingRecipe;
+import net.neoforged.neoforge.common.conditions.AndCondition;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
+import net.neoforged.neoforge.common.conditions.OrCondition;
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
 
 import java.util.ArrayList;
@@ -654,7 +656,8 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	protected static ICondition[] conditionsFor(Ingredient... ingredients) {
 		List<ICondition> conditions = new ArrayList<>();
 		for (Ingredient ing : ingredients) {
-			collectTagConditions(ing, conditions);
+			ICondition c = ingredientCondition(ing);
+			if (c != null) conditions.add(c);
 		}
 		return conditions.toArray(ICondition[]::new);
 	}
@@ -677,25 +680,54 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		return combined;
 	}
 
-	private static void collectTagConditions(Ingredient ingredient, List<ICondition> out) {
-		if (ingredient == null) return;
-		// CompoundIngredient and other custom ingredients don't expose a HolderSet — recurse into
-		// their components via the public extension.
+	private static ICondition ingredientCondition(Ingredient ingredient) {
+		if (ingredient == null) return null;
 		var custom = ingredient.getCustomIngredient();
 		if (custom instanceof net.neoforged.neoforge.common.crafting.CompoundIngredient compound) {
+			List<ICondition> branches = new ArrayList<>();
 			for (Ingredient child : compound.children()) {
-				collectTagConditions(child, out);
+				ICondition c = ingredientCondition(child);
+				if (c != null) branches.add(c);
 			}
-			return;
+			if (branches.isEmpty()) return null;
+			if (branches.size() == 1) return branches.get(0);
+			return new OrCondition(branches);
 		}
-		if (custom != null) return;
+		if (custom != null) return null;
 		HolderSet<Item> values = ingredient.getValues();
-		if (values == null) return;
-		values.unwrapKey().ifPresent(tagKey -> {
+		if (values == null) return null;
+		return values.unwrapKey().map(tagKey -> {
 			@SuppressWarnings("unchecked")
 			TagKey<Item> itemTag = (TagKey<Item>) (TagKey<?>) tagKey;
-			out.add(new NotCondition(new TagEmptyCondition(itemTag)));
-		});
+			List<ICondition> parts = new ArrayList<>();
+			parts.add(new NotCondition(new TagEmptyCondition(itemTag)));
+			String material = materialFromTag(itemTag);
+			if (material != null) {
+				parts.add(ComponentsAvailableCondition.of(material));
+			}
+			return parts.size() == 1 ? parts.get(0) : (ICondition) new AndCondition(parts);
+		}).orElse(null);
+	}
+
+	private static String materialFromTag(TagKey<Item> tagKey) {
+		Identifier tid = tagKey.location();
+		if (!"c".equals(tid.getNamespace())) return null;
+		String path = tid.getPath();
+		int slash = path.indexOf('/');
+		if (slash < 0) return null;
+		String typePlural = path.substring(0, slash);
+		String material = path.substring(slash + 1);
+		String typeSingular = switch (typePlural) {
+			case "dusts" -> "dust";
+			case "ingots" -> "ingot";
+			case "plates" -> "plate";
+			case "gears" -> "gear";
+			case "rods" -> "rod";
+			case "nuggets" -> "nugget";
+			default -> null;
+		};
+		if (typeSingular == null) return null;
+		return material + "_" + typeSingular;
 	}
 
 

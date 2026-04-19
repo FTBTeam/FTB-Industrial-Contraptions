@@ -19,6 +19,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<MachineRecipe>> {
 	public static final int WIDTH = 112;
 	public static final int HEIGHT = 26;
@@ -57,9 +60,19 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 		int idx = 0;
 		for (IngredientWithCount in : recipe.inputs) {
 			int x = INPUT_X_1 - (inputCount - 1 - idx) * 18;
-			builder.addInputSlot(x, SLOT_Y)
-					.setStandardSlotBackground()
-					.add(in.ingredient());
+			var slot = builder.addInputSlot(x, SLOT_Y).setStandardSlotBackground();
+			int cnt = in.count();
+			if (cnt > 1) {
+				List<ItemStack> stacks = new ArrayList<>();
+				in.ingredient().items().forEach(h -> {
+					ItemStack stack = new ItemStack(h);
+					stack.setCount(cnt);
+					stacks.add(stack);
+				});
+				slot.addItemStacks(stacks);
+			} else {
+				slot.add(in.ingredient());
+			}
 			idx++;
 			if (idx >= 2) break;
 		}

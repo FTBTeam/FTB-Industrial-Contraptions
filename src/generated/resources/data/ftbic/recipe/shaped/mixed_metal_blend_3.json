@@ -1,39 +1,104 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:dusts/iron"
-      }
+      "type": "neoforge:or",
+      "values": [
+        {
+          "type": "neoforge:and",
+          "values": [
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/iron"
+              }
+            },
+            {
+              "type": "ftbmaterials:components_available",
+              "used_materials": [
+                "iron_dust"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "neoforge:and",
+          "values": [
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/lead"
+              }
+            },
+            {
+              "type": "ftbmaterials:components_available",
+              "used_materials": [
+                "lead_dust"
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:dusts/lead"
-      }
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/constantan"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "constantan_dust"
+          ]
+        }
+      ]
     },
     {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:dusts/constantan"
-      }
-    },
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:dusts/tin"
-      }
-    },
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:dusts/aluminum"
-      }
+      "type": "neoforge:or",
+      "values": [
+        {
+          "type": "neoforge:and",
+          "values": [
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/tin"
+              }
+            },
+            {
+              "type": "ftbmaterials:components_available",
+              "used_materials": [
+                "tin_dust"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "neoforge:and",
+          "values": [
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/aluminum"
+              }
+            },
+            {
+              "type": "ftbmaterials:components_available",
+              "used_materials": [
+                "aluminum_dust"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "type": "minecraft:crafting_shaped",
