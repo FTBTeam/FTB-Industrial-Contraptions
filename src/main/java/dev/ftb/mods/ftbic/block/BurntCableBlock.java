@@ -4,14 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class BurntCableBlock extends BaseCableBlock {
 	public BurntCableBlock(BlockBehaviour.Properties props) {
-		super(props, 6, SoundType.METAL);
+		super(props, 6);
 	}
 
 	public static BlockState getBurntCable(BlockState state) {

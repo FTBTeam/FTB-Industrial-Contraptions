@@ -3,6 +3,12 @@
   "values": [
     "ftbic:reinforced_stone",
     "ftbic:reinforced_glass",
+    "ftbic:lv_reinforced_cable",
+    "ftbic:mv_reinforced_cable",
+    "ftbic:hv_reinforced_cable",
+    "ftbic:ev_reinforced_cable",
+    "ftbic:iv_reinforced_cable",
+    "ftbic:burnt_reinforced_cable",
     "minecraft:bedrock",
     "minecraft:barrier",
     "minecraft:command_block"

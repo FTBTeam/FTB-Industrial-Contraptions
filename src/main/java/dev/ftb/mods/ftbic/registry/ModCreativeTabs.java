@@ -47,6 +47,12 @@ public final class ModCreativeTabs {
 						out.accept(FTBICItems.EV_CABLE.get());
 						out.accept(FTBICItems.IV_CABLE.get());
 						out.accept(FTBICItems.BURNT_CABLE.get());
+						out.accept(FTBICItems.LV_REINFORCED_CABLE.get());
+						out.accept(FTBICItems.MV_REINFORCED_CABLE.get());
+						out.accept(FTBICItems.HV_REINFORCED_CABLE.get());
+						out.accept(FTBICItems.EV_REINFORCED_CABLE.get());
+						out.accept(FTBICItems.IV_REINFORCED_CABLE.get());
+						out.accept(FTBICItems.BURNT_REINFORCED_CABLE.get());
 						out.accept(FTBICItems.LANDMARK.get());
 						out.accept(FTBICItems.EXFLUID.get());
 						out.accept(FTBICItems.NUCLEAR_REACTOR_CHAMBER.get());

@@ -72,6 +72,12 @@ public interface FTBICItems {
 	DeferredItem<BlockItem> EV_CABLE = blockItem("ev_cable", FTBICBlocks.EV_CABLE);
 	DeferredItem<BlockItem> IV_CABLE = blockItem("iv_cable", FTBICBlocks.IV_CABLE);
 	DeferredItem<BlockItem> BURNT_CABLE = blockItem("burnt_cable", FTBICBlocks.BURNT_CABLE);
+	DeferredItem<BlockItem> LV_REINFORCED_CABLE = blockItem("lv_reinforced_cable", FTBICBlocks.LV_REINFORCED_CABLE);
+	DeferredItem<BlockItem> MV_REINFORCED_CABLE = blockItem("mv_reinforced_cable", FTBICBlocks.MV_REINFORCED_CABLE);
+	DeferredItem<BlockItem> HV_REINFORCED_CABLE = blockItem("hv_reinforced_cable", FTBICBlocks.HV_REINFORCED_CABLE);
+	DeferredItem<BlockItem> EV_REINFORCED_CABLE = blockItem("ev_reinforced_cable", FTBICBlocks.EV_REINFORCED_CABLE);
+	DeferredItem<BlockItem> IV_REINFORCED_CABLE = blockItem("iv_reinforced_cable", FTBICBlocks.IV_REINFORCED_CABLE);
+	DeferredItem<BlockItem> BURNT_REINFORCED_CABLE = blockItem("burnt_reinforced_cable", FTBICBlocks.BURNT_REINFORCED_CABLE);
 	DeferredItem<BlockItem> LANDMARK = blockItem("landmark", FTBICBlocks.LANDMARK);
 	DeferredItem<BlockItem> EXFLUID = blockItem("exfluid", FTBICBlocks.EXFLUID);
 	DeferredItem<BlockItem> NUCLEAR_REACTOR_CHAMBER = blockItem("nuclear_reactor_chamber", FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);

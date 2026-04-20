@@ -22,6 +22,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("block.ftbic.antimatter_constructor", "Antimatter Constructor");
 		add("block.ftbic.basic_generator", "Basic Generator");
 		add("block.ftbic.burnt_cable", "Burnt Cable");
+		add("block.ftbic.burnt_reinforced_cable", "Burnt Reinforced Cable");
 		add("block.ftbic.canning_machine", "Canning Machine");
 		add("block.ftbic.centrifuge", "Centrifuge");
 		add("block.ftbic.charge_pad", "Charge Pad");
@@ -29,6 +30,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("block.ftbic.enderium_block", "Block of Enderium");
 		add("block.ftbic.ev_battery_box", "EV Battery Box");
 		add("block.ftbic.ev_cable", "EV Cable");
+		add("block.ftbic.ev_reinforced_cable", "Reinforced EV Cable");
 		add("block.ftbic.ev_rectifier", "EV Energy Rectifier");
 		add("block.ftbic.ev_solar_panel", "EV Solar Panel");
 		add("block.ftbic.ev_transformer", "EV Transformer");
@@ -37,15 +39,18 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("block.ftbic.geothermal_generator", "Geothermal Generator");
 		add("block.ftbic.hv_battery_box", "HV Battery Box");
 		add("block.ftbic.hv_cable", "HV Cable");
+		add("block.ftbic.hv_reinforced_cable", "Reinforced HV Cable");
 		add("block.ftbic.hv_rectifier", "HV Energy Rectifier");
 		add("block.ftbic.hv_solar_panel", "HV Solar Panel");
 		add("block.ftbic.hv_transformer", "HV Transformer");
 		add("block.ftbic.iron_furnace", "Iron Furnace");
 		add("block.ftbic.iv_cable", "IV Cable");
+		add("block.ftbic.iv_reinforced_cable", "Reinforced IV Cable");
 		add("block.ftbic.iv_rectifier", "IV Energy Rectifier");
 		add("block.ftbic.landmark", "Landmark");
 		add("block.ftbic.lv_battery_box", "LV Battery Box");
 		add("block.ftbic.lv_cable", "LV Cable");
+		add("block.ftbic.lv_reinforced_cable", "Reinforced LV Cable");
 		add("block.ftbic.lv_rectifier", "LV Energy Rectifier");
 		add("block.ftbic.lv_solar_panel", "LV Solar Panel");
 		add("block.ftbic.lv_transformer", "LV Transformer");
@@ -53,6 +58,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("block.ftbic.machine_block", "Machine Block");
 		add("block.ftbic.mv_battery_box", "MV Battery Box");
 		add("block.ftbic.mv_cable", "MV Cable");
+		add("block.ftbic.mv_reinforced_cable", "Reinforced MV Cable");
 		add("block.ftbic.mv_rectifier", "MV Energy Rectifier");
 		add("block.ftbic.mv_solar_panel", "MV Solar Panel");
 		add("block.ftbic.mv_transformer", "MV Transformer");
@@ -93,6 +99,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.antimatter_crystal", "Antimatter Crystal");
 		add("item.ftbic.basic_generator", "Basic Generator");
 		add("item.ftbic.burnt_cable", "Burnt Cable");
+		add("item.ftbic.burnt_reinforced_cable", "Burnt Reinforced Cable");
 		add("item.ftbic.canned_food", "Canned Food");
 		add("item.ftbic.canning_machine", "Canning Machine");
 		add("item.ftbic.carbon_boots", "Carbon Boots");
@@ -135,6 +142,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.ev_battery", "EV Battery");
 		add("item.ftbic.ev_battery_box", "EV Battery Box");
 		add("item.ftbic.ev_cable", "EV Cable");
+		add("item.ftbic.ev_reinforced_cable", "Reinforced EV Cable");
 		add("item.ftbic.ev_rectifier", "EV Energy Rectifier");
 		add("item.ftbic.ev_solar_panel", "EV Solar Panel");
 		add("item.ftbic.ev_transformer", "EV Transformer");
@@ -153,6 +161,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.hv_battery", "HV Battery");
 		add("item.ftbic.hv_battery_box", "HV Battery Box");
 		add("item.ftbic.hv_cable", "HV Cable");
+		add("item.ftbic.hv_reinforced_cable", "Reinforced HV Cable");
 		add("item.ftbic.hv_rectifier", "HV Energy Rectifier");
 		add("item.ftbic.hv_solar_panel", "HV Solar Panel");
 		add("item.ftbic.hv_transformer", "HV Transformer");
@@ -162,6 +171,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.iridium_neutron_reflector", "Iridium Neutron Reflector");
 		add("item.ftbic.iron_furnace", "Iron Furnace");
 		add("item.ftbic.iv_cable", "IV Cable");
+		add("item.ftbic.iv_reinforced_cable", "Reinforced IV Cable");
 		add("item.ftbic.iv_rectifier", "IV Energy Rectifier");
 		add("item.ftbic.landmark", "Landmark");
 		add("item.ftbic.large_coolant_cell", "Large Coolant Cell");
@@ -175,6 +185,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.lv_battery", "LV Battery");
 		add("item.ftbic.lv_battery_box", "LV Battery Box");
 		add("item.ftbic.lv_cable", "LV Cable");
+		add("item.ftbic.lv_reinforced_cable", "Reinforced LV Cable");
 		add("item.ftbic.lv_rectifier", "LV Energy Rectifier");
 		add("item.ftbic.lv_solar_panel", "LV Solar Panel");
 		add("item.ftbic.lv_transformer", "LV Transformer");
@@ -186,6 +197,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.mv_battery", "MV Battery");
 		add("item.ftbic.mv_battery_box", "MV Battery Box");
 		add("item.ftbic.mv_cable", "MV Cable");
+		add("item.ftbic.mv_reinforced_cable", "Reinforced MV Cable");
 		add("item.ftbic.mv_rectifier", "MV Energy Rectifier");
 		add("item.ftbic.mv_solar_panel", "MV Solar Panel");
 		add("item.ftbic.mv_transformer", "MV Transformer");

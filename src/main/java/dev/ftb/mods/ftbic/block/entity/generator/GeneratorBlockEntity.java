@@ -132,16 +132,21 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		boolean changed = false;
 		for (int vi = 0; vi < validBlocks; vi++) {
 			CachedEnergyStorage storage = blocks[valid[vi]];
-			if (storage.origin.cableTransferRate < share) {
-				level.setBlock(storage.origin.cablePos,
-						BurntCableBlock.getBurntCable(level.getBlockState(storage.origin.cablePos)),
-						3);
+			double thisShare = share;
+			if (storage.feHandlerCache != null) {
+				thisShare = Math.min(thisShare, storage.origin.cableTransferRate);
+			} else if (storage.origin.cableTransferRate < share) {
+				BlockState cableState = level.getBlockState(storage.origin.cablePos);
+				BlockState burntState = cableState.getBlock() instanceof CableBlock cable
+						? cable.getBurntState(cableState)
+						: BurntCableBlock.getBurntCable(cableState);
+				level.setBlock(storage.origin.cablePos, burntState, 3);
 				level.levelEvent(1502, storage.origin.cablePos, 0);
 				storage.origin.cableBurnt = true;
 				continue;
 			}
 
-			double accepted = storage.insertZaps(Math.min(share, energy));
+			double accepted = storage.insertZaps(Math.min(thisShare, energy));
 			if (accepted > 0D) {
 				energy -= accepted;
 				active = true;

@@ -35,3 +35,8 @@ item_ids:
 Transparent reinforced block. Use it as the viewing panel into a reactor room.
 
 <RecipeFor id="reinforced_glass" />
+
+<ItemImage id="minecraft:air" scale="0.25"/>
+***
+
+Need to run power through a containment wall without breaking it? See the reinforced cable family on the [Cables](../energy/cables.md) page — same toughness, still conducts at its tier rate.

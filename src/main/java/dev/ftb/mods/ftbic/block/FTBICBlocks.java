@@ -39,17 +39,30 @@ public interface FTBICBlocks {
 			name -> new IronFurnaceBlock(props(name)));
 
 	DeferredBlock<CableBlock> LV_CABLE = REGISTRY.register("lv_cable",
-			name -> new CableBlock(props(name), EnergyTier.LV, 5, SoundType.WOOL));
+			name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.WOOL), EnergyTier.LV, 5));
 	DeferredBlock<CableBlock> MV_CABLE = REGISTRY.register("mv_cable",
-			name -> new CableBlock(props(name), EnergyTier.MV, 4, SoundType.WOOL));
+			name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.WOOL), EnergyTier.MV, 4));
 	DeferredBlock<CableBlock> HV_CABLE = REGISTRY.register("hv_cable",
-			name -> new CableBlock(props(name), EnergyTier.HV, 6, SoundType.WOOL));
+			name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.WOOL), EnergyTier.HV, 6));
 	DeferredBlock<CableBlock> EV_CABLE = REGISTRY.register("ev_cable",
-			name -> new CableBlock(props(name), EnergyTier.EV, 4, SoundType.WOOL));
+			name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.WOOL), EnergyTier.EV, 4));
 	DeferredBlock<CableBlock> IV_CABLE = REGISTRY.register("iv_cable",
-			name -> new CableBlock(props(name), EnergyTier.IV, 6, SoundType.GLASS));
+			name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.GLASS), EnergyTier.IV, 6));
 	DeferredBlock<BurntCableBlock> BURNT_CABLE = REGISTRY.register("burnt_cable",
-			name -> new BurntCableBlock(props(name)));
+			name -> new BurntCableBlock(props(name).strength(0.9F).sound(SoundType.METAL)));
+
+	DeferredBlock<ReinforcedCableBlock> LV_REINFORCED_CABLE = REGISTRY.register("lv_reinforced_cable",
+			name -> new ReinforcedCableBlock(props(name).sound(SoundType.STONE).strength(10F, 10_000_000_000F).requiresCorrectToolForDrops(), EnergyTier.LV));
+	DeferredBlock<ReinforcedCableBlock> MV_REINFORCED_CABLE = REGISTRY.register("mv_reinforced_cable",
+			name -> new ReinforcedCableBlock(props(name).sound(SoundType.STONE).strength(10F, 10_000_000_000F).requiresCorrectToolForDrops(), EnergyTier.MV));
+	DeferredBlock<ReinforcedCableBlock> HV_REINFORCED_CABLE = REGISTRY.register("hv_reinforced_cable",
+			name -> new ReinforcedCableBlock(props(name).sound(SoundType.STONE).strength(10F, 10_000_000_000F).requiresCorrectToolForDrops(), EnergyTier.HV));
+	DeferredBlock<ReinforcedCableBlock> EV_REINFORCED_CABLE = REGISTRY.register("ev_reinforced_cable",
+			name -> new ReinforcedCableBlock(props(name).sound(SoundType.STONE).strength(10F, 10_000_000_000F).requiresCorrectToolForDrops(), EnergyTier.EV));
+	DeferredBlock<ReinforcedCableBlock> IV_REINFORCED_CABLE = REGISTRY.register("iv_reinforced_cable",
+			name -> new ReinforcedCableBlock(props(name).sound(SoundType.STONE).strength(10F, 10_000_000_000F).requiresCorrectToolForDrops(), EnergyTier.IV));
+	DeferredBlock<BurntReinforcedCableBlock> BURNT_REINFORCED_CABLE = REGISTRY.register("burnt_reinforced_cable",
+			name -> new BurntReinforcedCableBlock(props(name).sound(SoundType.STONE).strength(10F, 10_000_000_000F).requiresCorrectToolForDrops()));
 
 	DeferredBlock<LandmarkBlock> LANDMARK = REGISTRY.register("landmark",
 			name -> new LandmarkBlock(props(name)));
@@ -67,6 +80,7 @@ public interface FTBICBlocks {
 			name -> new Block(props(name).sound(SoundType.GRASS).strength(-1F, 10_000_000_000F).noLootTable()));
 
 	List<DeferredBlock<CableBlock>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE);
+	List<DeferredBlock<ReinforcedCableBlock>> REINFORCED_CABLES = Arrays.asList(LV_REINFORCED_CABLE, MV_REINFORCED_CABLE, HV_REINFORCED_CABLE, EV_REINFORCED_CABLE, IV_REINFORCED_CABLE);
 
 	DeferredBlock<Block> ENDERIUM_BLOCK = REGISTRY.register("enderium_block",
 			name -> new Block(props(name).requiresCorrectToolForDrops().strength(5.0f, 6.0f).sound(SoundType.METAL)));

@@ -59,6 +59,8 @@ The reactor samples every outward-facing face of its hull and attached chambers 
 
 Cheap trick: drop the reactor into a shallow pool and seal the top with glass — every `reactorCool` value doubles for free. Flowing or still water both count; lava and air don't.
 
+Reinforced cables (and their burnt variant) are treated as **neutral** faces — they are skipped entirely when the ratio is computed. Running power out of a submerged reactor through a reinforced cable will not dilute your water bonus.
+
 <ItemImage id="minecraft:air" scale="0.25"/>
 
 <Column alignItems="center" fullWidth={true}>

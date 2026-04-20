@@ -3,7 +3,9 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.block.BurntReinforcedCableBlock;
 import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
+import dev.ftb.mods.ftbic.block.ReinforcedCableBlock;
 import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 import dev.ftb.mods.ftbic.item.reactor.ReactorItem;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
@@ -106,10 +108,13 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 			if (level.getBlockState(neighborPos).getBlock() instanceof NuclearReactorChamberBlock) {
 				for (Direction chamberDir : FTBICUtils.DIRECTIONS) {
 					if (chamberDir == dir.getOpposite()) continue;
+					BlockPos chamberNeighbor = neighborPos.relative(chamberDir);
+					if (isNeutralForCooling(chamberNeighbor)) continue;
 					totalFaces++;
-					if (isWater(level.getFluidState(neighborPos.relative(chamberDir)))) waterFaces++;
+					if (isWater(level.getFluidState(chamberNeighbor))) waterFaces++;
 				}
 			} else {
+				if (isNeutralForCooling(neighborPos)) continue;
 				totalFaces++;
 				if (isWater(level.getFluidState(neighborPos))) waterFaces++;
 			}
@@ -120,6 +125,11 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 
 	private static boolean isWater(FluidState fluid) {
 		return !fluid.isEmpty() && fluid.is(FluidTags.WATER);
+	}
+
+	private boolean isNeutralForCooling(BlockPos pos) {
+		var block = level.getBlockState(pos).getBlock();
+		return block instanceof ReinforcedCableBlock || block instanceof BurntReinforcedCableBlock;
 	}
 
 	private void ejectFromColumns(int fromCol, int toColExclusive) {

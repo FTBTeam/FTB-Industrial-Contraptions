@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ftbic:reinforced_stone",
+    "ftbic:ev_cable"
+  ],
+  "result": {
+    "id": "ftbic:ev_reinforced_cable"
+  },
+  "show_notification": false
+}

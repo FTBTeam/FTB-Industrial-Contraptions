@@ -7,7 +7,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -39,8 +38,8 @@ public class BaseCableBlock extends Block implements SimpleWaterloggedBlock {
 	public final VoxelShape shapeE;
 	public final VoxelShape[] shapes;
 
-	public BaseCableBlock(BlockBehaviour.Properties props, int b, SoundType soundType) {
-		super(props.strength(0.9F).sound(soundType));
+	public BaseCableBlock(BlockBehaviour.Properties props, int b) {
+		super(props);
 		border = b;
 		int B0 = border;
 		int B1 = 16 - border;

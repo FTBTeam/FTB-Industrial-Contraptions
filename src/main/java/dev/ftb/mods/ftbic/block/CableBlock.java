@@ -11,7 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,9 +22,13 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 public class CableBlock extends BaseCableBlock {
 	public final EnergyTier tier;
 
-	public CableBlock(BlockBehaviour.Properties props, EnergyTier tier, int border, SoundType soundType) {
-		super(props, border, soundType);
+	public CableBlock(BlockBehaviour.Properties props, EnergyTier tier, int border) {
+		super(props, border);
 		this.tier = tier;
+	}
+
+	public BlockState getBurntState(BlockState state) {
+		return BurntCableBlock.getBurntCable(state);
 	}
 
 	@Override
@@ -47,7 +50,7 @@ public class CableBlock extends BaseCableBlock {
 
 	private boolean canCableConnectFrom(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
 		if (state.getBlock() instanceof CableBlock otherCable) {
-			return otherCable == this;
+			return otherCable.tier == this.tier;
 		}
 		if (state.getBlock() instanceof ElectricBlock) {
 			return true;
