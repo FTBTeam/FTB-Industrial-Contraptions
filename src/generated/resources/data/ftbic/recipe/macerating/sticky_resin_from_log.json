@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "minecraft:logs"
+      }
+    }
+  ],
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#minecraft:logs"
+    }
+  ],
+  "outputs": [
+    {
+      "chance": 0.25,
+      "item": {
+        "id": "ftbic:sticky_resin"
+      }
+    }
+  ]
+}

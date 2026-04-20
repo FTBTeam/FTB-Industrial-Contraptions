@@ -155,6 +155,8 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		for (String m : MACERATE_RAW) {
 			macerate("storage_blocks/raw_" + m + "_to_dust", commonTag("storage_blocks/raw_" + m), ftbmat(m + "_dust", 9));
 		}
+
+		macerateChance("sticky_resin_from_log", tag(ItemTags.LOGS), 1, ftbicStack("sticky_resin", 1), 0.25D);
 	}
 
 	private void macerate(String path, Ingredient input, ItemStackTemplate result) {
@@ -183,6 +185,20 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				false);
 		output.accept(recipeKey("macerating/" + path), recipe, null,
 				withOutputConditions(conditionsFor(input), primary, bonus));
+	}
+
+	private void macerateChance(String path, Ingredient input, int inputCount, ItemStackTemplate result, double chance) {
+		if (input == null || result == null) return;
+		MachineRecipe recipe = new MachineRecipe(
+				FTBICRecipes.MACERATING,
+				List.of(new IngredientWithCount(input, inputCount)),
+				List.of(),
+				List.of(new StackWithChance(result, chance)),
+				List.of(),
+				1D,
+				false);
+		output.accept(recipeKey("macerating/" + path), recipe, null,
+				withOutputConditions(conditionsFor(input), result));
 	}
 
 
@@ -283,6 +299,9 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		compress("blaze_powder_to_blaze_rod", Ingredient.of(Items.BLAZE_POWDER), 4, stack(Items.BLAZE_ROD, 1));
 		compress("flint_to_gunpowder", Ingredient.of(Items.FLINT), 4, stack(Items.GUNPOWDER, 1));
 		compress("diamond_dust_to_diamond", i("ftbmaterials:diamond_dust"), 2, stack(Items.DIAMOND, 1));
+
+		compress("rubber_from_resin", i("ftbic:sticky_resin"), 1, ftbicStack("rubber", 3));
+		compress("rubber_from_latex", i("ftbic:latex_ball"), 2, ftbicStack("rubber", 1));
 	}
 
 	private void compress(String path, Ingredient input, int inputCount, ItemStackTemplate result) {
@@ -348,6 +367,11 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		flowerDye("lilac", Items.LILAC, Items.MAGENTA_DYE);
 		flowerDye("rose_bush", Items.ROSE_BUSH, Items.RED_DYE);
 		flowerDye("peony", Items.PEONY, Items.PINK_DYE);
+
+		separate("latex_from_saplings", tag(ItemTags.SAPLINGS), 2,
+				java.util.Arrays.asList(out(FTBICItems.LATEX_BALL.item.get(), 1, 1D)));
+		separate("latex_from_kelp", Ingredient.of(Items.KELP), 6,
+				java.util.Arrays.asList(out(FTBICItems.LATEX_BALL.item.get(), 1, 1D)));
 	}
 
 	private void flowerDye(String name, Item flower, Item dye) {
@@ -375,6 +399,25 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		ItemStackTemplate[] templates = cleaned.stream().map(StackWithChance::template).toArray(ItemStackTemplate[]::new);
 		output.accept(recipeKey("separating/" + path), recipe, null,
 				withOutputConditions(conditionsFor(input), templates));
+	}
+
+	private void separateMulti(String path, List<IngredientWithCount> inputs, List<StackWithChance> outputs) {
+		if (inputs.isEmpty()) return;
+		List<StackWithChance> cleaned = new ArrayList<>();
+		for (StackWithChance o : outputs) if (o != null) cleaned.add(o);
+		if (cleaned.isEmpty()) return;
+		MachineRecipe recipe = new MachineRecipe(
+				FTBICRecipes.SEPARATING,
+				inputs,
+				List.of(),
+				cleaned,
+				List.of(),
+				1D,
+				false);
+		ItemStackTemplate[] templates = cleaned.stream().map(StackWithChance::template).toArray(ItemStackTemplate[]::new);
+		Ingredient[] ingredients = inputs.stream().map(IngredientWithCount::ingredient).toArray(Ingredient[]::new);
+		output.accept(recipeKey("separating/" + path), recipe, null,
+				withOutputConditions(conditionsFor(ingredients), templates));
 	}
 
 

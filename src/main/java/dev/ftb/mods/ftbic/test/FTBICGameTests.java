@@ -49,6 +49,8 @@ public class FTBICGameTests {
 		reg(event, "compressor_produces_sandstone", FTBICGameTestFunctions::compressorProducesSandstone, env, 400);
 		reg(event, "advanced_compressor_produces_sandstone", FTBICGameTestFunctions::advancedCompressorProducesSandstone, env, 400);
 		reg(event, "centrifuge_produces_flint", FTBICGameTestFunctions::centrifugeProducesFlint, env, 400);
+		reg(event, "centrifuge_rejects_input_below_recipe_count", FTBICGameTestFunctions::centrifugeRejectsInputBelowRecipeCount, env, 400);
+		reg(event, "centrifuge_consumes_count_from_input_kelp", FTBICGameTestFunctions::centrifugeConsumesCountFromInputKelp, env, 400);
 		reg(event, "advanced_centrifuge_produces_flint", FTBICGameTestFunctions::advancedCentrifugeProducesFlint, env, 400);
 		reg(event, "powered_furnace_smelts_raw_iron", FTBICGameTestFunctions::poweredFurnaceSmeltsRawIron, env, 400);
 		reg(event, "advanced_powered_furnace_smelts_raw_iron", FTBICGameTestFunctions::advancedPoweredFurnaceSmeltsRawIron, env, 400);

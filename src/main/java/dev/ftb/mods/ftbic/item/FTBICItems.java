@@ -87,6 +87,8 @@ public interface FTBICItems {
 	// Materials
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");
 	MaterialItem RUBBER = material("rubber");
+	MaterialItem STICKY_RESIN = material("sticky_resin");
+	MaterialItem LATEX_BALL = material("latex_ball");
 	MaterialItem FUSE = material("fuse");
 	MaterialItem COPPER_COIL = material("copper_coil");
 	MaterialItem MIXED_METAL_BLEND = material("mixed_metal_blend");

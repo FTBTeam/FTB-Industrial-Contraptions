@@ -230,6 +230,8 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.roller", "Roller");
 		add("item.ftbic.rubber", "Rubber");
 		add("item.ftbic.rubber_sheet", "Rubber Sheet");
+		add("item.ftbic.sticky_resin", "Sticky Resin");
+		add("item.ftbic.latex_ball", "Latex Ball");
 		add("item.ftbic.scrap", "Scrap");
 		add("item.ftbic.scrap_box", "Scrap Box");
 		add("item.ftbic.single_use_battery", "Single Use Battery");

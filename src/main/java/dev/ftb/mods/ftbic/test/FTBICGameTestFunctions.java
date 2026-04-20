@@ -337,6 +337,35 @@ public class FTBICGameTestFunctions {
 		});
 	}
 
+	static void centrifugeRejectsInputBelowRecipeCount(GameTestHelper helper) {
+		CentrifugeBlockEntity be = placeMachine(helper, FTBICElectricBlocks.CENTRIFUGE, CentrifugeBlockEntity.class);
+		be.inputItems[0] = new ItemStack(Items.KELP, 3);
+		be.setChanged();
+
+		helper.runAfterDelay(240, () -> {
+			CentrifugeBlockEntity after = helper.getBlockEntity(CENTER, CentrifugeBlockEntity.class);
+			helper.assertFalse(outputContainsAny(after),
+					"Centrifuge must NOT process kelp below the recipe's required count (have 3, need 6)");
+			helper.assertValueEqual(3, after.inputItems[0].getCount(), "kelp untouched");
+			helper.succeed();
+		});
+	}
+
+	static void centrifugeConsumesCountFromInputKelp(GameTestHelper helper) {
+		CentrifugeBlockEntity be = placeMachine(helper, FTBICElectricBlocks.CENTRIFUGE, CentrifugeBlockEntity.class);
+		be.inputItems[0] = new ItemStack(Items.KELP, 20);
+		be.setChanged();
+
+		helper.runAfterDelay(240, () -> {
+			CentrifugeBlockEntity after = helper.getBlockEntity(CENTER, CentrifugeBlockEntity.class);
+			helper.assertTrue(outputContains(after, FTBICItems.LATEX_BALL.item.get()),
+					"Centrifuge should output latex ball from 6 kelp");
+			helper.assertValueEqual(14, after.inputItems[0].getCount(),
+					"Centrifuge should consume exactly 6 kelp (started with 20, expect 14 remaining)");
+			helper.succeed();
+		});
+	}
+
 	static void advancedCentrifugeProducesFlint(GameTestHelper helper) {
 		AdvancedCentrifugeBlockEntity be = placeMachine(helper, FTBICElectricBlocks.ADVANCED_CENTRIFUGE, AdvancedCentrifugeBlockEntity.class);
 		be.inputItems[0] = new ItemStack(Items.GRAVEL, 4);
