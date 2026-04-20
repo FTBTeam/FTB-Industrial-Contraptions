@@ -31,6 +31,7 @@
     "ftbic:hv_solar_panel",
     "ftbic:ev_solar_panel",
     "ftbic:nuclear_reactor",
+    "ftbic:reactor_simulator",
     "ftbic:powered_furnace",
     "ftbic:macerator",
     "ftbic:centrifuge",

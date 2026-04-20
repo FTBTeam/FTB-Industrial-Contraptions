@@ -28,4 +28,5 @@ public interface FTBICMenus {
 	DeferredHolder<MenuType<?>, MenuType<PumpMenu>> PUMP = register("pump", PumpMenu::new);
 	DeferredHolder<MenuType<?>, MenuType<TeleporterMenu>> TELEPORTER = register("teleporter", TeleporterMenu::new);
 	DeferredHolder<MenuType<?>, MenuType<IronFurnaceMenu>> IRON_FURNACE = register("iron_furnace", IronFurnaceMenu::new);
+	DeferredHolder<MenuType<?>, MenuType<ReactorSimulatorMenu>> REACTOR_SIMULATOR = register("reactor_simulator", ReactorSimulatorMenu::new);
 }

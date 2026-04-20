@@ -11,6 +11,10 @@ public interface EnergyHandler {
 		return 0D;
 	}
 
+	default double getMaxOutputEnergy() {
+		return Double.POSITIVE_INFINITY;
+	}
+
 	double getEnergyCapacity();
 
 	double getEnergy();

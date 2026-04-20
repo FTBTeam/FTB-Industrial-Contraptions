@@ -193,6 +193,7 @@ public class FTBICJadePlugin implements IWailaPlugin {
 				int tankCap = data.getIntOr("ftbic_tele_tank_capacity", 1);
 				String sendFluidId = data.getStringOr("ftbic_tele_send_fluid", "");
 				String receiveFluidId = data.getStringOr("ftbic_tele_receive_fluid", "");
+				tooltip.add(Component.translatable("ftbic.jade.tele_power").withStyle(ChatFormatting.GOLD));
 				tooltip.add(Component.translatable("ftbic.jade.tele_send_items", sendItems).withStyle(ChatFormatting.AQUA));
 				tooltip.add(Component.translatable("ftbic.jade.tele_receive_items", receiveItems).withStyle(ChatFormatting.GREEN));
 				if (sendFluid > 0) {

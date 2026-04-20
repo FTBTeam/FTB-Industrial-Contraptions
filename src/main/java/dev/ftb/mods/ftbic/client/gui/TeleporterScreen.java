@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.client.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
 import dev.ftb.mods.ftbic.net.ClearTeleporterPayload;
 import dev.ftb.mods.ftbic.net.ConfigureTeleporterPayload;
@@ -23,10 +24,8 @@ import java.util.List;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 
 public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
-	private static List<TeleporterEntry> CURRENT_ENTRIES = new ArrayList<>();
-
-	public static void setEntries(List<TeleporterEntry> entries) {
-		CURRENT_ENTRIES = entries == null ? new ArrayList<>() : entries;
+	private List<TeleporterEntry> entries() {
+		return menu.peers == null ? List.of() : menu.peers;
 	}
 
 	private static final int GUI_HEIGHT = 196;
@@ -129,14 +128,14 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 	public boolean keyPressed(KeyEvent event) {
 		if (nameBox != null && nameBox.isFocused()) {
 			int key = event.key();
-			if (key == com.mojang.blaze3d.platform.InputConstants.KEY_RETURN) {
+			if (key == InputConstants.KEY_RETURN) {
 				if (!nameBox.getValue().equals(lastSentName)) {
 					sendConfig(false);
 				}
 				setFocused(null);
 				return true;
 			}
-			if (key == com.mojang.blaze3d.platform.InputConstants.KEY_ESCAPE) {
+			if (key == InputConstants.KEY_ESCAPE) {
 				setFocused(null);
 				return true;
 			}
@@ -211,7 +210,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 			g.fill(x + 1, y + 1, x + DROPDOWN_W - 1, y + DROPDOWN_H - 1, 0xFFDDEEFF);
 		}
 		String arrow = dropdownOpen ? "▲" : "▼";
-		String label = CURRENT_ENTRIES.isEmpty() ? "No teleporters available" : "Choose destination";
+		String label = entries().isEmpty() ? "No teleporters available" : "Choose destination";
 		String text = truncate(label, DROPDOWN_W - 20);
 		g.text(font, Component.literal(text), x + 4, y + 2, 0xFF202020, false);
 		g.text(font, Component.literal(arrow), x + DROPDOWN_W - 10, y + 2, 0xFF202020, false);
@@ -225,7 +224,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 		g.fill(x - 1, y - 1, x + w + 1, y + h + 1, 0xFF555555);
 		g.fill(x, y, x + w, y + h, 0xFFEEEEEE);
 
-		List<TeleporterEntry> entries = CURRENT_ENTRIES;
+		List<TeleporterEntry> entries = entries();
 		boolean needsScrollbar = entries.size() > OVERLAY_VISIBLE_ROWS;
 		int rowWidth = needsScrollbar ? w - SCROLLBAR_W - 2 : w - 2;
 
@@ -279,7 +278,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 			return;
 		}
 		if (dropdownOpen) {
-			List<TeleporterEntry> entries = CURRENT_ENTRIES;
+			List<TeleporterEntry> entries = entries();
 			int x = leftPos + DROPDOWN_X, y = topPos + OVERLAY_Y;
 			boolean needsScrollbar = entries.size() > OVERLAY_VISIBLE_ROWS;
 			int rowWidth = needsScrollbar ? DROPDOWN_W - SCROLLBAR_W - 2 : DROPDOWN_W - 2;
@@ -307,7 +306,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 
 		if (dropdownOpen) {
 			int x = leftPos + DROPDOWN_X, y = topPos + OVERLAY_Y;
-			List<TeleporterEntry> entries = CURRENT_ENTRIES;
+			List<TeleporterEntry> entries = entries();
 			boolean needsScrollbar = entries.size() > OVERLAY_VISIBLE_ROWS;
 			int rowWidth = needsScrollbar ? DROPDOWN_W - SCROLLBAR_W - 2 : DROPDOWN_W - 2;
 			if (isIn(mx, my, x, y, DROPDOWN_W, OVERLAY_H)) {
@@ -366,7 +365,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double dx, double dy) {
 		if (dropdownOpen) {
-			int max = Math.max(0, CURRENT_ENTRIES.size() - OVERLAY_VISIBLE_ROWS);
+			int max = Math.max(0, entries().size() - OVERLAY_VISIBLE_ROWS);
 			scroll = Math.max(0, Math.min(max, scroll - (int) Math.signum(dy)));
 			return true;
 		}

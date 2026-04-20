@@ -115,6 +115,13 @@ public class FTBICGameTests {
 		reg(event, "teleporter_pipe_clear_fluids", FTBICGameTestFunctions::teleporterPipeClearFluids, env, 100);
 		reg(event, "teleporter_pipe_drain_on_activity", FTBICGameTestFunctions::teleporterPipeDrainOnActivity, env, 200);
 		reg(event, "teleporter_pipe_balances_energy", FTBICGameTestFunctions::teleporterPipeBalancesEnergy, env, 200);
+		reg(event, "teleporter_exposes_energy_cap_both_directions", FTBICGameTestFunctions::teleporterExposesEnergyCapBothDirections, env, 40);
+		reg(event, "teleporter_pair_relays_power_for_remote_extract", FTBICGameTestFunctions::teleporterPairRelaysPowerForRemoteExtract, env, 200);
+		reg(event, "teleporter_filters_other_teleporters_from_push_network", FTBICGameTestFunctions::teleporterFiltersOtherTeleportersFromPushNetwork, env, 40);
+
+		reg(event, "reactor_simulator_runs_and_emits_power", FTBICGameTestFunctions::reactorSimulatorRunsAndEmitsPower, env, 200);
+		reg(event, "reactor_simulator_edit_lock", FTBICGameTestFunctions::reactorSimulatorEditLock, env, 100);
+		reg(event, "reactor_simulator_import_roundtrip", FTBICGameTestFunctions::reactorSimulatorImportRoundtrip, env, 100);
 	}
 
 	private static void reg(RegisterGameTestsEvent event, String name,

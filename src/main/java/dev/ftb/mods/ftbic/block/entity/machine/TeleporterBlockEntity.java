@@ -2,6 +2,8 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.generator.GeneratorBlockEntity;
 import dev.ftb.mods.ftbic.net.TeleporterListPayload;
 import dev.ftb.mods.ftbic.registry.TeleporterChunkTickets;
 import dev.ftb.mods.ftbic.screen.TeleporterMenu;
@@ -19,6 +21,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -28,20 +33,37 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import dev.ftb.mods.ftbic.util.CachedEnergyStorage;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-public class TeleporterBlockEntity extends ElectricBlockEntityRef {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class TeleporterBlockEntity extends GeneratorBlockEntity {
 	public static final int SEND_SLOTS = 9;
 	public static final int RECEIVE_SLOTS = 9;
 	public static final int TANK_CAPACITY = 16_000;
 	public static final int ITEMS_PER_FLUSH = 8;
 	public static final int FLUID_PER_FLUSH = 2_000;
 
-	private static final java.util.Set<TeleporterBlockEntity> ALL_LOADED =
-			java.util.Collections.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<>());
+	private static final Set<TeleporterBlockEntity> ALL_LOADED =
+			Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+	public static void purgeLevel(Level level) {
+		ALL_LOADED.removeIf(t -> t.level == level || t.level == null || t.isRemoved());
+	}
+
+	public static void purgeAll() {
+		ALL_LOADED.clear();
+	}
 
 	public BlockPos linkedPos;
 	public ResourceKey<Level> linkedDimension;
@@ -66,8 +88,40 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 
 	public TeleporterBlockEntity(BlockPos pos, BlockState state) {
 		super(FTBICElectricBlocks.TELEPORTER, pos, state);
-		java.util.Arrays.fill(sendItems, ItemStack.EMPTY);
-		java.util.Arrays.fill(receiveItems, ItemStack.EMPTY);
+		Arrays.fill(sendItems, ItemStack.EMPTY);
+		Arrays.fill(receiveItems, ItemStack.EMPTY);
+	}
+
+	@Override
+	public void initProperties() {
+		super.initProperties();
+		maxEnergyOutputTransfer = FTBICConfig.ENERGY.HV_TRANSFER_RATE.get();
+	}
+
+	@Override
+	public boolean isValidEnergyInputSide(Direction direction) {
+		return true;
+	}
+
+	@Override
+	public void handleGeneration() {
+	}
+
+	@Override
+	public CachedEnergyStorage[] getConnectedEnergyBlocks() {
+		CachedEnergyStorage[] all = super.getConnectedEnergyBlocks();
+		if (all.length == 0) return all;
+		int keep = 0;
+		for (CachedEnergyStorage s : all) {
+			if (!(s.blockEntity instanceof TeleporterBlockEntity)) keep++;
+		}
+		if (keep == all.length) return all;
+		CachedEnergyStorage[] out = new CachedEnergyStorage[keep];
+		int idx = 0;
+		for (CachedEnergyStorage s : all) {
+			if (!(s.blockEntity instanceof TeleporterBlockEntity)) out[idx++] = s;
+		}
+		return out;
 	}
 
 	@Override
@@ -88,29 +142,27 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 		releaseChunkTicketIfHeld();
 		for (ItemStack s : sendItems) if (!s.isEmpty()) Block.popResource(lvl, pos, s);
 		for (ItemStack s : receiveItems) if (!s.isEmpty()) Block.popResource(lvl, pos, s);
-		// Fluid contents are voided on block break. Players should empty tanks via "Clear Fluids" first.
 		super.onBroken(lvl, pos);
 	}
 
 	@Override
-	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
 		return new TeleporterMenu(id, inv, this);
 	}
 
 	@Override
 	public void openMenu(ServerPlayer player) {
 		super.openMenu(player);
-		java.util.List<TeleporterEntry> peers = collectPeers(player);
-		net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player,
-				new TeleporterListPayload(peers));
+		List<TeleporterEntry> peers = collectPeers(player);
+		PacketDistributor.sendToPlayer(player, new TeleporterListPayload(peers));
 	}
 
-	private java.util.List<TeleporterEntry> collectPeers(ServerPlayer player) {
-		java.util.List<TeleporterEntry> out = new java.util.ArrayList<>();
+	private List<TeleporterEntry> collectPeers(ServerPlayer player) {
+		List<TeleporterEntry> out = new ArrayList<>();
 		if (level == null) return out;
 		for (TeleporterBlockEntity t : ALL_LOADED) {
 			if (t == this || t.level == null || t.isRemoved()) continue;
-			if (!t.isPublic && !t.placerId.equals(player.getUUID())) continue;
+			if (!t.isPublic && !Util.NIL_UUID.equals(t.placerId) && !t.placerId.equals(player.getUUID())) continue;
 			ResourceKey<Level> peerDim = t.level.dimension();
 			String display = t.name.isEmpty() ? "Unnamed" : t.name;
 			out.add(new TeleporterEntry(
@@ -182,15 +234,15 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 		boolean any = false;
 		for (ItemStack s : stacks) if (!s.isEmpty()) { any = true; break; }
 		if (!any) return;
-		ValueOutput.TypedOutputList<dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity.SlotStack> list = output.list(key, dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity.SlotStack.CODEC);
+		ValueOutput.TypedOutputList<ElectricBlockEntity.SlotStack> list = output.list(key, ElectricBlockEntity.SlotStack.CODEC);
 		for (int i = 0; i < stacks.length; i++) {
-			if (!stacks[i].isEmpty()) list.add(new dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity.SlotStack(i, stacks[i]));
+			if (!stacks[i].isEmpty()) list.add(new ElectricBlockEntity.SlotStack(i, stacks[i]));
 		}
 	}
 
 	private static void loadStackArray(ValueInput input, String key, ItemStack[] stacks) {
-		java.util.Arrays.fill(stacks, ItemStack.EMPTY);
-		input.listOrEmpty(key, dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity.SlotStack.CODEC).forEach(e -> {
+		Arrays.fill(stacks, ItemStack.EMPTY);
+		input.listOrEmpty(key, ElectricBlockEntity.SlotStack.CODEC).forEach(e -> {
 			if (e.slot() >= 0 && e.slot() < stacks.length) stacks[e.slot()] = e.stack();
 		});
 	}
@@ -259,14 +311,18 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 
 	@Override
 	public void tick() {
+		if (!(level instanceof ServerLevel)) {
+			super.tick();
+			return;
+		}
 		if (cooldown > 0) cooldown--;
 		if (warmup > 0) warmup--;
 		if (cooldown <= 0 && linkedDimension != null && linkedPos != null
-				&& level != null && energy >= getEnergyUse(linkedDimension, linkedPos)) {
+				&& energy >= getEnergyUse(linkedDimension, linkedPos)) {
 			active = true;
 		}
 
-		if (level instanceof ServerLevel && linkedDimension != null && linkedPos != null) {
+		if (linkedDimension != null && linkedPos != null) {
 			long now = level.getGameTime();
 			boolean active20 = (now - lastSendTick) <= FTBICConfig.MACHINES.TELEPORTER_ACTIVE_WINDOW_TICKS.get();
 			if (active20) active = true;
@@ -310,14 +366,21 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED));
 			return;
 		}
-		String trimmed = newName == null ? "" : newName.trim();
-		if (trimmed.length() > 32) trimmed = trimmed.substring(0, 32);
-		name = trimmed;
+		name = clampName(newName == null ? "" : newName.trim(), 32);
 		isPublic = newPublic;
 		setChanged();
 		if (level != null) {
 			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 		}
+	}
+
+	private static String clampName(String s, int maxChars) {
+		if (s.length() <= maxChars) return s;
+		String out = s.substring(0, maxChars);
+		if (!out.isEmpty() && Character.isHighSurrogate(out.charAt(out.length() - 1))) {
+			out = out.substring(0, out.length() - 1);
+		}
+		return out;
 	}
 
 	public void unlink(ServerPlayer player) {
@@ -340,6 +403,10 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED));
 			return;
 		}
+		if (level != null && d.equals(level.dimension()) && p.equals(worldPosition)) {
+			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.perm_error").withStyle(ChatFormatting.RED));
+			return;
+		}
 		ServerLevel linkedLevel = player.level().getServer().getLevel(d);
 		if (linkedLevel == null || !linkedLevel.isLoaded(p)) {
 			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.load_error").withStyle(ChatFormatting.RED));
@@ -349,13 +416,15 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 			player.sendSystemMessage(Component.translatable("block.ftbic.teleporter.load_error").withStyle(ChatFormatting.RED));
 			return;
 		}
-		if (t.isPublic || net.minecraft.util.Util.NIL_UUID.equals(t.placerId) || t.placerId.equals(player.getUUID())) {
+		if (t.isPublic || Util.NIL_UUID.equals(t.placerId) || t.placerId.equals(player.getUUID())) {
 			releaseChunkTicketIfHeld();
 			linkedDimension = d;
 			linkedPos = p;
 			linkedName = t.name;
 			setChanged();
-			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+			if (level != null) {
+				level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+			}
 
 			if (t.linkedPos == null || t.linkedDimension == null) {
 				t.releaseChunkTicketIfHeld();
@@ -624,12 +693,9 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 		double totalEnergy = energy + peer.energy;
 		double targetSelf = energyCapacity * (totalEnergy / totalCap);
 		double delta = targetSelf - energy;
-		double rate = FTBICConfig.MACHINES.TELEPORTER_BALANCE_RATE.get();
-		if (delta > rate) delta = rate;
-		else if (delta < -rate) delta = -rate;
 		if (Math.abs(delta) < 0.01D) return;
-		energy += delta;
-		peer.energy -= delta;
+		energy = Math.max(0D, Math.min(energyCapacity, energy + delta));
+		peer.energy = Math.max(0D, Math.min(peer.energyCapacity, peer.energy - delta));
 		setChanged();
 		peer.setChanged();
 	}
@@ -646,11 +712,13 @@ public class TeleporterBlockEntity extends ElectricBlockEntityRef {
 			int newZ = linkedPos.getZ() >> 4;
 			if (peerChunkForced && linkedDimension.equals(forcedChunkDim) && newX == forcedChunkX && newZ == forcedChunkZ) return;
 			releaseChunkTicketIfHeld();
-			TeleporterChunkTickets.CONTROLLER.forceChunk(peerLevel, worldPosition, newX, newZ, true, true);
-			peerChunkForced = true;
-			forcedChunkDim = linkedDimension;
-			forcedChunkX = newX;
-			forcedChunkZ = newZ;
+			boolean added = TeleporterChunkTickets.CONTROLLER.forceChunk(peerLevel, worldPosition, newX, newZ, true, true);
+			if (added) {
+				peerChunkForced = true;
+				forcedChunkDim = linkedDimension;
+				forcedChunkX = newX;
+				forcedChunkZ = newZ;
+			}
 		} else {
 			releaseChunkTicketIfHeld();
 		}

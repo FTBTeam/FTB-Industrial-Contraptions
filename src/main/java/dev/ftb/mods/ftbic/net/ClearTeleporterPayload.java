@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbic.screen.TeleporterMenu;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ClearTeleporterPayload(boolean clearItems, boolean clearFluids) implements CustomPacketPayload {
@@ -26,7 +27,7 @@ public record ClearTeleporterPayload(boolean clearItems, boolean clearFluids) im
 
 	public static void handleOnServer(ClearTeleporterPayload payload, IPayloadContext context) {
 		context.enqueueWork(() -> {
-			if (!(context.player() instanceof net.minecraft.server.level.ServerPlayer sp)) return;
+			if (!(context.player() instanceof ServerPlayer sp)) return;
 			if (!(sp.containerMenu instanceof TeleporterMenu menu)) return;
 			if (!(menu.blockEntity instanceof TeleporterBlockEntity be)) return;
 			if (payload.clearItems) be.clearStorage();

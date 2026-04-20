@@ -78,6 +78,12 @@ public interface FTBICElectricBlocks {
 			.feMode(ElectricBlockInstance.FECapMode.EXTRACT_ONLY)
 			.io(NuclearReactor.MAX_SLOTS, 0);
 
+	ElectricBlockInstance REACTOR_SIMULATOR = register("reactor_simulator", ReactorSimulatorBlockEntity::new)
+			.advanced()
+			.noRotation()
+			.cantBeActive()
+			.io(NuclearReactor.MAX_SLOTS, 0);
+
 	// Machines //
 
 	ElectricBlockInstance POWERED_FURNACE = register("powered_furnace", PoweredFurnaceBlockEntity::new)
@@ -184,7 +190,9 @@ public interface FTBICElectricBlocks {
 			.wip()
 			.advanced()
 			.energyCapacity(FTBICConfig.MACHINES.TELEPORTER_CAPACITY)
-			.maxEnergyInput(FTBICConfig.ENERGY.IV_TRANSFER_RATE)
+			.maxEnergyInput(FTBICConfig.ENERGY.HV_TRANSFER_RATE)
+			.maxEnergyOutput(FTBICConfig.ENERGY.HV_TRANSFER_RATE)
+			.feMode(ElectricBlockInstance.FECapMode.INSERT_AND_EXTRACT)
 			.energyUsage(FTBICConfig.MACHINES.TELEPORTER_MAX_USE)
 			.energyUsageIsntPerTick();
 

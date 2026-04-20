@@ -44,7 +44,7 @@ public class ElectricBlockInstance {
 	public boolean tickClientSide = false;
 	public FECapMode feCapMode = FECapMode.NONE;
 
-	public enum FECapMode { NONE, EXTRACT_ONLY, INSERT_ONLY }
+	public enum FECapMode { NONE, EXTRACT_ONLY, INSERT_ONLY, INSERT_AND_EXTRACT }
 
 	public ElectricBlockInstance(String i, BlockEntityType.BlockEntitySupplier<BlockEntity> blockEntitySupplier) {
 		id = i;

@@ -8,15 +8,44 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	public static final int INVALID_Y = Integer.MIN_VALUE;
+
+	private static final WeakHashMap<Level, Set<DiggingBaseBlockEntity>> PER_LEVEL = new WeakHashMap<>();
+
+	public static Iterable<DiggingBaseBlockEntity> forLevel(Level level) {
+		synchronized (PER_LEVEL) {
+			Set<DiggingBaseBlockEntity> set = PER_LEVEL.get(level);
+			return set == null ? List.of() : new java.util.ArrayList<>(set);
+		}
+	}
+
+	private static void register(DiggingBaseBlockEntity be) {
+		if (be.level == null) return;
+		synchronized (PER_LEVEL) {
+			PER_LEVEL.computeIfAbsent(be.level, k -> Collections.newSetFromMap(new ConcurrentHashMap<>())).add(be);
+		}
+	}
+
+	private static void unregister(DiggingBaseBlockEntity be) {
+		synchronized (PER_LEVEL) {
+			Set<DiggingBaseBlockEntity> set = PER_LEVEL.get(be.level);
+			if (set != null) set.remove(be);
+		}
+	}
 
 	public boolean paused = false;
 	public boolean redstonePaused = false;
@@ -35,6 +64,18 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 
 	public DiggingBaseBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
+	}
+
+	@Override
+	public void setLevel(Level level) {
+		super.setLevel(level);
+		if (!level.isClientSide()) register(this);
+	}
+
+	@Override
+	public void setRemoved() {
+		unregister(this);
+		super.setRemoved();
 	}
 
 	@Override

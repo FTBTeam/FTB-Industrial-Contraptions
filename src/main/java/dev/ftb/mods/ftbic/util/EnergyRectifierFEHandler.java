@@ -25,9 +25,10 @@ public class EnergyRectifierFEHandler extends SnapshotJournal<Long> implements E
 	@Override
 	public int insert(int amount, TransactionContext transaction) {
 		if (amount <= 0 || be.isBurnt()) return 0;
-		long accepted = be.insertFE(amount, true);
-		if (accepted <= 0L) return 0;
 		updateSnapshots(transaction);
+		long room = be.getFeBufferCapacity() - be.feBuffer;
+		if (room <= 0L) return 0;
+		long accepted = Math.min((long) amount, room);
 		be.feBuffer += accepted;
 		return (int) accepted;
 	}

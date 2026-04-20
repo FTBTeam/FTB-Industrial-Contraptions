@@ -176,6 +176,17 @@ public class FTBICJEIPlugin implements IModPlugin {
 	}
 
 	@Override
+	public void registerGuiHandlers(mezz.jei.api.registration.IGuiHandlerRegistration r) {
+		r.addGuiContainerHandler(dev.ftb.mods.ftbic.client.gui.ReactorSimulatorScreen.class,
+				new mezz.jei.api.gui.handlers.IGuiContainerHandler<>() {
+					@Override
+					public java.util.List<net.minecraft.client.renderer.Rect2i> getGuiExtraAreas(dev.ftb.mods.ftbic.client.gui.ReactorSimulatorScreen screen) {
+						return java.util.List.of(new net.minecraft.client.renderer.Rect2i(0, 0, screen.width, screen.height));
+					}
+				});
+	}
+
+	@Override
 	public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
 		ClientRecipeCache.setRuntime(jeiRuntime);
 		hideEmptyInputRecipes(jeiRuntime);

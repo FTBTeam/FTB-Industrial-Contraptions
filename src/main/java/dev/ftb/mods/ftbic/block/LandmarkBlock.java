@@ -1,11 +1,19 @@
 package dev.ftb.mods.ftbic.block;
 
+import dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
@@ -23,7 +31,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
 public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	private static final VoxelShape SHAPE = Shapes.box(0.4375, 0.0, 0.4375, 0.5625, 0.5, 0.5625);
@@ -34,7 +42,7 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	protected VoxelShape getShape(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos, CollisionContext ctx) {
+	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
 		return SHAPE;
 	}
 
@@ -49,7 +57,7 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction facing, BlockPos facingPos, BlockState facingState, net.minecraft.util.RandomSource random) {
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
 		if (state.getValue(BlockStateProperties.WATERLOGGED)) {
 			ticks.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 		}
@@ -82,7 +90,7 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public void setPlacedBy(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.@org.jetbrains.annotations.Nullable LivingEntity placer, net.minecraft.world.item.ItemStack stack) {
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(level, pos, state, placer, stack);
 		if (!level.isClientSide()) {
 			triggerNearbyResize(level, pos, placer instanceof Player p ? p : null);
@@ -90,41 +98,35 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean movedByPiston) {
+	protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
 		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
 		triggerNearbyResize(level, pos, null);
 	}
 
-	private static void triggerNearbyResize(Level level, BlockPos pos, @org.jetbrains.annotations.Nullable Player player) {
-		if (!(level instanceof net.minecraft.server.level.ServerLevel server)) return;
+	private static void triggerNearbyResize(Level level, BlockPos pos, @Nullable Player player) {
+		if (!(level instanceof ServerLevel)) return;
 		int radius = 128;
-		int minChunkX = (pos.getX() - radius) >> 4;
-		int maxChunkX = (pos.getX() + radius) >> 4;
-		int minChunkZ = (pos.getZ() - radius) >> 4;
-		int maxChunkZ = (pos.getZ() + radius) >> 4;
-		for (int cx = minChunkX; cx <= maxChunkX; cx++) {
-			for (int cz = minChunkZ; cz <= maxChunkZ; cz++) {
-				net.minecraft.world.level.chunk.LevelChunk chunk = server.getChunkSource().getChunkNow(cx, cz);
-				if (chunk == null) continue;
-				for (BlockPos bePos : chunk.getBlockEntitiesPos()) {
-					if (Math.abs(bePos.getX() - pos.getX()) > radius) continue;
-					if (Math.abs(bePos.getZ() - pos.getZ()) > radius) continue;
-					if (Math.abs(bePos.getY() - pos.getY()) > 128) continue;
-					if (chunk.getBlockEntity(bePos) instanceof DiggingBaseBlockEntity dig) {
-						if (!dig.hasAnchorLandmark()) {
-							continue;
-						}
-						dig.resize();
-						if (player != null) {
-							String machine = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(dig.getBlockState().getBlock()).getPath();
-							player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
-									String.format("%s at %d,%d,%d area: %d × %d",
-											machine, bePos.getX(), bePos.getY(), bePos.getZ(),
-											dig.sizeX, dig.sizeZ)));
-						}
-					}
-				}
+		StringBuilder report = null;
+		for (DiggingBaseBlockEntity dig : DiggingBaseBlockEntity.forLevel(level)) {
+			if (dig.isRemoved()) continue;
+			BlockPos bePos = dig.getBlockPos();
+			if (Math.abs(bePos.getX() - pos.getX()) > radius) continue;
+			if (Math.abs(bePos.getZ() - pos.getZ()) > radius) continue;
+			if (Math.abs(bePos.getY() - pos.getY()) > 128) continue;
+			if (!dig.hasAnchorLandmark()) continue;
+			dig.resize();
+			if (player != null) {
+				Identifier key = BuiltInRegistries.BLOCK.getKey(dig.getBlockState().getBlock());
+				String machine = key == null ? "machine" : key.getPath();
+				if (report == null) report = new StringBuilder();
+				else report.append('\n');
+				report.append(String.format("%s at %d,%d,%d area: %d x %d",
+						machine, bePos.getX(), bePos.getY(), bePos.getZ(),
+						dig.sizeX, dig.sizeZ));
 			}
+		}
+		if (player != null && report != null) {
+			player.sendSystemMessage(Component.literal(report.toString()));
 		}
 	}
 

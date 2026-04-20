@@ -1,6 +1,5 @@
 package dev.ftb.mods.ftbic.util;
 
-import dev.ftb.mods.ftbic.FTBICConfig;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -62,8 +61,7 @@ public final class CachedEnergyStorage {
 			if (fe == null) {
 				return 0D;
 			}
-			double rate = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
-			int feOffer = (int) Math.min(Integer.MAX_VALUE, Math.floor(zaps * rate));
+			int feOffer = ZapFEConversion.zapsToFEFloor(zaps);
 			if (feOffer <= 0) {
 				return 0D;
 			}
@@ -71,8 +69,7 @@ public final class CachedEnergyStorage {
 				int feAccepted = fe.insert(feOffer, tx);
 				if (feAccepted > 0) {
 					tx.commit();
-					double consumed = feAccepted / rate;
-					return Math.min(consumed, zaps);
+					return Math.min(ZapFEConversion.feToZapsCeil(feAccepted), zaps);
 				}
 			}
 			return 0D;

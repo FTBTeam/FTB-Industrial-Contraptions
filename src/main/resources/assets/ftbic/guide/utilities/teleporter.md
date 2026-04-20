@@ -26,7 +26,7 @@ item_ids:
 1. Place a teleporter and open its GUI.
 2. Set its **ID** (the name other teleporters will see it by).
 3. Choose whether to **publish** it — public teleporters appear in everyone's list; unpublished ones only show to the owner.
-4. Wire in MV power or higher — the teleporter behaves as if it had max transformer upgrades installed, so any tier from MV up to IV feeds it without burning. LV works but trickles.
+4. Wire in **HV power** on any side. The teleporter is a full HV node — it accepts HV input and also emits HV output, so either side of the pair can act as a power source or sink.
 5. From another teleporter's GUI, pick the destination from the list. Picking a destination automatically links the other end back as well, provided the other end is not already pointed at something else.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -76,7 +76,9 @@ The teleporter item model exposes sending storage as "insert only" slots and rec
 
 Moving resources through the link costs a small idle drain on the **sending** teleporter — not per item, but once per second while traffic is flowing. If nothing has moved in the last second, the drain stops.
 
-The pair also **shares power**: whichever teleporter has more zaps quietly topping up the other, so you only need to wire one side to keep both humming. If both buffers drop to zero, transfers halt until you feed power back in.
+The pair **shares power at 100%**: every few ticks the two buffers rebalance to equal fill, so feeding power to one teleporter makes it available at both ends immediately. Either teleporter can also **output HV** to an attached cable network. A common setup: place a teleporter next to your generators and another next to your quarries or machines, then cable the far side into your machine grid. Power flows in whichever direction is needed, even across dimensions.
+
+Teleporters are filtered out of each other's push networks, so putting two linked teleporters on the same cable run will not ping-pong — the balance mechanism handles their pair transfer and the cable network handles everything else.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

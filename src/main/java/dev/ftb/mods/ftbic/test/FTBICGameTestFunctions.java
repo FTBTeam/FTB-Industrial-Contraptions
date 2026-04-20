@@ -12,7 +12,10 @@ import dev.ftb.mods.ftbic.block.entity.machine.ChargePadBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PoweredCraftingTableBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.ReactorSimulatorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
+import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
+import dev.ftb.mods.ftbic.util.ReactorDesign;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.storage.BatteryBoxBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.EnergyRectifierBlockEntity;
@@ -1483,6 +1486,76 @@ public class FTBICGameTestFunctions {
 		});
 	}
 
+	static void reactorSimulatorRunsAndEmitsPower(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.REACTOR_SIMULATOR.block.get());
+		ReactorSimulatorBlockEntity sim = helper.getBlockEntity(CENTER, ReactorSimulatorBlockEntity.class);
+
+		sim.setSlotItem(NuclearReactor.slotIndex(1, 2), new ItemStack(FTBICItems.URANIUM_FUEL_ROD.get()));
+		sim.setSlotItem(NuclearReactor.slotIndex(0, 2), new ItemStack(FTBICItems.HEAT_VENT.get()));
+		sim.setSlotItem(NuclearReactor.slotIndex(2, 2), new ItemStack(FTBICItems.HEAT_VENT.get()));
+		sim.setSlotItem(NuclearReactor.slotIndex(1, 1), new ItemStack(FTBICItems.HEAT_VENT.get()));
+		sim.setSlotItem(NuclearReactor.slotIndex(1, 3), new ItemStack(FTBICItems.HEAT_VENT.get()));
+		sim.setSpeedIndex(3);
+		sim.start();
+
+		helper.runAfterDelay(40L, () -> {
+			ReactorSimulatorBlockEntity after = helper.getBlockEntity(CENTER, ReactorSimulatorBlockEntity.class);
+			helper.assertTrue(after.totalEnergy > 0D,
+					"Simulator should have accumulated total energy after running (got " + after.totalEnergy + ")");
+			helper.assertTrue(after.elapsedCycles > 0L,
+					"Simulator should have advanced cycles (got " + after.elapsedCycles + ")");
+			helper.succeed();
+		});
+	}
+
+	static void reactorSimulatorEditLock(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.REACTOR_SIMULATOR.block.get());
+		ReactorSimulatorBlockEntity sim = helper.getBlockEntity(CENTER, ReactorSimulatorBlockEntity.class);
+
+		sim.setSlotItem(NuclearReactor.slotIndex(1, 2), new ItemStack(FTBICItems.URANIUM_FUEL_ROD.get()));
+		sim.start();
+		helper.assertTrue(sim.isLocked(), "Simulator should be locked while running");
+
+		boolean accepted = sim.setSlotItem(NuclearReactor.slotIndex(0, 0), new ItemStack(FTBICItems.HEAT_VENT.get()));
+		helper.assertFalse(accepted, "setSlotItem should reject while running");
+
+		sim.pause();
+		helper.assertFalse(sim.isLocked(), "Pause should clear the edit lock");
+		accepted = sim.setSlotItem(NuclearReactor.slotIndex(0, 0), new ItemStack(FTBICItems.HEAT_VENT.get()));
+		helper.assertTrue(accepted, "setSlotItem should succeed after pause");
+		helper.succeed();
+	}
+
+	static void reactorSimulatorImportRoundtrip(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.REACTOR_SIMULATOR.block.get());
+		ReactorSimulatorBlockEntity sim = helper.getBlockEntity(CENTER, ReactorSimulatorBlockEntity.class);
+		sim.setChambers(2);
+		sim.setWaterThousandths(500);
+		sim.setSlotItem(NuclearReactor.slotIndex(1, 2), new ItemStack(FTBICItems.URANIUM_FUEL_ROD.get()));
+		sim.setSlotItem(NuclearReactor.slotIndex(0, 2), new ItemStack(FTBICItems.HEAT_VENT.get()));
+
+		String json = sim.exportDesign().toJson();
+
+		BlockPos second = CENTER.east(3);
+		helper.setBlock(second.below(), Blocks.STONE);
+		helper.setBlock(second, FTBICElectricBlocks.REACTOR_SIMULATOR.block.get());
+		ReactorSimulatorBlockEntity sim2 = helper.getBlockEntity(second, ReactorSimulatorBlockEntity.class);
+
+		ReactorDesign parsed = ReactorDesign.fromJson(json);
+		sim2.applyDesign(parsed);
+
+		helper.assertValueEqual(2, sim2.chambers, "chambers restored");
+		helper.assertValueEqual(500, sim2.waterThousandths, "water restored");
+		helper.assertTrue(sim2.inputItems[NuclearReactor.slotIndex(1, 2)].is(FTBICItems.URANIUM_FUEL_ROD.get()),
+				"fuel rod restored at (1,2)");
+		helper.assertTrue(sim2.inputItems[NuclearReactor.slotIndex(0, 2)].is(FTBICItems.HEAT_VENT.get()),
+				"heat vent restored at (0,2)");
+		helper.succeed();
+	}
+
 	static void teleporterPipeBalancesEnergy(GameTestHelper helper) {
 		BlockPos aRel = CENTER;
 		BlockPos bRel = CENTER.south(3);
@@ -1498,11 +1571,85 @@ public class FTBICGameTestFunctions {
 		helper.runAfterDelay(40L, () -> {
 			TeleporterBlockEntity aAfter = helper.getBlockEntity(aRel, TeleporterBlockEntity.class);
 			TeleporterBlockEntity bAfter = helper.getBlockEntity(bRel, TeleporterBlockEntity.class);
-			helper.assertTrue(bAfter.energy > 0D,
-					"peer teleporter should have received energy from balance (b=" + bAfter.energy + ")");
-			helper.assertTrue(aAfter.energy < 80_000D,
-					"sending teleporter should have given energy to balance (a=" + aAfter.energy + ")");
+			double total = aAfter.energy + bAfter.energy;
+			double expectedEach = total / 2D;
+			helper.assertTrue(Math.abs(aAfter.energy - expectedEach) < 1D,
+					"pair should be 100%% balanced; a=" + aAfter.energy + " expected~" + expectedEach);
+			helper.assertTrue(Math.abs(bAfter.energy - expectedEach) < 1D,
+					"pair should be 100%% balanced; b=" + bAfter.energy + " expected~" + expectedEach);
 			helper.succeed();
 		});
+	}
+
+	static void teleporterExposesEnergyCapBothDirections(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.TELEPORTER.block.get());
+		TeleporterBlockEntity t = helper.getBlockEntity(CENTER, TeleporterBlockEntity.class);
+		t.energy = 0D;
+		t.setChanged();
+
+		EnergyHandler fe = helper.getLevel().getCapability(
+				Capabilities.Energy.BLOCK, helper.absolutePos(CENTER), Direction.NORTH);
+		helper.assertTrue(fe != null, "Teleporter should expose FE cap on any side");
+
+		int accepted;
+		try (Transaction tx = Transaction.openRoot()) {
+			accepted = fe.insert(2048, tx);
+			tx.commit();
+		}
+		helper.assertTrue(accepted > 0, "Teleporter should accept FE insert (got " + accepted + ")");
+		double energyAfterInsert = t.energy;
+		helper.assertTrue(energyAfterInsert > 0D, "energy buffer grew after insert (energy=" + energyAfterInsert + ")");
+
+		int extracted;
+		try (Transaction tx = Transaction.openRoot()) {
+			extracted = fe.extract(1024, tx);
+			tx.commit();
+		}
+		helper.assertTrue(extracted > 0, "Teleporter should honour FE extract (got " + extracted + ")");
+		double energyAfterExtract = t.energy;
+		helper.assertTrue(energyAfterExtract < energyAfterInsert,
+				"energy buffer shrank after extract (before=" + energyAfterInsert + " after=" + energyAfterExtract + ")");
+		helper.succeed();
+	}
+
+	static void teleporterPairRelaysPowerForRemoteExtract(GameTestHelper helper) {
+		BlockPos aRel = CENTER;
+		BlockPos bRel = CENTER.south(3);
+		TeleporterBlockEntity a = placeTeleporter(helper, aRel);
+		TeleporterBlockEntity b = placeTeleporter(helper, bRel);
+		linkPeers(helper, a, aRel, b, bRel);
+
+		a.energy = 100_000D;
+		b.energy = 0D;
+		a.setChanged();
+		b.setChanged();
+
+		helper.runAfterDelay(40L, () -> {
+			EnergyHandler bCap = helper.getLevel().getCapability(
+					Capabilities.Energy.BLOCK, helper.absolutePos(bRel), Direction.NORTH);
+			helper.assertTrue(bCap != null, "B should expose FE cap");
+			int extracted;
+			try (Transaction tx = Transaction.openRoot()) {
+				extracted = bCap.extract(4096, tx);
+				tx.commit();
+			}
+			helper.assertTrue(extracted > 0, "Should extract from B after balance (got " + extracted + ")");
+			helper.succeed();
+		});
+	}
+
+	static void teleporterFiltersOtherTeleportersFromPushNetwork(GameTestHelper helper) {
+		BlockPos aRel = CENTER;
+		BlockPos bRel = CENTER.south(3);
+		TeleporterBlockEntity a = placeTeleporter(helper, aRel);
+		TeleporterBlockEntity b = placeTeleporter(helper, bRel);
+
+		var connected = a.getConnectedEnergyBlocks();
+		for (var cached : connected) {
+			helper.assertFalse(cached.blockEntity instanceof TeleporterBlockEntity,
+					"teleporter push network must exclude other teleporters");
+		}
+		helper.succeed();
 	}
 }

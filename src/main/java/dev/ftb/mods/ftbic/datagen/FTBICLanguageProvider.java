@@ -71,6 +71,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("block.ftbic.powered_furnace", "Powered Furnace");
 		add("block.ftbic.pump", "Pump");
 		add("block.ftbic.quarry", "Quarry");
+		add("block.ftbic.reactor_simulator", "Reactor Simulator");
 		add("block.ftbic.reinforced_glass", "Reinforced Glass");
 		add("block.ftbic.reinforced_stone", "Reinforced Stone");
 		add("block.ftbic.reprocessor", "Reprocessor");
@@ -222,6 +223,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.reactor_heat_exchanger", "Reactor Heat Exchanger");
 		add("item.ftbic.reactor_heat_vent", "Reactor Heat Vent");
 		add("item.ftbic.reactor_plating", "Reactor Plating");
+		add("item.ftbic.reactor_simulator", "Reactor Simulator");
 		add("item.ftbic.reinforced_glass", "Reinforced Glass");
 		add("item.ftbic.reinforced_stone", "Reinforced Stone");
 		add("item.ftbic.reprocessor", "Reprocessor");
@@ -270,6 +272,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("ftbic.jade.reactor_output", "Output: %s/t");
 		add("ftbic.jade.reactor_paused", "Paused (%s/t when active)");
 		add("ftbic.jade.water", "Water: %s / %s mB");
+		add("ftbic.jade.tele_power", "Power: HV (shared with linked pair)");
 		add("ftbic.jade.tele_send_items", "Sending: %s items");
 		add("ftbic.jade.tele_receive_items", "Received: %s items");
 		add("ftbic.jade.tele_send_fluid", "Sending %s: %s / %s mB");

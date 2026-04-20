@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "ftbic:uranium_fuel_rod",
+    "ftbic:dual_uranium_fuel_rod",
+    "ftbic:quad_uranium_fuel_rod",
+    "ftbic:heat_vent",
+    "ftbic:advanced_heat_vent",
+    "ftbic:reactor_heat_vent",
+    "ftbic:component_heat_vent",
+    "ftbic:overclocked_heat_vent",
+    "ftbic:heat_exchanger",
+    "ftbic:advanced_heat_exchanger",
+    "ftbic:reactor_heat_exchanger",
+    "ftbic:component_heat_exchanger",
+    "ftbic:small_coolant_cell",
+    "ftbic:medium_coolant_cell",
+    "ftbic:large_coolant_cell",
+    "ftbic:neutron_reflector",
+    "ftbic:thick_neutron_reflector",
+    "ftbic:iridium_neutron_reflector",
+    "ftbic:reactor_plating",
+    "ftbic:containment_reactor_plating",
+    "ftbic:heat_capacity_reactor_plating"
+  ]
+}

@@ -11,7 +11,7 @@ public class ReinforcedCableBlock extends CableBlock {
 
 	@Override
 	public BlockState getBurntState(BlockState state) {
-		return FTBICBlocks.BURNT_REINFORCED_CABLE.get().defaultBlockState();
+		return BurntReinforcedCableBlock.getBurntReinforcedCable(state);
 	}
 
 	@Override

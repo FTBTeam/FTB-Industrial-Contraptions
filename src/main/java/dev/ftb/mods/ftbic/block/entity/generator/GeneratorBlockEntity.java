@@ -11,6 +11,7 @@ import dev.ftb.mods.ftbic.util.CachedEnergyStorageOrigin;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.util.ZapFEConversion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -25,7 +26,9 @@ import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
@@ -39,6 +42,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	private CachedEnergyStorage[] connectedEnergyBlocks;
 	private int[] validConsumerIndices;
 	private BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction>[] fePushCaches;
+	private final Map<Long, BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction>> feFindCaches = new HashMap<>();
 
 	public GeneratorBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -81,10 +85,8 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 
-		// 0. Push to adjacent foreign FE consumers (cables/machines) directly via Capabilities.Energy.BLOCK.
 		pushFEToNeighbours();
 
-		// 1. Charge slot: drain this BE's buffer into an inserted battery.
 		if (energy > 0D) {
 			ItemStack battery = chargeBatteryInventory.getStackInSlot(0);
 			if (!battery.isEmpty() && battery.getItem() instanceof EnergyItemHandler item) {
@@ -100,7 +102,6 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			}
 		}
 
-		// 2. Cable network: distribute to connected consumers.
 		double transferable = Math.min(energy, maxEnergyOutputTransfer);
 		if (transferable <= 0D) {
 			return;
@@ -175,10 +176,11 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	}
 
 	private void pushFEToNeighbours() {
-		if (electricBlockInstance.feCapMode != ElectricBlockInstance.FECapMode.EXTRACT_ONLY) return;
+		boolean canFEOutput = electricBlockInstance.feCapMode == ElectricBlockInstance.FECapMode.EXTRACT_ONLY
+				|| (FTBICConfig.ENERGY.FULL_FE_MODE.get() && maxEnergyOutput > 0D);
+		if (!canFEOutput) return;
 		if (energy <= 0D || maxEnergyOutputTransfer <= 0D) return;
 		if (!(level instanceof ServerLevel serverLevel)) return;
-		double rate = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 		for (Direction dir : FTBICUtils.DIRECTIONS) {
 			if (!isValidEnergyOutputSide(dir)) continue;
 			BlockPos npos = worldPosition.relative(dir);
@@ -187,13 +189,12 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			net.neoforged.neoforge.transfer.energy.EnergyHandler fe = fePushCache(serverLevel, dir).getCapability();
 			if (fe == null) continue;
 			double zapsAvailable = Math.min(energy, maxEnergyOutputTransfer);
-			int feToOffer = (int) Math.min(Integer.MAX_VALUE, Math.floor(zapsAvailable * rate));
+			int feToOffer = ZapFEConversion.zapsToFEFloor(zapsAvailable);
 			if (feToOffer <= 0) continue;
 			try (Transaction tx = Transaction.openRoot()) {
 				int feAccepted = fe.insert(feToOffer, tx);
 				if (feAccepted > 0) {
-					double zapsConsumed = feAccepted / rate;
-					if (zapsConsumed > energy) zapsConsumed = energy;
+					double zapsConsumed = Math.min(ZapFEConversion.feToZapsCeil(feAccepted), energy);
 					energy -= zapsConsumed;
 					tx.commit();
 					active = true;
@@ -221,6 +222,11 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	@Override
 	public boolean isValidEnergyInputSide(Direction direction) {
 		return false;
+	}
+
+	@Override
+	public double getMaxOutputEnergy() {
+		return maxEnergyOutputTransfer;
 	}
 
 	public CachedEnergyStorage[] getConnectedEnergyBlocks() {
@@ -309,8 +315,12 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		if (!(level instanceof ServerLevel serverLevel)) {
 			return;
 		}
-		BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction> feCache =
-				BlockCapabilityCache.create(Capabilities.Energy.BLOCK, serverLevel, pos, direction.getOpposite());
+		long key = pos.asLong() ^ ((long) direction.ordinal() << 56);
+		BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction> feCache = feFindCaches.get(key);
+		if (feCache == null) {
+			feCache = BlockCapabilityCache.create(Capabilities.Energy.BLOCK, serverLevel, pos, direction.getOpposite());
+			feFindCaches.put(key, feCache);
+		}
 		if (feCache.getCapability() == null) {
 			return;
 		}

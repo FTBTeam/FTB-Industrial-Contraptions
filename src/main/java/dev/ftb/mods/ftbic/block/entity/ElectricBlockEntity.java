@@ -3,21 +3,29 @@ package dev.ftb.mods.ftbic.block.entity;
 import com.mojang.serialization.Codec;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
+import dev.ftb.mods.ftbic.screen.MachineMenu;
 import dev.ftb.mods.ftbic.util.EnergyHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.UUIDUtil;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -32,7 +40,6 @@ import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-import dev.ftb.mods.ftbic.screen.MachineMenu;
 
 public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 	private static final ConcurrentHashMap<ResourceKey<Level>, AtomicLong> ELECTRIC_NETWORK_CHANGES = new ConcurrentHashMap<>();
@@ -159,7 +166,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 	}
 
 	@Override
-	public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider registries) {
+	public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
 		return saveCustomOnly(registries);
 	}
 
@@ -231,26 +238,25 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 			level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, active), 3);
 			setChanged();
 		}
-		// Reset the flag; subclass ticks set it back to true each frame they do work.
 		active = false;
 		changeStateTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.STATE_UPDATE_TICKS.get();
 	}
 
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		if (level != null && !level.isClientSide() && player instanceof net.minecraft.server.level.ServerPlayer sp) {
+		if (level != null && !level.isClientSide() && player instanceof ServerPlayer sp) {
 			openMenu(sp);
 		}
 		return InteractionResult.SUCCESS;
 	}
 
-	public void openMenu(net.minecraft.server.level.ServerPlayer player) {
-		player.openMenu(new net.minecraft.world.SimpleMenuProvider(
+	public void openMenu(ServerPlayer player) {
+		player.openMenu(new SimpleMenuProvider(
 				(id, inv, p) -> createMenu(id, inv),
-				net.minecraft.network.chat.Component.translatable(getBlockState().getBlock().getDescriptionId())
+				Component.translatable(getBlockState().getBlock().getDescriptionId())
 		), buf -> buf.writeBlockPos(worldPosition));
 	}
 
-	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
 		return new MachineMenu(id, inv, this);
 	}
 
@@ -284,7 +290,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 		}
 	}
 
-	public void stepOn(net.minecraft.server.level.ServerPlayer player) {
+	public void stepOn(ServerPlayer player) {
 	}
 
 	public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, RandomSource r) {

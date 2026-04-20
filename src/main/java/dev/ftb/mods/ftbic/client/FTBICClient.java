@@ -11,6 +11,7 @@ import dev.ftb.mods.ftbic.client.gui.NuclearReactorScreen;
 import dev.ftb.mods.ftbic.client.gui.PoweredCraftingTableScreen;
 import dev.ftb.mods.ftbic.client.gui.PumpScreen;
 import dev.ftb.mods.ftbic.client.gui.QuarryScreen;
+import dev.ftb.mods.ftbic.client.gui.ReactorSimulatorScreen;
 import dev.ftb.mods.ftbic.client.gui.SolarPanelScreen;
 import dev.ftb.mods.ftbic.client.gui.TeleporterScreen;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
@@ -42,6 +43,7 @@ public final class FTBICClient {
 		event.register(FTBICMenus.PUMP.get(), PumpScreen::new);
 		event.register(FTBICMenus.TELEPORTER.get(), TeleporterScreen::new);
 		event.register(FTBICMenus.IRON_FURNACE.get(), IronFurnaceScreen::new);
+		event.register(FTBICMenus.REACTOR_SIMULATOR.get(), ReactorSimulatorScreen::new);
 	}
 
 	@SubscribeEvent

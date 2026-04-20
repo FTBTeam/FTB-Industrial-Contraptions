@@ -827,6 +827,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("reactor_heat_vent", ftbicStack("reactor_heat_vent", 1), new String[] {"P", "V", "P"}, 'P', commonOrTag("c:plates/lead"), 'V', i("ftbic:heat_vent"));
 		shaped("recycler", ftbicStack("reprocessor", 1), new String[] {"MDM", "MCM"}, 'D', i("minecraft:composter"), 'C', i("ftbic:compressor"), 'M', i("ftbic:industrial_grade_metal"));
 		shaped("reinforced_glass", ftbicStack("reinforced_glass", 4), new String[] {"RGR", "G G", "RGR"}, 'R', i("ftbic:reinforced_stone"), 'G', commonOrTag("c:glass_blocks/colorless"));
+		shaped("reactor_simulator", ftbicStack("reactor_simulator", 1), new String[] {"GCG", "AMA", "GWG"}, 'G', i("ftbic:reinforced_glass"), 'C', i("ftbic:advanced_circuit"), 'A', i("ftbic:advanced_alloy"), 'M', i("ftbic:nuclear_reactor_chamber"), 'W', i("ftbic:reinforced_stone"));
 		shaped("reinforced_stone", ftbicStack("reinforced_stone", 4), new String[] {"SSS", "SAS", "SSS"}, 'S', i("minecraft:smooth_stone"), 'A', i("ftbic:advanced_alloy"));
 		shaped("roller", ftbicStack("roller", 1), new String[] {"PCP", "PMP"}, 'P', i("minecraft:piston"), 'M', i("ftbic:machine_block"), 'C', i("ftbic:electronic_circuit"));
 		shaped("rubber_sheet", ftbicStack("rubber_sheet", 1), new String[] {"III"}, 'I', i("ftbic:rubber"));
