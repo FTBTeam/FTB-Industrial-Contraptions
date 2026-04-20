@@ -28,5 +28,9 @@ public final class FTBICBlockEntities {
 			"iron_furnace", IronFurnaceBlockEntity::new,
 			() -> FTBICBlocks.IRON_FURNACE.get());
 
+	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> ACTIVE_NUKE = register(
+			"active_nuke", ActiveNukeBlockEntity::new,
+			() -> FTBICBlocks.ACTIVE_NUKE.get());
+
 	private FTBICBlockEntities() {}
 }

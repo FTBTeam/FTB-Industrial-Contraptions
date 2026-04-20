@@ -77,8 +77,8 @@ public interface FTBICBlocks {
 	DeferredBlock<NukeBlock> NUKE = REGISTRY.register("nuke",
 			name -> new NukeBlock(props(name)));
 
-	DeferredBlock<Block> ACTIVE_NUKE = REGISTRY.register("active_nuke",
-			name -> new Block(props(name).sound(SoundType.GRASS).strength(-1F, 10_000_000_000F).noLootTable()));
+	DeferredBlock<ActiveNukeBlock> ACTIVE_NUKE = REGISTRY.register("active_nuke",
+			name -> new ActiveNukeBlock(props(name).sound(SoundType.GRASS).strength(-1F, 10_000_000_000F).noLootTable()));
 
 	List<DeferredBlock<CableBlock>> CABLES = Arrays.asList(LV_CABLE, MV_CABLE, HV_CABLE, EV_CABLE, IV_CABLE);
 	List<DeferredBlock<ReinforcedCableBlock>> REINFORCED_CABLES = Arrays.asList(LV_REINFORCED_CABLE, MV_REINFORCED_CABLE, HV_REINFORCED_CABLE, EV_REINFORCED_CABLE, IV_REINFORCED_CABLE);

@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.block.entity.ActiveNukeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -12,7 +13,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import dev.ftb.mods.ftbic.util.NuclearFallout;
 
 public class NukeBlock extends Block {
 	public NukeBlock(BlockBehaviour.Properties props) {
@@ -28,21 +28,17 @@ public class NukeBlock extends Block {
 			return InteractionResult.PASS;
 		}
 
-		// Swap to active_nuke and detonate a tick later so the state flip is visible first.
 		level.setBlock(pos, FTBICBlocks.ACTIVE_NUKE.get().defaultBlockState(), 3);
+		if (level.getBlockEntity(pos) instanceof ActiveNukeBlockEntity be) {
+			be.arm(FTBICConfig.NUCLEAR.NUKE_FUSE_TICKS.get(),
+					FTBICConfig.NUCLEAR.NUKE_RADIUS.get(),
+					player.getUUID(),
+					player.getScoreboardName());
+		}
+
 		server.getServer().getPlayerList().broadcastSystemMessage(
 				Component.translatable("block.ftbic.nuke.broadcast", player.getDisplayName()), false);
 
-		double radius = FTBICConfig.NUCLEAR.NUKE_RADIUS.get();
-		level.removeBlock(pos, false);
-		server.explode(null,
-				null, null,
-				pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-				(float) radius,
-				true,
-				Level.ExplosionInteraction.BLOCK);
-
-		NuclearFallout.apply(server, pos, radius);
 		return InteractionResult.SUCCESS;
 	}
 }

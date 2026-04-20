@@ -11,6 +11,7 @@ import dev.ftb.mods.ftbic.item.reactor.ReactorItem;
 import dev.ftb.mods.ftbic.screen.NuclearReactorMenu;
 import dev.ftb.mods.ftbic.sound.FTBICSounds;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.util.NuclearExplosion;
 import dev.ftb.mods.ftbic.util.NuclearFallout;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -248,21 +249,24 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 		if (!(level instanceof ServerLevel server)) return;
 		Arrays.fill(inputItems, ItemStack.EMPTY);
 		setChanged();
-		level.setBlock(worldPosition, FTBICBlocks.ACTIVE_NUKE.get().defaultBlockState(), 3);
+		level.removeBlock(worldPosition, false);
 		for (Direction direction : FTBICUtils.DIRECTIONS) {
 			BlockPos n = worldPosition.relative(direction);
 			if (level.getBlockState(n).getBlock() instanceof NuclearReactorChamberBlock) {
-				level.setBlock(n, FTBICBlocks.ACTIVE_NUKE.get().defaultBlockState(), 3);
+				level.removeBlock(n, false);
 			}
 		}
 		server.getServer().getPlayerList().broadcastSystemMessage(
 				Component.translatable("block.ftbic.nuclear_reactor.broadcast", placerName).withStyle(ChatFormatting.RED), false);
-		level.removeBlock(worldPosition, false);
-		server.explode(null, null, null,
-				worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5,
-				(float) reactor.explosionRadius, true, Level.ExplosionInteraction.BLOCK);
 
-		NuclearFallout.apply(server, worldPosition, reactor.explosionRadius);
+		if (FTBICConfig.NUCLEAR.REACTOR_MELTDOWN_RESPECTS_CLAIMS.get()) {
+			server.explode(null, null, null,
+					worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5,
+					(float) reactor.explosionRadius, true, Level.ExplosionInteraction.BLOCK);
+			NuclearFallout.apply(server, worldPosition, reactor.explosionRadius);
+		} else {
+			NuclearExplosion.detonate(server, worldPosition, reactor.explosionRadius, placerId, placerName);
+		}
 	}
 
 	@Override

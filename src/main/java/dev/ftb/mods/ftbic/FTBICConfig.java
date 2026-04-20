@@ -289,6 +289,8 @@ public final class FTBICConfig {
 		public final ModConfigSpec.BooleanValue ADD_ALL_FLUID_CELLS;
 		public final ModConfigSpec.BooleanValue NUCLEAR_EXPLOSION_DAEMON_THREAD;
 		public final ModConfigSpec.DoubleValue WATER_COOLING_MULTIPLIER;
+		public final ModConfigSpec.IntValue NUKE_FUSE_TICKS;
+		public final ModConfigSpec.BooleanValue REACTOR_MELTDOWN_RESPECTS_CLAIMS;
 
 		Nuclear(ModConfigSpec.Builder b) {
 			b.push("nuclear");
@@ -301,6 +303,10 @@ public final class FTBICConfig {
 			NUCLEAR_EXPLOSION_DAEMON_THREAD = b.comment("Spawn a daemon thread for explosion calc (experimental).").define("nuclear_explosion_daemon_thread", false);
 			WATER_COOLING_MULTIPLIER = b.comment("Max reactor-hull cooling multiplier when every outward face is water-clad. 1.0 disables the bonus; 2.0 doubles cooling; scales linearly with water-adjacent faces.")
 					.defineInRange("water_cooling_multiplier", 2.0D, 1.0D, 10.0D);
+			NUKE_FUSE_TICKS = b.comment("Fuse length for the placed Nuke block in ticks (20 ticks per second).")
+					.defineInRange("nuke_fuse_ticks", 200, 0, 20 * 60 * 10);
+			REACTOR_MELTDOWN_RESPECTS_CLAIMS = b.comment("If true, nuclear reactor meltdown uses a vanilla explosion which chunk-protection mods (FTB Chunks etc.) can cancel. If false (default), reactor meltdown bypasses claim protection so the reactor itself and surrounding terrain always suffer the consequences.")
+					.define("reactor_meltdown_respects_claims", false);
 			b.pop();
 		}
 	}
