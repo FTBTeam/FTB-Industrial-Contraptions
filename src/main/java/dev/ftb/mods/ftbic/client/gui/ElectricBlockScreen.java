@@ -7,11 +7,13 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.AtlasIds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -61,7 +63,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 	}
 
 	protected void extractMachineSlotTooltips(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-		net.minecraft.world.inventory.Slot slot = this.hoveredSlot;
+		Slot slot = this.hoveredSlot;
 		if (slot == null || slot.hasItem()) return;
 		if (slot instanceof UpgradeSlot) {
 			graphics.setTooltipForNextFrame(Component.literal("Upgrade Slot"), mouseX, mouseY);
@@ -78,7 +80,7 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 		if (fluid == null || fluid.isEmpty() || capacity <= 0) {
 			label = Component.translatable("ftbic.jade.fluid_empty");
 		} else {
-			Identifier id = net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(fluid.getFluid());
+			Identifier id = BuiltInRegistries.FLUID.getKey(fluid.getFluid());
 			String name = id == null ? "unknown" : id.getPath();
 			String key = switch (name) {
 				case "water" -> "ftbic.jade.water";

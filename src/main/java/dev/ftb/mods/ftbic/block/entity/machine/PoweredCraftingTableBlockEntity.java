@@ -1,18 +1,20 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
-import dev.ftb.mods.ftbic.screen.PoweredCraftingTableMenu;
 
 public class PoweredCraftingTableBlockEntity extends BasicMachineBlockEntity {
 	public PoweredCraftingTableBlockEntity(BlockPos pos, BlockState state) {
@@ -20,7 +22,7 @@ public class PoweredCraftingTableBlockEntity extends BasicMachineBlockEntity {
 	}
 
 	@Override
-	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
 		return new PoweredCraftingTableMenu(id, inv, this);
 	}
 

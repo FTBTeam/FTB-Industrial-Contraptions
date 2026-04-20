@@ -3,6 +3,8 @@ package dev.ftb.mods.ftbic.screen;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
@@ -65,8 +67,8 @@ public class PumpMenu extends ElectricBlockMenu {
 	public boolean clickMenuButton(Player player, int id) {
 		if (id == 0 && blockEntity instanceof PumpBlockEntity pump) {
 			if (pump.redstonePaused) {
-				if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
-					sp.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+				if (player instanceof ServerPlayer sp) {
+					sp.sendSystemMessage(Component.literal(
 							"Pause is currently overridden by an active redstone signal"), true);
 				}
 				return true;

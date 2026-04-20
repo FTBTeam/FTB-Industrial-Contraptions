@@ -1,11 +1,16 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.screen.PumpMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,8 +19,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import dev.ftb.mods.ftbic.block.FTBICBlocks;
-import dev.ftb.mods.ftbic.screen.PumpMenu;
 
 public class PumpBlockEntity extends DiggingBaseBlockEntity {
 	public Fluid storedFluid = Fluids.EMPTY;
@@ -26,7 +29,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity {
 	}
 
 	@Override
-	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
 		return new PumpMenu(id, inv, this);
 	}
 
@@ -51,7 +54,7 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity {
 		String fluidStr = input.getStringOr("Fluid", "");
 		if (!fluidStr.isEmpty()) {
 			Identifier id = Identifier.parse(fluidStr);
-			storedFluid = BuiltInRegistries.FLUID.getValue(ResourceKey.create(net.minecraft.core.registries.Registries.FLUID, id));
+			storedFluid = BuiltInRegistries.FLUID.getValue(ResourceKey.create(Registries.FLUID, id));
 			if (storedFluid == null) storedFluid = Fluids.EMPTY;
 		} else {
 			storedFluid = Fluids.EMPTY;

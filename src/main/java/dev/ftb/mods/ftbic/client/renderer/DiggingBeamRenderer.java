@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
@@ -16,6 +17,7 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Collections;
@@ -129,7 +131,7 @@ public class DiggingBeamRenderer implements BlockEntityRenderer<DiggingBaseBlock
 		for (int z = 0; z < state.sizeZ - 1; z++) {
 			pose.pushPose();
 			pose.translate(state.laserX, 0.52D, state.offsetZ + z + 1.0D);
-			pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(90F));
+			pose.mulPose(Axis.YP.rotationDegrees(90F));
 			buffers.submitModelPart(gantryBarWE, pose, MODEL_RENDER_TYPE, light, overlay, null);
 			pose.popPose();
 		}
@@ -219,12 +221,12 @@ public class DiggingBeamRenderer implements BlockEntityRenderer<DiggingBaseBlock
 	}
 
 	@Override
-	public net.minecraft.world.phys.AABB getRenderBoundingBox(DiggingBaseBlockEntity be) {
+	public AABB getRenderBoundingBox(DiggingBaseBlockEntity be) {
 		int qx = be.getBlockPos().getX();
 		int qy = be.getBlockPos().getY();
 		int qz = be.getBlockPos().getZ();
 		int bottom = be.getLevel() == null ? qy - 1 : be.getLevel().getMinY();
-		return new net.minecraft.world.phys.AABB(
+		return new AABB(
 				qx + be.offsetX - 0.5, bottom - 0.5, qz + be.offsetZ - 0.5,
 				qx + be.offsetX + be.sizeX + 0.5, qy + 1.5, qz + be.offsetZ + be.sizeZ + 0.5);
 	}

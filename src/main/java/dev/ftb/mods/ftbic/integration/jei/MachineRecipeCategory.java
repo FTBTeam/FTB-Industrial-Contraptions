@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.integration.jei;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeType;
@@ -18,6 +19,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,7 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 
 	@SuppressWarnings("unchecked")
 	private static IRecipeHolderType<MachineRecipe> jeiRecipeType(MachineRecipeType type) {
-		return IRecipeType.create((net.minecraft.world.item.crafting.RecipeType<MachineRecipe>) (net.minecraft.world.item.crafting.RecipeType<?>) type.TYPE.get());
+		return IRecipeType.create((RecipeType<MachineRecipe>) (RecipeType<?>) type.TYPE.get());
 	}
 
 	@Override
@@ -108,14 +110,14 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 	@Override
 	public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<MachineRecipe> recipe, IRecipeSlotsView slots, double mouseX, double mouseY) {
 		if (mouseX >= ARROW_HIT_X0 && mouseX < ARROW_HIT_X1 && mouseY >= ARROW_HIT_Y0 && mouseY < ARROW_HIT_Y1) {
-			double baseTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
+			double baseTicks = FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
 			double ticks = recipe.value().processingTime * baseTicks;
 			double energyPerTick = machine.energyUsage.get();
 			long zaps = Math.round(ticks * energyPerTick);
 			double seconds = ticks / 20.0D;
 			tooltip.add(Component.literal(String.format("%.1fs · %,d zaps", seconds, zaps)));
 			tooltip.add(Component.literal(String.format("%.0f z/t", energyPerTick))
-					.withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+					.withStyle(ChatFormatting.DARK_GRAY));
 		}
 	}
 }

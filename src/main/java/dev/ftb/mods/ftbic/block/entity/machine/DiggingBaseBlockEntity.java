@@ -5,8 +5,16 @@ import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -14,7 +22,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +40,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	public static Iterable<DiggingBaseBlockEntity> forLevel(Level level) {
 		synchronized (PER_LEVEL) {
 			Set<DiggingBaseBlockEntity> set = PER_LEVEL.get(level);
-			return set == null ? List.of() : new java.util.ArrayList<>(set);
+			return set == null ? List.of() : new ArrayList<>(set);
 		}
 	}
 
@@ -188,9 +199,9 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 		setChanged();
 	}
 
-	private static final net.minecraft.tags.TagKey<Block> RELOCATION_NOT_PERMITTED =
-			net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK,
-					net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "relocation_not_permitted"));
+	private static final TagKey<Block> RELOCATION_NOT_PERMITTED =
+			TagKey.create(Registries.BLOCK,
+					Identifier.fromNamespaceAndPath("c", "relocation_not_permitted"));
 
 	public boolean isValidBlock(BlockState state, BlockPos pos) {
 		return !state.is(RELOCATION_NOT_PERMITTED);
@@ -282,7 +293,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 		int qx = worldPosition.getX();
 		int qy = worldPosition.getY();
 		int qz = worldPosition.getZ();
-		java.util.List<BlockPos> marks = new java.util.ArrayList<>();
+		List<BlockPos> marks = new ArrayList<>();
 		boolean useLandmarks = hasAnchorLandmark();
 		if (useLandmarks) {
 			BlockPos.MutableBlockPos mut = new BlockPos.MutableBlockPos();
@@ -345,23 +356,23 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	}
 
 	@Override
-	public net.minecraft.world.InteractionResult rightClick(net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
 		if (player.isSecondaryUseActive() && player.getItemInHand(hand).isEmpty()) {
 			if (level != null && !level.isClientSide()) {
 				resize();
-				player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+				player.sendSystemMessage(Component.literal(
 						String.format("Area: %d × %d (corner %d,%d..%d,%d)",
 								sizeX, sizeZ,
 								worldPosition.getX() + offsetX, worldPosition.getZ() + offsetZ,
 								worldPosition.getX() + offsetX + sizeX - 1, worldPosition.getZ() + offsetZ + sizeZ - 1)));
 			}
-			return net.minecraft.world.InteractionResult.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		return super.rightClick(player, hand, hit);
 	}
 
 	@Override
-	public void onPlacedBy(net.minecraft.world.entity.@org.jetbrains.annotations.Nullable LivingEntity entity, ItemStack stack) {
+	public void onPlacedBy(@Nullable LivingEntity entity, ItemStack stack) {
 		super.onPlacedBy(entity, stack);
 		if (level != null && !level.isClientSide()) {
 			if (hasAnchorLandmark()) {

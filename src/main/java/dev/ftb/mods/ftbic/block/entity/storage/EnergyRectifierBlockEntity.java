@@ -4,7 +4,9 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.generator.GeneratorBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
@@ -54,10 +56,9 @@ public class EnergyRectifierBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
-	public boolean isValidEnergyOutputSide(net.minecraft.core.Direction direction) {
-		// Block the input face (matches the FE-input face) from also pushing zaps to FTBIC cables.
-		net.minecraft.world.level.block.state.BlockState st = getBlockState();
-		net.minecraft.core.Direction inputFace = st.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING);
+	public boolean isValidEnergyOutputSide(Direction direction) {
+		BlockState st = getBlockState();
+		Direction inputFace = st.getValue(BlockStateProperties.FACING);
 		return direction != inputFace;
 	}
 

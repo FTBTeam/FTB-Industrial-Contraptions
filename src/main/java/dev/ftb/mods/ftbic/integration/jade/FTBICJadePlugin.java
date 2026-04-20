@@ -8,13 +8,15 @@ import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
-import net.minecraft.world.item.ItemStack;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluids;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
@@ -37,7 +39,7 @@ public class FTBICJadePlugin implements IWailaPlugin {
 
 	@Override
 	public void registerClient(IWailaClientRegistration registration) {
-		registration.registerBlockComponent(EnergyClientProvider.INSTANCE, net.minecraft.world.level.block.Block.class);
+		registration.registerBlockComponent(EnergyClientProvider.INSTANCE, Block.class);
 		registration.registerBlockComponent(CableTierProvider.INSTANCE, CableBlock.class);
 	}
 
@@ -67,7 +69,7 @@ public class FTBICJadePlugin implements IWailaPlugin {
 		}
 
 		@Override
-		public void appendServerData(net.minecraft.nbt.CompoundTag data, BlockAccessor accessor) {
+		public void appendServerData(CompoundTag data, BlockAccessor accessor) {
 			if (accessor.getBlockEntity() instanceof ElectricBlockEntity be) {
 				data.putDouble("ftbic_energy", be.getEnergy());
 				data.putDouble("ftbic_energy_capacity", be.getEnergyCapacity());
@@ -145,7 +147,7 @@ public class FTBICJadePlugin implements IWailaPlugin {
 
 		@Override
 		public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-			net.minecraft.nbt.CompoundTag data = accessor.getServerData();
+			CompoundTag data = accessor.getServerData();
 			if (data.contains("ftbic_burnt")) {
 				tooltip.add(Component.translatable("ftbic.jade.burnt").withStyle(ChatFormatting.RED));
 				return;

@@ -3,18 +3,23 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.recipe.BasicGeneratorFuelRecipe;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
+import dev.ftb.mods.ftbic.screen.BasicGeneratorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import dev.ftb.mods.ftbic.screen.BasicGeneratorMenu;
 
 public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 	@Override
-	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
 		return new BasicGeneratorMenu(id, inv, this);
 	}
 
@@ -44,8 +49,8 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 			return 0;
 		}
 		@SuppressWarnings("unchecked")
-		net.minecraft.world.item.crafting.RecipeType<BasicGeneratorFuelRecipe> type =
-				(net.minecraft.world.item.crafting.RecipeType<BasicGeneratorFuelRecipe>) (net.minecraft.world.item.crafting.RecipeType<?>) FTBICRecipes.BASIC_GENERATOR_FUEL.get();
+		RecipeType<BasicGeneratorFuelRecipe> type =
+				(RecipeType<BasicGeneratorFuelRecipe>) (RecipeType<?>) FTBICRecipes.BASIC_GENERATOR_FUEL.get();
 		for (RecipeHolder<BasicGeneratorFuelRecipe> holder : server.recipeAccess().recipeMap().byType(type)) {
 			if (holder.value().ingredient().test(stack)) {
 				return holder.value().ticks();
@@ -73,14 +78,14 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
 				fuelTicks = ticks;
 
 				@SuppressWarnings("deprecation")
-				net.minecraft.world.item.ItemStackTemplate template = inputItems[0].getItem().getCraftingRemainder();
+				ItemStackTemplate template = inputItems[0].getItem().getCraftingRemainder();
 				ItemStack remainder = template == null ? ItemStack.EMPTY : template.create();
 				if (inputItems[0].getCount() == 1) {
 					inputItems[0] = remainder.isEmpty() ? ItemStack.EMPTY : remainder;
 				} else {
 					inputItems[0].shrink(1);
 					if (!remainder.isEmpty() && level != null) {
-						net.minecraft.world.level.block.Block.popResource(level, worldPosition, remainder);
+						Block.popResource(level, worldPosition, remainder);
 					}
 				}
 				active = true;

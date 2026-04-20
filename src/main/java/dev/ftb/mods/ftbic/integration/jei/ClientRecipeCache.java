@@ -1,20 +1,25 @@
 package dev.ftb.mods.ftbic.integration.jei;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
+import dev.ftb.mods.ftbic.recipe.MachineRecipe;
+import dev.ftb.mods.ftbic.util.IngredientWithCount;
+import dev.ftb.mods.ftbic.util.StackWithChance;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
 import mezz.jei.api.runtime.IJeiRuntime;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
-import dev.ftb.mods.ftbic.recipe.MachineRecipe;
-import dev.ftb.mods.ftbic.util.IngredientWithCount;
-import dev.ftb.mods.ftbic.util.StackWithChance;
 
 public final class ClientRecipeCache {
 	private static IJeiRuntime runtime;
@@ -33,12 +38,12 @@ public final class ClientRecipeCache {
 	public static synchronized void applySyncedRecipes(List<RecipeHolder<?>> recipes) {
 		CACHE.clear();
 		RecipeType<?> ftbicSmelting = FTBICRecipes.SMELTING.TYPE.get();
-		double baseTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
+		double baseTicks = FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
 		for (RecipeHolder<?> h : recipes) {
-			if (h.value() instanceof net.minecraft.world.item.crafting.SmeltingRecipe sr) {
-				net.minecraft.world.item.ItemStack result = sr.assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(net.minecraft.world.item.ItemStack.EMPTY));
+			if (h.value() instanceof SmeltingRecipe sr) {
+				ItemStack result = sr.assemble(new SingleRecipeInput(ItemStack.EMPTY));
 				if (result.isEmpty()) continue;
-				net.minecraft.world.item.ItemStackTemplate template = new net.minecraft.world.item.ItemStackTemplate(
+				ItemStackTemplate template = new ItemStackTemplate(
 						result.typeHolder(), result.getCount(), result.getComponentsPatch());
 				MachineRecipe mr = new MachineRecipe(
 						FTBICRecipes.SMELTING,
@@ -59,7 +64,7 @@ public final class ClientRecipeCache {
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public static synchronized void showRecipesForType(RecipeType<?> vanillaType) {
-		showRecipesForTypes(java.util.List.of(vanillaType));
+		showRecipesForTypes(List.of(vanillaType));
 	}
 
 	public static synchronized void setSearchFilter(String text) {
@@ -72,9 +77,9 @@ public final class ClientRecipeCache {
 		if (runtime == null) {
 			return;
 		}
-		List<mezz.jei.api.recipe.types.IRecipeType<?>> jeiTypes = new ArrayList<>();
+		List<IRecipeType<?>> jeiTypes = new ArrayList<>();
 		for (RecipeType<?> t : vanillaTypes) {
-			jeiTypes.add((mezz.jei.api.recipe.types.IRecipeType) mezz.jei.api.recipe.types.IRecipeHolderType.create((RecipeType) t));
+			jeiTypes.add((IRecipeType) IRecipeHolderType.create((RecipeType) t));
 		}
 		runtime.getRecipesGui().showTypes(jeiTypes);
 	}
@@ -95,7 +100,7 @@ public final class ClientRecipeCache {
 			try {
 				runtime.getRecipeManager().addRecipes((IRecipeType) jeiType, (List) holders);
 			} catch (Throwable t) {
-				dev.ftb.mods.ftbic.FTBIC.LOGGER.warn("ClientRecipeCache.pushToJei: failed for {}: {}", vanillaType, t.toString());
+				FTBIC.LOGGER.warn("ClientRecipeCache.pushToJei: failed for {}: {}", vanillaType, t.toString());
 			}
 		}
 	}

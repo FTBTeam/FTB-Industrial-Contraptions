@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
@@ -15,6 +16,8 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,6 +35,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
 public final class FTBICCommands {
@@ -47,7 +51,7 @@ public final class FTBICCommands {
 		event.getDispatcher().register(root);
 	}
 
-	private static int runShowcase(com.mojang.brigadier.context.CommandContext<CommandSourceStack> ctx) {
+	private static int runShowcase(CommandContext<CommandSourceStack> ctx) {
 		CommandSourceStack src = ctx.getSource();
 		if (!(src.getEntity() instanceof ServerPlayer player)) {
 			src.sendFailure(Component.literal("Must be run by a player."));
@@ -134,7 +138,7 @@ public final class FTBICCommands {
 	}
 
 	private static boolean buildReactor(ServerLevel level, BlockPos reactorPos,
-			java.util.function.Consumer<NuclearReactorBlockEntity> populator, boolean allowRedstone) {
+			Consumer<NuclearReactorBlockEntity> populator, boolean allowRedstone) {
 		BlockState air = Blocks.AIR.defaultBlockState();
 		for (int dx = -2; dx <= 2; dx++) {
 			for (int dz = -2; dz <= 2; dz++) {
@@ -284,8 +288,8 @@ public final class FTBICCommands {
 			Item i = m.item.get();
 			if (i != null && seen.add(i)) out.add(new ItemStack(i));
 		}
-		for (Item item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
-			net.minecraft.resources.Identifier id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
+		for (Item item : BuiltInRegistries.ITEM) {
+			Identifier id = BuiltInRegistries.ITEM.getKey(item);
 			if (id != null && FTBIC.MOD_ID.equals(id.getNamespace()) && seen.add(item)) {
 				out.add(new ItemStack(item));
 			}

@@ -13,7 +13,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 public class NuclearReactorChamberBlock extends Block {
 	public NuclearReactorChamberBlock(BlockBehaviour.Properties props) {
@@ -22,10 +24,8 @@ public class NuclearReactorChamberBlock extends Block {
 
 	@Override
 	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor,
-			@org.jetbrains.annotations.Nullable net.minecraft.world.level.redstone.Orientation orientation, boolean movedByPiston) {
+			@Nullable Orientation orientation, boolean movedByPiston) {
 		super.neighborChanged(state, level, pos, neighbor, orientation, movedByPiston);
-		// A reactor being placed or broken next to this chamber changes the caps this chamber forwards,
-		// so refresh the cap cache.
 		if (!level.isClientSide()) {
 			level.invalidateCapabilities(pos);
 		}

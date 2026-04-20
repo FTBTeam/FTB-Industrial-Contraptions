@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -99,7 +101,7 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 		ItemStack result = sr.assemble(new SingleRecipeInput(inputStack));
 		ItemStackTemplate template = new ItemStackTemplate(
 				result.typeHolder(), result.getCount(), result.getComponentsPatch());
-		double baseTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
+		double baseTicks = FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
 		return new MachineRecipe(
 				recipeType,
 				List.of(new IngredientWithCount(sr.input(), 1)),
@@ -165,7 +167,7 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 		}
 
 		double speed = Math.max(1D, progressSpeed);
-		maxProgress = Math.max(1, (int) (recipe.processingTime * dev.ftb.mods.ftbic.FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get() / speed));
+		maxProgress = Math.max(1, (int) (recipe.processingTime * FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get() / speed));
 		energy -= energyUse;
 		progress++;
 		active = true;
@@ -220,7 +222,7 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 			// Leftover overflow — if the output slots are full, pop the rest into the world so the
 			// machine doesn't stall and the recipe can continue next tick.
 			if (!toAdd.isEmpty() && level != null) {
-				net.minecraft.world.level.block.Block.popResource(level, worldPosition, toAdd);
+				Block.popResource(level, worldPosition, toAdd);
 			}
 		}
 	}

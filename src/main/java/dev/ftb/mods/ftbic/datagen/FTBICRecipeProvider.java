@@ -1,21 +1,27 @@
 package dev.ftb.mods.ftbic.datagen;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe;
 import dev.ftb.mods.ftbic.recipe.BasicGeneratorFuelRecipe;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.MachineRecipeType;
+import dev.ftb.mods.ftbic.util.FluidCellIngredient;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
 import dev.ftb.mods.ftbmaterials.data.ComponentsAvailableCondition;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
-import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
@@ -28,22 +34,30 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.BlastingRecipe;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
 import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.crafting.SmokingRecipe;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.conditions.AndCondition;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
 import net.neoforged.neoforge.common.conditions.OrCondition;
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
+import net.neoforged.neoforge.common.crafting.CompoundIngredient;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import dev.ftb.mods.ftbic.item.FTBICItems;
-import dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe;
-import dev.ftb.mods.ftbic.util.FluidCellIngredient;
 
 public class FTBICRecipeProvider extends RecipeProvider {
 
@@ -287,7 +301,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		compress("industrial_grade_metal", commonTag("ingots/iron"), 3, ftbicStack("industrial_grade_metal", 3));
 		compress("paper", i("minecraft:sugar_cane"), 3, stack(Items.PAPER, 5));
 		compress("protein_bar", i("ftbic:canned_food"), 1, ftbicStack("protein_bar", 1));
-		compress("snowball", fluidCell(net.minecraft.world.level.material.Fluids.WATER), 1, stack(Items.SNOWBALL, 1));
+		compress("snowball", fluidCell(Fluids.WATER), 1, stack(Items.SNOWBALL, 1));
 
 		// IC2C-inspired compressions
 		compress("sand_to_sandstone", Ingredient.of(Items.SAND), 4, stack(Items.SANDSTONE, 1));
@@ -320,10 +334,10 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 
 	private void separatingRecipes() {
-		Item silicon = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("ftbmaterials", "silicon_gem"));
-		separate("flint", commonTag("gravels"), 1, java.util.Arrays.asList(out(Items.FLINT, 1, 1D)));
+		Item silicon = BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("ftbmaterials", "silicon_gem"));
+		separate("flint", commonTag("gravels"), 1, Arrays.asList(out(Items.FLINT, 1, 1D)));
 		if (silicon != null && silicon != Items.AIR) {
-			separate("silicon_from_quartz", commonTag("gems/quartz"), 1, java.util.Arrays.asList(out(silicon, 3, 1D)));
+			separate("silicon_from_quartz", commonTag("gems/quartz"), 1, Arrays.asList(out(silicon, 3, 1D)));
 			separate("silicon_from_sand", tag(ItemTags.SAND), 1, List.of(
 					out(silicon, 1, 0.2D),
 					out(silicon, 1, 0.05D)));
@@ -337,16 +351,16 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		separate("glowstone_dust", Ingredient.of(Items.SEA_PICKLE), 1, List.of(
 				out(Items.SEAGRASS, 1, 0.5D),
 				out(Items.GLOWSTONE_DUST, 1, 0.03D)));
-		Item smallCoolant = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(FTBIC.id("small_coolant_cell"));
-		separate("small_coolant_cell", fluidCell(net.minecraft.world.level.material.Fluids.WATER), 1,
-				java.util.Arrays.asList(out(smallCoolant, 1, 1D)));
+		Item smallCoolant = BuiltInRegistries.ITEM.getValue(FTBIC.id("small_coolant_cell"));
+		separate("small_coolant_cell", fluidCell(Fluids.WATER), 1,
+				Arrays.asList(out(smallCoolant, 1, 1D)));
 
 		// IC2C: ore → gem extraction (bypasses silk touch)
-		separate("coal_from_ore", commonTag("ores/coal"), 1, java.util.Arrays.asList(out(Items.COAL, 1, 1D)));
-		separate("lapis_from_ore", commonTag("ores/lapis"), 1, java.util.Arrays.asList(out(Items.LAPIS_LAZULI, 6, 1D)));
-		separate("diamond_from_ore", commonTag("ores/diamond"), 1, java.util.Arrays.asList(out(Items.DIAMOND, 1, 1D)));
-		separate("emerald_from_ore", commonTag("ores/emerald"), 1, java.util.Arrays.asList(out(Items.EMERALD, 1, 1D)));
-		separate("quartz_from_ore", commonTag("ores/quartz"), 1, java.util.Arrays.asList(out(Items.QUARTZ, 1, 1D)));
+		separate("coal_from_ore", commonTag("ores/coal"), 1, Arrays.asList(out(Items.COAL, 1, 1D)));
+		separate("lapis_from_ore", commonTag("ores/lapis"), 1, Arrays.asList(out(Items.LAPIS_LAZULI, 6, 1D)));
+		separate("diamond_from_ore", commonTag("ores/diamond"), 1, Arrays.asList(out(Items.DIAMOND, 1, 1D)));
+		separate("emerald_from_ore", commonTag("ores/emerald"), 1, Arrays.asList(out(Items.EMERALD, 1, 1D)));
+		separate("quartz_from_ore", commonTag("ores/quartz"), 1, Arrays.asList(out(Items.QUARTZ, 1, 1D)));
 
 		// IC2C: flower → dye extraction
 		flowerDye("poppy", Items.POPPY, Items.RED_DYE);
@@ -369,13 +383,13 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		flowerDye("peony", Items.PEONY, Items.PINK_DYE);
 
 		separate("latex_from_saplings", tag(ItemTags.SAPLINGS), 2,
-				java.util.Arrays.asList(out(FTBICItems.LATEX_BALL.item.get(), 1, 1D)));
+				Arrays.asList(out(FTBICItems.LATEX_BALL.item.get(), 1, 1D)));
 		separate("latex_from_kelp", Ingredient.of(Items.KELP), 6,
-				java.util.Arrays.asList(out(FTBICItems.LATEX_BALL.item.get(), 1, 1D)));
+				Arrays.asList(out(FTBICItems.LATEX_BALL.item.get(), 1, 1D)));
 	}
 
 	private void flowerDye(String name, Item flower, Item dye) {
-		separate(name + "_to_dye", Ingredient.of(flower), 1, java.util.Arrays.asList(out(dye, 2, 1D)));
+		separate(name + "_to_dye", Ingredient.of(flower), 1, Arrays.asList(out(dye, 2, 1D)));
 	}
 
 	private StackWithChance out(Item item, int count, double chance) {
@@ -471,7 +485,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		}
 
 		// Spray paint cans — use a FluidCellIngredient (water).
-		Ingredient waterCell = fluidCell(net.minecraft.world.level.material.Fluids.WATER);
+		Ingredient waterCell = fluidCell(Fluids.WATER);
 		canning("light_spray_can", waterCell, commonTag("dyes/white"),
 				new ItemStackTemplate(FTBICItems.LIGHT_SPRAY_PAINT_CAN.get(), 1));
 		canning("dark_spray_can", waterCell, commonTag("dyes/black"),
@@ -496,7 +510,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				withOutputConditions(conditionsFor(a, b), result));
 	}
 
-	private static Ingredient fluidCell(net.minecraft.world.level.material.Fluid fluid) {
+	private static Ingredient fluidCell(Fluid fluid) {
 		return new Ingredient(new FluidCellIngredient(fluid));
 	}
 
@@ -573,14 +587,14 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shapelessBatch();
 
 		// Guide book — shapeless with a result data-component (guideme:guide_id → ftbic:guide).
-		net.minecraft.core.component.DataComponentType<net.minecraft.resources.Identifier> guideIdType =
-				(net.minecraft.core.component.DataComponentType<net.minecraft.resources.Identifier>) (Object)
-				net.minecraft.core.registries.BuiltInRegistries.DATA_COMPONENT_TYPE.getValue(
+		DataComponentType<Identifier> guideIdType =
+				(DataComponentType<Identifier>) (Object)
+				BuiltInRegistries.DATA_COMPONENT_TYPE.getValue(
 						Identifier.fromNamespaceAndPath("guideme", "guide_id"));
-		Item guideItem = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(
+		Item guideItem = BuiltInRegistries.ITEM.getValue(
 				Identifier.fromNamespaceAndPath("guideme", "guide"));
 		if (guideIdType != null && guideItem != null && guideItem != Items.AIR) {
-			net.minecraft.core.component.DataComponentPatch patch = net.minecraft.core.component.DataComponentPatch.builder()
+			DataComponentPatch patch = DataComponentPatch.builder()
 					.set(guideIdType, FTBIC.id("guide"))
 					.build();
 			ItemStackTemplate result = new ItemStackTemplate(guideItem, 1, patch);
@@ -590,7 +604,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 	protected Ingredient i(String id) {
 		Identifier rid = Identifier.parse(id);
-		Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(rid);
+		Item item = BuiltInRegistries.ITEM.getValue(rid);
 		if (item == null || item == Items.AIR) return null;
 		return Ingredient.of(item);
 	}
@@ -601,7 +615,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	}
 
 	protected static Ingredient compound(Ingredient... children) {
-		return net.neoforged.neoforge.common.crafting.CompoundIngredient.of(children);
+		return CompoundIngredient.of(children);
 	}
 
 	protected static ItemStackTemplate ftbicStack(String path, int count) {
@@ -610,28 +624,26 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 	protected static ItemStackTemplate modStack(String id, int count) {
 		Identifier rid = Identifier.parse(id);
-		Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(rid);
+		Item item = BuiltInRegistries.ITEM.getValue(rid);
 		if (item == null || item == Items.AIR) return null;
 		return new ItemStackTemplate(item, count);
 	}
 
 	protected void shaped(String name, ItemStackTemplate result, String[] pattern, Object... pairs) {
 		if (result == null) return;
-		java.util.Map<Character, Ingredient> key = new java.util.HashMap<>();
-		java.util.List<Ingredient> allIngredients = new java.util.ArrayList<>();
+		Map<Character, Ingredient> key = new HashMap<>();
+		List<Ingredient> allIngredients = new ArrayList<>();
 		for (int i = 0; i < pairs.length; i += 2) {
 			Character ch = (Character) pairs[i];
 			Ingredient ing = (Ingredient) pairs[i + 1];
-			if (ing == null) return; // skip recipe if any referenced item is missing
+			if (ing == null) return;
 			key.put(ch, ing);
 			allIngredients.add(ing);
 		}
-		net.minecraft.world.item.crafting.ShapedRecipePattern shaped =
-				net.minecraft.world.item.crafting.ShapedRecipePattern.of(key, pattern);
-		net.minecraft.world.item.crafting.ShapedRecipe recipe = new net.minecraft.world.item.crafting.ShapedRecipe(
+		ShapedRecipePattern shaped = ShapedRecipePattern.of(key, pattern);
+		ShapedRecipe recipe = new ShapedRecipe(
 				new Recipe.CommonInfo(false),
-				new net.minecraft.world.item.crafting.CraftingRecipe.CraftingBookInfo(
-						net.minecraft.world.item.crafting.CraftingBookCategory.MISC, ""),
+				new CraftingRecipe.CraftingBookInfo(CraftingBookCategory.MISC, ""),
 				shaped,
 				result);
 		output.accept(recipeKey("shaped/" + name), recipe, null, conditionsFor(allIngredients.toArray(Ingredient[]::new)));
@@ -640,14 +652,13 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	protected void shapeless(String name, ItemStackTemplate result, Ingredient... ingredients) {
 		if (result == null) return;
 		for (Ingredient ing : ingredients) {
-			if (ing == null) return; // skip if any referenced item missing
+			if (ing == null) return;
 		}
-		net.minecraft.world.item.crafting.ShapelessRecipe recipe = new net.minecraft.world.item.crafting.ShapelessRecipe(
+		ShapelessRecipe recipe = new ShapelessRecipe(
 				new Recipe.CommonInfo(false),
-				new net.minecraft.world.item.crafting.CraftingRecipe.CraftingBookInfo(
-						net.minecraft.world.item.crafting.CraftingBookCategory.MISC, ""),
+				new CraftingRecipe.CraftingBookInfo(CraftingBookCategory.MISC, ""),
 				result,
-				java.util.List.of(ingredients));
+				List.of(ingredients));
 		output.accept(recipeKey("shapeless/" + name), recipe, null, conditionsFor(ingredients));
 	}
 
@@ -670,7 +681,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 	private ItemStackTemplate ftbmat(String path, int count) {
 		Identifier id = Identifier.fromNamespaceAndPath("ftbmaterials", path);
-		Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(id);
+		Item item = BuiltInRegistries.ITEM.getValue(id);
 		if (item == Items.AIR || item == null) return null;
 		return new ItemStackTemplate(item, count);
 	}
@@ -709,7 +720,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		List<String> materials = new ArrayList<>();
 		for (ItemStackTemplate t : outputs) {
 			if (t == null) continue;
-			Identifier id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(t.item().value());
+			Identifier id = BuiltInRegistries.ITEM.getKey(t.item().value());
 			if (id == null || !"ftbmaterials".equals(id.getNamespace())) continue;
 			String path = id.getPath();
 			if (!materials.contains(path)) {
@@ -726,7 +737,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	private static ICondition ingredientCondition(Ingredient ingredient) {
 		if (ingredient == null) return null;
 		var custom = ingredient.getCustomIngredient();
-		if (custom instanceof net.neoforged.neoforge.common.crafting.CompoundIngredient compound) {
+		if (custom instanceof CompoundIngredient compound) {
 			List<ICondition> branches = new ArrayList<>();
 			for (Ingredient child : compound.children()) {
 				ICondition c = ingredientCondition(child);
@@ -855,6 +866,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("neutron_reflector", ftbicStack("neutron_reflector", 1), new String[] {"TCT", "TPT", "TCT"}, 'T', commonOrTag("c:dusts/tin"), 'C', commonOrTag("c:dusts/coal"), 'P', i("ftbic:dense_copper_plate"));
 		shaped("nuclear_reactor", ftbicStack("nuclear_reactor", 1), new String[] {"HCH", "HHH", "HGH"}, 'H', i("ftbic:nuclear_reactor_chamber"), 'C', i("ftbic:iridium_circuit"), 'G', i("ftbic:basic_generator"));
 		shaped("nuclear_reactor_chamber", ftbicStack("nuclear_reactor_chamber", 3), new String[] {"HPH", "PMP", "HPH"}, 'M', i("ftbic:advanced_machine_block"), 'P', i("ftbic:dense_copper_plate"), 'H', i("ftbic:reactor_plating"));
+		shaped("powered_crafting_table", ftbicStack("powered_crafting_table", 1), new String[] {"PCP", "PMP", "PTP"}, 'P', tag(ItemTags.PLANKS), 'C', i("ftbic:electronic_circuit"), 'M', i("ftbic:machine_block"), 'T', i("minecraft:crafting_table"));
 		shaped("nuggets/enderium_to_enderium_ingot", ftbicStack("enderium_ingot", 1), new String[] {"XXX", "XXX", "XXX"}, 'X', commonOrTag("c:nuggets/enderium"));
 		shaped("nuke", ftbicStack("nuke", 1), new String[] {"UCU", "TMT", "UCU"}, 'T', i("minecraft:tnt"), 'U', i("ftbic:quad_uranium_fuel_rod"), 'M', i("ftbic:advanced_machine_block"), 'C', i("ftbic:advanced_circuit"));
 		shaped("overclocked_heat_vent", ftbicStack("overclocked_heat_vent", 1), new String[] {"P", "V", "P"}, 'P', commonOrTag("c:plates/enderium"), 'V', i("ftbic:reactor_heat_vent"));
@@ -870,7 +882,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("reactor_heat_vent", ftbicStack("reactor_heat_vent", 1), new String[] {"P", "V", "P"}, 'P', commonOrTag("c:plates/lead"), 'V', i("ftbic:heat_vent"));
 		shaped("recycler", ftbicStack("reprocessor", 1), new String[] {"MDM", "MCM"}, 'D', i("minecraft:composter"), 'C', i("ftbic:compressor"), 'M', i("ftbic:industrial_grade_metal"));
 		shaped("reinforced_glass", ftbicStack("reinforced_glass", 4), new String[] {"RGR", "G G", "RGR"}, 'R', i("ftbic:reinforced_stone"), 'G', commonOrTag("c:glass_blocks/colorless"));
-		shaped("reactor_simulator", ftbicStack("reactor_simulator", 1), new String[] {"GCG", "AMA", "GWG"}, 'G', i("ftbic:reinforced_glass"), 'C', i("ftbic:advanced_circuit"), 'A', i("ftbic:advanced_alloy"), 'M', i("ftbic:nuclear_reactor_chamber"), 'W', i("ftbic:reinforced_stone"));
+		shaped("reactor_simulator", ftbicStack("reactor_simulator", 1), new String[] {"HPH", "PBP", "HPH"}, 'H', i("ftbic:reactor_plating"), 'P', i("ftbic:dense_copper_plate"), 'B', i("minecraft:writable_book"));
 		shaped("reinforced_stone", ftbicStack("reinforced_stone", 4), new String[] {"SSS", "SAS", "SSS"}, 'S', i("minecraft:smooth_stone"), 'A', i("ftbic:advanced_alloy"));
 		shaped("roller", ftbicStack("roller", 1), new String[] {"PCP", "PMP"}, 'P', i("minecraft:piston"), 'M', i("ftbic:machine_block"), 'C', i("ftbic:electronic_circuit"));
 		shaped("rubber_sheet", ftbicStack("rubber_sheet", 1), new String[] {"III"}, 'I', i("ftbic:rubber"));

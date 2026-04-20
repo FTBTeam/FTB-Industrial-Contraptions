@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.client.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.entity.machine.ReactorSimulatorBlockEntity;
 import dev.ftb.mods.ftbic.FTBICConfig;
@@ -968,11 +969,11 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 	public boolean keyPressed(KeyEvent event) {
 		if (saveMode && saveNameBox != null && saveNameBox.isFocused()) {
 			int key = event.key();
-			if (key == com.mojang.blaze3d.platform.InputConstants.KEY_RETURN) {
+			if (key == InputConstants.KEY_RETURN) {
 				tryConfirmSave();
 				return true;
 			}
-			if (key == com.mojang.blaze3d.platform.InputConstants.KEY_ESCAPE) {
+			if (key == InputConstants.KEY_ESCAPE) {
 				exitSaveMode();
 				return true;
 			}

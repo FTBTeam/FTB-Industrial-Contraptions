@@ -8,26 +8,31 @@ import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
 import dev.ftb.mods.ftbic.block.ReinforcedCableBlock;
 import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 import dev.ftb.mods.ftbic.item.reactor.ReactorItem;
+import dev.ftb.mods.ftbic.screen.NuclearReactorMenu;
+import dev.ftb.mods.ftbic.sound.FTBICSounds;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.util.NuclearFallout;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.Containers;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.tags.FluidTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
-import dev.ftb.mods.ftbic.screen.NuclearReactorMenu;
-import dev.ftb.mods.ftbic.sound.FTBICSounds;
-import dev.ftb.mods.ftbic.util.NuclearFallout;
 
 public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public final NuclearReactor reactor;
@@ -41,7 +46,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
-	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
 		return new NuclearReactorMenu(id, inv, this);
 	}
 
@@ -149,13 +154,13 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
-	public void onPlacedBy(@org.jetbrains.annotations.Nullable net.minecraft.world.entity.LivingEntity entity, ItemStack stack) {
+	public void onPlacedBy(@Nullable LivingEntity entity, ItemStack stack) {
 		super.onPlacedBy(entity, stack);
 		pendingChamberRecompute = true;
 	}
 
 	@Override
-	public void neighborChanged(BlockPos neighborPos, net.minecraft.world.level.block.Block neighborBlock) {
+	public void neighborChanged(BlockPos neighborPos, Block neighborBlock) {
 		super.neighborChanged(neighborPos, neighborBlock);
 		pendingChamberRecompute = true;
 	}

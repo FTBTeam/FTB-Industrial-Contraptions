@@ -2,17 +2,21 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.screen.GeothermalGeneratorMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
-import dev.ftb.mods.ftbic.screen.GeothermalGeneratorMenu;
 
 public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 	public int fluidAmount = 0;
@@ -22,7 +26,7 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
-	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
 		return new GeothermalGeneratorMenu(id, inv, this);
 	}
 
@@ -87,8 +91,8 @@ public class GeothermalGeneratorBlockEntity extends GeneratorBlockEntity {
 				player.setItemInHand(hand, new ItemStack(Items.BUCKET));
 			}
 			level.playSound(null, worldPosition,
-					net.minecraft.sounds.SoundEvents.BUCKET_EMPTY_LAVA,
-					net.minecraft.sounds.SoundSource.BLOCKS, 1F, 1F);
+					SoundEvents.BUCKET_EMPTY_LAVA,
+					SoundSource.BLOCKS, 1F, 1F);
 			setChanged();
 			return InteractionResult.SUCCESS;
 		}

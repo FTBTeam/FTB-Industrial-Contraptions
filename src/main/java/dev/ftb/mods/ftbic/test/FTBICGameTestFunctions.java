@@ -40,23 +40,36 @@ import dev.ftb.mods.ftbic.block.entity.machine.CompressorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MaceratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PoweredFurnaceBlockEntity;
+import com.mojang.authlib.GameProfile;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.FluidCellItem;
+import dev.ftb.mods.ftbic.registry.ModDataComponents;
+import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.FluidCellIngredient;
+import io.netty.channel.embedded.EmbeddedChannel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.CommonListenerCookie;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.clock.WorldClock;
 import net.minecraft.world.clock.WorldClocks;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -69,6 +82,8 @@ import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+
+import java.util.UUID;
 
 public class FTBICGameTestFunctions {
 
@@ -256,7 +271,7 @@ public class FTBICGameTestFunctions {
 		return be;
 	}
 
-	private static boolean outputContains(ElectricBlockEntity be, net.minecraft.world.item.Item item) {
+	private static boolean outputContains(ElectricBlockEntity be, Item item) {
 		for (ItemStack stack : be.outputItems) {
 			if (!stack.isEmpty() && stack.is(item)) return true;
 		}
@@ -495,7 +510,7 @@ public class FTBICGameTestFunctions {
 
 		helper.assertTrue(be.maxInputEnergy > baseInput,
 				"Transformer upgrade should raise maxInputEnergy (base=" + baseInput + ", now=" + be.maxInputEnergy + ")");
-		helper.assertTrue(be.maxInputEnergy <= dev.ftb.mods.ftbic.FTBICConfig.ENERGY.IV_TRANSFER_RATE.get() + 0.01D,
+		helper.assertTrue(be.maxInputEnergy <= FTBICConfig.ENERGY.IV_TRANSFER_RATE.get() + 0.01D,
 				"Transformer upgrade should clamp at IV transfer rate (now=" + be.maxInputEnergy + ")");
 		helper.succeed();
 	}
@@ -525,7 +540,7 @@ public class FTBICGameTestFunctions {
 		be.upgradeInventory.setStackInSlot(0, new ItemStack(FTBICItems.OVERCLOCKER_UPGRADE.get(), 2));
 		double speedWithUpgrades = be.progressSpeed;
 
-		net.minecraft.core.HolderLookup.Provider registries = helper.getLevel().registryAccess();
+		HolderLookup.Provider registries = helper.getLevel().registryAccess();
 		CompoundTag tag = be.saveCustomOnly(registries);
 
 		helper.setBlock(CENTER, Blocks.AIR);
@@ -546,7 +561,7 @@ public class FTBICGameTestFunctions {
 		box.energy = 0D;
 
 		ItemStack battery = new ItemStack(FTBICItems.LV_BATTERY.get());
-		if (battery.getItem() instanceof dev.ftb.mods.ftbic.util.EnergyItemHandler h) {
+		if (battery.getItem() instanceof EnergyItemHandler h) {
 			h.setEnergy(battery, h.getEnergyCapacity(battery));
 		}
 		box.inputItems[0] = battery;
@@ -573,7 +588,7 @@ public class FTBICGameTestFunctions {
 		helper.runAfterDelay(40, () -> {
 			LVBatteryBoxBlockEntity after = helper.getBlockEntity(CENTER, LVBatteryBoxBlockEntity.class);
 			ItemStack charged = after.chargeBatteryInventory.getStackInSlot(0);
-			double stored = charged.getItem() instanceof dev.ftb.mods.ftbic.util.EnergyItemHandler h
+			double stored = charged.getItem() instanceof EnergyItemHandler h
 					? h.getEnergy(charged) : 0D;
 			helper.assertTrue(stored > 0D,
 					"Battery in charge slot should gain energy (stored=" + stored + ")");
@@ -922,7 +937,7 @@ public class FTBICGameTestFunctions {
 		pad.energy = 1_000D;
 
 		ItemStack battery = new ItemStack(FTBICItems.LV_BATTERY.get());
-		var handler = (dev.ftb.mods.ftbic.util.EnergyItemHandler) battery.getItem();
+		var handler = (EnergyItemHandler) battery.getItem();
 		double before = handler.getEnergy(battery);
 		double inserted = handler.insertEnergy(battery, 500D, false);
 		helper.assertTrue(inserted > 0D, "Battery should accept energy insertion");
@@ -933,7 +948,7 @@ public class FTBICGameTestFunctions {
 
 	static void rechargeableBatteryAcceptsAndHoldsEnergy(GameTestHelper helper) {
 		ItemStack battery = new ItemStack(FTBICItems.LV_BATTERY.get());
-		var h = (dev.ftb.mods.ftbic.util.EnergyItemHandler) battery.getItem();
+		var h = (EnergyItemHandler) battery.getItem();
 		double cap = h.getEnergyCapacity(battery);
 		double inserted = h.insertEnergy(battery, cap, false);
 		helper.assertValueEqual(cap, inserted, "inserted energy should equal capacity on empty battery");
@@ -943,19 +958,19 @@ public class FTBICGameTestFunctions {
 
 	static void rechargeableBatteryClearsComponentAtZero(GameTestHelper helper) {
 		ItemStack battery = new ItemStack(FTBICItems.LV_BATTERY.get());
-		var h = (dev.ftb.mods.ftbic.util.EnergyItemHandler) battery.getItem();
+		var h = (EnergyItemHandler) battery.getItem();
 		h.insertEnergy(battery, h.getEnergyCapacity(battery), false);
 
 		double drained = h.extractEnergy(battery, h.getEnergyCapacity(battery), false);
 		helper.assertTrue(drained > 0D, "Extract should drain the battery");
-		helper.assertFalse(battery.has(dev.ftb.mods.ftbic.registry.ModDataComponents.ENERGY.get()),
+		helper.assertFalse(battery.has(ModDataComponents.ENERGY.get()),
 				"ENERGY component should be cleared at zero");
 		helper.succeed();
 	}
 
 	static void singleUseBatteryShrinksAtZero(GameTestHelper helper) {
 		ItemStack stack = new ItemStack(FTBICItems.SINGLE_USE_BATTERY.get(), 2);
-		var h = (dev.ftb.mods.ftbic.util.EnergyItemHandler) stack.getItem();
+		var h = (EnergyItemHandler) stack.getItem();
 		double cap = h.getEnergyCapacity(stack);
 		h.extractEnergy(stack, cap, false);
 
@@ -965,26 +980,26 @@ public class FTBICGameTestFunctions {
 
 	static void singleUseBatteryCannotBeRecharged(GameTestHelper helper) {
 		ItemStack stack = new ItemStack(FTBICItems.SINGLE_USE_BATTERY.get());
-		var h = (dev.ftb.mods.ftbic.util.EnergyItemHandler) stack.getItem();
+		var h = (EnergyItemHandler) stack.getItem();
 		helper.assertFalse(h.canInsertEnergy(), "Single-use batteries cannot accept new energy");
 		double inserted = h.insertEnergy(stack, 1000D, false);
 		helper.assertValueEqual(0D, inserted, "insertEnergy must return 0 on single-use battery");
 		helper.succeed();
 	}
 
-	private static net.minecraft.server.level.ServerPlayer mockSurvivalPlayer(GameTestHelper helper) {
-		var cookie = net.minecraft.server.network.CommonListenerCookie.createInitial(
-				new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "test-fluid-cell-player"), false);
-		net.minecraft.server.level.ServerPlayer player = new net.minecraft.server.level.ServerPlayer(
+	private static ServerPlayer mockSurvivalPlayer(GameTestHelper helper) {
+		var cookie = CommonListenerCookie.createInitial(
+				new GameProfile(UUID.randomUUID(), "test-fluid-cell-player"), false);
+		ServerPlayer player = new ServerPlayer(
 				helper.getLevel().getServer(), helper.getLevel(), cookie.gameProfile(), cookie.clientInformation()
 		) {
 			@Override
-			public net.minecraft.world.level.GameType gameMode() {
-				return net.minecraft.world.level.GameType.SURVIVAL;
+			public GameType gameMode() {
+				return GameType.SURVIVAL;
 			}
 		};
-		var connection = new net.minecraft.network.Connection(net.minecraft.network.protocol.PacketFlow.SERVERBOUND);
-		new io.netty.channel.embedded.EmbeddedChannel(connection);
+		var connection = new Connection(PacketFlow.SERVERBOUND);
+		new EmbeddedChannel(connection);
 		try {
 			helper.getLevel().getServer().getPlayerList().placeNewPlayer(connection, player, cookie);
 		} catch (UnsupportedOperationException ignored) {
@@ -1001,7 +1016,7 @@ public class FTBICGameTestFunctions {
 		helper.setBlock(waterPos, Blocks.WATER.defaultBlockState().setValue(BlockStateProperties.LEVEL, 0));
 		helper.setBlock(playerPos, Blocks.AIR);
 
-		net.minecraft.server.level.ServerPlayer player = mockSurvivalPlayer(helper);
+		ServerPlayer player = mockSurvivalPlayer(helper);
 		BlockPos absPlayer = helper.absolutePos(playerPos);
 		player.snapTo(absPlayer.getX() + 0.5, absPlayer.getY(), absPlayer.getZ() + 0.5, 0F, 90F);
 
@@ -1036,7 +1051,7 @@ public class FTBICGameTestFunctions {
 		quarry.energy = quarry.energyCapacity;
 
 		ItemStack pickaxe = new ItemStack(Items.DIAMOND_PICKAXE);
-		pickaxe.enchant(helper.getLevel().holderOrThrow(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH), 1);
+		pickaxe.enchant(helper.getLevel().holderOrThrow(Enchantments.SILK_TOUCH), 1);
 		quarry.pickaxeStack = pickaxe;
 		quarry.setChanged();
 
@@ -1085,7 +1100,7 @@ public class FTBICGameTestFunctions {
 		double baseSpeed = quarry.progressSpeed;
 
 		ItemStack pickaxe = new ItemStack(Items.DIAMOND_PICKAXE);
-		pickaxe.enchant(helper.getLevel().holderOrThrow(net.minecraft.world.item.enchantment.Enchantments.EFFICIENCY), 3);
+		pickaxe.enchant(helper.getLevel().holderOrThrow(Enchantments.EFFICIENCY), 3);
 		quarry.pickaxeStack = pickaxe;
 		quarry.initProperties();
 		quarry.upgradesChanged();
@@ -1122,7 +1137,7 @@ public class FTBICGameTestFunctions {
 	static void fluidCellIngredientDisplaysFilledStack(GameTestHelper helper) {
 		FluidCellIngredient ingredient = new FluidCellIngredient(Fluids.WATER);
 		var display = ingredient.display();
-		var stacks = display.resolveForStacks(net.minecraft.util.context.ContextMap.EMPTY);
+		var stacks = display.resolveForStacks(ContextMap.EMPTY);
 		helper.assertTrue(!stacks.isEmpty(), "Display should resolve to at least one stack");
 		ItemStack first = stacks.get(0);
 		helper.assertTrue(first.getItem() instanceof FluidCellItem,

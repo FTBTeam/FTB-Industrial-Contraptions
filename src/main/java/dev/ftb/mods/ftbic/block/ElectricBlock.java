@@ -1,10 +1,19 @@
 package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.item.FTBICItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -22,9 +31,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-import dev.ftb.mods.ftbic.item.FTBICItems;
 
 public class ElectricBlock extends Block implements EntityBlock, SprayPaintable {
 	public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
@@ -105,7 +114,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 					double dx = pos.getX() + 0.4 + r.nextDouble() * 0.2;
 					double dy = pos.getY() + 0.8 + r.nextDouble() * 0.2;
 					double dz = pos.getZ() + 0.4 + r.nextDouble() * 0.2;
-					level.addParticle(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE, dx, dy, dz, 0D, 0.01D, 0D);
+					level.addParticle(ParticleTypes.LARGE_SMOKE, dx, dy, dz, 0D, 0.01D, 0D);
 				}
 			} else if (electricBlockInstance.canBeActive
 					&& state.hasProperty(ACTIVE) && state.getValue(ACTIVE)
@@ -113,7 +122,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 				double dx = pos.getX() + r.nextDouble();
 				double dy = pos.getY() + 0.1 + r.nextDouble() * 0.2;
 				double dz = pos.getZ() + r.nextDouble();
-				level.addParticle(net.minecraft.core.particles.ParticleTypes.ELECTRIC_SPARK, dx, dy, dz, 0D, 0D, 0D);
+				level.addParticle(ParticleTypes.ELECTRIC_SPARK, dx, dy, dz, 0D, 0D, 0D);
 			}
 		}
 	}
@@ -136,13 +145,13 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 	}
 
 	@Override
-	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean movedByPiston) {
+	protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
 		ElectricBlockEntity.electricNetworkUpdated(level, pos);
 		level.updateNeighbourForOutputSignal(pos, this);
 	}
 
 	@Override
-	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @org.jetbrains.annotations.Nullable net.minecraft.world.level.redstone.Orientation orientation, boolean movedByPiston) {
+	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation orientation, boolean movedByPiston) {
 		super.neighborChanged(state, level, pos, block, orientation, movedByPiston);
 		if (!level.isClientSide() && level.getBlockEntity(pos) instanceof ElectricBlockEntity be) {
 			be.neighborChanged(pos, block);
@@ -150,14 +159,14 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 	}
 
 	@Override
-	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, net.minecraft.world.InteractionHand hand, BlockHitResult hit) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!(level.getBlockEntity(pos) instanceof ElectricBlockEntity be)) {
 			return InteractionResult.TRY_WITH_EMPTY_HAND;
 		}
 		if (be.isBurnt() && stack.is(FTBICItems.FUSE.item.get())) {
 			be.setBurnt(false);
-			level.playSound(player, pos, net.minecraft.sounds.SoundEvents.STONE_BUTTON_CLICK_ON,
-					net.minecraft.sounds.SoundSource.BLOCKS, 0.3F, 0.6F);
+			level.playSound(player, pos, SoundEvents.STONE_BUTTON_CLICK_ON,
+					SoundSource.BLOCKS, 0.3F, 0.6F);
 			if (!level.isClientSide() && !player.isCreative()) {
 				stack.shrink(1);
 			}
@@ -165,7 +174,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 		}
 		if (be.isBurnt()) {
 			if (!level.isClientSide()) {
-				player.sendSystemMessage(net.minecraft.network.chat.Component.translatable("ftbic.fuse_info"));
+				player.sendSystemMessage(Component.translatable("ftbic.fuse_info"));
 			}
 			return InteractionResult.SUCCESS;
 		}
@@ -175,14 +184,14 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
 		if (level.getBlockEntity(pos) instanceof ElectricBlockEntity be && !be.isBurnt()) {
-			return be.rightClick(player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+			return be.rightClick(player, InteractionHand.MAIN_HAND, hit);
 		}
 		return InteractionResult.PASS;
 	}
 
 	@Override
-	public void stepOn(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.Entity entity) {
-		if (!level.isClientSide() && entity instanceof net.minecraft.server.level.ServerPlayer sp
+	public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+		if (!level.isClientSide() && entity instanceof ServerPlayer sp
 				&& level.getBlockEntity(pos) instanceof ElectricBlockEntity be && !be.isBurnt()) {
 			be.stepOn(sp);
 		}

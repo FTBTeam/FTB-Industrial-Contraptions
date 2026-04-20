@@ -6,12 +6,14 @@ import dev.ftb.mods.ftbic.block.CableBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.BatteryInventory;
+import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
 import dev.ftb.mods.ftbic.util.CachedEnergyStorage;
 import dev.ftb.mods.ftbic.util.CachedEnergyStorageOrigin;
-import dev.ftb.mods.ftbic.util.EnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.util.ZapEnergyHandler;
 import dev.ftb.mods.ftbic.util.ZapFEConversion;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -24,14 +26,13 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
 
 public class GeneratorBlockEntity extends ElectricBlockEntity {
 	public double maxEnergyOutput;
@@ -41,8 +42,8 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	private long currentElectricNetwork = -1L;
 	private CachedEnergyStorage[] connectedEnergyBlocks;
 	private int[] validConsumerIndices;
-	private BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction>[] fePushCaches;
-	private final Map<Long, BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction>> feFindCaches = new HashMap<>();
+	private BlockCapabilityCache<EnergyHandler, Direction>[] fePushCaches;
+	private final Map<Long, BlockCapabilityCache<EnergyHandler, Direction>> feFindCaches = new HashMap<>();
 
 	public GeneratorBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -185,8 +186,8 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			if (!isValidEnergyOutputSide(dir)) continue;
 			BlockPos npos = worldPosition.relative(dir);
 			BlockEntity nbe = level.getBlockEntity(npos);
-			if (nbe instanceof EnergyHandler) continue;
-			net.neoforged.neoforge.transfer.energy.EnergyHandler fe = fePushCache(serverLevel, dir).getCapability();
+			if (nbe instanceof ZapEnergyHandler) continue;
+			EnergyHandler fe = fePushCache(serverLevel, dir).getCapability();
 			if (fe == null) continue;
 			double zapsAvailable = Math.min(energy, maxEnergyOutputTransfer);
 			int feToOffer = ZapFEConversion.zapsToFEFloor(zapsAvailable);
@@ -206,11 +207,11 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	}
 
 	@SuppressWarnings("unchecked")
-	private BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction> fePushCache(ServerLevel serverLevel, Direction dir) {
+	private BlockCapabilityCache<EnergyHandler, Direction> fePushCache(ServerLevel serverLevel, Direction dir) {
 		if (fePushCaches == null) {
 			fePushCaches = new BlockCapabilityCache[FTBICUtils.DIRECTIONS.length];
 		}
-		BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction> c = fePushCaches[dir.ordinal()];
+		BlockCapabilityCache<EnergyHandler, Direction> c = fePushCaches[dir.ordinal()];
 		if (c == null) {
 			c = BlockCapabilityCache.create(Capabilities.Energy.BLOCK, serverLevel,
 					worldPosition.relative(dir), dir.getOpposite());
@@ -300,7 +301,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 
-		if (entity instanceof EnergyHandler handler && handler != this) {
+		if (entity instanceof ZapEnergyHandler handler && handler != this) {
 			if (handler.getMaxInputEnergy() > 0D && !handler.isBurnt() && handler.isValidEnergyInputSide(direction.getOpposite())) {
 				CachedEnergyStorage s = new CachedEnergyStorage();
 				s.origin = origin;
@@ -316,7 +317,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 		long key = pos.asLong() ^ ((long) direction.ordinal() << 56);
-		BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction> feCache = feFindCaches.get(key);
+		BlockCapabilityCache<EnergyHandler, Direction> feCache = feFindCaches.get(key);
 		if (feCache == null) {
 			feCache = BlockCapabilityCache.create(Capabilities.Energy.BLOCK, serverLevel, pos, direction.getOpposite());
 			feFindCaches.put(key, feCache);

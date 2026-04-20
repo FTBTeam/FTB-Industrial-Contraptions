@@ -2,16 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "ftbic:advanced_alloy",
-    "C": "ftbic:advanced_circuit",
-    "G": "ftbic:reinforced_glass",
-    "M": "ftbic:nuclear_reactor_chamber",
-    "W": "ftbic:reinforced_stone"
+    "B": "minecraft:writable_book",
+    "H": "ftbic:reactor_plating",
+    "P": "ftbic:dense_copper_plate"
   },
   "pattern": [
-    "GCG",
-    "AMA",
-    "GWG"
+    "HPH",
+    "PBP",
+    "HPH"
   ],
   "result": {
     "id": "ftbic:reactor_simulator"

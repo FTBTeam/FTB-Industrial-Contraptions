@@ -1,17 +1,20 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
-import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.screen.AntimatterConstructorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import dev.ftb.mods.ftbic.screen.AntimatterConstructorMenu;
 
 public class AntimatterConstructorBlockEntity extends ElectricBlockEntityRef {
 	public double progress = 0D;
@@ -23,7 +26,7 @@ public class AntimatterConstructorBlockEntity extends ElectricBlockEntityRef {
 	}
 
 	@Override
-	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
 		return new AntimatterConstructorMenu(id, inv, this);
 	}
 
@@ -44,8 +47,8 @@ public class AntimatterConstructorBlockEntity extends ElectricBlockEntityRef {
 	private double boostFor(ItemStack stack) {
 		if (stack.isEmpty() || !(level instanceof ServerLevel server)) return 0D;
 		@SuppressWarnings("unchecked")
-		net.minecraft.world.item.crafting.RecipeType<AntimatterBoostRecipe> type =
-				(net.minecraft.world.item.crafting.RecipeType<AntimatterBoostRecipe>) (net.minecraft.world.item.crafting.RecipeType<?>) FTBICRecipes.ANTIMATTER_BOOST.get();
+		RecipeType<AntimatterBoostRecipe> type =
+				(RecipeType<AntimatterBoostRecipe>) (RecipeType<?>) FTBICRecipes.ANTIMATTER_BOOST.get();
 		for (RecipeHolder<AntimatterBoostRecipe> holder : server.recipeAccess().recipeMap().byType(type)) {
 			if (holder.value().ingredient().test(stack)) {
 				return holder.value().boost();

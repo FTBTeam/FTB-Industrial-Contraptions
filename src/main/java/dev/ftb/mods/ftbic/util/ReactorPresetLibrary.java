@@ -4,8 +4,6 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,7 +15,6 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-@OnlyIn(Dist.CLIENT)
 public final class ReactorPresetLibrary {
 	public static final int MAX_NAME_LENGTH = 64;
 	private static final Pattern NAME_RX = Pattern.compile("[a-z0-9_\\-./]+");

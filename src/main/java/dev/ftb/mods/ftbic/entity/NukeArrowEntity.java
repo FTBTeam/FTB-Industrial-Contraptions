@@ -2,6 +2,8 @@ package dev.ftb.mods.ftbic.entity;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.util.NuclearFallout;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import dev.ftb.mods.ftbic.util.NuclearFallout;
 
 public final class NukeArrowEntity extends AbstractArrow {
 	public NukeArrowEntity(EntityType<? extends NukeArrowEntity> type, Level level) {
@@ -47,7 +48,7 @@ public final class NukeArrowEntity extends AbstractArrow {
 			server.explode(this, null, null, at.x, at.y, at.z,
 					(float) radius, true, Level.ExplosionInteraction.BLOCK);
 			NuclearFallout.apply(server,
-					net.minecraft.core.BlockPos.containing(at), radius);
+					BlockPos.containing(at), radius);
 			kill(server);
 		}
 	}

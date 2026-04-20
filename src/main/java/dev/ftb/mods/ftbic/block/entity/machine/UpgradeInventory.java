@@ -1,5 +1,7 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.item.UpgradeItem;
 import net.minecraft.core.NonNullList;
@@ -72,8 +74,8 @@ public class UpgradeInventory {
 	}
 
 	public record SlotEntry(int slot, ItemStack stack) {
-		public static final com.mojang.serialization.Codec<SlotEntry> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.create(i -> i.group(
-				com.mojang.serialization.Codec.INT.fieldOf("slot").forGetter(SlotEntry::slot),
+		public static final Codec<SlotEntry> CODEC = RecordCodecBuilder.create(i -> i.group(
+				Codec.INT.fieldOf("slot").forGetter(SlotEntry::slot),
 				ItemStack.CODEC.fieldOf("stack").forGetter(SlotEntry::stack)
 		).apply(i, SlotEntry::new));
 	}

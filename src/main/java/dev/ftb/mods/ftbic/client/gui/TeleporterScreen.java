@@ -9,6 +9,7 @@ import dev.ftb.mods.ftbic.screen.TeleporterMenu;
 import dev.ftb.mods.ftbic.util.TeleporterEntry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.core.BlockPos;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -91,7 +92,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 		return s + ellipsis;
 	}
 
-	private String formatEntry(String name, net.minecraft.core.BlockPos pos, ResourceKey<Level> dim) {
+	private String formatEntry(String name, BlockPos pos, ResourceKey<Level> dim) {
 		String base = name + " (" + pos.getX() + "," + pos.getY() + "," + pos.getZ() + ")";
 		ResourceKey<Level> self = myDim();
 		if (self != null && dim != null && dim != self) {

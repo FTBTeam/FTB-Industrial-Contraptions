@@ -12,6 +12,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
@@ -53,9 +54,9 @@ public final class FTBICRecipeSyncHandler {
 				FTBICRecipes.BASIC_GENERATOR_FUEL.get(), FTBICRecipes.ANTIMATTER_BOOST.get(),
 		};
 		for (RecipeType<?> t : types) {
-			out.addAll((java.util.Collection<? extends RecipeHolder<?>>) map.byType((RecipeType) t));
+			out.addAll((Collection<? extends RecipeHolder<?>>) map.byType((RecipeType) t));
 		}
-		out.addAll((java.util.Collection<? extends RecipeHolder<?>>) map.byType((RecipeType) RecipeType.SMELTING));
+		out.addAll((Collection<? extends RecipeHolder<?>>) map.byType((RecipeType) RecipeType.SMELTING));
 		return out;
 	}
 

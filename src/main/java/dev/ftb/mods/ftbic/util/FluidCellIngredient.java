@@ -7,6 +7,7 @@ import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -29,7 +30,7 @@ public record FluidCellIngredient(Fluid fluid) implements ICustomIngredient {
 	).apply(i, FluidCellIngredient::new));
 
 	public static final StreamCodec<RegistryFriendlyByteBuf, FluidCellIngredient> STREAM_CODEC = StreamCodec.composite(
-			ByteBufCodecs.registry(net.minecraft.core.registries.Registries.FLUID), FluidCellIngredient::fluid,
+			ByteBufCodecs.registry(Registries.FLUID), FluidCellIngredient::fluid,
 			FluidCellIngredient::new);
 
 	@Override

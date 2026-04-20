@@ -3,12 +3,14 @@ package dev.ftb.mods.ftbic.block.entity.storage;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.generator.GeneratorBlockEntity;
+import dev.ftb.mods.ftbic.screen.BatteryBoxMenu;
 import dev.ftb.mods.ftbic.util.BatterySlotHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import dev.ftb.mods.ftbic.screen.BatteryBoxMenu;
 
 public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	public BatteryBoxBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
@@ -16,7 +18,7 @@ public class BatteryBoxBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
-	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
 		return new BatteryBoxMenu(id, inv, this);
 	}
 

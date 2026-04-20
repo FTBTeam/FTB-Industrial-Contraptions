@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.item;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.item.reactor.CoolantItem;
 import dev.ftb.mods.ftbic.item.reactor.FuelRodItem;
@@ -11,29 +12,34 @@ import dev.ftb.mods.ftbic.item.reactor.NeutronReflectorItem;
 import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Unit;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.equipment.ArmorMaterials;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
-import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 
 public interface FTBICItems {
 	DeferredRegister.Items REGISTRY = DeferredRegister.createItems(FTBIC.MOD_ID);
 	List<MaterialItem> MATERIALS = new ArrayList<>();
 
-	static Item.Properties props(net.minecraft.resources.Identifier name) {
+	static Item.Properties props(Identifier name) {
 		return new Item.Properties().setId(ResourceKey.create(Registries.ITEM, name));
 	}
 
-	static double safeGet(net.neoforged.neoforge.common.ModConfigSpec.DoubleValue value, double fallback) {
+	static double safeGet(ModConfigSpec.DoubleValue value, double fallback) {
 		try {
 			return value.get();
 		} catch (IllegalStateException e) {
@@ -175,38 +181,34 @@ public interface FTBICItems {
 	DeferredItem<Item> TRANSFORMER_UPGRADE = REGISTRY.register("transformer_upgrade", name -> new UpgradeItem(props(name), 4));
 	DeferredItem<Item> EJECTOR_UPGRADE = REGISTRY.register("ejector_upgrade", name -> new UpgradeItem(props(name), 1));
 
-	// Armor + elytra — use Item.Properties.humanoidArmor() so the items equip into the right slot
-	// without needing the legacy ArmorItem class. Material picks vanilla DIAMOND for Carbon and
-	// NETHERITE for Quantum (durability + base defense values); per-tick energy absorption is
-	// applied on top by EnergyArmorDamageHandler.
 	DeferredItem<Item> MECHANICAL_ELYTRA = REGISTRY.register("mechanical_elytra", name ->
 			new MechanicalElytraItem(props(name)
-					.component(net.minecraft.core.component.DataComponents.GLIDER, net.minecraft.util.Unit.INSTANCE)
-					.humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.IRON,
-							net.minecraft.world.item.equipment.ArmorType.CHESTPLATE)));
+					.component(DataComponents.GLIDER, Unit.INSTANCE)
+					.humanoidArmor(ArmorMaterials.IRON,
+							ArmorType.CHESTPLATE)));
 	DeferredItem<Item> CARBON_HELMET = REGISTRY.register("carbon_helmet", name ->
-			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.DIAMOND,
-					net.minecraft.world.item.equipment.ArmorType.HELMET), EnergyArmorMaterial.CARBON, EquipmentSlot.HEAD));
+			new DummyEnergyArmorItem(props(name).humanoidArmor(ArmorMaterials.DIAMOND,
+					ArmorType.HELMET), EnergyArmorMaterial.CARBON, EquipmentSlot.HEAD));
 	DeferredItem<Item> CARBON_CHESTPLATE = REGISTRY.register("carbon_chestplate", name ->
-			new EnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.DIAMOND,
-					net.minecraft.world.item.equipment.ArmorType.CHESTPLATE), EnergyArmorMaterial.CARBON));
+			new EnergyArmorItem(props(name).humanoidArmor(ArmorMaterials.DIAMOND,
+					ArmorType.CHESTPLATE), EnergyArmorMaterial.CARBON));
 	DeferredItem<Item> CARBON_LEGGINGS = REGISTRY.register("carbon_leggings", name ->
-			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.DIAMOND,
-					net.minecraft.world.item.equipment.ArmorType.LEGGINGS), EnergyArmorMaterial.CARBON, EquipmentSlot.LEGS));
+			new DummyEnergyArmorItem(props(name).humanoidArmor(ArmorMaterials.DIAMOND,
+					ArmorType.LEGGINGS), EnergyArmorMaterial.CARBON, EquipmentSlot.LEGS));
 	DeferredItem<Item> CARBON_BOOTS = REGISTRY.register("carbon_boots", name ->
-			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.DIAMOND,
-					net.minecraft.world.item.equipment.ArmorType.BOOTS), EnergyArmorMaterial.CARBON, EquipmentSlot.FEET));
+			new DummyEnergyArmorItem(props(name).humanoidArmor(ArmorMaterials.DIAMOND,
+					ArmorType.BOOTS), EnergyArmorMaterial.CARBON, EquipmentSlot.FEET));
 	DeferredItem<Item> QUANTUM_HELMET = REGISTRY.register("quantum_helmet", name ->
-			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.NETHERITE,
-					net.minecraft.world.item.equipment.ArmorType.HELMET), EnergyArmorMaterial.QUANTUM, EquipmentSlot.HEAD));
+			new DummyEnergyArmorItem(props(name).humanoidArmor(ArmorMaterials.NETHERITE,
+					ArmorType.HELMET), EnergyArmorMaterial.QUANTUM, EquipmentSlot.HEAD));
 	DeferredItem<Item> QUANTUM_CHESTPLATE = REGISTRY.register("quantum_chestplate", name ->
-			new EnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.NETHERITE,
-					net.minecraft.world.item.equipment.ArmorType.CHESTPLATE), EnergyArmorMaterial.QUANTUM));
+			new EnergyArmorItem(props(name).humanoidArmor(ArmorMaterials.NETHERITE,
+					ArmorType.CHESTPLATE), EnergyArmorMaterial.QUANTUM));
 	DeferredItem<Item> QUANTUM_LEGGINGS = REGISTRY.register("quantum_leggings", name ->
-			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.NETHERITE,
-					net.minecraft.world.item.equipment.ArmorType.LEGGINGS), EnergyArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
+			new DummyEnergyArmorItem(props(name).humanoidArmor(ArmorMaterials.NETHERITE,
+					ArmorType.LEGGINGS), EnergyArmorMaterial.QUANTUM, EquipmentSlot.LEGS));
 	DeferredItem<Item> QUANTUM_BOOTS = REGISTRY.register("quantum_boots", name ->
-			new DummyEnergyArmorItem(props(name).humanoidArmor(net.minecraft.world.item.equipment.ArmorMaterials.NETHERITE,
-					net.minecraft.world.item.equipment.ArmorType.BOOTS), EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
+			new DummyEnergyArmorItem(props(name).humanoidArmor(ArmorMaterials.NETHERITE,
+					ArmorType.BOOTS), EnergyArmorMaterial.QUANTUM, EquipmentSlot.FEET));
 	DeferredItem<Item> NUKE_ARROW = REGISTRY.register("nuke_arrow", name -> new NukeArrowItem(props(name)));
 }

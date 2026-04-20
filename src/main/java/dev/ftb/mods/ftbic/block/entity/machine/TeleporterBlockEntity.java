@@ -293,7 +293,7 @@ public class TeleporterBlockEntity extends GeneratorBlockEntity {
 		energy -= use;
 		player.teleportTo(linkedLevel,
 				linkedPos.getX() + 0.5D, linkedPos.getY() + 1.1D, linkedPos.getZ() + 0.5D,
-				java.util.Collections.emptySet(),
+				Collections.emptySet(),
 				direction.toYRot() + 90F, 0F, true);
 		level.playSound(null, worldPosition.getX() + 0.5, worldPosition.getY() + 1.5, worldPosition.getZ() + 0.5,
 				SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 1F, 1F);

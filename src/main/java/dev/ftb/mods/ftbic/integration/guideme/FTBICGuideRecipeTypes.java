@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,15 +44,15 @@ public class FTBICGuideRecipeTypes implements RecipeTypeMappingSupplier {
 				h -> buildMachineBox(FTBICRecipes.EXTRUDING, FTBICElectricBlocks.EXTRUDER, h));
 
 		@SuppressWarnings("unchecked")
-		net.minecraft.world.item.crafting.RecipeType<BasicGeneratorFuelRecipe> fuelType =
-				(net.minecraft.world.item.crafting.RecipeType<BasicGeneratorFuelRecipe>)
-						(net.minecraft.world.item.crafting.RecipeType<?>) FTBICRecipes.BASIC_GENERATOR_FUEL.get();
+		RecipeType<BasicGeneratorFuelRecipe> fuelType =
+				(RecipeType<BasicGeneratorFuelRecipe>)
+						(RecipeType<?>) FTBICRecipes.BASIC_GENERATOR_FUEL.get();
 		mappings.add(fuelType, this::buildFuelBox);
 
 		@SuppressWarnings("unchecked")
-		net.minecraft.world.item.crafting.RecipeType<AntimatterBoostRecipe> boostType =
-				(net.minecraft.world.item.crafting.RecipeType<AntimatterBoostRecipe>)
-						(net.minecraft.world.item.crafting.RecipeType<?>) FTBICRecipes.ANTIMATTER_BOOST.get();
+		RecipeType<AntimatterBoostRecipe> boostType =
+				(RecipeType<AntimatterBoostRecipe>)
+						(RecipeType<?>) FTBICRecipes.ANTIMATTER_BOOST.get();
 		mappings.add(boostType, this::buildBoostBox);
 	}
 

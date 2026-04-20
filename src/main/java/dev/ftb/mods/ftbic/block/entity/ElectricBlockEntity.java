@@ -1,10 +1,12 @@
 package dev.ftb.mods.ftbic.block.entity;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.screen.MachineMenu;
-import dev.ftb.mods.ftbic.util.EnergyHandler;
+import dev.ftb.mods.ftbic.util.ZapEnergyHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -41,7 +43,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
+public class ElectricBlockEntity extends BlockEntity implements ZapEnergyHandler {
 	private static final ConcurrentHashMap<ResourceKey<Level>, AtomicLong> ELECTRIC_NETWORK_CHANGES = new ConcurrentHashMap<>();
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
@@ -239,7 +241,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 			setChanged();
 		}
 		active = false;
-		changeStateTicks = dev.ftb.mods.ftbic.FTBICConfig.MACHINES.STATE_UPDATE_TICKS.get();
+		changeStateTicks = FTBICConfig.MACHINES.STATE_UPDATE_TICKS.get();
 	}
 
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
@@ -312,7 +314,7 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
 	}
 
 	public record SlotStack(int slot, ItemStack stack) {
-		public static final Codec<SlotStack> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.create(i -> i.group(
+		public static final Codec<SlotStack> CODEC = RecordCodecBuilder.create(i -> i.group(
 				Codec.INT.fieldOf("Slot").forGetter(SlotStack::slot),
 				ItemStack.CODEC.fieldOf("Item").forGetter(SlotStack::stack)
 		).apply(i, SlotStack::new));

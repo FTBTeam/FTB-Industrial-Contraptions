@@ -4,15 +4,17 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.generator.*;
 import dev.ftb.mods.ftbic.block.entity.machine.*;
 import dev.ftb.mods.ftbic.block.entity.storage.*;
+import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.ArrayList;
 import java.util.List;
-import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 
 public interface FTBICElectricBlocks {
 	List<ElectricBlockInstance> ALL = new ArrayList<>();
 
-	static ElectricBlockInstance register(String id, net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier<net.minecraft.world.level.block.entity.BlockEntity> supplier) {
+	static ElectricBlockInstance register(String id, BlockEntityType.BlockEntitySupplier<BlockEntity> supplier) {
 		ElectricBlockInstance instance = new ElectricBlockInstance(id, supplier);
 		ALL.add(instance);
 		return instance;

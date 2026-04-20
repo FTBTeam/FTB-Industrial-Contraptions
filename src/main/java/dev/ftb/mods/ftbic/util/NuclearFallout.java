@@ -5,10 +5,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.Random;
 
@@ -43,7 +45,7 @@ public final class NuclearFallout {
 
 				BlockState replacement = falloutFor(state, level, pos, rng);
 				if (replacement == null) continue;
-				level.setBlock(pos, replacement, net.minecraft.world.level.block.Block.UPDATE_CLIENTS);
+				level.setBlock(pos, replacement, Block.UPDATE_CLIENTS);
 
 				// Occasional fire on top of burnt stone.
 				if ((replacement == Blocks.MAGMA_BLOCK.defaultBlockState()
@@ -52,14 +54,14 @@ public final class NuclearFallout {
 						&& rng.nextInt(8) == 0) {
 					BlockPos above = pos.above();
 					if (level.getBlockState(above).isAir()) {
-						level.setBlock(above, fire, net.minecraft.world.level.block.Block.UPDATE_CLIENTS);
+						level.setBlock(above, fire, Block.UPDATE_CLIENTS);
 					}
 				}
 
 				// Exfluid pool replaces shallow water/lava puddles.
 				if (rng.nextInt(40) == 0
-						&& level.getFluidState(pos.above()).getType() != net.minecraft.world.level.material.Fluids.EMPTY) {
-					level.setBlock(pos.above(), exfluid, net.minecraft.world.level.block.Block.UPDATE_CLIENTS);
+						&& level.getFluidState(pos.above()).getType() != Fluids.EMPTY) {
+					level.setBlock(pos.above(), exfluid, Block.UPDATE_CLIENTS);
 				}
 			}
 		}

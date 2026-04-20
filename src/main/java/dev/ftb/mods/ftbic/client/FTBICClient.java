@@ -20,6 +20,7 @@ import dev.ftb.mods.ftbic.client.renderer.DiggingBeamRenderer;
 import dev.ftb.mods.ftbic.client.renderer.NukeArrowRenderer;
 import dev.ftb.mods.ftbic.entity.FTBICEntities;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -50,12 +51,12 @@ public final class FTBICClient {
 	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(FTBICEntities.NUKE_ARROW.get(), NukeArrowRenderer::new);
 		@SuppressWarnings("unchecked")
-		net.minecraft.world.level.block.entity.BlockEntityType<DiggingBaseBlockEntity> quarryType =
-				(net.minecraft.world.level.block.entity.BlockEntityType<DiggingBaseBlockEntity>)
+		BlockEntityType<DiggingBaseBlockEntity> quarryType =
+				(BlockEntityType<DiggingBaseBlockEntity>)
 						(Object) FTBICElectricBlocks.QUARRY.blockEntity.get();
 		@SuppressWarnings("unchecked")
-		net.minecraft.world.level.block.entity.BlockEntityType<DiggingBaseBlockEntity> pumpType =
-				(net.minecraft.world.level.block.entity.BlockEntityType<DiggingBaseBlockEntity>)
+		BlockEntityType<DiggingBaseBlockEntity> pumpType =
+				(BlockEntityType<DiggingBaseBlockEntity>)
 						(Object) FTBICElectricBlocks.PUMP.blockEntity.get();
 		event.registerBlockEntityRenderer(quarryType, DiggingBeamRenderer::new);
 		event.registerBlockEntityRenderer(pumpType, DiggingBeamRenderer::new);

@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.block;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -16,7 +17,7 @@ import java.util.List;
 public interface FTBICBlocks {
 	DeferredRegister.Blocks REGISTRY = DeferredRegister.createBlocks(FTBIC.MOD_ID);
 
-	static BlockBehaviour.Properties props(net.minecraft.resources.Identifier name) {
+	static BlockBehaviour.Properties props(Identifier name) {
 		return BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, name));
 	}
 

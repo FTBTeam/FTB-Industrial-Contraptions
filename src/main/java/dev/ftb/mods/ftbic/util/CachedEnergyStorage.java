@@ -4,6 +4,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public final class CachedEnergyStorage {
@@ -12,8 +13,8 @@ public final class CachedEnergyStorage {
 	public CachedEnergyStorageOrigin origin;
 	public int distance;
 	public BlockEntity blockEntity;
-	public EnergyHandler energyHandler;
-	public BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction> feHandlerCache;
+	public ZapEnergyHandler energyHandler;
+	public BlockCapabilityCache<EnergyHandler, Direction> feHandlerCache;
 
 	@Override
 	public int hashCode() {

@@ -1,10 +1,14 @@
 package dev.ftb.mods.ftbic.item;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -14,7 +18,6 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Consumer;
-import dev.ftb.mods.ftbic.registry.ModDataComponents;
 
 public class MechanicalElytraItem extends Item implements EnergyItemHandler {
 	public MechanicalElytraItem(Properties props) {
@@ -37,8 +40,8 @@ public class MechanicalElytraItem extends Item implements EnergyItemHandler {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
-		if (slot != net.minecraft.world.entity.EquipmentSlot.CHEST) return;
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, EquipmentSlot slot) {
+		if (slot != EquipmentSlot.CHEST) return;
 		if (!(entity instanceof LivingEntity le)) return;
 
 		if (le.isFallFlying()) {

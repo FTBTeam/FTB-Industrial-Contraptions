@@ -1,10 +1,11 @@
 package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
-import dev.ftb.mods.ftbic.util.EnergyHandler;
+import dev.ftb.mods.ftbic.util.ZapEnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -60,7 +61,7 @@ public class CableBlock extends BaseCableBlock {
 		}
 		if (!state.isAir()) {
 			BlockEntity be = world.getBlockEntity(pos);
-			if (be instanceof EnergyHandler) {
+			if (be instanceof ZapEnergyHandler) {
 				return true;
 			}
 			if (world instanceof Level lvl && !lvl.isClientSide()
@@ -96,7 +97,7 @@ public class CableBlock extends BaseCableBlock {
 	}
 
 	@Override
-	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean movedByPiston) {
+	protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
 		ElectricBlockEntity.electricNetworkUpdated(level, pos);
 	}
 }

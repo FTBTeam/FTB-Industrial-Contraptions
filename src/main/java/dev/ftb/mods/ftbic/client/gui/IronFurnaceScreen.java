@@ -12,6 +12,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.RecipeType;
 
+import java.util.List;
+
 public class IronFurnaceScreen extends AbstractContainerScreen<IronFurnaceMenu> {
 	private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath("minecraft", "textures/gui/container/furnace.png");
 	private static final Identifier LIT_PROGRESS_SPRITE = Identifier.fromNamespaceAndPath("minecraft", "container/furnace/lit_progress");
@@ -55,7 +57,7 @@ public class IronFurnaceScreen extends AbstractContainerScreen<IronFurnaceMenu> 
 		int mx = (int) event.x();
 		int my = (int) event.y();
 		if (isInArrow(mx, my)) {
-			ClientRecipeCache.showRecipesForTypes(java.util.List.of(RecipeType.SMELTING));
+			ClientRecipeCache.showRecipesForTypes(List.of(RecipeType.SMELTING));
 			return true;
 		}
 		return super.mouseClicked(event, dragging);

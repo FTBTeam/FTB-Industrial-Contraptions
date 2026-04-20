@@ -111,10 +111,8 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.carbon_leggings", "Carbon Leggings");
 		add("item.ftbic.carbon_plate", "Carbon Plate");
 		add("item.ftbic.centrifuge", "Centrifuge");
-		add("item.ftbic.charcoal_dust", "Charcoal Dust");
 		add("item.ftbic.charge_pad", "Charge Pad");
 		add("item.ftbic.coal_ball", "Coal Ball");
-		add("item.ftbic.coal_dust", "Coal Dust");
 		add("item.ftbic.component_heat_exchanger", "Component Heat Exchanger");
 		add("item.ftbic.component_heat_vent", "Component Heat Vent");
 		add("item.ftbic.compressed_coal_ball", "Compressed Coal Ball");
@@ -124,12 +122,10 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.creative_battery", "Creative Battery");
 		add("item.ftbic.dark_spray_paint_can", "Spray Paint Can (Dark)");
 		add("item.ftbic.dense_copper_plate", "Dense Copper Plate");
-		add("item.ftbic.diamond_dust", "Diamond Dust");
 		add("item.ftbic.dual_uranium_fuel_rod", "Dual Uranium Fuel Rod");
 		add("item.ftbic.ejector_upgrade", "Ejector Upgrade");
 		add("item.ftbic.electronic_circuit", "Electronic Circuit");
 		add("item.ftbic.empty_can", "Empty Can");
-		add("item.ftbic.ender_dust", "Ender Dust");
 		add("item.ftbic.enderium_block", "Block of Enderium");
 		add("item.ftbic.enderium_dust", "Enderium Dust");
 		add("item.ftbic.enderium_gear", "Enderium Gear");
@@ -207,7 +203,6 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.nuclear_reactor_chamber", "Nuclear Reactor Chamber");
 		add("item.ftbic.nuke", "Nuke");
 		add("item.ftbic.nuke_arrow", "Nuke Arrow");
-		add("item.ftbic.obsidian_dust", "Obsidian Dust");
 		add("item.ftbic.overclocked_heat_vent", "Overclocked Heat Vent");
 		add("item.ftbic.overclocker_upgrade", "Overclocker Upgrade");
 		add("item.ftbic.powered_crafting_table", "Powered Crafting Table");

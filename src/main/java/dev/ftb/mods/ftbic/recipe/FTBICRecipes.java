@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.recipe;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -41,7 +42,7 @@ public final class FTBICRecipes {
 					() -> new RecipeSerializer<>(AntimatterBoostRecipe.CODEC, AntimatterBoostRecipe.STREAM_CODEC)));
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private static <T extends net.minecraft.world.item.crafting.Recipe<?>> DeferredHolder<RecipeSerializer<?>, RecipeSerializer<T>> castSerializer(DeferredHolder<RecipeSerializer<?>, ? extends RecipeSerializer<?>> raw) {
+	private static <T extends Recipe<?>> DeferredHolder<RecipeSerializer<?>, RecipeSerializer<T>> castSerializer(DeferredHolder<RecipeSerializer<?>, ? extends RecipeSerializer<?>> raw) {
 		return (DeferredHolder) raw;
 	}
 

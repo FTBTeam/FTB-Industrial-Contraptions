@@ -2,9 +2,11 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.state.BlockState;
 import dev.ftb.mods.ftbic.screen.SolarPanelMenu;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 	public SolarPanelBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
@@ -12,7 +14,7 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
 	}
 
 	@Override
-	public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv) {
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
 		return new SolarPanelMenu(id, inv, this);
 	}
 

@@ -8,6 +8,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.RecipeType;
 
+import java.util.List;
+
 public class MachineScreen extends ElectricBlockScreen<MachineMenu> {
 	public MachineScreen(MachineMenu menu, Inventory inv, Component title) {
 		super(menu, inv, title);
@@ -59,7 +61,7 @@ public class MachineScreen extends ElectricBlockScreen<MachineMenu> {
 		int mx = (int) event.x();
 		int my = (int) event.y();
 		if (drawDefaultArrow && isIn(mx, my, leftPos + 80, topPos + 34, 24, 17)) {
-			java.util.List<RecipeType<?>> types = this.menu.getJeiRecipeTypes();
+			List<RecipeType<?>> types = this.menu.getJeiRecipeTypes();
 			if (!types.isEmpty()) {
 				ClientRecipeCache.showRecipesForTypes(types);
 				return true;
