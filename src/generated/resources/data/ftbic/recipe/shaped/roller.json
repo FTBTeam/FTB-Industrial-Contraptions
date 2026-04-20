@@ -1,34 +1,13 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:and",
-      "values": [
-        {
-          "type": "neoforge:not",
-          "value": {
-            "type": "neoforge:tag_empty",
-            "tag": "c:gears/aluminum"
-          }
-        },
-        {
-          "type": "ftbmaterials:components_available",
-          "used_materials": [
-            "aluminum_gear"
-          ]
-        }
-      ]
-    }
-  ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
     "C": "ftbic:electronic_circuit",
-    "H": "#c:gears/aluminum",
     "M": "ftbic:machine_block",
     "P": "minecraft:piston"
   },
   "pattern": [
-    "HCH",
+    "PCP",
     "PMP"
   ],
   "result": {
