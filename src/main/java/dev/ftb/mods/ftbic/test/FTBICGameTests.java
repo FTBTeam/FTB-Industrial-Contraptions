@@ -68,6 +68,15 @@ public class FTBICGameTests {
 		reg(event, "battery_box_charges_output_battery", FTBICGameTestFunctions::batteryBoxChargesOutputBattery, env, 200);
 		reg(event, "battery_box_output_face_only", FTBICGameTestFunctions::batteryBoxOutputFaceOnly, env, 100);
 		reg(event, "transformer_face_geometry", FTBICGameTestFunctions::transformerFaceGeometry, env, 100);
+		reg(event, "energy_tier_transfer_rates_match_config", FTBICGameTestFunctions::energyTierTransferRatesMatchConfig, env, 20);
+		reg(event, "lv_cable_survives_within_rate", FTBICGameTestFunctions::lvCableSurvivesWithinRate, env, 200);
+		reg(event, "lv_cable_burns_when_overloaded", FTBICGameTestFunctions::lvCableBurnsWhenOverloaded, env, 200);
+		reg(event, "transformer_steps_mv_down_to_lv", FTBICGameTestFunctions::transformerStepsMvDownToLv, env, 200);
+		reg(event, "rectifier_converts_fe_to_zaps", FTBICGameTestFunctions::rectifierConvertsFeToZaps, env, 100);
+		reg(event, "rectifier_feeds_downstream_machine", FTBICGameTestFunctions::rectifierFeedsDownstreamMachine, env, 200);
+		reg(event, "rectifier_face_geometry", FTBICGameTestFunctions::rectifierFaceGeometry, env, 100);
+		reg(event, "rectifier_roundtrip_conserves_energy", FTBICGameTestFunctions::rectifierRoundtripConservesEnergy, env, 200);
+		reg(event, "rectifier_fe_insert_is_transactional", FTBICGameTestFunctions::rectifierFeInsertIsTransactional, env, 100);
 		reg(event, "cable_connects_gen_to_machine", FTBICGameTestFunctions::cableConnectsGenToMachine, env, 200);
 		reg(event, "burnt_cable_does_not_conduct", FTBICGameTestFunctions::burntCableDoesNotConduct, env, 200);
 		reg(event, "burnt_cable_state_retains_cable_shape", FTBICGameTestFunctions::burntCableStateRetainsCableShape, env, 100);

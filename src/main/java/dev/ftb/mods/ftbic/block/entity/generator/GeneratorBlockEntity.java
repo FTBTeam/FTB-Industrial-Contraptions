@@ -27,6 +27,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 import java.util.HashSet;
 import java.util.Set;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
 
 public class GeneratorBlockEntity extends ElectricBlockEntity {
@@ -36,6 +37,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	public final BatteryInventory chargeBatteryInventory;
 	private long currentElectricNetwork = -1L;
 	private CachedEnergyStorage[] connectedEnergyBlocks;
+	private int[] validConsumerIndices;
 	private BlockCapabilityCache<net.neoforged.neoforge.transfer.energy.EnergyHandler, Direction>[] fePushCaches;
 
 	public GeneratorBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
@@ -105,12 +107,20 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		}
 
 		CachedEnergyStorage[] blocks = getConnectedEnergyBlocks();
+		if (blocks.length == 0) {
+			return;
+		}
+		if (validConsumerIndices == null || validConsumerIndices.length < blocks.length) {
+			validConsumerIndices = new int[blocks.length];
+		}
+		int[] valid = validConsumerIndices;
 		int validBlocks = 0;
-		for (CachedEnergyStorage storage : blocks) {
+		for (int i = 0; i < blocks.length; i++) {
+			CachedEnergyStorage storage = blocks[i];
 			if (storage.isInvalid()) {
 				electricNetworkUpdated(level, storage.blockEntity.getBlockPos());
 			} else if (storage.shouldReceiveEnergy()) {
-				validBlocks++;
+				valid[validBlocks++] = i;
 			}
 		}
 
@@ -119,12 +129,10 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		}
 
 		double share = transferable / validBlocks;
-		for (CachedEnergyStorage storage : blocks) {
-			if (storage.isInvalid() || !storage.shouldReceiveEnergy()) {
-				continue;
-			}
-			if (storage.origin.cableTier != null && storage.origin.cableTier.transferRate() < share) {
-				// Overload — burn the weakest cable.
+		boolean changed = false;
+		for (int vi = 0; vi < validBlocks; vi++) {
+			CachedEnergyStorage storage = blocks[valid[vi]];
+			if (storage.origin.cableTransferRate < share) {
 				level.setBlock(storage.origin.cablePos,
 						BurntCableBlock.getBurntCable(level.getBlockState(storage.origin.cablePos)),
 						3);
@@ -137,11 +145,14 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			if (accepted > 0D) {
 				energy -= accepted;
 				active = true;
-				setChanged();
+				changed = true;
 			}
 			if (energy < share) {
 				break;
 			}
+		}
+		if (changed) {
+			setChanged();
 		}
 	}
 
@@ -218,14 +229,15 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		}
 
 		Set<CachedEnergyStorage> set = new HashSet<>();
-		Set<BlockPos> traversed = new HashSet<>();
-		traversed.add(worldPosition);
+		LongOpenHashSet traversed = new LongOpenHashSet();
+		traversed.add(worldPosition.asLong());
+		int maxCableLength = FTBICConfig.ENERGY.MAX_CABLE_LENGTH.get();
 
 		for (Direction direction : FTBICUtils.DIRECTIONS) {
 			if (isValidEnergyOutputSide(direction)) {
 				CachedEnergyStorageOrigin origin = new CachedEnergyStorageOrigin();
 				origin.direction = direction;
-				find(traversed, set, origin, 0, worldPosition, direction);
+				find(traversed, set, origin, 0, maxCableLength, worldPosition, direction);
 			}
 		}
 
@@ -234,27 +246,29 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		return connectedEnergyBlocks;
 	}
 
-	private void find(Set<BlockPos> traversed, Set<CachedEnergyStorage> set, CachedEnergyStorageOrigin origin,
-			int distance, BlockPos currentPos, Direction direction) {
-		if (level == null || distance > FTBICConfig.ENERGY.MAX_CABLE_LENGTH.get()) {
+	private void find(LongOpenHashSet traversed, Set<CachedEnergyStorage> set, CachedEnergyStorageOrigin origin,
+			int distance, int maxCableLength, BlockPos currentPos, Direction direction) {
+		if (level == null || distance > maxCableLength) {
 			return;
 		}
 
 		BlockPos pos = currentPos.relative(direction);
-		if (!traversed.add(pos)) {
+		if (!traversed.add(pos.asLong())) {
 			return;
 		}
 
 		BlockState state = level.getBlockState(pos);
 
 		if (state.getBlock() instanceof CableBlock cableBlock) {
-			if (origin.cableTier == null || cableBlock.tier.transferRate() < origin.cableTier.transferRate()) {
+			double rate = cableBlock.tier.transferRate();
+			if (rate < origin.cableTransferRate) {
 				origin.cableTier = cableBlock.tier;
+				origin.cableTransferRate = rate;
 				origin.cablePos = pos;
 			}
 			for (Direction dir : FTBICUtils.DIRECTIONS) {
 				if (state.getValue(CableBlock.CONNECTION[dir.get3DDataValue()])) {
-					find(traversed, set, origin, distance + 1, pos, dir);
+					find(traversed, set, origin, distance + 1, maxCableLength, pos, dir);
 				}
 			}
 			return;
@@ -262,7 +276,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
 		if (state.getBlock() instanceof NuclearReactorChamberBlock) {
 			for (Direction dir : FTBICUtils.DIRECTIONS) {
-				find(traversed, set, origin, distance + 1, pos, dir);
+				find(traversed, set, origin, distance + 1, maxCableLength, pos, dir);
 			}
 			return;
 		}

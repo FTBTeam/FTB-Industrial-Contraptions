@@ -84,8 +84,6 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	@Override
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.@org.jetbrains.annotations.Nullable LivingEntity placer, net.minecraft.world.item.ItemStack stack) {
 		super.setPlacedBy(level, pos, state, placer, stack);
-		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("Landmark.setPlacedBy at {} side={} placer={}",
-				pos, level.isClientSide() ? "CLIENT" : "SERVER", placer);
 		if (!level.isClientSide()) {
 			triggerNearbyResize(level, pos, placer instanceof Player p ? p : null);
 		}
@@ -94,15 +92,12 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 	@Override
 	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean movedByPiston) {
 		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
-		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("Landmark.affectNeighborsAfterRemoval at {}", pos);
 		triggerNearbyResize(level, pos, null);
 	}
 
 	private static void triggerNearbyResize(Level level, BlockPos pos, @org.jetbrains.annotations.Nullable Player player) {
 		if (!(level instanceof net.minecraft.server.level.ServerLevel server)) return;
-		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("Landmark.triggerNearbyResize at {}", pos);
 		int radius = 128;
-		int hits = 0;
 		int minChunkX = (pos.getX() - radius) >> 4;
 		int maxChunkX = (pos.getX() + radius) >> 4;
 		int minChunkZ = (pos.getZ() - radius) >> 4;
@@ -117,11 +112,8 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 					if (Math.abs(bePos.getY() - pos.getY()) > 128) continue;
 					if (chunk.getBlockEntity(bePos) instanceof DiggingBaseBlockEntity dig) {
 						if (!dig.hasAnchorLandmark()) {
-							dev.ftb.mods.ftbic.FTBIC.LOGGER.info("  found DiggingBase at {} but no anchor landmark; skipping", bePos);
 							continue;
 						}
-						hits++;
-						dev.ftb.mods.ftbic.FTBIC.LOGGER.info("  found DiggingBase at {} with anchor; calling resize()", bePos);
 						dig.resize();
 						if (player != null) {
 							String machine = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(dig.getBlockState().getBlock()).getPath();
@@ -134,7 +126,6 @@ public class LandmarkBlock extends Block implements SimpleWaterloggedBlock {
 				}
 			}
 		}
-		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("Landmark.triggerNearbyResize done — {} machines updated", hits);
 	}
 
 }

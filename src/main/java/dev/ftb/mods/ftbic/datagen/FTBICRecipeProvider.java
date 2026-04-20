@@ -828,7 +828,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("recycler", ftbicStack("reprocessor", 1), new String[] {"MDM", "MCM"}, 'D', i("minecraft:composter"), 'C', i("ftbic:compressor"), 'M', i("ftbic:industrial_grade_metal"));
 		shaped("reinforced_glass", ftbicStack("reinforced_glass", 4), new String[] {"RGR", "G G", "RGR"}, 'R', i("ftbic:reinforced_stone"), 'G', commonOrTag("c:glass_blocks/colorless"));
 		shaped("reinforced_stone", ftbicStack("reinforced_stone", 4), new String[] {"SSS", "SAS", "SSS"}, 'S', i("minecraft:smooth_stone"), 'A', i("ftbic:advanced_alloy"));
-		shaped("roller", ftbicStack("roller", 1), new String[] {"HCH", "PMP"}, 'H', commonOrTag("c:gears/aluminum"), 'P', i("minecraft:piston"), 'M', i("ftbic:machine_block"), 'C', i("ftbic:electronic_circuit"));
+		shaped("roller", ftbicStack("roller", 1), new String[] {"PCP", "PMP"}, 'P', i("minecraft:piston"), 'M', i("ftbic:machine_block"), 'C', i("ftbic:electronic_circuit"));
 		shaped("rubber_sheet", ftbicStack("rubber_sheet", 1), new String[] {"III"}, 'I', i("ftbic:rubber"));
 		shaped("scrap_box", ftbicStack("scrap_box", 1), new String[] {"SSS", "SSS", "SSS"}, 'S', i("ftbic:scrap"));
 		shaped("single_use_battery", ftbicStack("single_use_battery", 1), new String[] {"C", "R", "O"}, 'C', i("ftbic:lv_cable"), 'O', commonOrTag("minecraft:coals"), 'R', commonOrTag("c:dusts/redstone"));

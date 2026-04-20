@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -29,18 +30,25 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import dev.ftb.mods.ftbic.screen.MachineMenu;
 
 public class ElectricBlockEntity extends BlockEntity implements EnergyHandler {
-	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
+	private static final ConcurrentHashMap<ResourceKey<Level>, AtomicLong> ELECTRIC_NETWORK_CHANGES = new ConcurrentHashMap<>();
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
-		ELECTRIC_NETWORK_CHANGES.incrementAndGet();
+		if (level instanceof Level l) {
+			ELECTRIC_NETWORK_CHANGES.computeIfAbsent(l.dimension(), k -> new AtomicLong()).incrementAndGet();
+		}
 	}
 
 	public static long getCurrentElectricNetwork(LevelAccessor level, BlockPos pos) {
-		return ELECTRIC_NETWORK_CHANGES.get();
+		if (level instanceof Level l) {
+			AtomicLong counter = ELECTRIC_NETWORK_CHANGES.get(l.dimension());
+			return counter == null ? 0L : counter.get();
+		}
+		return 0L;
 	}
 
 	public final ElectricBlockInstance electricBlockInstance;

@@ -126,7 +126,6 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 			int my = findMinableY(mx, mz);
 
 			if (my == INVALID_Y) {
-				dev.ftb.mods.ftbic.FTBIC.LOGGER.info("DiggingBase.tick at {} skipping col=({},{}) row={} (no minable Y)", worldPosition, mx, mz, row);
 				skippedBlocks++;
 				if (skippedBlocks >= area * 2) {
 					paused = true;
@@ -135,7 +134,6 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 			} else {
 				BlockPos miningPos = new BlockPos(mx, my, mz);
 				BlockState state = level.getBlockState(miningPos);
-				dev.ftb.mods.ftbic.FTBIC.LOGGER.info("DiggingBase.tick at {} mining {} at {} (col={} row={} of {}x{})", worldPosition, state.getBlock(), miningPos, col, row, interiorW, interiorD);
 				skippedBlocks = 0;
 				laserX = (float) (offsetX + 1 + col + 0.5);
 				laserZ = (float) (offsetZ + 1 + row + 0.5);
@@ -256,13 +254,10 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 						mut.set(qx + dx, y, qz + dz);
 						if (level.getBlockState(mut).getBlock() == landmark) {
 							marks.add(mut.immutable());
-							dev.ftb.mods.ftbic.FTBIC.LOGGER.info("  resize scan -> FOUND landmark at {}", mut);
 						}
 					}
 				}
 			}
-		} else {
-			dev.ftb.mods.ftbic.FTBIC.LOGGER.info("  resize: no anchor landmark behind quarry, using facing default");
 		}
 
 		int x0, x1, z0, z1;
@@ -302,15 +297,6 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 
 		boundaryHighlightTicks = 60;
 
-		dev.ftb.mods.ftbic.FTBIC.LOGGER.info(
-				"DiggingBase.resize {} at {} side={} -> {} landmarks found | offset=({},{}) size={}x{} -> rect X[{}..{}] Z[{}..{}]",
-				net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(getBlockState().getBlock()),
-				worldPosition,
-				level.isClientSide() ? "CLIENT" : "SERVER",
-				marks.size(),
-				offsetX, offsetZ, sizeX, sizeZ,
-				qx + offsetX, qx + offsetX + sizeX - 1,
-				qz + offsetZ, qz + offsetZ + sizeZ - 1);
 		laserX = offsetX + sizeX / 2.0F;
 		laserZ = offsetZ + sizeZ / 2.0F;
 		setChanged();
@@ -336,10 +322,6 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	@Override
 	public void onPlacedBy(net.minecraft.world.entity.@org.jetbrains.annotations.Nullable LivingEntity entity, ItemStack stack) {
 		super.onPlacedBy(entity, stack);
-		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("DiggingBase.onPlacedBy at {} side={} placer={} facing={}",
-				worldPosition,
-				level == null ? "null" : (level.isClientSide() ? "CLIENT" : "SERVER"),
-				entity, getFacing(Direction.NORTH));
 		if (level != null && !level.isClientSide()) {
 			if (hasAnchorLandmark()) {
 				resize();

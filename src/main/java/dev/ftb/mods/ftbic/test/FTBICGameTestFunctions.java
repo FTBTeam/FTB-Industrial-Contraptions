@@ -12,10 +12,15 @@ import dev.ftb.mods.ftbic.block.entity.machine.ChargePadBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PoweredCraftingTableBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.storage.BatteryBoxBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.storage.EnergyRectifierBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.LVBatteryBoxBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.storage.LVRectifierBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.LVTransformerBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.storage.MVTransformerBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.TransformerBlockEntity;
+import dev.ftb.mods.ftbic.util.EnergyTier;
 import dev.ftb.mods.ftbic.block.entity.generator.BasicGeneratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.EVSolarPanelBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.GeothermalGeneratorBlockEntity;
@@ -54,6 +59,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.ValueInput;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class FTBICGameTestFunctions {
 
@@ -1086,6 +1094,220 @@ public class FTBICGameTestFunctions {
 		var stored = FluidCellItem.getStored(first);
 		helper.assertTrue(!stored.isEmpty() && stored.getFluid() == Fluids.WATER,
 				"Displayed cell should be prefilled with water (stored=" + stored + ")");
+		helper.succeed();
+	}
+
+	static void energyTierTransferRatesMatchConfig(GameTestHelper helper) {
+		helper.assertValueEqual(FTBICConfig.ENERGY.LV_TRANSFER_RATE.get(), EnergyTier.LV.transferRate(), "LV rate");
+		helper.assertValueEqual(FTBICConfig.ENERGY.MV_TRANSFER_RATE.get(), EnergyTier.MV.transferRate(), "MV rate");
+		helper.assertValueEqual(FTBICConfig.ENERGY.HV_TRANSFER_RATE.get(), EnergyTier.HV.transferRate(), "HV rate");
+		helper.assertValueEqual(FTBICConfig.ENERGY.EV_TRANSFER_RATE.get(), EnergyTier.EV.transferRate(), "EV rate");
+		helper.assertValueEqual(FTBICConfig.ENERGY.IV_TRANSFER_RATE.get(), EnergyTier.IV.transferRate(), "IV rate");
+		helper.succeed();
+	}
+
+	static void lvCableSurvivesWithinRate(GameTestHelper helper) {
+		BlockPos genPos = new BlockPos(1, 2, 4);
+		BlockPos cablePos = new BlockPos(2, 2, 4);
+		BlockPos machinePos = new BlockPos(3, 2, 4);
+		helper.setBlock(genPos.below(), Blocks.STONE);
+		helper.setBlock(cablePos.below(), Blocks.STONE);
+		helper.setBlock(machinePos.below(), Blocks.STONE);
+
+		helper.setBlock(genPos, FTBICElectricBlocks.BASIC_GENERATOR.block.get());
+		helper.setBlock(cablePos, FTBICBlocks.LV_CABLE.get());
+		helper.setBlock(machinePos, FTBICElectricBlocks.MACERATOR.block.get());
+
+		BasicGeneratorBlockEntity gen = helper.getBlockEntity(genPos, BasicGeneratorBlockEntity.class);
+		gen.energy = gen.energyCapacity;
+		gen.setChanged();
+		MaceratorBlockEntity machine = helper.getBlockEntity(machinePos, MaceratorBlockEntity.class);
+		machine.energy = 0D;
+		machine.setChanged();
+
+		helper.runAfterDelay(40, () -> {
+			BlockState cs = helper.getLevel().getBlockState(helper.absolutePos(cablePos));
+			helper.assertFalse(cs.getBlock() instanceof BurntCableBlock,
+					"LV cable within rate should not burn (got " + cs.getBlock() + ")");
+			MaceratorBlockEntity after = helper.getBlockEntity(machinePos, MaceratorBlockEntity.class);
+			helper.assertTrue(after.energy > 0D,
+					"Machine should receive energy through intact LV cable (got " + after.energy + ")");
+			helper.succeed();
+		});
+	}
+
+	static void lvCableBurnsWhenOverloaded(GameTestHelper helper) {
+		BlockPos srcPos = new BlockPos(1, 2, 4);
+		BlockPos cablePos = new BlockPos(2, 2, 4);
+		BlockPos machinePos = new BlockPos(3, 2, 4);
+		helper.setBlock(srcPos.below(), Blocks.STONE);
+		helper.setBlock(cablePos.below(), Blocks.STONE);
+		helper.setBlock(machinePos.below(), Blocks.STONE);
+
+		helper.setBlock(srcPos, FTBICElectricBlocks.MV_TRANSFORMER.block.get());
+		helper.setBlock(cablePos, FTBICBlocks.LV_CABLE.get());
+		helper.setBlock(machinePos, FTBICElectricBlocks.MACERATOR.block.get());
+
+		MVTransformerBlockEntity src = helper.getBlockEntity(srcPos, MVTransformerBlockEntity.class);
+		src.energy = src.energyCapacity;
+		src.setChanged();
+
+		helper.runAfterDelay(20, () -> {
+			BlockState cs = helper.getLevel().getBlockState(helper.absolutePos(cablePos));
+			helper.assertTrue(cs.getBlock() instanceof BurntCableBlock,
+					"LV cable carrying MV-rate source should burn (got " + cs.getBlock() + ")");
+			helper.succeed();
+		});
+	}
+
+	static void transformerStepsMvDownToLv(GameTestHelper helper) {
+		BlockPos mvSrcPos = new BlockPos(1, 2, 4);
+		BlockPos mvCablePos = new BlockPos(2, 2, 4);
+		BlockPos lvTrPos = new BlockPos(3, 2, 4);
+		BlockPos lvCablePos = new BlockPos(4, 2, 4);
+		BlockPos machinePos = new BlockPos(5, 2, 4);
+		BlockPos[] floors = {mvSrcPos, mvCablePos, lvTrPos, lvCablePos, machinePos};
+		for (BlockPos p : floors) helper.setBlock(p.below(), Blocks.STONE);
+
+		helper.setBlock(mvSrcPos, FTBICElectricBlocks.MV_TRANSFORMER.block.get());
+		helper.setBlock(mvCablePos, FTBICBlocks.MV_CABLE.get());
+		helper.setBlock(lvTrPos, FTBICElectricBlocks.LV_TRANSFORMER.block.get().defaultBlockState()
+				.setValue(BlockStateProperties.FACING, Direction.WEST));
+		helper.setBlock(lvCablePos, FTBICBlocks.LV_CABLE.get());
+		helper.setBlock(machinePos, FTBICElectricBlocks.MACERATOR.block.get());
+
+		MVTransformerBlockEntity mvSrc = helper.getBlockEntity(mvSrcPos, MVTransformerBlockEntity.class);
+		mvSrc.energy = mvSrc.energyCapacity;
+		mvSrc.setChanged();
+		MaceratorBlockEntity machine = helper.getBlockEntity(machinePos, MaceratorBlockEntity.class);
+		machine.energy = 0D;
+		machine.setChanged();
+
+		helper.runAfterDelay(60, () -> {
+			MaceratorBlockEntity after = helper.getBlockEntity(machinePos, MaceratorBlockEntity.class);
+			helper.assertTrue(after.energy > 0D,
+					"Machine should receive energy through MV→LV transformer chain (got " + after.energy + ")");
+			BlockState mvCs = helper.getLevel().getBlockState(helper.absolutePos(mvCablePos));
+			helper.assertFalse(mvCs.getBlock() instanceof BurntCableBlock,
+					"MV cable should not burn (got " + mvCs.getBlock() + ")");
+			BlockState lvCs = helper.getLevel().getBlockState(helper.absolutePos(lvCablePos));
+			helper.assertFalse(lvCs.getBlock() instanceof BurntCableBlock,
+					"LV cable downstream of LV transformer should not burn (got " + lvCs.getBlock() + ")");
+			helper.succeed();
+		});
+	}
+
+	static void rectifierConvertsFeToZaps(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.LV_RECTIFIER.block.get());
+		LVRectifierBlockEntity rec = helper.getBlockEntity(CENTER, LVRectifierBlockEntity.class);
+		rec.energy = 0D;
+		rec.feBuffer = 0L;
+		rec.setChanged();
+
+		double rate = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
+		long inserted = rec.insertFE(80L, false);
+		helper.assertValueEqual(80L, inserted, "insertFE accepted amount");
+
+		helper.runAfterDelay(2, () -> {
+			LVRectifierBlockEntity after = helper.getBlockEntity(CENTER, LVRectifierBlockEntity.class);
+			double expectedZaps = 80L / rate;
+			helper.assertTrue(Math.abs(after.energy - expectedZaps) < 0.01D,
+					"Rectifier should convert 80 FE into " + expectedZaps + " zaps (got " + after.energy + ")");
+			helper.assertValueEqual(0L, after.feBuffer, "feBuffer drained after conversion");
+			helper.succeed();
+		});
+	}
+
+	static void rectifierFeedsDownstreamMachine(GameTestHelper helper) {
+		BlockPos recPos = new BlockPos(1, 2, 4);
+		BlockPos cablePos = new BlockPos(2, 2, 4);
+		BlockPos machinePos = new BlockPos(3, 2, 4);
+		helper.setBlock(recPos.below(), Blocks.STONE);
+		helper.setBlock(cablePos.below(), Blocks.STONE);
+		helper.setBlock(machinePos.below(), Blocks.STONE);
+
+		helper.setBlock(recPos, FTBICElectricBlocks.LV_RECTIFIER.block.get());
+		helper.setBlock(cablePos, FTBICBlocks.LV_CABLE.get());
+		helper.setBlock(machinePos, FTBICElectricBlocks.MACERATOR.block.get());
+
+		LVRectifierBlockEntity rec = helper.getBlockEntity(recPos, LVRectifierBlockEntity.class);
+		rec.energy = 0D;
+		rec.feBuffer = 0L;
+		rec.insertFE(rec.getFeBufferCapacity(), false);
+		rec.setChanged();
+		MaceratorBlockEntity machine = helper.getBlockEntity(machinePos, MaceratorBlockEntity.class);
+		machine.energy = 0D;
+		machine.setChanged();
+
+		helper.runAfterDelay(40, () -> {
+			MaceratorBlockEntity after = helper.getBlockEntity(machinePos, MaceratorBlockEntity.class);
+			helper.assertTrue(after.energy > 0D,
+					"Macerator should receive zaps from FE-fed rectifier (got " + after.energy + ")");
+			helper.succeed();
+		});
+	}
+
+	static void rectifierFaceGeometry(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.LV_RECTIFIER.block.get());
+		EnergyRectifierBlockEntity rec = helper.getBlockEntity(CENTER, LVRectifierBlockEntity.class);
+		Direction facing = rec.getBlockState().getValue(BlockStateProperties.FACING);
+
+		helper.assertFalse(rec.isValidEnergyOutputSide(facing),
+				"Rectifier should NOT output zaps on its FE-input face (" + facing + ")");
+		for (Direction d : Direction.values()) {
+			if (d == facing) continue;
+			helper.assertTrue(rec.isValidEnergyOutputSide(d),
+					"Rectifier should output zaps on non-facing side " + d);
+		}
+		helper.succeed();
+	}
+
+	static void rectifierRoundtripConservesEnergy(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.LV_RECTIFIER.block.get());
+		LVRectifierBlockEntity rec = helper.getBlockEntity(CENTER, LVRectifierBlockEntity.class);
+		rec.energy = 0D;
+		rec.feBuffer = 0L;
+		long accepted = rec.insertFE(rec.getFeBufferCapacity(), false);
+		rec.setChanged();
+
+		double rate = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
+		double initialEquivalent = accepted / rate;
+
+		helper.runAfterDelay(40, () -> {
+			LVRectifierBlockEntity after = helper.getBlockEntity(CENTER, LVRectifierBlockEntity.class);
+			double finalEquivalent = after.energy + after.feBuffer / rate;
+			helper.assertTrue(finalEquivalent <= initialEquivalent + 0.001D,
+					"Rectifier equivalent energy must not grow (initial=" + initialEquivalent + ", now=" + finalEquivalent + ")");
+			helper.assertTrue(finalEquivalent >= initialEquivalent - 0.001D,
+					"Rectifier with no consumer should not leak energy (initial=" + initialEquivalent + ", now=" + finalEquivalent + ")");
+			helper.succeed();
+		});
+	}
+
+	static void rectifierFeInsertIsTransactional(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.LV_RECTIFIER.block.get());
+		LVRectifierBlockEntity rec = helper.getBlockEntity(CENTER, LVRectifierBlockEntity.class);
+		rec.energy = 0D;
+		rec.feBuffer = 50L;
+		rec.setChanged();
+
+		Direction facing = rec.getBlockState().getValue(BlockStateProperties.FACING);
+		EnergyHandler feHandler = helper.getLevel().getCapability(
+				Capabilities.Energy.BLOCK, helper.absolutePos(CENTER), facing);
+		helper.assertTrue(feHandler != null, "Rectifier should expose FE capability on facing " + facing);
+
+		int accepted;
+		try (Transaction tx = Transaction.openRoot()) {
+			accepted = feHandler.insert(500, tx);
+		}
+		helper.assertTrue(accepted > 0, "Insert should have accepted FE inside the transaction (got " + accepted + ")");
+
+		LVRectifierBlockEntity after = helper.getBlockEntity(CENTER, LVRectifierBlockEntity.class);
+		helper.assertValueEqual(50L, after.feBuffer, "feBuffer reverted after aborted transaction");
 		helper.succeed();
 	}
 }

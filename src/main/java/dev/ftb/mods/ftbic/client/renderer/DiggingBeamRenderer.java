@@ -88,15 +88,8 @@ public class DiggingBeamRenderer implements BlockEntityRenderer<DiggingBaseBlock
 		state.quarryY = be.getBlockPos().getY();
 	}
 
-	private static int submitLogCount = 0;
-
 	@Override
 	public void submit(DiggingBeamRenderState state, PoseStack pose, SubmitNodeCollector buffers, CameraRenderState camera) {
-		if (submitLogCount < 20) {
-			submitLogCount++;
-			FTBIC.LOGGER.info("DiggingBeamRenderer.submit: size={}x{} offset=({},{}) depth={} light={}",
-					state.sizeX, state.sizeZ, state.offsetX, state.offsetZ, 0, state.light);
-		}
 		if (state.sizeX > 0 && state.sizeZ > 0) {
 			try {
 				renderFrame(state, pose, buffers);

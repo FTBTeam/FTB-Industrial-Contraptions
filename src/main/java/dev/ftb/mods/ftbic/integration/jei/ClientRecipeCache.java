@@ -22,7 +22,6 @@ public final class ClientRecipeCache {
 
 	public static synchronized void setRuntime(IJeiRuntime jeiRuntime) {
 		runtime = jeiRuntime;
-		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("ClientRecipeCache.setRuntime: runtime set, CACHE has {} entries", CACHE.size());
 		pushToJei();
 	}
 
@@ -55,8 +54,6 @@ public final class ClientRecipeCache {
 				CACHE.computeIfAbsent(t, k -> new ArrayList<>()).add(h);
 			}
 		}
-		dev.ftb.mods.ftbic.FTBIC.LOGGER.info("ClientRecipeCache.applySyncedRecipes: received {} recipes across {} types",
-				recipes.size(), CACHE.size());
 		pushToJei();
 	}
 
@@ -73,7 +70,6 @@ public final class ClientRecipeCache {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public static synchronized void showRecipesForTypes(List<RecipeType<?>> vanillaTypes) {
 		if (runtime == null) {
-			dev.ftb.mods.ftbic.FTBIC.LOGGER.info("ClientRecipeCache.showRecipesForTypes: runtime is null");
 			return;
 		}
 		List<mezz.jei.api.recipe.types.IRecipeType<?>> jeiTypes = new ArrayList<>();
@@ -87,7 +83,6 @@ public final class ClientRecipeCache {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private static synchronized void pushToJei() {
 		if (runtime == null) {
-			dev.ftb.mods.ftbic.FTBIC.LOGGER.info("ClientRecipeCache.pushToJei: runtime is null, skipping");
 			return;
 		}
 
@@ -99,7 +94,6 @@ public final class ClientRecipeCache {
 			IRecipeHolderType<?> jeiType = IRecipeHolderType.create((RecipeType) vanillaType);
 			try {
 				runtime.getRecipeManager().addRecipes((IRecipeType) jeiType, (List) holders);
-				dev.ftb.mods.ftbic.FTBIC.LOGGER.info("ClientRecipeCache.pushToJei: pushed {} recipes for uid {}", holders.size(), jeiType.getUid());
 			} catch (Throwable t) {
 				dev.ftb.mods.ftbic.FTBIC.LOGGER.warn("ClientRecipeCache.pushToJei: failed for {}: {}", vanillaType, t.toString());
 			}
