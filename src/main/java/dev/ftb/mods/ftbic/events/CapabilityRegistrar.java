@@ -9,12 +9,15 @@ import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.GeothermalGeneratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.ElectricBlockEnergyHandler;
 import dev.ftb.mods.ftbic.util.ElectricBlockResourceHandler;
 import dev.ftb.mods.ftbic.util.FluidCellHandler;
 import dev.ftb.mods.ftbic.util.GeothermalTankHandler;
 import dev.ftb.mods.ftbic.util.PumpTankHandler;
+import dev.ftb.mods.ftbic.util.TeleporterFluidPassthroughHandler;
+import dev.ftb.mods.ftbic.util.TeleporterItemPassthroughHandler;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -33,8 +36,10 @@ public final class CapabilityRegistrar {
 			@SuppressWarnings("unchecked")
 			net.minecraft.world.level.block.entity.BlockEntityType<ElectricBlockEntity> type =
 					(net.minecraft.world.level.block.entity.BlockEntityType<ElectricBlockEntity>) (Object) instance.blockEntity.get();
-			event.registerBlockEntity(Capabilities.Item.BLOCK, type,
-					(be, side) -> new ElectricBlockResourceHandler(be));
+			if (instance != FTBICElectricBlocks.TELEPORTER) {
+				event.registerBlockEntity(Capabilities.Item.BLOCK, type,
+						(be, side) -> new ElectricBlockResourceHandler(be));
+			}
 
 			if (fullFE && instance.feCapMode != ElectricBlockInstance.FECapMode.INSERT_ONLY) {
 				boolean canInsert = instance.maxEnergyInput.get() > 0D;
@@ -78,6 +83,16 @@ public final class CapabilityRegistrar {
 						(Object) FTBICElectricBlocks.PUMP.blockEntity.get();
 		event.registerBlockEntity(Capabilities.Fluid.BLOCK, pumpType,
 				(be, side) -> new PumpTankHandler(be));
+
+		// Teleporter: item and fluid caps act as a passthrough to the linked peer's 6 neighbor inventories.
+		@SuppressWarnings("unchecked")
+		net.minecraft.world.level.block.entity.BlockEntityType<TeleporterBlockEntity> teleType =
+				(net.minecraft.world.level.block.entity.BlockEntityType<TeleporterBlockEntity>)
+						(Object) FTBICElectricBlocks.TELEPORTER.blockEntity.get();
+		event.registerBlockEntity(Capabilities.Item.BLOCK, teleType,
+				(be, side) -> new TeleporterItemPassthroughHandler(be));
+		event.registerBlockEntity(Capabilities.Fluid.BLOCK, teleType,
+				(be, side) -> new TeleporterFluidPassthroughHandler(be));
 
 		// FluidCell item: accept/provide fluid via Capabilities.Fluid.ITEM.
 		event.registerItem(Capabilities.Fluid.ITEM,

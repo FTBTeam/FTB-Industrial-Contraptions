@@ -50,7 +50,7 @@ public class MachineScreen extends ElectricBlockScreen<MachineMenu> {
 		super.extractOverlayTooltips(g, mouseX, mouseY);
 		if (drawDefaultArrow && isIn(mouseX, mouseY, leftPos + 80, topPos + 34, 24, 17)) {
 			int pct = Math.round(this.menu.getProgressFraction() * 100F);
-			g.setTooltipForNextFrame(Component.literal("Progress: " + pct + "% — Click to show recipes"), mouseX, mouseY);
+			g.setTooltipForNextFrame(Component.literal("Progress: " + pct + "%. Click to show recipes."), mouseX, mouseY);
 		}
 	}
 

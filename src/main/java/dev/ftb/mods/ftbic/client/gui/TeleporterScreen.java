@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.client.gui;
 
 import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
+import dev.ftb.mods.ftbic.net.ClearTeleporterPayload;
 import dev.ftb.mods.ftbic.net.ConfigureTeleporterPayload;
 import dev.ftb.mods.ftbic.net.SelectTeleporterPayload;
 import dev.ftb.mods.ftbic.screen.TeleporterMenu;
@@ -37,6 +38,9 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 	private static final int UNLINK_BTN_X = 148, UNLINK_BTN_Y = 37;
 
 	private static final int DROPDOWN_X = 8, DROPDOWN_Y = 52, DROPDOWN_W = 160, DROPDOWN_H = 12;
+	private static final int CLEAR_BTN_Y = 68, CLEAR_BTN_H = 12;
+	private static final int CLEAR_ITEMS_BTN_X = 8, CLEAR_ITEMS_BTN_W = 76;
+	private static final int CLEAR_FLUIDS_BTN_X = 92, CLEAR_FLUIDS_BTN_W = 76;
 	private static final int OVERLAY_Y = 64;
 	private static final int OVERLAY_ROW_H = 11;
 	private static final int OVERLAY_VISIBLE_ROWS = 5;
@@ -123,13 +127,22 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 
 	@Override
 	public boolean keyPressed(KeyEvent event) {
-		if (event.key() == com.mojang.blaze3d.platform.InputConstants.KEY_RETURN
-				&& nameBox != null && nameBox.isFocused()) {
-			if (!nameBox.getValue().equals(lastSentName)) {
-				sendConfig(false);
+		if (nameBox != null && nameBox.isFocused()) {
+			int key = event.key();
+			if (key == com.mojang.blaze3d.platform.InputConstants.KEY_RETURN) {
+				if (!nameBox.getValue().equals(lastSentName)) {
+					sendConfig(false);
+				}
+				setFocused(null);
+				return true;
 			}
-			setFocused(null);
-			return true;
+			if (key == com.mojang.blaze3d.platform.InputConstants.KEY_ESCAPE) {
+				setFocused(null);
+				return true;
+			}
+			if (nameBox.keyPressed(event) || nameBox.canConsumeInput()) {
+				return true;
+			}
 		}
 		return super.keyPressed(event);
 	}
@@ -162,7 +175,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 			String display = be.linkedName != null && !be.linkedName.isEmpty() ? be.linkedName : "Unnamed";
 			statusLabel = truncate("Linked: " + formatEntry(display, be.linkedPos, be.linkedDimension), statusMax);
 		} else {
-			statusLabel = truncate("Not linked — click below", statusMax);
+			statusLabel = truncate("Not linked. Click below.", statusMax);
 		}
 		g.text(font, Component.literal(statusLabel), leftPos + 8, topPos + DEST_Y, 0xFF404040, false);
 
@@ -171,12 +184,22 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 		}
 
 		drawDropdownButton(g, mouseX, mouseY);
+		drawClearButton(g, leftPos + CLEAR_ITEMS_BTN_X, topPos + CLEAR_BTN_Y, CLEAR_ITEMS_BTN_W, "Clear Storage", mouseX, mouseY);
+		drawClearButton(g, leftPos + CLEAR_FLUIDS_BTN_X, topPos + CLEAR_BTN_Y, CLEAR_FLUIDS_BTN_W, "Clear Fluids", mouseX, mouseY);
 
 		if (dropdownOpen) {
 			drawDropdownOverlay(g, mouseX, mouseY);
 		}
 
 		extractCustomTooltips(g, mouseX, mouseY);
+	}
+
+	private void drawClearButton(GuiGraphicsExtractor g, int x, int y, int w, String label, int mouseX, int mouseY) {
+		boolean hovered = isIn(mouseX, mouseY, x, y, w, CLEAR_BTN_H);
+		g.fill(x, y, x + w, y + CLEAR_BTN_H, 0xFF555555);
+		g.fill(x + 1, y + 1, x + w - 1, y + CLEAR_BTN_H - 1, hovered ? 0xFFDDEEFF : 0xFFEEEEEE);
+		int textX = x + (w - font.width(label)) / 2;
+		g.text(font, Component.literal(label), textX, y + 2, 0xFF202020, false);
 	}
 
 	private void drawDropdownButton(GuiGraphicsExtractor g, int mouseX, int mouseY) {
@@ -241,8 +264,8 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 		TeleporterBlockEntity be = teleporter();
 		if (isIn(mouseX, mouseY, leftPos + PUBLIC_BTN_X, topPos + PUBLIC_BTN_Y, 9, 10)) {
 			Component tip = be != null && be.isPublic
-					? Component.literal("Public — anyone can link to this teleporter. Click to make private.")
-					: Component.literal("Private — only you can link to this teleporter. Click to make public.");
+					? Component.literal("Public. Anyone can link to this teleporter. Click to make private.")
+					: Component.literal("Private. Only you can link to this teleporter. Click to make public.");
 			g.setTooltipForNextFrame(tip, mouseX, mouseY);
 			return;
 		}
@@ -311,6 +334,15 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 		if (isIn(mx, my, leftPos + DROPDOWN_X, topPos + DROPDOWN_Y, DROPDOWN_W, DROPDOWN_H)) {
 			dropdownOpen = !dropdownOpen;
 			scroll = 0;
+			return true;
+		}
+
+		if (isIn(mx, my, leftPos + CLEAR_ITEMS_BTN_X, topPos + CLEAR_BTN_Y, CLEAR_ITEMS_BTN_W, CLEAR_BTN_H)) {
+			ClientPacketDistributor.sendToServer(new ClearTeleporterPayload(true, false));
+			return true;
+		}
+		if (isIn(mx, my, leftPos + CLEAR_FLUIDS_BTN_X, topPos + CLEAR_BTN_Y, CLEAR_FLUIDS_BTN_W, CLEAR_BTN_H)) {
+			ClientPacketDistributor.sendToServer(new ClearTeleporterPayload(false, true));
 			return true;
 		}
 

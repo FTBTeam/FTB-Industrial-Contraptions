@@ -36,6 +36,11 @@ public final class FTBICNet {
 				ConfigureTeleporterPayload.STREAM_CODEC,
 				ConfigureTeleporterPayload::handleOnServer);
 
+		registrar.playToServer(
+				ClearTeleporterPayload.TYPE,
+				ClearTeleporterPayload.STREAM_CODEC,
+				ClearTeleporterPayload::handleOnServer);
+
 		registrar.playToClient(
 				TeleporterListPayload.TYPE,
 				TeleporterListPayload.STREAM_CODEC,

@@ -7,6 +7,8 @@ import dev.ftb.mods.ftbic.block.entity.generator.GeothermalGeneratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
+import net.minecraft.world.item.ItemStack;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.material.Fluids;
@@ -94,9 +96,43 @@ public class FTBICJadePlugin implements IWailaPlugin {
 					data.putDouble("ftbic_reactor_output", reactor.reactor.energyOutput);
 					data.putBoolean("ftbic_reactor_paused", reactor.reactor.paused);
 				}
+				if (be instanceof TeleporterBlockEntity tele) {
+					int sendCount = 0;
+					for (ItemStack s : tele.sendItems) if (!s.isEmpty()) sendCount += s.getCount();
+					int receiveCount = 0;
+					for (ItemStack s : tele.receiveItems) if (!s.isEmpty()) receiveCount += s.getCount();
+					data.putInt("ftbic_tele_send_items", sendCount);
+					data.putInt("ftbic_tele_receive_items", receiveCount);
+					data.putInt("ftbic_tele_send_fluid_amount", tele.sendFluidAmount);
+					data.putInt("ftbic_tele_receive_fluid_amount", tele.receiveFluidAmount);
+					data.putInt("ftbic_tele_tank_capacity", TeleporterBlockEntity.TANK_CAPACITY);
+					if (tele.sendFluid != Fluids.EMPTY) {
+						Identifier fid = BuiltInRegistries.FLUID.getKey(tele.sendFluid);
+						if (fid != null) data.putString("ftbic_tele_send_fluid", fid.toString());
+					}
+					if (tele.receiveFluid != Fluids.EMPTY) {
+						Identifier fid = BuiltInRegistries.FLUID.getKey(tele.receiveFluid);
+						if (fid != null) data.putString("ftbic_tele_receive_fluid", fid.toString());
+					}
+				}
 			}
 		}
 
+	}
+
+	private static String prettyFluidId(String raw) {
+		if (raw.isEmpty()) return "Fluid";
+		int colon = raw.indexOf(':');
+		String path = colon >= 0 ? raw.substring(colon + 1) : raw;
+		String[] parts = path.split("_");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < parts.length; i++) {
+			if (parts[i].isEmpty()) continue;
+			if (sb.length() > 0) sb.append(' ');
+			sb.append(Character.toUpperCase(parts[i].charAt(0)));
+			if (parts[i].length() > 1) sb.append(parts[i].substring(1));
+		}
+		return sb.toString();
 	}
 
 	public static final class EnergyClientProvider implements IBlockComponentProvider {
@@ -148,6 +184,29 @@ public class FTBICJadePlugin implements IWailaPlugin {
 				tooltip.add(Component.translatable(paused ? "ftbic.jade.reactor_paused"
 								: "ftbic.jade.reactor_output", FTBICUtils.formatEnergy(out))
 						.withStyle(paused ? ChatFormatting.GRAY : ChatFormatting.AQUA));
+			}
+			if (data.contains("ftbic_tele_tank_capacity")) {
+				int sendItems = data.getIntOr("ftbic_tele_send_items", 0);
+				int receiveItems = data.getIntOr("ftbic_tele_receive_items", 0);
+				int sendFluid = data.getIntOr("ftbic_tele_send_fluid_amount", 0);
+				int receiveFluid = data.getIntOr("ftbic_tele_receive_fluid_amount", 0);
+				int tankCap = data.getIntOr("ftbic_tele_tank_capacity", 1);
+				String sendFluidId = data.getStringOr("ftbic_tele_send_fluid", "");
+				String receiveFluidId = data.getStringOr("ftbic_tele_receive_fluid", "");
+				tooltip.add(Component.translatable("ftbic.jade.tele_send_items", sendItems).withStyle(ChatFormatting.AQUA));
+				tooltip.add(Component.translatable("ftbic.jade.tele_receive_items", receiveItems).withStyle(ChatFormatting.GREEN));
+				if (sendFluid > 0) {
+					String label = prettyFluidId(sendFluidId);
+					tooltip.add(Component.translatable("ftbic.jade.tele_send_fluid", label, sendFluid, tankCap).withStyle(ChatFormatting.AQUA));
+				} else {
+					tooltip.add(Component.translatable("ftbic.jade.tele_send_fluid_empty", tankCap).withStyle(ChatFormatting.DARK_AQUA));
+				}
+				if (receiveFluid > 0) {
+					String label = prettyFluidId(receiveFluidId);
+					tooltip.add(Component.translatable("ftbic.jade.tele_receive_fluid", label, receiveFluid, tankCap).withStyle(ChatFormatting.GREEN));
+				} else {
+					tooltip.add(Component.translatable("ftbic.jade.tele_receive_fluid_empty", tankCap).withStyle(ChatFormatting.DARK_GREEN));
+				}
 			}
 			if (data.contains("ftbic_fluid_capacity")) {
 				int fluid = data.getIntOr("ftbic_fluid", 0);

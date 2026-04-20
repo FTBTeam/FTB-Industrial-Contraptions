@@ -36,7 +36,7 @@ public class QuarryScreen extends ElectricBlockScreen<QuarryMenu> {
 		super.extractOverlayTooltips(g, mouseX, mouseY);
 		if (isIn(mouseX, mouseY, leftPos + 129, topPos + 17, 9, 10)) {
 			g.setTooltipForNextFrame(
-					Component.literal(this.menu.isPaused() ? "Paused — click to resume" : "Running — click to pause"),
+					Component.literal(this.menu.isPaused() ? "Paused. Click to resume." : "Running. Click to pause."),
 					mouseX, mouseY);
 		}
 	}

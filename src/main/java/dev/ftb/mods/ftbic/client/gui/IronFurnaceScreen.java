@@ -46,7 +46,7 @@ public class IronFurnaceScreen extends AbstractContainerScreen<IronFurnaceMenu> 
 		super.extractRenderState(g, mouseX, mouseY, partialTick);
 		if (isInArrow(mouseX, mouseY)) {
 			int pct = Math.round(menu.getBurnProgress() * 100F);
-			g.setTooltipForNextFrame(Component.literal("Progress: " + pct + "% — Click to show recipes"), mouseX, mouseY);
+			g.setTooltipForNextFrame(Component.literal("Progress: " + pct + "%. Click to show recipes."), mouseX, mouseY);
 		}
 	}
 

@@ -165,6 +165,10 @@ public final class FTBICConfig {
 		public final ModConfigSpec.DoubleValue TELEPORTER_MIN_DISTANCE;
 		public final ModConfigSpec.DoubleValue TELEPORTER_MAX_USE;
 		public final ModConfigSpec.DoubleValue TELEPORTER_MAX_DISTANCE;
+		public final ModConfigSpec.DoubleValue TELEPORTER_TRANSPORT_DRAIN;
+		public final ModConfigSpec.IntValue TELEPORTER_ACTIVE_WINDOW_TICKS;
+		public final ModConfigSpec.IntValue TELEPORTER_CHUNK_LOAD_IDLE_TICKS;
+		public final ModConfigSpec.DoubleValue TELEPORTER_BALANCE_RATE;
 		public final ModConfigSpec.DoubleValue CHARGE_PAD_CAPACITY;
 		public final ModConfigSpec.DoubleValue POWERED_CRAFTING_TABLE_CAPACITY;
 		public final ModConfigSpec.DoubleValue POWERED_CRAFTING_TABLE_USE;
@@ -245,6 +249,10 @@ public final class FTBICConfig {
 			TELEPORTER_MIN_DISTANCE = b.defineInRange("teleporter_min_distance", 16D, 1D, 100_000D);
 			TELEPORTER_MAX_USE = b.defineInRange("teleporter_max_use", 10_000D, 0D, 100_000D);
 			TELEPORTER_MAX_DISTANCE = b.defineInRange("teleporter_max_distance", 1_200D, 1D, 100_000D);
+			TELEPORTER_TRANSPORT_DRAIN = b.comment("Zaps drained once per active second from the sending teleporter while items or fluids are flowing through a linked pair.").defineInRange("teleporter_transport_drain", 32D, 0D, 1_000_000D);
+			TELEPORTER_ACTIVE_WINDOW_TICKS = b.comment("How recent the last successful transfer must be (in ticks) for the pair to be considered active for drain and chunk-loading.").defineInRange("teleporter_active_window_ticks", 20, 1, 12_000);
+			TELEPORTER_CHUNK_LOAD_IDLE_TICKS = b.comment("Release the peer chunk ticket after this many ticks of inactivity. Should be >= teleporter_active_window_ticks.").defineInRange("teleporter_chunk_load_idle_ticks", 1_200, 1, 72_000);
+			TELEPORTER_BALANCE_RATE = b.comment("Maximum zaps per tick shuffled between a linked pair to keep their energy buffers in balance.").defineInRange("teleporter_balance_rate", 128D, 0D, 1_000_000D);
 			CHARGE_PAD_CAPACITY = b.defineInRange("charge_pad_capacity", 1_000_000D, 1D, 100_000D);
 			POWERED_CRAFTING_TABLE_CAPACITY = b.defineInRange("powered_crafting_table_capacity", 1_200D, 1D, 100_000D);
 			POWERED_CRAFTING_TABLE_USE = b.defineInRange("powered_crafting_table_use", 1D, 0D, 100_000D);

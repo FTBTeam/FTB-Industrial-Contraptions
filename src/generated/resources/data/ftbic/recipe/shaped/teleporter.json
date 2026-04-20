@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:advanced_circuit",
+    "E": "minecraft:ender_pearl",
+    "I": "ftbic:iridium_alloy",
+    "M": "ftbic:advanced_machine_block",
+    "P": "ftbic:energy_crystal"
+  },
+  "pattern": [
+    "EIE",
+    "CMC",
+    "EPE"
+  ],
+  "result": {
+    "id": "ftbic:teleporter"
+  },
+  "show_notification": false
+}

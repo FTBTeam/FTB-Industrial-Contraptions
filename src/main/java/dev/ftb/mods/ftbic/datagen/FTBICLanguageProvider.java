@@ -270,6 +270,12 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("ftbic.jade.reactor_output", "Output: %s/t");
 		add("ftbic.jade.reactor_paused", "Paused (%s/t when active)");
 		add("ftbic.jade.water", "Water: %s / %s mB");
+		add("ftbic.jade.tele_send_items", "Sending: %s items");
+		add("ftbic.jade.tele_receive_items", "Received: %s items");
+		add("ftbic.jade.tele_send_fluid", "Sending %s: %s / %s mB");
+		add("ftbic.jade.tele_send_fluid_empty", "Send tank: Empty (0 / %s mB)");
+		add("ftbic.jade.tele_receive_fluid", "Received %s: %s / %s mB");
+		add("ftbic.jade.tele_receive_fluid_empty", "Receive tank: Empty (0 / %s mB)");
 
 		add("config.jade.plugin_ftbic.cable_tier", "Cable Tier");
 		add("config.jade.plugin_ftbic.energy", "Energy");

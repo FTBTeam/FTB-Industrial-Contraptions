@@ -107,6 +107,14 @@ public class FTBICGameTests {
 		reg(event, "quarry_without_pickaxe_produces_cobble", FTBICGameTestFunctions::quarryWithoutPickaxeProducesCobble, env, 100);
 		reg(event, "quarry_efficiency_pickaxe_speeds_up_mining", FTBICGameTestFunctions::quarryEfficiencyPickaxeSpeedsUpMining, env, 100);
 		reg(event, "quarry_pickaxe_rejects_non_pickaxe", FTBICGameTestFunctions::quarryPickaxeRejectsNonPickaxe, env, 100);
+
+		reg(event, "teleporter_pipe_forwards_item_to_peer", FTBICGameTestFunctions::teleporterPipeForwardsItemToPeer, env, 200);
+		reg(event, "teleporter_pipe_extracts_from_peer", FTBICGameTestFunctions::teleporterPipeExtractsFromPeer, env, 200);
+		reg(event, "teleporter_pipe_forwards_fluid_to_peer", FTBICGameTestFunctions::teleporterPipeForwardsFluidToPeer, env, 200);
+		reg(event, "teleporter_pipe_clear_storage", FTBICGameTestFunctions::teleporterPipeClearStorage, env, 100);
+		reg(event, "teleporter_pipe_clear_fluids", FTBICGameTestFunctions::teleporterPipeClearFluids, env, 100);
+		reg(event, "teleporter_pipe_drain_on_activity", FTBICGameTestFunctions::teleporterPipeDrainOnActivity, env, 200);
+		reg(event, "teleporter_pipe_balances_energy", FTBICGameTestFunctions::teleporterPipeBalancesEnergy, env, 200);
 	}
 
 	private static void reg(RegisterGameTestsEvent event, String name,

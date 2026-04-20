@@ -28,7 +28,7 @@ public class BasicGeneratorScreen extends ElectricBlockScreen<BasicGeneratorMenu
 			int ticks = this.menu.getFuelTicksRemaining();
 			double seconds = ticks / 20.0;
 			g.setTooltipForNextFrame(
-					Component.literal(String.format("Burn time: %.1fs — Click to show fuels", seconds)),
+					Component.literal(String.format("Burn time: %.1fs. Click to show fuels.", seconds)),
 					mouseX, mouseY);
 		}
 	}

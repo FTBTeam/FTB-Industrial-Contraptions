@@ -12,6 +12,7 @@ import dev.ftb.mods.ftbic.block.entity.machine.ChargePadBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PoweredCraftingTableBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.PumpBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.storage.BatteryBoxBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.EnergyRectifierBlockEntity;
@@ -60,7 +61,10 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class FTBICGameTestFunctions {
@@ -1309,5 +1313,196 @@ public class FTBICGameTestFunctions {
 		LVRectifierBlockEntity after = helper.getBlockEntity(CENTER, LVRectifierBlockEntity.class);
 		helper.assertValueEqual(50L, after.feBuffer, "feBuffer reverted after aborted transaction");
 		helper.succeed();
+	}
+
+	private static TeleporterBlockEntity placeTeleporter(GameTestHelper helper, BlockPos pos) {
+		helper.setBlock(pos.below(), Blocks.STONE);
+		helper.setBlock(pos, FTBICElectricBlocks.TELEPORTER.block.get());
+		return helper.getBlockEntity(pos, TeleporterBlockEntity.class);
+	}
+
+	private static void linkPeers(GameTestHelper helper, TeleporterBlockEntity a, BlockPos aRel, TeleporterBlockEntity b, BlockPos bRel) {
+		ServerLevel level = helper.getLevel();
+		a.linkedPos = helper.absolutePos(bRel);
+		a.linkedDimension = level.dimension();
+		b.linkedPos = helper.absolutePos(aRel);
+		b.linkedDimension = level.dimension();
+		a.setChanged();
+		b.setChanged();
+	}
+
+	private static long sumItemAmount(ResourceHandler<ItemResource> handler, ItemResource target) {
+		if (handler == null) return 0L;
+		long total = 0L;
+		for (int i = 0; i < handler.size(); i++) {
+			if (handler.getResource(i).equals(target)) total += handler.getAmountAsLong(i);
+		}
+		return total;
+	}
+
+	static void teleporterPipeForwardsItemToPeer(GameTestHelper helper) {
+		BlockPos aRel = CENTER;
+		BlockPos bRel = CENTER.south(3);
+		TeleporterBlockEntity a = placeTeleporter(helper, aRel);
+		TeleporterBlockEntity b = placeTeleporter(helper, bRel);
+		linkPeers(helper, a, aRel, b, bRel);
+
+		ResourceHandler<ItemResource> aCap = helper.getLevel().getCapability(
+				Capabilities.Item.BLOCK, helper.absolutePos(aRel), Direction.NORTH);
+		helper.assertTrue(aCap != null, "Teleporter A should expose an item capability");
+
+		int accepted;
+		try (Transaction tx = Transaction.openRoot()) {
+			accepted = aCap.insert(ItemResource.of(Items.COBBLESTONE), 16, tx);
+			tx.commit();
+		}
+		helper.assertValueEqual(16, accepted, "accepted cobblestone count");
+		helper.assertValueEqual(16, a.sendItems[0].getCount(), "cobble buffered in A sendItems[0]");
+
+		helper.runAfterDelay(24L, () -> {
+			TeleporterBlockEntity bAfter = helper.getBlockEntity(bRel, TeleporterBlockEntity.class);
+			long totalInReceive = 0;
+			for (ItemStack s : bAfter.receiveItems) if (!s.isEmpty() && s.is(Items.COBBLESTONE)) totalInReceive += s.getCount();
+			helper.assertValueEqual(16L, totalInReceive, "cobble arrived in B receiveItems after flush");
+			helper.succeed();
+		});
+	}
+
+	static void teleporterPipeExtractsFromPeer(GameTestHelper helper) {
+		BlockPos aRel = CENTER;
+		BlockPos bRel = CENTER.south(3);
+		TeleporterBlockEntity a = placeTeleporter(helper, aRel);
+		TeleporterBlockEntity b = placeTeleporter(helper, bRel);
+		linkPeers(helper, a, aRel, b, bRel);
+
+		ResourceHandler<ItemResource> bCap = helper.getLevel().getCapability(
+				Capabilities.Item.BLOCK, helper.absolutePos(bRel), Direction.NORTH);
+		try (Transaction tx = Transaction.openRoot()) {
+			bCap.insert(ItemResource.of(Items.IRON_INGOT), 32, tx);
+			tx.commit();
+		}
+
+		helper.runAfterDelay(24L, () -> {
+			ResourceHandler<ItemResource> aCap = helper.getLevel().getCapability(
+					Capabilities.Item.BLOCK, helper.absolutePos(aRel), Direction.NORTH);
+			int extracted;
+			try (Transaction tx = Transaction.openRoot()) {
+				extracted = aCap.extract(ItemResource.of(Items.IRON_INGOT), 32, tx);
+				tx.commit();
+			}
+			helper.assertValueEqual(32, extracted, "iron extracted from A receiveItems after peer flush");
+			helper.succeed();
+		});
+	}
+
+	static void teleporterPipeForwardsFluidToPeer(GameTestHelper helper) {
+		BlockPos aRel = CENTER;
+		BlockPos bRel = CENTER.south(3);
+		TeleporterBlockEntity a = placeTeleporter(helper, aRel);
+		TeleporterBlockEntity b = placeTeleporter(helper, bRel);
+		linkPeers(helper, a, aRel, b, bRel);
+
+		ResourceHandler<FluidResource> aCap = helper.getLevel().getCapability(
+				Capabilities.Fluid.BLOCK, helper.absolutePos(aRel), Direction.NORTH);
+		helper.assertTrue(aCap != null, "Teleporter A should expose a fluid capability");
+
+		int accepted;
+		try (Transaction tx = Transaction.openRoot()) {
+			accepted = aCap.insert(FluidResource.of(Fluids.LAVA), 1000, tx);
+			tx.commit();
+		}
+		helper.assertTrue(accepted > 0, "A should accept lava into its send tank (got " + accepted + ")");
+
+		helper.runAfterDelay(24L, () -> {
+			TeleporterBlockEntity bAfter = helper.getBlockEntity(bRel, TeleporterBlockEntity.class);
+			helper.assertTrue(bAfter.receiveFluid == Fluids.LAVA,
+					"B receive tank should hold lava, got " + bAfter.receiveFluid);
+			helper.assertTrue(bAfter.receiveFluidAmount > 0,
+					"B receive tank should have a positive amount, got " + bAfter.receiveFluidAmount);
+			helper.succeed();
+		});
+	}
+
+	static void teleporterPipeClearStorage(GameTestHelper helper) {
+		BlockPos aRel = CENTER;
+		BlockPos bRel = CENTER.south(3);
+		TeleporterBlockEntity a = placeTeleporter(helper, aRel);
+		TeleporterBlockEntity b = placeTeleporter(helper, bRel);
+		linkPeers(helper, a, aRel, b, bRel);
+
+		a.sendItems[0] = new ItemStack(Items.DIAMOND, 5);
+		a.setChanged();
+
+		a.clearStorage();
+
+		helper.assertTrue(a.sendItems[0].isEmpty(), "sendItems[0] cleared");
+		long totalInReceive = 0;
+		for (ItemStack s : a.receiveItems) if (!s.isEmpty() && s.is(Items.DIAMOND)) totalInReceive += s.getCount();
+		helper.assertValueEqual(5L, totalInReceive, "diamonds moved to receiveItems");
+		helper.succeed();
+	}
+
+	static void teleporterPipeClearFluids(GameTestHelper helper) {
+		BlockPos aRel = CENTER;
+		BlockPos bRel = CENTER.south(3);
+		TeleporterBlockEntity a = placeTeleporter(helper, aRel);
+		TeleporterBlockEntity b = placeTeleporter(helper, bRel);
+		linkPeers(helper, a, aRel, b, bRel);
+
+		a.sendFluid = Fluids.WATER;
+		a.sendFluidAmount = 4000;
+		a.setChanged();
+
+		a.clearFluids();
+
+		helper.assertValueEqual(0, a.sendFluidAmount, "send tank drained");
+		helper.assertTrue(a.receiveFluid == Fluids.WATER, "receive tank holds water");
+		helper.assertValueEqual(4000, a.receiveFluidAmount, "water moved into receive tank");
+		helper.succeed();
+	}
+
+	static void teleporterPipeDrainOnActivity(GameTestHelper helper) {
+		BlockPos aRel = CENTER;
+		BlockPos bRel = CENTER.south(3);
+		TeleporterBlockEntity a = placeTeleporter(helper, aRel);
+		TeleporterBlockEntity b = placeTeleporter(helper, bRel);
+		linkPeers(helper, a, aRel, b, bRel);
+
+		a.energy = 50_000D;
+		b.energy = 50_000D;
+		a.sendItems[0] = new ItemStack(Items.COBBLESTONE, 32);
+		a.setChanged();
+		b.setChanged();
+		long baselineA = (long) a.energy;
+
+		helper.runAfterDelay(60L, () -> {
+			TeleporterBlockEntity aAfter = helper.getBlockEntity(aRel, TeleporterBlockEntity.class);
+			helper.assertTrue(aAfter.energy < baselineA,
+					"sender teleporter should have drained energy during active window (before=" + baselineA + ", after=" + aAfter.energy + ")");
+			helper.succeed();
+		});
+	}
+
+	static void teleporterPipeBalancesEnergy(GameTestHelper helper) {
+		BlockPos aRel = CENTER;
+		BlockPos bRel = CENTER.south(3);
+		TeleporterBlockEntity a = placeTeleporter(helper, aRel);
+		TeleporterBlockEntity b = placeTeleporter(helper, bRel);
+		linkPeers(helper, a, aRel, b, bRel);
+
+		a.energy = 80_000D;
+		b.energy = 0D;
+		a.setChanged();
+		b.setChanged();
+
+		helper.runAfterDelay(40L, () -> {
+			TeleporterBlockEntity aAfter = helper.getBlockEntity(aRel, TeleporterBlockEntity.class);
+			TeleporterBlockEntity bAfter = helper.getBlockEntity(bRel, TeleporterBlockEntity.class);
+			helper.assertTrue(bAfter.energy > 0D,
+					"peer teleporter should have received energy from balance (b=" + bAfter.energy + ")");
+			helper.assertTrue(aAfter.energy < 80_000D,
+					"sending teleporter should have given energy to balance (a=" + aAfter.energy + ")");
+			helper.succeed();
+		});
 	}
 }

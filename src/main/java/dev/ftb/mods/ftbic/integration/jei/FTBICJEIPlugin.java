@@ -128,7 +128,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addItemStackInfo(new net.minecraft.world.item.ItemStack(item),
 				net.minecraft.network.chat.Component.literal("Nuclear fuel rod. " + rods + "-rod pack emits " + pulses + " pulse" + (pulses == 1 ? "" : "s") + "/cycle."),
 				net.minecraft.network.chat.Component.literal("Energy: " + baseEnergy + " zap/t base (×(pulses+reflectors))."),
-				net.minecraft.network.chat.Component.literal("Heat: " + baseHeat + "/cycle base — distributed into neighboring heat acceptors."),
+				net.minecraft.network.chat.Component.literal("Heat: " + baseHeat + "/cycle base. Distributed into neighboring heat acceptors."),
 				net.minecraft.network.chat.Component.literal("Durability: " + durability + " cycles before the rod is spent."));
 	}
 
@@ -141,7 +141,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	private static void ventInfo(IRecipeRegistration r, net.minecraft.world.item.Item item, int maxHeat, int selfCool, int reactorCool, int componentCool) {
 		java.util.List<net.minecraft.network.chat.Component> lines = new java.util.ArrayList<>();
-		lines.add(net.minecraft.network.chat.Component.literal("Heat vent — removes heat each reactor cycle."));
+		lines.add(net.minecraft.network.chat.Component.literal("Heat vent. Removes heat each reactor cycle."));
 		if (maxHeat > 0) lines.add(net.minecraft.network.chat.Component.literal("Durability: " + maxHeat + " heat absorption."));
 		if (selfCool > 0) lines.add(net.minecraft.network.chat.Component.literal("Self cooling: " + selfCool + "/cycle (heals own durability)."));
 		if (reactorCool > 0) lines.add(net.minecraft.network.chat.Component.literal("Reactor cooling: " + reactorCool + "/cycle removed from reactor heat pool."));
@@ -151,7 +151,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	private static void exchangerInfo(IRecipeRegistration r, net.minecraft.world.item.Item item, int maxHeat, int toAdjacent, int toCore) {
 		java.util.List<net.minecraft.network.chat.Component> lines = new java.util.ArrayList<>();
-		lines.add(net.minecraft.network.chat.Component.literal("Heat exchanger — balances heat between neighbors and the reactor core."));
+		lines.add(net.minecraft.network.chat.Component.literal("Heat exchanger. Balances heat between neighbors and the reactor core."));
 		lines.add(net.minecraft.network.chat.Component.literal("Durability: " + String.format("%,d", maxHeat) + " heat buffer."));
 		if (toAdjacent > 0) lines.add(net.minecraft.network.chat.Component.literal("Adjacent transfer: up to " + toAdjacent + "/cycle per neighbor."));
 		if (toCore > 0) lines.add(net.minecraft.network.chat.Component.literal("Core transfer: up to " + toCore + "/cycle to/from the reactor heat pool."));
@@ -161,14 +161,14 @@ public class FTBICJEIPlugin implements IModPlugin {
 	private static void platingInfo(IRecipeRegistration r, net.minecraft.world.item.Item item, int heatCapacity, double explosionMod) {
 		int pct = (int) Math.round((1.0 - explosionMod) * 100.0);
 		r.addItemStackInfo(new net.minecraft.world.item.ItemStack(item),
-				net.minecraft.network.chat.Component.literal("Reactor plating — modifies the reactor hull itself."),
+				net.minecraft.network.chat.Component.literal("Reactor plating. Modifies the reactor hull itself."),
 				net.minecraft.network.chat.Component.literal("Max heat bonus: +" + String.format("%,d", heatCapacity) + " (stacks with other plating)."),
 				net.minecraft.network.chat.Component.literal("Explosion dampening: ×" + explosionMod + " (-" + pct + "% radius per plating)."));
 	}
 
 	private static void reflectorInfo(IRecipeRegistration r, net.minecraft.world.item.Item item, int durability) {
 		r.addItemStackInfo(new net.minecraft.world.item.ItemStack(item),
-				net.minecraft.network.chat.Component.literal("Neutron reflector — bounces pulses back into adjacent fuel rods."),
+				net.minecraft.network.chat.Component.literal("Neutron reflector. Bounces pulses back into adjacent fuel rods."),
 				net.minecraft.network.chat.Component.literal("Each reflector adjacent to a rod adds +1 pulse (more energy AND more heat)."),
 				net.minecraft.network.chat.Component.literal(durability == 0
 						? "Durability: infinite (iridium-reinforced)."

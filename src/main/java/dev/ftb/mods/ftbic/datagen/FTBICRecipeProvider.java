@@ -832,6 +832,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("rubber_sheet", ftbicStack("rubber_sheet", 1), new String[] {"III"}, 'I', i("ftbic:rubber"));
 		shaped("scrap_box", ftbicStack("scrap_box", 1), new String[] {"SSS", "SSS", "SSS"}, 'S', i("ftbic:scrap"));
 		shaped("single_use_battery", ftbicStack("single_use_battery", 1), new String[] {"C", "R", "O"}, 'C', i("ftbic:lv_cable"), 'O', commonOrTag("minecraft:coals"), 'R', commonOrTag("c:dusts/redstone"));
+		shaped("teleporter", ftbicStack("teleporter", 1), new String[] {"EIE", "CMC", "EPE"}, 'E', i("minecraft:ender_pearl"), 'I', i("ftbic:iridium_alloy"), 'C', i("ftbic:advanced_circuit"), 'M', i("ftbic:advanced_machine_block"), 'P', i("ftbic:energy_crystal"));
 		shaped("thick_neutron_reflector", ftbicStack("thick_neutron_reflector", 1), new String[] {"PNP", "NPN", "PNP"}, 'N', i("ftbic:neutron_reflector"), 'P', commonOrTag("c:plates/copper"));
 		shaped("transformer_upgrade", ftbicStack("transformer_upgrade", 1), new String[] {"GGG", "WTW", "GCG"}, 'G', commonOrTag("c:glass_blocks/colorless"), 'W', i("ftbic:mv_cable"), 'T', i("ftbic:mv_transformer"), 'C', i("ftbic:electronic_circuit"));
 		shaped("wind_mill", ftbicStack("wind_mill", 1), new String[] {" P ", "CGC", " P "}, 'P', i("ftbic:carbon_plate"), 'G', i("ftbic:basic_generator"), 'C', i("ftbic:electronic_circuit"));
