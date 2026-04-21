@@ -219,16 +219,14 @@ public interface FTBICElectricBlocks {
 			.energyCapacity(FTBICConfig.MACHINES.QUARRY_CAPACITY)
 			.maxEnergyInput(FTBICConfig.ENERGY.HV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.MACHINES.QUARRY_USE)
-			.io(0, 18)
-			.tickClientSide();
+			.io(0, 18);
 
 	ElectricBlockInstance PUMP = register("pump", PumpBlockEntity::new)
 			.advanced()
 			.energyCapacity(FTBICConfig.MACHINES.PUMP_CAPACITY)
 			.maxEnergyInput(FTBICConfig.ENERGY.HV_TRANSFER_RATE)
 			.energyUsage(FTBICConfig.MACHINES.PUMP_USE)
-			.io(1, 1)
-			.tickClientSide();
+			.io(1, 1);
 
 	// Battery Boxes //
 

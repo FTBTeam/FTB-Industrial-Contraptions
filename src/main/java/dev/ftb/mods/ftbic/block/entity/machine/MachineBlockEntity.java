@@ -16,7 +16,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -32,6 +31,7 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 	@Nullable
 	private MachineRecipe cachedRecipe;
 	private boolean recipeDirty = true;
+	private int dirtyTimer = 0;
 
 	public MachineBlockEntity(ElectricBlockInstance type, MachineRecipeType recipeType,
 			BlockPos pos, BlockState state) {
@@ -78,6 +78,7 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 		for (RecipeHolder<?> holder : server.recipeAccess().recipeMap().byType(recipeType.TYPE.get())) {
 			if (holder.value() instanceof MachineRecipe mr && recipeMatchesInputs(mr)) {
 				cachedRecipe = mr;
+				updateMaxProgress();
 				return mr;
 			}
 		}
@@ -88,13 +89,31 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 					MachineRecipe synthetic = adaptCooking(sr, inputItems[0]);
 					if (canFitOutputs(synthetic)) {
 						cachedRecipe = synthetic;
+						updateMaxProgress();
 						return synthetic;
 					}
 				}
 			}
 		}
 		cachedRecipe = null;
+		maxProgress = 0;
 		return null;
+	}
+
+	private void updateMaxProgress() {
+		if (cachedRecipe == null) {
+			maxProgress = 0;
+			return;
+		}
+		double speed = Math.max(1D, progressSpeed);
+		maxProgress = Math.max(1, (int) (cachedRecipe.processingTime
+				* FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get() / speed));
+	}
+
+	@Override
+	public void upgradesChanged() {
+		super.upgradesChanged();
+		updateMaxProgress();
 	}
 
 	private MachineRecipe adaptCooking(AbstractCookingRecipe sr, ItemStack inputStack) {
@@ -137,15 +156,30 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 		if (mr.outputs.isEmpty() || outputItems.length == 0) {
 			return true;
 		}
-		// Simple heuristic: at least one output slot empty or stackable with a primary output.
-		ItemStack primary = mr.outputs.get(0).stack();
-		for (ItemStack out : outputItems) {
-			if (out.isEmpty()) return true;
-			if (ItemStack.isSameItemSameComponents(out, primary) && out.getCount() + primary.getCount() <= out.getMaxStackSize()) {
-				return true;
-			}
+		ItemStack[] virtual = new ItemStack[outputItems.length];
+		for (int i = 0; i < outputItems.length; i++) {
+			virtual[i] = outputItems[i].copy();
 		}
-		return false;
+		for (StackWithChance swc : mr.outputs) {
+			ItemStack add = swc.stack();
+			int remaining = add.getCount();
+			for (int i = 0; i < virtual.length && remaining > 0; i++) {
+				if (virtual[i].isEmpty()) {
+					ItemStack put = add.copy();
+					int take = Math.min(remaining, put.getMaxStackSize());
+					put.setCount(take);
+					virtual[i] = put;
+					remaining -= take;
+				} else if (ItemStack.isSameItemSameComponents(virtual[i], add)) {
+					int room = virtual[i].getMaxStackSize() - virtual[i].getCount();
+					int move = Math.min(room, remaining);
+					virtual[i].grow(move);
+					remaining -= move;
+				}
+			}
+			if (remaining > 0) return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -161,13 +195,17 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 			if (progress != 0) {
 				progress = 0;
 				setChanged();
+				dirtyTimer = 0;
 			}
 			active = false;
 			return;
 		}
 
-		double speed = Math.max(1D, progressSpeed);
-		maxProgress = Math.max(1, (int) (recipe.processingTime * FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get() / speed));
+		if (progress + 1 >= maxProgress && !canFitOutputs(recipe)) {
+			active = false;
+			return;
+		}
+
 		energy -= energyUse;
 		progress++;
 		active = true;
@@ -178,9 +216,12 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 			progress = 0;
 			cachedRecipe = null;
 			recipeDirty = true;
+			setChanged();
+			dirtyTimer = 0;
+		} else if (++dirtyTimer >= 20) {
+			setChanged();
+			dirtyTimer = 0;
 		}
-		// Persist progress + energy changes so a chunk unload / server stop mid-recipe doesn't lose them.
-		setChanged();
 	}
 
 	private void consumeInputs(MachineRecipe mr) {
@@ -206,7 +247,6 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 				continue;
 			}
 			ItemStack toAdd = swc.stack().copy();
-			// Find a slot that can stack with it first.
 			for (int i = 0; i < outputItems.length && !toAdd.isEmpty(); i++) {
 				ItemStack existing = outputItems[i];
 				if (existing.isEmpty()) {
@@ -218,11 +258,6 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 					existing.grow(move);
 					toAdd.shrink(move);
 				}
-			}
-			// Leftover overflow — if the output slots are full, pop the rest into the world so the
-			// machine doesn't stall and the recipe can continue next tick.
-			if (!toAdd.isEmpty() && level != null) {
-				Block.popResource(level, worldPosition, toAdd);
 			}
 		}
 	}

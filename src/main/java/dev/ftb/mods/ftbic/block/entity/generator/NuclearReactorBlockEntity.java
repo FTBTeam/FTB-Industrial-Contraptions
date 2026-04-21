@@ -40,6 +40,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	public int timeUntilNextCycle;
 	public int debugSpeed;
 	private boolean pendingChamberRecompute = true;
+	private double cachedEnvCooling = 1.0D;
 
 	public NuclearReactorBlockEntity(BlockPos pos, BlockState state) {
 		super(FTBICElectricBlocks.NUCLEAR_REACTOR, pos, state);
@@ -92,6 +93,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 
 	public void recomputeActiveColumns() {
 		if (level == null) return;
+		cachedEnvCooling = computeEnvCooling();
 		int target = 3 + countAttachedChambers();
 		if (target == reactor.activeColumns) return;
 		int previous = reactor.activeColumns;
@@ -236,7 +238,7 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
 	}
 
 	private void runCycle() {
-		reactor.envCoolingMultiplier = computeEnvCooling();
+		reactor.envCoolingMultiplier = cachedEnvCooling;
 		double peo = reactor.energyOutput;
 		int ph = reactor.heat;
 		reactor.tick();

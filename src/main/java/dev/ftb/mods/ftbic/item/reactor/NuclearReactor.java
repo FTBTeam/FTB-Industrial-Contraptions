@@ -80,16 +80,15 @@ public class NuclearReactor {
 
 		int cols = Math.max(3, Math.min(MAX_COLUMNS, activeColumns));
 
-		for (int pass = 0; pass < 3; pass++) {
+		int passes = simulation ? 3 : 2;
+		for (int pass = 0; pass < passes; pass++) {
 			for (int x = 0; x < cols; x++) {
 				for (int y = 0; y < ROWS; y++) {
 					ItemStack stack = getAt(x, y);
 					if (stack.getItem() instanceof ReactorItem ri) {
 						if (pass == 0) ri.reactorTickPre(this, stack, x, y);
 						else if (pass == 1) ri.reactorTickPost(this, stack, x, y);
-						else {
-							if (simulation && ri.keepSimulationRunning(stack)) stopSimulation = false;
-						}
+						else if (ri.keepSimulationRunning(stack)) stopSimulation = false;
 						if (stack.isEmpty() || ri.isItemBroken(stack)) {
 							setAt(x, y, ItemStack.EMPTY);
 						}

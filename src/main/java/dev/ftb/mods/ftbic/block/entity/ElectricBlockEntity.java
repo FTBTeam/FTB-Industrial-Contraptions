@@ -39,25 +39,29 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class ElectricBlockEntity extends BlockEntity implements ZapEnergyHandler {
-	private static final ConcurrentHashMap<ResourceKey<Level>, AtomicLong> ELECTRIC_NETWORK_CHANGES = new ConcurrentHashMap<>();
+	private static final Map<ResourceKey<Level>, long[]> ELECTRIC_NETWORK_CHANGES = new HashMap<>();
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
 		if (level instanceof Level l) {
-			ELECTRIC_NETWORK_CHANGES.computeIfAbsent(l.dimension(), k -> new AtomicLong()).incrementAndGet();
+			ELECTRIC_NETWORK_CHANGES.computeIfAbsent(l.dimension(), k -> new long[1])[0]++;
 		}
 	}
 
 	public static long getCurrentElectricNetwork(LevelAccessor level, BlockPos pos) {
 		if (level instanceof Level l) {
-			AtomicLong counter = ELECTRIC_NETWORK_CHANGES.get(l.dimension());
-			return counter == null ? 0L : counter.get();
+			long[] counter = ELECTRIC_NETWORK_CHANGES.get(l.dimension());
+			return counter == null ? 0L : counter[0];
 		}
 		return 0L;
+	}
+
+	public static void forgetElectricNetwork(Level level) {
+		ELECTRIC_NETWORK_CHANGES.remove(level.dimension());
 	}
 
 	public final ElectricBlockInstance electricBlockInstance;

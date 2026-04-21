@@ -35,6 +35,7 @@ import dev.ftb.mods.ftbic.block.entity.machine.AdvancedCompressorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.AdvancedMaceratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.AdvancedPoweredFurnaceBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.CanningMachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CentrifugeBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.CompressorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MaceratorBlockEntity;
@@ -65,6 +66,7 @@ import net.minecraft.world.clock.WorldClock;
 import net.minecraft.world.clock.WorldClocks;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -1694,6 +1696,139 @@ public class FTBICGameTestFunctions {
 			helper.assertFalse(cached.blockEntity instanceof TeleporterBlockEntity,
 					"teleporter push network must exclude other teleporters");
 		}
+		helper.succeed();
+	}
+
+	static void insertAcceptsPartialWhenSlotOverflows(GameTestHelper helper) {
+		MaceratorBlockEntity be = placeMachine(helper, FTBICElectricBlocks.MACERATOR, MaceratorBlockEntity.class);
+		int slotCap = new ItemStack(Items.BONE).getMaxStackSize();
+		int prefill = slotCap - 10;
+		be.inputItems[0] = new ItemStack(Items.BONE, prefill);
+		be.setChanged();
+
+		ResourceHandler<ItemResource> handler = helper.getLevel().getCapability(
+				Capabilities.Item.BLOCK, helper.absolutePos(CENTER), Direction.NORTH);
+		helper.assertTrue(handler != null, "macerator should expose an item capability");
+
+		int inserted;
+		try (Transaction tx = Transaction.openRoot()) {
+			inserted = handler.insert(ItemResource.of(Items.BONE), 64, tx);
+			tx.commit();
+		}
+
+		MaceratorBlockEntity after = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+		helper.assertValueEqual(10, inserted, "insert accepts only what fits");
+		helper.assertValueEqual(slotCap, after.inputItems[0].getCount(), "slot count after partial insert");
+		helper.succeed();
+	}
+
+	static void machineStallOnFullOutputDoesNotDropItems(GameTestHelper helper) {
+		MaceratorBlockEntity be = placeMachine(helper, FTBICElectricBlocks.MACERATOR, MaceratorBlockEntity.class);
+		be.inputItems[0] = new ItemStack(Items.BONE, 2);
+		int max = Items.BONE_MEAL.getDefaultMaxStackSize();
+		for (int i = 0; i < be.outputItems.length; i++) {
+			be.outputItems[i] = new ItemStack(Items.BONE_MEAL, max);
+		}
+		be.setChanged();
+
+		helper.runAfterDelay(200, () -> {
+			helper.assertEntityNotPresent(EntityType.ITEM);
+			MaceratorBlockEntity after = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+			helper.assertValueEqual(2, after.inputItems[0].getCount(),
+					"bones remain unconsumed while every output slot is full");
+			for (int i = 0; i < after.outputItems.length; i++) {
+				helper.assertValueEqual(max, after.outputItems[i].getCount(),
+						"output slot " + i + " still at max");
+			}
+			helper.succeed();
+		});
+	}
+
+	static void overclockerProgressSpeedScalesAsPower(GameTestHelper helper) {
+		BasicMachineBlockEntity be = placeMacerator(helper);
+		double base = be.progressSpeed;
+		double mult = FTBICConfig.MACHINES.OVERCLOCKER_SPEED.get();
+
+		be.upgradeInventory.setStackInSlot(0, new ItemStack(FTBICItems.OVERCLOCKER_UPGRADE.get(), 3));
+		double expected = base * Math.pow(mult, 3);
+		double actual = be.progressSpeed;
+
+		helper.assertTrue(Math.abs(expected - actual) < 1e-6,
+				"3 overclockers should yield base*pow(mult,3) (expected=" + expected + ", actual=" + actual + ")");
+		helper.succeed();
+	}
+
+	static void transactionAbortRestoresMultipleSlots(GameTestHelper helper) {
+		CanningMachineBlockEntity be = placeMachine(helper, FTBICElectricBlocks.CANNING_MACHINE, CanningMachineBlockEntity.class);
+		be.inputItems[0] = new ItemStack(Items.BONE, 5);
+		be.inputItems[1] = new ItemStack(Items.COAL, 5);
+		be.setChanged();
+
+		ResourceHandler<ItemResource> handler = helper.getLevel().getCapability(
+				Capabilities.Item.BLOCK, helper.absolutePos(CENTER), Direction.NORTH);
+		helper.assertTrue(handler != null, "canning machine should expose item handler");
+
+		try (Transaction tx = Transaction.openRoot()) {
+			handler.insert(0, ItemResource.of(Items.BONE), 10, tx);
+			handler.insert(1, ItemResource.of(Items.COAL), 10, tx);
+		}
+
+		CanningMachineBlockEntity after = helper.getBlockEntity(CENTER, CanningMachineBlockEntity.class);
+		helper.assertValueEqual(5, after.inputItems[0].getCount(), "slot 0 rolled back");
+		helper.assertValueEqual(5, after.inputItems[1].getCount(), "slot 1 rolled back");
+		helper.succeed();
+	}
+
+	static void transactionNestedAbortPreservesOuterWrites(GameTestHelper helper) {
+		CanningMachineBlockEntity be = placeMachine(helper, FTBICElectricBlocks.CANNING_MACHINE, CanningMachineBlockEntity.class);
+		be.inputItems[0] = new ItemStack(Items.BONE, 5);
+		be.inputItems[1] = new ItemStack(Items.COAL, 5);
+		be.setChanged();
+
+		ResourceHandler<ItemResource> handler = helper.getLevel().getCapability(
+				Capabilities.Item.BLOCK, helper.absolutePos(CENTER), Direction.NORTH);
+
+		try (Transaction outer = Transaction.openRoot()) {
+			handler.insert(0, ItemResource.of(Items.BONE), 5, outer);
+			try (Transaction inner = Transaction.open(outer)) {
+				handler.insert(0, ItemResource.of(Items.BONE), 10, inner);
+				handler.insert(1, ItemResource.of(Items.COAL), 10, inner);
+			}
+			outer.commit();
+		}
+
+		CanningMachineBlockEntity after = helper.getBlockEntity(CENTER, CanningMachineBlockEntity.class);
+		helper.assertValueEqual(10, after.inputItems[0].getCount(),
+				"slot 0 = original 5 + outer 5 (inner rolled back)");
+		helper.assertValueEqual(5, after.inputItems[1].getCount(),
+				"slot 1 untouched by outer, inner's +10 rolled back");
+		helper.succeed();
+	}
+
+	static void transactionNestedCommitMergesIntoOuter(GameTestHelper helper) {
+		CanningMachineBlockEntity be = placeMachine(helper, FTBICElectricBlocks.CANNING_MACHINE, CanningMachineBlockEntity.class);
+		be.inputItems[0] = new ItemStack(Items.BONE, 5);
+		be.inputItems[1] = new ItemStack(Items.COAL, 5);
+		be.setChanged();
+
+		ResourceHandler<ItemResource> handler = helper.getLevel().getCapability(
+				Capabilities.Item.BLOCK, helper.absolutePos(CENTER), Direction.NORTH);
+
+		try (Transaction outer = Transaction.openRoot()) {
+			handler.insert(0, ItemResource.of(Items.BONE), 3, outer);
+			try (Transaction inner = Transaction.open(outer)) {
+				handler.insert(0, ItemResource.of(Items.BONE), 2, inner);
+				handler.insert(1, ItemResource.of(Items.COAL), 4, inner);
+				inner.commit();
+			}
+			// Outer aborts: everything — outer writes AND inner's committed-into-outer writes — rolls back.
+		}
+
+		CanningMachineBlockEntity after = helper.getBlockEntity(CENTER, CanningMachineBlockEntity.class);
+		helper.assertValueEqual(5, after.inputItems[0].getCount(),
+				"slot 0 fully rolled back (outer abort undoes inner's committed writes too)");
+		helper.assertValueEqual(5, after.inputItems[1].getCount(),
+				"slot 1 fully rolled back");
 		helper.succeed();
 	}
 }

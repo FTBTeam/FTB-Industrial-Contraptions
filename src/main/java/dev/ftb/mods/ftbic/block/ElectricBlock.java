@@ -64,7 +64,7 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-		return electricBlockInstance.tickClientSide || !level.isClientSide() ? ElectricBlockEntity::ticker : null;
+		return level.isClientSide() ? null : ElectricBlockEntity::ticker;
 	}
 
 	@Override

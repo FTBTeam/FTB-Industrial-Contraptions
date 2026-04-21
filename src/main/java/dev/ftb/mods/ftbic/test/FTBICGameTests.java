@@ -124,6 +124,13 @@ public class FTBICGameTests {
 		reg(event, "reactor_simulator_runs_and_emits_power", FTBICGameTestFunctions::reactorSimulatorRunsAndEmitsPower, env, 200);
 		reg(event, "reactor_simulator_edit_lock", FTBICGameTestFunctions::reactorSimulatorEditLock, env, 100);
 		reg(event, "reactor_simulator_import_roundtrip", FTBICGameTestFunctions::reactorSimulatorImportRoundtrip, env, 100);
+
+		reg(event, "insert_accepts_partial_when_slot_overflows", FTBICGameTestFunctions::insertAcceptsPartialWhenSlotOverflows, env, 40);
+		reg(event, "machine_stall_on_full_output_does_not_drop_items", FTBICGameTestFunctions::machineStallOnFullOutputDoesNotDropItems, env, 220);
+		reg(event, "overclocker_progress_speed_scales_as_power", FTBICGameTestFunctions::overclockerProgressSpeedScalesAsPower, env, 40);
+		reg(event, "transaction_abort_restores_multiple_slots", FTBICGameTestFunctions::transactionAbortRestoresMultipleSlots, env, 40);
+		reg(event, "transaction_nested_abort_preserves_outer_writes", FTBICGameTestFunctions::transactionNestedAbortPreservesOuterWrites, env, 40);
+		reg(event, "transaction_nested_commit_merges_into_outer", FTBICGameTestFunctions::transactionNestedCommitMergesIntoOuter, env, 40);
 	}
 
 	private static void reg(RegisterGameTestsEvent event, String name,

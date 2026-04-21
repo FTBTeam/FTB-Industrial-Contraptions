@@ -41,7 +41,6 @@ public class ElectricBlockInstance {
 	public boolean wip = false;
 	public int inputItemCount = 0;
 	public int outputItemCount = 0;
-	public boolean tickClientSide = false;
 	public FECapMode feCapMode = FECapMode.NONE;
 
 	public enum FECapMode { NONE, EXTRACT_ONLY, INSERT_ONLY, INSERT_AND_EXTRACT }
@@ -75,7 +74,6 @@ public class ElectricBlockInstance {
 	public ElectricBlockInstance cantBeActive() { canBeActive = false; return this; }
 	public ElectricBlockInstance canBurn() { canBurn = true; return this; }
 	public ElectricBlockInstance wip() { wip = true; return this; }
-	public ElectricBlockInstance tickClientSide() { tickClientSide = true; return this; }
 	public ElectricBlockInstance energyUsageIsntPerTick() { return this; }
 	public ElectricBlockInstance io(int inItems, int outItems) { inputItemCount = inItems; outputItemCount = outItems; return this; }
 

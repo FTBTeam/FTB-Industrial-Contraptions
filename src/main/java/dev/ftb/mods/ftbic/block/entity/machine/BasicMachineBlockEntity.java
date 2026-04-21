@@ -145,15 +145,14 @@ public class BasicMachineBlockEntity extends ElectricBlockEntity {
 		super.upgradesChanged();
 
 		int overclockers = upgradeInventory.countUpgrades(FTBICItems.OVERCLOCKER_UPGRADE.get());
-		for (int i = 0; i < overclockers; i++) {
-			energyUse *= FTBICConfig.MACHINES.OVERCLOCKER_ENERGY_USE.get();
-			progressSpeed *= FTBICConfig.MACHINES.OVERCLOCKER_SPEED.get();
+		if (overclockers > 0) {
+			energyUse *= Math.pow(FTBICConfig.MACHINES.OVERCLOCKER_ENERGY_USE.get(), overclockers);
+			progressSpeed *= Math.pow(FTBICConfig.MACHINES.OVERCLOCKER_SPEED.get(), overclockers);
 		}
 
 		int transformers = upgradeInventory.countUpgrades(FTBICItems.TRANSFORMER_UPGRADE.get());
-		while (transformers > 0) {
-			transformers--;
-			maxInputEnergy *= 4D;
+		if (transformers > 0) {
+			maxInputEnergy *= Math.pow(4D, transformers);
 		}
 		double ivCap = FTBICConfig.ENERGY.IV_TRANSFER_RATE.get();
 		if (maxInputEnergy > ivCap) {
@@ -167,5 +166,14 @@ public class BasicMachineBlockEntity extends ElectricBlockEntity {
 		}
 
 		autoEject = upgradeInventory.countUpgrades(FTBICItems.EJECTOR_UPGRADE.get()) > 0;
+
+		energyUse = sanitize(energyUse, 1D);
+		progressSpeed = sanitize(progressSpeed, 1D);
+		maxInputEnergy = sanitize(maxInputEnergy, electricBlockInstance.maxEnergyInput.get());
+		energyCapacity = sanitize(energyCapacity, electricBlockInstance.energyCapacity.get());
+	}
+
+	private static double sanitize(double value, double fallback) {
+		return (!Double.isFinite(value) || value < 0D) ? fallback : value;
 	}
 }
