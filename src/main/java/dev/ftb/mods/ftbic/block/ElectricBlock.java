@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -115,6 +116,18 @@ public class ElectricBlock extends Block implements EntityBlock, SprayPaintable 
 					double dy = pos.getY() + 0.8 + r.nextDouble() * 0.2;
 					double dz = pos.getZ() + 0.4 + r.nextDouble() * 0.2;
 					level.addParticle(ParticleTypes.LARGE_SMOKE, dx, dy, dz, 0D, 0.01D, 0D);
+				}
+			} else if (be instanceof MachineBlockEntity m && m.starving) {
+				if (r.nextInt(4) == 0) {
+					double dx = pos.getX() + 0.3 + r.nextDouble() * 0.4;
+					double dy = pos.getY() + 0.5 + r.nextDouble() * 0.4;
+					double dz = pos.getZ() + 0.3 + r.nextDouble() * 0.4;
+					level.addParticle(ParticleTypes.ELECTRIC_SPARK, dx, dy, dz, 0D, 0D, 0D);
+				}
+				if (r.nextInt(80) == 0) {
+					level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+							SoundEvents.REDSTONE_TORCH_BURNOUT, SoundSource.BLOCKS,
+							0.3F, 0.5F + r.nextFloat() * 0.2F, false);
 				}
 			} else if (electricBlockInstance.canBeActive
 					&& state.hasProperty(ACTIVE) && state.getValue(ACTIVE)

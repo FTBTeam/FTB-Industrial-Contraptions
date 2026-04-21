@@ -92,6 +92,9 @@ public class FTBICJadePlugin implements IWailaPlugin {
 					data.putInt("ftbic_progress", m.progress);
 					data.putInt("ftbic_max_progress", m.maxProgress);
 				}
+				if (be instanceof MachineBlockEntity m && m.starving) {
+					data.putBoolean("ftbic_starving", true);
+				}
 				if (be instanceof NuclearReactorBlockEntity reactor) {
 					data.putInt("ftbic_reactor_heat", reactor.reactor.heat);
 					data.putInt("ftbic_reactor_max_heat", Math.max(1, reactor.reactor.maxHeat));
@@ -171,6 +174,9 @@ public class FTBICJadePlugin implements IWailaPlugin {
 					tooltip.add(Component.translatable("ftbic.jade.progress", pct)
 							.withStyle(ChatFormatting.GREEN));
 				}
+			}
+			if (data.getBooleanOr("ftbic_starving", false)) {
+				tooltip.add(Component.translatable("ftbic.jade.starving").withStyle(ChatFormatting.RED));
 			}
 			if (data.contains("ftbic_reactor_max_heat")) {
 				int heat = data.getIntOr("ftbic_reactor_heat", 0);

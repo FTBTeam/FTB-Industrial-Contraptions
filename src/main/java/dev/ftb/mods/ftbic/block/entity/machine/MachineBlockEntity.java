@@ -27,6 +27,7 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 	public final MachineRecipeType recipeType;
 	public int progress;
 	public int maxProgress;
+	public boolean starving;
 
 	@Nullable
 	private MachineRecipe cachedRecipe;
@@ -52,6 +53,7 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 		super.saveAdditional(output);
 		if (progress > 0) output.putInt("Progress", progress);
 		if (maxProgress > 0) output.putInt("MaxProgress", maxProgress);
+		if (starving) output.putBoolean("Starving", true);
 	}
 
 	@Override
@@ -59,6 +61,18 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 		super.loadAdditional(input);
 		progress = input.getIntOr("Progress", 0);
 		maxProgress = input.getIntOr("MaxProgress", 0);
+		starving = input.getBooleanOr("Starving", false);
+	}
+
+	private void setStarving(boolean s) {
+		if (starving != s) {
+			starving = s;
+			setChanged();
+			if (level != null && !level.isClientSide()) {
+				BlockState state = getBlockState();
+				level.sendBlockUpdated(worldPosition, state, state, 3);
+			}
+		}
 	}
 
 	@Nullable
@@ -198,17 +212,20 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 				dirtyTimer = 0;
 			}
 			active = false;
+			setStarving(recipe != null && energy < energyUse);
 			return;
 		}
 
 		if (progress + 1 >= maxProgress && !canFitOutputs(recipe)) {
 			active = false;
+			setStarving(false);
 			return;
 		}
 
 		energy -= energyUse;
 		progress++;
 		active = true;
+		setStarving(false);
 
 		if (progress >= maxProgress) {
 			consumeInputs(recipe);

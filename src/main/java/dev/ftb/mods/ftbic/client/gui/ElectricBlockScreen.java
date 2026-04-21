@@ -125,6 +125,10 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 		if (energyX >= 0 && energyY >= 0) {
 			float frac = this.menu.getEnergyFraction();
 			drawEnergy(graphics, leftPos + energyX, topPos + energyY, Mth.ceil(frac * 14F));
+			if (this.menu.isStarving() && (System.currentTimeMillis() / 400L) % 2L == 0L) {
+				graphics.fill(leftPos + energyX, topPos + energyY,
+						leftPos + energyX + 14, topPos + energyY + 14, 0x55FF3030);
+			}
 		}
 		if (drawDefaultArrow) {
 			int progPx = Math.max(0, Math.min(24, Math.round(this.menu.getProgressFraction() * 24F)));

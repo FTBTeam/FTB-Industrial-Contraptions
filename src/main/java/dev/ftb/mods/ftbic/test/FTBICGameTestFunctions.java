@@ -473,6 +473,54 @@ public class FTBICGameTestFunctions {
 		return placeMachine(helper, FTBICElectricBlocks.MACERATOR, MaceratorBlockEntity.class);
 	}
 
+	static void machineStarvingFlagSetWhenEnergyDepleted(GameTestHelper helper) {
+		MaceratorBlockEntity be = placeMachine(helper, FTBICElectricBlocks.MACERATOR, MaceratorBlockEntity.class);
+		be.inputItems[0] = new ItemStack(Items.BONE, 8);
+		be.energy = 0D;
+		be.setChanged();
+
+		helper.runAfterDelay(10, () -> {
+			MaceratorBlockEntity after = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+			helper.assertTrue(after.starving,
+					"Machine with loaded recipe and no energy should be starving (starving=" + after.starving + ", energy=" + after.energy + ")");
+			helper.succeed();
+		});
+	}
+
+	static void machineNotStarvingWithoutRecipe(GameTestHelper helper) {
+		MaceratorBlockEntity be = placeMachine(helper, FTBICElectricBlocks.MACERATOR, MaceratorBlockEntity.class);
+		be.energy = 0D;
+		be.setChanged();
+
+		helper.runAfterDelay(10, () -> {
+			MaceratorBlockEntity after = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+			helper.assertFalse(after.starving,
+					"Idle machine with no recipe should not be marked starving (starving=" + after.starving + ")");
+			helper.succeed();
+		});
+	}
+
+	static void machineStarvingClearsWhenEnergyRestored(GameTestHelper helper) {
+		MaceratorBlockEntity be = placeMachine(helper, FTBICElectricBlocks.MACERATOR, MaceratorBlockEntity.class);
+		be.inputItems[0] = new ItemStack(Items.BONE, 8);
+		be.energy = 0D;
+		be.setChanged();
+
+		helper.runAfterDelay(10, () -> {
+			MaceratorBlockEntity starving = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+			helper.assertTrue(starving.starving, "pre-condition: machine should be starving before refill");
+			starving.energy = starving.energyCapacity;
+			starving.setChanged();
+
+			helper.runAfterDelay(10, () -> {
+				MaceratorBlockEntity after = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+				helper.assertFalse(after.starving,
+						"Machine should clear starving once energy is restored (starving=" + after.starving + ")");
+				helper.succeed();
+			});
+		});
+	}
+
 	static void overclockerIncreasesSpeed(GameTestHelper helper) {
 		BasicMachineBlockEntity be = placeMacerator(helper);
 		double baseSpeed = be.progressSpeed;
@@ -1213,6 +1261,37 @@ public class FTBICGameTestFunctions {
 			helper.succeed();
 		});
 	}
+
+	static void overloadBurnsEntireLvSubnet(GameTestHelper helper) {
+		BlockPos srcPos = new BlockPos(1, 2, 4);
+		BlockPos[] cables = new BlockPos[5];
+		for (int i = 0; i < cables.length; i++) {
+			cables[i] = new BlockPos(2 + i, 2, 4);
+		}
+		BlockPos machinePos = new BlockPos(2 + cables.length, 2, 4);
+
+		helper.setBlock(srcPos.below(), Blocks.STONE);
+		for (BlockPos c : cables) helper.setBlock(c.below(), Blocks.STONE);
+		helper.setBlock(machinePos.below(), Blocks.STONE);
+
+		helper.setBlock(srcPos, FTBICElectricBlocks.MV_TRANSFORMER.block.get());
+		for (BlockPos c : cables) helper.setBlock(c, FTBICBlocks.LV_CABLE.get());
+		helper.setBlock(machinePos, FTBICElectricBlocks.MACERATOR.block.get());
+
+		MVTransformerBlockEntity src = helper.getBlockEntity(srcPos, MVTransformerBlockEntity.class);
+		src.energy = src.energyCapacity;
+		src.setChanged();
+
+		helper.runAfterDelay(20, () -> {
+			for (int i = 0; i < cables.length; i++) {
+				BlockState cs = helper.getLevel().getBlockState(helper.absolutePos(cables[i]));
+				helper.assertTrue(cs.getBlock() instanceof BurntCableBlock,
+						"LV cable at index " + i + " should burn via flood-fill (got " + cs.getBlock() + ")");
+			}
+			helper.succeed();
+		});
+	}
+
 
 	static void transformerStepsMvDownToLv(GameTestHelper helper) {
 		BlockPos mvSrcPos = new BlockPos(1, 2, 4);

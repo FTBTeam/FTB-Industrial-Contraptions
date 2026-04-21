@@ -265,6 +265,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("ftbic.jade.fluid_empty", "Tank: Empty");
 		add("ftbic.jade.lava", "Lava: %s / %s mB");
 		add("ftbic.jade.progress", "Progress: %s%%");
+		add("ftbic.jade.starving", "Starving for power");
 		add("ftbic.jade.reactor_heat", "Heat: %s%%");
 		add("ftbic.jade.reactor_output", "Output: %s/t");
 		add("ftbic.jade.reactor_paused", "Paused (%s/t when active)");

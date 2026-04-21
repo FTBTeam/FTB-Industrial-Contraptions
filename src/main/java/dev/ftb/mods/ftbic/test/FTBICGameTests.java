@@ -57,6 +57,9 @@ public class FTBICGameTests {
 		reg(event, "macerator_no_recipe_no_progress", FTBICGameTestFunctions::maceratorNoRecipeNoProgress, env, 200);
 		reg(event, "machine_sleeps_when_output_full", FTBICGameTestFunctions::machineSleepsWhenOutputFull, env, 200);
 		reg(event, "machine_consumes_energy_per_tick", FTBICGameTestFunctions::machineConsumesEnergyPerTick, env, 200);
+		reg(event, "machine_starving_flag_set_when_energy_depleted", FTBICGameTestFunctions::machineStarvingFlagSetWhenEnergyDepleted, env, 100);
+		reg(event, "machine_not_starving_without_recipe", FTBICGameTestFunctions::machineNotStarvingWithoutRecipe, env, 100);
+		reg(event, "machine_starving_clears_when_energy_restored", FTBICGameTestFunctions::machineStarvingClearsWhenEnergyRestored, env, 100);
 
 		reg(event, "overclocker_increases_speed", FTBICGameTestFunctions::overclockerIncreasesSpeed, env, 100);
 		reg(event, "overclocker_increases_energy_use", FTBICGameTestFunctions::overclockerIncreasesEnergyUse, env, 100);
@@ -73,6 +76,7 @@ public class FTBICGameTests {
 		reg(event, "energy_tier_transfer_rates_match_config", FTBICGameTestFunctions::energyTierTransferRatesMatchConfig, env, 20);
 		reg(event, "lv_cable_survives_within_rate", FTBICGameTestFunctions::lvCableSurvivesWithinRate, env, 200);
 		reg(event, "lv_cable_burns_when_overloaded", FTBICGameTestFunctions::lvCableBurnsWhenOverloaded, env, 200);
+		reg(event, "overload_burns_entire_lv_subnet", FTBICGameTestFunctions::overloadBurnsEntireLvSubnet, env, 200);
 		reg(event, "transformer_steps_mv_down_to_lv", FTBICGameTestFunctions::transformerStepsMvDownToLv, env, 200);
 		reg(event, "rectifier_converts_fe_to_zaps", FTBICGameTestFunctions::rectifierConvertsFeToZaps, env, 100);
 		reg(event, "rectifier_feeds_downstream_machine", FTBICGameTestFunctions::rectifierFeedsDownstreamMachine, env, 200);

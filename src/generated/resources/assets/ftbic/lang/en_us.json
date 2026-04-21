@@ -86,6 +86,7 @@
   "ftbic.jade.reactor_heat": "Heat: %s%%",
   "ftbic.jade.reactor_output": "Output: %s/t",
   "ftbic.jade.reactor_paused": "Paused (%s/t when active)",
+  "ftbic.jade.starving": "Starving for power",
   "ftbic.jade.tele_power": "Power: HV (shared with linked pair)",
   "ftbic.jade.tele_receive_fluid": "Received %s: %s / %s mB",
   "ftbic.jade.tele_receive_fluid_empty": "Receive tank: Empty (0 / %s mB)",
