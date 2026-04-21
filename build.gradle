@@ -76,6 +76,10 @@ repositories {
     }
 }
 
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 dependencies {
     // JEI - wired up for Phase 6 integration; safe to leave as compileOnly until then
     compileOnly("mezz.jei:jei-26.1.2-neoforge-api:29.5.0.26")
