@@ -19,16 +19,28 @@ import dev.ftb.mods.ftbic.block.entity.machine.DiggingBaseBlockEntity;
 import dev.ftb.mods.ftbic.client.renderer.DiggingBeamRenderer;
 import dev.ftb.mods.ftbic.client.renderer.NukeArrowRenderer;
 import dev.ftb.mods.ftbic.entity.FTBICEntities;
+import dev.ftb.mods.ftbic.integration.guideme.FTBICGuide;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
+@Mod(value = FTBIC.MOD_ID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = FTBIC.MOD_ID, value = Dist.CLIENT)
 public final class FTBICClient {
+
+	public FTBICClient(IEventBus eventBus, ModContainer container) {
+		if (ModList.get().isLoaded("guideme")) {
+			FTBICGuide.init();
+		}
+	}
 
 	@SubscribeEvent
 	public static void registerMenuScreens(RegisterMenuScreensEvent event) {
@@ -62,5 +74,4 @@ public final class FTBICClient {
 		event.registerBlockEntityRenderer(pumpType, DiggingBeamRenderer::new);
 	}
 
-	private FTBICClient() {}
 }

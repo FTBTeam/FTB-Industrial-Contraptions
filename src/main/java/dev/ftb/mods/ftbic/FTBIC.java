@@ -12,17 +12,14 @@ import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import dev.ftb.mods.ftbic.screen.FTBICMenus;
 import dev.ftb.mods.ftbic.sound.FTBICSounds;
 import dev.ftb.mods.ftbic.test.FTBICGameTests;
+import dev.ftb.mods.ftbic.util.FTBICIngredientTypes;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import org.slf4j.Logger;
-import dev.ftb.mods.ftbic.integration.guideme.FTBICGuide;
-import dev.ftb.mods.ftbic.util.FTBICIngredientTypes;
 
 @Mod(FTBIC.MOD_ID)
 public class FTBIC {
@@ -34,7 +31,7 @@ public class FTBIC {
 		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 	}
 
-	public FTBIC(IEventBus eventBus, ModContainer container, Dist dist) {
+	public FTBIC(IEventBus eventBus, ModContainer container) {
 		FTBICElectricBlocks.init();
 
 		ModDataComponents.DATA_COMPONENTS.register(eventBus);
@@ -53,9 +50,5 @@ public class FTBIC {
 		container.registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_SPEC);
 		FTBICConfig.init();
 		FTBICUtils.init();
-
-		if (dist.isClient() && ModList.get().isLoaded("guideme")) {
-			FTBICGuide.init();
-		}
 	}
 }
