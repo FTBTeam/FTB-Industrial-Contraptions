@@ -7,7 +7,7 @@ public enum EnergyTier {
 	MV("mv", 2),
 	HV("hv", 3),
 	EV("ev", 4),
-	IV("xv", 4);
+	IV("iv", 4);
 
 	public static final EnergyTier[] VALUES = values();
 
