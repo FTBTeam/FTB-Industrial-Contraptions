@@ -139,7 +139,7 @@ publishMods {
     curseforge {
         projectId = project.curseforge_id
         projectSlug = "ftb-industrial-contraptions"
-        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        accessToken = providers.environmentVariable("CURSEFORGE_KEY")
         minecraftVersions.add(minecraft_version)
         optional("jei", "jade", "guideme")
     }
