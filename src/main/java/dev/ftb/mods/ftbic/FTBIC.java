@@ -35,15 +35,7 @@ public class FTBIC {
 	}
 
 	public FTBIC(IEventBus eventBus, ModContainer container, Dist dist) {
-		LOGGER.info("{} loading on {}", MOD_NAME, dist);
-
 		FTBICElectricBlocks.init();
-
-		FTBICBlocks.REGISTRY.getClass();
-		FTBICItems.REGISTRY.getClass();
-		FTBICSounds.REGISTRY.getClass();
-		FTBICEntities.REGISTRY.getClass();
-		FTBICMenus.REGISTRY.getClass();
 
 		ModDataComponents.DATA_COMPONENTS.register(eventBus);
 		ModCreativeTabs.TABS.register(eventBus);
