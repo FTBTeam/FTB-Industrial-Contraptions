@@ -1,23 +1,31 @@
 plugins {
     id 'java-library'
-    id 'eclipse'
     id 'idea'
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.141'
     id 'me.modmuss50.mod-publish-plugin' version '1.1.0'
 }
 
-version = "${minecraft_version}-${project.mod_version}"
+tasks.named('wrapper', Wrapper).configure {
+	distributionType = Wrapper.DistributionType.BIN
+}
+
+apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/v1/gradle/maven.gradle'
+apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/v1/gradle/publishing-2.gradle'
+apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/v1/gradle/utils.gradle'
+apply from: 'https://raw.githubusercontent.com/FTBTeam/mods-meta/v1/gradle/changelog.gradle'
+
+version = createModVersion(project)
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name
+	archivesName = archives_base_name
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 neoForge {
-    version = project.neoforge_full_version
+    version = project.neoforge_version
 
     runs {
         configureEach {
@@ -56,36 +64,14 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
+	commonMavenRepos(repositories)
+
     maven {
         name = "Jared's Maven"
         url = "https://maven.blamejared.com/"
         content {
             includeGroup "mezz.jei"
-        }
-    }
-
-    maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
-        content {
-            includeGroup "maven.modrinth"
-        }
-    }
-
-    maven {
-        name = "CurseMaven"
-        url = "https://cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
-
-    maven {
-        name = "FTB"
-        url = "https://maven.ftb.dev/snapshots"
-        content {
-            includeGroup "dev.ftb.mods"
         }
     }
 }
@@ -108,14 +94,16 @@ dependencies {
 tasks.withType(ProcessResources).configureEach {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     var replaceProperties = [
+            mod_id                 : mod_id,
+            version                : version,
             minecraft_version      : minecraft_version,
             neoforge_loader_version: neoforge_loader_version,
-            neoforge_full_version  : neoforge_full_version,
-            version                : version,
-            neo_version_range      : neo_version_range,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_author             : mod_author
+            minecraft_version_range: minecraft_version_range,
+            neoforge_version: neoforge_version,
+            neoforge_version_range: neoforge_version_range,
+            ftb_materials_version: ftb_materials_version,
+            ftb_materials_version_range: ftb_materials_version_range,
+            guideme_version_range: guideme_version_range,
     ]
 
     inputs.properties replaceProperties
@@ -136,11 +124,17 @@ idea {
     }
 }
 
+createMavenPublishingBlock(project)
+
 publishMods {
     file = jar.archiveFile
-    changelog = "Release ${version}"
-    type = BETA
-    modLoaders.add("neoforge")
+
+	dryRun = providers.environmentVariable("CURSEFORGE_KEY").getOrNull() == null || providers.environmentVariable("SKIP_CURSEFORGE").getOrNull() != null
+	changelog = createChangelog(project)
+	version = project.version
+	type = createReleaseType(project)
+
+	modLoaders.add("neoforge")
 
     curseforge {
         projectId = project.curseforge_id

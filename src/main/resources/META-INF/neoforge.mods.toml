@@ -5,36 +5,36 @@ license = "All Rights Reserved"
 [[mods]]
 modId = "${mod_id}"
 version = "${version}"
-displayName = "${mod_name}"
-authors = "${mod_author}"
+displayName = "FTB Industrial Contraptions"
+authors = "FTB Team"
 description = '''
 FTB Industrial Contraptions - an industrial tech mod featuring tiered energy, generators, machines, nuclear reactors, and automation.
 '''
 
-[[dependencies.ftbic]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
-versionRange = "${neo_version_range}"
+versionRange = "${neoforge_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.ftbic]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
-versionRange = "[${minecraft_version},)"
+versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.ftbic]]
+[[dependencies.${mod_id}]]
 modId = "ftbmaterials"
 type = "required"
-versionRange = "[26.1.1.1,)"
+versionRange = "${ftb_materials_version_range}"
 ordering = "BEFORE"
 side = "BOTH"
 
-[[dependencies.ftbic]]
+[[dependencies.${mod_id}]]
 modId = "guideme"
 type = "optional"
-versionRange = "[26,)"
+versionRange = "${guideme_version_range}"
 ordering = "AFTER"
 side = "BOTH"
