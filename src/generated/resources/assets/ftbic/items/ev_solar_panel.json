@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "ftbic:block/electric/light/ev_solar_panel"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:raw_materials/antimony"
+      }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "antimony_dust"
+      ]
+    }
+  ],
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:raw_materials/antimony"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:antimony_dust"
+      }
+    },
+    {
+      "chance": 0.35,
+      "item": {
+        "id": "ftbmaterials:antimony_dust"
+      }
+    }
+  ]
+}

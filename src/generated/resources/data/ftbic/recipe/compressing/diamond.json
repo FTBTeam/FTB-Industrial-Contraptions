@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "ingredient": "ftbic:graphene"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:diamond"
+      }
+    }
+  ]
+}

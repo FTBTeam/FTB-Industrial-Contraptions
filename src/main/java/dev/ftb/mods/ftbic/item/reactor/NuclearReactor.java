@@ -7,117 +7,91 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NuclearReactor {
+	public static final int MAX_COLUMNS = 9;
+	public static final int ROWS = 6;
+	public static final int MAX_SLOTS = MAX_COLUMNS * ROWS;
+
 	public final ItemStack[] inputItems;
 
-	public boolean paused;
-	public boolean allowRedstoneControl;
-	public boolean simulation;
-	public int heat;
+	public boolean paused = true;
+	public boolean allowRedstoneControl = false;
+	public boolean simulation = false;
+	public int heat = 0;
+	public int activeColumns = 3;
+	public double envCoolingMultiplier = 1.0D;
 
-	public double energyOutput;
-	public int maxHeat;
-	public double explosionModifier;
-	public double explosionRadius;
+	public double energyOutput = 0D;
+	public int maxHeat = 10_000;
+	public double explosionModifier = 1D;
+	public double explosionRadius = 0D;
 
 	public NuclearReactor(ItemStack[] is) {
 		inputItems = is;
-		paused = true;
-		allowRedstoneControl = false;
-		simulation = false;
-		energyOutput = 0D;
-		heat = 0;
+	}
+
+	public static int slotIndex(int x, int y) {
+		return y * MAX_COLUMNS + x;
 	}
 
 	public ItemStack getAt(int x, int y) {
-		if (x < 0 || x >= 9 || y < 0 || y >= 6) {
-			return ItemStack.EMPTY;
-		}
-
-		return inputItems[x + y * 9];
+		if (x < 0 || x >= MAX_COLUMNS || y < 0 || y >= ROWS) return ItemStack.EMPTY;
+		return inputItems[slotIndex(x, y)];
 	}
 
 	public void setAt(int x, int y, ItemStack stack) {
-		if (x < 0 || x >= 9 || y < 0 || y >= 6) {
-			return;
-		}
-
-		inputItems[x + y * 9] = stack;
+		if (x < 0 || x >= MAX_COLUMNS || y < 0 || y >= ROWS) return;
+		inputItems[slotIndex(x, y)] = stack;
 	}
 
 	public void addHeat(int h) {
 		heat = Math.max(heat + h, 0);
 	}
 
-	public void distributeHeat(ItemStack[] around, int heat) {
-		List<ItemStack> list = new ArrayList<>(around.length);
+	public void distributeHeat(ItemStack[] around, int incomingHeat) {
+		List<ItemStack> acceptors = new ArrayList<>(around.length);
 		ItemStack first = ItemStack.EMPTY;
-
 		for (ItemStack stack : around) {
-			if (stack.getItem() instanceof ReactorItem && ((ReactorItem) stack.getItem()).isHeatAcceptor(stack)) {
-				list.add(stack);
-
-				if (first == ItemStack.EMPTY) {
-					first = stack;
-				}
+			if (stack.getItem() instanceof ReactorItem ri && ri.isHeatAcceptor(stack)) {
+				acceptors.add(stack);
+				if (first == ItemStack.EMPTY) first = stack;
 			}
 		}
 
-		if (list.isEmpty()) {
-			addHeat(heat);
+		if (acceptors.isEmpty()) {
+			addHeat(incomingHeat);
 			return;
 		}
 
-		for (ItemStack stack : list) {
-			((ReactorItem) stack.getItem()).damageReactorItem(stack, heat / list.size());
+		int per = incomingHeat / acceptors.size();
+		for (ItemStack stack : acceptors) {
+			((ReactorItem) stack.getItem()).damageReactorItem(stack, per);
 		}
-
-		((ReactorItem) first.getItem()).damageReactorItem(first, heat % list.size());
+		if (!first.isEmpty()) {
+			((ReactorItem) first.getItem()).damageReactorItem(first, incomingHeat % acceptors.size());
+		}
 	}
 
 	public boolean tick() {
 		energyOutput = 0D;
-		maxHeat = 10000;
+		maxHeat = 10_000;
 		explosionModifier = 1D;
 		explosionRadius = FTBICConfig.NUCLEAR.NUCLEAR_REACTOR_EXPLOSION_BASE_RADIUS.get();
 		boolean stopSimulation = true;
 
-		for (int x = 0; x < 9; x++) {
-			for (int y = 0; y < 6; y++) {
-				ItemStack stack = getAt(x, y);
+		int cols = Math.max(3, Math.min(MAX_COLUMNS, activeColumns));
 
-				if (stack.getItem() instanceof ReactorItem reactorItem) {
-                    reactorItem.reactorTickPre(this, stack, x, y);
-
-					if (stack.isEmpty() || reactorItem.isItemBroken(stack)) {
-						setAt(x, y, ItemStack.EMPTY);
-					}
-				}
-			}
-		}
-
-		for (int x = 0; x < 9; x++) {
-			for (int y = 0; y < 6; y++) {
-				ItemStack stack = getAt(x, y);
-
-				if (stack.getItem() instanceof ReactorItem reactorItem) {
-                    reactorItem.reactorTickPost(this, stack, x, y);
-
-					if (stack.isEmpty() || reactorItem.isItemBroken(stack)) {
-						setAt(x, y, ItemStack.EMPTY);
-					}
-				}
-			}
-		}
-
-		for (int x = 0; x < 9; x++) {
-			for (int y = 0; y < 6; y++) {
-				ItemStack stack = getAt(x, y);
-
-				if (stack.getItem() instanceof ReactorItem reactorItem) {
-                    if (stack.isEmpty() || reactorItem.isItemBroken(stack)) {
-						setAt(x, y, ItemStack.EMPTY);
-					} else if (simulation && reactorItem.keepSimulationRunning(stack)) {
-						stopSimulation = false;
+		int passes = simulation ? 3 : 2;
+		for (int pass = 0; pass < passes; pass++) {
+			for (int x = 0; x < cols; x++) {
+				for (int y = 0; y < ROWS; y++) {
+					ItemStack stack = getAt(x, y);
+					if (stack.getItem() instanceof ReactorItem ri) {
+						if (pass == 0) ri.reactorTickPre(this, stack, x, y);
+						else if (pass == 1) ri.reactorTickPost(this, stack, x, y);
+						else if (ri.keepSimulationRunning(stack)) stopSimulation = false;
+						if (stack.isEmpty() || ri.isItemBroken(stack)) {
+							setAt(x, y, ItemStack.EMPTY);
+						}
 					}
 				}
 			}
@@ -126,11 +100,7 @@ public class NuclearReactor {
 		heat = Math.max(0, heat);
 		explosionRadius *= explosionModifier;
 		explosionRadius = Math.min(explosionRadius, FTBICConfig.NUCLEAR.NUCLEAR_REACTOR_EXPLOSION_LIMIT.get());
-
-		if (heat >= maxHeat) {
-			stopSimulation = true;
-		}
-
+		if (heat >= maxHeat) stopSimulation = true;
 		return stopSimulation;
 	}
 }

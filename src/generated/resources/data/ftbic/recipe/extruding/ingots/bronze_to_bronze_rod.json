@@ -1,0 +1,42 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ingots/bronze"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "bronze_ingot"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "bronze_rod"
+      ]
+    }
+  ],
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/bronze"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ftbmaterials:bronze_rod"
+      }
+    }
+  ]
+}

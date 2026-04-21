@@ -1,0 +1,42 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:plates/steel"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "steel_plate"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "steel_gear"
+      ]
+    }
+  ],
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/steel"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:steel_gear"
+      }
+    }
+  ]
+}

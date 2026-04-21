@@ -1,45 +1,31 @@
 package dev.ftb.mods.ftbic.item;
 
+import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
-import net.minecraft.nbt.ByteTag;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import org.jetbrains.annotations.Nullable;
 
 public class BatteryItem extends ElectricItem {
 	public final BatteryType batteryType;
 
-	public BatteryItem(BatteryType b, EnergyTier t, double cap) {
-		super(t, cap);
-		batteryType = b;
-	}
-
-	@Nullable
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
+	public BatteryItem(Properties props, BatteryType batteryType, EnergyTier tier, double capacity) {
+		super(props, tier, capacity);
+		this.batteryType = batteryType;
+		// Single-use batteries ship pre-charged via the ENERGY data component default.
 		if (batteryType.singleUse) {
-			CompoundTag t = stack.getOrCreateTag();
-
-			if (!t.contains("Energy")) {
-				t.putDouble("Energy", capacity);
-			}
+			props.component(ModDataComponents.ENERGY.get(), capacity);
 		}
-
-		return null;
-	}
-
-	@Override
-	public boolean isFoil(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().getBoolean("Active");
 	}
 
 	@Override
@@ -59,49 +45,54 @@ public class BatteryItem extends ElectricItem {
 
 	@Override
 	public double extractEnergy(ItemStack stack, double maxExtract, boolean simulate) {
-		double d = super.extractEnergy(stack, maxExtract, simulate);
-
+		double drained = super.extractEnergy(stack, maxExtract, simulate);
 		if (!simulate && getEnergy(stack) <= 0D) {
 			if (batteryType.singleUse) {
 				stack.shrink(1);
 			} else {
-				stack.removeTagKey("Energy");
+				stack.remove(ModDataComponents.ENERGY.get());
 			}
 		}
-
-		return d;
+		return drained;
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public boolean isFoil(ItemStack stack) {
+		return stack.has(ModDataComponents.BATTERY_ACTIVE.get());
+	}
+
+	@Override
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
+		if (batteryType.singleUse) return InteractionResult.PASS;
 		ItemStack stack = player.getItemInHand(hand);
-
-		if (stack.hasTag() && stack.getTag().getBoolean("Active")) {
-			stack.removeTagKey("Active");
+		if (stack.has(ModDataComponents.BATTERY_ACTIVE.get())) {
+			stack.remove(ModDataComponents.BATTERY_ACTIVE.get());
 		} else {
-			stack.addTagElement("Active", ByteTag.valueOf(true));
+			stack.set(ModDataComponents.BATTERY_ACTIVE.get(), Unit.INSTANCE);
 		}
-
-		return InteractionResultHolder.success(stack);
+		return InteractionResult.SUCCESS;
 	}
 
+	private static final EquipmentSlot[] CHARGE_SLOTS = {
+			EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET,
+			EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND
+	};
+
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean bl) {
-		if (entity instanceof LivingEntity && stack.hasTag() && stack.getTag().getBoolean("Active") && getEnergy(stack) > 0D) {
-			for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-				ItemStack is = ((LivingEntity) entity).getItemBySlot(equipmentSlot);
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, EquipmentSlot slot) {
+		if (!(entity instanceof LivingEntity le)) return;
+		if (!stack.has(ModDataComponents.BATTERY_ACTIVE.get())) return;
+		if (getEnergy(stack) <= 0D) return;
 
-				if (is != stack && is.getItem() instanceof EnergyItemHandler handler) {
-                    double e = getEnergy(stack);
-
-					if (e > 0D) {
-						double d = handler.insertEnergy(is, e, false);
-						extractEnergy(stack, d, false);
-					} else {
-						break;
-					}
-				}
-			}
+		// Charge every other EnergyItemHandler stack the carrier wears or holds.
+		for (EquipmentSlot eq : CHARGE_SLOTS) {
+			ItemStack equipped = le.getItemBySlot(eq);
+			if (equipped == stack || equipped.isEmpty()) continue;
+			if (!(equipped.getItem() instanceof EnergyItemHandler other)) continue;
+			double available = getEnergy(stack);
+			if (available <= 0D) break;
+			double inserted = other.insertEnergy(equipped, available, false);
+			if (inserted > 0D) extractEnergy(stack, inserted, false);
 		}
 	}
 }

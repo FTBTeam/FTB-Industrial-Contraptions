@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:wires/enderium"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:wires/enderium",
+    "ftbic:rubber"
+  ],
+  "result": {
+    "id": "ftbic:ev_cable"
+  },
+  "show_notification": false
+}

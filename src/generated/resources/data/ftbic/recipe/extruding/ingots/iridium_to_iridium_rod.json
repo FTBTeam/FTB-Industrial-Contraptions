@@ -1,0 +1,42 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ingots/iridium"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "iridium_ingot"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "iridium_rod"
+      ]
+    }
+  ],
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/iridium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ftbmaterials:iridium_rod"
+      }
+    }
+  ]
+}

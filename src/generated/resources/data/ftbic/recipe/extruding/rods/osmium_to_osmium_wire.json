@@ -1,0 +1,42 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:rods/osmium"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "osmium_rod"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "osmium_wire"
+      ]
+    }
+  ],
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:rods/osmium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ftbmaterials:osmium_wire"
+      }
+    }
+  ]
+}

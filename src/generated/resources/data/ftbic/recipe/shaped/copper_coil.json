@@ -1,0 +1,44 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:wires/copper"
+      }
+    },
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:rods/iron"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "iron_rod"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "#c:rods/iron",
+    "W": "#c:wires/copper"
+  },
+  "pattern": [
+    "WWW",
+    "WRW",
+    "WWW"
+  ],
+  "result": {
+    "id": "ftbic:copper_coil"
+  },
+  "show_notification": false
+}

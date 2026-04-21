@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "coal_dust"
+      ]
+    }
+  ],
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:coal"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:coal_dust"
+      }
+    }
+  ]
+}

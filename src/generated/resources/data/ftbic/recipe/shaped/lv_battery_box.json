@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "minecraft:planks"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "ftbic:lv_battery",
+    "P": "#minecraft:planks",
+    "W": "ftbic:lv_cable"
+  },
+  "pattern": [
+    "PWP",
+    "BBB",
+    "PPP"
+  ],
+  "result": {
+    "id": "ftbic:lv_battery_box"
+  },
+  "show_notification": false
+}

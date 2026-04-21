@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "ftbic:scrappable"
+      }
+    }
+  ],
+  "type": "ftbic:reprocessing",
+  "inputs": [
+    {
+      "ingredient": "#ftbic:scrappable"
+    }
+  ],
+  "outputs": [
+    {
+      "chance": 0.125,
+      "item": {
+        "id": "ftbic:scrap"
+      }
+    }
+  ]
+}

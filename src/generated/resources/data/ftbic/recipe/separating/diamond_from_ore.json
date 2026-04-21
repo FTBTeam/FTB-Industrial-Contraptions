@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ores/diamond"
+      }
+    }
+  ],
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "#c:ores/diamond"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:diamond"
+      }
+    }
+  ]
+}

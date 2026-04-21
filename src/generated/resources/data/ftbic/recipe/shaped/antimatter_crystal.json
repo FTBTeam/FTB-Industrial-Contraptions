@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:antimatter",
+    "C": "ftbic:energy_crystal",
+    "N": "minecraft:nether_star"
+  },
+  "pattern": [
+    "AAC",
+    "ANA",
+    "CAA"
+  ],
+  "result": {
+    "id": "ftbic:antimatter_crystal"
+  },
+  "show_notification": false
+}

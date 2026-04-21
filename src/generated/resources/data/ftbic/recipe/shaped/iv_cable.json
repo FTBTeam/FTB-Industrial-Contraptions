@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:glass_blocks/colorless"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:energy_crystal",
+    "G": "#c:glass_blocks/colorless"
+  },
+  "pattern": [
+    "GGG",
+    " C ",
+    "GGG"
+  ],
+  "result": {
+    "count": 6,
+    "id": "ftbic:iv_cable"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,42 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:rods/refined_glowstone"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "refined_glowstone_rod"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "refined_glowstone_wire"
+      ]
+    }
+  ],
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:rods/refined_glowstone"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ftbmaterials:refined_glowstone_wire"
+      }
+    }
+  ]
+}

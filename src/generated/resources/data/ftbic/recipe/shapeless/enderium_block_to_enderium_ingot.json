@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:storage_blocks/enderium"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:storage_blocks/enderium"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ftbic:enderium_ingot"
+  },
+  "show_notification": false
+}

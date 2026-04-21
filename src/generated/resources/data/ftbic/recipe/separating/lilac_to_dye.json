@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:lilac"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "minecraft:magenta_dye"
+      }
+    }
+  ]
+}

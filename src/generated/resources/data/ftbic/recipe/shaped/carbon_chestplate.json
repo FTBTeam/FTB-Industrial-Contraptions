@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:netherite_chestplate",
+    "C": "ftbic:carbon_plate",
+    "E": "ftbic:hv_battery"
+  },
+  "pattern": [
+    "CEC",
+    "CAC",
+    "CCC"
+  ],
+  "result": {
+    "id": "ftbic:carbon_chestplate"
+  },
+  "show_notification": false
+}

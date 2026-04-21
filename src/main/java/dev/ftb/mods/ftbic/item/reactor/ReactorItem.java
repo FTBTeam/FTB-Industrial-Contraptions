@@ -31,15 +31,9 @@ public interface ReactorItem {
 	default int damageReactorItem(ItemStack stack, int damage) {
 		if (damage != 0 && stack.isDamageableItem()) {
 			int max = stack.getMaxDamage();
-
-			if (max <= 0) {
-				return damage;
-			}
-
+			if (max <= 0) return damage;
 			int extra = 0;
-			int newDamage = stack.getDamageValue();
-			newDamage += damage;
-
+			int newDamage = stack.getDamageValue() + damage;
 			if (newDamage > max) {
 				extra = max - newDamage + 1;
 				newDamage = max;
@@ -47,11 +41,9 @@ public interface ReactorItem {
 				extra = newDamage;
 				newDamage = 0;
 			}
-
 			stack.setDamageValue(newDamage);
 			return extra;
 		}
-
 		return damage;
 	}
 

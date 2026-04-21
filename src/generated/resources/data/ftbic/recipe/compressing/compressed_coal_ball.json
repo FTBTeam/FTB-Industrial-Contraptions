@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "ingredient": "ftbic:coal_ball"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:compressed_coal_ball"
+      }
+    }
+  ]
+}

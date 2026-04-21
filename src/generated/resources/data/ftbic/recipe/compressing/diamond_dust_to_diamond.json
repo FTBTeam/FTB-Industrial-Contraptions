@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "count": 2,
+      "ingredient": "ftbmaterials:diamond_dust"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:diamond"
+      }
+    }
+  ]
+}

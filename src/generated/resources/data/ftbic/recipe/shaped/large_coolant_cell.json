@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ingots/tin"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "tin_ingot"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:dense_copper_plate",
+    "C": "ftbic:medium_coolant_cell",
+    "T": "#c:ingots/tin"
+  },
+  "pattern": [
+    "TCT",
+    "TAT",
+    "TCT"
+  ],
+  "result": {
+    "id": "ftbic:large_coolant_cell"
+  },
+  "show_notification": false
+}

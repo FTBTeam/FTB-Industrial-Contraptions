@@ -4,11 +4,7 @@ import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.generator.GeneratorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 
 public class TransformerBlockEntity extends GeneratorBlockEntity {
 	public TransformerBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
@@ -29,10 +25,5 @@ public class TransformerBlockEntity extends GeneratorBlockEntity {
 	@Override
 	public boolean isValidEnergyInputSide(Direction direction) {
 		return direction == getFacing(Direction.NORTH);
-	}
-
-	@Override
-	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
-		return InteractionResult.SUCCESS;
 	}
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:advanced_alloy",
+    "C": "ftbic:advanced_circuit",
+    "E": "ftbic:energy_crystal",
+    "S": "ftbic:lv_solar_panel"
+  },
+  "pattern": [
+    "SES",
+    "SAS",
+    "SCS"
+  ],
+  "result": {
+    "id": "ftbic:mv_solar_panel"
+  },
+  "show_notification": false
+}

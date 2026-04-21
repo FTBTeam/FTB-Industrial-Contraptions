@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "ftbic:block/electric/light/basic_generator_off"
+  }
+}

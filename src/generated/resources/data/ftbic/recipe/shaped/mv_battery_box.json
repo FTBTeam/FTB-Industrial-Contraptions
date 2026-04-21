@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "ftbic:energy_crystal",
+    "M": "ftbic:machine_block",
+    "W": "ftbic:mv_cable"
+  },
+  "pattern": [
+    "WBW",
+    "BMB",
+    "WBW"
+  ],
+  "result": {
+    "id": "ftbic:mv_battery_box"
+  },
+  "show_notification": false
+}

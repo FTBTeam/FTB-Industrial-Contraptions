@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ores/zinc"
+      }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "zinc_dust"
+      ]
+    }
+  ],
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ores/zinc"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ftbmaterials:zinc_dust"
+      }
+    }
+  ]
+}

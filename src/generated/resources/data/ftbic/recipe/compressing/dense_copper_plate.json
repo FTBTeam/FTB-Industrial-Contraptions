@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:plates/copper"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "copper_plate"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "count": 8,
+      "ingredient": "#c:plates/copper"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:dense_copper_plate"
+      }
+    }
+  ]
+}

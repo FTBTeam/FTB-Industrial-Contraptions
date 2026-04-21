@@ -1,0 +1,56 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/tin"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "tin_dust"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/coal"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "coal_dust"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#c:dusts/coal",
+    "P": "ftbic:dense_copper_plate",
+    "T": "#c:dusts/tin"
+  },
+  "pattern": [
+    "TCT",
+    "TPT",
+    "TCT"
+  ],
+  "result": {
+    "id": "ftbic:neutron_reflector"
+  },
+  "show_notification": false
+}

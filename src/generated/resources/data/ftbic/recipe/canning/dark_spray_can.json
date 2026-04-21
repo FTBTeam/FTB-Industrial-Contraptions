@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dyes/black"
+      }
+    }
+  ],
+  "type": "ftbic:canning",
+  "inputs": [
+    {
+      "ingredient": {
+        "neoforge:ingredient_type": "ftbic:fluid_cell",
+        "fluid": "minecraft:water"
+      }
+    },
+    {
+      "ingredient": "#c:dyes/black"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:dark_spray_paint_can"
+      }
+    }
+  ]
+}

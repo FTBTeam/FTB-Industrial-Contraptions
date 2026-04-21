@@ -1,0 +1,133 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:or",
+      "values": [
+        {
+          "type": "neoforge:and",
+          "values": [
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/iron"
+              }
+            },
+            {
+              "type": "ftbmaterials:components_available",
+              "used_materials": [
+                "iron_dust"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "neoforge:and",
+          "values": [
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/lead"
+              }
+            },
+            {
+              "type": "ftbmaterials:components_available",
+              "used_materials": [
+                "lead_dust"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/electrum"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "electrum_dust"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "neoforge:or",
+      "values": [
+        {
+          "type": "neoforge:and",
+          "values": [
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/tin"
+              }
+            },
+            {
+              "type": "ftbmaterials:components_available",
+              "used_materials": [
+                "tin_dust"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "neoforge:and",
+          "values": [
+            {
+              "type": "neoforge:not",
+              "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/aluminum"
+              }
+            },
+            {
+              "type": "ftbmaterials:components_available",
+              "used_materials": [
+                "aluminum_dust"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "neoforge:ingredient_type": "neoforge:compound",
+      "children": [
+        "#c:dusts/iron",
+        "#c:dusts/lead"
+      ]
+    },
+    "O": "#c:dusts/electrum",
+    "P": {
+      "neoforge:ingredient_type": "neoforge:compound",
+      "children": [
+        "#c:dusts/tin",
+        "#c:dusts/aluminum"
+      ]
+    }
+  },
+  "pattern": [
+    "III",
+    "OOO",
+    "PPP"
+  ],
+  "result": {
+    "count": 3,
+    "id": "ftbic:mixed_metal_blend"
+  },
+  "show_notification": false
+}

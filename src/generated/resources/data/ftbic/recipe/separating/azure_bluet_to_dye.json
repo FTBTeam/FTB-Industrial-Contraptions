@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:azure_bluet"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "minecraft:light_gray_dye"
+      }
+    }
+  ]
+}

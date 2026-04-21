@@ -1,0 +1,55 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/copper"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "copper_dust"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/tin"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "tin_dust"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#c:dusts/copper",
+    "T": "#c:dusts/tin"
+  },
+  "pattern": [
+    "CC",
+    "CT"
+  ],
+  "result": {
+    "count": 4,
+    "id": "ftbmaterials:bronze_dust"
+  },
+  "show_notification": false
+}

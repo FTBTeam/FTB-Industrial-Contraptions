@@ -1,0 +1,39 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ingots/copper"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "copper_ingot"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:ingots/copper",
+    "R": "minecraft:redstone",
+    "T": "ftbic:lv_transformer",
+    "W": "ftbic:lv_cable"
+  },
+  "pattern": [
+    "RWR",
+    "PTP",
+    "RWR"
+  ],
+  "result": {
+    "id": "ftbic:lv_rectifier"
+  },
+  "show_notification": false
+}

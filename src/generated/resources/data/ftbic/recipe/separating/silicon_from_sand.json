@@ -1,0 +1,37 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "minecraft:sand"
+      }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "silicon_gem"
+      ]
+    }
+  ],
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "#minecraft:sand"
+    }
+  ],
+  "outputs": [
+    {
+      "chance": 0.2,
+      "item": {
+        "id": "ftbmaterials:silicon_gem"
+      }
+    },
+    {
+      "chance": 0.05,
+      "item": {
+        "id": "ftbmaterials:silicon_gem"
+      }
+    }
+  ]
+}

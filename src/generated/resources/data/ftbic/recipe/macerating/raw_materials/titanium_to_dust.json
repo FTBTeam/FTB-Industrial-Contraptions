@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:raw_materials/titanium"
+      }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "titanium_dust"
+      ]
+    }
+  ],
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:raw_materials/titanium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:titanium_dust"
+      }
+    },
+    {
+      "chance": 0.35,
+      "item": {
+        "id": "ftbmaterials:titanium_dust"
+      }
+    }
+  ]
+}

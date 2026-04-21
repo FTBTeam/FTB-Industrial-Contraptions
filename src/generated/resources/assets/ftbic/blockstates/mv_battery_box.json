@@ -4,47 +4,47 @@
       "model": "ftbic:block/electric/light/mv_battery_box",
       "x": 90
     },
-    "dark=true,facing=down": {
-      "model": "ftbic:block/electric/dark/mv_battery_box",
-      "x": 90
-    },
-    "dark=false,facing=up": {
+    "dark=false,facing=east": {
       "model": "ftbic:block/electric/light/mv_battery_box",
-      "x": 270
-    },
-    "dark=true,facing=up": {
-      "model": "ftbic:block/electric/dark/mv_battery_box",
-      "x": 270
+      "y": 90
     },
     "dark=false,facing=north": {
       "model": "ftbic:block/electric/light/mv_battery_box"
-    },
-    "dark=true,facing=north": {
-      "model": "ftbic:block/electric/dark/mv_battery_box"
     },
     "dark=false,facing=south": {
       "model": "ftbic:block/electric/light/mv_battery_box",
       "y": 180
     },
-    "dark=true,facing=south": {
-      "model": "ftbic:block/electric/dark/mv_battery_box",
-      "y": 180
+    "dark=false,facing=up": {
+      "model": "ftbic:block/electric/light/mv_battery_box",
+      "x": 270
     },
     "dark=false,facing=west": {
       "model": "ftbic:block/electric/light/mv_battery_box",
       "y": 270
     },
-    "dark=true,facing=west": {
+    "dark=true,facing=down": {
       "model": "ftbic:block/electric/dark/mv_battery_box",
-      "y": 270
-    },
-    "dark=false,facing=east": {
-      "model": "ftbic:block/electric/light/mv_battery_box",
-      "y": 90
+      "x": 90
     },
     "dark=true,facing=east": {
       "model": "ftbic:block/electric/dark/mv_battery_box",
       "y": 90
+    },
+    "dark=true,facing=north": {
+      "model": "ftbic:block/electric/dark/mv_battery_box"
+    },
+    "dark=true,facing=south": {
+      "model": "ftbic:block/electric/dark/mv_battery_box",
+      "y": 180
+    },
+    "dark=true,facing=up": {
+      "model": "ftbic:block/electric/dark/mv_battery_box",
+      "x": 270
+    },
+    "dark=true,facing=west": {
+      "model": "ftbic:block/electric/dark/mv_battery_box",
+      "y": 270
     }
   }
 }

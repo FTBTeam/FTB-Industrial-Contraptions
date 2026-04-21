@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:rods/blaze"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "blaze_rod"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:rods/blaze"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 5,
+        "id": "minecraft:blaze_powder"
+      }
+    }
+  ]
+}

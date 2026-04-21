@@ -1,0 +1,63 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "stone": "ftbic:block/reinforced_stone",
+    "particle": "ftbic:block/reinforced_stone"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "down":  { "texture": "#stone", "cullface": "down" },
+        "up":    { "texture": "#stone", "cullface": "up" },
+        "north": { "texture": "#stone", "cullface": "north" },
+        "south": { "texture": "#stone", "cullface": "south" },
+        "west":  { "texture": "#stone", "cullface": "west" },
+        "east":  { "texture": "#stone", "cullface": "east" }
+      }
+    },
+    {
+      "from": [6, 6, -0.01],
+      "to": [10, 10, 0],
+      "faces": {
+        "north": { "texture": "#center", "uv": [6, 6, 10, 10] }
+      }
+    },
+    {
+      "from": [6, 6, 16],
+      "to": [10, 10, 16.01],
+      "faces": {
+        "south": { "texture": "#center", "uv": [6, 6, 10, 10] }
+      }
+    },
+    {
+      "from": [-0.01, 6, 6],
+      "to": [0, 10, 10],
+      "faces": {
+        "west": { "texture": "#center", "uv": [6, 6, 10, 10] }
+      }
+    },
+    {
+      "from": [16, 6, 6],
+      "to": [16.01, 10, 10],
+      "faces": {
+        "east": { "texture": "#center", "uv": [6, 6, 10, 10] }
+      }
+    },
+    {
+      "from": [6, -0.01, 6],
+      "to": [10, 0, 10],
+      "faces": {
+        "down": { "texture": "#center", "uv": [6, 6, 10, 10] }
+      }
+    },
+    {
+      "from": [6, 16, 6],
+      "to": [10, 16.01, 10],
+      "faces": {
+        "up": { "texture": "#center", "uv": [6, 6, 10, 10] }
+      }
+    }
+  ]
+}

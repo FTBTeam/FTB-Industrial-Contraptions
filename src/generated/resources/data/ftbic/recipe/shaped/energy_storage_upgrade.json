@@ -1,0 +1,28 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "minecraft:planks"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "ftbic:lv_battery",
+    "C": "ftbic:electronic_circuit",
+    "P": "#minecraft:planks",
+    "W": "ftbic:lv_cable"
+  },
+  "pattern": [
+    "PPP",
+    "WBW",
+    "PCP"
+  ],
+  "result": {
+    "id": "ftbic:energy_storage_upgrade"
+  },
+  "show_notification": false
+}

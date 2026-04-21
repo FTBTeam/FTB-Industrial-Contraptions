@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:cornflower"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "minecraft:blue_dye"
+      }
+    }
+  ]
+}

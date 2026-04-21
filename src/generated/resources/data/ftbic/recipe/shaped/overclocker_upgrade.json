@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:electronic_circuit",
+    "U": "ftbic:small_coolant_cell",
+    "W": "ftbic:lv_cable"
+  },
+  "pattern": [
+    "UUU",
+    "WCW"
+  ],
+  "result": {
+    "id": "ftbic:overclocker_upgrade"
+  },
+  "show_notification": false
+}

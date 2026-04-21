@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "minecraft:blaze_powder"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:blaze_rod"
+      }
+    }
+  ]
+}

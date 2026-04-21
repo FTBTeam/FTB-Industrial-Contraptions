@@ -1,0 +1,37 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ingots/tin"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "tin_ingot"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "minecraft:piston",
+    "T": "#c:ingots/tin"
+  },
+  "pattern": [
+    "T T",
+    " P ",
+    "T T"
+  ],
+  "result": {
+    "id": "ftbic:ejector_upgrade"
+  },
+  "show_notification": false
+}

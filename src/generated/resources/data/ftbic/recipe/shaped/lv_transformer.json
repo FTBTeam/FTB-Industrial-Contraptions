@@ -1,0 +1,45 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ingots/copper"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "copper_ingot"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "minecraft:planks"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#c:ingots/copper",
+    "P": "#minecraft:planks",
+    "W": "ftbic:lv_cable"
+  },
+  "pattern": [
+    "PWP",
+    "CCC",
+    "PWP"
+  ],
+  "result": {
+    "id": "ftbic:lv_transformer"
+  },
+  "show_notification": false
+}

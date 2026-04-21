@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ores/lapis"
+      }
+    }
+  ],
+  "type": "ftbic:separating",
+  "inputs": [
+    {
+      "ingredient": "#c:ores/lapis"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 6,
+        "id": "minecraft:lapis_lazuli"
+      }
+    }
+  ]
+}

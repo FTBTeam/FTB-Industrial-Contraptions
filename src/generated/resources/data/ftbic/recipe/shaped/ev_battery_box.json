@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:iridium_circuit",
+    "E": "ftbic:antimatter_crystal",
+    "G": "ftbic:advanced_alloy",
+    "M": "ftbic:advanced_machine_block",
+    "X": "ftbic:hv_battery_box"
+  },
+  "pattern": [
+    "GCG",
+    "EXE",
+    "GMG"
+  ],
+  "result": {
+    "id": "ftbic:ev_battery_box"
+  },
+  "show_notification": false
+}

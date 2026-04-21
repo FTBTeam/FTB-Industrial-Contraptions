@@ -1,0 +1,40 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/glowstone"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "glowstone_dust"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:carbon_helmet",
+    "C": "ftbic:iridium_circuit",
+    "G": "ftbic:reinforced_glass",
+    "I": "ftbic:iridium_alloy",
+    "N": "#c:dusts/glowstone"
+  },
+  "pattern": [
+    " A ",
+    "INI",
+    "CGC"
+  ],
+  "result": {
+    "id": "ftbic:quantum_helmet"
+  },
+  "show_notification": false
+}

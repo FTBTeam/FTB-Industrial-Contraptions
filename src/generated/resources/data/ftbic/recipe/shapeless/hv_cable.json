@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:wires/gold"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:wires/gold",
+    "ftbic:rubber"
+  ],
+  "result": {
+    "id": "ftbic:hv_cable"
+  },
+  "show_notification": false
+}

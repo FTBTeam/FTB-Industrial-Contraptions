@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ingots/aluminum"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "aluminum_ingot"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": "#c:ingots/aluminum",
+    "R": "ftbic:rubber"
+  },
+  "pattern": [
+    "RRR",
+    "MMM",
+    "RRR"
+  ],
+  "result": {
+    "count": 6,
+    "id": "ftbic:mv_cable"
+  },
+  "show_notification": false
+}

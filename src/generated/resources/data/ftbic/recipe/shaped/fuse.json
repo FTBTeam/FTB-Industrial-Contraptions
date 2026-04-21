@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:glass_blocks/colorless"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "#c:glass_blocks/colorless",
+    "M": "ftbic:industrial_grade_metal"
+  },
+  "pattern": [
+    "GGG",
+    "MMM",
+    "GGG"
+  ],
+  "result": {
+    "count": 24,
+    "id": "ftbic:fuse"
+  },
+  "show_notification": false
+}

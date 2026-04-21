@@ -1,26 +1,37 @@
 package dev.ftb.mods.ftbic.screen;
 
+import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 import dev.ftb.mods.ftbic.item.reactor.ReactorItem;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
-import org.jetbrains.annotations.NotNull;
 
-public class NuclearReactorSlot extends SimpleItemHandlerSlot {
-	private final int index;
+public class NuclearReactorSlot extends Slot {
+	private final ElectricBlockEntity be;
 
-	public NuclearReactorSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
-		super(itemHandler, index, xPosition, yPosition);
-		this.index = index;
+	public NuclearReactorSlot(Container container, ElectricBlockEntity be, int index, int x, int y) {
+		super(container, index, x, y);
+		this.be = be;
 	}
 
 	@Override
-	public boolean mayPlace(@NotNull ItemStack stack) {
-		return !stack.isEmpty() && stack.getItem() instanceof ReactorItem;
+	public boolean mayPlace(ItemStack stack) {
+		return be.isItemValid(getContainerSlot(), stack);
 	}
 
 	@Override
-	public void setChanged() {
-		super.setChanged();
-		// refresh stats?
+	public boolean mayPickup(Player player) {
+		return true;
+	}
+
+	public boolean isActive(int activeColumns) {
+		int col = getContainerSlot() % NuclearReactor.MAX_COLUMNS;
+		return col < activeColumns;
+	}
+
+	public static boolean isReactorItem(ItemStack stack) {
+		return stack.isEmpty() || stack.getItem() instanceof ReactorItem;
 	}
 }

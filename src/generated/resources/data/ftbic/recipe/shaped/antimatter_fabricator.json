@@ -1,0 +1,39 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/glowstone"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "glowstone_dust"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:iridium_circuit",
+    "E": "minecraft:nether_star",
+    "G": "#c:dusts/glowstone",
+    "M": "ftbic:advanced_machine_block"
+  },
+  "pattern": [
+    "GCG",
+    "MEM",
+    "GCG"
+  ],
+  "result": {
+    "id": "ftbic:antimatter_constructor"
+  },
+  "show_notification": false
+}

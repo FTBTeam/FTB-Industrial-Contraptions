@@ -1,0 +1,40 @@
+modLoader = "javafml"
+loaderVersion = "[${neoforge_loader_version},)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${version}"
+displayName = "FTB Industrial Contraptions"
+authors = "FTB Team"
+description = '''
+FTB Industrial Contraptions - an industrial tech mod featuring tiered energy, generators, machines, nuclear reactors, and automation.
+'''
+
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type = "required"
+versionRange = "${neoforge_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "ftbmaterials"
+type = "required"
+versionRange = "${ftb_materials_version_range}"
+ordering = "BEFORE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "guideme"
+type = "optional"
+versionRange = "${guideme_version_range}"
+ordering = "AFTER"
+side = "BOTH"

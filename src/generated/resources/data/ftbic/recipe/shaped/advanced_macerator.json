@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:industrial_grade_metal",
+    "F": "ftbic:macerator",
+    "M": "ftbic:advanced_machine_block",
+    "W": "ftbic:copper_coil"
+  },
+  "pattern": [
+    "CCC",
+    "CFC",
+    "WMW"
+  ],
+  "result": {
+    "id": "ftbic:advanced_macerator"
+  },
+  "show_notification": false
+}

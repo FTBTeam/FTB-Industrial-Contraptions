@@ -1,0 +1,41 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/uranium"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "uranium_dust"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "ftbic:canning",
+  "inputs": [
+    {
+      "ingredient": {
+        "neoforge:ingredient_type": "ftbic:fluid_cell",
+        "fluid": "minecraft:water"
+      }
+    },
+    {
+      "ingredient": "#c:dusts/uranium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:uranium_fuel_rod"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ftbic:advanced_circuit",
+    "M": "ftbic:advanced_machine_block",
+    "T": "minecraft:tnt",
+    "U": "ftbic:quad_uranium_fuel_rod"
+  },
+  "pattern": [
+    "UCU",
+    "TMT",
+    "UCU"
+  ],
+  "result": {
+    "id": "ftbic:nuke"
+  },
+  "show_notification": false
+}

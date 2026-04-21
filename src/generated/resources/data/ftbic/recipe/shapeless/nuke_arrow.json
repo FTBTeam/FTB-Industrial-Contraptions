@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ftbic:nuke",
+    "minecraft:arrow"
+  ],
+  "result": {
+    "id": "ftbic:nuke_arrow"
+  },
+  "show_notification": false
+}

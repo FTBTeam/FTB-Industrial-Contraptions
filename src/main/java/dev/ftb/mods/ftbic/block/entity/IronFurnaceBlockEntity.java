@@ -1,32 +1,35 @@
 package dev.ftb.mods.ftbic.block.entity;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
-import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Inventory;
+import dev.ftb.mods.ftbic.screen.IronFurnaceMenu;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class IronFurnaceBlockEntity extends FurnaceBlockEntity {
+public class IronFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 	public IronFurnaceBlockEntity(BlockPos pos, BlockState state) {
-		super(pos, state);
-	}
-
-	@Override
-	public BlockEntityType<?> getType() {
-		return FTBICBlockEntities.IRON_FURNACE.get();
+		super(FTBICBlockEntities.IRON_FURNACE.get(), pos, state, RecipeType.SMELTING);
 	}
 
 	@Override
 	protected Component getDefaultName() {
-		return new TranslatableComponent(FTBICBlocks.IRON_FURNACE.get().getDescriptionId());
+		return Component.translatable("block.ftbic.iron_furnace");
 	}
 
 	@Override
-	protected int getBurnDuration(ItemStack stack) {
-		return Math.round(super.getBurnDuration(stack) * (float) FTBICConfig.MACHINES.IRON_FURNACE_ITEMS_PER_COAL.get() / 8);
+	protected AbstractContainerMenu createMenu(int id, Inventory inv) {
+		return new IronFurnaceMenu(id, inv, this, this.dataAccess);
+	}
+
+	@Override
+	protected int getBurnDuration(FuelValues fuelValues, ItemStack stack) {
+		int base = super.getBurnDuration(fuelValues, stack);
+		return Math.round(base * (float) FTBICConfig.MACHINES.IRON_FURNACE_ITEMS_PER_COAL.get() / 8F);
 	}
 }

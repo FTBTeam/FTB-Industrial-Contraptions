@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:storage_blocks/raw_osmium"
+      }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "osmium_dust"
+      ]
+    }
+  ],
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:storage_blocks/raw_osmium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 9,
+        "id": "ftbmaterials:osmium_dust"
+      }
+    }
+  ]
+}

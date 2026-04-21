@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "ingredient": "ftbic:carbon_fiber_mesh"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:carbon_plate"
+      }
+    }
+  ]
+}

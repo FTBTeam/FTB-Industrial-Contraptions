@@ -1,0 +1,5 @@
+{
+  "type": "ftbic:basic_generator_fuel",
+  "ingredient": "minecraft:cactus",
+  "ticks": 200
+}

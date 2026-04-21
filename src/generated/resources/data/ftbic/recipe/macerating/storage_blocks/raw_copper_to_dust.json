@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:storage_blocks/raw_copper"
+      }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "copper_dust"
+      ]
+    }
+  ],
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:storage_blocks/raw_copper"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 9,
+        "id": "ftbmaterials:copper_dust"
+      }
+    }
+  ]
+}

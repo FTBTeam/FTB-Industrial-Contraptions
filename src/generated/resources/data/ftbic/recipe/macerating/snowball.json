@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:snow_block"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:snowball"
+      }
+    }
+  ]
+}

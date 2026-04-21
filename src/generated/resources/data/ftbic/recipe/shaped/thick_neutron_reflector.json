@@ -1,0 +1,37 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:plates/copper"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "copper_plate"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "N": "ftbic:neutron_reflector",
+    "P": "#c:plates/copper"
+  },
+  "pattern": [
+    "PNP",
+    "NPN",
+    "PNP"
+  ],
+  "result": {
+    "id": "ftbic:thick_neutron_reflector"
+  },
+  "show_notification": false
+}

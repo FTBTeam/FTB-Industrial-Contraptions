@@ -1,27 +1,28 @@
 package dev.ftb.mods.ftbic.block.entity;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
-import dev.ftb.mods.ftbic.recipe.RecipeCache;
-import dev.ftb.mods.ftbic.screen.sync.SyncedData;
-import dev.ftb.mods.ftbic.util.EnergyHandler;
-import dev.ftb.mods.ftbic.util.OpenMenuFactory;
-import net.minecraft.Util;
+import dev.ftb.mods.ftbic.screen.MachineMenu;
+import dev.ftb.mods.ftbic.util.ZapEnergyHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -32,47 +33,42 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
 
-public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, IItemHandlerModifiable {
-	private static final AtomicLong ELECTRIC_NETWORK_CHANGES = new AtomicLong(0L);
+public class ElectricBlockEntity extends BlockEntity implements ZapEnergyHandler {
+	private static final Map<ResourceKey<Level>, long[]> ELECTRIC_NETWORK_CHANGES = new HashMap<>();
 
 	public static void electricNetworkUpdated(LevelAccessor level, BlockPos pos) {
-		// TODO: Possibly implement some kind of localized network change counter. But for now, this works
-		ELECTRIC_NETWORK_CHANGES.incrementAndGet();
+		if (level instanceof Level l) {
+			ELECTRIC_NETWORK_CHANGES.computeIfAbsent(l.dimension(), k -> new long[1])[0]++;
+		}
 	}
 
 	public static long getCurrentElectricNetwork(LevelAccessor level, BlockPos pos) {
-		return ELECTRIC_NETWORK_CHANGES.get();
+		if (level instanceof Level l) {
+			long[] counter = ELECTRIC_NETWORK_CHANGES.get(l.dimension());
+			return counter == null ? 0L : counter[0];
+		}
+		return 0L;
+	}
+
+	public static void forgetElectricNetwork(Level level) {
+		ELECTRIC_NETWORK_CHANGES.remove(level.dimension());
 	}
 
 	public final ElectricBlockInstance electricBlockInstance;
-	private boolean changed;
 	public double energy;
 	public final ItemStack[] inputItems;
 	public final ItemStack[] outputItems;
-	private LazyOptional<?> thisOptional;
 	public boolean active;
-	private int changeStateTicks;
 	private boolean burnt;
 
 	public double energyCapacity;
@@ -85,603 +81,208 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 	public ElectricBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type.blockEntity.get(), pos, state);
 		electricBlockInstance = type;
-		changed = false;
-		energy = 0;
 		inputItems = new ItemStack[type.inputItemCount];
 		outputItems = new ItemStack[type.outputItemCount];
 		Arrays.fill(inputItems, ItemStack.EMPTY);
 		Arrays.fill(outputItems, ItemStack.EMPTY);
-
-		if (inputItems.length + outputItems.length > 127) {
-			throw new RuntimeException("Internal inventory of " + getType().getRegistryName() + " too large!");
-		}
-
-		thisOptional = null;
-		active = false;
-		changeStateTicks = 0;
-		burnt = false;
+		initProperties();
 	}
 
-	public void writeData(CompoundTag tag) {
-		tag.putDouble("Energy", energy);
+	public void initProperties() {
+		energyCapacity = electricBlockInstance.energyCapacity.get();
+		maxInputEnergy = electricBlockInstance.maxEnergyInput.get();
+		autoEject = false;
+	}
 
-		if (inputItems.length + outputItems.length > 0) {
-			ListTag inv = new ListTag();
+	public void upgradesChanged() {
+	}
 
-			for (int slot = 0; slot < inputItems.length + outputItems.length; slot++) {
+	public int getSlotCount() {
+		return inputItems.length + outputItems.length;
+	}
+
+	public ItemStack getStackInSlot(int slot) {
+		if (slot < inputItems.length) {
+			return inputItems[slot];
+		}
+		return outputItems[slot - inputItems.length];
+	}
+
+	public void setStackInSlot(int slot, ItemStack stack) {
+		if (slot < inputItems.length) {
+			inputItems[slot] = stack;
+		} else {
+			outputItems[slot - inputItems.length] = stack;
+		}
+	}
+
+	public boolean isItemValid(int slot, ItemStack stack) {
+		return slot >= 0 && slot < inputItems.length;
+	}
+
+	public boolean isSlotExtractable(int slot) {
+		return slot >= inputItems.length && slot < getSlotCount();
+	}
+
+	@Override
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		output.putDouble("Energy", energy);
+		if (burnt) {
+			output.putBoolean("Burnt", true);
+		}
+		if (!placerId.equals(Util.NIL_UUID)) {
+			output.store("PlacerId", UUIDUtil.CODEC, placerId);
+			output.putString("PlacerName", placerName);
+		}
+		if (getSlotCount() > 0) {
+			ValueOutput.TypedOutputList<SlotStack> list = output.list("Inventory", SlotStack.CODEC);
+			for (int slot = 0; slot < getSlotCount(); slot++) {
 				ItemStack stack = getStackInSlot(slot);
-
 				if (!stack.isEmpty()) {
-					CompoundTag tag1 = stack.serializeNBT();
-					tag1.putByte("Slot", (byte) slot);
-					inv.add(tag1);
+					list.add(new SlotStack(slot, stack));
 				}
 			}
-
-			tag.put("Inventory", inv);
-		}
-
-		if (burnt) {
-			tag.putBoolean("Burnt", true);
-		}
-
-		if (!placerId.equals(Util.NIL_UUID)) {
-			tag.putUUID("PlacerId", placerId);
-			tag.putString("PlacerName", placerName);
-		}
-	}
-
-	public void readData(CompoundTag tag) {
-		energy = tag.getDouble("Energy");
-
-		if (inputItems.length + outputItems.length > 0) {
-			Arrays.fill(inputItems, ItemStack.EMPTY);
-			Arrays.fill(outputItems, ItemStack.EMPTY);
-
-			ListTag inv = tag.getList("Inventory", Tag.TAG_COMPOUND);
-
-			for (int i = 0; i < inv.size(); i++) {
-				CompoundTag tag1 = inv.getCompound(i);
-				setStackInSlot(tag1.getByte("Slot"), ItemStack.of(tag1));
-			}
-		}
-
-		burnt = tag.getBoolean("Burnt");
-
-		if (tag.hasUUID("PlacerId")) {
-			placerId = tag.getUUID("PlacerId");
-			placerName = tag.getString("PlacerName");
-		} else {
-			placerId = Util.NIL_UUID;
-			placerName = "";
-		}
-	}
-
-	public void writeNetData(CompoundTag tag) {
-		tag.putBoolean("Burnt", burnt);
-	}
-
-	public void readNetData(CompoundTag tag) {
-		if (tag != null) {
-			burnt = tag.getBoolean("Burnt");
 		}
 	}
 
 	@Override
-	public void load(CompoundTag tag) {
-		super.load(tag);
-		readData(tag);
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		energy = input.getDoubleOr("Energy", 0D);
+		burnt = input.getBooleanOr("Burnt", false);
+		placerId = input.read("PlacerId", UUIDUtil.CODEC).orElse(Util.NIL_UUID);
+		placerName = input.getStringOr("PlacerName", "");
+		if (getSlotCount() > 0) {
+			Arrays.fill(inputItems, ItemStack.EMPTY);
+			Arrays.fill(outputItems, ItemStack.EMPTY);
+			input.listOrEmpty("Inventory", SlotStack.CODEC).forEach(e -> {
+				if (e.slot >= 0 && e.slot < getSlotCount()) {
+					setStackInSlot(e.slot, e.stack);
+				}
+			});
+		}
 		initProperties();
 		upgradesChanged();
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag arg) {
-		super.saveAdditional(arg);
-		writeData(arg);
-	}
-
-	@Override
-	public void handleUpdateTag(CompoundTag tag) {
-		readNetData(tag);
-		initProperties();
-	}
-
-	@Override
-	public CompoundTag getUpdateTag() {
-		CompoundTag tag = super.getUpdateTag();
-		writeNetData(tag);
-		return tag;
-	}
-
-	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		readNetData(pkt.getTag());
-		initProperties();
-	}
-
-	@Override
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+	public Packet<ClientGamePacketListener> getUpdatePacket() {
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override
-	public void onLoad() {
-		initProperties();
-
-		if (level != null && !level.isClientSide()) {
-			upgradesChanged();
-		}
-
-		super.onLoad();
+	public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+		return saveCustomOnly(registries);
 	}
 
-	public LazyOptional<?> getThisOptional() {
-		if (thisOptional == null) {
-			thisOptional = LazyOptional.of(() -> this);
-		}
 
-		return thisOptional;
+	@Override
+	public double getEnergyCapacity() {
+		return energyCapacity;
 	}
 
 	@Override
-	public void invalidateCaps() {
-		super.invalidateCaps();
+	public double getEnergy() {
+		return energy;
+	}
 
-		if (thisOptional != null) {
-			thisOptional.invalidate();
-			thisOptional = null;
+	@Override
+	public void setEnergyRaw(double e) {
+		energy = e;
+	}
+
+	@Override
+	public double getMaxInputEnergy() {
+		return maxInputEnergy;
+	}
+
+	@Override
+	public boolean canBurn() {
+		return electricBlockInstance.canBurn;
+	}
+
+	@Override
+	public void setBurnt(boolean b) {
+		if (burnt != b && level != null && !level.isClientSide() && canBurn()) {
+			burnt = b;
+			setChanged();
+			if (burnt) {
+				level.levelEvent(1502, worldPosition, 0);
+				if (electricBlockInstance.canBeActive) {
+					level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, false), 3);
+				}
+			}
+			electricNetworkUpdated(level, worldPosition);
 		}
 	}
 
-	@NotNull
 	@Override
-	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && (inputItems.length + outputItems.length) > 0) {
-			return getThisOptional().cast();
-		}
+	public boolean isBurnt() {
+		return burnt;
+	}
 
-		return super.getCapability(cap, side);
+
+	private int changeStateTicks = 0;
+
+	public void tick() {
+		if (level == null || level.isClientSide()) {
+			return;
+		}
+		handleChanges();
 	}
 
 	protected void handleChanges() {
 		if (changeStateTicks > 0) {
 			changeStateTicks--;
+			return;
 		}
-
-		if (changeStateTicks <= 0) {
-			if (!isBurnt()) {
-				if (level != null && electricBlockInstance.canBeActive && getBlockState().getBlock() instanceof ElectricBlock && getBlockState().getValue(ElectricBlock.ACTIVE) != active && !level.isClientSide()) {
-					level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, active), 3);
-					setChanged();
-				}
-
-				active = false;
-			}
-
-			if (level != null && !getBlockState().isAir()) {
-				level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
-			}
-
-			changeStateTicks = FTBICConfig.MACHINES.STATE_UPDATE_TICKS.get();
-
-			if (changed) {
-				setChangedNow();
-			}
+		if (!isBurnt()
+				&& electricBlockInstance.canBeActive
+				&& getBlockState().getBlock() instanceof ElectricBlock
+				&& getBlockState().getValue(ElectricBlock.ACTIVE) != active) {
+			level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, active), 3);
+			setChanged();
 		}
-	}
-
-	public void tick() {
-		handleChanges();
-	}
-
-	@Override
-	public void setChanged() {
-		changed = true;
-	}
-
-	public void setChangedNow() {
-		changed = false;
-		level.blockEntityChanged(worldPosition);
-	}
-
-	public int getRedstoneOutputSignalEnergyStorage() {
-		return Math.round((float) ((energy / energyCapacity) * 15));
-	}
-
-	@Override
-	public final double getEnergyCapacity() {
-		return energyCapacity;
-	}
-
-	@Override
-	public final double getEnergy() {
-		return energy;
-	}
-
-	@Override
-	public final void setEnergyRaw(double e) {
-		energy = e;
+		active = false;
+		changeStateTicks = FTBICConfig.MACHINES.STATE_UPDATE_TICKS.get();
 	}
 
 	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
+		if (level != null && !level.isClientSide() && player instanceof ServerPlayer sp) {
+			openMenu(sp);
+		}
 		return InteractionResult.SUCCESS;
 	}
 
-	public void openMenu(ServerPlayer player, OpenMenuFactory openMenuFactory) {
-		NetworkHooks.openGui(player, new MenuProvider() {
-			@Override
-			public Component getDisplayName() {
-				return createDisplayName();
-			}
-
-			@Override
-			public AbstractContainerMenu createMenu(int id, Inventory playerInv, Player player1) {
-				return openMenuFactory.create(id, playerInv);
-			}
-		}, buf -> writeMenu(player, buf));
+	public void openMenu(ServerPlayer player) {
+		player.openMenu(new SimpleMenuProvider(
+				(id, inv, p) -> createMenu(id, inv),
+				Component.translatable(getBlockState().getBlock().getDescriptionId())
+		), buf -> buf.writeBlockPos(worldPosition));
 	}
 
-	public Component createDisplayName() {
-		return new TranslatableComponent(getBlockState().getBlock().getDescriptionId());
+	public AbstractContainerMenu createMenu(int id, Inventory inv) {
+		return new MachineMenu(id, inv, this);
 	}
 
-	public void writeMenu(ServerPlayer player, FriendlyByteBuf buf) {
-		buf.writeBlockPos(worldPosition);
-	}
-
-	@Override
-	public boolean isEnergyHandlerInvalid() {
-		return isBurnt() || isRemoved();
-	}
-
-	@Override
-	public final double getMaxInputEnergy() {
-		return maxInputEnergy;
-	}
-
-	@Nullable
-	public RecipeCache getRecipeCache() {
-		return level == null ? null : RecipeCache.get(level);
-	}
-
-	@Override
-	public int getSlots() {
-		return inputItems.length + outputItems.length;
-	}
-
-	@NotNull
-	@Override
-	public ItemStack getStackInSlot(int slot) {
-		if (slot < 0 || slot >= getSlots()) {
-			throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
-		} else if (slot >= inputItems.length) {
-			return outputItems[slot - inputItems.length];
-		} else {
-			return inputItems[slot];
-		}
-	}
-
-	@Override
-	public void setStackInSlot(int slot, ItemStack stack) {
-		if (slot < 0 || slot >= getSlots()) {
-			throw new RuntimeException("Slot " + slot + " not in valid range - [0," + getSlots() + ")");
-		} else if (slot >= inputItems.length) {
-			ItemStack prev = outputItems[slot - inputItems.length];
-			outputItems[slot - inputItems.length] = stack;
-			inventoryChanged(slot, prev);
-		} else {
-			ItemStack prev = inputItems[slot];
-			inputItems[slot] = stack;
-			inventoryChanged(slot, prev);
-		}
-	}
-
-	@NotNull
-	@Override
-	public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-		if (slot >= inputItems.length || stack.isEmpty() || !isItemValid(slot, stack)) {
-			return stack;
-		}
-
-		ItemStack existing = inputItems[slot];
-		int limit = Math.min(this.getSlotLimit(slot), stack.getMaxStackSize());
-
-		if (!existing.isEmpty()) {
-			if (!ItemHandlerHelper.canItemStacksStack(stack, existing)) {
-				return stack;
-			}
-
-			limit -= existing.getCount();
-		}
-
-		if (limit <= 0) {
-			return stack;
-		}
-
-		boolean reachedLimit = stack.getCount() > limit;
-
-		if (!simulate) {
-			if (existing.isEmpty()) {
-				ItemStack prev = inputItems[slot];
-				inputItems[slot] = reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack;
-				inventoryChanged(slot, prev);
-			} else {
-				ItemStack prev = existing.copy();
-				existing.grow(reachedLimit ? limit : stack.getCount());
-				inventoryChanged(slot, prev);
-			}
-		}
-
-		return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
-	}
-
-	@NotNull
-	@Override
-	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		if (slot < inputItems.length || amount <= 0) {
-			return ItemStack.EMPTY;
-		}
-
-		slot -= inputItems.length;
-		ItemStack existing = outputItems[slot];
-
-		if (existing.isEmpty()) {
-			return ItemStack.EMPTY;
-		}
-
-		int toExtract = Math.min(amount, existing.getMaxStackSize());
-
-		if (existing.getCount() <= toExtract) {
-			if (!simulate) {
-				outputItems[slot] = ItemStack.EMPTY;
-				inventoryChanged(slot, existing);
-				return existing;
-			} else {
-				return existing.copy();
-			}
-		} else {
-			if (!simulate) {
-				outputItems[slot] = ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract);
-				inventoryChanged(slot, existing);
-			}
-
-			return ItemHandlerHelper.copyStackWithSize(existing, toExtract);
-		}
-	}
-
-	public void inventoryChanged(int slot, @Nullable ItemStack prev) {
-		setChanged();
-	}
-
-	public void energyChanged(int prev) {
-		if (energy == 0 || prev == 0 || energy == energyCapacity) {
-			setChanged();
-		}
-	}
-
-	@Override
-	public int getSlotLimit(int slot) {
-		return 64;
-	}
-
-	@Override
-	public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-		return slot < inputItems.length;
-	}
-
-	public ItemStack addOutputInSlot(int slot, ItemStack stack) {
-		if (outputItems[slot].isEmpty()) {
-			outputItems[slot] = stack;
-			return ItemStack.EMPTY;
-		}
-
-		ItemStack existing = outputItems[slot];
-
-		int limit = stack.getMaxStackSize();
-
-		if (!existing.isEmpty()) {
-			if (!ItemHandlerHelper.canItemStacksStack(stack, existing)) {
-				return stack;
-			}
-
-			limit -= existing.getCount();
-		}
-
-		if (limit <= 0) {
-			return stack;
-		}
-
-		boolean reachedLimit = stack.getCount() > limit;
-
-		if (existing.isEmpty()) {
-			outputItems[slot] = reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack;
-		} else {
-			existing.grow(reachedLimit ? limit : stack.getCount());
-		}
-
-		inventoryChanged(slot, existing);
-		return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
-	}
-
-	public ItemStack addOutput(ItemStack stack) {
-		if (stack.isEmpty()) {
-			return ItemStack.EMPTY;
-		}
-
-		for (int i = 0; i < outputItems.length; i++) {
-			if (outputItems[i].getItem() == stack.getItem()) {
-				stack = addOutputInSlot(i, stack);
-
-				if (stack.isEmpty()) {
-					return ItemStack.EMPTY;
-				}
-			}
-		}
-
-		for (int i = 0; i < outputItems.length; i++) {
-			if (outputItems[i].isEmpty()) {
-				stack = addOutputInSlot(i, stack);
-
-				if (stack.isEmpty()) {
-					return ItemStack.EMPTY;
-				}
-			}
-		}
-
-		return stack;
-	}
-
-	public Direction[] getEjectDirections() {
-		if (electricBlockInstance.facingProperty != BlockStateProperties.HORIZONTAL_FACING) {
-			return Direction.values();
-		}
-
-		Direction rot = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
-		Direction[] values = new Direction[6];
-		values[0] = Direction.DOWN;
-		values[1] = rot.getCounterClockWise();
-		values[2] = rot.getOpposite();
-		values[3] = rot.getClockWise();
-		values[4] = rot;
-		values[5] = Direction.UP;
-		return values;
-	}
-
-	public void shiftInputs() {
-		if (inputItems.length <= 1) {
-			return;
-		}
-
-		List<ItemStack> stacks = new ArrayList<>();
-
-		for (int i = 0; i < inputItems.length; i++) {
-			if (!inputItems[i].isEmpty()) {
-				stacks.add(inputItems[i]);
-				inputItems[i] = ItemStack.EMPTY;
-			}
-		}
-
-		for (ItemStack stack : stacks) {
-			// drop items that failed to shift for some reason? but that should be impossible unless max stack size has changed for that item...
-			ItemHandlerHelper.insertItemStacked(this, stack, false);
-		}
-	}
-
-	public void ejectOutputItems() {
-		if (!autoEject) {
-			return;
-		}
-
-		Direction[] directions = null;
-
-		for (int i = 0; i < outputItems.length; i++) {
-			if (!outputItems[i].isEmpty()) {
-				for (Direction direction : (directions == null ? (directions = getEjectDirections()) : directions)) {
-					BlockEntity entity = level.getBlockEntity(worldPosition.relative(direction));
-					IItemHandler itemHandler = entity == null ? null : entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction.getOpposite()).orElse(null);
-
-					if (itemHandler != null) {
-						outputItems[i] = ItemHandlerHelper.insertItemStacked(itemHandler, outputItems[i].copy(), false);
-
-						if (outputItems[i].isEmpty()) {
-							outputItems[i] = ItemStack.EMPTY;
-							break;
-						}
-					}
-				}
-			}
-		}
+	public int getRedstoneOutputSignalEnergyStorage() {
+		return energyCapacity <= 0D ? 0 : Math.round((float) ((energy / energyCapacity) * 15));
 	}
 
 	public void onBroken(Level level, BlockPos pos) {
 		for (ItemStack stack : inputItems) {
 			Block.popResource(level, pos, stack);
 		}
-
 		for (ItemStack stack : outputItems) {
 			Block.popResource(level, pos, stack);
 		}
 	}
 
-	public void initProperties() {
-		energyCapacity = electricBlockInstance.energyCapacity;
-		maxInputEnergy = electricBlockInstance.maxEnergyInput;
-		autoEject = false;
-	}
-
-	/**
-	 * In every instance initProperties() should be called first
-	 */
-	public void upgradesChanged() {
-	}
-
-	public double getTotalPossibleEnergyCapacity() {
-		return electricBlockInstance.energyCapacity;
-	}
-
-	public void addSyncData(SyncedData data) {
-		data.addDouble(SyncedData.ENERGY, () -> energy);
-		data.addDouble(SyncedData.ENERGY_CAPACITY, () -> energyCapacity);
-	}
-
-	@Override
-	public final boolean canBurn() {
-		return electricBlockInstance.canBurn;
-	}
-
-	@Override
-	public final void setBurnt(boolean b) {
-		if (burnt != b && !level.isClientSide() && canBurn()) {
-			burnt = b;
-			setChanged();
-			syncBlock();
-			electricNetworkUpdated(level, worldPosition);
-
-			if (burnt) {
-				level.levelEvent(1502, worldPosition, 0);
-
-				if (electricBlockInstance.canBeActive) {
-					level.setBlock(worldPosition, getBlockState().setValue(ElectricBlock.ACTIVE, false), 3);
-				}
-			}
-		}
-	}
-
-	@Override
-	public final boolean isBurnt() {
-		return burnt;
-	}
-
-	public void stepOn(ServerPlayer player) {
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, Random r) {
-	}
-
-	public Direction getFacing(Direction def) {
-		if (electricBlockInstance.facingProperty == null) {
-			return def;
-		}
-
-		BlockState state = getBlockState();
-
-		if (state.getBlock() instanceof ElectricBlock) {
-			return state.getValue(electricBlockInstance.facingProperty);
-		}
-
-		return def;
-	}
-
 	public void onPlacedBy(@Nullable LivingEntity entity, ItemStack stack) {
-		if (savePlacer()) {
-			if (entity != null) {
-				placerId = entity.getUUID();
-				placerName = entity.getScoreboardName();
-			} else if (!level.isClientSide()) {
-				level.removeBlock(worldPosition, false);
-			}
+		if (savePlacer() && entity != null) {
+			placerId = entity.getUUID();
+			placerName = entity.getScoreboardName();
 		}
 	}
 
@@ -689,18 +290,37 @@ public class ElectricBlockEntity extends BlockEntity implements EnergyHandler, I
 		return false;
 	}
 
-	public void syncBlock() {
-		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 11);
-		setChanged();
+	public void neighborChanged(BlockPos neighborPos, Block neighborBlock) {
+		if (level != null && !level.getBlockState(neighborPos).is(neighborBlock)) {
+			electricNetworkUpdated(level, neighborPos);
+		}
 	}
 
-	public void neighborChanged(BlockPos pos1, Block block1) {
-		if (!level.getBlockState(pos1).is(block1)) {
-			electricNetworkUpdated(level, pos1);
+	public void stepOn(ServerPlayer player) {
+	}
+
+	public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, RandomSource r) {
+	}
+
+	public Direction getFacing(Direction def) {
+		if (electricBlockInstance.facingProperty == null) {
+			return def;
 		}
+		BlockState state = getBlockState();
+		if (state.getBlock() instanceof ElectricBlock) {
+			return state.getValue(electricBlockInstance.facingProperty);
+		}
+		return def;
 	}
 
 	public static <T extends BlockEntity> void ticker(Level level, BlockPos pos, BlockState state, T entity) {
 		((ElectricBlockEntity) entity).tick();
+	}
+
+	public record SlotStack(int slot, ItemStack stack) {
+		public static final Codec<SlotStack> CODEC = RecordCodecBuilder.create(i -> i.group(
+				Codec.INT.fieldOf("Slot").forGetter(SlotStack::slot),
+				ItemStack.CODEC.fieldOf("Item").forGetter(SlotStack::stack)
+		).apply(i, SlotStack::new));
 	}
 }

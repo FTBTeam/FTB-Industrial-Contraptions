@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dyes/white"
+      }
+    }
+  ],
+  "type": "ftbic:canning",
+  "inputs": [
+    {
+      "ingredient": {
+        "neoforge:ingredient_type": "ftbic:fluid_cell",
+        "fluid": "minecraft:water"
+      }
+    },
+    {
+      "ingredient": "#c:dyes/white"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:light_spray_paint_can"
+      }
+    }
+  ]
+}

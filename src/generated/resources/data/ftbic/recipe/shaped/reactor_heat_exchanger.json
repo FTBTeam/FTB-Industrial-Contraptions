@@ -1,0 +1,37 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:plates/lead"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "lead_plate"
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:plates/lead",
+    "V": "ftbic:heat_exchanger"
+  },
+  "pattern": [
+    "P",
+    "V",
+    "P"
+  ],
+  "result": {
+    "id": "ftbic:reactor_heat_exchanger"
+  },
+  "show_notification": false
+}

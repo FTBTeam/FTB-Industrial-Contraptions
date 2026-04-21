@@ -1,31 +1,31 @@
 package dev.ftb.mods.ftbic.item;
 
-import dev.ftb.mods.ftbic.FTBIC;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 public class CannedFoodItem extends Item {
-	public CannedFoodItem() {
-		super(new Properties().stacksTo(24).tab(FTBIC.TAB).food(new FoodProperties.Builder().nutrition(4).saturationMod(0.5F).alwaysEat().fast().meat().build()));
+	public CannedFoodItem(Properties props) {
+		super(props.stacksTo(24).food(new FoodProperties.Builder()
+				.nutrition(4)
+				.saturationModifier(0.5F)
+				.alwaysEdible()
+				.build()));
 	}
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-		ItemStack is = entity.eat(level, stack);
+		ItemStack result = super.finishUsingItem(stack, level, entity);
 
-		if (entity instanceof ServerPlayer && !((ServerPlayer) entity).isCreative()) {
-			if (is.isEmpty()) {
-				return new ItemStack(FTBICItems.EMPTY_CAN.item.get());
-			}
-
-			ItemHandlerHelper.giveItemToPlayer((ServerPlayer) entity, new ItemStack(FTBICItems.EMPTY_CAN.item.get()));
+		if (entity instanceof ServerPlayer player && !player.isCreative()) {
+			ItemStack can = new ItemStack(FTBICItems.EMPTY_CAN.item.get());
+			if (result.isEmpty()) return can;
+			if (!player.getInventory().add(can)) player.drop(can, false);
 		}
 
-		return stack;
+		return result;
 	}
 }

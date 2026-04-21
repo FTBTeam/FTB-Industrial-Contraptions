@@ -1,0 +1,41 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ingots/stainless_steel"
+          }
+        },
+        {
+          "type": "ftbmaterials:components_available",
+          "used_materials": [
+            "stainless_steel_ingot"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "stainless_steel_plate"
+      ]
+    }
+  ],
+  "type": "ftbic:rolling",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/stainless_steel"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbmaterials:stainless_steel_plate"
+      }
+    }
+  ]
+}

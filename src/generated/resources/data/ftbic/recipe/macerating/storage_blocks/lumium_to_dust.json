@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:storage_blocks/lumium"
+      }
+    },
+    {
+      "type": "ftbmaterials:components_available",
+      "used_materials": [
+        "lumium_dust"
+      ]
+    }
+  ],
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:storage_blocks/lumium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 9,
+        "id": "ftbmaterials:lumium_dust"
+      }
+    }
+  ]
+}

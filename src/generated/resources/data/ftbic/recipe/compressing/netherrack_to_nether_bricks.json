@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "minecraft:netherrack"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:nether_bricks"
+      }
+    }
+  ]
+}

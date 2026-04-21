@@ -1,47 +1,75 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
-import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
-import dev.ftb.mods.ftbic.net.MoveLaserMessage;
-import dev.ftb.mods.ftbic.screen.sync.SyncedData;
-import dev.ftb.mods.ftbic.util.FTBChunksIntegration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
-	private static final int INVALID_Y = -10000;
+	public static final int INVALID_Y = Integer.MIN_VALUE;
+
+	private static final WeakHashMap<Level, Set<DiggingBaseBlockEntity>> PER_LEVEL = new WeakHashMap<>();
+
+	public static Iterable<DiggingBaseBlockEntity> forLevel(Level level) {
+		synchronized (PER_LEVEL) {
+			Set<DiggingBaseBlockEntity> set = PER_LEVEL.get(level);
+			return set == null ? List.of() : new ArrayList<>(set);
+		}
+	}
+
+	private static void register(DiggingBaseBlockEntity be) {
+		if (be.level == null) return;
+		synchronized (PER_LEVEL) {
+			PER_LEVEL.computeIfAbsent(be.level, k -> Collections.newSetFromMap(new ConcurrentHashMap<>())).add(be);
+		}
+	}
+
+	private static void unregister(DiggingBaseBlockEntity be) {
+		synchronized (PER_LEVEL) {
+			Set<DiggingBaseBlockEntity> set = PER_LEVEL.get(be.level);
+			if (set != null) set.remove(be);
+		}
+	}
 
 	public boolean paused = false;
+	public boolean redstonePaused = false;
 	public long tick = 0L;
+	public int boundaryHighlightTicks = 0;
 	public float laserX = 0.5F;
-	public int laserY = INVALID_Y;
 	public float laserZ = 0.5F;
-	public int offsetX = 1;
-	public int offsetZ = -2;
-	public int sizeX = 5;
-	public int sizeZ = 5;
+	public int laserY = Integer.MIN_VALUE;
+	public int offsetX = 0;
+	public int offsetZ = 0;
+	public int sizeX = 0;
+	public int sizeZ = 0;
 	public int skippedBlocks = 0;
-
-	// Client side stuff
-	public float prevLaserX = 0.5F;
-	public float prevLaserZ = 0.5F;
-	public float moveLaserX = 0.5F;
-	public int moveLaserY = 0;
-	public float moveLaserZ = 0.5F;
-
 	public long diggingMineTicks;
 	public long diggingMoveTicks;
 
@@ -50,197 +78,22 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 	}
 
 	@Override
-	public void writeData(CompoundTag tag) {
-		super.writeData(tag);
-		tag.putFloat("LaserX", laserX);
-		tag.putInt("LaserY", laserY);
-		tag.putFloat("LaserZ", laserZ);
-		tag.putBoolean("Paused", paused);
-		tag.putLong("Tick", tick);
-		tag.putByte("OffsetX", (byte) offsetX);
-		tag.putByte("OffsetZ", (byte) offsetZ);
-		tag.putByte("SizeX", (byte) sizeX);
-		tag.putByte("SizeZ", (byte) sizeZ);
-
-		if (skippedBlocks > 0) {
-			tag.putShort("SkippedBlocks", (short) skippedBlocks);
-		}
+	public void setLevel(Level level) {
+		super.setLevel(level);
+		if (!level.isClientSide()) register(this);
 	}
 
 	@Override
-	public void readData(CompoundTag tag) {
-		super.readData(tag);
-		laserX = tag.getFloat("LaserX");
-		laserY = tag.getInt("LaserY");
-		laserZ = tag.getFloat("LaserZ");
-		paused = tag.getBoolean("Paused");
-		tick = tag.getLong("Tick");
-		offsetX = tag.getByte("OffsetX");
-		offsetZ = tag.getByte("OffsetZ");
-		sizeX = Mth.clamp(tag.getByte("SizeX"), 1, 64);
-		sizeZ = Mth.clamp(tag.getByte("SizeZ"), 1, 64);
-		skippedBlocks = tag.getShort("SkippedBlocks");
+	public void setRemoved() {
+		unregister(this);
+		super.setRemoved();
 	}
 
 	@Override
-	public void writeNetData(CompoundTag tag) {
-		super.writeNetData(tag);
-		tag.putFloat("LaserX", laserX);
-		tag.putInt("LaserY", laserY);
-		tag.putFloat("LaserZ", laserZ);
-		tag.putBoolean("Paused", paused);
-
-		tag.putLong("Tick", tick);
-		tag.putByte("OffsetX", (byte) offsetX);
-		tag.putByte("OffsetZ", (byte) offsetZ);
-		tag.putByte("SizeX", (byte) sizeX);
-		tag.putByte("SizeZ", (byte) sizeZ);
-		tag.putDouble("Speed", progressSpeed);
-	}
-
-	@Override
-	public void readNetData(CompoundTag tag) {
-		super.readNetData(tag);
-		prevLaserX = moveLaserX = laserX = tag.getFloat("LaserX");
-		moveLaserY = laserY = tag.getInt("LaserY");
-		prevLaserZ = moveLaserZ = laserZ = tag.getFloat("LaserZ");
-		paused = tag.getBoolean("Paused");
-		tick = tag.getLong("Tick");
-		offsetX = tag.getByte("OffsetX");
-		offsetZ = tag.getByte("OffsetZ");
-		sizeX = tag.getByte("SizeX");
-		sizeZ = tag.getByte("SizeZ");
-	}
-
-	@Override
-	public void handleProcessing() {
-		active = !paused;
-
-		if (level != null && level.isClientSide()) {
-			prevLaserX = laserX;
-			prevLaserZ = laserZ;
-
-			laserX = moveLaserX;
-			laserY = moveLaserY;
-			laserZ = moveLaserZ;
-
-			if (!paused) {
-				double x = worldPosition.getX() + laserX;
-				double minY = laserY + 0.5D;
-				double maxY = worldPosition.getY() + 0.5D;
-				double z = worldPosition.getZ() + laserZ;
-				FTBIC.PROXY.playLaserSound(level.getGameTime(), x, minY, maxY, z);
-			}
-		}
-
-		if (!paused && level != null && !level.isClientSide()) {
-			if (energy >= energyUse) {
-				energy -= energyUse;
-			} else {
-				return;
-			}
-
-			int miningTicks = Math.max((int) (diggingMineTicks / progressSpeed), 1);
-			int moveTicks = Math.max((int) (diggingMoveTicks / progressSpeed), 1);
-			int totalTicks = miningTicks + moveTicks;
-			int ltick = (int) (tick % (long) totalTicks);
-
-			if (ltick <= moveTicks) {
-				long s = (long) sizeX * (long) sizeZ * 2L;
-				int lpos0 = (int) (((tick / (long) totalTicks) - 1L) % s);
-				int lpos1 = (int) ((tick / (long) totalTicks) % s);
-
-				if (lpos0 < 0) {
-					lpos0 += s;
-				}
-
-				if (lpos0 >= s / 2L) {
-					lpos0 = (int) (s - lpos0 - 1);
-				}
-
-				if (lpos1 >= s / 2L) {
-					lpos1 = (int) (s - lpos1 - 1);
-				}
-
-				int row0 = lpos0 / sizeX;
-				int col0 = row0 % 2 == 0 ? (lpos0 % sizeX) : (sizeX - 1 - (lpos0 % sizeX));
-				int row1 = lpos1 / sizeX;
-				int col1 = row1 % 2 == 0 ? (lpos1 % sizeX) : (sizeX - 1 - (lpos1 % sizeX));
-				float lerp = ltick / (float) moveTicks;
-
-				laserX = (offsetX + Mth.lerp(lerp, col0, col1)) + 0.5F;
-				laserZ = (offsetZ + Mth.lerp(lerp, row0, row1)) + 0.5F;
-				laserY = getY(worldPosition.getX() + Mth.floor(laserX), worldPosition.getZ() + Mth.floor(laserZ));
-				sendLaserMove();
-			}
-
-			if (ltick == totalTicks - 1) {
-				laserY = getY(worldPosition.getX() + Mth.floor(laserX), worldPosition.getZ() + Mth.floor(laserZ));
-
-				if (laserY == INVALID_Y) {
-					skippedBlocks++;
-
-					if (skippedBlocks >= sizeX * sizeZ * 2) {
-						paused = true;
-						skippedBlocks = 0;
-						syncBlock();
-					}
-				} else {
-					BlockPos miningPos = new BlockPos(worldPosition.getX() + laserX, laserY, worldPosition.getZ() + laserZ);
-					BlockState state = level.getBlockState(miningPos);
-					skippedBlocks = 0;
-
-					if (!level.isClientSide()) {
-						level.getProfiler().push("ftbic_" + electricBlockInstance.id);
-						double lx = worldPosition.getX() + laserX;
-						double ly = laserY + 0.5D;
-						double lz = worldPosition.getZ() + laserZ;
-						digBlock(state, miningPos, lx, ly, lz);
-						level.getProfiler().pop();
-
-						if (paused) {
-							syncBlock();
-						}
-					}
-				}
-			}
-
-			tick++;
-		}
-	}
-
-	public boolean isValidBlock(BlockState state, BlockPos pos) {
-		return false;
-	}
-
-	public void digBlock(BlockState state, BlockPos miningPos, double lx, double ly, double lz) {
-	}
-
-	private int getY(int x, int z) {
-		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, 0, z);
-
-		if (level instanceof ServerLevel && FTBChunksIntegration.instance.isProtected((ServerLevel) level, pos, placerId)) {
-			return INVALID_Y;
-		}
-
-		for (int y = worldPosition.getY(); y >= level.getMinBuildHeight(); y--) {
-			pos.setY(y);
-
-			if (level.isLoaded(pos)) {
-				BlockState state = level.getBlockState(pos);
-
-				if (state.getBlock() != Blocks.BEDROCK && state.getBlock() != FTBICBlocks.EXFLUID.get() && !state.isAir() && isValidBlock(state, pos)) {
-					return y;
-				}
-			}
-		}
-
-		return INVALID_Y;
-	}
-
-	@Override
-	public AABB getRenderBoundingBox() {
-		return INFINITE_EXTENT_AABB;
+	public void initProperties() {
+		super.initProperties();
+		diggingMineTicks = FTBICConfig.MACHINES.QUARRY_MINE_TICKS.get();
+		diggingMoveTicks = FTBICConfig.MACHINES.QUARRY_MOVE_TICKS.get();
 	}
 
 	@Override
@@ -248,105 +101,307 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 		return true;
 	}
 
+	@Override
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		output.putBoolean("Paused", paused);
+		output.putLong("Tick", tick);
+		output.putByte("OffsetX", (byte) offsetX);
+		output.putByte("OffsetZ", (byte) offsetZ);
+		output.putByte("SizeX", (byte) sizeX);
+		output.putByte("SizeZ", (byte) sizeZ);
+		if (skippedBlocks > 0) output.putShort("SkippedBlocks", (short) skippedBlocks);
+		if (boundaryHighlightTicks > 0) output.putInt("BoundaryHighlight", boundaryHighlightTicks);
+		output.putFloat("LaserX", laserX);
+		output.putFloat("LaserZ", laserZ);
+		if (laserY != Integer.MIN_VALUE) output.putInt("LaserY", laserY);
+	}
+
+	@Override
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		paused = input.getBooleanOr("Paused", false);
+		tick = input.getLongOr("Tick", 0L);
+		offsetX = input.getByteOr("OffsetX", (byte) 0);
+		offsetZ = input.getByteOr("OffsetZ", (byte) 0);
+		sizeX = Mth.clamp(input.getByteOr("SizeX", (byte) 0), 0, 64);
+		sizeZ = Mth.clamp(input.getByteOr("SizeZ", (byte) 0), 0, 64);
+		skippedBlocks = input.getShortOr("SkippedBlocks", (short) 0);
+		boundaryHighlightTicks = input.getIntOr("BoundaryHighlight", 0);
+		laserX = input.getFloatOr("LaserX", 0.5F);
+		laserZ = input.getFloatOr("LaserZ", 0.5F);
+		laserY = input.getIntOr("LaserY", Integer.MIN_VALUE);
+	}
+
+	public boolean isEffectivelyPaused() {
+		return paused || redstonePaused;
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		if (level == null || level.isClientSide()) {
+			return;
+		}
+		boolean signal = level.hasNeighborSignal(worldPosition);
+		if (signal != redstonePaused) {
+			redstonePaused = signal;
+			setChanged();
+		}
+		if (boundaryHighlightTicks > 0) {
+			boundaryHighlightTicks--;
+			if (boundaryHighlightTicks == 0) setChanged();
+		}
+		if (paused || redstonePaused) {
+			return;
+		}
+
+		if (energy < energyUse) return;
+		energy -= energyUse;
+		active = true;
+
+		int miningTicks = Math.max((int) (diggingMineTicks / progressSpeed), 1);
+		int moveTicks = Math.max((int) (diggingMoveTicks / progressSpeed), 1);
+		int totalTicks = miningTicks + moveTicks;
+
+		if ((tick % totalTicks) == totalTicks - 1) {
+			int interiorW = sizeX - 2;
+			int interiorD = sizeZ - 2;
+			if (interiorW <= 0 || interiorD <= 0) return;
+			long area = (long) interiorW * (long) interiorD;
+			long pos = (tick / totalTicks) % area;
+			int row = (int) (pos / interiorW);
+			int col = row % 2 == 0 ? (int) (pos % interiorW) : (interiorW - 1 - (int) (pos % interiorW));
+
+			int mx = worldPosition.getX() + offsetX + 1 + col;
+			int mz = worldPosition.getZ() + offsetZ + 1 + row;
+			int my = findMinableY(mx, mz);
+
+			if (my == INVALID_Y) {
+				skippedBlocks++;
+				if (skippedBlocks >= area * 2) {
+					paused = true;
+					skippedBlocks = 0;
+				}
+			} else {
+				BlockPos miningPos = new BlockPos(mx, my, mz);
+				BlockState state = level.getBlockState(miningPos);
+				skippedBlocks = 0;
+				laserX = (float) (offsetX + 1 + col + 0.5);
+				laserZ = (float) (offsetZ + 1 + row + 0.5);
+				laserY = my;
+				level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+				digBlock(state, miningPos);
+			}
+		}
+		tick++;
+		// Persist tick + energy so a mid-operation chunk unload doesn't lose progress.
+		setChanged();
+	}
+
+	private static final TagKey<Block> RELOCATION_NOT_PERMITTED =
+			TagKey.create(Registries.BLOCK,
+					Identifier.fromNamespaceAndPath("c", "relocation_not_permitted"));
+
+	public boolean isValidBlock(BlockState state, BlockPos pos) {
+		return !state.is(RELOCATION_NOT_PERMITTED);
+	}
+
+	public void digBlock(BlockState state, BlockPos miningPos) {
+		if (!(level instanceof ServerLevel server)) return;
+		List<ItemStack> drops = Block.getDrops(state, server, miningPos, null);
+		if (!canFitAllDrops(drops)) {
+			paused = true;
+			setChanged();
+			return;
+		}
+		level.removeBlock(miningPos, false);
+		for (ItemStack drop : drops) {
+			addToOutputs(drop);
+		}
+		setChanged();
+	}
+
+	protected boolean canFitAllDrops(List<ItemStack> drops) {
+		if (drops.isEmpty()) return true;
+		if (outputItems.length == 0) return false;
+		ItemStack[] sim = new ItemStack[outputItems.length];
+		for (int i = 0; i < outputItems.length; i++) sim[i] = outputItems[i].copy();
+		for (ItemStack drop : drops) {
+			ItemStack remaining = drop.copy();
+			for (int i = 0; i < sim.length && !remaining.isEmpty(); i++) {
+				if (sim[i].isEmpty()) {
+					sim[i] = remaining;
+					remaining = ItemStack.EMPTY;
+				} else if (ItemStack.isSameItemSameComponents(sim[i], remaining)
+						&& sim[i].getCount() < sim[i].getMaxStackSize()) {
+					int move = Math.min(remaining.getCount(), sim[i].getMaxStackSize() - sim[i].getCount());
+					sim[i].grow(move);
+					remaining.shrink(move);
+				}
+			}
+			if (!remaining.isEmpty()) return false;
+		}
+		return true;
+	}
+
+	protected ItemStack addToOutputs(ItemStack stack) {
+		if (stack.isEmpty() || outputItems.length == 0) return stack;
+		for (int i = 0; i < outputItems.length && !stack.isEmpty(); i++) {
+			if (outputItems[i].isEmpty()) {
+				outputItems[i] = stack;
+				return ItemStack.EMPTY;
+			}
+			if (ItemStack.isSameItemSameComponents(outputItems[i], stack)
+					&& outputItems[i].getCount() < outputItems[i].getMaxStackSize()) {
+				int move = Math.min(stack.getCount(), outputItems[i].getMaxStackSize() - outputItems[i].getCount());
+				outputItems[i].grow(move);
+				stack.shrink(move);
+			}
+		}
+		return stack;
+	}
+
+	private int findMinableY(int x, int z) {
+		if (level == null) return INVALID_Y;
+		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, 0, z);
+		int bottom = level.getMinY();
+		for (int y = worldPosition.getY() - 1; y >= bottom; y--) {
+			pos.setY(y);
+			if (!level.isLoaded(pos)) continue;
+			BlockState state = level.getBlockState(pos);
+			if (state.isAir()) continue;
+			if (state.getBlock() == Blocks.BEDROCK) continue;
+			if (state.getBlock() == FTBICBlocks.EXFLUID.get()) continue;
+			if (!isValidBlock(state, pos)) continue;
+			return y;
+		}
+		return INVALID_Y;
+	}
+
+	public boolean hasAnchorLandmark() {
+		if (level == null) return false;
+		Direction back = getFacing(Direction.NORTH).getOpposite();
+		BlockPos anchorPos = worldPosition.relative(back);
+		return level.getBlockState(anchorPos).getBlock() == FTBICBlocks.LANDMARK.get();
+	}
+
 	public void resize() {
+		if (level == null) return;
 		Block landmark = FTBICBlocks.LANDMARK.get();
-		Direction front = getFacing(Direction.NORTH);
-		Direction back = front.getOpposite();
-		Direction left = front.getClockWise();
-		Direction right = front.getCounterClockWise();
-
-		int offBack = 6;
-		int offLeft = 3;
-		int offRight = 3;
-
-		for (int i = 2; i <= 64; i++) {
-			BlockState state = level.getBlockState(worldPosition.relative(back, i));
-
-			if (state.getBlock() == landmark) {
-				offBack = i;
-				break;
+		int radius = 128;
+		int qx = worldPosition.getX();
+		int qy = worldPosition.getY();
+		int qz = worldPosition.getZ();
+		List<BlockPos> marks = new ArrayList<>();
+		boolean useLandmarks = hasAnchorLandmark();
+		if (useLandmarks) {
+			BlockPos.MutableBlockPos mut = new BlockPos.MutableBlockPos();
+			int yMin = Math.max(level.getMinY(), qy - 128);
+			int yMax = Math.min(level.getMaxY() - 1, qy + 4);
+			for (int dx = -radius; dx <= radius; dx++) {
+				for (int dz = -radius; dz <= radius; dz++) {
+					if (dx == 0 && dz == 0) continue;
+					for (int y = yMin; y <= yMax; y++) {
+						mut.set(qx + dx, y, qz + dz);
+						if (level.getBlockState(mut).getBlock() == landmark) {
+							marks.add(mut.immutable());
+						}
+					}
+				}
 			}
 		}
 
-		for (int i = 1; i <= 64; i++) {
-			BlockState state = level.getBlockState(worldPosition.relative(left, i));
-
-			if (state.getBlock() == landmark) {
-				offLeft = i;
-				break;
+		int x0, x1, z0, z1;
+		boolean defaultArea = marks.isEmpty() || marks.size() == 1;
+		if (defaultArea) {
+			Direction back = getFacing(Direction.NORTH).getOpposite();
+			int ox = back.getStepX();
+			int oz = back.getStepZ();
+			if (back.getAxis() == Direction.Axis.X) {
+				x0 = qx + (ox == 1 ? 1 : -5);
+				x1 = qx + (ox == 1 ? 5 : -1);
+				z0 = qz - 2; z1 = qz + 2;
+			} else {
+				x0 = qx - 2; x1 = qx + 2;
+				z0 = qz + (oz == 1 ? 1 : -5);
+				z1 = qz + (oz == 1 ? 5 : -1);
 			}
-		}
-
-		for (int i = 1; i <= 64; i++) {
-			BlockState state = level.getBlockState(worldPosition.relative(right, i));
-
-			if (state.getBlock() == landmark) {
-				offRight = i;
-				break;
+		} else {
+			int minX = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE;
+			int minZ = Integer.MAX_VALUE, maxZ = Integer.MIN_VALUE;
+			for (BlockPos l : marks) {
+				minX = Math.min(minX, l.getX());
+				maxX = Math.max(maxX, l.getX());
+				minZ = Math.min(minZ, l.getZ());
+				maxZ = Math.max(maxZ, l.getZ());
 			}
+			x0 = minX;
+			x1 = maxX;
+			z0 = minZ;
+			z1 = maxZ;
 		}
 
-		offBack -= 1;
-		offLeft -= 1;
-		offRight -= 1;
+		offsetX = x0 - qx;
+		offsetZ = z0 - qz;
+		sizeX = Math.max(1, x1 - x0 + 1);
+		sizeZ = Math.max(1, z1 - z0 + 1);
 
-		if (back.getAxis() == Direction.Axis.X) {
-			sizeX = offBack;
-			sizeZ = (offLeft + offRight + 1);
-			offsetX = back.getStepX() == 1 ? 1 : -sizeX;
-			offsetZ = -(back.getStepX() == 1 ? offLeft : offRight);
-		} else if (back.getAxis() == Direction.Axis.Z) {
-			sizeX = (offLeft + offRight + 1);
-			sizeZ = offBack;
-			offsetX = -(back.getStepZ() == 1 ? offRight : offLeft);
-			offsetZ = back.getStepZ() == 1 ? 1 : -sizeZ;
+		boundaryHighlightTicks = 60;
+
+		laserX = offsetX + sizeX / 2.0F;
+		laserZ = offsetZ + sizeZ / 2.0F;
+		setChanged();
+		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+	}
+
+	@Override
+	public InteractionResult rightClick(Player player, InteractionHand hand, BlockHitResult hit) {
+		if (player.isSecondaryUseActive() && player.getItemInHand(hand).isEmpty()) {
+			if (level != null && !level.isClientSide()) {
+				resize();
+				player.sendSystemMessage(Component.literal(
+						String.format("Area: %d × %d (corner %d,%d..%d,%d)",
+								sizeX, sizeZ,
+								worldPosition.getX() + offsetX, worldPosition.getZ() + offsetZ,
+								worldPosition.getX() + offsetX + sizeX - 1, worldPosition.getZ() + offsetZ + sizeZ - 1)));
+			}
+			return InteractionResult.SUCCESS;
 		}
-
-		syncBlock();
+		return super.rightClick(player, hand, hit);
 	}
 
 	@Override
 	public void onPlacedBy(@Nullable LivingEntity entity, ItemStack stack) {
 		super.onPlacedBy(entity, stack);
-		Direction dir = getFacing(Direction.NORTH).getOpposite();
-		laserX = dir.getStepX() + 0.5F;
-		laserZ = dir.getStepZ() + 0.5F;
+		if (level != null && !level.isClientSide()) {
+			if (hasAnchorLandmark()) {
+				resize();
+			} else {
+				resetToFacingDefault();
+			}
+		}
+	}
 
-		BlockEntity e = level.getBlockEntity(worldPosition.below());
-
-		if (e instanceof DiggingBaseBlockEntity q) {
-			offsetX = q.offsetX;
-			offsetZ = q.offsetZ;
-			sizeX = q.sizeX;
-			sizeZ = q.sizeZ;
-			syncBlock();
+	private void resetToFacingDefault() {
+		Direction back = getFacing(Direction.NORTH).getOpposite();
+		int ox = back.getStepX();
+		int oz = back.getStepZ();
+		if (back.getAxis() == Direction.Axis.X) {
+			offsetX = ox == 1 ? 1 : -5;
+			offsetZ = -2;
+			sizeX = 5;
+			sizeZ = 5;
 		} else {
-			resize();
+			offsetX = -2;
+			offsetZ = oz == 1 ? 1 : -5;
+			sizeX = 5;
+			sizeZ = 5;
 		}
-	}
-
-	@Override
-	public void addSyncData(SyncedData data) {
-		super.addSyncData(data);
-		data.addBoolean(SyncedData.PAUSED, () -> paused);
-	}
-
-	public void moveLaser(float x, int y, float z) {
-		moveLaserX = x;
-		moveLaserY = y;
-		moveLaserZ = z;
-		// FTBIC.LOGGER.info(String.format("Moved laser %d, %d, %d to %f, %f, %f", worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), x, y, z));
-	}
-
-	private void sendLaserMove() {
-		LevelChunk chunk = level == null ? null : level.getChunkAt(worldPosition);
-
-		if (chunk != null) {
-			new MoveLaserMessage(worldPosition, laserX, laserY, laserZ).sendToChunkListeners(chunk);
-		}
-	}
-
-	public float[] getLaserColor() {
-		return new float[]{1F, 1F, 1F};
+		boundaryHighlightTicks = 60;
+		laserX = offsetX + sizeX / 2.0F;
+		laserZ = offsetZ + sizeZ / 2.0F;
+		setChanged();
+		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
 	}
 }

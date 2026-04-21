@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "count": 2,
+      "ingredient": "ftbic:latex_ball"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:rubber"
+      }
+    }
+  ]
+}

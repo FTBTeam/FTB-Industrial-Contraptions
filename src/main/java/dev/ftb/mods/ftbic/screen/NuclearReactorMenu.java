@@ -1,48 +1,131 @@
 package dev.ftb.mods.ftbic.screen;
 
+import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
+import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.Slot;
 
-public class NuclearReactorMenu extends ElectricBlockMenu<NuclearReactorBlockEntity> {
-	public NuclearReactorMenu(int id, Inventory playerInv, NuclearReactorBlockEntity r) {
-		super(FTBICMenus.NUCLEAR_REACTOR.get(), id, playerInv, r, null);
-	}
+public class NuclearReactorMenu extends ElectricBlockMenu {
+	public final DataSlot pausedSlot = DataSlot.standalone();
+	public final DataSlot allowRedstoneSlot = DataSlot.standalone();
+	public final DataSlot heatScaled = DataSlot.standalone();
+	public final DataSlot maxHeatScaled = DataSlot.standalone();
+	public final DataSlot energyOutShort = DataSlot.standalone();
+	public final DataSlot runningFlag = DataSlot.standalone();
+	public final DataSlot activeColumnsSlot = DataSlot.standalone();
 
 	public NuclearReactorMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-		this(id, playerInv, (NuclearReactorBlockEntity) playerInv.player.level.getBlockEntity(buf.readBlockPos()));
+		super(FTBICMenus.NUCLEAR_REACTOR.get(), id, playerInv, buf);
+		registerSlots();
+	}
+
+	public NuclearReactorMenu(int id, Inventory playerInv, ElectricBlockEntity be) {
+		super(FTBICMenus.NUCLEAR_REACTOR.get(), id, playerInv, be);
+		registerSlots();
+	}
+
+	private void registerSlots() {
+		addDataSlot(pausedSlot);
+		addDataSlot(allowRedstoneSlot);
+		addDataSlot(heatScaled);
+		addDataSlot(maxHeatScaled);
+		addDataSlot(energyOutShort);
+		addDataSlot(runningFlag);
+		addDataSlot(activeColumnsSlot);
 	}
 
 	@Override
-	public int getPlayerSlotOffset() {
-		return 140;
+	protected int getPlayerSlotOffset() {
+		return 144;
 	}
 
+	public static final int HOTBAR_OFFSET_FROM_INV = 54;
+
 	@Override
-	public void addBlockSlots(@Nullable Object extra) {
-		for (int y = 0; y < 6; y++) {
-			for (int x = 0; x < 9; x++) {
-				addSlot(new NuclearReactorSlot(entity, y * 9 + x, 8 + x * 18, 18 + y * 18));
+	protected void addPlayerInventorySlots(Inventory inv) {
+		int off = getPlayerSlotOffset();
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 9; col++) {
+				addSlot(new Slot(inv, col + row * 9 + 9, 8 + col * 18, off + row * 18));
 			}
 		}
+		int hotbar = off + HOTBAR_OFFSET_FROM_INV;
+		for (int col = 0; col < 9; col++) {
+			addSlot(new Slot(inv, col, 8 + col * 18, hotbar));
+		}
+	}
+
+	public static int slotScreenY(int row) {
+		return 18 + row * 18;
 	}
 
 	@Override
-	public boolean clickMenuButton(Player player, int button) {
-		if (button == 0) {
-			entity.reactor.paused = !entity.reactor.paused;
-			entity.setChanged();
-			return true;
+	protected void addMachineSlots(Inventory playerInv) {
+		if (blockEntity == null || blockEntity.getSlotCount() == 0) {
+			machineSlotCount = 0;
+			return;
+		}
+		ElectricBlockEntityContainer container = new ElectricBlockEntityContainer(blockEntity);
+
+		int activeColumns = NuclearReactor.MAX_COLUMNS;
+		if (blockEntity instanceof NuclearReactorBlockEntity reactor) {
+			activeColumns = Math.max(3, Math.min(NuclearReactor.MAX_COLUMNS, reactor.reactor.activeColumns));
+		}
+		// NOTE: do NOT touch activeColumnsSlot here — this method runs from super() before subclass
+		// field initializers execute, so the DataSlot is still null. broadcastChanges() syncs it.
+
+		for (int row = 0; row < NuclearReactor.ROWS; row++) {
+			for (int col = 0; col < activeColumns; col++) {
+				int idx = NuclearReactor.slotIndex(col, row);
+				addSlot(new NuclearReactorSlot(container, blockEntity, idx,
+						8 + col * 18, slotScreenY(row)));
+			}
 		}
 
-		if (button == 1) {
-			entity.reactor.allowRedstoneControl = !entity.reactor.allowRedstoneControl;
-			entity.setChanged();
-			return true;
-		}
+		machineSlotCount = NuclearReactor.ROWS * activeColumns;
+	}
 
-		return false;
+	@Override
+	public void broadcastChanges() {
+		super.broadcastChanges();
+		if (blockEntity instanceof NuclearReactorBlockEntity reactor) {
+			pausedSlot.set(reactor.reactor.paused ? 1 : 0);
+			allowRedstoneSlot.set(reactor.reactor.allowRedstoneControl ? 1 : 0);
+			int max = Math.max(1, reactor.reactor.maxHeat);
+			heatScaled.set((int) Math.min(1000L, Math.round(1000D * reactor.reactor.heat / max)));
+			maxHeatScaled.set(Math.min(Short.MAX_VALUE, max));
+			energyOutShort.set(Math.min(Short.MAX_VALUE, (int) Math.round(reactor.reactor.energyOutput)));
+			runningFlag.set(reactor.reactor.energyOutput > 0D ? 1 : 0);
+			activeColumnsSlot.set(Math.max(3, Math.min(NuclearReactor.MAX_COLUMNS, reactor.reactor.activeColumns)));
+		}
+	}
+
+	public boolean isPaused()           { return pausedSlot.get() == 1; }
+	public boolean allowRedstone()      { return allowRedstoneSlot.get() == 1; }
+	public boolean isRunning()          { return runningFlag.get() == 1; }
+	public float getHeatFraction()      { return heatScaled.get() / 1000F; }
+	public int getEnergyOutput()        { return energyOutShort.get(); }
+	public int getActiveColumns()       { return Math.max(3, Math.min(NuclearReactor.MAX_COLUMNS, activeColumnsSlot.get())); }
+
+	@Override
+	public boolean clickMenuButton(Player player, int id) {
+		if (!(blockEntity instanceof NuclearReactorBlockEntity reactor)) return false;
+		switch (id) {
+			case 0 -> {
+				reactor.reactor.paused = !reactor.reactor.paused;
+				reactor.setChanged();
+				return true;
+			}
+			case 1 -> {
+				reactor.reactor.allowRedstoneControl = !reactor.reactor.allowRedstoneControl;
+				reactor.setChanged();
+				return true;
+			}
+		}
+		return super.clickMenuButton(player, id);
 	}
 }

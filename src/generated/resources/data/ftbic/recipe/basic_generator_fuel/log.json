@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "minecraft:logs_that_burn"
+      }
+    }
+  ],
+  "type": "ftbic:basic_generator_fuel",
+  "ingredient": "#minecraft:logs_that_burn",
+  "ticks": 300
+}
