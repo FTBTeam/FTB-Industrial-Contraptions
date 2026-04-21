@@ -8,7 +8,7 @@ version = "${version}"
 displayName = "${mod_name}"
 authors = "${mod_author}"
 description = '''
-FTB Industrial Contraptions - tech mod inspired by IndustrialCraft.
+FTB Industrial Contraptions - an industrial tech mod featuring tiered energy, generators, machines, nuclear reactors, and automation.
 '''
 
 [[dependencies.ftbic]]
