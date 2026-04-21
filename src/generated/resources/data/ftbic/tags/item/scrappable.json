@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "values": [
     "minecraft:dirt",
     "minecraft:cobblestone",
@@ -15,8 +14,17 @@
     "minecraft:tuff",
     "minecraft:end_stone",
     "minecraft:rotten_flesh",
-    {"id": "#minecraft:leaves", "required": false},
-    {"id": "#minecraft:saplings", "required": false},
-    {"id": "#minecraft:dirt", "required": false}
+    {
+      "id": "#minecraft:leaves",
+      "required": false
+    },
+    {
+      "id": "#minecraft:saplings",
+      "required": false
+    },
+    {
+      "id": "#minecraft:dirt",
+      "required": false
+    }
   ]
 }

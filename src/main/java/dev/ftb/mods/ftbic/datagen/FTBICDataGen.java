@@ -13,6 +13,8 @@ public final class FTBICDataGen {
 		event.createProvider(FTBICModelProvider::new);
 		event.createProvider(FTBICRecipeProvider.Runner::new);
 		event.createProvider(FTBICLanguageProvider::new);
+		event.createProvider(FTBICBlockTagsProvider::new);
+		event.createProvider(FTBICItemTagsProvider::new);
 	}
 
 	private FTBICDataGen() {}
