@@ -89,7 +89,7 @@ dependencies {
     // the auroral reference project.
     implementation("curse.maven:jade-324717:7817285")
 
-    implementation("dev.ftb.mods:ftb-materials:26.1.2.1-SNAPSHOT")
+    implementation("dev.ftb.mods:ftb-materials:26.1.2.2-SNAPSHOT")
 
     // GuideME - In-game guidebook (optional)
     implementation("org.appliedenergistics:guideme:${guideme_version}")
