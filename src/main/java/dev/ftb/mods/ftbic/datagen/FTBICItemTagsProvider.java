@@ -24,6 +24,8 @@ public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
 
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
+		tag(ItemTags.ARROWS).add(FTBICItems.NUKE_ARROW.get());
+
 		tag(FTBICUtils.UNCANNABLE_FOOD)
 				.add(FTBICItems.CANNED_FOOD.get())
 				.add(FTBICItems.PROTEIN_BAR.get());
