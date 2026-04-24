@@ -15,6 +15,7 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.util.ElectricBlockEnergyHandler;
 import dev.ftb.mods.ftbic.util.ElectricBlockResourceHandler;
 import dev.ftb.mods.ftbic.util.EnergyRectifierFEHandler;
+import dev.ftb.mods.ftbic.util.FTBICCapabilities;
 import dev.ftb.mods.ftbic.util.FluidCellHandler;
 import dev.ftb.mods.ftbic.util.GeothermalTankHandler;
 import dev.ftb.mods.ftbic.util.PumpTankHandler;
@@ -42,6 +43,9 @@ public final class CapabilityRegistrar {
 			@SuppressWarnings("unchecked")
 			BlockEntityType<ElectricBlockEntity> type =
 					(BlockEntityType<ElectricBlockEntity>) (Object) instance.blockEntity.get();
+
+			event.registerBlockEntity(FTBICCapabilities.ZAP_ENERGY_BLOCK, type, (be, side) -> be);
+
 			if (instance != FTBICElectricBlocks.TELEPORTER) {
 				event.registerBlockEntity(Capabilities.Item.BLOCK, type,
 						(be, side) -> new ElectricBlockResourceHandler(be));
@@ -108,6 +112,9 @@ public final class CapabilityRegistrar {
 				FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get());
 		event.registerBlock(Capabilities.Energy.BLOCK,
 				(level, pos, state, be, side) -> forwardChamber(Capabilities.Energy.BLOCK, level, pos),
+				FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get());
+		event.registerBlock(FTBICCapabilities.ZAP_ENERGY_BLOCK,
+				(level, pos, state, be, side) -> forwardChamber(FTBICCapabilities.ZAP_ENERGY_BLOCK, level, pos),
 				FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get());
 	}
 

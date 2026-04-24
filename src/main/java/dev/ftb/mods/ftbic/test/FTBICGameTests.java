@@ -135,6 +135,13 @@ public class FTBICGameTests {
 		reg(event, "transaction_abort_restores_multiple_slots", FTBICGameTestFunctions::transactionAbortRestoresMultipleSlots, env, 40);
 		reg(event, "transaction_nested_abort_preserves_outer_writes", FTBICGameTestFunctions::transactionNestedAbortPreservesOuterWrites, env, 40);
 		reg(event, "transaction_nested_commit_merges_into_outer", FTBICGameTestFunctions::transactionNestedCommitMergesIntoOuter, env, 40);
+
+		reg(event, "zap_cap_present_on_every_electric_block", FTBICGameTestFunctions::zapCapPresentOnEveryElectricBlock, env, 100);
+		reg(event, "zap_cap_null_side_returns_handler", FTBICGameTestFunctions::zapCapNullSideReturnsHandler, env, 40);
+		reg(event, "zap_cap_absent_on_vanilla_blocks", FTBICGameTestFunctions::zapCapAbsentOnVanillaBlocks, env, 40);
+		reg(event, "zap_cap_forwards_through_reactor_chamber", FTBICGameTestFunctions::zapCapForwardsThroughReactorChamber, env, 40);
+		reg(event, "zap_cap_cache_invalidates_on_block_removal", FTBICGameTestFunctions::zapCapCacheInvalidatesOnBlockRemoval, env, 40);
+		reg(event, "zap_cap_cache_updates_on_block_swap", FTBICGameTestFunctions::zapCapCacheUpdatesOnBlockSwap, env, 40);
 	}
 
 	private static void reg(RegisterGameTestsEvent event, String name,
