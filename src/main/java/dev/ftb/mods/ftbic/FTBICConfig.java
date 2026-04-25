@@ -268,7 +268,7 @@ public final class FTBICConfig {
 			PUMP_MINE_TICKS = b.defineInRange("pump_mine_ticks", 40L, 0L, 100_000L);
 			PUMP_MOVE_TICKS = b.defineInRange("pump_move_ticks", 10L, 0L, 100_000L);
 			PUMP_REPLACE_FLUID_EXFLUID = b.define("pump_replace_fluid_with_exfluid", true);
-			PUMP_TANK_CAPACITY = b.defineInRange("pump_tank_capacity", FLUID_BUCKET_VOLUME * 128, 1, 100_000);
+			PUMP_TANK_CAPACITY = b.defineInRange("pump_tank_capacity", FLUID_BUCKET_VOLUME * 128, 1, 1_000_000);
 			ITEM_TRANSFER_EFFICIENCY = b.defineInRange("item_transfer_efficiency", 20.0D, 0D, Double.POSITIVE_INFINITY);
 			STATE_UPDATE_TICKS = b.comment("To reduce lag, block states only update every X ticks.").defineInRange("state_update_ticks", 6, 1, 1_000);
 			UPGRADE_LIMIT_PER_SLOT = b.defineInRange("upgrade_limit_per_slot", 4, 1, 64);

@@ -197,10 +197,12 @@ public class FTBICGameTestFunctions {
 		helper.setBlock(CENTER, FTBICElectricBlocks.LV_SOLAR_PANEL.block.get());
 		helper.setBlock(CENTER.above(), Blocks.STONE);
 
-		helper.runAfterDelay(5, () -> {
+		helper.runAfterDelay(20, () -> {
+			helper.assertFalse(helper.getLevel().canSeeSky(helper.absolutePos(CENTER.above())),
+					"obstruction must block sky access before measuring");
 			LVSolarPanelBlockEntity panel = helper.getBlockEntity(CENTER, LVSolarPanelBlockEntity.class);
 			panel.energy = 0D;
-			helper.runAfterDelay(15, () -> {
+			helper.runAfterDelay(40, () -> {
 				LVSolarPanelBlockEntity after = helper.getBlockEntity(CENTER, LVSolarPanelBlockEntity.class);
 				helper.assertValueEqual(0D, after.energy, "solar panel energy when obstructed");
 				helper.succeed();
