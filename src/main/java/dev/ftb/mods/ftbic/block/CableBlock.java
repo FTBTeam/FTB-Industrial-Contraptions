@@ -1,8 +1,8 @@
 package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
-import dev.ftb.mods.ftbic.util.ZapEnergyHandler;
 import dev.ftb.mods.ftbic.util.EnergyTier;
+import dev.ftb.mods.ftbic.util.FTBICCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -11,8 +11,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -59,13 +57,11 @@ public class CableBlock extends BaseCableBlock {
 		if (state.getBlock() instanceof NuclearReactorChamberBlock) {
 			return true;
 		}
-		if (!state.isAir()) {
-			BlockEntity be = world.getBlockEntity(pos);
-			if (be instanceof ZapEnergyHandler) {
+		if (!state.isAir() && world instanceof Level lvl) {
+			if (lvl.getCapability(FTBICCapabilities.ZAP_ENERGY_BLOCK, pos, face) != null) {
 				return true;
 			}
-			if (world instanceof Level lvl && !lvl.isClientSide()
-					&& lvl.getCapability(Capabilities.Energy.BLOCK, pos, face) != null) {
+			if (!lvl.isClientSide() && lvl.getCapability(Capabilities.Energy.BLOCK, pos, face) != null) {
 				return true;
 			}
 		}

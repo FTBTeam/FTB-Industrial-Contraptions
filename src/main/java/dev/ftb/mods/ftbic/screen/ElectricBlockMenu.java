@@ -21,6 +21,7 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 	public final DataSlot energyScaled = DataSlot.standalone();
 	public final DataSlot progressScaled = DataSlot.standalone();
 	public final DataSlot maxProgressScaled = DataSlot.standalone();
+	public final DataSlot starvingFlag = DataSlot.standalone();
 
 	protected int machineSlotCount;
 
@@ -32,6 +33,7 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		addDataSlot(energyScaled);
 		addDataSlot(progressScaled);
 		addDataSlot(maxProgressScaled);
+		addDataSlot(starvingFlag);
 	}
 
 	protected ElectricBlockMenu(MenuType<?> type, int id, Inventory playerInv, FriendlyByteBuf buf) {
@@ -133,6 +135,9 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 			if (blockEntity instanceof MachineBlockEntity m) {
 				progressScaled.set(m.progress);
 				maxProgressScaled.set(m.maxProgress);
+				starvingFlag.set(m.starving ? 1 : 0);
+			} else {
+				starvingFlag.set(0);
 			}
 		}
 		super.broadcastChanges();
@@ -140,6 +145,10 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 
 	public float getEnergyFraction() {
 		return energyScaled.get() / 1000F;
+	}
+
+	public boolean isStarving() {
+		return starvingFlag.get() != 0;
 	}
 
 	public float getProgressFraction() {

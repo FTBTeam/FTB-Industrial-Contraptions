@@ -244,7 +244,7 @@ public final class FTBICConfig {
 			ADVANCED_CENTRIFUGE_USE = b.defineInRange("advanced_centrifuge_use", 16D, 0D, 100_000D);
 			ADVANCED_COMPRESSOR_CAPACITY = b.defineInRange("advanced_compressor_capacity", 10_000D, 1D, 100_000D);
 			ADVANCED_COMPRESSOR_USE = b.defineInRange("advanced_compressor_use", 16D, 0D, 100_000D);
-			TELEPORTER_CAPACITY = b.defineInRange("teleporter_capacity", 1_000_000D, 1D, 100_000D);
+			TELEPORTER_CAPACITY = b.defineInRange("teleporter_capacity", 1_000_000D, 1D, 10_000_000D);
 			TELEPORTER_MIN_USE = b.defineInRange("teleporter_min_use", 100D, 0D, 100_000D);
 			TELEPORTER_MIN_DISTANCE = b.defineInRange("teleporter_min_distance", 16D, 1D, 100_000D);
 			TELEPORTER_MAX_USE = b.defineInRange("teleporter_max_use", 10_000D, 0D, 100_000D);
@@ -253,7 +253,7 @@ public final class FTBICConfig {
 			TELEPORTER_ACTIVE_WINDOW_TICKS = b.comment("How recent the last successful transfer must be (in ticks) for the pair to be considered active for drain and chunk-loading.").defineInRange("teleporter_active_window_ticks", 20, 1, 12_000);
 			TELEPORTER_CHUNK_LOAD_IDLE_TICKS = b.comment("Release the peer chunk ticket after this many ticks of inactivity. Should be >= teleporter_active_window_ticks.").defineInRange("teleporter_chunk_load_idle_ticks", 1_200, 1, 72_000);
 			TELEPORTER_BALANCE_RATE = b.comment("Maximum zaps per tick shuffled between a linked pair to keep their energy buffers in balance.").defineInRange("teleporter_balance_rate", 128D, 0D, 1_000_000D);
-			CHARGE_PAD_CAPACITY = b.defineInRange("charge_pad_capacity", 1_000_000D, 1D, 100_000D);
+			CHARGE_PAD_CAPACITY = b.defineInRange("charge_pad_capacity", 1_000_000D, 1D, 10_000_000D);
 			POWERED_CRAFTING_TABLE_CAPACITY = b.defineInRange("powered_crafting_table_capacity", 1_200D, 1D, 100_000D);
 			POWERED_CRAFTING_TABLE_USE = b.defineInRange("powered_crafting_table_use", 1D, 0D, 100_000D);
 			QUARRY_CAPACITY = b.defineInRange("quarry_capacity", 10_000D, 1D, 100_000D);
@@ -268,7 +268,7 @@ public final class FTBICConfig {
 			PUMP_MINE_TICKS = b.defineInRange("pump_mine_ticks", 40L, 0L, 100_000L);
 			PUMP_MOVE_TICKS = b.defineInRange("pump_move_ticks", 10L, 0L, 100_000L);
 			PUMP_REPLACE_FLUID_EXFLUID = b.define("pump_replace_fluid_with_exfluid", true);
-			PUMP_TANK_CAPACITY = b.defineInRange("pump_tank_capacity", FLUID_BUCKET_VOLUME * 128, 1, 100_000);
+			PUMP_TANK_CAPACITY = b.defineInRange("pump_tank_capacity", FLUID_BUCKET_VOLUME * 128, 1, 1_000_000);
 			ITEM_TRANSFER_EFFICIENCY = b.defineInRange("item_transfer_efficiency", 20.0D, 0D, Double.POSITIVE_INFINITY);
 			STATE_UPDATE_TICKS = b.comment("To reduce lag, block states only update every X ticks.").defineInRange("state_update_ticks", 6, 1, 1_000);
 			UPGRADE_LIMIT_PER_SLOT = b.defineInRange("upgrade_limit_per_slot", 4, 1, 64);

@@ -76,6 +76,10 @@ repositories {
     }
 }
 
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 dependencies {
     // JEI - wired up for Phase 6 integration; safe to leave as compileOnly until then
     compileOnly("mezz.jei:jei-26.1.2-neoforge-api:29.5.0.26")
@@ -85,7 +89,7 @@ dependencies {
     // the auroral reference project.
     implementation("curse.maven:jade-324717:7817285")
 
-    implementation("dev.ftb.mods:ftb-materials:26.1.2.1-SNAPSHOT")
+    implementation("dev.ftb.mods:ftb-materials:26.1.2.2-SNAPSHOT")
 
     // GuideME - In-game guidebook (optional)
     implementation("org.appliedenergistics:guideme:${guideme_version}")

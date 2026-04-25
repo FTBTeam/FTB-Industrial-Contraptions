@@ -279,6 +279,14 @@ public class ElectricBlockEntity extends BlockEntity implements ZapEnergyHandler
 		}
 	}
 
+	@Override
+	public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+		super.preRemoveSideEffects(pos, state);
+		if (level != null) {
+			onBroken(level, pos);
+		}
+	}
+
 	public void onPlacedBy(@Nullable LivingEntity entity, ItemStack stack) {
 		if (savePlacer() && entity != null) {
 			placerId = entity.getUUID();

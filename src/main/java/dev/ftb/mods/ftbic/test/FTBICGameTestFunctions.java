@@ -46,7 +46,9 @@ import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.FluidCellItem;
 import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
+import dev.ftb.mods.ftbic.util.FTBICCapabilities;
 import dev.ftb.mods.ftbic.util.FluidCellIngredient;
+import dev.ftb.mods.ftbic.util.ZapEnergyHandler;
 import io.netty.channel.embedded.EmbeddedChannel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -78,6 +80,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.ValueInput;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
@@ -194,10 +197,12 @@ public class FTBICGameTestFunctions {
 		helper.setBlock(CENTER, FTBICElectricBlocks.LV_SOLAR_PANEL.block.get());
 		helper.setBlock(CENTER.above(), Blocks.STONE);
 
-		helper.runAfterDelay(5, () -> {
+		helper.runAfterDelay(20, () -> {
+			helper.assertFalse(helper.getLevel().canSeeSky(helper.absolutePos(CENTER.above())),
+					"obstruction must block sky access before measuring");
 			LVSolarPanelBlockEntity panel = helper.getBlockEntity(CENTER, LVSolarPanelBlockEntity.class);
 			panel.energy = 0D;
-			helper.runAfterDelay(15, () -> {
+			helper.runAfterDelay(40, () -> {
 				LVSolarPanelBlockEntity after = helper.getBlockEntity(CENTER, LVSolarPanelBlockEntity.class);
 				helper.assertValueEqual(0D, after.energy, "solar panel energy when obstructed");
 				helper.succeed();
@@ -471,6 +476,54 @@ public class FTBICGameTestFunctions {
 
 	private static BasicMachineBlockEntity placeMacerator(GameTestHelper helper) {
 		return placeMachine(helper, FTBICElectricBlocks.MACERATOR, MaceratorBlockEntity.class);
+	}
+
+	static void machineStarvingFlagSetWhenEnergyDepleted(GameTestHelper helper) {
+		MaceratorBlockEntity be = placeMachine(helper, FTBICElectricBlocks.MACERATOR, MaceratorBlockEntity.class);
+		be.inputItems[0] = new ItemStack(Items.BONE, 8);
+		be.energy = 0D;
+		be.setChanged();
+
+		helper.runAfterDelay(10, () -> {
+			MaceratorBlockEntity after = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+			helper.assertTrue(after.starving,
+					"Machine with loaded recipe and no energy should be starving (starving=" + after.starving + ", energy=" + after.energy + ")");
+			helper.succeed();
+		});
+	}
+
+	static void machineNotStarvingWithoutRecipe(GameTestHelper helper) {
+		MaceratorBlockEntity be = placeMachine(helper, FTBICElectricBlocks.MACERATOR, MaceratorBlockEntity.class);
+		be.energy = 0D;
+		be.setChanged();
+
+		helper.runAfterDelay(10, () -> {
+			MaceratorBlockEntity after = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+			helper.assertFalse(after.starving,
+					"Idle machine with no recipe should not be marked starving (starving=" + after.starving + ")");
+			helper.succeed();
+		});
+	}
+
+	static void machineStarvingClearsWhenEnergyRestored(GameTestHelper helper) {
+		MaceratorBlockEntity be = placeMachine(helper, FTBICElectricBlocks.MACERATOR, MaceratorBlockEntity.class);
+		be.inputItems[0] = new ItemStack(Items.BONE, 8);
+		be.energy = 0D;
+		be.setChanged();
+
+		helper.runAfterDelay(10, () -> {
+			MaceratorBlockEntity starving = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+			helper.assertTrue(starving.starving, "pre-condition: machine should be starving before refill");
+			starving.energy = starving.energyCapacity;
+			starving.setChanged();
+
+			helper.runAfterDelay(10, () -> {
+				MaceratorBlockEntity after = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+				helper.assertFalse(after.starving,
+						"Machine should clear starving once energy is restored (starving=" + after.starving + ")");
+				helper.succeed();
+			});
+		});
 	}
 
 	static void overclockerIncreasesSpeed(GameTestHelper helper) {
@@ -1214,6 +1267,37 @@ public class FTBICGameTestFunctions {
 		});
 	}
 
+	static void overloadBurnsEntireLvSubnet(GameTestHelper helper) {
+		BlockPos srcPos = new BlockPos(1, 2, 4);
+		BlockPos[] cables = new BlockPos[5];
+		for (int i = 0; i < cables.length; i++) {
+			cables[i] = new BlockPos(2 + i, 2, 4);
+		}
+		BlockPos machinePos = new BlockPos(2 + cables.length, 2, 4);
+
+		helper.setBlock(srcPos.below(), Blocks.STONE);
+		for (BlockPos c : cables) helper.setBlock(c.below(), Blocks.STONE);
+		helper.setBlock(machinePos.below(), Blocks.STONE);
+
+		helper.setBlock(srcPos, FTBICElectricBlocks.MV_TRANSFORMER.block.get());
+		for (BlockPos c : cables) helper.setBlock(c, FTBICBlocks.LV_CABLE.get());
+		helper.setBlock(machinePos, FTBICElectricBlocks.MACERATOR.block.get());
+
+		MVTransformerBlockEntity src = helper.getBlockEntity(srcPos, MVTransformerBlockEntity.class);
+		src.energy = src.energyCapacity;
+		src.setChanged();
+
+		helper.runAfterDelay(20, () -> {
+			for (int i = 0; i < cables.length; i++) {
+				BlockState cs = helper.getLevel().getBlockState(helper.absolutePos(cables[i]));
+				helper.assertTrue(cs.getBlock() instanceof BurntCableBlock,
+						"LV cable at index " + i + " should burn via flood-fill (got " + cs.getBlock() + ")");
+			}
+			helper.succeed();
+		});
+	}
+
+
 	static void transformerStepsMvDownToLv(GameTestHelper helper) {
 		BlockPos mvSrcPos = new BlockPos(1, 2, 4);
 		BlockPos mvCablePos = new BlockPos(2, 2, 4);
@@ -1831,5 +1915,114 @@ public class FTBICGameTestFunctions {
 		helper.assertValueEqual(5, after.inputItems[1].getCount(),
 				"slot 1 fully rolled back");
 		helper.succeed();
+	}
+
+	static void zapCapPresentOnEveryElectricBlock(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		for (ElectricBlockInstance inst : FTBICElectricBlocks.ALL) {
+			helper.setBlock(CENTER, inst.block.get());
+			ElectricBlockEntity be = helper.getBlockEntity(CENTER, ElectricBlockEntity.class);
+			for (Direction dir : Direction.values()) {
+				ZapEnergyHandler cap = helper.getLevel().getCapability(
+						FTBICCapabilities.ZAP_ENERGY_BLOCK, helper.absolutePos(CENTER), dir);
+				helper.assertTrue(cap != null,
+						"zap cap missing on " + inst.id + " face " + dir);
+				helper.assertTrue(cap == be,
+						"zap cap handler on " + inst.id + " should be the block entity itself");
+			}
+			helper.setBlock(CENTER, Blocks.AIR);
+		}
+		helper.succeed();
+	}
+
+	static void zapCapNullSideReturnsHandler(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.MACERATOR.block.get());
+		MaceratorBlockEntity be = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+
+		ZapEnergyHandler cap = helper.getLevel().getCapability(
+				FTBICCapabilities.ZAP_ENERGY_BLOCK, helper.absolutePos(CENTER), null);
+		helper.assertTrue(cap == be, "null-side zap cap query should resolve to the BE");
+		helper.assertTrue(cap.getEnergyCapacity() > 0D,
+				"macerator zap capacity should be positive (got " + cap.getEnergyCapacity() + ")");
+		helper.succeed();
+	}
+
+	static void zapCapAbsentOnVanillaBlocks(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+
+		helper.setBlock(CENTER, Blocks.CHEST);
+		ZapEnergyHandler chest = helper.getLevel().getCapability(
+				FTBICCapabilities.ZAP_ENERGY_BLOCK, helper.absolutePos(CENTER), Direction.NORTH);
+		helper.assertTrue(chest == null, "vanilla chest must not expose zap cap");
+
+		helper.setBlock(CENTER, Blocks.FURNACE);
+		ZapEnergyHandler furnace = helper.getLevel().getCapability(
+				FTBICCapabilities.ZAP_ENERGY_BLOCK, helper.absolutePos(CENTER), Direction.NORTH);
+		helper.assertTrue(furnace == null, "vanilla furnace must not expose zap cap");
+
+		helper.setBlock(CENTER, Blocks.STONE);
+		ZapEnergyHandler stone = helper.getLevel().getCapability(
+				FTBICCapabilities.ZAP_ENERGY_BLOCK, helper.absolutePos(CENTER), Direction.NORTH);
+		helper.assertTrue(stone == null, "plain stone must not expose zap cap");
+
+		helper.succeed();
+	}
+
+	static void zapCapForwardsThroughReactorChamber(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER.north().below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.NUCLEAR_REACTOR.block.get());
+		BlockPos chamberPos = CENTER.north();
+		helper.setBlock(chamberPos, FTBICBlocks.NUCLEAR_REACTOR_CHAMBER.get());
+
+		NuclearReactorBlockEntity reactor = helper.getBlockEntity(CENTER, NuclearReactorBlockEntity.class);
+
+		ZapEnergyHandler capOnChamber = helper.getLevel().getCapability(
+				FTBICCapabilities.ZAP_ENERGY_BLOCK, helper.absolutePos(chamberPos), Direction.NORTH);
+		helper.assertTrue(capOnChamber != null,
+				"chamber should forward zap cap to adjacent reactor");
+		helper.assertTrue(capOnChamber == reactor,
+				"forwarded cap should resolve to the reactor BE itself");
+		helper.succeed();
+	}
+
+	static void zapCapCacheInvalidatesOnBlockRemoval(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.BASIC_GENERATOR.block.get());
+
+		BlockCapabilityCache<ZapEnergyHandler, Direction> cache = BlockCapabilityCache.create(
+				FTBICCapabilities.ZAP_ENERGY_BLOCK, helper.getLevel(),
+				helper.absolutePos(CENTER), Direction.NORTH);
+		helper.assertTrue(cache.getCapability() != null,
+				"cache should resolve zap cap while the electric block is present");
+
+		helper.setBlock(CENTER, Blocks.AIR);
+		helper.runAfterDelay(2L, () -> {
+			helper.assertTrue(cache.getCapability() == null,
+					"cache must invalidate after the block is removed");
+			helper.succeed();
+		});
+	}
+
+	static void zapCapCacheUpdatesOnBlockSwap(GameTestHelper helper) {
+		helper.setBlock(CENTER.below(), Blocks.STONE);
+		helper.setBlock(CENTER, FTBICElectricBlocks.BASIC_GENERATOR.block.get());
+
+		BlockCapabilityCache<ZapEnergyHandler, Direction> cache = BlockCapabilityCache.create(
+				FTBICCapabilities.ZAP_ENERGY_BLOCK, helper.getLevel(),
+				helper.absolutePos(CENTER), Direction.NORTH);
+		ZapEnergyHandler first = cache.getCapability();
+		helper.assertTrue(first instanceof BasicGeneratorBlockEntity,
+				"initial cache resolves to generator");
+
+		helper.setBlock(CENTER, FTBICElectricBlocks.MACERATOR.block.get());
+		helper.runAfterDelay(2L, () -> {
+			ZapEnergyHandler second = cache.getCapability();
+			helper.assertTrue(second instanceof MaceratorBlockEntity,
+					"cache should reflect replacement block (got " + second + ")");
+			helper.assertTrue(first != second, "cache should return the new BE handler, not the old one");
+			helper.succeed();
+		});
 	}
 }

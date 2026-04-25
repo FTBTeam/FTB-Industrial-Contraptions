@@ -1,7 +1,6 @@
 package dev.ftb.mods.ftbic.block.entity.generator;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
-import dev.ftb.mods.ftbic.block.BurntCableBlock;
 import dev.ftb.mods.ftbic.block.CableBlock;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
@@ -10,6 +9,8 @@ import dev.ftb.mods.ftbic.block.NuclearReactorChamberBlock;
 import dev.ftb.mods.ftbic.util.CachedEnergyStorage;
 import dev.ftb.mods.ftbic.util.CachedEnergyStorageOrigin;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
+import dev.ftb.mods.ftbic.util.EnergyTier;
+import dev.ftb.mods.ftbic.util.FTBICCapabilities;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.ZapEnergyHandler;
 import dev.ftb.mods.ftbic.util.ZapFEConversion;
@@ -29,6 +30,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -43,7 +45,9 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 	private CachedEnergyStorage[] connectedEnergyBlocks;
 	private int[] validConsumerIndices;
 	private BlockCapabilityCache<EnergyHandler, Direction>[] fePushCaches;
+	private BlockCapabilityCache<ZapEnergyHandler, Direction>[] zapPushCaches;
 	private final Map<Long, BlockCapabilityCache<EnergyHandler, Direction>> feFindCaches = new HashMap<>();
+	private final Map<Long, BlockCapabilityCache<ZapEnergyHandler, Direction>> zapFindCaches = new HashMap<>();
 
 	public GeneratorBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -138,12 +142,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			if (storage.feHandlerCache != null) {
 				thisShare = Math.min(thisShare, storage.origin.cableTransferRate);
 			} else if (storage.origin.cableTransferRate < share) {
-				BlockState cableState = level.getBlockState(storage.origin.cablePos);
-				BlockState burntState = cableState.getBlock() instanceof CableBlock cable
-						? cable.getBurntState(cableState)
-						: BurntCableBlock.getBurntCable(cableState);
-				level.setBlock(storage.origin.cablePos, burntState, 3);
-				level.levelEvent(1502, storage.origin.cablePos, 0);
+				burnCableNetwork(storage.origin.cablePos, storage.origin.cableTier);
 				storage.origin.cableBurnt = true;
 				continue;
 			}
@@ -184,9 +183,7 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		if (!(level instanceof ServerLevel serverLevel)) return;
 		for (Direction dir : FTBICUtils.DIRECTIONS) {
 			if (!isValidEnergyOutputSide(dir)) continue;
-			BlockPos npos = worldPosition.relative(dir);
-			BlockEntity nbe = level.getBlockEntity(npos);
-			if (nbe instanceof ZapEnergyHandler) continue;
+			if (zapPushCache(serverLevel, dir).getCapability() != null) continue;
 			EnergyHandler fe = fePushCache(serverLevel, dir).getCapability();
 			if (fe == null) continue;
 			double zapsAvailable = Math.min(energy, maxEnergyOutputTransfer);
@@ -216,6 +213,20 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			c = BlockCapabilityCache.create(Capabilities.Energy.BLOCK, serverLevel,
 					worldPosition.relative(dir), dir.getOpposite());
 			fePushCaches[dir.ordinal()] = c;
+		}
+		return c;
+	}
+
+	@SuppressWarnings("unchecked")
+	private BlockCapabilityCache<ZapEnergyHandler, Direction> zapPushCache(ServerLevel serverLevel, Direction dir) {
+		if (zapPushCaches == null) {
+			zapPushCaches = new BlockCapabilityCache[FTBICUtils.DIRECTIONS.length];
+		}
+		BlockCapabilityCache<ZapEnergyHandler, Direction> c = zapPushCaches[dir.ordinal()];
+		if (c == null) {
+			c = BlockCapabilityCache.create(FTBICCapabilities.ZAP_ENERGY_BLOCK, serverLevel,
+					worldPosition.relative(dir), dir.getOpposite());
+			zapPushCaches[dir.ordinal()] = c;
 		}
 		return c;
 	}
@@ -301,22 +312,29 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 			return;
 		}
 
-		if (entity instanceof ZapEnergyHandler handler && handler != this) {
-			if (handler.getMaxInputEnergy() > 0D && !handler.isBurnt() && handler.isValidEnergyInputSide(direction.getOpposite())) {
+		if (!(level instanceof ServerLevel serverLevel)) {
+			return;
+		}
+		long key = pos.asLong() ^ ((long) direction.ordinal() << 56);
+
+		BlockCapabilityCache<ZapEnergyHandler, Direction> zapCache = zapFindCaches.get(key);
+		if (zapCache == null) {
+			zapCache = BlockCapabilityCache.create(FTBICCapabilities.ZAP_ENERGY_BLOCK, serverLevel, pos, direction.getOpposite());
+			zapFindCaches.put(key, zapCache);
+		}
+		ZapEnergyHandler zapHandler = zapCache.getCapability();
+		if (zapHandler != null && zapHandler != this) {
+			if (zapHandler.getMaxInputEnergy() > 0D && !zapHandler.isBurnt() && zapHandler.isValidEnergyInputSide(direction.getOpposite())) {
 				CachedEnergyStorage s = new CachedEnergyStorage();
 				s.origin = origin;
 				s.distance = distance;
 				s.blockEntity = entity;
-				s.energyHandler = handler;
+				s.energyHandler = zapHandler;
 				set.add(s);
 			}
 			return;
 		}
 
-		if (!(level instanceof ServerLevel serverLevel)) {
-			return;
-		}
-		long key = pos.asLong() ^ ((long) direction.ordinal() << 56);
 		BlockCapabilityCache<EnergyHandler, Direction> feCache = feFindCaches.get(key);
 		if (feCache == null) {
 			feCache = BlockCapabilityCache.create(Capabilities.Energy.BLOCK, serverLevel, pos, direction.getOpposite());
@@ -331,5 +349,33 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 		s.blockEntity = entity;
 		s.feHandlerCache = feCache;
 		set.add(s);
+	}
+
+	private void burnCableNetwork(BlockPos startPos, EnergyTier tier) {
+		if (level == null || tier == null) {
+			return;
+		}
+		LongOpenHashSet visited = new LongOpenHashSet();
+		ArrayDeque<BlockPos> queue = new ArrayDeque<>();
+		visited.add(startPos.asLong());
+		queue.add(startPos);
+		while (!queue.isEmpty()) {
+			BlockPos pos = queue.poll();
+			BlockState state = level.getBlockState(pos);
+			if (!(state.getBlock() instanceof CableBlock cable) || cable.tier != tier) {
+				continue;
+			}
+			level.setBlock(pos, cable.getBurntState(state), 3);
+			level.levelEvent(1502, pos, 0);
+			for (Direction dir : FTBICUtils.DIRECTIONS) {
+				if (!state.getValue(CableBlock.CONNECTION[dir.get3DDataValue()])) {
+					continue;
+				}
+				BlockPos next = pos.relative(dir);
+				if (visited.add(next.asLong())) {
+					queue.add(next);
+				}
+			}
+		}
 	}
 }
