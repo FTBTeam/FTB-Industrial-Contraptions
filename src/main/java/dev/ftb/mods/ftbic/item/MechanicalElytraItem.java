@@ -56,6 +56,11 @@ public class MechanicalElytraItem extends Item implements EnergyItemHandler {
 		insertEnergy(stack, rechargeRate, false);
 	}
 
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return slotChanged || !oldStack.is(newStack.getItem());
+	}
+
 	private void tickFlight(ItemStack stack, LivingEntity le) {
 		double drain = FTBICConfig.EQUIPMENT.ARMOR_FLIGHT_ENERGY.get();
 		if (drain > 0D && !isCreativeEnergyItem()) {
