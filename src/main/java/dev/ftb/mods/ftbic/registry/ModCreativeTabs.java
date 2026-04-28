@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbic.registry;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
-import dev.ftb.mods.ftbic.integration.guideme.FTBICGuide;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
 import net.minecraft.core.registries.Registries;
@@ -23,14 +22,7 @@ public final class ModCreativeTabs {
 					.icon(() -> new ItemStack(FTBICElectricBlocks.POWERED_FURNACE.item.get()))
 					.displayItems((params, out) -> {
 						if (ModList.get().isLoaded("guideme")) {
-							try {
-								ItemStack guide = guideme.Guides.createGuideItem(FTBICGuide.GUIDE_ID);
-								if (guide != null && !guide.isEmpty()) {
-									out.accept(guide);
-								}
-							} catch (Exception e) {
-								FTBIC.LOGGER.debug("Could not add GuideME book to creative tab: {}", e.getMessage());
-							}
+							out.accept(FTBICItems.GUIDE.get());
 						}
 
 						FTBICElectricBlocks.ALL.forEach(inst -> out.accept(inst.item.get()));

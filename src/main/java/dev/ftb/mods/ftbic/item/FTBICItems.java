@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
+import dev.ftb.mods.ftbic.integration.guideme.FTBICGuideItem;
 import dev.ftb.mods.ftbic.item.reactor.CoolantItem;
 import dev.ftb.mods.ftbic.item.reactor.FuelRodItem;
 import dev.ftb.mods.ftbic.item.reactor.HeatExchangerItem;
@@ -89,6 +90,9 @@ public interface FTBICItems {
 	DeferredItem<BlockItem> NUCLEAR_REACTOR_CHAMBER = blockItem("nuclear_reactor_chamber", FTBICBlocks.NUCLEAR_REACTOR_CHAMBER);
 	DeferredItem<BlockItem> NUKE = blockItem("nuke", FTBICBlocks.NUKE);
 	DeferredItem<BlockItem> ACTIVE_NUKE = blockItem("active_nuke", FTBICBlocks.ACTIVE_NUKE);
+
+	DeferredItem<FTBICGuideItem> GUIDE = REGISTRY.register("guide",
+			name -> new FTBICGuideItem(props(name).stacksTo(1)));
 
 	// Materials
 	MaterialItem INDUSTRIAL_GRADE_METAL = material("industrial_grade_metal");

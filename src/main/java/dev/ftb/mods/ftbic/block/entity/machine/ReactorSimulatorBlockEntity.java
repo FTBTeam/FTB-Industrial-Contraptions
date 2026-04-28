@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -298,6 +299,10 @@ public class ReactorSimulatorBlockEntity extends ElectricBlockEntityRef {
 			}
 		}
 		setChanged();
+	}
+
+	@Override
+	public void onBroken(Level level, BlockPos pos) {
 	}
 
 	@Override
