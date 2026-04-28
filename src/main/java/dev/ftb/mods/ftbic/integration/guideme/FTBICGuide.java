@@ -19,7 +19,7 @@ public class FTBICGuide {
 		try {
 			guide = Guide.builder(GUIDE_ID)
 				.defaultNamespace(FTBIC.MOD_ID)
-				.folder("guide")
+				.folder("ftbic")
 				.itemSettings(new GuideItemSettings(
 					Optional.of(Component.translatable("item.ftbic.guide")),
 					List.of(),

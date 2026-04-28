@@ -17,6 +17,12 @@ public class EnergyRectifierBlockEntity extends GeneratorBlockEntity {
 		super(type, pos, state);
 	}
 
+	@Override
+	public void initProperties() {
+		super.initProperties();
+		maxEnergyOutputTransfer = maxEnergyOutput;
+	}
+
 	public long getFeBufferCapacity() {
 		double rate = FTBICConfig.ENERGY.ZAP_TO_FE_CONVERSION_RATE.get();
 		return (long) Math.ceil(electricBlockInstance.maxEnergyInput.get() * rate * 4D);

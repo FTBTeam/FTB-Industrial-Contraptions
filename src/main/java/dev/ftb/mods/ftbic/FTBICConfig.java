@@ -235,7 +235,7 @@ public final class FTBICConfig {
 			EXTRUDER_CAPACITY = b.defineInRange("extruder_capacity", 1_200D, 1D, 100_000D);
 			EXTRUDER_USE = b.defineInRange("extruder_use", 3D, 0D, 100_000D);
 			ANTIMATTER_CONSTRUCTOR_CAPACITY = b.defineInRange("antimatter_constructor_capacity", 1_000_000D, 1D, 1_000_000D);
-			ANTIMATTER_CONSTRUCTOR_BOOST = b.defineInRange("antimatter_constructor_boost", 6D, 1D, 100_000D);
+			ANTIMATTER_CONSTRUCTOR_BOOST = b.defineInRange("antimatter_constructor_boost", 3D, 1D, 100_000D);
 			ADVANCED_POWERED_FURNACE_CAPACITY = b.defineInRange("advanced_powered_furnace_capacity", 10_000D, 1D, 100_000D);
 			ADVANCED_POWERED_FURNACE_USE = b.defineInRange("advanced_powered_furnace_use", 16D, 0D, 100_000D);
 			ADVANCED_MACERATOR_CAPACITY = b.defineInRange("advanced_macerator_capacity", 10_000D, 1D, 100_000D);
@@ -291,6 +291,7 @@ public final class FTBICConfig {
 		public final ModConfigSpec.DoubleValue WATER_COOLING_MULTIPLIER;
 		public final ModConfigSpec.IntValue NUKE_FUSE_TICKS;
 		public final ModConfigSpec.BooleanValue REACTOR_MELTDOWN_RESPECTS_CLAIMS;
+		public final ModConfigSpec.BooleanValue NUKE_RESPECTS_CLAIMS;
 
 		Nuclear(ModConfigSpec.Builder b) {
 			b.push("nuclear");
@@ -307,6 +308,8 @@ public final class FTBICConfig {
 					.defineInRange("nuke_fuse_ticks", 200, 0, 20 * 60 * 10);
 			REACTOR_MELTDOWN_RESPECTS_CLAIMS = b.comment("If true, nuclear reactor meltdown uses a vanilla explosion which chunk-protection mods (FTB Chunks etc.) can cancel. If false (default), reactor meltdown bypasses claim protection so the reactor itself and surrounding terrain always suffer the consequences.")
 					.define("reactor_meltdown_respects_claims", false);
+			NUKE_RESPECTS_CLAIMS = b.comment("If true, the Nuke block and Nuke Arrow detonate via a vanilla explosion which chunk-protection mods (FTB Chunks etc.) can cancel; this also caps the destruction radius at vanilla's power-based falloff (much smaller than nuke_radius). If false (default), nukes carve a full spherical crater of nuke_radius blocks and ignore claim protection.")
+					.define("nuke_respects_claims", false);
 			b.pop();
 		}
 	}

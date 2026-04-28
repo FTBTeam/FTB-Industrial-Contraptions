@@ -787,10 +787,30 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		int chX = leftPos + 8;
 		int waX = chX + STEPPER_W + 4;
 		int stY = topPos + ROW_STEPPERS_Y;
-		if (isIn(mx, my, chX, stY, STEPPER_BTN_W, BUTTON_H)) { ClientPacketDistributor.sendToServer(SimulatorActionPayload.setChambers(menu.getChambers() - 1)); return true; }
-		if (isIn(mx, my, chX + STEPPER_W - STEPPER_BTN_W, stY, STEPPER_BTN_W, BUTTON_H)) { ClientPacketDistributor.sendToServer(SimulatorActionPayload.setChambers(menu.getChambers() + 1)); return true; }
-		if (isIn(mx, my, waX, stY, STEPPER_BTN_W, BUTTON_H)) { ClientPacketDistributor.sendToServer(SimulatorActionPayload.setWater(menu.getWaterThousandths() - 100)); return true; }
-		if (isIn(mx, my, waX + STEPPER_W - STEPPER_BTN_W, stY, STEPPER_BTN_W, BUTTON_H)) { ClientPacketDistributor.sendToServer(SimulatorActionPayload.setWater(menu.getWaterThousandths() + 100)); return true; }
+		if (isIn(mx, my, chX, stY, STEPPER_BTN_W, BUTTON_H)) {
+			int target = Math.max(0, menu.getChambers() - 1);
+			menu.chambersSlot.set(target);
+			ClientPacketDistributor.sendToServer(SimulatorActionPayload.setChambers(target));
+			return true;
+		}
+		if (isIn(mx, my, chX + STEPPER_W - STEPPER_BTN_W, stY, STEPPER_BTN_W, BUTTON_H)) {
+			int target = Math.min(6, menu.getChambers() + 1);
+			menu.chambersSlot.set(target);
+			ClientPacketDistributor.sendToServer(SimulatorActionPayload.setChambers(target));
+			return true;
+		}
+		if (isIn(mx, my, waX, stY, STEPPER_BTN_W, BUTTON_H)) {
+			int target = Math.max(0, menu.getWaterThousandths() - 100);
+			menu.waterSlot.set(target);
+			ClientPacketDistributor.sendToServer(SimulatorActionPayload.setWater(target));
+			return true;
+		}
+		if (isIn(mx, my, waX + STEPPER_W - STEPPER_BTN_W, stY, STEPPER_BTN_W, BUTTON_H)) {
+			int target = Math.min(1000, menu.getWaterThousandths() + 100);
+			menu.waterSlot.set(target);
+			ClientPacketDistributor.sendToServer(SimulatorActionPayload.setWater(target));
+			return true;
+		}
 
 		int btnY = topPos + ROW_BUTTONS_Y;
 		int startX = leftPos + BOTTOM_BTN_START_X;
