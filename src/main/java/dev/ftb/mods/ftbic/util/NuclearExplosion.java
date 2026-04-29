@@ -197,6 +197,7 @@ public final class NuclearExplosion {
 		double dist = Math.sqrt((double) (x0 * x0) + (double) (y0 * y0) + (double) (z0 * z0));
 		if (dist <= 0D) return;
 
+		LongList path = new LongArrayList();
 		int px = Integer.MIN_VALUE;
 		int py = Integer.MIN_VALUE;
 		int pz = Integer.MIN_VALUE;
@@ -215,6 +216,12 @@ public final class NuclearExplosion {
 			byte flag = blocks.get(key);
 			if (flag == 0) continue;
 			if ((flag & FLAG_REINFORCED) != 0) return;
+			path.add(key);
+		}
+
+		for (int i = 0; i < path.size(); i++) {
+			long key = path.getLong(i);
+			byte flag = blocks.get(key);
 			if ((flag & FLAG_DESTROY) == 0) {
 				blocks.put(key, (byte) (flag | FLAG_DESTROY));
 			}

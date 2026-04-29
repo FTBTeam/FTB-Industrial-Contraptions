@@ -15,6 +15,7 @@ import dev.ftb.mods.ftbic.block.entity.machine.QuarryBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ReactorSimulatorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.TeleporterBlockEntity;
 import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
+import dev.ftb.mods.ftbic.util.NuclearExplosion;
 import dev.ftb.mods.ftbic.util.ReactorDesign;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.entity.storage.BatteryBoxBlockEntity;
@@ -594,7 +595,10 @@ public class FTBICGameTestFunctions {
 	static void upgradePersistedAcrossSave(GameTestHelper helper) {
 		BasicMachineBlockEntity be = placeMacerator(helper);
 		be.upgradeInventory.setStackInSlot(0, new ItemStack(FTBICItems.OVERCLOCKER_UPGRADE.get(), 2));
-		double speedWithUpgrades = be.progressSpeed;
+		be.upgradeInventory.setStackInSlot(1, new ItemStack(FTBICItems.TRANSFORMER_UPGRADE.get(), 1));
+		double expectedSpeed = be.progressSpeed;
+		double expectedMaxInput = be.maxInputEnergy;
+		double expectedEnergyUse = be.energyUse;
 
 		HolderLookup.Provider registries = helper.getLevel().registryAccess();
 		CompoundTag tag = be.saveCustomOnly(registries);
@@ -602,11 +606,15 @@ public class FTBICGameTestFunctions {
 		helper.setBlock(CENTER, Blocks.AIR);
 		helper.setBlock(CENTER, FTBICElectricBlocks.MACERATOR.block.get());
 		MaceratorBlockEntity reloaded = helper.getBlockEntity(CENTER, MaceratorBlockEntity.class);
+		double baseMaxInput = reloaded.maxInputEnergy;
 		ValueInput input = TagValueInput.create(ProblemReporter.DISCARDING, registries, tag);
 		reloaded.loadCustomOnly(input);
-		reloaded.upgradesChanged();
 
-		helper.assertValueEqual(speedWithUpgrades, reloaded.progressSpeed, "restored progressSpeed");
+		helper.assertValueEqual(expectedSpeed, reloaded.progressSpeed, "restored progressSpeed");
+		helper.assertValueEqual(expectedMaxInput, reloaded.maxInputEnergy, "restored maxInputEnergy");
+		helper.assertValueEqual(expectedEnergyUse, reloaded.energyUse, "restored energyUse");
+		helper.assertTrue(expectedMaxInput > baseMaxInput,
+				"sanity: transformer upgrade should raise input cap above base (base=" + baseMaxInput + ", upgraded=" + expectedMaxInput + ")");
 		helper.succeed();
 	}
 
@@ -2024,5 +2032,66 @@ public class FTBICGameTestFunctions {
 			helper.assertTrue(first != second, "cache should return the new BE handler, not the old one");
 			helper.succeed();
 		});
+	}
+
+	private static final UUID NUCLEAR_TEST_OWNER = new UUID(0L, 0L);
+
+	static void nuclearExplosionDestroysUnshieldedBlock(GameTestHelper helper) {
+		BlockPos center = new BlockPos(4, 4, 4);
+		BlockPos exposed = new BlockPos(4, 4, 6);
+		helper.setBlock(exposed, Blocks.COBBLESTONE);
+
+		NuclearExplosion.detonate(helper.getLevel(), helper.absolutePos(center), 3.5D,
+				NUCLEAR_TEST_OWNER, "test");
+
+		BlockState state = helper.getLevel().getBlockState(helper.absolutePos(exposed));
+		helper.assertTrue(state.isAir(),
+				"Cobblestone within unshielded explosion radius should be destroyed (got " + state.getBlock() + ")");
+		helper.succeed();
+	}
+
+	static void nuclearExplosionPreservesReinforcedBlock(GameTestHelper helper) {
+		BlockPos center = new BlockPos(4, 4, 4);
+		BlockPos reinforced = new BlockPos(4, 4, 5);
+		helper.setBlock(reinforced, FTBICBlocks.REINFORCED_STONE.get());
+
+		NuclearExplosion.detonate(helper.getLevel(), helper.absolutePos(center), 3.5D,
+				NUCLEAR_TEST_OWNER, "test");
+
+		BlockState state = helper.getLevel().getBlockState(helper.absolutePos(reinforced));
+		helper.assertTrue(state.is(FTBICBlocks.REINFORCED_STONE.get()),
+				"Reinforced stone within explosion radius should be preserved (got " + state.getBlock() + ")");
+		helper.succeed();
+	}
+
+	static void nuclearExplosionShieldedByReinforcedWall(GameTestHelper helper) {
+		BlockPos center = new BlockPos(4, 4, 4);
+		BlockPos wall = new BlockPos(4, 4, 5);
+		BlockPos shielded = new BlockPos(4, 4, 6);
+		BlockPos shieldedCrust = new BlockPos(4, 4, 7);
+		BlockPos exposed = new BlockPos(4, 4, 3);
+
+		helper.setBlock(wall, FTBICBlocks.REINFORCED_STONE.get());
+		helper.setBlock(shielded, Blocks.COBBLESTONE);
+		helper.setBlock(shieldedCrust, Blocks.COBBLESTONE);
+		helper.setBlock(exposed, Blocks.COBBLESTONE);
+
+		NuclearExplosion.detonate(helper.getLevel(), helper.absolutePos(center), 3.5D,
+				NUCLEAR_TEST_OWNER, "test");
+
+		BlockState wallState = helper.getLevel().getBlockState(helper.absolutePos(wall));
+		BlockState shieldedState = helper.getLevel().getBlockState(helper.absolutePos(shielded));
+		BlockState shieldedCrustState = helper.getLevel().getBlockState(helper.absolutePos(shieldedCrust));
+		BlockState exposedState = helper.getLevel().getBlockState(helper.absolutePos(exposed));
+
+		helper.assertTrue(wallState.is(FTBICBlocks.REINFORCED_STONE.get()),
+				"Reinforced wall should remain reinforced (got " + wallState.getBlock() + ")");
+		helper.assertTrue(shieldedState.is(Blocks.COBBLESTONE),
+				"Cobblestone behind reinforced wall should survive (got " + shieldedState.getBlock() + ")");
+		helper.assertTrue(shieldedCrustState.is(Blocks.COBBLESTONE),
+				"Crust cobblestone behind reinforced wall should survive (got " + shieldedCrustState.getBlock() + ")");
+		helper.assertTrue(exposedState.isAir(),
+				"Unshielded cobblestone within explosion radius should be destroyed (got " + exposedState.getBlock() + ")");
+		helper.succeed();
 	}
 }
