@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.block.entity.machine;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe;
@@ -62,7 +63,6 @@ public class AntimatterConstructorBlockEntity extends ElectricBlockEntityRef {
 		super.tick();
 		if (level == null || level.isClientSide()) return;
 
-		// Refill boost charge from the input slot if depleted.
 		if (boostCharge <= 0D && inputItems.length > 0 && !inputItems[0].isEmpty()) {
 			double newBoost = boostFor(inputItems[0]);
 			if (newBoost > 0D) {
@@ -73,13 +73,16 @@ public class AntimatterConstructorBlockEntity extends ElectricBlockEntityRef {
 			}
 		}
 
-		double use = electricBlockInstance.energyUsage.get();
-		if (energy < use) return;
+		if (energy <= 0D) return;
 
-		double effectiveBoost = boostCharge > 0D ? Math.max(1D, boostCharge) : 1D;
-		energy -= use;
-		progress += use * effectiveBoost;
-		if (boostCharge > 0D) boostCharge = Math.max(0D, boostCharge - use);
+		double drain = Math.min(energy, electricBlockInstance.maxEnergyInput.get());
+		double boostMult = FTBICConfig.MACHINES.ANTIMATTER_CONSTRUCTOR_BOOST.get();
+		double boostedPart = Math.min(boostCharge, drain);
+		double normalPart = drain - boostedPart;
+
+		energy -= drain;
+		boostCharge -= boostedPart;
+		progress += boostedPart * boostMult + normalPart;
 		active = true;
 
 		if (progress >= PRODUCTION_THRESHOLD) {

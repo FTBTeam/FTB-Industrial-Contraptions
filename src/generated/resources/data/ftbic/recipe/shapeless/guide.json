@@ -6,10 +6,7 @@
     "minecraft:redstone"
   ],
   "result": {
-    "components": {
-      "guideme:guide_id": "ftbic:guide"
-    },
-    "id": "guideme:guide"
+    "id": "ftbic:guide"
   },
   "show_notification": false
 }

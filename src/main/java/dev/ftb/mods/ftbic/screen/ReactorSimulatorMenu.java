@@ -95,8 +95,9 @@ public class ReactorSimulatorMenu extends ElectricBlockMenu {
 		for (int row = 0; row < NuclearReactor.ROWS; row++) {
 			for (int col = 0; col < NuclearReactor.MAX_COLUMNS; col++) {
 				int idx = NuclearReactor.slotIndex(col, row);
-				addSlot(new ReactorSimulatorSlot(container, sim, idx,
-						8 + col * 18, slotScreenY(row)));
+				addSlot(new ReactorSimulatorSlot(container, sim,
+						() -> Math.max(3, Math.min(NuclearReactor.MAX_COLUMNS, 3 + chambersSlot.get())),
+						idx, 8 + col * 18, slotScreenY(row)));
 			}
 		}
 		machineSlotCount = NuclearReactor.MAX_SLOTS;

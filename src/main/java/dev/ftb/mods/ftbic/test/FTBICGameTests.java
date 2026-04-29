@@ -142,6 +142,10 @@ public class FTBICGameTests {
 		reg(event, "zap_cap_forwards_through_reactor_chamber", FTBICGameTestFunctions::zapCapForwardsThroughReactorChamber, env, 40);
 		reg(event, "zap_cap_cache_invalidates_on_block_removal", FTBICGameTestFunctions::zapCapCacheInvalidatesOnBlockRemoval, env, 40);
 		reg(event, "zap_cap_cache_updates_on_block_swap", FTBICGameTestFunctions::zapCapCacheUpdatesOnBlockSwap, env, 40);
+
+		reg(event, "nuclear_explosion_destroys_unshielded_block", FTBICGameTestFunctions::nuclearExplosionDestroysUnshieldedBlock, env, 20);
+		reg(event, "nuclear_explosion_preserves_reinforced_block", FTBICGameTestFunctions::nuclearExplosionPreservesReinforcedBlock, env, 20);
+		reg(event, "nuclear_explosion_shielded_by_reinforced_wall", FTBICGameTestFunctions::nuclearExplosionShieldedByReinforcedWall, env, 20);
 	}
 
 	private static void reg(RegisterGameTestsEvent event, String name,

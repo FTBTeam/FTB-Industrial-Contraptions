@@ -1,5 +1,7 @@
 package dev.ftb.mods.ftbic.block.entity;
 
+import dev.ftb.mods.ftbic.FTBICConfig;
+import dev.ftb.mods.ftbic.util.NuclearExplosion;
 import dev.ftb.mods.ftbic.util.NuclearFallout;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
@@ -45,10 +47,14 @@ public class ActiveNukeBlockEntity extends BlockEntity {
 	private void detonate(ServerLevel server) {
 		armed = false;
 		server.removeBlock(worldPosition, false);
-		server.explode(null, null, null,
-				worldPosition.getX() + 0.5D, worldPosition.getY() + 0.5D, worldPosition.getZ() + 0.5D,
-				(float) radius, true, Level.ExplosionInteraction.BLOCK);
-		NuclearFallout.apply(server, worldPosition, radius);
+		if (FTBICConfig.NUCLEAR.NUKE_RESPECTS_CLAIMS.get()) {
+			server.explode(null, null, null,
+					worldPosition.getX() + 0.5D, worldPosition.getY() + 0.5D, worldPosition.getZ() + 0.5D,
+					(float) radius, true, Level.ExplosionInteraction.BLOCK);
+			NuclearFallout.apply(server, worldPosition, radius);
+		} else {
+			NuclearExplosion.detonate(server, worldPosition, radius, ownerId, ownerName);
+		}
 	}
 
 	@Override

@@ -2,12 +2,7 @@ package dev.ftb.mods.ftbic.integration.guideme;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import guideme.Guide;
-import guideme.GuideItemSettings;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-
-import java.util.List;
-import java.util.Optional;
 
 public class FTBICGuide {
 
@@ -19,12 +14,7 @@ public class FTBICGuide {
 		try {
 			guide = Guide.builder(GUIDE_ID)
 				.defaultNamespace(FTBIC.MOD_ID)
-				.folder("guide")
-				.itemSettings(new GuideItemSettings(
-					Optional.of(Component.translatable("item.ftbic.guide")),
-					List.of(),
-					Optional.of(FTBIC.id("item/guide"))
-				))
+				.folder("ftbic")
 				.build();
 			FTBIC.LOGGER.info("FTBIC GuideME guide registered");
 		} catch (Exception e) {

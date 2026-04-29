@@ -46,7 +46,7 @@ public final class CapabilityRegistrar {
 
 			event.registerBlockEntity(FTBICCapabilities.ZAP_ENERGY_BLOCK, type, (be, side) -> be);
 
-			if (instance != FTBICElectricBlocks.TELEPORTER) {
+			if (instance != FTBICElectricBlocks.TELEPORTER && instance != FTBICElectricBlocks.REACTOR_SIMULATOR) {
 				event.registerBlockEntity(Capabilities.Item.BLOCK, type,
 						(be, side) -> new ElectricBlockResourceHandler(be));
 			}

@@ -13,8 +13,6 @@ import dev.ftb.mods.ftbic.util.StackWithChance;
 import dev.ftb.mods.ftbmaterials.data.ComponentsAvailableCondition;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -586,20 +584,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	private void shapelessRecipes() {
 		shapelessBatch();
 
-		// Guide book — shapeless with a result data-component (guideme:guide_id → ftbic:guide).
-		DataComponentType<Identifier> guideIdType =
-				(DataComponentType<Identifier>) (Object)
-				BuiltInRegistries.DATA_COMPONENT_TYPE.getValue(
-						Identifier.fromNamespaceAndPath("guideme", "guide_id"));
-		Item guideItem = BuiltInRegistries.ITEM.getValue(
-				Identifier.fromNamespaceAndPath("guideme", "guide"));
-		if (guideIdType != null && guideItem != null && guideItem != Items.AIR) {
-			DataComponentPatch patch = DataComponentPatch.builder()
-					.set(guideIdType, FTBIC.id("guide"))
-					.build();
-			ItemStackTemplate result = new ItemStackTemplate(guideItem, 1, patch);
-			shapeless("guide", result, i("minecraft:book"), i("minecraft:redstone"));
-		}
+		shapeless("guide", ftbicStack("guide", 1), i("minecraft:book"), i("minecraft:redstone"));
 	}
 
 	protected Ingredient i(String id) {
