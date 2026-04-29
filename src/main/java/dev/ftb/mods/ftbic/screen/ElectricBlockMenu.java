@@ -1,7 +1,9 @@
 package dev.ftb.mods.ftbic.screen;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
+import dev.ftb.mods.ftbic.item.UpgradeItem;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,7 +14,6 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
-import dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity;
 
 public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 	@Nullable
@@ -65,7 +66,7 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		for (int i = 0; i < inputs; i++) {
 			int col = i % inputCols;
 			int row = i / inputCols;
-			addSlot(new Slot(container, i, inputXStart + col * 18, yStart + row * 18));
+			addSlot(new InputSlot(container, i, inputXStart + col * 18, yStart + row * 18));
 		}
 
 		int outputCols = Math.max(1, Math.min(2, outputs));
@@ -108,6 +109,18 @@ public abstract class ElectricBlockMenu extends AbstractContainerMenu {
 		@Override
 		public boolean mayPlace(ItemStack stack) {
 			return false;
+		}
+	}
+
+	protected static class InputSlot extends Slot {
+		public InputSlot(Container container, int index, int x, int y) {
+			super(container, index, x, y);
+		}
+
+		@Override
+		public boolean mayPlace(ItemStack stack) {
+			if (stack.getItem() instanceof UpgradeItem) return false;
+			return super.mayPlace(stack);
 		}
 	}
 

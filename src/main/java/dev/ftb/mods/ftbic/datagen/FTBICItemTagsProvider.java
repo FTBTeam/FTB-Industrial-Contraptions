@@ -17,6 +17,7 @@ import java.util.concurrent.CompletableFuture;
 public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
 	private static final TagKey<Item> SCRAPPABLE = TagKey.create(Registries.ITEM, FTBIC.id("scrappable"));
 	private static final TagKey<Item> REACTOR_COMPONENT = TagKey.create(Registries.ITEM, FTBIC.id("reactor_component"));
+	private static final TagKey<Item> REINFORCED = TagKey.create(Registries.ITEM, FTBIC.id("reinforced"));
 
 	public FTBICItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
 		super(output, Registries.ITEM, lookup, item -> item.builtInRegistryHolder().key(), FTBIC.MOD_ID);
@@ -25,6 +26,16 @@ public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
 		tag(ItemTags.ARROWS).add(FTBICItems.NUKE_ARROW.get());
+
+		tag(REINFORCED)
+				.add(FTBICItems.REINFORCED_STONE.get())
+				.add(FTBICItems.REINFORCED_GLASS.get())
+				.add(FTBICItems.LV_REINFORCED_CABLE.get())
+				.add(FTBICItems.MV_REINFORCED_CABLE.get())
+				.add(FTBICItems.HV_REINFORCED_CABLE.get())
+				.add(FTBICItems.EV_REINFORCED_CABLE.get())
+				.add(FTBICItems.IV_REINFORCED_CABLE.get())
+				.add(FTBICItems.BURNT_REINFORCED_CABLE.get());
 
 		tag(FTBICUtils.UNCANNABLE_FOOD)
 				.add(FTBICItems.CANNED_FOOD.get())

@@ -100,12 +100,9 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 			for (RecipeHolder<SmeltingRecipe> holder : server.recipeAccess().recipeMap().byType(RecipeType.SMELTING)) {
 				SmeltingRecipe sr = holder.value();
 				if (sr.input().test(inputItems[0])) {
-					MachineRecipe synthetic = adaptCooking(sr, inputItems[0]);
-					if (canFitOutputs(synthetic)) {
-						cachedRecipe = synthetic;
-						updateMaxProgress();
-						return synthetic;
-					}
+					cachedRecipe = adaptCooking(sr, inputItems[0]);
+					updateMaxProgress();
+					return cachedRecipe;
 				}
 			}
 		}
@@ -149,7 +146,6 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 		if (mr.inputs.isEmpty() || inputItems.length == 0) {
 			return false;
 		}
-		// Every ingredient must be satisfied by some input slot.
 		boolean[] used = new boolean[inputItems.length];
 		for (IngredientWithCount need : mr.inputs) {
 			boolean found = false;
@@ -163,7 +159,7 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 			}
 			if (!found) return false;
 		}
-		return canFitOutputs(mr);
+		return true;
 	}
 
 	private boolean canFitOutputs(MachineRecipe mr) {
@@ -216,7 +212,7 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 			return;
 		}
 
-		if (progress + 1 >= maxProgress && !canFitOutputs(recipe)) {
+		if (!canFitOutputs(recipe)) {
 			active = false;
 			setStarving(false);
 			return;
