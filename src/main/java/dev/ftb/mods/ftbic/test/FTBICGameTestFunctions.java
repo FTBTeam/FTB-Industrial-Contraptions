@@ -2094,4 +2094,21 @@ public class FTBICGameTestFunctions {
 				"Unshielded cobblestone within explosion radius should be destroyed (got " + exposedState.getBlock() + ")");
 		helper.succeed();
 	}
+
+	static void nuclearFalloutShieldedByReinforcedWall(GameTestHelper helper) {
+		BlockPos center = new BlockPos(4, 4, 4);
+		BlockPos wall = new BlockPos(4, 4, 5);
+		BlockPos shieldedSurface = new BlockPos(4, 4, 6);
+
+		helper.setBlock(wall, FTBICBlocks.REINFORCED_STONE.get());
+		helper.setBlock(shieldedSurface, Blocks.GRASS_BLOCK);
+
+		NuclearExplosion.detonate(helper.getLevel(), helper.absolutePos(center), 3.5D,
+				NUCLEAR_TEST_OWNER, "test");
+
+		BlockState shieldedState = helper.getLevel().getBlockState(helper.absolutePos(shieldedSurface));
+		helper.assertTrue(shieldedState.is(Blocks.GRASS_BLOCK),
+				"Grass block behind reinforced wall should not be replaced by fallout (got " + shieldedState.getBlock() + ")");
+		helper.succeed();
+	}
 }

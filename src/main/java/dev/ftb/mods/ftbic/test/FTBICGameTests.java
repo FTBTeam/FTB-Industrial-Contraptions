@@ -146,6 +146,7 @@ public class FTBICGameTests {
 		reg(event, "nuclear_explosion_destroys_unshielded_block", FTBICGameTestFunctions::nuclearExplosionDestroysUnshieldedBlock, env, 20);
 		reg(event, "nuclear_explosion_preserves_reinforced_block", FTBICGameTestFunctions::nuclearExplosionPreservesReinforcedBlock, env, 20);
 		reg(event, "nuclear_explosion_shielded_by_reinforced_wall", FTBICGameTestFunctions::nuclearExplosionShieldedByReinforcedWall, env, 20);
+		reg(event, "nuclear_fallout_shielded_by_reinforced_wall", FTBICGameTestFunctions::nuclearFalloutShieldedByReinforcedWall, env, 20);
 	}
 
 	private static void reg(RegisterGameTestsEvent event, String name,
