@@ -1,30 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:and",
-      "values": [
-        {
-          "type": "neoforge:not",
-          "value": {
-            "type": "neoforge:tag_empty",
-            "tag": "c:plates/aluminum"
-          }
-        },
-        {
-          "type": "ftbmaterials:components_available",
-          "used_materials": [
-            "aluminum_plate"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "aluminum_gear"
-      ]
-    }
-  ],
   "type": "ftbic:extruding",
   "inputs": [
     {
@@ -35,7 +9,7 @@
   "outputs": [
     {
       "item": {
-        "id": "ftbmaterials:aluminum_gear"
+        "id": "ftbic:aluminum_gear"
       }
     }
   ]

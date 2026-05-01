@@ -1,0 +1,22 @@
+{
+  "values": [
+    "ftbic:aluminum_wire",
+    "ftbic:bronze_wire",
+    "ftbic:copper_wire",
+    "ftbic:diamond_wire",
+    "ftbic:electrum_wire",
+    "ftbic:gold_wire",
+    "ftbic:invar_wire",
+    "ftbic:iridium_wire",
+    "ftbic:iron_wire",
+    "ftbic:lead_wire",
+    "ftbic:netherite_wire",
+    "ftbic:nickel_wire",
+    "ftbic:obsidian_wire",
+    "ftbic:plutonium_wire",
+    "ftbic:quartz_wire",
+    "ftbic:silver_wire",
+    "ftbic:tin_wire",
+    "ftbic:uranium_wire"
+  ]
+}

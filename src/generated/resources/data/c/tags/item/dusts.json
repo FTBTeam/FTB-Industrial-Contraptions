@@ -1,0 +1,27 @@
+{
+  "values": [
+    "ftbic:aluminum_dust",
+    "ftbic:bronze_dust",
+    "ftbic:charcoal_dust",
+    "ftbic:coal_dust",
+    "ftbic:constantan_dust",
+    "ftbic:copper_dust",
+    "ftbic:diamond_dust",
+    "ftbic:electrum_dust",
+    "ftbic:emerald_dust",
+    "ftbic:gold_dust",
+    "ftbic:invar_dust",
+    "ftbic:iridium_dust",
+    "ftbic:iron_dust",
+    "ftbic:lapis_lazuli_dust",
+    "ftbic:lead_dust",
+    "ftbic:netherite_dust",
+    "ftbic:nickel_dust",
+    "ftbic:obsidian_dust",
+    "ftbic:plutonium_dust",
+    "ftbic:quartz_dust",
+    "ftbic:silver_dust",
+    "ftbic:tin_dust",
+    "ftbic:uranium_dust"
+  ]
+}

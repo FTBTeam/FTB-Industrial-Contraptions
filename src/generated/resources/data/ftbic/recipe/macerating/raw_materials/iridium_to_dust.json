@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:raw_materials/iridium"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "iridium_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -23,13 +8,13 @@
   "outputs": [
     {
       "item": {
-        "id": "ftbmaterials:iridium_dust"
+        "id": "ftbic:iridium_dust"
       }
     },
     {
       "chance": 0.35,
       "item": {
-        "id": "ftbmaterials:iridium_dust"
+        "id": "ftbic:iridium_dust"
       }
     }
   ]

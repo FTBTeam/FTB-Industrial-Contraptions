@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/enderium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:enderium_dust"
+      }
+    }
+  ]
+}

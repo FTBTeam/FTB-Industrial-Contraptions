@@ -1,0 +1,20 @@
+{
+  "values": [
+    "ftbic:aluminum_rod",
+    "ftbic:bronze_rod",
+    "ftbic:copper_rod",
+    "ftbic:electrum_rod",
+    "ftbic:gold_rod",
+    "ftbic:invar_rod",
+    "ftbic:iridium_rod",
+    "ftbic:iron_rod",
+    "ftbic:lead_rod",
+    "ftbic:netherite_rod",
+    "ftbic:nickel_rod",
+    "ftbic:obsidian_rod",
+    "ftbic:plutonium_rod",
+    "ftbic:silver_rod",
+    "ftbic:tin_rod",
+    "ftbic:uranium_rod"
+  ]
+}
