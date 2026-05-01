@@ -1,0 +1,27 @@
+{
+  "neoforge:definition_type": "contex:definition",
+  "contex_meta": [
+    {
+      "type": "contex:full",
+      "predicate": {
+        "type": "contex:match_tag",
+        "tag": "ftbic:reinforced"
+      },
+      "occlusion_mode": "solid_or_self",
+      "state_predicate": { },
+      "textures": [
+        {
+          "main_texture": "ftbic:block/reinforced_stone",
+          "compact/hor": "ftbic:block/reinforced_stone_hor",
+          "compact/vert": "ftbic:block/reinforced_stone_vert",
+          "compact/cross": "ftbic:block/reinforced_stone_cross",
+          "compact/full": "ftbic:block/reinforced_stone_full"
+        }
+      ]
+    }
+  ],
+  "strategy": "contex:compact",
+  "variants": {
+    "": { "model": "ftbic:block/hv_reinforced_cable" }
+  }
+}
