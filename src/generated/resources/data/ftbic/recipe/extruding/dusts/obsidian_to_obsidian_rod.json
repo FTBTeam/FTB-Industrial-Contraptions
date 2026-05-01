@@ -2,14 +2,14 @@
   "type": "ftbic:extruding",
   "inputs": [
     {
-      "ingredient": "#c:rods/diamond"
+      "ingredient": "#c:dusts/obsidian"
     }
   ],
   "outputs": [
     {
       "item": {
         "count": 2,
-        "id": "ftbic:diamond_wire"
+        "id": "ftbic:obsidian_rod"
       }
     }
   ]

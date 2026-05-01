@@ -13,8 +13,14 @@ public class FTBICLanguageProvider extends LanguageProvider {
 	@Override
 	protected void addTranslations() {
 		MaterialEntries.all().forEach(entry -> {
-			String key = (entry.component().isBlock() ? "block." : "item.") + FTBIC.MOD_ID + "." + entry.name();
-			add(key, entry.component().translation(entry.material().displayName()));
+			String text = entry.component().translation(entry.material().displayName());
+			String suffix = FTBIC.MOD_ID + "." + entry.name();
+			if (entry.component().isBlock()) {
+				add("block." + suffix, text);
+				add("item." + suffix, text);
+			} else {
+				add("item." + suffix, text);
+			}
 		});
 
 		add("itemGroup.ftbic", "FTB Industrial Contraptions");

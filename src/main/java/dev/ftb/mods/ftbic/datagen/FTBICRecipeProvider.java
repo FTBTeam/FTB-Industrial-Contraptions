@@ -209,9 +209,9 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	};
 
 	private static final String[] EXTRUDE_PLATE_ROD_MATERIALS = {
-			"aluminum", "bronze", "constantan", "copper", "diamond", "electrum", "enderium", "gold",
+			"aluminum", "bronze", "constantan", "copper", "electrum", "enderium", "gold",
 			"invar", "iridium", "iron", "lead", "netherite", "nickel", "obsidian", "plutonium",
-			"quartz", "silver", "steel", "tin", "uranium",
+			"silver", "steel", "tin", "uranium",
 	};
 
 	private void extrudingRecipes() {
@@ -230,6 +230,8 @@ public class FTBICRecipeProvider extends RecipeProvider {
 			extrude("rods/" + m + "_to_" + m + "_wire", commonTag("rods/" + m), 1,
 					resolveShape(m, "wire"), 2);
 		}
+		extrude("dusts/obsidian_to_obsidian_rod", commonTag("dusts/obsidian"), 1,
+				ftbicStack("obsidian_rod", 1), 2);
 	}
 
 	private void extrude(String path, Ingredient input, int inputCount, ItemStackTemplate result, int outputCount) {
@@ -290,6 +292,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		compress("blaze_powder_to_blaze_rod", Ingredient.of(Items.BLAZE_POWDER), 4, stack(Items.BLAZE_ROD, 1));
 		compress("flint_to_gunpowder", Ingredient.of(Items.FLINT), 4, stack(Items.GUNPOWDER, 1));
 		compress("diamond_dust_to_diamond", i("ftbic:diamond_dust"), 2, stack(Items.DIAMOND, 1));
+		compress("obsidian_dust_to_obsidian_plate", i("ftbic:obsidian_dust"), 1, ftbicStack("obsidian_plate", 1));
 
 		compress("rubber_from_resin", i("ftbic:sticky_resin"), 1, ftbicStack("rubber", 3));
 		compress("rubber_from_latex", i("ftbic:latex_ball"), 2, ftbicStack("rubber", 1));
