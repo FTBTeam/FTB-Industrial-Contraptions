@@ -154,6 +154,8 @@ public final class FTBICConfig {
 		public final ModConfigSpec.DoubleValue ANTIMATTER_CONSTRUCTOR_BOOST;
 		public final ModConfigSpec.DoubleValue ADVANCED_POWERED_FURNACE_CAPACITY;
 		public final ModConfigSpec.DoubleValue ADVANCED_POWERED_FURNACE_USE;
+		public final ModConfigSpec.DoubleValue ALLOY_SMELTER_CAPACITY;
+		public final ModConfigSpec.DoubleValue ALLOY_SMELTER_USE;
 		public final ModConfigSpec.DoubleValue ADVANCED_MACERATOR_CAPACITY;
 		public final ModConfigSpec.DoubleValue ADVANCED_MACERATOR_USE;
 		public final ModConfigSpec.DoubleValue ADVANCED_CENTRIFUGE_CAPACITY;
@@ -238,6 +240,8 @@ public final class FTBICConfig {
 			ANTIMATTER_CONSTRUCTOR_BOOST = b.defineInRange("antimatter_constructor_boost", 3D, 1D, 100_000D);
 			ADVANCED_POWERED_FURNACE_CAPACITY = b.defineInRange("advanced_powered_furnace_capacity", 10_000D, 1D, 100_000D);
 			ADVANCED_POWERED_FURNACE_USE = b.defineInRange("advanced_powered_furnace_use", 16D, 0D, 100_000D);
+			ALLOY_SMELTER_CAPACITY = b.defineInRange("alloy_smelter_capacity", 10_000D, 1D, 100_000D);
+			ALLOY_SMELTER_USE = b.defineInRange("alloy_smelter_use", 48D, 0D, 100_000D);
 			ADVANCED_MACERATOR_CAPACITY = b.defineInRange("advanced_macerator_capacity", 10_000D, 1D, 100_000D);
 			ADVANCED_MACERATOR_USE = b.defineInRange("advanced_macerator_use", 16D, 0D, 100_000D);
 			ADVANCED_CENTRIFUGE_CAPACITY = b.defineInRange("advanced_centrifuge_capacity", 10_000D, 1D, 100_000D);

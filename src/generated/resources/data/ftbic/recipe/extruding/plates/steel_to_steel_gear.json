@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/steel"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:steel_gear"
+      }
+    }
+  ]
+}

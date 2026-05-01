@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "ingredient": "ftbic:plutonium_raw_ore",
+  "result": {
+    "id": "ftbic:plutonium_ingot"
+  },
+  "show_notification": false
+}

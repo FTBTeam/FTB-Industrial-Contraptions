@@ -2,6 +2,7 @@
   "values": [
     "ftbic:aluminum_rod",
     "ftbic:bronze_rod",
+    "ftbic:constantan_rod",
     "ftbic:copper_rod",
     "ftbic:electrum_rod",
     "ftbic:gold_rod",
@@ -14,6 +15,7 @@
     "ftbic:obsidian_rod",
     "ftbic:plutonium_rod",
     "ftbic:silver_rod",
+    "ftbic:steel_rod",
     "ftbic:tin_rod",
     "ftbic:uranium_rod"
   ]

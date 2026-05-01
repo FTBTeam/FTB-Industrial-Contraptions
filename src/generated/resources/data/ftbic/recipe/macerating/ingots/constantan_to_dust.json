@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/constantan"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:constantan_dust"
+      }
+    }
+  ]
+}

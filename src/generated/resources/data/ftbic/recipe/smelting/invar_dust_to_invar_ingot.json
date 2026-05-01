@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": "ftbic:invar_dust",
+  "result": {
+    "id": "ftbic:invar_ingot"
+  },
+  "show_notification": false
+}

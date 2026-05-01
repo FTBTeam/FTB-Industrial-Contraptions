@@ -1,0 +1,16 @@
+{
+  "type": "ftbic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/constantan"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:constantan_gear"
+      }
+    }
+  ]
+}

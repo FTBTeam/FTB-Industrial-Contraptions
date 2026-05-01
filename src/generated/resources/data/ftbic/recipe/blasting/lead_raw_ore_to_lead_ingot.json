@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "ingredient": "ftbic:lead_raw_ore",
+  "result": {
+    "id": "ftbic:lead_ingot"
+  },
+  "show_notification": false
+}

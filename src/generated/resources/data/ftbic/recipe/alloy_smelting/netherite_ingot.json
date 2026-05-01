@@ -1,0 +1,20 @@
+{
+  "type": "ftbic:alloy_smelting",
+  "inputs": [
+    {
+      "count": 2,
+      "ingredient": "#c:ingots/gold"
+    },
+    {
+      "count": 2,
+      "ingredient": "minecraft:netherite_scrap"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:netherite_ingot"
+      }
+    }
+  ]
+}

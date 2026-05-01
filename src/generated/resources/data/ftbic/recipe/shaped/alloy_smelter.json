@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": "ftbic:advanced_powered_furnace",
+    "I": "ftbic:industrial_grade_metal",
+    "M": "ftbic:advanced_machine_block",
+    "W": "ftbic:copper_coil"
+  },
+  "pattern": [
+    "III",
+    "IFI",
+    "WMW"
+  ],
+  "result": {
+    "id": "ftbic:alloy_smelter"
+  },
+  "show_notification": false
+}

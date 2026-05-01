@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "ingredient": "ftbic:enderium_dust",
+  "result": {
+    "id": "ftbic:enderium_ingot"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "ingredient": "ftbic:electrum_dust",
+  "result": {
+    "id": "ftbic:electrum_ingot"
+  },
+  "show_notification": false
+}

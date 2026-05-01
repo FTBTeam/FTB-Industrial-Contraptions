@@ -1,0 +1,18 @@
+{
+  "type": "ftbic:alloy_smelting",
+  "inputs": [
+    {
+      "ingredient": "ftbic:industrial_grade_metal"
+    },
+    {
+      "ingredient": "minecraft:coal"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:steel_ingot"
+      }
+    }
+  ]
+}

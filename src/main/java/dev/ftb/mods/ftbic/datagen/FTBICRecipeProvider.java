@@ -2,6 +2,8 @@ package dev.ftb.mods.ftbic.datagen;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.material.Material;
+import dev.ftb.mods.ftbic.material.MaterialComponent;
 import dev.ftb.mods.ftbic.recipe.AntimatterBoostRecipe;
 import dev.ftb.mods.ftbic.recipe.BasicGeneratorFuelRecipe;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
@@ -53,8 +55,9 @@ import java.util.concurrent.CompletableFuture;
 public class FTBICRecipeProvider extends RecipeProvider {
 
 	private static final String[] MACERATE_INGOTS = {
-			"aluminum", "bronze", "copper", "electrum", "enderium", "gold", "invar", "iridium",
-			"iron", "lead", "netherite", "nickel", "plutonium", "silver", "tin", "uranium",
+			"aluminum", "bronze", "constantan", "copper", "electrum", "enderium", "gold", "invar",
+			"iridium", "iron", "lead", "netherite", "nickel", "plutonium", "silver", "steel", "tin",
+			"uranium",
 	};
 
 	private static final String[] MACERATE_ORES = {
@@ -81,6 +84,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		compressingRecipes();
 		separatingRecipes();
 		reprocessingRecipes();
+		alloySmelterRecipes();
 		antimatterBoostRecipes();
 		smeltingRecipes();
 		blastingRecipes();
@@ -199,14 +203,15 @@ public class FTBICRecipeProvider extends RecipeProvider {
 
 
 	private static final String[] EXTRUDE_INGOT_METALS = {
-			"aluminum", "bronze", "copper", "electrum", "enderium", "gold", "invar", "iridium",
-			"iron", "lead", "netherite", "nickel", "plutonium", "silver", "tin", "uranium",
+			"aluminum", "bronze", "constantan", "copper", "electrum", "enderium", "gold", "invar",
+			"iridium", "iron", "lead", "netherite", "nickel", "plutonium", "silver", "steel", "tin",
+			"uranium",
 	};
 
 	private static final String[] EXTRUDE_PLATE_ROD_MATERIALS = {
-			"aluminum", "bronze", "copper", "diamond", "electrum", "enderium", "gold", "invar",
-			"iridium", "iron", "lead", "netherite", "nickel", "obsidian", "plutonium", "quartz",
-			"silver", "tin", "uranium",
+			"aluminum", "bronze", "constantan", "copper", "diamond", "electrum", "enderium", "gold",
+			"invar", "iridium", "iron", "lead", "netherite", "nickel", "obsidian", "plutonium",
+			"quartz", "silver", "steel", "tin", "uranium",
 	};
 
 	private void extrudingRecipes() {
@@ -418,6 +423,56 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	}
 
 
+	private void alloySmelterRecipes() {
+		alloy("netherite_ingot",
+				List.of(new IngredientWithCount(commonTag("ingots/gold"), 2),
+						new IngredientWithCount(Ingredient.of(Items.NETHERITE_SCRAP), 2)),
+				new ItemStackTemplate(Items.NETHERITE_INGOT, 1));
+		alloy("enderium_ingot",
+				List.of(new IngredientWithCount(commonTag("ingots/lead"), 3),
+						new IngredientWithCount(commonTag("dusts/diamond"), 1),
+						new IngredientWithCount(Ingredient.of(Items.ENDER_PEARL), 2)),
+				ftbicStack("enderium_ingot", 2));
+		alloy("bronze_ingot",
+				List.of(new IngredientWithCount(commonTag("ingots/copper"), 3),
+						new IngredientWithCount(commonTag("ingots/tin"), 1)),
+				ftbicStack("bronze_ingot", 4));
+		alloy("electrum_ingot",
+				List.of(new IngredientWithCount(commonTag("ingots/silver"), 1),
+						new IngredientWithCount(commonTag("ingots/gold"), 1)),
+				ftbicStack("electrum_ingot", 2));
+		alloy("invar_ingot",
+				List.of(new IngredientWithCount(commonTag("ingots/iron"), 2),
+						new IngredientWithCount(commonTag("ingots/nickel"), 1)),
+				ftbicStack("invar_ingot", 3));
+		alloy("constantan_ingot",
+				List.of(new IngredientWithCount(commonTag("ingots/copper"), 1),
+						new IngredientWithCount(commonTag("ingots/nickel"), 1)),
+				ftbicStack("constantan_ingot", 2));
+		alloy("steel_ingot_from_coal",
+				List.of(new IngredientWithCount(Ingredient.of(FTBICItems.INDUSTRIAL_GRADE_METAL.item.get()), 1),
+						new IngredientWithCount(Ingredient.of(Items.COAL), 1)),
+				ftbicStack("steel_ingot", 1));
+		alloy("steel_ingot_from_charcoal",
+				List.of(new IngredientWithCount(Ingredient.of(FTBICItems.INDUSTRIAL_GRADE_METAL.item.get()), 1),
+						new IngredientWithCount(Ingredient.of(Items.CHARCOAL), 1)),
+				ftbicStack("steel_ingot", 1));
+	}
+
+	private void alloy(String path, List<IngredientWithCount> inputs, ItemStackTemplate result) {
+		if (result == null) return;
+		MachineRecipe recipe = new MachineRecipe(
+				FTBICRecipes.ALLOY_SMELTING,
+				inputs,
+				List.of(),
+				List.of(new StackWithChance(result, 1D)),
+				List.of(),
+				1D,
+				false);
+		output.accept(recipeKey("alloy_smelting/" + path), recipe, null);
+	}
+
+
 	private void antimatterBoostRecipes() {
 		antimatterBoost("scrap", i("ftbic:scrap"), 5000D);
 		antimatterBoost("scrap_box", i("ftbic:scrap_box"), 45000D);
@@ -487,6 +542,8 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				stack(FTBICItems.ADVANCED_ALLOY.item.get(), 1), 0F, 400);
 		cookSmelt("industrial_grade_metal", commonTag("ingots/iron"),
 				stack(FTBICItems.INDUSTRIAL_GRADE_METAL.item.get(), 1), 0F, 400);
+
+		materialFurnaceRecipes(true);
 	}
 
 	private void blastingRecipes() {
@@ -494,6 +551,72 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				stack(FTBICItems.ADVANCED_ALLOY.item.get(), 1), 0F, 200);
 		cookBlast("industrial_grade_metal", commonTag("ingots/iron"),
 				stack(FTBICItems.INDUSTRIAL_GRADE_METAL.item.get(), 1), 0F, 200);
+
+		materialFurnaceRecipes(false);
+	}
+
+	private void materialFurnaceRecipes(boolean smelt) {
+		for (Material m : Material.values()) {
+			ItemStackTemplate ingot = ingotFor(m);
+			if (ingot == null) continue;
+
+			if (m.has(MaterialComponent.DUST)) {
+				materialCook(smelt, m.key() + "_dust_to_" + ingotPathSuffix(m),
+						Ingredient.of(ftbicItem(m.key() + "_dust")), ingot, 0F);
+			}
+			if (m.has(MaterialComponent.STONE_ORE)) {
+				materialCook(smelt, m.key() + "_stone_ore_to_" + ingotPathSuffix(m),
+						Ingredient.of(ftbicItem(m.key() + "_stone_ore")), ingot, 0.7F);
+			}
+			if (m.has(MaterialComponent.DEEPSLATE_ORE)) {
+				materialCook(smelt, m.key() + "_deepslate_ore_to_" + ingotPathSuffix(m),
+						Ingredient.of(ftbicItem(m.key() + "_deepslate_ore")), ingot, 0.7F);
+			}
+			if (m.has(MaterialComponent.RAW_ORE)) {
+				materialCook(smelt, m.key() + "_raw_ore_to_" + ingotPathSuffix(m),
+						Ingredient.of(ftbicItem(m.key() + "_raw_ore")), ingot, 0.7F);
+			}
+		}
+
+		ItemStackTemplate enderiumIngot = ftbicStack("enderium_ingot", 1);
+		Item enderiumDust = ftbicItem("enderium_dust");
+		if (enderiumIngot != null && enderiumDust != null) {
+			materialCook(smelt, "enderium_dust_to_enderium_ingot",
+					Ingredient.of(enderiumDust), enderiumIngot, 0F);
+		}
+	}
+
+	private ItemStackTemplate ingotFor(Material m) {
+		return switch (m) {
+			case COPPER -> stack(Items.COPPER_INGOT, 1);
+			case GOLD -> stack(Items.GOLD_INGOT, 1);
+			case IRON -> stack(Items.IRON_INGOT, 1);
+			default -> m.has(MaterialComponent.INGOT) ? ftbicStack(m.key() + "_ingot", 1) : null;
+		};
+	}
+
+	private static String ingotPathSuffix(Material m) {
+		return switch (m) {
+			case COPPER -> "copper_ingot";
+			case GOLD -> "gold_ingot";
+			case IRON -> "iron_ingot";
+			default -> m.key() + "_ingot";
+		};
+	}
+
+	private void materialCook(boolean smelt, String path, Ingredient input, ItemStackTemplate result, float xp) {
+		if (input == null || result == null) return;
+		int ticks = smelt ? 200 : 100;
+		String folder = smelt ? "smelting" : "blasting";
+		Recipe<?> r = smelt
+				? new SmeltingRecipe(cookingCommon(), cookingBook(CookingBookCategory.MISC), input, result, xp, ticks)
+				: new BlastingRecipe(cookingCommon(), cookingBook(CookingBookCategory.MISC), input, result, xp, ticks);
+		output.accept(recipeKey(folder + "/" + path), r, null);
+	}
+
+	private static Item ftbicItem(String path) {
+		Item item = BuiltInRegistries.ITEM.getValue(FTBIC.id(path));
+		return item == Items.AIR ? null : item;
 	}
 
 	private void smokingRecipes() {
@@ -658,6 +781,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("advanced_heat_vent", ftbicStack("advanced_heat_vent", 1), new String[] {"IVI", "IDI", "IVI"}, 'I', i("minecraft:iron_bars"), 'D', commonOrTag("c:gems/diamond"), 'V', i("ftbic:heat_vent"));
 		shaped("advanced_macerator", ftbicStack("advanced_macerator", 1), new String[] {"CCC", "CFC", "WMW"}, 'C', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:macerator"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
 		shaped("advanced_powered_furnace", ftbicStack("advanced_powered_furnace", 1), new String[] {"CCC", "CFC", "WMW"}, 'C', commonOrTag("c:ingots/copper"), 'F', i("ftbic:powered_furnace"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
+		shaped("alloy_smelter", ftbicStack("alloy_smelter", 1), new String[] {"III", "IFI", "WMW"}, 'I', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:advanced_powered_furnace"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
 		shaped("antimatter_crystal", ftbicStack("antimatter_crystal", 1), new String[] {"AAC", "ANA", "CAA"}, 'A', i("ftbic:antimatter"), 'C', i("ftbic:energy_crystal"), 'N', i("minecraft:nether_star"));
 		shaped("antimatter_fabricator", ftbicStack("antimatter_constructor", 1), new String[] {"GCG", "MEM", "GCG"}, 'G', commonOrTag("c:dusts/glowstone"), 'M', i("ftbic:advanced_machine_block"), 'C', i("ftbic:iridium_circuit"), 'E', i("minecraft:nether_star"));
 		shaped("basic_generator", ftbicStack("basic_generator", 1), new String[] {" B ", "MMM", " F "}, 'B', i("ftbic:lv_battery"), 'M', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:iron_furnace"));
@@ -681,7 +805,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("electric_furnace", ftbicStack("powered_furnace", 1), new String[] {" C ", "RFR"}, 'C', i("ftbic:electronic_circuit"), 'R', commonOrTag("c:dusts/redstone"), 'F', i("ftbic:iron_furnace"));
 		shaped("empty_can", ftbicStack("empty_can", 10), new String[] {"T T", "TTT"}, 'T', commonOrTag("c:ingots/tin"));
 		shaped("enderium_dust", ftbicStack("enderium_dust", 2), new String[] {"LLL", "DEE"}, 'L', commonOrTag("c:dusts/lead"), 'D', commonOrTag("c:dusts/diamond"), 'E', commonOrTag("c:ender_pearls"));
-		shaped("enderium_ingot", ftbicStack("enderium_ingot", 2), new String[] {"LLL", "DEE", "F  "}, 'L', compound(commonOrTag("c:dusts/lead"), commonOrTag("c:ingots/lead")), 'D', commonOrTag("c:dusts/diamond"), 'E', commonOrTag("c:ender_pearls"), 'F', i("minecraft:fire_charge"));
 		shaped("enderium_ingot_to_enderium_block", ftbicStack("enderium_block", 1), new String[] {"XXX", "XXX", "XXX"}, 'X', commonOrTag("c:ingots/enderium"));
 		shaped("enderium_wire", ftbicStack("enderium_wire", 6), new String[] {"MMM"}, 'M', commonOrTag("c:ingots/enderium"));
 		shaped("energy_storage_upgrade", ftbicStack("energy_storage_upgrade", 1), new String[] {"PPP", "WBW", "PCP"}, 'P', commonOrTag("minecraft:planks"), 'W', i("ftbic:lv_cable"), 'B', i("ftbic:lv_battery"), 'C', i("ftbic:electronic_circuit"));
@@ -764,7 +887,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shapeless("advanced_circuit", ftbicStack("advanced_circuit", 1), commonOrTag("c:dusts/redstone"), commonOrTag("c:dusts/glowstone"), commonOrTag("c:dusts/redstone"), commonOrTag("c:silicon"), i("ftbic:electronic_circuit"), commonOrTag("c:silicon"), commonOrTag("c:dusts/redstone"), commonOrTag("c:dusts/glowstone"), commonOrTag("c:dusts/redstone"));
 		shapeless("advanced_machine_block", ftbicStack("advanced_machine_block", 1), i("ftbic:copper_coil"), i("ftbic:carbon_plate"), i("ftbic:copper_coil"), i("ftbic:advanced_alloy"), i("ftbic:machine_block"), i("ftbic:advanced_alloy"), i("ftbic:copper_coil"), i("ftbic:carbon_plate"), i("ftbic:copper_coil"));
 		shapeless("carbon_fiber_mesh", ftbicStack("carbon_fiber_mesh", 1), i("ftbic:carbon_fibers"), i("ftbic:carbon_fibers"), i("ftbic:carbon_fibers"), i("ftbic:carbon_fibers"));
-		shapeless("constantan_dust", ftbicStack("constantan_dust", 2), commonOrTag("c:dusts/copper"), commonOrTag("c:dusts/nickel"));
 		shapeless("containment_reactor_plating", ftbicStack("containment_reactor_plating", 1), i("ftbic:reactor_plating"), i("ftbic:advanced_alloy"), i("ftbic:advanced_alloy"));
 		shapeless("electronic_circuit", ftbicStack("electronic_circuit", 1), i("ftbic:lv_cable"), i("ftbic:lv_cable"), i("ftbic:lv_cable"), commonOrTag("c:dusts/redstone"), i("ftbic:industrial_grade_metal"), commonOrTag("c:dusts/redstone"), i("ftbic:lv_cable"), i("ftbic:lv_cable"), i("ftbic:lv_cable"));
 		shapeless("electrum_dust", ftbicStack("electrum_dust", 2), commonOrTag("c:dusts/gold"), commonOrTag("c:dusts/silver"));

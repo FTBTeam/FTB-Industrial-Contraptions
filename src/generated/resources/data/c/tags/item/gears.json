@@ -2,6 +2,7 @@
   "values": [
     "ftbic:aluminum_gear",
     "ftbic:bronze_gear",
+    "ftbic:constantan_gear",
     "ftbic:copper_gear",
     "ftbic:diamond_gear",
     "ftbic:electrum_gear",
@@ -16,6 +17,7 @@
     "ftbic:plutonium_gear",
     "ftbic:quartz_gear",
     "ftbic:silver_gear",
+    "ftbic:steel_gear",
     "ftbic:tin_gear",
     "ftbic:uranium_gear"
   ]

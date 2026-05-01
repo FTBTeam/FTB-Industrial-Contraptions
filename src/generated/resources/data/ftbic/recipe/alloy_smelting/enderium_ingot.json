@@ -1,0 +1,24 @@
+{
+  "type": "ftbic:alloy_smelting",
+  "inputs": [
+    {
+      "count": 3,
+      "ingredient": "#c:ingots/lead"
+    },
+    {
+      "ingredient": "#c:dusts/diamond"
+    },
+    {
+      "count": 2,
+      "ingredient": "minecraft:ender_pearl"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ftbic:enderium_ingot"
+      }
+    }
+  ]
+}

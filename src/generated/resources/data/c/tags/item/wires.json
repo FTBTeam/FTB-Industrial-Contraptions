@@ -2,6 +2,7 @@
   "values": [
     "ftbic:aluminum_wire",
     "ftbic:bronze_wire",
+    "ftbic:constantan_wire",
     "ftbic:copper_wire",
     "ftbic:diamond_wire",
     "ftbic:electrum_wire",
@@ -16,6 +17,7 @@
     "ftbic:plutonium_wire",
     "ftbic:quartz_wire",
     "ftbic:silver_wire",
+    "ftbic:steel_wire",
     "ftbic:tin_wire",
     "ftbic:uranium_wire"
   ]
