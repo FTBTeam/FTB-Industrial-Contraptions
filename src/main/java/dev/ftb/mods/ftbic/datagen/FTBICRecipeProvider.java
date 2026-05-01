@@ -828,7 +828,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("ejector_upgrade", ftbicStack("ejector_upgrade", 1), new String[] {"T T", " P ", "T T"}, 'P', i("minecraft:piston"), 'T', commonOrTag("c:ingots/tin"));
 		shaped("electric_furnace", ftbicStack("powered_furnace", 1), new String[] {" C ", "RFR"}, 'C', i("ftbic:electronic_circuit"), 'R', commonOrTag("c:dusts/redstone"), 'F', i("ftbic:iron_furnace"));
 		shaped("empty_can", ftbicStack("empty_can", 10), new String[] {"T T", "TTT"}, 'T', commonOrTag("c:ingots/tin"));
-		shaped("enderium_dust", ftbicStack("enderium_dust", 2), new String[] {"LLL", "DEE"}, 'L', commonOrTag("c:dusts/lead"), 'D', commonOrTag("c:dusts/diamond"), 'E', commonOrTag("c:ender_pearls"));
 		shaped("enderium_ingot_to_enderium_block", ftbicStack("enderium_block", 1), new String[] {"XXX", "XXX", "XXX"}, 'X', commonOrTag("c:ingots/enderium"));
 		shaped("energy_storage_upgrade", ftbicStack("energy_storage_upgrade", 1), new String[] {"PPP", "WBW", "PCP"}, 'P', commonOrTag("minecraft:planks"), 'W', i("ftbic:lv_cable"), 'B', i("ftbic:lv_battery"), 'C', i("ftbic:electronic_circuit"));
 		shaped("ev_battery_box", ftbicStack("ev_battery_box", 1), new String[] {"GCG", "EXE", "GMG"}, 'C', i("ftbic:iridium_circuit"), 'G', i("ftbic:advanced_alloy"), 'E', i("ftbic:antimatter_crystal"), 'X', i("ftbic:hv_battery_box"), 'M', i("ftbic:advanced_machine_block"));

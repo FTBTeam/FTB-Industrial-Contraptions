@@ -9,7 +9,6 @@ item_ids:
   - ftbic:charcoal_dust
   - ftbic:diamond_dust
   - ftbic:obsidian_dust
-  - ftbic:enderium_dust
   - ftbic:dense_copper_plate
   - ftbic:copper_coil
   - ftbic:coal_ball
@@ -57,15 +56,6 @@ Ground coal. Crafting input for carbon fibers and coal balls.
 </Row>
 
 Grind a diamond in a macerator, compress two dusts back into a diamond — a free +100% when you want diamonds from recycled gear.
-
-<Row>
-  <ItemImage id="enderium_dust" />
-  ### <Color id="aqua">Enderium Dust</Color>
-</Row>
-
-Crafting input for <ItemLink id="enderium_ingot" />.
-
-<RecipeFor id="enderium_dust" />
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

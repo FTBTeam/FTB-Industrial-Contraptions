@@ -165,22 +165,15 @@ Iridium plates reinforced with <ItemLink id="advanced_alloy" />. Final-tier allo
 Purple-blue magical alloy — used in the <ItemLink id="teleporter" />, <ItemLink id="iv_cable" />, and advanced circuits.
 
 <Row>
-  <ItemImage id="enderium_dust" />
-  ### <Color id="aqua">Enderium Dust</Color>
-</Row>
-
-Crafted shaped from 3 lead dust + 1 diamond dust + 2 ender pearls. A recovery path for enderium ingots macerated back to dust.
-
-<RecipeFor id="enderium_dust" />
-
-<Row>
   <ItemImage id="enderium_ingot" />
   ### <Color id="aqua">Enderium Ingot</Color>
 </Row>
 
 Made exclusively in the <ItemLink id="alloy_smelter" />: 3 lead + 1 diamond dust + 2 ender pearls → 2 enderium ingots. There is no shaped-craft path.
 
-<RecipeFor id="enderium_ingot" />
+<Recipe id="ftbic:alloy_smelting/enderium_ingot" />
+
+<RecipesFor id="enderium_ingot" fallbackText="See the Alloy Smelter for the recipe." />
 
 <Row>
   <ItemImage id="enderium_block" />
