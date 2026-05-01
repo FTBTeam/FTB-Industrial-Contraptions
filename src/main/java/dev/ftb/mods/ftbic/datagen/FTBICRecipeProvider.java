@@ -160,6 +160,10 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		}
 
 		macerateChance("sticky_resin_from_log", tag(ItemTags.LOGS), 1, ftbicStack("sticky_resin", 1), 0.25D);
+
+		macerate("advanced_alloy_to_mixed_metal_blend",
+				Ingredient.of(FTBICItems.ADVANCED_ALLOY.item.get()),
+				new ItemStackTemplate(FTBICItems.MIXED_METAL_BLEND.item.get(), 1));
 	}
 
 	private void macerate(String path, Ingredient input, ItemStackTemplate result) {
@@ -460,6 +464,23 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(new IngredientWithCount(Ingredient.of(FTBICItems.INDUSTRIAL_GRADE_METAL.item.get()), 1),
 						new IngredientWithCount(Ingredient.of(Items.CHARCOAL), 1)),
 				ftbicStack("steel_ingot", 1));
+
+		ItemStackTemplate advancedAlloy = new ItemStackTemplate(FTBICItems.ADVANCED_ALLOY.item.get(), 1);
+		alloy("advanced_alloy_iron_bronze_aluminum",
+				List.of(new IngredientWithCount(commonTag("ingots/iron"), 1),
+						new IngredientWithCount(commonTag("ingots/bronze"), 1),
+						new IngredientWithCount(commonTag("ingots/aluminum"), 1)),
+				advancedAlloy);
+		alloy("advanced_alloy_lead_electrum_tin",
+				List.of(new IngredientWithCount(commonTag("ingots/lead"), 1),
+						new IngredientWithCount(commonTag("ingots/electrum"), 1),
+						new IngredientWithCount(commonTag("ingots/tin"), 1)),
+				advancedAlloy);
+		alloy("advanced_alloy_lead_copper_tin",
+				List.of(new IngredientWithCount(commonTag("ingots/lead"), 1),
+						new IngredientWithCount(commonTag("ingots/copper"), 1),
+						new IngredientWithCount(commonTag("ingots/tin"), 1)),
+				advancedAlloy);
 	}
 
 	private void alloy(String path, List<IngredientWithCount> inputs, ItemStackTemplate result) {
@@ -809,7 +830,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("empty_can", ftbicStack("empty_can", 10), new String[] {"T T", "TTT"}, 'T', commonOrTag("c:ingots/tin"));
 		shaped("enderium_dust", ftbicStack("enderium_dust", 2), new String[] {"LLL", "DEE"}, 'L', commonOrTag("c:dusts/lead"), 'D', commonOrTag("c:dusts/diamond"), 'E', commonOrTag("c:ender_pearls"));
 		shaped("enderium_ingot_to_enderium_block", ftbicStack("enderium_block", 1), new String[] {"XXX", "XXX", "XXX"}, 'X', commonOrTag("c:ingots/enderium"));
-		shaped("enderium_wire", ftbicStack("enderium_wire", 6), new String[] {"MMM"}, 'M', commonOrTag("c:ingots/enderium"));
 		shaped("energy_storage_upgrade", ftbicStack("energy_storage_upgrade", 1), new String[] {"PPP", "WBW", "PCP"}, 'P', commonOrTag("minecraft:planks"), 'W', i("ftbic:lv_cable"), 'B', i("ftbic:lv_battery"), 'C', i("ftbic:electronic_circuit"));
 		shaped("ev_battery_box", ftbicStack("ev_battery_box", 1), new String[] {"GCG", "EXE", "GMG"}, 'C', i("ftbic:iridium_circuit"), 'G', i("ftbic:advanced_alloy"), 'E', i("ftbic:antimatter_crystal"), 'X', i("ftbic:hv_battery_box"), 'M', i("ftbic:advanced_machine_block"));
 		shaped("ev_cable", ftbicStack("ev_cable", 6), new String[] {"RRR", "MMM", "RRR"}, 'R', i("ftbic:rubber"), 'M', commonOrTag("c:ingots/enderium"));
@@ -847,9 +867,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("machine_block", ftbicStack("machine_block", 1), new String[] {"MMM", "MFM", "MMM"}, 'M', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:fuse"));
 		shaped("mechanical_elytra", ftbicStack("mechanical_elytra", 1), new String[] {"CBC", "CSC", "VLV"}, 'C', i("ftbic:carbon_plate"), 'B', i("ftbic:mv_battery"), 'L', i("minecraft:elytra"), 'S', i("ftbic:lv_solar_panel"), 'V', i("ftbic:heat_vent"));
 		shaped("medium_coolant_cell", ftbicStack("medium_coolant_cell", 1), new String[] {"TTT", "CCC", "TTT"}, 'T', commonOrTag("c:ingots/tin"), 'C', i("ftbic:small_coolant_cell"));
-		shaped("mixed_metal_blend_1", ftbicStack("mixed_metal_blend", 3), new String[] {"III", "OOO", "PPP"}, 'I', compound(commonOrTag("c:dusts/iron"), commonOrTag("c:dusts/lead")), 'O', commonOrTag("c:dusts/bronze"), 'P', compound(commonOrTag("c:dusts/tin"), commonOrTag("c:dusts/aluminum")));
-		shaped("mixed_metal_blend_2", ftbicStack("mixed_metal_blend", 3), new String[] {"III", "OOO", "PPP"}, 'I', compound(commonOrTag("c:dusts/iron"), commonOrTag("c:dusts/lead")), 'O', commonOrTag("c:dusts/electrum"), 'P', compound(commonOrTag("c:dusts/tin"), commonOrTag("c:dusts/aluminum")));
-		shaped("mixed_metal_blend_3", ftbicStack("mixed_metal_blend", 3), new String[] {"III", "OOO", "PPP"}, 'I', compound(commonOrTag("c:dusts/iron"), commonOrTag("c:dusts/lead")), 'O', commonOrTag("c:dusts/constantan"), 'P', compound(commonOrTag("c:dusts/tin"), commonOrTag("c:dusts/aluminum")));
 		shaped("mv_battery_box", ftbicStack("mv_battery_box", 1), new String[] {"WBW", "BMB", "WBW"}, 'W', i("ftbic:mv_cable"), 'B', i("ftbic:energy_crystal"), 'M', i("ftbic:machine_block"));
 		shaped("mv_cable", ftbicStack("mv_cable", 6), new String[] {"RRR", "MMM", "RRR"}, 'R', i("ftbic:rubber"), 'M', commonOrTag("c:ingots/aluminum"));
 		shaped("mv_rectifier", ftbicStack("mv_rectifier", 1), new String[] {"RWR", "PTP", "RWR"}, 'R', i("minecraft:redstone"), 'W', i("ftbic:mv_cable"), 'P', commonOrTag("c:ingots/iron"), 'T', i("ftbic:mv_transformer"));

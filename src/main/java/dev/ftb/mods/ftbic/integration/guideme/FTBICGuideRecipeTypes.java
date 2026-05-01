@@ -42,6 +42,8 @@ public class FTBICGuideRecipeTypes implements RecipeTypeMappingSupplier {
 				h -> buildMachineBox(FTBICRecipes.ROLLING, FTBICElectricBlocks.ROLLER, h));
 		mappings.add(FTBICRecipes.EXTRUDING.TYPE.get(),
 				h -> buildMachineBox(FTBICRecipes.EXTRUDING, FTBICElectricBlocks.EXTRUDER, h));
+		mappings.add(FTBICRecipes.ALLOY_SMELTING.TYPE.get(),
+				h -> buildMachineBox(FTBICRecipes.ALLOY_SMELTING, FTBICElectricBlocks.ALLOY_SMELTER, h));
 
 		@SuppressWarnings("unchecked")
 		RecipeType<BasicGeneratorFuelRecipe> fuelType =

@@ -25,28 +25,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<MachineRecipe>> {
-	public static final int WIDTH = 112;
 	public static final int HEIGHT = 26;
 
-	private static final int INPUT_X_1 = 22;
-	private static final int ARROW_X = 44;
-	private static final int ARROW_Y = 5;
-	private static final int OUTPUT_X_0 = 72;
 	private static final int SLOT_Y = 4;
-	private static final int ARROW_HIT_X0 = INPUT_X_1 + 18;
-	private static final int ARROW_HIT_X1 = OUTPUT_X_0;
-	private static final int ARROW_HIT_Y0 = SLOT_Y;
-	private static final int ARROW_HIT_Y1 = SLOT_Y + 18;
+	private static final int ARROW_Y = 5;
 
 	private final ElectricBlockInstance machine;
+	private final int maxInputs;
+	private final int inputXEnd;
+	private final int arrowX;
+	private final int outputX;
 
 	public MachineRecipeCategory(MachineRecipeType type, ElectricBlockInstance machine, IGuiHelper helper) {
+		this(type, machine, helper, 2);
+	}
+
+	public MachineRecipeCategory(MachineRecipeType type, ElectricBlockInstance machine, IGuiHelper helper, int maxInputs) {
 		super(jeiRecipeType(type),
 				Component.literal(machine.name),
 				helper.createDrawableItemStack(new ItemStack(machine.item.get())),
-				WIDTH,
+				widthFor(maxInputs),
 				HEIGHT);
 		this.machine = machine;
+		this.maxInputs = Math.max(1, maxInputs);
+		this.inputXEnd = 22 + Math.max(0, this.maxInputs - 2) * 18;
+		this.arrowX = inputXEnd + 22;
+		this.outputX = arrowX + 28;
+	}
+
+	private static int widthFor(int maxInputs) {
+		return 112 + Math.max(0, maxInputs - 2) * 18;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -58,10 +66,11 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 	public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<MachineRecipe> holder, IFocusGroup focuses) {
 		MachineRecipe recipe = holder.value();
 
-		int inputCount = Math.min(2, recipe.inputs.size());
+		int inputCount = Math.min(maxInputs, recipe.inputs.size());
 		int idx = 0;
 		for (IngredientWithCount in : recipe.inputs) {
-			int x = INPUT_X_1 - (inputCount - 1 - idx) * 18;
+			if (idx >= maxInputs) break;
+			int x = inputXEnd - (inputCount - 1 - idx) * 18;
 			var slot = builder.addInputSlot(x, SLOT_Y).setStandardSlotBackground();
 			int cnt = in.count();
 			if (cnt > 1) {
@@ -76,7 +85,6 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 				slot.add(in.ingredient());
 			}
 			idx++;
-			if (idx >= 2) break;
 		}
 
 		int visibleOutputs = 0;
@@ -84,7 +92,7 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 			if (!out.stack().isEmpty()) visibleOutputs++;
 		}
 		boolean singleOutput = visibleOutputs == 1;
-		int ox = OUTPUT_X_0;
+		int ox = outputX;
 		for (StackWithChance out : recipe.outputs) {
 			ItemStack stack = out.stack();
 			if (stack.isEmpty()) continue;
@@ -104,12 +112,14 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 
 	@Override
 	public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<MachineRecipe> holder, IFocusGroup focuses) {
-		builder.addAnimatedRecipeArrow(50).setPosition(ARROW_X, ARROW_Y);
+		builder.addAnimatedRecipeArrow(50).setPosition(arrowX, ARROW_Y);
 	}
 
 	@Override
 	public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<MachineRecipe> recipe, IRecipeSlotsView slots, double mouseX, double mouseY) {
-		if (mouseX >= ARROW_HIT_X0 && mouseX < ARROW_HIT_X1 && mouseY >= ARROW_HIT_Y0 && mouseY < ARROW_HIT_Y1) {
+		int hitX0 = inputXEnd + 18;
+		int hitX1 = outputX;
+		if (mouseX >= hitX0 && mouseX < hitX1 && mouseY >= SLOT_Y && mouseY < SLOT_Y + 18) {
 			double baseTicks = FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
 			double ticks = recipe.value().processingTime * baseTicks;
 			double energyPerTick = machine.energyUsage.get();
