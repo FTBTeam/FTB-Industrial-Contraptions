@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
+import dev.ftb.mods.ftbic.material.MaterialEntries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -56,6 +57,8 @@ public final class ModCreativeTabs {
 								out.accept(mat.item.get());
 							}
 						}
+
+						MaterialEntries.all().forEach(entry -> out.accept(entry.item().get()));
 
 						out.accept(FTBICItems.SINGLE_USE_BATTERY.get());
 						out.accept(FTBICItems.LV_BATTERY.get());

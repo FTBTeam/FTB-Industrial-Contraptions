@@ -26,13 +26,6 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.${mod_id}]]
-modId = "ftbmaterials"
-type = "required"
-versionRange = "${ftb_materials_version_range}"
-ordering = "BEFORE"
-side = "BOTH"
-
-[[dependencies.${mod_id}]]
 modId = "guideme"
 type = "optional"
 versionRange = "${guideme_version_range}"

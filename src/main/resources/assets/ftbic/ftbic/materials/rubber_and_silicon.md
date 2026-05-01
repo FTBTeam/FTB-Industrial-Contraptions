@@ -7,7 +7,7 @@ navigation:
 item_ids:
   - ftbic:rubber
   - ftbic:rubber_sheet
-  - ftbmaterials:silicon_gem
+  - ftbic:silicon_gem
 ---
 
 # <Color id="gold">Rubber & Silicon</Color>
@@ -43,7 +43,7 @@ Smelt a vanilla **slime ball** for **8 rubber** — the main production path. Sl
 ***
 
 <Row>
-  <ItemImage id="ftbmaterials:silicon_gem" />
+  <ItemImage id="ftbic:silicon_gem" />
   ### <Color id="aqua">Silicon</Color>
 </Row>
 

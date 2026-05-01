@@ -10,9 +10,7 @@ import dev.ftb.mods.ftbic.recipe.MachineRecipeType;
 import dev.ftb.mods.ftbic.util.FluidCellIngredient;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
-import dev.ftb.mods.ftbmaterials.data.ComponentsAvailableCondition;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -43,11 +41,6 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.crafting.SmokingRecipe;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.common.conditions.AndCondition;
-import net.neoforged.neoforge.common.conditions.ICondition;
-import net.neoforged.neoforge.common.conditions.NotCondition;
-import net.neoforged.neoforge.common.conditions.OrCondition;
-import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
 import net.neoforged.neoforge.common.crafting.CompoundIngredient;
 
 import java.util.ArrayList;
@@ -60,24 +53,18 @@ import java.util.concurrent.CompletableFuture;
 public class FTBICRecipeProvider extends RecipeProvider {
 
 	private static final String[] MACERATE_INGOTS = {
-			"aluminum", "antimony", "brass", "bronze", "chromium", "constantan", "copper",
-			"electrum", "enderium", "gold", "graphite", "invar", "iridium", "iron", "lead",
-			"lumium", "netherite", "nickel", "osmium", "platinum", "plutonium", "refined_glowstone",
-			"refined_obsidian", "silicon", "silver", "stainless_steel", "steel", "tin", "titanium",
-			"tungsten", "uranium", "zinc",
+			"aluminum", "bronze", "copper", "electrum", "enderium", "gold", "invar", "iridium",
+			"iron", "lead", "netherite", "nickel", "plutonium", "silver", "tin", "uranium",
 	};
 
 	private static final String[] MACERATE_ORES = {
-			"aluminum", "antimony", "apatite", "bauxite", "cinnabar", "coal", "copper", "diamond",
-			"emerald", "fluorite", "gold", "iridium", "iron", "lapis_lazuli", "lead", "monazite",
-			"nickel", "niter", "osmium", "platinum", "quartz", "ruby", "salt", "sapphire", "silver",
-			"sulfur", "tin", "titanium", "tungsten", "uranium", "zinc",
+			"aluminum", "coal", "copper", "diamond", "emerald", "gold", "iridium", "iron",
+			"lapis_lazuli", "lead", "nickel", "quartz", "silver", "tin", "uranium",
 	};
 
 	private static final String[] MACERATE_RAW = {
-			"aluminum", "antimony", "brass", "chromium", "copper", "gold", "iridium", "iron",
-			"lead", "nickel", "osmium", "platinum", "plutonium", "silicon", "silver", "tin",
-			"titanium", "tungsten", "uranium", "zinc",
+			"aluminum", "copper", "gold", "iridium", "iron", "lead", "nickel", "plutonium",
+			"silver", "tin", "uranium",
 	};
 
 	public FTBICRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
@@ -119,33 +106,33 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	private void fuel(String name, Ingredient ingredient, int ticks) {
 		BasicGeneratorFuelRecipe recipe = new BasicGeneratorFuelRecipe(ingredient, ticks);
 		ResourceKey<Recipe<?>> key = recipeKey("basic_generator_fuel/" + name);
-		output.accept(key, recipe, null, conditionsFor(ingredient));
+		output.accept(key, recipe, null);
 	}
 
 
 	private void maceratingRecipes() {
 		macerate("blaze_powder", commonTag("rods/blaze"), stack(Items.BLAZE_POWDER, 5));
 		macerate("bone_meal", Ingredient.of(Items.BONE), stack(Items.BONE_MEAL, 5));
-		macerate("charcoal_dust", Ingredient.of(Items.CHARCOAL), ftbmat("charcoal_dust", 1));
-		macerate("coal_dust", Ingredient.of(Items.COAL), ftbmat("coal_dust", 1));
+		macerate("charcoal_dust", Ingredient.of(Items.CHARCOAL), ftbicStack("charcoal_dust", 1));
+		macerate("coal_dust", Ingredient.of(Items.COAL), ftbicStack("coal_dust", 1));
 		macerate("cobblestone", commonTag("stones"), stack(Items.COBBLESTONE, 1));
 		macerate("gravel", commonTag("cobblestones"), stack(Items.GRAVEL, 1));
-		macerate("obsidian_dust", commonTag("obsidians"), ftbmat("obsidian_dust", 1));
+		macerate("obsidian_dust", commonTag("obsidians"), ftbicStack("obsidian_dust", 1));
 		macerate("sand", commonTag("gravels"), stack(Items.SAND, 1));
 		macerate("snowball", Ingredient.of(Items.SNOW_BLOCK), stack(Items.SNOWBALL, 1));
 		macerate("string", tag(ItemTags.WOOL), stack(Items.STRING, 4));
 
-		macerate("gems/diamond_to_dust", commonTag("gems/diamond"), ftbmat("diamond_dust", 1));
+		macerate("gems/diamond_to_dust", commonTag("gems/diamond"), ftbicStack("diamond_dust", 1));
 
 		for (String m : MACERATE_INGOTS) {
-			macerate("ingots/" + m + "_to_dust", commonTag("ingots/" + m), ftbmat(m + "_dust", 1));
+			macerate("ingots/" + m + "_to_dust", commonTag("ingots/" + m), ftbicStack(m + "_dust", 1));
 		}
 		for (String m : MACERATE_ORES) {
 			String dust = oreDustName(m);
-			macerate("ores/" + m + "_to_dust", commonTag("ores/" + m), ftbmat(dust, 2));
+			macerate("ores/" + m + "_to_dust", commonTag("ores/" + m), ftbicStack(dust, 2));
 		}
 		for (String m : MACERATE_RAW) {
-			ItemStackTemplate dust = ftbmat(m + "_dust", 1);
+			ItemStackTemplate dust = ftbicStack(m + "_dust", 1);
 			macerateRaw("raw_materials/" + m + "_to_dust", commonTag("raw_materials/" + m),
 					dust, dust, 0.35);
 		}
@@ -160,12 +147,12 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		macerate("ores/redstone_to_dust", commonTag("ores/redstone"), stack(Items.REDSTONE, 6));
 
 		// IC2C: storage-block → 9 dust (direct dust extraction from compact storage)
-		macerate("storage_blocks/coal_to_dust", Ingredient.of(Items.COAL_BLOCK), ftbmat("coal_dust", 9));
+		macerate("storage_blocks/coal_to_dust", Ingredient.of(Items.COAL_BLOCK), ftbicStack("coal_dust", 9));
 		for (String m : MACERATE_INGOTS) {
-			macerate("storage_blocks/" + m + "_to_dust", commonTag("storage_blocks/" + m), ftbmat(m + "_dust", 9));
+			macerate("storage_blocks/" + m + "_to_dust", commonTag("storage_blocks/" + m), ftbicStack(m + "_dust", 9));
 		}
 		for (String m : MACERATE_RAW) {
-			macerate("storage_blocks/raw_" + m + "_to_dust", commonTag("storage_blocks/raw_" + m), ftbmat(m + "_dust", 9));
+			macerate("storage_blocks/raw_" + m + "_to_dust", commonTag("storage_blocks/raw_" + m), ftbicStack(m + "_dust", 9));
 		}
 
 		macerateChance("sticky_resin_from_log", tag(ItemTags.LOGS), 1, ftbicStack("sticky_resin", 1), 0.25D);
@@ -181,8 +168,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("macerating/" + path), recipe, null,
-				withOutputConditions(conditionsFor(input), result));
+		output.accept(recipeKey("macerating/" + path), recipe, null);
 	}
 
 	private void macerateRaw(String path, Ingredient input, ItemStackTemplate primary, ItemStackTemplate bonus, double chance) {
@@ -195,8 +181,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("macerating/" + path), recipe, null,
-				withOutputConditions(conditionsFor(input), primary, bonus));
+		output.accept(recipeKey("macerating/" + path), recipe, null);
 	}
 
 	private void macerateChance(String path, Ingredient input, int inputCount, ItemStackTemplate result, double chance) {
@@ -209,25 +194,19 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("macerating/" + path), recipe, null,
-				withOutputConditions(conditionsFor(input), result));
+		output.accept(recipeKey("macerating/" + path), recipe, null);
 	}
 
 
 	private static final String[] EXTRUDE_INGOT_METALS = {
-			"aluminum", "brass", "bronze", "chromium", "constantan", "copper", "electrum",
-			"enderium", "gold", "graphite", "invar", "iridium", "iron", "lead", "lumium",
-			"netherite", "nickel", "osmium", "platinum", "plutonium", "refined_glowstone",
-			"silicon", "silver", "stainless_steel", "steel", "tin", "titanium", "tungsten",
-			"uranium", "zinc",
+			"aluminum", "bronze", "copper", "electrum", "enderium", "gold", "invar", "iridium",
+			"iron", "lead", "netherite", "nickel", "plutonium", "silver", "tin", "uranium",
 	};
 
 	private static final String[] EXTRUDE_PLATE_ROD_MATERIALS = {
-			"aluminum", "brass", "bronze", "chromium", "constantan", "copper", "diamond",
-			"electrum", "enderium", "gold", "graphite", "invar", "iridium", "iron", "lead",
-			"lumium", "netherite", "nickel", "obsidian", "osmium", "platinum", "plutonium",
-			"quartz", "refined_glowstone", "silicon", "silver", "stainless_steel", "steel",
-			"tin", "titanium", "tungsten", "uranium", "zinc",
+			"aluminum", "bronze", "copper", "diamond", "electrum", "enderium", "gold", "invar",
+			"iridium", "iron", "lead", "netherite", "nickel", "obsidian", "plutonium", "quartz",
+			"silver", "tin", "uranium",
 	};
 
 	private void extrudingRecipes() {
@@ -259,15 +238,11 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("extruding/" + path), recipe, null,
-				withOutputConditions(conditionsFor(input), scaled));
+		output.accept(recipeKey("extruding/" + path), recipe, null);
 	}
 
 	private ItemStackTemplate resolveShape(String metal, String shape) {
-		if (metal.equals("enderium")) {
-			return modStack("ftbic:enderium_" + shape, 1);
-		}
-		return ftbmat(metal + "_" + shape, 1);
+		return ftbicStack(metal + "_" + shape, 1);
 	}
 
 
@@ -284,8 +259,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 					List.of(),
 					1D,
 					false);
-			output.accept(recipeKey("rolling/ingots/" + m + "_to_" + m + "_plate"), recipe, null,
-					withOutputConditions(conditionsFor(input), plate));
+			output.accept(recipeKey("rolling/ingots/" + m + "_to_" + m + "_plate"), recipe, null);
 		}
 	}
 
@@ -310,7 +284,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		compress("packed_ice_to_blue_ice", Ingredient.of(Items.PACKED_ICE), 1, stack(Items.BLUE_ICE, 1));
 		compress("blaze_powder_to_blaze_rod", Ingredient.of(Items.BLAZE_POWDER), 4, stack(Items.BLAZE_ROD, 1));
 		compress("flint_to_gunpowder", Ingredient.of(Items.FLINT), 4, stack(Items.GUNPOWDER, 1));
-		compress("diamond_dust_to_diamond", i("ftbmaterials:diamond_dust"), 2, stack(Items.DIAMOND, 1));
+		compress("diamond_dust_to_diamond", i("ftbic:diamond_dust"), 2, stack(Items.DIAMOND, 1));
 
 		compress("rubber_from_resin", i("ftbic:sticky_resin"), 1, ftbicStack("rubber", 3));
 		compress("rubber_from_latex", i("ftbic:latex_ball"), 2, ftbicStack("rubber", 1));
@@ -326,20 +300,17 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("compressing/" + path), recipe, null,
-				withOutputConditions(conditionsFor(input), result));
+		output.accept(recipeKey("compressing/" + path), recipe, null);
 	}
 
 
 	private void separatingRecipes() {
-		Item silicon = BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("ftbmaterials", "silicon_gem"));
+		Item silicon = BuiltInRegistries.ITEM.getValue(FTBIC.id("silicon_gem"));
 		separate("flint", commonTag("gravels"), 1, Arrays.asList(out(Items.FLINT, 1, 1D)));
-		if (silicon != null && silicon != Items.AIR) {
-			separate("silicon_from_quartz", commonTag("gems/quartz"), 1, Arrays.asList(out(silicon, 3, 1D)));
-			separate("silicon_from_sand", tag(ItemTags.SAND), 1, List.of(
-					out(silicon, 1, 0.2D),
-					out(silicon, 1, 0.05D)));
-		}
+		separate("silicon_from_quartz", commonTag("gems/quartz"), 1, Arrays.asList(out(silicon, 3, 1D)));
+		separate("silicon_from_sand", tag(ItemTags.SAND), 1, List.of(
+				out(silicon, 1, 0.2D),
+				out(silicon, 1, 0.05D)));
 		separate("slime_ball", Ingredient.of(Items.MAGMA_CREAM), 1, List.of(
 				out(Items.SLIME_BALL, 1, 1D),
 				out(Items.BLAZE_POWDER, 1, 0.25D)));
@@ -409,8 +380,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				1D,
 				false);
 		ItemStackTemplate[] templates = cleaned.stream().map(StackWithChance::template).toArray(ItemStackTemplate[]::new);
-		output.accept(recipeKey("separating/" + path), recipe, null,
-				withOutputConditions(conditionsFor(input), templates));
+		output.accept(recipeKey("separating/" + path), recipe, null);
 	}
 
 	private void separateMulti(String path, List<IngredientWithCount> inputs, List<StackWithChance> outputs) {
@@ -428,8 +398,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				false);
 		ItemStackTemplate[] templates = cleaned.stream().map(StackWithChance::template).toArray(ItemStackTemplate[]::new);
 		Ingredient[] ingredients = inputs.stream().map(IngredientWithCount::ingredient).toArray(Ingredient[]::new);
-		output.accept(recipeKey("separating/" + path), recipe, null,
-				withOutputConditions(conditionsFor(ingredients), templates));
+		output.accept(recipeKey("separating/" + path), recipe, null);
 	}
 
 
@@ -445,7 +414,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("reprocessing/scrappable_to_scrap"), recipe, null, conditionsFor(input));
+		output.accept(recipeKey("reprocessing/scrappable_to_scrap"), recipe, null);
 	}
 
 
@@ -458,7 +427,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		if (input == null) return;
 		AntimatterBoostRecipe recipe =
 				new AntimatterBoostRecipe(input, boost);
-		output.accept(recipeKey("antimatter_boost/" + path), recipe, null, conditionsFor(input));
+		output.accept(recipeKey("antimatter_boost/" + path), recipe, null);
 	}
 
 
@@ -504,8 +473,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey("canning/" + path), recipe, null,
-				withOutputConditions(conditionsFor(a, b), result));
+		output.accept(recipeKey("canning/" + path), recipe, null);
 	}
 
 	private static Ingredient fluidCell(Fluid fluid) {
@@ -539,29 +507,25 @@ public class FTBICRecipeProvider extends RecipeProvider {
 	private void cookSmelt(String path, Ingredient input, ItemStackTemplate result, float xp, int ticks) {
 		if (result == null) return;
 		Recipe<?> r = new SmeltingRecipe(cookingCommon(), cookingBook(CookingBookCategory.MISC), input, result, xp, ticks);
-		output.accept(recipeKey("smelting/" + path), r, null,
-				withOutputConditions(conditionsFor(input), result));
+		output.accept(recipeKey("smelting/" + path), r, null);
 	}
 
 	private void cookBlast(String path, Ingredient input, ItemStackTemplate result, float xp, int ticks) {
 		if (result == null) return;
 		Recipe<?> r = new BlastingRecipe(cookingCommon(), cookingBook(CookingBookCategory.MISC), input, result, xp, ticks);
-		output.accept(recipeKey("blasting/" + path), r, null,
-				withOutputConditions(conditionsFor(input), result));
+		output.accept(recipeKey("blasting/" + path), r, null);
 	}
 
 	private void cookSmoke(String path, Ingredient input, ItemStackTemplate result, float xp, int ticks) {
 		if (result == null) return;
 		Recipe<?> r = new SmokingRecipe(cookingCommon(), cookingBook(CookingBookCategory.FOOD), input, result, xp, ticks);
-		output.accept(recipeKey("smoking/" + path), r, null,
-				withOutputConditions(conditionsFor(input), result));
+		output.accept(recipeKey("smoking/" + path), r, null);
 	}
 
 	private void cookCampfire(String path, Ingredient input, ItemStackTemplate result, float xp, int ticks) {
 		if (result == null) return;
 		Recipe<?> r = new CampfireCookingRecipe(cookingCommon(), cookingBook(CookingBookCategory.FOOD), input, result, xp, ticks);
-		output.accept(recipeKey("campfire_cooking/" + path), r, null,
-				withOutputConditions(conditionsFor(input), result));
+		output.accept(recipeKey("campfire_cooking/" + path), r, null);
 	}
 
 	private static Recipe.CommonInfo cookingCommon() {
@@ -631,7 +595,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				new CraftingRecipe.CraftingBookInfo(CraftingBookCategory.MISC, ""),
 				shaped,
 				result);
-		output.accept(recipeKey("shaped/" + name), recipe, null, conditionsFor(allIngredients.toArray(Ingredient[]::new)));
+		output.accept(recipeKey("shaped/" + name), recipe, null);
 	}
 
 	protected void shapeless(String name, ItemStackTemplate result, Ingredient... ingredients) {
@@ -644,7 +608,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				new CraftingRecipe.CraftingBookInfo(CraftingBookCategory.MISC, ""),
 				result,
 				List.of(ingredients));
-		output.accept(recipeKey("shapeless/" + name), recipe, null, conditionsFor(ingredients));
+		output.accept(recipeKey("shapeless/" + name), recipe, null);
 	}
 
 
@@ -657,19 +621,13 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				List.of(),
 				1D,
 				false);
-		output.accept(recipeKey(path), recipe, null, withOutputConditions(conditionsFor(input), result));
+		output.accept(recipeKey(path), recipe, null);
 	}
 
 	private static ItemStackTemplate stack(Item item, int count) {
 		return new ItemStackTemplate(item, count);
 	}
 
-	private ItemStackTemplate ftbmat(String path, int count) {
-		Identifier id = Identifier.fromNamespaceAndPath("ftbmaterials", path);
-		Item item = BuiltInRegistries.ITEM.getValue(id);
-		if (item == Items.AIR || item == null) return null;
-		return new ItemStackTemplate(item, count);
-	}
 
 	private static String oreDustName(String oreName) {
 		return switch (oreName) {
@@ -692,83 +650,6 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		return ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(FTBIC.MOD_ID, path));
 	}
 
-	protected static ICondition[] conditionsFor(Ingredient... ingredients) {
-		List<ICondition> conditions = new ArrayList<>();
-		for (Ingredient ing : ingredients) {
-			ICondition c = ingredientCondition(ing);
-			if (c != null) conditions.add(c);
-		}
-		return conditions.toArray(ICondition[]::new);
-	}
-
-	private static ICondition[] withOutputConditions(ICondition[] base, ItemStackTemplate... outputs) {
-		List<String> materials = new ArrayList<>();
-		for (ItemStackTemplate t : outputs) {
-			if (t == null) continue;
-			Identifier id = BuiltInRegistries.ITEM.getKey(t.item().value());
-			if (id == null || !"ftbmaterials".equals(id.getNamespace())) continue;
-			String path = id.getPath();
-			if (!materials.contains(path)) {
-				materials.add(path);
-			}
-		}
-		if (materials.isEmpty()) return base;
-		ICondition[] combined = new ICondition[base.length + 1];
-		System.arraycopy(base, 0, combined, 0, base.length);
-		combined[base.length] = ComponentsAvailableCondition.of(materials.toArray(String[]::new));
-		return combined;
-	}
-
-	private static ICondition ingredientCondition(Ingredient ingredient) {
-		if (ingredient == null) return null;
-		var custom = ingredient.getCustomIngredient();
-		if (custom instanceof CompoundIngredient compound) {
-			List<ICondition> branches = new ArrayList<>();
-			for (Ingredient child : compound.children()) {
-				ICondition c = ingredientCondition(child);
-				if (c != null) branches.add(c);
-			}
-			if (branches.isEmpty()) return null;
-			if (branches.size() == 1) return branches.get(0);
-			return new OrCondition(branches);
-		}
-		if (custom != null) return null;
-		HolderSet<Item> values = ingredient.getValues();
-		if (values == null) return null;
-		return values.unwrapKey().map(tagKey -> {
-			@SuppressWarnings("unchecked")
-			TagKey<Item> itemTag = (TagKey<Item>) (TagKey<?>) tagKey;
-			List<ICondition> parts = new ArrayList<>();
-			parts.add(new NotCondition(new TagEmptyCondition(itemTag)));
-			String material = materialFromTag(itemTag);
-			if (material != null) {
-				parts.add(ComponentsAvailableCondition.of(material));
-			}
-			return parts.size() == 1 ? parts.get(0) : (ICondition) new AndCondition(parts);
-		}).orElse(null);
-	}
-
-	private static String materialFromTag(TagKey<Item> tagKey) {
-		Identifier tid = tagKey.location();
-		if (!"c".equals(tid.getNamespace())) return null;
-		String path = tid.getPath();
-		int slash = path.indexOf('/');
-		if (slash < 0) return null;
-		String typePlural = path.substring(0, slash);
-		String material = path.substring(slash + 1);
-		String typeSingular = switch (typePlural) {
-			case "dusts" -> "dust";
-			case "ingots" -> "ingot";
-			case "plates" -> "plate";
-			case "gears" -> "gear";
-			case "rods" -> "rod";
-			case "nuggets" -> "nugget";
-			default -> null;
-		};
-		if (typeSingular == null) return null;
-		return material + "_" + typeSingular;
-	}
-
 
 	private void shapedBatch() {
 		shaped("advanced_centrifuge", ftbicStack("advanced_centrifuge", 1), new String[] {"CCC", "CFC", "WMW"}, 'C', i("ftbic:fluid_cell"), 'F', i("ftbic:centrifuge"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
@@ -781,7 +662,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("antimatter_fabricator", ftbicStack("antimatter_constructor", 1), new String[] {"GCG", "MEM", "GCG"}, 'G', commonOrTag("c:dusts/glowstone"), 'M', i("ftbic:advanced_machine_block"), 'C', i("ftbic:iridium_circuit"), 'E', i("minecraft:nether_star"));
 		shaped("basic_generator", ftbicStack("basic_generator", 1), new String[] {" B ", "MMM", " F "}, 'B', i("ftbic:lv_battery"), 'M', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:iron_furnace"));
 		shaped("battery", ftbicStack("lv_battery", 1), new String[] {" C ", "TRT", "TRT"}, 'C', i("ftbic:lv_cable"), 'T', commonOrTag("c:ingots/tin"), 'R', commonOrTag("c:dusts/redstone"));
-		shaped("bronze_dust", ftbmat("bronze_dust", 4), new String[] {"CC", "CT"}, 'C', commonOrTag("c:dusts/copper"), 'T', commonOrTag("c:dusts/tin"));
+		shaped("bronze_dust", ftbicStack("bronze_dust", 4), new String[] {"CC", "CT"}, 'C', commonOrTag("c:dusts/copper"), 'T', commonOrTag("c:dusts/tin"));
 		shaped("canning_machine", ftbicStack("canning_machine", 1), new String[] {"TCT", "TMT", "TTT"}, 'T', commonOrTag("c:ingots/tin"), 'M', i("ftbic:machine_block"), 'C', i("ftbic:electronic_circuit"));
 		shaped("carbon_boots", ftbicStack("carbon_boots", 1), new String[] {"CEC", "CAC"}, 'C', i("ftbic:carbon_plate"), 'E', i("ftbic:energy_crystal"), 'A', i("minecraft:netherite_boots"));
 		shaped("carbon_chestplate", ftbicStack("carbon_chestplate", 1), new String[] {"CEC", "CAC", "CCC"}, 'C', i("ftbic:carbon_plate"), 'E', i("ftbic:hv_battery"), 'A', i("minecraft:netherite_chestplate"));
@@ -826,7 +707,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("iridium_alloy", ftbicStack("iridium_alloy", 1), new String[] {"IAI", "ADA", "IAI"}, 'I', commonOrTag("c:ingots/iridium"), 'A', i("ftbic:advanced_alloy"), 'D', commonOrTag("c:gems/diamond"));
 		shaped("iridium_neutron_reflector", ftbicStack("iridium_neutron_reflector", 1), new String[] {"NNN", "NPN", "NNN"}, 'N', i("ftbic:thick_neutron_reflector"), 'P', i("ftbic:iridium_alloy"));
 		shaped("iron_furnace", ftbicStack("iron_furnace", 1), new String[] {" I ", "I I", "IFI"}, 'I', commonOrTag("c:ingots/iron"), 'F', i("minecraft:furnace"));
-		shaped("iron_rod", ftbmat("iron_rod", 1), new String[] {"I", "I"}, 'I', commonOrTag("c:ingots/iron"));
+		shaped("iron_rod", ftbicStack("iron_rod", 1), new String[] {"I", "I"}, 'I', commonOrTag("c:ingots/iron"));
 		shaped("iv_cable", ftbicStack("iv_cable", 6), new String[] {"GGG", " C ", "GGG"}, 'G', commonOrTag("c:glass_blocks/colorless"), 'C', i("ftbic:energy_crystal"));
 		shaped("iv_rectifier", ftbicStack("iv_rectifier", 1), new String[] {"RWR", "PTP", "RWR"}, 'R', i("minecraft:redstone_block"), 'W', i("ftbic:ev_cable"), 'P', commonOrTag("c:ingots/iridium"), 'T', i("ftbic:ev_rectifier"));
 		shaped("large_coolant_cell", ftbicStack("large_coolant_cell", 1), new String[] {"TCT", "TAT", "TCT"}, 'T', commonOrTag("c:ingots/tin"), 'C', i("ftbic:medium_coolant_cell"), 'A', i("ftbic:dense_copper_plate"));
@@ -883,10 +764,10 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shapeless("advanced_circuit", ftbicStack("advanced_circuit", 1), commonOrTag("c:dusts/redstone"), commonOrTag("c:dusts/glowstone"), commonOrTag("c:dusts/redstone"), commonOrTag("c:silicon"), i("ftbic:electronic_circuit"), commonOrTag("c:silicon"), commonOrTag("c:dusts/redstone"), commonOrTag("c:dusts/glowstone"), commonOrTag("c:dusts/redstone"));
 		shapeless("advanced_machine_block", ftbicStack("advanced_machine_block", 1), i("ftbic:copper_coil"), i("ftbic:carbon_plate"), i("ftbic:copper_coil"), i("ftbic:advanced_alloy"), i("ftbic:machine_block"), i("ftbic:advanced_alloy"), i("ftbic:copper_coil"), i("ftbic:carbon_plate"), i("ftbic:copper_coil"));
 		shapeless("carbon_fiber_mesh", ftbicStack("carbon_fiber_mesh", 1), i("ftbic:carbon_fibers"), i("ftbic:carbon_fibers"), i("ftbic:carbon_fibers"), i("ftbic:carbon_fibers"));
-		shapeless("constantan_dust", ftbmat("constantan_dust", 2), commonOrTag("c:dusts/copper"), commonOrTag("c:dusts/nickel"));
+		shapeless("constantan_dust", ftbicStack("constantan_dust", 2), commonOrTag("c:dusts/copper"), commonOrTag("c:dusts/nickel"));
 		shapeless("containment_reactor_plating", ftbicStack("containment_reactor_plating", 1), i("ftbic:reactor_plating"), i("ftbic:advanced_alloy"), i("ftbic:advanced_alloy"));
 		shapeless("electronic_circuit", ftbicStack("electronic_circuit", 1), i("ftbic:lv_cable"), i("ftbic:lv_cable"), i("ftbic:lv_cable"), commonOrTag("c:dusts/redstone"), i("ftbic:industrial_grade_metal"), commonOrTag("c:dusts/redstone"), i("ftbic:lv_cable"), i("ftbic:lv_cable"), i("ftbic:lv_cable"));
-		shapeless("electrum_dust", ftbmat("electrum_dust", 2), commonOrTag("c:dusts/gold"), commonOrTag("c:dusts/silver"));
+		shapeless("electrum_dust", ftbicStack("electrum_dust", 2), commonOrTag("c:dusts/gold"), commonOrTag("c:dusts/silver"));
 		shapeless("enderium_block_to_enderium_ingot", ftbicStack("enderium_ingot", 9), commonOrTag("c:storage_blocks/enderium"));
 		shapeless("enderium_ingot_to_enderium_nugget", ftbicStack("enderium_nugget", 9), commonOrTag("c:ingots/enderium"));
 		shapeless("energy_crystal", ftbicStack("energy_crystal", 1), commonOrTag("c:dusts/redstone"), commonOrTag("c:dusts/glowstone"), commonOrTag("c:dusts/redstone"), commonOrTag("c:silicon"), commonOrTag("c:gems/diamond"), commonOrTag("c:silicon"), commonOrTag("c:dusts/redstone"), commonOrTag("c:dusts/glowstone"), commonOrTag("c:dusts/redstone"));

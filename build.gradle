@@ -89,8 +89,6 @@ dependencies {
     // the auroral reference project.
     implementation("curse.maven:jade-324717:7817285")
 
-    implementation("dev.ftb.mods:ftb-materials:26.1.2.2-SNAPSHOT")
-
     // GuideME - In-game guidebook (optional)
     implementation("org.appliedenergistics:guideme:${guideme_version}")
 }
@@ -105,8 +103,6 @@ tasks.withType(ProcessResources).configureEach {
             minecraft_version_range: minecraft_version_range,
             neoforge_version: neoforge_version,
             neoforge_version_range: neoforge_version_range,
-            ftb_materials_version: ftb_materials_version,
-            ftb_materials_version_range: ftb_materials_version_range,
             guideme_version_range: guideme_version_range,
     ]
 

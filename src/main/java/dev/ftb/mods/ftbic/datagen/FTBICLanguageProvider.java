@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.datagen;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.material.MaterialEntries;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -11,6 +12,11 @@ public class FTBICLanguageProvider extends LanguageProvider {
 
 	@Override
 	protected void addTranslations() {
+		MaterialEntries.all().forEach(entry -> {
+			String key = (entry.component().isBlock() ? "block." : "item.") + FTBIC.MOD_ID + "." + entry.name();
+			add(key, entry.component().translation(entry.material().displayName()));
+		});
+
 		add("itemGroup.ftbic", "FTB Industrial Contraptions");
 
 		add("block.ftbic.active_nuke", "Active Nuke");

@@ -9,6 +9,8 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.SprayPaintable;
 import dev.ftb.mods.ftbic.item.ElectricBlockItem;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.material.MaterialComponent;
+import dev.ftb.mods.ftbic.material.MaterialEntries;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
@@ -55,6 +57,12 @@ public class FTBICModelProvider extends ModelProvider {
 
 	@Override
 	protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+		MaterialEntries.all().forEach(entry -> {
+			if (entry.component().isBlock()) {
+				blockModels.createTrivialCube(entry.block().get());
+			}
+		});
+
 		blockModels.createTrivialCube(FTBICBlocks.REINFORCED_STONE.get());
 		blockModels.createTrivialCube(FTBICBlocks.REINFORCED_GLASS.get());
 		blockModels.createTrivialCube(FTBICBlocks.ENDERIUM_BLOCK.get());
