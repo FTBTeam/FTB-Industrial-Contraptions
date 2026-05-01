@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [26.1.2.7]
+
+### Added
+
+* **Alloy Smelter** — new MV machine with 3 unique input slots and 1 output. Energy use is 3× the Advanced Powered Furnace (48 z/t). Slot constraint: any item placed in one input slot is rejected by the other two so stacks can't be split across slots. The recipe matcher prefers the highest-input recipe that matches your slots, so a 3-input alloy wins over any 2-input subset. Recipes ship for: bronze (3 copper + 1 tin → 4), electrum (1 silver + 1 gold → 2), invar (2 iron + 1 nickel → 3), constantan (1 copper + 1 nickel → 2), steel (1 industrial grade metal + 1 coal *or* 1 charcoal → 1), netherite (2 gold + 2 netherite scrap → 1 ingot, skips smithing), enderium (3 lead + 1 diamond dust + 2 ender pearls → 2), and three steel-based advanced alloy recipes (steel + 2 bronze + aluminum / steel + electrum + aluminum / steel + 2 invar + aluminum → 1 advanced alloy).
+* **Steel material** — new ingot/dust/plate/rod/gear/wire/block set; gateway ingredient for every advanced alloy path.
+* **Macerator: advanced alloy → mixed metal blend** — recovery loop for the existing mixed_metal_blend → advanced_alloy smelting recipe.
+* **Smelting + blasting recipes for every material** with both an ingot and a smeltable input (dust / stone_ore / deepslate_ore / raw_ore → ingot). Vanilla-overlap materials (copper, gold, iron) smelt their FTBIC dust to the vanilla ingot.
+* **Obsidian alloy chain** — `obsidian_dust` compresses to `obsidian_plate` (Compressor, 1:1), and extrudes to `obsidian_rod` (Extruder, 1 dust → 2 rods).
+* **Constantan and silicon material set** restored — silicon as GEM (populates `c:silicon` for advanced circuit / energy crystal / lv solar panel), constantan with the full crafted-only set.
+* **Nickel ore worldgen** — middle-band and small-vein placements wired into the existing biome modifier alongside aluminum/lead/tin.
+* **EnderIO alloying compatibility** — 7 conditional alloy smelter recipes (`conductive_alloy`, `redstone_alloy`, `pulsating_alloy`, `energetic_alloy`, `vibrant_alloy`, `dark_steel`, `end_steel`) gated by `neoforge:mod_loaded` on `enderio`.
+* **ConTeX (XFactHD) optional support** — built-in resource pack ships connected-texture variants for reinforced stone, reinforced glass, and all reinforced cables (LV/MV/HV/EV/IV/burnt). Force-loaded only when the `contex` mod is present; uses the `ftbic:reinforced` block tag so all reinforced variants connect.
+* GuideME pages: new **Alloy Smelter** machine entry; rewritten **Alloys** materials page covering steel and the new advanced alloy paths.
+
+### Changed
+
+* **Materials migrated off FTB Materials.** `ftbmaterials` is no longer a dependency. FTBIC ships its own ore blocks, raw ore items, ingots, nuggets, dusts, plates, rods, gears, wires, storage blocks, raw blocks, and gem (silicon) variants for every material it touches. Tags use the `c:` (NeoForge common) namespace so third-party mods continue to fill gaps. All conditional `ComponentsAvailableCondition` wrappers and tag-empty checks were removed from the recipe provider.
+* **Alloy Smelter recipe matcher** sorts candidates by input count descending, so a 3-ingredient recipe wins over any 2-ingredient subset when all three slots are filled.
+* **Recipe sync handler** auto-iterates `FTBICRecipes.TYPES` instead of a hand-maintained list.
+* **JEI category dimensions** widen to fit up to N input slots; the alloy smelter category renders all 3 input slots in a row.
+* **Alloy Smelter craft recipe** is now 4 carbon plates + advanced circuit + 2 powered furnaces + copper coil + diamond.
+
+### Removed
+
+* Shaped craft recipes for `enderium_ingot`, `enderium_wire`, `enderium_dust`, `mixed_metal_blend_1/2/3`, and shapeless `constantan_dust`. Their replacements live in the Alloy Smelter (enderium ingot, constantan ingot) and in the macerator (mixed metal blend from advanced alloy recovery).
+
 ## [26.1.2.6]
 
 ### Fixed
