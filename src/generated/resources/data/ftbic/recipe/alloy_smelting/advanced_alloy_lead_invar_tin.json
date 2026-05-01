@@ -1,0 +1,21 @@
+{
+  "type": "ftbic:alloy_smelting",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/lead"
+    },
+    {
+      "ingredient": "#c:ingots/invar"
+    },
+    {
+      "ingredient": "#c:ingots/tin"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:advanced_alloy"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:macerating",
+  "inputs": [
+    {
+      "ingredient": "ftbic:advanced_alloy"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:mixed_metal_blend"
+      }
+    }
+  ]
+}

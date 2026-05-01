@@ -476,9 +476,9 @@ public class FTBICRecipeProvider extends RecipeProvider {
 						new IngredientWithCount(commonTag("ingots/electrum"), 1),
 						new IngredientWithCount(commonTag("ingots/tin"), 1)),
 				advancedAlloy);
-		alloy("advanced_alloy_lead_copper_tin",
+		alloy("advanced_alloy_lead_invar_tin",
 				List.of(new IngredientWithCount(commonTag("ingots/lead"), 1),
-						new IngredientWithCount(commonTag("ingots/copper"), 1),
+						new IngredientWithCount(commonTag("ingots/invar"), 1),
 						new IngredientWithCount(commonTag("ingots/tin"), 1)),
 				advancedAlloy);
 	}
@@ -805,7 +805,7 @@ public class FTBICRecipeProvider extends RecipeProvider {
 		shaped("advanced_heat_vent", ftbicStack("advanced_heat_vent", 1), new String[] {"IVI", "IDI", "IVI"}, 'I', i("minecraft:iron_bars"), 'D', commonOrTag("c:gems/diamond"), 'V', i("ftbic:heat_vent"));
 		shaped("advanced_macerator", ftbicStack("advanced_macerator", 1), new String[] {"CCC", "CFC", "WMW"}, 'C', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:macerator"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
 		shaped("advanced_powered_furnace", ftbicStack("advanced_powered_furnace", 1), new String[] {"CCC", "CFC", "WMW"}, 'C', commonOrTag("c:ingots/copper"), 'F', i("ftbic:powered_furnace"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
-		shaped("alloy_smelter", ftbicStack("alloy_smelter", 1), new String[] {"III", "IFI", "WMW"}, 'I', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:advanced_powered_furnace"), 'M', i("ftbic:advanced_machine_block"), 'W', i("ftbic:copper_coil"));
+		shaped("alloy_smelter", ftbicStack("alloy_smelter", 1), new String[] {"CAC", "FWF", "CDC"}, 'C', i("ftbic:carbon_plate"), 'A', i("ftbic:advanced_circuit"), 'F', i("ftbic:powered_furnace"), 'W', i("ftbic:copper_coil"), 'D', commonOrTag("c:gems/diamond"));
 		shaped("antimatter_crystal", ftbicStack("antimatter_crystal", 1), new String[] {"AAC", "ANA", "CAA"}, 'A', i("ftbic:antimatter"), 'C', i("ftbic:energy_crystal"), 'N', i("minecraft:nether_star"));
 		shaped("antimatter_fabricator", ftbicStack("antimatter_constructor", 1), new String[] {"GCG", "MEM", "GCG"}, 'G', commonOrTag("c:dusts/glowstone"), 'M', i("ftbic:advanced_machine_block"), 'C', i("ftbic:iridium_circuit"), 'E', i("minecraft:nether_star"));
 		shaped("basic_generator", ftbicStack("basic_generator", 1), new String[] {" B ", "MMM", " F "}, 'B', i("ftbic:lv_battery"), 'M', i("ftbic:industrial_grade_metal"), 'F', i("ftbic:iron_furnace"));

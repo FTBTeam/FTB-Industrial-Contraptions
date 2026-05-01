@@ -193,15 +193,9 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	private static void hideEmptyInputRecipes(IJeiRuntime runtime) {
 		IRecipeManager jeiRm = runtime.getRecipeManager();
-		hideEmptyFor(jeiRm, FTBICRecipes.SMELTING);
-		hideEmptyFor(jeiRm, FTBICRecipes.MACERATING);
-		hideEmptyFor(jeiRm, FTBICRecipes.SEPARATING);
-		hideEmptyFor(jeiRm, FTBICRecipes.COMPRESSING);
-		hideEmptyFor(jeiRm, FTBICRecipes.REPROCESSING);
-		hideEmptyFor(jeiRm, FTBICRecipes.CANNING);
-		hideEmptyFor(jeiRm, FTBICRecipes.ROLLING);
-		hideEmptyFor(jeiRm, FTBICRecipes.EXTRUDING);
-		hideEmptyFor(jeiRm, FTBICRecipes.ALLOY_SMELTING);
+		for (MachineRecipeType type : MachineRecipeType.ALL) {
+			hideEmptyFor(jeiRm, type);
+		}
 	}
 
 	private static void hideEmptyFor(IRecipeManager jeiRm, MachineRecipeType type) {

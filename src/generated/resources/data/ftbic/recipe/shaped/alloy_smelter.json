@@ -2,15 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "F": "ftbic:advanced_powered_furnace",
-    "I": "ftbic:industrial_grade_metal",
-    "M": "ftbic:advanced_machine_block",
+    "A": "ftbic:advanced_circuit",
+    "C": "ftbic:carbon_plate",
+    "D": "#c:gems/diamond",
+    "F": "ftbic:powered_furnace",
     "W": "ftbic:copper_coil"
   },
   "pattern": [
-    "III",
-    "IFI",
-    "WMW"
+    "CAC",
+    "FWF",
+    "CDC"
   ],
   "result": {
     "id": "ftbic:alloy_smelter"
