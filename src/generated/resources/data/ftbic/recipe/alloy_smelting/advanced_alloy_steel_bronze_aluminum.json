@@ -2,9 +2,10 @@
   "type": "ftbic:alloy_smelting",
   "inputs": [
     {
-      "ingredient": "#c:ingots/iron"
+      "ingredient": "#c:ingots/steel"
     },
     {
+      "count": 2,
       "ingredient": "#c:ingots/bronze"
     },
     {

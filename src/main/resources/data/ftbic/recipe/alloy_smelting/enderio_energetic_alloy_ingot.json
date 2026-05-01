@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio"
+    }
+  ],
+  "type": "ftbic:alloy_smelting",
+  "inputs": [
+    {"count": 1, "ingredient": "#c:dusts/redstone"},
+    {"count": 1, "ingredient": "#c:ingots/conductive_alloy"},
+    {"count": 1, "ingredient": "#c:ingots/gold"}
+  ],
+  "outputs": [
+    {"item": {"count": 2, "id": "enderio:energetic_alloy_ingot"}}
+  ]
+}

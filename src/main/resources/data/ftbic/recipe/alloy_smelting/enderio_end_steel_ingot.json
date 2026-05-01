@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio"
+    }
+  ],
+  "type": "ftbic:alloy_smelting",
+  "inputs": [
+    {"count": 1, "ingredient": "#c:end_stones"},
+    {"count": 1, "ingredient": "#c:ingots/dark_steel"},
+    {"count": 1, "ingredient": "#c:obsidians"}
+  ],
+  "outputs": [
+    {"item": {"count": 2, "id": "enderio:end_steel_ingot"}}
+  ]
+}

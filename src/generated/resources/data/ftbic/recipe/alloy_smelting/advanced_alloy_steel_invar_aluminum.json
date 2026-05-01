@@ -2,13 +2,14 @@
   "type": "ftbic:alloy_smelting",
   "inputs": [
     {
-      "ingredient": "#c:ingots/lead"
+      "ingredient": "#c:ingots/steel"
     },
     {
-      "ingredient": "#c:ingots/electrum"
+      "count": 2,
+      "ingredient": "#c:ingots/invar"
     },
     {
-      "ingredient": "#c:ingots/tin"
+      "ingredient": "#c:ingots/aluminum"
     }
   ],
   "outputs": [

@@ -21,6 +21,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MachineBlockEntity extends BasicMachineBlockEntity {
@@ -89,8 +90,15 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 			return null;
 		}
 		recipeDirty = false;
+		List<MachineRecipe> candidates = new ArrayList<>();
 		for (RecipeHolder<?> holder : server.recipeAccess().recipeMap().byType(recipeType.TYPE.get())) {
-			if (holder.value() instanceof MachineRecipe mr && recipeMatchesInputs(mr)) {
+			if (holder.value() instanceof MachineRecipe mr) {
+				candidates.add(mr);
+			}
+		}
+		candidates.sort((a, b) -> Integer.compare(b.inputs.size(), a.inputs.size()));
+		for (MachineRecipe mr : candidates) {
+			if (recipeMatchesInputs(mr)) {
 				cachedRecipe = mr;
 				updateMaxProgress();
 				return mr;

@@ -466,20 +466,20 @@ public class FTBICRecipeProvider extends RecipeProvider {
 				ftbicStack("steel_ingot", 1));
 
 		ItemStackTemplate advancedAlloy = new ItemStackTemplate(FTBICItems.ADVANCED_ALLOY.item.get(), 1);
-		alloy("advanced_alloy_iron_bronze_aluminum",
-				List.of(new IngredientWithCount(commonTag("ingots/iron"), 1),
-						new IngredientWithCount(commonTag("ingots/bronze"), 1),
+		alloy("advanced_alloy_steel_bronze_aluminum",
+				List.of(new IngredientWithCount(commonTag("ingots/steel"), 1),
+						new IngredientWithCount(commonTag("ingots/bronze"), 2),
 						new IngredientWithCount(commonTag("ingots/aluminum"), 1)),
 				advancedAlloy);
-		alloy("advanced_alloy_lead_electrum_tin",
-				List.of(new IngredientWithCount(commonTag("ingots/lead"), 1),
+		alloy("advanced_alloy_steel_electrum_aluminum",
+				List.of(new IngredientWithCount(commonTag("ingots/steel"), 1),
 						new IngredientWithCount(commonTag("ingots/electrum"), 1),
-						new IngredientWithCount(commonTag("ingots/tin"), 1)),
+						new IngredientWithCount(commonTag("ingots/aluminum"), 1)),
 				advancedAlloy);
-		alloy("advanced_alloy_lead_invar_tin",
-				List.of(new IngredientWithCount(commonTag("ingots/lead"), 1),
-						new IngredientWithCount(commonTag("ingots/invar"), 1),
-						new IngredientWithCount(commonTag("ingots/tin"), 1)),
+		alloy("advanced_alloy_steel_invar_aluminum",
+				List.of(new IngredientWithCount(commonTag("ingots/steel"), 1),
+						new IngredientWithCount(commonTag("ingots/invar"), 2),
+						new IngredientWithCount(commonTag("ingots/aluminum"), 1)),
 				advancedAlloy);
 	}
 
