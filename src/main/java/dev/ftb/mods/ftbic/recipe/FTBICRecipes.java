@@ -24,6 +24,7 @@ public final class FTBICRecipes {
 	public static final MachineRecipeType CANNING = new MachineRecipeType("canning", true, false, TYPES, SERIALIZERS);
 	public static final MachineRecipeType ROLLING = new MachineRecipeType("rolling", false, false, TYPES, SERIALIZERS);
 	public static final MachineRecipeType EXTRUDING = new MachineRecipeType("extruding", false, false, TYPES, SERIALIZERS);
+	public static final MachineRecipeType ALLOY_SMELTING = new MachineRecipeType("alloy_smelting", false, false, TYPES, SERIALIZERS);
 
 	// Basic generator fuel burn-time recipes.
 	public static final DeferredHolder<RecipeType<?>, RecipeType<?>> BASIC_GENERATOR_FUEL = TYPES.register("basic_generator_fuel",

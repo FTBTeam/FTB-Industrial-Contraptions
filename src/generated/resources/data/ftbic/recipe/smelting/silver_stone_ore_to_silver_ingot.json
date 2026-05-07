@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "ingredient": "ftbic:silver_stone_ore",
+  "result": {
+    "id": "ftbic:silver_ingot"
+  },
+  "show_notification": false
+}

@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:ores/tin"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "tin_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -24,7 +9,7 @@
     {
       "item": {
         "count": 2,
-        "id": "ftbmaterials:tin_dust"
+        "id": "ftbic:tin_dust"
       }
     }
   ]

@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:raw_materials/nickel"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "nickel_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -23,13 +8,13 @@
   "outputs": [
     {
       "item": {
-        "id": "ftbmaterials:nickel_dust"
+        "id": "ftbic:nickel_dust"
       }
     },
     {
       "chance": 0.35,
       "item": {
-        "id": "ftbmaterials:nickel_dust"
+        "id": "ftbic:nickel_dust"
       }
     }
   ]

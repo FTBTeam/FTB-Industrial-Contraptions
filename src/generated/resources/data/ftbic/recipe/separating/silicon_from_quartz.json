@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:gems/quartz"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "silicon_gem"
-      ]
-    }
-  ],
   "type": "ftbic:separating",
   "inputs": [
     {
@@ -24,7 +9,7 @@
     {
       "item": {
         "count": 3,
-        "id": "ftbmaterials:silicon_gem"
+        "id": "ftbic:silicon_gem"
       }
     }
   ]

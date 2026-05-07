@@ -1,0 +1,20 @@
+{
+  "type": "ftbic:alloy_smelting",
+  "inputs": [
+    {
+      "count": 2,
+      "ingredient": "#c:ingots/iron"
+    },
+    {
+      "ingredient": "#c:ingots/nickel"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 3,
+        "id": "ftbic:invar_ingot"
+      }
+    }
+  ]
+}

@@ -15,6 +15,7 @@ public final class FTBICDataGen {
 		event.createProvider(FTBICLanguageProvider::new);
 		event.createProvider(FTBICBlockTagsProvider::new);
 		event.createProvider(FTBICItemTagsProvider::new);
+		event.createProvider(FTBICLootTableProvider::new);
 	}
 
 	private FTBICDataGen() {}

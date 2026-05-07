@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:raw_materials/uranium"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "uranium_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -23,13 +8,13 @@
   "outputs": [
     {
       "item": {
-        "id": "ftbmaterials:uranium_dust"
+        "id": "ftbic:uranium_dust"
       }
     },
     {
       "chance": 0.35,
       "item": {
-        "id": "ftbmaterials:uranium_dust"
+        "id": "ftbic:uranium_dust"
       }
     }
   ]

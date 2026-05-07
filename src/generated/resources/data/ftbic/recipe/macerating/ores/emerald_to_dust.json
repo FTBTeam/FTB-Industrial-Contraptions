@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:ores/emerald"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "emerald_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -24,7 +9,7 @@
     {
       "item": {
         "count": 2,
-        "id": "ftbmaterials:emerald_dust"
+        "id": "ftbic:emerald_dust"
       }
     }
   ]

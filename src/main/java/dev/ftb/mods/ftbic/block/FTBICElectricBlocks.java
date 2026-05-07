@@ -161,6 +161,14 @@ public interface FTBICElectricBlocks {
 			.energyUsage(FTBICConfig.MACHINES.ADVANCED_POWERED_FURNACE_USE)
 			.io(1, 1);
 
+	ElectricBlockInstance ALLOY_SMELTER = register("alloy_smelter", AlloySmelterBlockEntity::new)
+			.advanced()
+			.canBurn()
+			.energyCapacity(FTBICConfig.MACHINES.ALLOY_SMELTER_CAPACITY)
+			.maxEnergyInput(FTBICConfig.ENERGY.MV_TRANSFER_RATE)
+			.energyUsage(FTBICConfig.MACHINES.ALLOY_SMELTER_USE)
+			.io(3, 1);
+
 	ElectricBlockInstance ADVANCED_MACERATOR = register("advanced_macerator", AdvancedMaceratorBlockEntity::new)
 			.wip()
 			.advanced()

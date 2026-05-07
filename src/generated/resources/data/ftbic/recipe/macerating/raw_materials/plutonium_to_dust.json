@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:raw_materials/plutonium"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "plutonium_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -23,13 +8,13 @@
   "outputs": [
     {
       "item": {
-        "id": "ftbmaterials:plutonium_dust"
+        "id": "ftbic:plutonium_dust"
       }
     },
     {
       "chance": 0.35,
       "item": {
-        "id": "ftbmaterials:plutonium_dust"
+        "id": "ftbic:plutonium_dust"
       }
     }
   ]

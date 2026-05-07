@@ -3,7 +3,7 @@
   "inputs": [
     {
       "count": 2,
-      "ingredient": "ftbmaterials:diamond_dust"
+      "ingredient": "ftbic:diamond_dust"
     }
   ],
   "outputs": [

@@ -1,0 +1,22 @@
+{
+  "values": [
+    "ftbic:aluminum_gear",
+    "ftbic:bronze_gear",
+    "ftbic:constantan_gear",
+    "ftbic:copper_gear",
+    "ftbic:electrum_gear",
+    "ftbic:gold_gear",
+    "ftbic:invar_gear",
+    "ftbic:iridium_gear",
+    "ftbic:iron_gear",
+    "ftbic:lead_gear",
+    "ftbic:netherite_gear",
+    "ftbic:nickel_gear",
+    "ftbic:obsidian_gear",
+    "ftbic:plutonium_gear",
+    "ftbic:silver_gear",
+    "ftbic:steel_gear",
+    "ftbic:tin_gear",
+    "ftbic:uranium_gear"
+  ]
+}

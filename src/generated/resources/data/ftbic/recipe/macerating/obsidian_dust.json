@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:obsidians"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "obsidian_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -23,7 +8,7 @@
   "outputs": [
     {
       "item": {
-        "id": "ftbmaterials:obsidian_dust"
+        "id": "ftbic:obsidian_dust"
       }
     }
   ]

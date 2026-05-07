@@ -1,30 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:and",
-      "values": [
-        {
-          "type": "neoforge:not",
-          "value": {
-            "type": "neoforge:tag_empty",
-            "tag": "c:ingots/constantan"
-          }
-        },
-        {
-          "type": "ftbmaterials:components_available",
-          "used_materials": [
-            "constantan_ingot"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "constantan_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -34,7 +8,7 @@
   "outputs": [
     {
       "item": {
-        "id": "ftbmaterials:constantan_dust"
+        "id": "ftbic:constantan_dust"
       }
     }
   ]

@@ -15,9 +15,14 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class MachineRecipeType {
+	private static final List<MachineRecipeType> INSTANCES = new ArrayList<>();
+	public static final List<MachineRecipeType> ALL = Collections.unmodifiableList(INSTANCES);
+
 	public final String id;
 	public final boolean twoInputs;
 	public final boolean extraOutput;
@@ -40,6 +45,8 @@ public final class MachineRecipeType {
 
 		this.SERIALIZER = (DeferredHolder) serializerRegistry.register(id,
 				() -> new RecipeSerializer<>(buildMapCodec(), buildStreamCodec()));
+
+		INSTANCES.add(this);
 	}
 
 	private MapCodec<MachineRecipe> buildMapCodec() {

@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:ores/quartz"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "quartz_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -24,7 +9,7 @@
     {
       "item": {
         "count": 2,
-        "id": "ftbmaterials:quartz_dust"
+        "id": "ftbic:quartz_dust"
       }
     }
   ]

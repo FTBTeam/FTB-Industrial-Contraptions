@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio"
+    }
+  ],
+  "type": "ftbic:alloy_smelting",
+  "inputs": [
+    {"count": 1, "ingredient": "#c:ingots/iron"},
+    {"count": 1, "ingredient": "#c:ingots/copper"}
+  ],
+  "outputs": [
+    {"item": {"count": 2, "id": "enderio:conductive_alloy_ingot"}}
+  ]
+}

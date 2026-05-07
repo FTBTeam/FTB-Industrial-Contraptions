@@ -1,13 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:dyes/black"
-      }
-    }
-  ],
   "type": "ftbic:canning",
   "inputs": [
     {

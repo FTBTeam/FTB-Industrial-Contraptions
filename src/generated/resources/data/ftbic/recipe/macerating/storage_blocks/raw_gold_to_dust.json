@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:storage_blocks/raw_gold"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "gold_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -24,7 +9,7 @@
     {
       "item": {
         "count": 9,
-        "id": "ftbmaterials:gold_dust"
+        "id": "ftbic:gold_dust"
       }
     }
   ]

@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:storage_blocks/raw_nickel"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "nickel_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -24,7 +9,7 @@
     {
       "item": {
         "count": 9,
-        "id": "ftbmaterials:nickel_dust"
+        "id": "ftbic:nickel_dust"
       }
     }
   ]

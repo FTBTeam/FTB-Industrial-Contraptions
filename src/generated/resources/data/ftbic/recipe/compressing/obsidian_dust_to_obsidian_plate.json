@@ -1,0 +1,15 @@
+{
+  "type": "ftbic:compressing",
+  "inputs": [
+    {
+      "ingredient": "ftbic:obsidian_dust"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ftbic:obsidian_plate"
+      }
+    }
+  ]
+}

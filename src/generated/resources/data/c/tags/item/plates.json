@@ -1,0 +1,22 @@
+{
+  "values": [
+    "ftbic:aluminum_plate",
+    "ftbic:bronze_plate",
+    "ftbic:constantan_plate",
+    "ftbic:copper_plate",
+    "ftbic:electrum_plate",
+    "ftbic:gold_plate",
+    "ftbic:invar_plate",
+    "ftbic:iridium_plate",
+    "ftbic:iron_plate",
+    "ftbic:lead_plate",
+    "ftbic:netherite_plate",
+    "ftbic:nickel_plate",
+    "ftbic:obsidian_plate",
+    "ftbic:plutonium_plate",
+    "ftbic:silver_plate",
+    "ftbic:steel_plate",
+    "ftbic:tin_plate",
+    "ftbic:uranium_plate"
+  ]
+}

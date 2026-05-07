@@ -1,13 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:slime_balls"
-      }
-    }
-  ],
   "type": "minecraft:campfire_cooking",
   "category": "food",
   "cookingtime": 600,

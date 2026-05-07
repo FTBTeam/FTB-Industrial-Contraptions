@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": "ftbic:steel_dust",
+  "result": {
+    "id": "ftbic:steel_ingot"
+  },
+  "show_notification": false
+}

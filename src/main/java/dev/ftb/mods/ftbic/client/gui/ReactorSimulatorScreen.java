@@ -179,7 +179,7 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 
 		for (int row = 0; row < 6; row++) {
 			for (int col = 0; col < 9; col++) {
-				drawSlot(g, gridLeft + col * 18, topPos + GRID_TOP + row * 18 - 1);
+				drawSlot(g, gridLeft + col * 18, topPos + GRID_TOP + row * 18);
 			}
 		}
 
@@ -187,7 +187,7 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		if (active < 9) {
 			int maskX = gridLeft + 1 + active * 18;
 			int maskW = (9 - active) * 18;
-			g.fill(maskX, topPos + GRID_TOP - 1, maskX + maskW, topPos + GRID_BOTTOM, overlayColor);
+			g.fill(maskX, topPos + GRID_TOP, maskX + maskW, topPos + GRID_BOTTOM, overlayColor);
 		}
 
 		drawSpeedRow(g, mouseX, mouseY);

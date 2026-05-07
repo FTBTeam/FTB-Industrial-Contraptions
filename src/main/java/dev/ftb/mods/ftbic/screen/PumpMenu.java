@@ -8,7 +8,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.material.Fluids;
 
 public class PumpMenu extends ElectricBlockMenu {
@@ -39,7 +38,7 @@ public class PumpMenu extends ElectricBlockMenu {
 		ElectricBlockEntityContainer container = new ElectricBlockEntityContainer(blockEntity);
 		int inputs = blockEntity.inputItems.length;
 		int outputs = blockEntity.outputItems.length;
-		if (inputs > 0) addSlot(new Slot(container, 0, 53, 17));
+		if (inputs > 0) addSlot(new InputSlot(container, 0, 53, 17));
 		if (outputs > 0) addSlot(new OutputSlot(container, inputs, 53, 53));
 		machineSlotCount = inputs + outputs;
 		addBatterySlot(107, 53);

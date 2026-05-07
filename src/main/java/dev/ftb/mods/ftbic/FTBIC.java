@@ -6,6 +6,7 @@ import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.FTBICBlockEntities;
 import dev.ftb.mods.ftbic.entity.FTBICEntities;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.material.MaterialEntries;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.registry.ModCreativeTabs;
 import dev.ftb.mods.ftbic.registry.ModDataComponents;
@@ -33,6 +34,7 @@ public class FTBIC {
 
 	public FTBIC(IEventBus eventBus, ModContainer container) {
 		FTBICElectricBlocks.init();
+		MaterialEntries.register();
 
 		ModDataComponents.DATA_COMPONENTS.register(eventBus);
 		ModCreativeTabs.TABS.register(eventBus);

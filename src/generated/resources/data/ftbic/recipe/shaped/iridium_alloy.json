@@ -1,31 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:and",
-      "values": [
-        {
-          "type": "neoforge:not",
-          "value": {
-            "type": "neoforge:tag_empty",
-            "tag": "c:ingots/iridium"
-          }
-        },
-        {
-          "type": "ftbmaterials:components_available",
-          "used_materials": [
-            "iridium_ingot"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:gems/diamond"
-      }
-    }
-  ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {

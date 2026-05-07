@@ -70,6 +70,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.CANNING, FTBICElectricBlocks.CANNING_MACHINE, helper));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.ROLLING, FTBICElectricBlocks.ROLLER, helper));
 		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.EXTRUDING, FTBICElectricBlocks.EXTRUDER, helper));
+		r.addRecipeCategories(new MachineRecipeCategory(FTBICRecipes.ALLOY_SMELTING, FTBICElectricBlocks.ALLOY_SMELTER, helper, 3));
 		r.addRecipeCategories(new BasicGeneratorFuelCategory(helper));
 		r.addRecipeCategories(new GeothermalFuelCategory(helper));
 		r.addRecipeCategories(new AntimatterBoostCategory(helper));
@@ -192,14 +193,9 @@ public class FTBICJEIPlugin implements IModPlugin {
 
 	private static void hideEmptyInputRecipes(IJeiRuntime runtime) {
 		IRecipeManager jeiRm = runtime.getRecipeManager();
-		hideEmptyFor(jeiRm, FTBICRecipes.SMELTING);
-		hideEmptyFor(jeiRm, FTBICRecipes.MACERATING);
-		hideEmptyFor(jeiRm, FTBICRecipes.SEPARATING);
-		hideEmptyFor(jeiRm, FTBICRecipes.COMPRESSING);
-		hideEmptyFor(jeiRm, FTBICRecipes.REPROCESSING);
-		hideEmptyFor(jeiRm, FTBICRecipes.CANNING);
-		hideEmptyFor(jeiRm, FTBICRecipes.ROLLING);
-		hideEmptyFor(jeiRm, FTBICRecipes.EXTRUDING);
+		for (MachineRecipeType type : MachineRecipeType.ALL) {
+			hideEmptyFor(jeiRm, type);
+		}
 	}
 
 	private static void hideEmptyFor(IRecipeManager jeiRm, MachineRecipeType type) {
@@ -244,6 +240,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addCraftingStation(catalystType(FTBICRecipes.CANNING), FTBICElectricBlocks.CANNING_MACHINE.block.get());
 		r.addCraftingStation(catalystType(FTBICRecipes.ROLLING), FTBICElectricBlocks.ROLLER.block.get());
 		r.addCraftingStation(catalystType(FTBICRecipes.EXTRUDING), FTBICElectricBlocks.EXTRUDER.block.get());
+		r.addCraftingStation(catalystType(FTBICRecipes.ALLOY_SMELTING), FTBICElectricBlocks.ALLOY_SMELTER.block.get());
 		r.addCraftingStation(RecipeTypes.CRAFTING, FTBICElectricBlocks.POWERED_CRAFTING_TABLE.block.get());
 		r.addCraftingStation(RecipeTypes.SMELTING, FTBICBlocks.IRON_FURNACE.get());
 		r.addCraftingStation(basicGeneratorFuelType(), FTBICElectricBlocks.BASIC_GENERATOR.block.get());

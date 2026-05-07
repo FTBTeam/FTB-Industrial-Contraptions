@@ -42,6 +42,7 @@ public final class NuclearFallout {
 
 				if (state.is(FTBICUtils.REINFORCED) || state.getDestroySpeed(level, pos) < 0F) continue;
 				if (!level.mayInteract(null, pos)) continue;
+				if (isShieldedFromCenter(level, center, pos)) continue;
 
 				BlockState replacement = falloutFor(state, level, pos, rng);
 				if (replacement == null) continue;
@@ -65,6 +66,41 @@ public final class NuclearFallout {
 				}
 			}
 		}
+	}
+
+	private static boolean isShieldedFromCenter(ServerLevel level, BlockPos center, BlockPos surface) {
+		int dx = surface.getX() - center.getX();
+		int dy = surface.getY() - center.getY();
+		int dz = surface.getZ() - center.getZ();
+		double dist = Math.sqrt((double) dx * dx + (double) dy * dy + (double) dz * dz);
+		if (dist <= 1D) return false;
+
+		BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
+		int px = Integer.MIN_VALUE;
+		int py = Integer.MIN_VALUE;
+		int pz = Integer.MIN_VALUE;
+		long surfaceKey = surface.asLong();
+		long centerKey = center.asLong();
+
+		for (double l = 0.5D; l < dist; l += 0.5D) {
+			int x = center.getX() + Mth.floor(dx * l / dist + 0.5D);
+			int y = center.getY() + Mth.floor(dy * l / dist + 0.5D);
+			int z = center.getZ() + Mth.floor(dz * l / dist + 0.5D);
+			if (px == x && py == y && pz == z) continue;
+			px = x;
+			py = y;
+			pz = z;
+
+			mpos.set(x, y, z);
+			long key = mpos.asLong();
+			if (key == surfaceKey || key == centerKey) continue;
+
+			BlockState s = level.getBlockState(mpos);
+			if (s.is(FTBICUtils.REINFORCED) || s.getDestroySpeed(level, mpos) < 0F) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static BlockState falloutFor(BlockState state, ServerLevel level, BlockPos pos, Random rng) {

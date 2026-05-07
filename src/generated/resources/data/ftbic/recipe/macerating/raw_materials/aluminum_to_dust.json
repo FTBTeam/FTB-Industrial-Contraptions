@@ -1,19 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:raw_materials/aluminum"
-      }
-    },
-    {
-      "type": "ftbmaterials:components_available",
-      "used_materials": [
-        "aluminum_dust"
-      ]
-    }
-  ],
   "type": "ftbic:macerating",
   "inputs": [
     {
@@ -23,13 +8,13 @@
   "outputs": [
     {
       "item": {
-        "id": "ftbmaterials:aluminum_dust"
+        "id": "ftbic:aluminum_dust"
       }
     },
     {
       "chance": 0.35,
       "item": {
-        "id": "ftbmaterials:aluminum_dust"
+        "id": "ftbic:aluminum_dust"
       }
     }
   ]

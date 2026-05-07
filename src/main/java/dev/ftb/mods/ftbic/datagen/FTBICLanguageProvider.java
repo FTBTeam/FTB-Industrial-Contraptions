@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.datagen;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.material.MaterialEntries;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -11,6 +12,17 @@ public class FTBICLanguageProvider extends LanguageProvider {
 
 	@Override
 	protected void addTranslations() {
+		MaterialEntries.all().forEach(entry -> {
+			String text = entry.component().translation(entry.material().displayName());
+			String suffix = FTBIC.MOD_ID + "." + entry.name();
+			if (entry.component().isBlock()) {
+				add("block." + suffix, text);
+				add("item." + suffix, text);
+			} else {
+				add("item." + suffix, text);
+			}
+		});
+
 		add("itemGroup.ftbic", "FTB Industrial Contraptions");
 
 		add("block.ftbic.active_nuke", "Active Nuke");
@@ -19,6 +31,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("block.ftbic.advanced_macerator", "Advanced Macerator");
 		add("block.ftbic.advanced_machine_block", "Advanced Machine Block");
 		add("block.ftbic.advanced_powered_furnace", "Advanced Powered Furnace");
+		add("block.ftbic.alloy_smelter", "Alloy Smelter");
 		add("block.ftbic.antimatter_constructor", "Antimatter Constructor");
 		add("block.ftbic.basic_generator", "Basic Generator");
 		add("block.ftbic.burnt_cable", "Burnt Cable");
@@ -95,6 +108,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.advanced_macerator", "Advanced Macerator");
 		add("item.ftbic.advanced_machine_block", "Advanced Machine Block");
 		add("item.ftbic.advanced_powered_furnace", "Advanced Powered Furnace");
+		add("item.ftbic.alloy_smelter", "Alloy Smelter");
 		add("item.ftbic.antimatter", "Antimatter");
 		add("item.ftbic.antimatter_constructor", "Antimatter Constructor");
 		add("item.ftbic.antimatter_crystal", "Antimatter Crystal");
@@ -241,6 +255,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("item.ftbic.uranium_fuel_rod", "Uranium Fuel Rod");
 		add("item.ftbic.wind_mill", "Wind Mill");
 
+		add("recipe.ftbic.alloy_smelting", "Alloy Smelting");
 		add("recipe.ftbic.canning", "Canning");
 		add("recipe.ftbic.compressing", "Compressing");
 		add("recipe.ftbic.extruding", "Extruding");

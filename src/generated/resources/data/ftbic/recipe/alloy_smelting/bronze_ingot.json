@@ -1,0 +1,20 @@
+{
+  "type": "ftbic:alloy_smelting",
+  "inputs": [
+    {
+      "count": 3,
+      "ingredient": "#c:ingots/copper"
+    },
+    {
+      "ingredient": "#c:ingots/tin"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 4,
+        "id": "ftbic:bronze_ingot"
+      }
+    }
+  ]
+}

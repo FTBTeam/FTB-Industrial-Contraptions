@@ -2,11 +2,15 @@ package dev.ftb.mods.ftbic.datagen;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.item.FTBICItems;
+import dev.ftb.mods.ftbic.material.Material;
+import dev.ftb.mods.ftbic.material.MaterialComponent;
+import dev.ftb.mods.ftbic.material.MaterialEntries;
 import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -17,6 +21,8 @@ import java.util.concurrent.CompletableFuture;
 public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
 	private static final TagKey<Item> SCRAPPABLE = TagKey.create(Registries.ITEM, FTBIC.id("scrappable"));
 	private static final TagKey<Item> REACTOR_COMPONENT = TagKey.create(Registries.ITEM, FTBIC.id("reactor_component"));
+	private static final TagKey<Item> REINFORCED = TagKey.create(Registries.ITEM, FTBIC.id("reinforced"));
+	private static final TagKey<Item> COMMON_SILICON = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "silicon"));
 
 	public FTBICItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
 		super(output, Registries.ITEM, lookup, item -> item.builtInRegistryHolder().key(), FTBIC.MOD_ID);
@@ -24,7 +30,30 @@ public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
 
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
+		for (var entry : MaterialEntries.all()) {
+			Item item = entry.item().get();
+			Material mat = entry.material();
+			MaterialComponent comp = entry.component();
+			for (String container : comp.containerTags()) {
+				tag(commonItemTag(container)).add(item);
+			}
+			tag(commonItemTag(comp.perMaterialTag(mat.tagName()))).add(item);
+			if (mat == Material.SILICON && comp == MaterialComponent.GEM) {
+				tag(COMMON_SILICON).add(item);
+			}
+		}
+
 		tag(ItemTags.ARROWS).add(FTBICItems.NUKE_ARROW.get());
+
+		tag(REINFORCED)
+				.add(FTBICItems.REINFORCED_STONE.get())
+				.add(FTBICItems.REINFORCED_GLASS.get())
+				.add(FTBICItems.LV_REINFORCED_CABLE.get())
+				.add(FTBICItems.MV_REINFORCED_CABLE.get())
+				.add(FTBICItems.HV_REINFORCED_CABLE.get())
+				.add(FTBICItems.EV_REINFORCED_CABLE.get())
+				.add(FTBICItems.IV_REINFORCED_CABLE.get())
+				.add(FTBICItems.BURNT_REINFORCED_CABLE.get());
 
 		tag(FTBICUtils.UNCANNABLE_FOOD)
 				.add(FTBICItems.CANNED_FOOD.get())
@@ -71,5 +100,16 @@ public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
 				.addOptionalTag(ItemTags.LEAVES)
 				.addOptionalTag(ItemTags.SAPLINGS)
 				.addOptionalTag(ItemTags.DIRT);
+	}
+
+	private static TagKey<Item> commonItemTag(String fullPath) {
+		Identifier id;
+		if (fullPath.contains(":")) {
+			String[] parts = fullPath.split(":", 2);
+			id = Identifier.fromNamespaceAndPath(parts[0], parts[1]);
+		} else {
+			id = Identifier.fromNamespaceAndPath("c", fullPath);
+		}
+		return TagKey.create(Registries.ITEM, id);
 	}
 }

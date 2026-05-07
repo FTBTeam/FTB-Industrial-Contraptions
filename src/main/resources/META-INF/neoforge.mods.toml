@@ -26,15 +26,15 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.${mod_id}]]
-modId = "ftbmaterials"
-type = "required"
-versionRange = "${ftb_materials_version_range}"
-ordering = "BEFORE"
-side = "BOTH"
-
-[[dependencies.${mod_id}]]
 modId = "guideme"
 type = "optional"
 versionRange = "${guideme_version_range}"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "contex"
+type = "optional"
+versionRange = "*"
+ordering = "BEFORE"
+side = "CLIENT"

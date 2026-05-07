@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:advanced_circuit",
+    "C": "ftbic:carbon_plate",
+    "D": "#c:gems/diamond",
+    "F": "ftbic:powered_furnace",
+    "W": "ftbic:copper_coil"
+  },
+  "pattern": [
+    "CAC",
+    "FWF",
+    "CDC"
+  ],
+  "result": {
+    "id": "ftbic:alloy_smelter"
+  },
+  "show_notification": false
+}
