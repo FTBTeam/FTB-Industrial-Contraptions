@@ -106,7 +106,9 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
 		}
 		if (recipeType == FTBICRecipes.SMELTING && inputItems.length > 0 && !inputItems[0].isEmpty()) {
 			for (RecipeHolder<SmeltingRecipe> holder : server.recipeAccess().recipeMap().byType(RecipeType.SMELTING)) {
-				SmeltingRecipe sr = holder.value();
+				if (!(holder.value() instanceof AbstractCookingRecipe sr)) {
+					continue;
+				}
 				if (sr.input().test(inputItems[0])) {
 					cachedRecipe = adaptCooking(sr, inputItems[0]);
 					updateMaxProgress();
