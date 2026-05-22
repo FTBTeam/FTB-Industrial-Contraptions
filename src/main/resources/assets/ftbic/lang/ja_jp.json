@@ -446,11 +446,11 @@
   "itemGroup.ftbic": "FTB Industrial Contraptions",
   "recipe.ftbic.alloy_smelting": "合金精錬",
   "recipe.ftbic.canning": "缶詰加工",
-  "recipe.ftbic.compressing": "圧縮",
+  "recipe.ftbic.compressing": "圧縮加工",
   "recipe.ftbic.extruding": "押出成形",
-  "recipe.ftbic.macerating": "粉砕",
+  "recipe.ftbic.macerating": "粉砕加工",
   "recipe.ftbic.reconstructing": "再構築",
   "recipe.ftbic.reprocessing": "再処理",
-  "recipe.ftbic.rolling": "圧延",
+  "recipe.ftbic.rolling": "圧延加工",
   "recipe.ftbic.separating": "分解"
 }
