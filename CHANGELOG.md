@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [26.1.2.9]
+
+### Fixed
+
+* **Alloy Smelter** and **Block of Enderium** now drop when mined. Both blocks were missing their block loot tables, so they vanished on break and showed no drop in JEI. The Alloy Smelter also drops its contents (inputs, outputs, upgrades, and battery) as before.
+
 ## [26.1.2.8]
 
 ### Fixed
