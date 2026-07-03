@@ -45,10 +45,10 @@ public class GeothermalFuelCategory extends AbstractRecipeCategory<GeothermalFue
 		long zapsPerBucket = Math.round(zapsPerMb * 1000D);
 		long zapsPerTank = Math.round(zapsPerMb * tankCap);
 
-		builder.addText(Component.literal(String.format("%.0f z/mB @ %,d z/bucket", zapsPerMb, zapsPerBucket)), 120, 9)
+		builder.addText(Component.translatable("ftbic.jei.zaps_per_mb", zapsPerMb, zapsPerBucket), 120, 9)
 				.setPosition(26, 3)
 				.setColor(0xFF404040);
-		builder.addText(Component.literal(String.format("= %,d zaps / full tank (%d mB)", zapsPerTank, tankCap)), 120, 9)
+		builder.addText(Component.translatable("ftbic.jei.zaps_per_tank", zapsPerTank, tankCap), 120, 9)
 				.setPosition(26, 14)
 				.setColor(0xFF0A7F0A);
 	}

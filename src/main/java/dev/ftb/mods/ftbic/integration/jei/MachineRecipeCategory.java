@@ -42,7 +42,7 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 
 	public MachineRecipeCategory(MachineRecipeType type, ElectricBlockInstance machine, IGuiHelper helper) {
 		super(jeiRecipeType(type),
-				Component.literal(machine.name),
+				Component.translatable("block.ftbic." + machine.id),
 				helper.createDrawableItemStack(new ItemStack(machine.item.get())),
 				WIDTH,
 				HEIGHT);
@@ -95,7 +95,7 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 			double chance = out.chance();
 			if (chance < 1.0D) {
 				slot.addRichTooltipCallback((slotView, tooltip) ->
-						tooltip.add(Component.literal(String.format("Chance: %.1f%%", chance * 100D))
+						tooltip.add(Component.translatable("ftbic.jei.chance", chance * 100D)
 								.withStyle(ChatFormatting.GRAY)));
 			}
 			ox += 18;
@@ -115,8 +115,8 @@ public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<M
 			double energyPerTick = machine.energyUsage.get();
 			long zaps = Math.round(ticks * energyPerTick);
 			double seconds = ticks / 20.0D;
-			tooltip.add(Component.literal(String.format("%.1fs · %,d zaps", seconds, zaps)));
-			tooltip.add(Component.literal(String.format("%.0f z/t", energyPerTick))
+			tooltip.add(Component.translatable("ftbic.jei.recipe_time_energy", seconds, zaps));
+			tooltip.add(Component.translatable("ftbic.jei.energy_per_tick", energyPerTick)
 					.withStyle(ChatFormatting.DARK_GRAY));
 		}
 	}

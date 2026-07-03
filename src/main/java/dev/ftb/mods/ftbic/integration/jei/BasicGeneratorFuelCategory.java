@@ -50,10 +50,10 @@ public class BasicGeneratorFuelCategory extends AbstractRecipeCategory<RecipeHol
 
 		builder.addAnimatedRecipeFlame(300).setPosition(26, 5);
 
-		builder.addText(Component.literal(String.format("%.1fs @ %.0f z/t", seconds, zapsPerTick)), 100, 9)
+		builder.addText(Component.translatable("ftbic.jei.burn_time", seconds, zapsPerTick), 100, 9)
 				.setPosition(44, 3)
 				.setColor(0xFF404040);
-		builder.addText(Component.literal(String.format("= %,d zaps", totalZaps)), 100, 9)
+		builder.addText(Component.translatable("ftbic.jei.total_zaps", totalZaps), 100, 9)
 				.setPosition(44, 14)
 				.setColor(0xFF0A7F0A);
 	}

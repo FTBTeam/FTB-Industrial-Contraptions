@@ -69,10 +69,13 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 		drawHeatBar(g, leftPos + 115, stripY, this.menu.getHeatFraction());
 		drawSmallRedstoneButton(g, leftPos + 105, stripY, mouseX, mouseY, this.menu.allowRedstone());
 
-		String energyLabel = this.menu.isPaused() ? "Paused" : (this.menu.getEnergyOutput() + " z/t");
-		g.centeredText(font, Component.literal(energyLabel).withStyle(ChatFormatting.WHITE),
+		g.centeredText(font, (this.menu.isPaused()
+				? Component.translatable("ftbic.reactor.paused")
+				: Component.translatable("ftbic.reactor.energy_output", this.menu.getEnergyOutput()))
+				.withStyle(ChatFormatting.WHITE),
 				leftPos + 142, topPos + 6, 0xFFFFFF);
-		g.centeredText(font, Component.literal(Math.round(this.menu.getHeatFraction() * 100F) + "%")
+		g.centeredText(font, Component.translatable("ftbic.reactor.heat_percentage",
+						Math.round(this.menu.getHeatFraction() * 100F))
 				.withStyle(ChatFormatting.WHITE), leftPos + 142, stripY + 1, 0xFFFFFF);
 
 		int invX = leftPos + 8;
@@ -93,8 +96,8 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 		int stripY = topPos + CONTROL_STRIP_TOP + (CONTROL_STRIP_H - 10) / 2;
 		if (isIn(mouseX, mouseY, leftPos + 115, topPos + 5, 54, 10)) {
 			Component label = this.menu.isPaused()
-					? Component.literal("Paused (" + this.menu.getEnergyOutput() + " z/t when active)")
-					: Component.literal("Output: " + this.menu.getEnergyOutput() + " z/t");
+					? Component.translatable("ftbic.reactor.tooltip.paused", this.menu.getEnergyOutput())
+					: Component.translatable("ftbic.reactor.tooltip.output", this.menu.getEnergyOutput());
 			g.setTooltipForNextFrame(label, mouseX, mouseY);
 		}
 		if (isIn(mouseX, mouseY, leftPos + 115, stripY, 54, 10)) {
@@ -103,18 +106,18 @@ public class NuclearReactorScreen extends ElectricBlockScreen<NuclearReactorMenu
 		}
 		if (isIn(mouseX, mouseY, leftPos + 105, topPos + 5, 9, 10)) {
 			Component label = this.menu.isPaused()
-					? Component.literal("Resume reactor")
-					: Component.literal("Pause reactor");
+					? Component.translatable("ftbic.reactor.tooltip.resume")
+					: Component.translatable("ftbic.reactor.tooltip.pause");
 			g.setTooltipForNextFrame(label, mouseX, mouseY);
 		}
 		if (isIn(mouseX, mouseY, leftPos + 105, stripY, 9, 10)) {
 			Component label = this.menu.allowRedstone()
-					? Component.literal("Redstone control: enabled")
-					: Component.literal("Redstone control: disabled");
+					? Component.translatable("ftbic.reactor.tooltip.redstone_enabled")
+					: Component.translatable("ftbic.reactor.tooltip.redstone_disabled");
 			g.setTooltipForNextFrame(label, mouseX, mouseY);
 		}
 		if (isIn(mouseX, mouseY, leftPos + 94, topPos + 5, 9, 10)) {
-			g.setTooltipForNextFrame(Component.literal("Show reactor components in JEI"), mouseX, mouseY);
+			g.setTooltipForNextFrame(Component.translatable("ftbic.reactor.tooltip.show_jei"), mouseX, mouseY);
 		}
 	}
 
