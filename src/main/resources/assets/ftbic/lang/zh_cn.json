@@ -1,4 +1,4 @@
-{
+﻿{
   "block.ftbic.active_nuke": "激活的核弹",
   "block.ftbic.advanced_centrifuge": "高级离心机",
   "block.ftbic.advanced_compressor": "高级压缩机",
@@ -263,12 +263,12 @@
   "recipe.ftbic.separating": "离心",
 
   "ftbic.jei.chance": "概率：%.1f%%",
-  "ftbic.jei.recipe_time_energy": "%.1fs · %,dzap",
+  "ftbic.jei.recipe_time_energy": "%.1fs · %,d zap",
   "ftbic.jei.energy_per_tick": "%.0f z/t",
   "ftbic.jei.burn_time": "%.1fs @ %.0f z/t",
-  "ftbic.jei.total_zaps": "= %,dzap",
-  "ftbic.jei.zaps_per_mb": "%.0f z/mB @ %,d z/bucket",
-  "ftbic.jei.zaps_per_tank": "= %,dzap / 满储罐（%d mB）",
+  "ftbic.jei.total_zaps": "= %,d zap",
+  "ftbic.jei.zaps_per_mb": "每 mB %.0f z，每桶 %,d z",
+  "ftbic.jei.zaps_per_tank": "= %,d zap / 满储罐（%d mB）",
   "ftbic.jei.boost": "+%,.0f zap 加速",
 
   "ftbic.jei.antimatter.line1": "由反物质构建机产生。",
