@@ -283,8 +283,8 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("ftbic.jei.energy_per_tick", "%.0f z/t");
 		add("ftbic.jei.burn_time", "%.1fs @ %.0f z/t");
 		add("ftbic.jei.total_zaps", "= %,d zaps");
-		add("ftbic.jei.zaps_per_mb", "%.0f z/mB @ %,d z/bucket");
-		add("ftbic.jei.zaps_per_tank", "= %,d zaps / full tank (%d mB)");
+		add("ftbic.jei.zaps_per_mb", "%s z/mB @ %s z/bucket");
+		add("ftbic.jei.zaps_per_tank", "= %s zaps / full tank (%s mB)");
 		add("ftbic.jei.boost", "+%,.0f zaps boost");
 
 		add("ftbic.jei.antimatter.line1", "Produced by the Antimatter Constructor.");

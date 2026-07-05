@@ -13,6 +13,8 @@ import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+
+import java.util.Locale;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -45,10 +47,14 @@ public class GeothermalFuelCategory extends AbstractRecipeCategory<GeothermalFue
 		long zapsPerBucket = Math.round(zapsPerMb * 1000D);
 		long zapsPerTank = Math.round(zapsPerMb * tankCap);
 
-		builder.addText(Component.translatable("ftbic.jei.zaps_per_mb", zapsPerMb, zapsPerBucket), 120, 9)
+		builder.addText(Component.translatable("ftbic.jei.zaps_per_mb",
+						String.format(Locale.ROOT, "%.0f", zapsPerMb),
+						String.format(Locale.ROOT, "%,d", zapsPerBucket)), 120, 9)
 				.setPosition(26, 3)
 				.setColor(0xFF404040);
-		builder.addText(Component.translatable("ftbic.jei.zaps_per_tank", zapsPerTank, tankCap), 120, 9)
+		builder.addText(Component.translatable("ftbic.jei.zaps_per_tank",
+						String.format(Locale.ROOT, "%,d", zapsPerTank),
+						String.format(Locale.ROOT, "%d", tankCap)), 120, 9)
 				.setPosition(26, 14)
 				.setColor(0xFF0A7F0A);
 	}
