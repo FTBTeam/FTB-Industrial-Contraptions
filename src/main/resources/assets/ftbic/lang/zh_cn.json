@@ -269,6 +269,9 @@
   "ftbic.jei.total_zaps": "= %,d zap",
   "ftbic.jei.boost": "加速 +%,.0f zap",
 
+  "ftbic.jei.zaps_per_mb": "每 mB %1$s ⚡，每桶 %2$s ⚡",
+  "ftbic.jei.zaps_per_tank": "满储罐（%2$s mB）：%1$s ⚡",
+
   "ftbic.jei.antimatter.line1": "由反物质构建机产生。",
   "ftbic.jei.antimatter.line2": "每个反物质需要 %,d zap 的进度。",
   "ftbic.jei.antimatter.line3": "输入槽中消耗的加速物品可加快进度。",
