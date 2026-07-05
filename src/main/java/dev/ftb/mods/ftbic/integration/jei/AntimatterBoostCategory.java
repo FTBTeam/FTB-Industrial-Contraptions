@@ -40,7 +40,7 @@ public class AntimatterBoostCategory extends AbstractRecipeCategory<RecipeHolder
 
 	@Override
 	public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<AntimatterBoostRecipe> holder, IFocusGroup focuses) {
-		builder.addText(Component.translatable("ftbic.jei.boost", holder.value().boost()), 80, 9)
+		builder.addText(Component.translatable("ftbic.jei.boost", FTBICJEIPlugin.fmtDouble(holder.value().boost(), 0)), 80, 9)
 				.setPosition(26, 9)
 				.setColor(0xFF0A7F0A);
 	}

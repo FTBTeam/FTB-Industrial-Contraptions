@@ -278,54 +278,54 @@ public class FTBICLanguageProvider extends LanguageProvider {
 		add("ftbic.jade.tele_receive_fluid_empty", "Receive tank: Empty (0 / %s mB)");
 
 		// JEI
-		add("ftbic.jei.chance", "Chance: %.1f%%");
-		add("ftbic.jei.recipe_time_energy", "%.1fs · %,d zaps");
-		add("ftbic.jei.energy_per_tick", "%.0f z/t");
-		add("ftbic.jei.burn_time", "%.1fs @ %.0f z/t");
-		add("ftbic.jei.total_zaps", "= %,d zaps");
+		add("ftbic.jei.chance", "Chance: %s%%");
+		add("ftbic.jei.recipe_time_energy", "%s · %s zaps");
+		add("ftbic.jei.energy_per_tick", "%s z/t");
+		add("ftbic.jei.burn_time", "%s @ %s z/t");
+		add("ftbic.jei.total_zaps", "= %s zaps");
 		add("ftbic.jei.zaps_per_mb", "%s z/mB @ %s z/bucket");
 		add("ftbic.jei.zaps_per_tank", "= %s zaps / full tank (%s mB)");
-		add("ftbic.jei.boost", "+%,.0f zaps boost");
+		add("ftbic.jei.boost", "+%s zaps boost");
 
 		add("ftbic.jei.antimatter.line1", "Produced by the Antimatter Constructor.");
-		add("ftbic.jei.antimatter.line2", "Each antimatter requires %,d zaps of progress.");
+		add("ftbic.jei.antimatter.line2", "Each antimatter requires %s zaps of progress.");
 		add("ftbic.jei.antimatter.line3", "Boost items consumed in the input slot accelerate progress.");
 		add("ftbic.jei.antimatter.line4", "See \"Antimatter Constructor\" recipes for boost values.");
 
 		add("ftbic.jei.rod.title", "Nuclear fuel rod");
-		add("ftbic.jei.rod.desc", "%d-rod pack: %d pulse(s) per cycle");
+		add("ftbic.jei.rod.desc", "%s-rod pack: %s pulse(s) per cycle");
 		add("ftbic.jei.rod.energy", "Energy: %s zap/t base (×(pulses+reflectors))");
 		add("ftbic.jei.rod.heat", "Heat: %s/cycle base. Distributed into neighboring heat acceptors.");
-		add("ftbic.jei.rod.durability", "Durability: %d cycles before the rod is spent.");
+		add("ftbic.jei.rod.durability", "Durability: %s cycles before the rod is spent.");
 
 		add("ftbic.jei.coolant.title", "Coolant cell");
 		add("ftbic.jei.coolant.desc", "Passive heat buffer. Absorbs heat distributed by adjacent fuel rods.");
-		add("ftbic.jei.coolant.capacity", "Capacity: %,d heat.");
+		add("ftbic.jei.coolant.capacity", "Capacity: %s heat.");
 		add("ftbic.jei.coolant.vent_pair", "Pair with a Component Heat Vent to replenish durability each cycle.");
 
 		add("ftbic.jei.vent.title", "Heat vent");
 		add("ftbic.jei.vent.desc", "Removes heat each reactor cycle.");
-		add("ftbic.jei.vent.durability", "Durability: %d heat absorption.");
-		add("ftbic.jei.vent.self_cool", "Self cooling: %d/cycle (heals own durability).");
-		add("ftbic.jei.vent.reactor_cool", "Reactor cooling: %d/cycle removed from reactor heat pool.");
-		add("ftbic.jei.vent.component_cool", "Component cooling: %d/cycle to each adjacent coolant cell.");
+		add("ftbic.jei.vent.durability", "Durability: %s heat absorption.");
+		add("ftbic.jei.vent.self_cool", "Self cooling: %s/cycle (heals own durability).");
+		add("ftbic.jei.vent.reactor_cool", "Reactor cooling: %s/cycle removed from reactor heat pool.");
+		add("ftbic.jei.vent.component_cool", "Component cooling: %s/cycle to each adjacent coolant cell.");
 
 		add("ftbic.jei.exchanger.title", "Heat exchanger");
 		add("ftbic.jei.exchanger.desc", "Balances heat between neighbors and the reactor core.");
-		add("ftbic.jei.exchanger.durability", "Durability: %,d heat buffer.");
-		add("ftbic.jei.exchanger.adjacent", "Adjacent transfer: up to %d/cycle per neighbor.");
-		add("ftbic.jei.exchanger.core", "Core transfer: up to %d/cycle to/from the reactor heat pool.");
+		add("ftbic.jei.exchanger.durability", "Durability: %s heat buffer.");
+		add("ftbic.jei.exchanger.adjacent", "Adjacent transfer: up to %s/cycle per neighbor.");
+		add("ftbic.jei.exchanger.core", "Core transfer: up to %s/cycle to/from the reactor heat pool.");
 
 		add("ftbic.jei.plating.title", "Reactor plating");
 		add("ftbic.jei.plating.desc", "Modifies the reactor hull itself.");
-		add("ftbic.jei.plating.heat_bonus", "Max heat bonus: +%,d (stacks with other plating).");
-		add("ftbic.jei.plating.explosion", "Explosion dampening: ×%s (-%d%% radius per plating).");
+		add("ftbic.jei.plating.heat_bonus", "Max heat bonus: +%s (stacks with other plating).");
+		add("ftbic.jei.plating.explosion", "Explosion dampening: ×%s (-%s%% radius per plating).");
 
 		add("ftbic.jei.reflector.title", "Neutron reflector");
 		add("ftbic.jei.reflector.desc", "Bounces pulses back into adjacent fuel rods.");
 		add("ftbic.jei.reflector.pulse_effect", "Each reflector adjacent to a rod adds +1 pulse (more energy AND more heat).");
 		add("ftbic.jei.reflector.durability_infinite", "Durability: infinite (iridium-reinforced).");
-		add("ftbic.jei.reflector.durability", "Durability: %,d pulses before the reflector burns out.");
+		add("ftbic.jei.reflector.durability", "Durability: %s pulses before the reflector burns out.");
 
 		add("ftbic.reactor.paused", "Paused");
 		add("ftbic.reactor.energy_output", "%d z/t");

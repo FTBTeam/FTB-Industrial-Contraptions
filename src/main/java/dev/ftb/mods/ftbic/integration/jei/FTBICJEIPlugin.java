@@ -39,6 +39,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @JeiPlugin
 public class FTBICJEIPlugin implements IModPlugin {
@@ -83,7 +84,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addItemStackInfo(
 				new ItemStack(FTBICItems.ANTIMATTER.item.get()),
 				Component.translatable("ftbic.jei.antimatter.line1"),
-				Component.translatable("ftbic.jei.antimatter.line2", zapsPer),
+				Component.translatable("ftbic.jei.antimatter.line2", fmtInt(zapsPer)),
 				Component.translatable("ftbic.jei.antimatter.line3"),
 				Component.translatable("ftbic.jei.antimatter.line4"));
 
@@ -125,17 +126,17 @@ public class FTBICJEIPlugin implements IModPlugin {
 		double baseHeat = heatMult * pulses * (pulses + 1);
 		r.addItemStackInfo(new ItemStack(item),
 				Component.translatable("ftbic.jei.rod.title"),
-				Component.translatable("ftbic.jei.rod.desc", rods, pulses),
+				Component.translatable("ftbic.jei.rod.desc", fmtInt(rods), fmtInt(pulses)),
 				Component.translatable("ftbic.jei.rod.energy", fmt(baseEnergy)),
 				Component.translatable("ftbic.jei.rod.heat", fmt(baseHeat)),
-				Component.translatable("ftbic.jei.rod.durability", durability));
+				Component.translatable("ftbic.jei.rod.durability", fmtInt(durability)));
 	}
 
 	private static void coolantInfo(IRecipeRegistration r, Item item, int capacity) {
 		r.addItemStackInfo(new ItemStack(item),
 				Component.translatable("ftbic.jei.coolant.title"),
 				Component.translatable("ftbic.jei.coolant.desc"),
-				Component.translatable("ftbic.jei.coolant.capacity", capacity),
+				Component.translatable("ftbic.jei.coolant.capacity", fmtInt(capacity)),
 				Component.translatable("ftbic.jei.coolant.vent_pair"));
 	}
 
@@ -143,10 +144,10 @@ public class FTBICJEIPlugin implements IModPlugin {
 		List<Component> lines = new ArrayList<>();
 		lines.add(Component.translatable("ftbic.jei.vent.title"));
 		lines.add(Component.translatable("ftbic.jei.vent.desc"));
-		if (maxHeat > 0) lines.add(Component.translatable("ftbic.jei.vent.durability", maxHeat));
-		if (selfCool > 0) lines.add(Component.translatable("ftbic.jei.vent.self_cool", selfCool));
-		if (reactorCool > 0) lines.add(Component.translatable("ftbic.jei.vent.reactor_cool", reactorCool));
-		if (componentCool > 0) lines.add(Component.translatable("ftbic.jei.vent.component_cool", componentCool));
+		if (maxHeat > 0) lines.add(Component.translatable("ftbic.jei.vent.durability", fmtInt(maxHeat)));
+		if (selfCool > 0) lines.add(Component.translatable("ftbic.jei.vent.self_cool", fmtInt(selfCool)));
+		if (reactorCool > 0) lines.add(Component.translatable("ftbic.jei.vent.reactor_cool", fmtInt(reactorCool)));
+		if (componentCool > 0) lines.add(Component.translatable("ftbic.jei.vent.component_cool", fmtInt(componentCool)));
 		r.addItemStackInfo(new ItemStack(item), lines.toArray(Component[]::new));
 	}
 
@@ -154,9 +155,9 @@ public class FTBICJEIPlugin implements IModPlugin {
 		List<Component> lines = new ArrayList<>();
 		lines.add(Component.translatable("ftbic.jei.exchanger.title"));
 		lines.add(Component.translatable("ftbic.jei.exchanger.desc"));
-		lines.add(Component.translatable("ftbic.jei.exchanger.durability", maxHeat));
-		if (toAdjacent > 0) lines.add(Component.translatable("ftbic.jei.exchanger.adjacent", toAdjacent));
-		if (toCore > 0) lines.add(Component.translatable("ftbic.jei.exchanger.core", toCore));
+		lines.add(Component.translatable("ftbic.jei.exchanger.durability", fmtInt(maxHeat)));
+		if (toAdjacent > 0) lines.add(Component.translatable("ftbic.jei.exchanger.adjacent", fmtInt(toAdjacent)));
+		if (toCore > 0) lines.add(Component.translatable("ftbic.jei.exchanger.core", fmtInt(toCore)));
 		r.addItemStackInfo(new ItemStack(item), lines.toArray(Component[]::new));
 	}
 
@@ -165,8 +166,8 @@ public class FTBICJEIPlugin implements IModPlugin {
 		r.addItemStackInfo(new ItemStack(item),
 				Component.translatable("ftbic.jei.plating.title"),
 				Component.translatable("ftbic.jei.plating.desc"),
-				Component.translatable("ftbic.jei.plating.heat_bonus", heatCapacity),
-				Component.translatable("ftbic.jei.plating.explosion", fmt(explosionMod), pct));
+				Component.translatable("ftbic.jei.plating.heat_bonus", fmtInt(heatCapacity)),
+				Component.translatable("ftbic.jei.plating.explosion", fmt(explosionMod), fmtInt(pct)));
 	}
 
 	private static void reflectorInfo(IRecipeRegistration r, Item item, int durability) {
@@ -176,12 +177,20 @@ public class FTBICJEIPlugin implements IModPlugin {
 				Component.translatable("ftbic.jei.reflector.pulse_effect"),
 				durability == 0
 						? Component.translatable("ftbic.jei.reflector.durability_infinite")
-						: Component.translatable("ftbic.jei.reflector.durability", durability));
+						: Component.translatable("ftbic.jei.reflector.durability", fmtInt(durability)));
 	}
 
 	private static String fmt(double v) {
 		if (v == Math.floor(v) && !Double.isInfinite(v)) return String.valueOf((long) v);
-		return String.format("%.2f", v);
+		return String.format(Locale.ROOT, "%.2f", v);
+	}
+
+	public static String fmtInt(long v) {
+		return String.format(Locale.ROOT, "%,d", v);
+	}
+
+	public static String fmtDouble(double v, int decimals) {
+		return String.format(Locale.ROOT, "%." + decimals + "f", v);
 	}
 
 	@Override
