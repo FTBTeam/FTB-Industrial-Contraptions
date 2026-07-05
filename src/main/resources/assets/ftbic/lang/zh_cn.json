@@ -267,8 +267,6 @@
   "ftbic.jei.energy_per_tick": "%.0f z/t",
   "ftbic.jei.burn_time": "%.1fs · %.0f z/t",
   "ftbic.jei.total_zaps": "= %,d zap",
-  "ftbic.jei.zaps_per_mb": "每 mB %.0f z，每桶 %,d z",
-  "ftbic.jei.zaps_per_tank": "满储罐（%2$d mB）：%1$,d zap",
   "ftbic.jei.boost": "加速 +%,.0f zap",
 
   "ftbic.jei.antimatter.line1": "由反物质构建机产生。",
