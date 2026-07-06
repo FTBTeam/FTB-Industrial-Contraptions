@@ -67,7 +67,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 		lastSentName = initialName;
 
 		nameBox = new EditBox(font, leftPos + NAME_X, topPos + NAME_Y, NAME_W, NAME_H,
-				Component.literal("Name"));
+				Component.translatable("ftbic.gui.teleporter.name_label"));
 		nameBox.setMaxLength(32);
 		nameBox.setValue(initialName);
 		nameBox.setHint(Component.translatable("block.ftbic.teleporter.name_hint").withStyle(ChatFormatting.DARK_GRAY));
@@ -165,17 +165,17 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 
 		drawSmallRedstoneButton(g, leftPos + PUBLIC_BTN_X, topPos + PUBLIC_BTN_Y, mouseX, mouseY,
 				be != null && be.isPublic);
-		g.text(font, Component.literal(be != null && be.isPublic ? "Public" : "Private"),
+		g.text(font, Component.translatable(be != null && be.isPublic ? "ftbic.gui.teleporter.public_label" : "ftbic.gui.teleporter.private_label"),
 				leftPos + PUBLIC_BTN_X + 11, topPos + PUBLIC_BTN_Y + 1, 0xFF404040, false);
 
 		boolean hasLink = be != null && be.linkedPos != null && be.linkedDimension != null;
 		int statusMax = UNLINK_BTN_X - 8 - 4;
 		String statusLabel;
 		if (hasLink) {
-			String display = be.linkedName != null && !be.linkedName.isEmpty() ? be.linkedName : "Unnamed";
-			statusLabel = truncate("Linked: " + formatEntry(display, be.linkedPos, be.linkedDimension), statusMax);
+			String display = be.linkedName != null && !be.linkedName.isEmpty() ? be.linkedName : Component.translatable("ftbic.gui.teleporter.unnamed").getString();
+			statusLabel = truncate(Component.translatable("ftbic.gui.teleporter.linked_format", formatEntry(display, be.linkedPos, be.linkedDimension)).getString(), statusMax);
 		} else {
-			statusLabel = truncate("Not linked. Click below.", statusMax);
+			statusLabel = truncate(Component.translatable("ftbic.gui.teleporter.not_linked").getString(), statusMax);
 		}
 		g.text(font, Component.literal(statusLabel), leftPos + 8, topPos + DEST_Y, 0xFF404040, false);
 
@@ -184,8 +184,8 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 		}
 
 		drawDropdownButton(g, mouseX, mouseY);
-		drawClearButton(g, leftPos + CLEAR_ITEMS_BTN_X, topPos + CLEAR_BTN_Y, CLEAR_ITEMS_BTN_W, "Clear Storage", mouseX, mouseY);
-		drawClearButton(g, leftPos + CLEAR_FLUIDS_BTN_X, topPos + CLEAR_BTN_Y, CLEAR_FLUIDS_BTN_W, "Clear Fluids", mouseX, mouseY);
+		drawClearButton(g, leftPos + CLEAR_ITEMS_BTN_X, topPos + CLEAR_BTN_Y, CLEAR_ITEMS_BTN_W, Component.translatable("ftbic.gui.teleporter.clear_storage").getString(), mouseX, mouseY);
+		drawClearButton(g, leftPos + CLEAR_FLUIDS_BTN_X, topPos + CLEAR_BTN_Y, CLEAR_FLUIDS_BTN_W, Component.translatable("ftbic.gui.teleporter.clear_fluids").getString(), mouseX, mouseY);
 
 		if (dropdownOpen) {
 			drawDropdownOverlay(g, mouseX, mouseY);
@@ -211,7 +211,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 			g.fill(x + 1, y + 1, x + DROPDOWN_W - 1, y + DROPDOWN_H - 1, 0xFFDDEEFF);
 		}
 		String arrow = dropdownOpen ? "▲" : "▼";
-		String label = entries().isEmpty() ? "No teleporters available" : "Choose destination";
+		String label = entries().isEmpty() ? Component.translatable("ftbic.gui.teleporter.no_teleporters").getString() : Component.translatable("ftbic.gui.teleporter.choose_destination").getString();
 		String text = truncate(label, DROPDOWN_W - 20);
 		g.text(font, Component.literal(text), x + 4, y + 2, 0xFF202020, false);
 		g.text(font, Component.literal(arrow), x + DROPDOWN_W - 10, y + 2, 0xFF202020, false);
@@ -230,7 +230,7 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 		int rowWidth = needsScrollbar ? w - SCROLLBAR_W - 2 : w - 2;
 
 		if (entries.isEmpty()) {
-			g.text(font, Component.literal("No teleporters found").withStyle(ChatFormatting.DARK_GRAY),
+			g.text(font, Component.translatable("ftbic.gui.teleporter.no_teleporters_found").withStyle(ChatFormatting.DARK_GRAY),
 					x + 3, y + 3, 0xFF606060, false);
 		}
 
@@ -264,18 +264,18 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 		TeleporterBlockEntity be = teleporter();
 		if (isIn(mouseX, mouseY, leftPos + PUBLIC_BTN_X, topPos + PUBLIC_BTN_Y, 9, 10)) {
 			Component tip = be != null && be.isPublic
-					? Component.literal("Public. Anyone can link to this teleporter. Click to make private.")
-					: Component.literal("Private. Only you can link to this teleporter. Click to make public.");
+					? Component.translatable("ftbic.gui.teleporter.public_tooltip")
+					: Component.translatable("ftbic.gui.teleporter.private_tooltip");
 			g.setTooltipForNextFrame(tip, mouseX, mouseY);
 			return;
 		}
 		boolean hasLink = be != null && be.linkedPos != null && be.linkedDimension != null;
 		if (hasLink && isIn(mouseX, mouseY, leftPos + UNLINK_BTN_X, topPos + UNLINK_BTN_Y, 9, 10)) {
-			g.setTooltipForNextFrame(Component.literal("Unlink destination"), mouseX, mouseY);
+			g.setTooltipForNextFrame(Component.translatable("ftbic.gui.teleporter.unlink_tooltip"), mouseX, mouseY);
 			return;
 		}
 		if (isIn(mouseX, mouseY, leftPos + NAME_X, topPos + NAME_Y, NAME_W, NAME_H)) {
-			g.setTooltipForNextFrame(Component.literal("Give this teleporter a name so you can find it in other teleporters' lists."), mouseX, mouseY);
+			g.setTooltipForNextFrame(Component.translatable("ftbic.gui.teleporter.name_tooltip"), mouseX, mouseY);
 			return;
 		}
 		if (dropdownOpen) {
@@ -291,8 +291,8 @@ public class TeleporterScreen extends ElectricBlockScreen<TeleporterMenu> {
 				if (isIn(mouseX, mouseY, x + 1, rowY, rowWidth, OVERLAY_ROW_H)) {
 					TeleporterEntry e = entries.get(idx);
 					String cost = FTBICUtils.formatEnergy(e.energyUse()).getString();
-					g.setTooltipForNextFrame(Component.literal(formatEntry(e.name(), e.pos(), e.dimension())
-							+ "\nCost: " + cost + " per jump\nClick to link"), mouseX, mouseY);
+					g.setTooltipForNextFrame(Component.translatable("ftbic.gui.teleporter.entry_tooltip",
+							formatEntry(e.name(), e.pos(), e.dimension()), cost), mouseX, mouseY);
 					break;
 				}
 			}

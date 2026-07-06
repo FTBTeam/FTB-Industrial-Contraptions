@@ -22,7 +22,7 @@ public class SolarPanelScreen extends ElectricBlockScreen<SolarPanelMenu> {
 	protected void extractOverlayTooltips(GuiGraphicsExtractor g, int mouseX, int mouseY) {
 		if (isIn(mouseX, mouseY, leftPos + 63, topPos + 36, 14, 14)) {
 			boolean sunny = this.menu.getSunBar() > 0;
-			g.setTooltipForNextFrame(Component.literal(sunny ? "Producing" : "No sunlight"), mouseX, mouseY);
+			g.setTooltipForNextFrame(Component.translatable(sunny ? "ftbic.gui.solar_panel.producing" : "ftbic.gui.solar_panel.no_sunlight"), mouseX, mouseY);
 		}
 	}
 }

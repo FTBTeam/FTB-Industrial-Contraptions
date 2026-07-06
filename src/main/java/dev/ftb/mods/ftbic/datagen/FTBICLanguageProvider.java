@@ -340,5 +340,146 @@ public class FTBICLanguageProvider extends LanguageProvider {
 
 		add("config.jade.plugin_ftbic.cable_tier", "Cable Tier");
 		add("config.jade.plugin_ftbic.energy", "Energy");
+
+		// GUI tooltips
+		add("ftbic.gui.antimatter_constructor.boosted", "Boosted. Click to show boost items.");
+		add("ftbic.gui.antimatter_constructor.boost", "Click to show boost items");
+
+		add("ftbic.gui.basic_generator.burn_time", "Burn time: %s s. Click to show fuels.");
+
+		add("ftbic.gui.slot.upgrade", "Upgrade Slot");
+		add("ftbic.gui.slot.battery", "Battery Slot");
+		add("ftbic.gui.slot.pickaxe", "Pickaxe Slot (applies enchantments to mined blocks)");
+
+		add("ftbic.gui.iron_furnace.progress", "Progress: %s%%. Click to show recipes.");
+
+		add("ftbic.gui.machine.progress", "Progress: %s%%. Click to show recipes.");
+
+		add("ftbic.gui.pump.paused", "Paused. Click to resume.");
+		add("ftbic.gui.pump.running", "Running. Click to pause.");
+
+		add("ftbic.gui.quarry.paused", "Paused. Click to resume.");
+		add("ftbic.gui.quarry.running", "Running. Click to pause.");
+
+		add("ftbic.gui.solar_panel.producing", "Producing");
+		add("ftbic.gui.solar_panel.no_sunlight", "No sunlight");
+
+		// Teleporter GUI
+		add("ftbic.gui.teleporter.name_label", "Name");
+		add("ftbic.gui.teleporter.public_label", "Public");
+		add("ftbic.gui.teleporter.private_label", "Private");
+		add("ftbic.gui.teleporter.unnamed", "Unnamed");
+		add("ftbic.gui.teleporter.linked_format", "Linked: %s");
+		add("ftbic.gui.teleporter.not_linked", "Not linked. Click below.");
+		add("ftbic.gui.teleporter.clear_storage", "Clear Storage");
+		add("ftbic.gui.teleporter.clear_fluids", "Clear Fluids");
+		add("ftbic.gui.teleporter.no_teleporters", "No teleporters available");
+		add("ftbic.gui.teleporter.choose_destination", "Choose destination");
+		add("ftbic.gui.teleporter.no_teleporters_found", "No teleporters found");
+		add("ftbic.gui.teleporter.public_tooltip", "Public. Anyone can link to this teleporter. Click to make private.");
+		add("ftbic.gui.teleporter.private_tooltip", "Private. Only you can link to this teleporter. Click to make public.");
+		add("ftbic.gui.teleporter.unlink_tooltip", "Unlink destination");
+		add("ftbic.gui.teleporter.name_tooltip", "Give this teleporter a name so you can find it in other teleporters' lists.");
+		add("ftbic.gui.teleporter.entry_tooltip", "%s\nCost: %s per jump\nClick to link");
+
+		// Reactor simulator GUI
+		add("ftbic.gui.reactor_sim.start", "Start");
+		add("ftbic.gui.reactor_sim.pause", "Pause");
+		add("ftbic.gui.reactor_sim.restart", "Restart");
+		add("ftbic.gui.reactor_sim.clear", "Clear");
+		add("ftbic.gui.reactor_sim.chambers", "Chambers: %d/%d");
+		add("ftbic.gui.reactor_sim.water", "Water: %s");
+		add("ftbic.gui.reactor_sim.components", "Components");
+		add("ftbic.gui.reactor_sim.presets", "Presets");
+		add("ftbic.gui.reactor_sim.no_presets", "(none)");
+		add("ftbic.gui.reactor_sim.analyze", "Analyze");
+		add("ftbic.gui.reactor_sim.import_btn", "Import");
+		add("ftbic.gui.reactor_sim.export_btn", "Export");
+
+		add("ftbic.gui.reactor_sim.verdict_stable", "Result: STABLE");
+		add("ftbic.gui.reactor_sim.verdict_unstable", "Result: overheats at cycle %d");
+		add("ftbic.gui.reactor_sim.verdict_none", "Result: not analyzed");
+		add("ftbic.gui.reactor_sim.stats", "%d z/t  |  total %s  |  cycle %d");
+
+		add("ftbic.gui.reactor_sim.save_name_label", "Name");
+		add("ftbic.gui.reactor_sim.save_error_invalid_name", "Invalid name");
+		add("ftbic.gui.reactor_sim.save_error_reserved", "Reserved name");
+		add("ftbic.gui.reactor_sim.save_error_no_sim", "No simulator");
+		add("ftbic.gui.reactor_sim.save_error_failed", "Save failed");
+		add("ftbic.gui.reactor_sim.save_success", "Preset saved: %s");
+		add("ftbic.gui.reactor_sim.remove_success", "Preset removed: %s");
+		add("ftbic.gui.reactor_sim.import_error", "Clipboard is not a valid reactor design.");
+		add("ftbic.gui.reactor_sim.export_success", "Reactor design copied to clipboard.");
+
+		// Reactor simulator context tooltips
+		add("ftbic.gui.reactor_sim.chambers_title", "Chambers");
+		add("ftbic.gui.reactor_sim.chambers_desc1", "Number of Nuclear Reactor Chambers attached to the real reactor");
+		add("ftbic.gui.reactor_sim.chambers_desc2", "Each chamber adds one column to the grid (currently %d columns active)");
+		add("ftbic.gui.reactor_sim.chambers_desc3", "Chambers also expose more outer hull faces for water cooling");
+
+		add("ftbic.gui.reactor_sim.water_title", "Water env factor");
+		add("ftbic.gui.reactor_sim.water_desc1", "Fraction of outward hull faces touching water (0.00 to 1.00)");
+		add("ftbic.gui.reactor_sim.water_desc2", "Current cooling multiplier: x%s");
+		add("ftbic.gui.reactor_sim.water_desc3", "Applied to vent \"reactor cool\" values each cycle");
+		add("ftbic.gui.reactor_sim.water_desc4", "(1.0 at 0.00 water up to x%s at 1.00 water)");
+
+		add("ftbic.gui.reactor_sim.stats_title", "Simulation stats");
+		add("ftbic.gui.reactor_sim.stats_desc1", "Verdict line: stability analysis result");
+		add("ftbic.gui.reactor_sim.stats_desc2", "N z/t: energy output this cycle");
+		add("ftbic.gui.reactor_sim.stats_desc3", "total: cumulative energy since Start");
+		add("ftbic.gui.reactor_sim.stats_desc4", "cN: cycle counter (1 cycle = 1 reactor tick)");
+		add("ftbic.gui.reactor_sim.stats_desc5", "Speed controls cycles per game tick: 20x = 1/t, 1000x = 50/t");
+
+		// Reactor simulator preset tooltips
+		add("ftbic.gui.reactor_sim.load_title", "Load");
+		add("ftbic.gui.reactor_sim.load_desc", "Apply the selected preset to this simulator");
+		add("ftbic.gui.reactor_sim.load_hint", "Clears current layout first, then sets chambers and components");
+
+		add("ftbic.gui.reactor_sim.save_title", "Save");
+		add("ftbic.gui.reactor_sim.save_desc", "Save the current layout as a new preset");
+		add("ftbic.gui.reactor_sim.save_hint", "Stored locally in local/ftbic/reactor_layout/");
+
+		add("ftbic.gui.reactor_sim.remove_title", "Remove");
+		add("ftbic.gui.reactor_sim.remove_desc", "Delete the selected preset file");
+		add("ftbic.gui.reactor_sim.remove_locked", "Built-in presets cannot be removed");
+
+		// Reactor simulator component item tooltips
+		add("ftbic.gui.reactor_sim.item.fuel_rod.title", "Fuel rod");
+		add("ftbic.gui.reactor_sim.item.fuel_rod.base_pulses", "  Base pulses: %d (+1 per adjacent reflector or rod)");
+		add("ftbic.gui.reactor_sim.item.fuel_rod.energy", "  Energy: p x %s zap/t");
+		add("ftbic.gui.reactor_sim.item.fuel_rod.heat", "  Heat:   p x (p+1) x %s / cycle");
+		add("ftbic.gui.reactor_sim.item.fuel_rod.spread", "    spread over adjacent heat acceptors");
+		add("ftbic.gui.reactor_sim.item.fuel_rod.heat_example", "  p=%d -> %d heat | p=%d -> %d heat");
+		add("ftbic.gui.reactor_sim.item.fuel_rod.durability", "  Durability: %d cycles");
+
+		add("ftbic.gui.reactor_sim.item.heat_vent.title", "Heat vent");
+		add("ftbic.gui.reactor_sim.item.heat_vent.heat_buffer", "  Own heat buffer: %s");
+		add("ftbic.gui.reactor_sim.item.heat_vent.no_buffer", "  No own heat buffer");
+		add("ftbic.gui.reactor_sim.item.heat_vent.self_cool", "  Self-heal: %s heat / cycle");
+		add("ftbic.gui.reactor_sim.item.heat_vent.reactor_cool", "  Reactor cool: %s heat / cycle");
+		add("ftbic.gui.reactor_sim.item.heat_vent.water_hint", "    multiplied by water env factor");
+		add("ftbic.gui.reactor_sim.item.heat_vent.component_cool", "  Adjacent coolant cooling: %s heat / cycle each");
+
+		add("ftbic.gui.reactor_sim.item.exchanger.title", "Heat exchanger");
+		add("ftbic.gui.reactor_sim.item.exchanger.heat_buffer", "  Own heat buffer: %s");
+		add("ftbic.gui.reactor_sim.item.exchanger.adjacent", "  Adjacent transfer: up to %s / cycle per neighbour");
+		add("ftbic.gui.reactor_sim.item.exchanger.core", "  Core transfer: up to %s / cycle vs reactor");
+		add("ftbic.gui.reactor_sim.item.exchanger.transfer_direction", "  Moves heat from hotter side to cooler side");
+
+		add("ftbic.gui.reactor_sim.item.coolant.title", "Coolant cell");
+		add("ftbic.gui.reactor_sim.item.coolant.capacity", "  Capacity: %s heat");
+		add("ftbic.gui.reactor_sim.item.coolant.passive", "  Passive. Soaks heat distributed by adjacent fuel rods");
+		add("ftbic.gui.reactor_sim.item.coolant.vent_pair", "  Component heat vents can refill durability");
+
+		add("ftbic.gui.reactor_sim.item.reflector.title", "Neutron reflector");
+		add("ftbic.gui.reactor_sim.item.reflector.pulse_boost", "  +1 pulse on each adjacent fuel rod");
+		add("ftbic.gui.reactor_sim.item.reflector.energy_heat_note", "  Each added pulse raises energy AND heat");
+		add("ftbic.gui.reactor_sim.item.reflector.durability", "  Durability: %d pulses reflected");
+		add("ftbic.gui.reactor_sim.item.reflector.infinite", "  Infinite durability");
+
+		add("ftbic.gui.reactor_sim.item.plating.title", "Reactor plating");
+		add("ftbic.gui.reactor_sim.item.plating.heat_capacity", "  +%s max reactor heat (raises meltdown threshold)");
+		add("ftbic.gui.reactor_sim.item.plating.blast", "  Blast radius: x%s (%s)");
+		add("ftbic.gui.reactor_sim.item.plating.multiply_hint", "  Applies once per plating, multiplicative");
 	}
 }
