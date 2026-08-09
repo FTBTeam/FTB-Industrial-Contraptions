@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:netherite_boots",
+    "C": "ic:carbon_plate",
+    "E": "ic:energy_crystal"
+  },
+  "pattern": [
+    "CEC",
+    "CAC"
+  ],
+  "result": {
+    "id": "ic:carbon_boots"
+  },
+  "show_notification": false
+}

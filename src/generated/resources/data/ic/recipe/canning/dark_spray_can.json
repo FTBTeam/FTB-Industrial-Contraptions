@@ -1,0 +1,21 @@
+{
+  "type": "ic:canning",
+  "inputs": [
+    {
+      "ingredient": {
+        "neoforge:ingredient_type": "ic:fluid_cell",
+        "fluid": "minecraft:water"
+      }
+    },
+    {
+      "ingredient": "#c:dyes/black"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:dark_spray_paint_can"
+      }
+    }
+  ]
+}

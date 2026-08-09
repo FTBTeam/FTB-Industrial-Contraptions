@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": "ic:fuse",
+    "M": "ic:industrial_grade_metal"
+  },
+  "pattern": [
+    "MMM",
+    "MFM",
+    "MMM"
+  ],
+  "result": {
+    "id": "ic:machine_block"
+  },
+  "show_notification": false
+}

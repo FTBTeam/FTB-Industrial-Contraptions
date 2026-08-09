@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ic:carbon_helmet",
+    "C": "ic:iridium_circuit",
+    "G": "ic:reinforced_glass",
+    "I": "ic:iridium_alloy",
+    "N": "#c:dusts/glowstone"
+  },
+  "pattern": [
+    " A ",
+    "INI",
+    "CGC"
+  ],
+  "result": {
+    "id": "ic:quantum_helmet"
+  },
+  "show_notification": false
+}

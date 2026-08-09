@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:netherite_leggings",
+    "C": "ic:carbon_plate",
+    "E": "ic:energy_crystal"
+  },
+  "pattern": [
+    "CEC",
+    "CAC",
+    "C C"
+  ],
+  "result": {
+    "id": "ic:carbon_leggings"
+  },
+  "show_notification": false
+}

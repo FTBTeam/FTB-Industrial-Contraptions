@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:book",
+    "minecraft:redstone"
+  ],
+  "result": {
+    "id": "ic:guide"
+  },
+  "show_notification": false
+}

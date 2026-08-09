@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:scrap_box"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ic:scrap"
+  },
+  "show_notification": false
+}

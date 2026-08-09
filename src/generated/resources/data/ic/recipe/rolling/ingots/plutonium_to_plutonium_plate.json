@@ -1,0 +1,15 @@
+{
+  "type": "ic:rolling",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/plutonium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:plutonium_plate"
+      }
+    }
+  ]
+}

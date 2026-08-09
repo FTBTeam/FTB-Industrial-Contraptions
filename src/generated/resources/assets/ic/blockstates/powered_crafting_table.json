@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "dark=false": {
+      "model": "ic:block/electric/light/powered_crafting_table"
+    },
+    "dark=true": {
+      "model": "ic:block/electric/dark/powered_crafting_table"
+    }
+  }
+}

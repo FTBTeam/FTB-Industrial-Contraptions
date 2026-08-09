@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "minecraft:iron_bars",
+    "P": "#c:plates/tin",
+    "V": "ic:heat_vent"
+  },
+  "pattern": [
+    "IPI",
+    "PVP",
+    "IPI"
+  ],
+  "result": {
+    "id": "ic:component_heat_vent"
+  },
+  "show_notification": false
+}

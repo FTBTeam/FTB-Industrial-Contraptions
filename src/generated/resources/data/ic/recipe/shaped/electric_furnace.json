@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:electronic_circuit",
+    "F": "ic:iron_furnace",
+    "R": "#c:dusts/redstone"
+  },
+  "pattern": [
+    " C ",
+    "RFR"
+  ],
+  "result": {
+    "id": "ic:powered_furnace"
+  },
+  "show_notification": false
+}

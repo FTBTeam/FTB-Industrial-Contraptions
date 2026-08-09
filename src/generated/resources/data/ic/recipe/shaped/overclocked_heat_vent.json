@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:plates/enderium",
+    "V": "ic:reactor_heat_vent"
+  },
+  "pattern": [
+    "P",
+    "V",
+    "P"
+  ],
+  "result": {
+    "id": "ic:overclocked_heat_vent"
+  },
+  "show_notification": false
+}

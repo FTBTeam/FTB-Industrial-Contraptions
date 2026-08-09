@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "minecraft:obsidian",
+    "F": "ic:compressor",
+    "M": "ic:advanced_machine_block",
+    "W": "ic:copper_coil"
+  },
+  "pattern": [
+    "CCC",
+    "CFC",
+    "WMW"
+  ],
+  "result": {
+    "id": "ic:advanced_compressor"
+  },
+  "show_notification": false
+}

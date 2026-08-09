@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:netherite_helmet",
+    "C": "ic:carbon_plate",
+    "E": "ic:energy_crystal"
+  },
+  "pattern": [
+    "CEC",
+    "CAC"
+  ],
+  "result": {
+    "id": "ic:carbon_helmet"
+  },
+  "show_notification": false
+}

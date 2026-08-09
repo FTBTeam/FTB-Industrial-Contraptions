@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/bronze"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ic:bronze_rod"
+      }
+    }
+  ]
+}

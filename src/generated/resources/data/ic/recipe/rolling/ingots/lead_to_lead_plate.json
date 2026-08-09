@@ -1,0 +1,15 @@
+{
+  "type": "ic:rolling",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/lead"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:lead_plate"
+      }
+    }
+  ]
+}

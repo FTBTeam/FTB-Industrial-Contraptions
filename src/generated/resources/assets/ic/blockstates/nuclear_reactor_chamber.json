@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ic:block/nuclear_reactor_chamber"
+    }
+  }
+}

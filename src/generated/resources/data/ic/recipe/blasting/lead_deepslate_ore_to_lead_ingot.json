@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "ingredient": "ic:lead_deepslate_ore",
+  "result": {
+    "id": "ic:lead_ingot"
+  },
+  "show_notification": false
+}

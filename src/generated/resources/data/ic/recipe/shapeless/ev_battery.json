@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:hv_battery",
+    "ic:iridium_alloy"
+  ],
+  "result": {
+    "id": "ic:ev_battery"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,15 @@
+{
+  "values": [
+    "ic:reinforced_stone",
+    "ic:reinforced_glass",
+    "ic:lv_reinforced_cable",
+    "ic:mv_reinforced_cable",
+    "ic:hv_reinforced_cable",
+    "ic:ev_reinforced_cable",
+    "ic:iv_reinforced_cable",
+    "ic:burnt_reinforced_cable",
+    "minecraft:bedrock",
+    "minecraft:barrier",
+    "minecraft:command_block"
+  ]
+}

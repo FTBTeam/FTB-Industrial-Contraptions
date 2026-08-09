@@ -1,0 +1,17 @@
+{
+  "type": "ic:compressing",
+  "inputs": [
+    {
+      "count": 3,
+      "ingredient": "#c:ingots/iron"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 3,
+        "id": "ic:industrial_grade_metal"
+      }
+    }
+  ]
+}

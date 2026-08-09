@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:electronic_circuit",
+    "G": "ic:basic_generator",
+    "P": "ic:carbon_plate"
+  },
+  "pattern": [
+    " P ",
+    "CGC",
+    " P "
+  ],
+  "result": {
+    "id": "ic:wind_mill"
+  },
+  "show_notification": false
+}

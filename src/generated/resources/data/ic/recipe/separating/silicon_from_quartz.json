@@ -1,0 +1,16 @@
+{
+  "type": "ic:separating",
+  "inputs": [
+    {
+      "ingredient": "#c:gems/quartz"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 3,
+        "id": "ic:silicon_gem"
+      }
+    }
+  ]
+}

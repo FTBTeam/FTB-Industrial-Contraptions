@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": "#c:ingots/copper",
+    "R": "ic:rubber"
+  },
+  "pattern": [
+    "RRR",
+    "MMM",
+    "RRR"
+  ],
+  "result": {
+    "count": 6,
+    "id": "ic:lv_cable"
+  },
+  "show_notification": false
+}

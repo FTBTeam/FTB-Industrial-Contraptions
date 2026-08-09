@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "ic:block/burnt_reinforced_cable"
+      }
+    }
+  ]
+}

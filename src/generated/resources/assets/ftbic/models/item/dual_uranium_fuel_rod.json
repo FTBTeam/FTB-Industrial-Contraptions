@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "ftbic:item/dual_uranium_fuel_rod"
-  }
-}

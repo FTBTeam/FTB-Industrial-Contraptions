@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:dusts/redstone",
+    "#c:dusts/glowstone",
+    "#c:dusts/redstone",
+    "#c:silicon",
+    "ic:electronic_circuit",
+    "#c:silicon",
+    "#c:dusts/redstone",
+    "#c:dusts/glowstone",
+    "#c:dusts/redstone"
+  ],
+  "result": {
+    "id": "ic:advanced_circuit"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/tin"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:tin_dust"
+      }
+    }
+  ]
+}

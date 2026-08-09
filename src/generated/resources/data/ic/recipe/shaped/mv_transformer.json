@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": "ic:machine_block",
+    "W": "ic:mv_cable"
+  },
+  "pattern": [
+    "W",
+    "M",
+    "W"
+  ],
+  "result": {
+    "id": "ic:mv_transformer"
+  },
+  "show_notification": false
+}

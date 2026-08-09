@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "ic:dense_copper_plate",
+    "C": "ic:electronic_circuit",
+    "P": "#c:plates/iron"
+  },
+  "pattern": [
+    " C ",
+    "PBP",
+    " P "
+  ],
+  "result": {
+    "id": "ic:heat_exchanger"
+  },
+  "show_notification": false
+}

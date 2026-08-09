@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/enderium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:enderium_gear"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "ic:separating",
+  "inputs": [
+    {
+      "count": 2,
+      "ingredient": "#minecraft:saplings"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:latex_ball"
+      }
+    }
+  ]
+}

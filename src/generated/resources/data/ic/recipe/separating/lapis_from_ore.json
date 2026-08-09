@@ -1,0 +1,16 @@
+{
+  "type": "ic:separating",
+  "inputs": [
+    {
+      "ingredient": "#c:ores/lapis"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 6,
+        "id": "minecraft:lapis_lazuli"
+      }
+    }
+  ]
+}

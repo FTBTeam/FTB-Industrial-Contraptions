@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:copper_coil",
+    "ic:carbon_plate",
+    "ic:copper_coil",
+    "ic:advanced_alloy",
+    "ic:machine_block",
+    "ic:advanced_alloy",
+    "ic:copper_coil",
+    "ic:carbon_plate",
+    "ic:copper_coil"
+  ],
+  "result": {
+    "id": "ic:advanced_machine_block"
+  },
+  "show_notification": false
+}

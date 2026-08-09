@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:advanced_alloy",
+    "#c:plates/lead",
+    "#c:plates/lead"
+  ],
+  "result": {
+    "id": "ic:reactor_plating"
+  },
+  "show_notification": false
+}

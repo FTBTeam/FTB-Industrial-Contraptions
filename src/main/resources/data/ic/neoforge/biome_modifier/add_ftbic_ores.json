@@ -1,0 +1,23 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": [
+    "ic:ore_tin_upper",
+    "ic:ore_tin_middle",
+    "ic:ore_tin_small",
+    "ic:ore_lead_upper",
+    "ic:ore_lead_middle",
+    "ic:ore_lead_small",
+    "ic:ore_aluminum_upper",
+    "ic:ore_aluminum_middle",
+    "ic:ore_aluminum_small",
+    "ic:ore_nickel_middle",
+    "ic:ore_nickel_small",
+    "ic:ore_uranium",
+    "ic:ore_uranium_lower",
+    "ic:ore_iridium",
+    "ic:ore_iridium_large",
+    "ic:ore_iridium_buried"
+  ],
+  "step": "underground_ores"
+}

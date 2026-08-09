@@ -1,0 +1,7 @@
+{
+  "parent": "ic:block/orientable_3d",
+  "textures": {
+    "side": "ic:block/electric/light/hv_battery_box_in",
+    "front": "ic:block/electric/light/hv_battery_box_out"
+  }
+}

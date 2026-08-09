@@ -1,0 +1,16 @@
+{
+  "type": "ic:compressing",
+  "inputs": [
+    {
+      "ingredient": "ic:sticky_resin"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 3,
+        "id": "ic:rubber"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:rods/blaze"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 5,
+        "id": "minecraft:blaze_powder"
+      }
+    }
+  ]
+}

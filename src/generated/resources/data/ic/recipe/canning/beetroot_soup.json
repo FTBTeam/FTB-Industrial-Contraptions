@@ -1,0 +1,18 @@
+{
+  "type": "ic:canning",
+  "inputs": [
+    {
+      "ingredient": "minecraft:beetroot_soup"
+    },
+    {
+      "ingredient": "ic:empty_can"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:canned_food"
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ic:block/lead_block"
+    }
+  }
+}

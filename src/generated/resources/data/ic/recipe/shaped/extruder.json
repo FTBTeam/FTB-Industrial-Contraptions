@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:electronic_circuit",
+    "M": "ic:machine_block",
+    "S": "#c:rods/iron"
+  },
+  "pattern": [
+    "SCS",
+    "SMS"
+  ],
+  "result": {
+    "id": "ic:extruder"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ic:compressing",
+  "inputs": [
+    {
+      "ingredient": "ic:graphene"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:diamond"
+      }
+    }
+  ]
+}

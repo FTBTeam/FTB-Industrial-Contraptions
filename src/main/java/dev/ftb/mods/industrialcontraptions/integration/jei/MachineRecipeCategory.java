@@ -1,0 +1,133 @@
+package dev.ftb.mods.industrialcontraptions.integration.jei;
+
+import dev.ftb.mods.industrialcontraptions.ICConfig;
+import dev.ftb.mods.industrialcontraptions.block.ElectricBlockInstance;
+import dev.ftb.mods.industrialcontraptions.recipe.MachineRecipe;
+import dev.ftb.mods.industrialcontraptions.recipe.MachineRecipeType;
+import dev.ftb.mods.industrialcontraptions.util.IngredientWithCount;
+import dev.ftb.mods.industrialcontraptions.util.StackWithChance;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.ITooltipBuilder;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.category.AbstractRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
+import mezz.jei.api.recipe.types.IRecipeType;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MachineRecipeCategory extends AbstractRecipeCategory<RecipeHolder<MachineRecipe>> {
+	public static final int HEIGHT = 26;
+
+	private static final int SLOT_Y = 4;
+	private static final int ARROW_Y = 5;
+
+	private final ElectricBlockInstance machine;
+	private final int maxInputs;
+	private final int inputXEnd;
+	private final int arrowX;
+	private final int outputX;
+
+	public MachineRecipeCategory(MachineRecipeType type, ElectricBlockInstance machine, IGuiHelper helper) {
+		this(type, machine, helper, 2);
+	}
+
+	public MachineRecipeCategory(MachineRecipeType type, ElectricBlockInstance machine, IGuiHelper helper, int maxInputs) {
+		super(jeiRecipeType(type),
+				Component.literal(machine.name),
+				helper.createDrawableItemStack(new ItemStack(machine.item.get())),
+				widthFor(maxInputs),
+				HEIGHT);
+		this.machine = machine;
+		this.maxInputs = Math.max(1, maxInputs);
+		this.inputXEnd = 22 + Math.max(0, this.maxInputs - 2) * 18;
+		this.arrowX = inputXEnd + 22;
+		this.outputX = arrowX + 28;
+	}
+
+	private static int widthFor(int maxInputs) {
+		return 112 + Math.max(0, maxInputs - 2) * 18;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static IRecipeHolderType<MachineRecipe> jeiRecipeType(MachineRecipeType type) {
+		return IRecipeType.create((RecipeType<MachineRecipe>) (RecipeType<?>) type.TYPE.get());
+	}
+
+	@Override
+	public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<MachineRecipe> holder, IFocusGroup focuses) {
+		MachineRecipe recipe = holder.value();
+
+		int inputCount = Math.min(maxInputs, recipe.inputs.size());
+		int idx = 0;
+		for (IngredientWithCount in : recipe.inputs) {
+			if (idx >= maxInputs) break;
+			int x = inputXEnd - (inputCount - 1 - idx) * 18;
+			var slot = builder.addInputSlot(x, SLOT_Y).setStandardSlotBackground();
+			int cnt = in.count();
+			if (cnt > 1) {
+				List<ItemStack> stacks = new ArrayList<>();
+				in.ingredient().items().forEach(h -> {
+					ItemStack stack = new ItemStack(h);
+					stack.setCount(cnt);
+					stacks.add(stack);
+				});
+				slot.addItemStacks(stacks);
+			} else {
+				slot.add(in.ingredient());
+			}
+			idx++;
+		}
+
+		int visibleOutputs = 0;
+		for (StackWithChance out : recipe.outputs) {
+			if (!out.stack().isEmpty()) visibleOutputs++;
+		}
+		boolean singleOutput = visibleOutputs == 1;
+		int ox = outputX;
+		for (StackWithChance out : recipe.outputs) {
+			ItemStack stack = out.stack();
+			if (stack.isEmpty()) continue;
+			var slot = builder.addOutputSlot(ox, SLOT_Y);
+			if (singleOutput) slot.setOutputSlotBackground();
+			else slot.setStandardSlotBackground();
+			slot.add(stack);
+			double chance = out.chance();
+			if (chance < 1.0D) {
+				slot.addRichTooltipCallback((slotView, tooltip) ->
+						tooltip.add(Component.literal(String.format("Chance: %.1f%%", chance * 100D))
+								.withStyle(ChatFormatting.GRAY)));
+			}
+			ox += 18;
+		}
+	}
+
+	@Override
+	public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<MachineRecipe> holder, IFocusGroup focuses) {
+		builder.addAnimatedRecipeArrow(50).setPosition(arrowX, ARROW_Y);
+	}
+
+	@Override
+	public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<MachineRecipe> recipe, IRecipeSlotsView slots, double mouseX, double mouseY) {
+		int hitX0 = inputXEnd + 18;
+		int hitX1 = outputX;
+		if (mouseX >= hitX0 && mouseX < hitX1 && mouseY >= SLOT_Y && mouseY < SLOT_Y + 18) {
+			double baseTicks = ICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get();
+			double ticks = recipe.value().processingTime * baseTicks;
+			double energyPerTick = machine.energyUsage.get();
+			long zaps = Math.round(ticks * energyPerTick);
+			double seconds = ticks / 20.0D;
+			tooltip.add(Component.literal(String.format("%.1fs · %,d zaps", seconds, zaps)));
+			tooltip.add(Component.literal(String.format("%.0f z/t", energyPerTick))
+					.withStyle(ChatFormatting.DARK_GRAY));
+		}
+	}
+}

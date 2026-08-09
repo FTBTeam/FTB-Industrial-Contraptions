@@ -1,0 +1,15 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "ic:advanced_alloy"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:mixed_metal_blend"
+      }
+    }
+  ]
+}

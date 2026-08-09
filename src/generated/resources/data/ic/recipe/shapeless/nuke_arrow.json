@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:nuke",
+    "minecraft:arrow"
+  ],
+  "result": {
+    "id": "ic:nuke_arrow"
+  },
+  "show_notification": false
+}

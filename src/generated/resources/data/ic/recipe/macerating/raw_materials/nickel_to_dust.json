@@ -1,0 +1,21 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:raw_materials/nickel"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:nickel_dust"
+      }
+    },
+    {
+      "chance": 0.35,
+      "item": {
+        "id": "ic:nickel_dust"
+      }
+    }
+  ]
+}

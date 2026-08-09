@@ -1,0 +1,16 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:storage_blocks/electrum"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 9,
+        "id": "ic:electrum_dust"
+      }
+    }
+  ]
+}

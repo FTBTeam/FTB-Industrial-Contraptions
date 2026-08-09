@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/plutonium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:plutonium_gear"
+      }
+    }
+  ]
+}

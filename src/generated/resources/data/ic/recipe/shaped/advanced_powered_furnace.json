@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#c:ingots/copper",
+    "F": "ic:powered_furnace",
+    "M": "ic:advanced_machine_block",
+    "W": "ic:copper_coil"
+  },
+  "pattern": [
+    "CCC",
+    "CFC",
+    "WMW"
+  ],
+  "result": {
+    "id": "ic:advanced_powered_furnace"
+  },
+  "show_notification": false
+}

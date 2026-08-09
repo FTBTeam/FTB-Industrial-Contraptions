@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/bronze"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:bronze_gear"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": "#c:gems/diamond",
+    "I": "minecraft:iron_bars",
+    "V": "ic:heat_vent"
+  },
+  "pattern": [
+    "IVI",
+    "IDI",
+    "IVI"
+  ],
+  "result": {
+    "id": "ic:advanced_heat_vent"
+  },
+  "show_notification": false
+}
