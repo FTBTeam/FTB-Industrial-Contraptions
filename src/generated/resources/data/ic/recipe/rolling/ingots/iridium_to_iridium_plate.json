@@ -1,0 +1,15 @@
+{
+  "type": "ic:rolling",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/iridium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:iridium_plate"
+      }
+    }
+  ]
+}

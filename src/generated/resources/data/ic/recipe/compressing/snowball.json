@@ -1,0 +1,18 @@
+{
+  "type": "ic:compressing",
+  "inputs": [
+    {
+      "ingredient": {
+        "neoforge:ingredient_type": "ic:fluid_cell",
+        "fluid": "minecraft:water"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:snowball"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": "#c:ingots/enderium"
+  },
+  "pattern": [
+    " X ",
+    " X "
+  ],
+  "result": {
+    "id": "ic:enderium_rod"
+  },
+  "show_notification": false
+}

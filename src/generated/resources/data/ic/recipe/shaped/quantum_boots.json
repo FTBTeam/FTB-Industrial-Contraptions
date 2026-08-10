@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ic:carbon_boots",
+    "I": "ic:iridium_alloy",
+    "L": "minecraft:leather_boots",
+    "S": "ic:reinforced_stone"
+  },
+  "pattern": [
+    "IAI",
+    "SLS"
+  ],
+  "result": {
+    "id": "ic:quantum_boots"
+  },
+  "show_notification": false
+}

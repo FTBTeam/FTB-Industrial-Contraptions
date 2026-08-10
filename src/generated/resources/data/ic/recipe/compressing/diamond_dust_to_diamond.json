@@ -1,0 +1,16 @@
+{
+  "type": "ic:compressing",
+  "inputs": [
+    {
+      "count": 2,
+      "ingredient": "ic:diamond_dust"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:diamond"
+      }
+    }
+  ]
+}

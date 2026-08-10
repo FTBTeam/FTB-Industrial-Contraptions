@@ -1,0 +1,18 @@
+{
+  "type": "ic:alloy_smelting",
+  "inputs": [
+    {
+      "ingredient": "ic:industrial_grade_metal"
+    },
+    {
+      "ingredient": "minecraft:charcoal"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:steel_ingot"
+      }
+    }
+  ]
+}

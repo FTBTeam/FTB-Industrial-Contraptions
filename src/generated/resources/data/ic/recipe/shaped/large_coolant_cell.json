@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ic:dense_copper_plate",
+    "C": "ic:medium_coolant_cell",
+    "T": "#c:ingots/tin"
+  },
+  "pattern": [
+    "TCT",
+    "TAT",
+    "TCT"
+  ],
+  "result": {
+    "id": "ic:large_coolant_cell"
+  },
+  "show_notification": false
+}

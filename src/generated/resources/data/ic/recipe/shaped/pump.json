@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ic:advanced_alloy",
+    "C": "ic:advanced_circuit",
+    "D": "minecraft:bucket",
+    "F": "ic:fluid_cell",
+    "M": "ic:advanced_machine_block"
+  },
+  "pattern": [
+    "FFF",
+    "CMC",
+    "ADA"
+  ],
+  "result": {
+    "id": "ic:pump"
+  },
+  "show_notification": false
+}

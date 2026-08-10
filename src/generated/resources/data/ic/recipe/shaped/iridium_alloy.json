@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ic:advanced_alloy",
+    "D": "#c:gems/diamond",
+    "I": "#c:ingots/iridium"
+  },
+  "pattern": [
+    "IAI",
+    "ADA",
+    "IAI"
+  ],
+  "result": {
+    "id": "ic:iridium_alloy"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "T": "#c:ingots/tin"
+  },
+  "pattern": [
+    " T ",
+    "T T",
+    " T "
+  ],
+  "result": {
+    "count": 4,
+    "id": "ic:fluid_cell"
+  },
+  "show_notification": false
+}

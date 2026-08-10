@@ -1,0 +1,15 @@
+{
+  "type": "ic:rolling",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/silver"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:silver_plate"
+      }
+    }
+  ]
+}

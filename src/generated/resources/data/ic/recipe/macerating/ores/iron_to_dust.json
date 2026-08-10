@@ -1,0 +1,16 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ores/iron"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ic:iron_dust"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "ic:alloy_smelting",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/steel"
+    },
+    {
+      "ingredient": "#c:ingots/electrum"
+    },
+    {
+      "ingredient": "#c:ingots/aluminum"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:advanced_alloy"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:fluid_cell",
+    "F": "ic:centrifuge",
+    "M": "ic:advanced_machine_block",
+    "W": "ic:copper_coil"
+  },
+  "pattern": [
+    "CCC",
+    "CFC",
+    "WMW"
+  ],
+  "result": {
+    "id": "ic:advanced_centrifuge"
+  },
+  "show_notification": false
+}

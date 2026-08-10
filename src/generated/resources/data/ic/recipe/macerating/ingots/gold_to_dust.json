@@ -1,0 +1,15 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/gold"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:gold_dust"
+      }
+    }
+  ]
+}

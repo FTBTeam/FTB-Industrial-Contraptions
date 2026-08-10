@@ -1,12 +1,12 @@
 {
   "values": [
-    "ftbic:aluminum_raw_ore",
-    "ftbic:iridium_raw_ore",
-    "ftbic:lead_raw_ore",
-    "ftbic:nickel_raw_ore",
-    "ftbic:plutonium_raw_ore",
-    "ftbic:silver_raw_ore",
-    "ftbic:tin_raw_ore",
-    "ftbic:uranium_raw_ore"
+    "ic:aluminum_raw_ore",
+    "ic:iridium_raw_ore",
+    "ic:lead_raw_ore",
+    "ic:nickel_raw_ore",
+    "ic:plutonium_raw_ore",
+    "ic:silver_raw_ore",
+    "ic:tin_raw_ore",
+    "ic:uranium_raw_ore"
   ]
 }

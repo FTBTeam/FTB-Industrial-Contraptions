@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/invar"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:invar_gear"
+      }
+    }
+  ]
+}

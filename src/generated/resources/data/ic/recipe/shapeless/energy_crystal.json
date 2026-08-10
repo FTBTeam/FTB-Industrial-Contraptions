@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:dusts/redstone",
+    "#c:dusts/glowstone",
+    "#c:dusts/redstone",
+    "#c:silicon",
+    "#c:gems/diamond",
+    "#c:silicon",
+    "#c:dusts/redstone",
+    "#c:dusts/glowstone",
+    "#c:dusts/redstone"
+  ],
+  "result": {
+    "id": "ic:energy_crystal"
+  },
+  "show_notification": false
+}

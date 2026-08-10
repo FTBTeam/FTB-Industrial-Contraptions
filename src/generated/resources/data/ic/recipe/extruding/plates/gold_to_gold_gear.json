@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/gold"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:gold_gear"
+      }
+    }
+  ]
+}

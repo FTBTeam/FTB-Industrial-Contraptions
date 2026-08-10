@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:plates/lead",
+    "V": "ic:heat_exchanger"
+  },
+  "pattern": [
+    "P",
+    "V",
+    "P"
+  ],
+  "result": {
+    "id": "ic:reactor_heat_exchanger"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:advanced_alloy",
+    "ic:graphene",
+    "ic:advanced_alloy",
+    "ic:advanced_circuit",
+    "ic:iridium_alloy",
+    "ic:advanced_circuit",
+    "ic:advanced_alloy",
+    "ic:graphene",
+    "ic:advanced_alloy"
+  ],
+  "result": {
+    "count": 2,
+    "id": "ic:iridium_circuit"
+  },
+  "show_notification": false
+}

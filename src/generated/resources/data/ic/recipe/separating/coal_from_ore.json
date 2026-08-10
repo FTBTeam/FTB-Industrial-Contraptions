@@ -1,0 +1,15 @@
+{
+  "type": "ic:separating",
+  "inputs": [
+    {
+      "ingredient": "#c:ores/coal"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:coal"
+      }
+    }
+  ]
+}

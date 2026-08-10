@@ -1,0 +1,22 @@
+{
+  "type": "ic:separating",
+  "inputs": [
+    {
+      "ingredient": "#minecraft:sand"
+    }
+  ],
+  "outputs": [
+    {
+      "chance": 0.2,
+      "item": {
+        "id": "ic:silicon_gem"
+      }
+    },
+    {
+      "chance": 0.05,
+      "item": {
+        "id": "ic:silicon_gem"
+      }
+    }
+  ]
+}

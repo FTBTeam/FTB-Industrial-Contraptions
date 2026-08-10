@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "dark=false": {
+      "model": "ic:block/electric/light/hv_solar_panel"
+    },
+    "dark=true": {
+      "model": "ic:block/electric/dark/hv_solar_panel"
+    }
+  }
+}

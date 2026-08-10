@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "ingredient": "#c:rods/obsidian"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ic:obsidian_wire"
+      }
+    }
+  ]
+}

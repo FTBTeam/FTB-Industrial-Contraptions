@@ -1,0 +1,5 @@
+{
+  "type": "ic:antimatter_boost",
+  "boost": 45000.0,
+  "ingredient": "ic:scrap_box"
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "#c:glass_blocks/colorless",
+    "M": "ic:industrial_grade_metal"
+  },
+  "pattern": [
+    "GGG",
+    "MMM",
+    "GGG"
+  ],
+  "result": {
+    "count": 24,
+    "id": "ic:fuse"
+  },
+  "show_notification": false
+}

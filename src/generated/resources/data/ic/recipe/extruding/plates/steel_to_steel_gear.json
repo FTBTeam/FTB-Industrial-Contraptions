@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/steel"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:steel_gear"
+      }
+    }
+  ]
+}

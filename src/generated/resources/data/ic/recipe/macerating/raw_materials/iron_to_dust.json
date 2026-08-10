@@ -1,0 +1,21 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:raw_materials/iron"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:iron_dust"
+      }
+    },
+    {
+      "chance": 0.35,
+      "item": {
+        "id": "ic:iron_dust"
+      }
+    }
+  ]
+}

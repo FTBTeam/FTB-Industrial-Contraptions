@@ -1,17 +1,17 @@
 {
   "values": [
-    "ftbic:aluminum_ingot",
-    "ftbic:bronze_ingot",
-    "ftbic:constantan_ingot",
-    "ftbic:electrum_ingot",
-    "ftbic:invar_ingot",
-    "ftbic:iridium_ingot",
-    "ftbic:lead_ingot",
-    "ftbic:nickel_ingot",
-    "ftbic:plutonium_ingot",
-    "ftbic:silver_ingot",
-    "ftbic:steel_ingot",
-    "ftbic:tin_ingot",
-    "ftbic:uranium_ingot"
+    "ic:aluminum_ingot",
+    "ic:bronze_ingot",
+    "ic:constantan_ingot",
+    "ic:electrum_ingot",
+    "ic:invar_ingot",
+    "ic:iridium_ingot",
+    "ic:lead_ingot",
+    "ic:nickel_ingot",
+    "ic:plutonium_ingot",
+    "ic:silver_ingot",
+    "ic:steel_ingot",
+    "ic:tin_ingot",
+    "ic:uranium_ingot"
   ]
 }

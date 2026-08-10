@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "N": "ic:neutron_reflector",
+    "P": "#c:plates/copper"
+  },
+  "pattern": [
+    "PNP",
+    "NPN",
+    "PNP"
+  ],
+  "result": {
+    "id": "ic:thick_neutron_reflector"
+  },
+  "show_notification": false
+}

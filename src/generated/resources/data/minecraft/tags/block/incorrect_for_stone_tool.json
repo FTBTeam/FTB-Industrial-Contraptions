@@ -1,13 +1,13 @@
 {
   "values": [
-    "ftbic:invar_block",
-    "ftbic:silver_stone_ore",
-    "ftbic:silver_deepslate_ore",
-    "ftbic:silver_block",
-    "ftbic:silver_raw_block",
-    "ftbic:uranium_stone_ore",
-    "ftbic:uranium_deepslate_ore",
-    "ftbic:uranium_block",
-    "ftbic:uranium_raw_block"
+    "ic:invar_block",
+    "ic:silver_stone_ore",
+    "ic:silver_deepslate_ore",
+    "ic:silver_block",
+    "ic:silver_raw_block",
+    "ic:uranium_stone_ore",
+    "ic:uranium_deepslate_ore",
+    "ic:uranium_block",
+    "ic:uranium_raw_block"
   ]
 }

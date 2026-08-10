@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/obsidian"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:obsidian_gear"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ic:advanced_machine_block",
+    "C": "ic:iridium_circuit",
+    "G": "ic:graphene",
+    "S": "ic:mv_solar_panel"
+  },
+  "pattern": [
+    "SGS",
+    "SAS",
+    "SCS"
+  ],
+  "result": {
+    "id": "ic:hv_solar_panel"
+  },
+  "show_notification": false
+}

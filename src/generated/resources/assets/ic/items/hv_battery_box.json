@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "ic:block/electric/light/hv_battery_box"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "ic:block/ev_reinforced_cable"
+      }
+    }
+  ]
+}

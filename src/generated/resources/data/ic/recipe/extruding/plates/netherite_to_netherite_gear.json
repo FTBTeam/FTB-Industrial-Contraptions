@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/netherite"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:netherite_gear"
+      }
+    }
+  ]
+}

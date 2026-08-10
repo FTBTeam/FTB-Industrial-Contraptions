@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:lv_battery",
+    "ic:energy_crystal"
+  ],
+  "result": {
+    "id": "ic:mv_battery"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:coal"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:coal_dust"
+      }
+    }
+  ]
+}

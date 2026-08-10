@@ -1,0 +1,21 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:raw_materials/tin"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:tin_dust"
+      }
+    },
+    {
+      "chance": 0.35,
+      "item": {
+        "id": "ic:tin_dust"
+      }
+    }
+  ]
+}

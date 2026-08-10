@@ -1,0 +1,16 @@
+{
+  "type": "ic:reprocessing",
+  "inputs": [
+    {
+      "ingredient": "#ic:scrappable"
+    }
+  ],
+  "outputs": [
+    {
+      "chance": 0.125,
+      "item": {
+        "id": "ic:scrap"
+      }
+    }
+  ]
+}

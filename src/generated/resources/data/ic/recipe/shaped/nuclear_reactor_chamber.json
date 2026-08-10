@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": "ic:reactor_plating",
+    "M": "ic:advanced_machine_block",
+    "P": "ic:dense_copper_plate"
+  },
+  "pattern": [
+    "HPH",
+    "PMP",
+    "HPH"
+  ],
+  "result": {
+    "count": 3,
+    "id": "ic:nuclear_reactor_chamber"
+  },
+  "show_notification": false
+}

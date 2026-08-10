@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:ingots/iron",
+    "R": "minecraft:redstone",
+    "T": "ic:hv_transformer",
+    "W": "ic:hv_cable"
+  },
+  "pattern": [
+    "RWR",
+    "PTP",
+    "RWR"
+  ],
+  "result": {
+    "id": "ic:hv_rectifier"
+  },
+  "show_notification": false
+}

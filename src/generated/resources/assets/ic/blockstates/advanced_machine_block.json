@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ic:block/advanced_machine_block"
+    }
+  }
+}

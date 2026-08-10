@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "ingredient": "ic:invar_dust",
+  "result": {
+    "id": "ic:invar_ingot"
+  },
+  "show_notification": false
+}

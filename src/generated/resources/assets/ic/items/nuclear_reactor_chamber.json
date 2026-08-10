@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "ic:block/nuclear_reactor_chamber"
+  }
+}
