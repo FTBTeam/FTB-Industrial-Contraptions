@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": "ic:lead_dust",
+  "result": {
+    "id": "ic:lead_ingot"
+  },
+  "show_notification": false
+}

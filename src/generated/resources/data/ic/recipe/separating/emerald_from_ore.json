@@ -1,0 +1,15 @@
+{
+  "type": "ic:separating",
+  "inputs": [
+    {
+      "ingredient": "#c:ores/emerald"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:emerald"
+      }
+    }
+  ]
+}

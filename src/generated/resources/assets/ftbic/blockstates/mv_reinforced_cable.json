@@ -1,9 +1,0 @@
-{
-  "multipart": [
-    {
-      "apply": {
-        "model": "ftbic:block/mv_reinforced_cable"
-      }
-    }
-  ]
-}

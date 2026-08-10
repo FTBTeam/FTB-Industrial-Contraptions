@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#c:dusts/copper",
+    "T": "#c:dusts/tin"
+  },
+  "pattern": [
+    "CC",
+    "CT"
+  ],
+  "result": {
+    "count": 4,
+    "id": "ic:bronze_dust"
+  },
+  "show_notification": false
+}

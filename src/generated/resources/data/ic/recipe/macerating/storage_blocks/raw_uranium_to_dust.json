@@ -1,0 +1,16 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:storage_blocks/raw_uranium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 9,
+        "id": "ic:uranium_dust"
+      }
+    }
+  ]
+}

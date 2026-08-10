@@ -1,0 +1,21 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:raw_materials/gold"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:gold_dust"
+      }
+    },
+    {
+      "chance": 0.35,
+      "item": {
+        "id": "ic:gold_dust"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "ic:block/orientable_2d",
+  "textures": {
+    "side": "ic:block/electric/light/antimatter_constructor_side",
+    "front": "ic:block/electric/light/antimatter_constructor_front_off",
+    "top": "ic:block/electric/light/advanced_top",
+    "bottom": "ic:block/electric/light/advanced_bottom"
+  }
+}

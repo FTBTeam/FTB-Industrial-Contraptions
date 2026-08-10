@@ -1,0 +1,18 @@
+{
+  "type": "ic:canning",
+  "inputs": [
+    {
+      "ingredient": "minecraft:melon_slice"
+    },
+    {
+      "ingredient": "ic:empty_can"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:canned_food"
+      }
+    }
+  ]
+}

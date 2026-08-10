@@ -1,0 +1,15 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:stones"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:cobblestone"
+      }
+    }
+  ]
+}

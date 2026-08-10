@@ -1,0 +1,21 @@
+{
+  "type": "ic:canning",
+  "inputs": [
+    {
+      "ingredient": {
+        "neoforge:ingredient_type": "ic:fluid_cell",
+        "fluid": "minecraft:water"
+      }
+    },
+    {
+      "ingredient": "#c:dusts/uranium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:uranium_fuel_rod"
+      }
+    }
+  ]
+}

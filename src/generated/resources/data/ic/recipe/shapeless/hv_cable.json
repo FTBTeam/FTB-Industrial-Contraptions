@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:wires/gold",
+    "ic:rubber"
+  ],
+  "result": {
+    "id": "ic:hv_cable"
+  },
+  "show_notification": false
+}

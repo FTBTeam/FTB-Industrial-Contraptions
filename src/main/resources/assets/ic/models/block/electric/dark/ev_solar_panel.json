@@ -1,0 +1,9 @@
+{
+  "parent": "ic:block/orientable_2d",
+  "textures": {
+    "side": "ic:block/electric/dark/advanced_side",
+    "front": "ic:block/electric/dark/advanced_side",
+    "top": "ic:block/electric/dark/ev_solar_panel_top",
+    "bottom": "ic:block/electric/dark/advanced_bottom"
+  }
+}

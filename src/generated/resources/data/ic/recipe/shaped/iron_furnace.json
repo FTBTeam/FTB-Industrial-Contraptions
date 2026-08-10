@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": "minecraft:furnace",
+    "I": "#c:ingots/iron"
+  },
+  "pattern": [
+    " I ",
+    "I I",
+    "IFI"
+  ],
+  "result": {
+    "id": "ic:iron_furnace"
+  },
+  "show_notification": false
+}

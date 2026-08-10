@@ -1,0 +1,15 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:gems/diamond"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:diamond_dust"
+      }
+    }
+  ]
+}

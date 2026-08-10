@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:reinforced_stone",
+    "ic:iv_cable"
+  ],
+  "result": {
+    "id": "ic:iv_reinforced_cable"
+  },
+  "show_notification": false
+}

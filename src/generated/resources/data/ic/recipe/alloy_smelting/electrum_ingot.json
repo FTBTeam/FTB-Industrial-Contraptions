@@ -1,0 +1,19 @@
+{
+  "type": "ic:alloy_smelting",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/silver"
+    },
+    {
+      "ingredient": "#c:ingots/gold"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ic:electrum_ingot"
+      }
+    }
+  ]
+}

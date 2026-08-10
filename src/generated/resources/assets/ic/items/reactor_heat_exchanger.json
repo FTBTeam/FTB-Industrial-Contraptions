@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "ic:item/reactor_heat_exchanger"
+  }
+}

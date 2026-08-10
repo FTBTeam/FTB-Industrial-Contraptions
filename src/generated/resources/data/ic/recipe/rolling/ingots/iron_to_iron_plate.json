@@ -1,0 +1,15 @@
+{
+  "type": "ic:rolling",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/iron"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:iron_plate"
+      }
+    }
+  ]
+}

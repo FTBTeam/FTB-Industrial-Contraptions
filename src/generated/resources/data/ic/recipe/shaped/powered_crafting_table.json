@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:electronic_circuit",
+    "M": "ic:machine_block",
+    "P": "#minecraft:planks",
+    "T": "minecraft:crafting_table"
+  },
+  "pattern": [
+    "PCP",
+    "PMP",
+    "PTP"
+  ],
+  "result": {
+    "id": "ic:powered_crafting_table"
+  },
+  "show_notification": false
+}

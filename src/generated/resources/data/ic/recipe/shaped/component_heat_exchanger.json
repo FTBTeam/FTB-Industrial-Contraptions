@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:plates/tin",
+    "V": "ic:heat_exchanger"
+  },
+  "pattern": [
+    " P ",
+    "PVP",
+    " P "
+  ],
+  "result": {
+    "id": "ic:component_heat_exchanger"
+  },
+  "show_notification": false
+}

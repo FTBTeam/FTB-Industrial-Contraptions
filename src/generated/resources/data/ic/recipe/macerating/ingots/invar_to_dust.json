@@ -1,0 +1,15 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/invar"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:invar_dust"
+      }
+    }
+  ]
+}

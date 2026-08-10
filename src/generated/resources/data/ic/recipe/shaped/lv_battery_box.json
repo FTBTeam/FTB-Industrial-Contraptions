@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "ic:lv_battery",
+    "P": "#minecraft:planks",
+    "W": "ic:lv_cable"
+  },
+  "pattern": [
+    "PWP",
+    "BBB",
+    "PPP"
+  ],
+  "result": {
+    "id": "ic:lv_battery_box"
+  },
+  "show_notification": false
+}

@@ -1,11 +1,11 @@
 {
   "values": [
-    "ftbic:aluminum_deepslate_ore",
-    "ftbic:iridium_deepslate_ore",
-    "ftbic:lead_deepslate_ore",
-    "ftbic:nickel_deepslate_ore",
-    "ftbic:silver_deepslate_ore",
-    "ftbic:tin_deepslate_ore",
-    "ftbic:uranium_deepslate_ore"
+    "ic:aluminum_deepslate_ore",
+    "ic:iridium_deepslate_ore",
+    "ic:lead_deepslate_ore",
+    "ic:nickel_deepslate_ore",
+    "ic:silver_deepslate_ore",
+    "ic:tin_deepslate_ore",
+    "ic:uranium_deepslate_ore"
   ]
 }

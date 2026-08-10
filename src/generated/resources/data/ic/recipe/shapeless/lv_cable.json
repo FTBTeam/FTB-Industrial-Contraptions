@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:wires/copper",
+    "ic:rubber"
+  ],
+  "result": {
+    "id": "ic:lv_cable"
+  },
+  "show_notification": false
+}

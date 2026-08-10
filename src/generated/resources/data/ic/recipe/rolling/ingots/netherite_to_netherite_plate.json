@@ -1,0 +1,15 @@
+{
+  "type": "ic:rolling",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/netherite"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:netherite_plate"
+      }
+    }
+  ]
+}

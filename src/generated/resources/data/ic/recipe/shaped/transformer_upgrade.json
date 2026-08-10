@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:electronic_circuit",
+    "G": "#c:glass_blocks/colorless",
+    "T": "ic:mv_transformer",
+    "W": "ic:mv_cable"
+  },
+  "pattern": [
+    "GGG",
+    "WTW",
+    "GCG"
+  ],
+  "result": {
+    "id": "ic:transformer_upgrade"
+  },
+  "show_notification": false
+}

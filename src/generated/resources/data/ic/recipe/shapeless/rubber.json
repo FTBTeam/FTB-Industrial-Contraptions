@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:rubber_sheet"
+  ],
+  "result": {
+    "count": 3,
+    "id": "ic:rubber"
+  },
+  "show_notification": false
+}

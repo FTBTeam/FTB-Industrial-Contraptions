@@ -1,0 +1,15 @@
+{
+  "type": "ic:separating",
+  "inputs": [
+    {
+      "ingredient": "#c:gravels"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:flint"
+      }
+    }
+  ]
+}

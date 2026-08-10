@@ -1,0 +1,9 @@
+{
+  "parent": "ic:block/orientable_2d",
+  "textures": {
+    "side": "ic:block/electric/dark/advanced_side",
+    "front": "ic:block/electric/dark/advanced_side",
+    "top": "ic:block/electric/dark/teleporter_top_off",
+    "bottom": "ic:block/electric/dark/advanced_bottom"
+  }
+}

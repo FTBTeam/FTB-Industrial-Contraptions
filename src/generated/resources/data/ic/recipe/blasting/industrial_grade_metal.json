@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": "#c:ingots/iron",
+  "result": {
+    "id": "ic:industrial_grade_metal"
+  },
+  "show_notification": false
+}

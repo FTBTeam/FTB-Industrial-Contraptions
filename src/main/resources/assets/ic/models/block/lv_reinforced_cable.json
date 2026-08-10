@@ -1,0 +1,6 @@
+{
+  "parent": "ic:block/reinforced_cable_base",
+  "textures": {
+    "center": "ic:block/lv_cable"
+  }
+}

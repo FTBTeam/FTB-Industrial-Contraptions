@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:mv_battery",
+    "ic:graphene"
+  ],
+  "result": {
+    "id": "ic:hv_battery"
+  },
+  "show_notification": false
+}

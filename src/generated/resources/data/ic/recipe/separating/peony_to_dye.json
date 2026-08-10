@@ -1,0 +1,16 @@
+{
+  "type": "ic:separating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:peony"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "minecraft:pink_dye"
+      }
+    }
+  ]
+}

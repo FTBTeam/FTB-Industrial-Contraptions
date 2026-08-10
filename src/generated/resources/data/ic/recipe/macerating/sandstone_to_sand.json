@@ -1,0 +1,15 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "minecraft:sandstone"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "minecraft:sand"
+      }
+    }
+  ]
+}

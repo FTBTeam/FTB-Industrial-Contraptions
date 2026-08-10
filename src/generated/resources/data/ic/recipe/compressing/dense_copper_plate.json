@@ -1,0 +1,16 @@
+{
+  "type": "ic:compressing",
+  "inputs": [
+    {
+      "count": 8,
+      "ingredient": "#c:plates/copper"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:dense_copper_plate"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "#c:glass_blocks/colorless",
+    "R": "ic:reinforced_stone"
+  },
+  "pattern": [
+    "RGR",
+    "G G",
+    "RGR"
+  ],
+  "result": {
+    "count": 4,
+    "id": "ic:reinforced_glass"
+  },
+  "show_notification": false
+}

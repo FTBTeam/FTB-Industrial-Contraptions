@@ -1,0 +1,25 @@
+{
+  "values": [
+    "ic:uranium_fuel_rod",
+    "ic:dual_uranium_fuel_rod",
+    "ic:quad_uranium_fuel_rod",
+    "ic:heat_vent",
+    "ic:advanced_heat_vent",
+    "ic:reactor_heat_vent",
+    "ic:component_heat_vent",
+    "ic:overclocked_heat_vent",
+    "ic:heat_exchanger",
+    "ic:advanced_heat_exchanger",
+    "ic:reactor_heat_exchanger",
+    "ic:component_heat_exchanger",
+    "ic:small_coolant_cell",
+    "ic:medium_coolant_cell",
+    "ic:large_coolant_cell",
+    "ic:neutron_reflector",
+    "ic:thick_neutron_reflector",
+    "ic:iridium_neutron_reflector",
+    "ic:reactor_plating",
+    "ic:containment_reactor_plating",
+    "ic:heat_capacity_reactor_plating"
+  ]
+}

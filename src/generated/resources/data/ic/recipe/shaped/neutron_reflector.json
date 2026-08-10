@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#c:dusts/coal",
+    "P": "ic:dense_copper_plate",
+    "T": "#c:dusts/tin"
+  },
+  "pattern": [
+    "TCT",
+    "TPT",
+    "TCT"
+  ],
+  "result": {
+    "id": "ic:neutron_reflector"
+  },
+  "show_notification": false
+}

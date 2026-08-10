@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:wires/aluminum",
+    "ic:rubber"
+  ],
+  "result": {
+    "id": "ic:mv_cable"
+  },
+  "show_notification": false
+}

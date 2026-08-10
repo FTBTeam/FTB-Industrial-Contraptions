@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/copper"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:copper_gear"
+      }
+    }
+  ]
+}

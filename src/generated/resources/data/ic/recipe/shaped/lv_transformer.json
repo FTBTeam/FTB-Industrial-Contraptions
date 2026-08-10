@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#c:ingots/copper",
+    "P": "#minecraft:planks",
+    "W": "ic:lv_cable"
+  },
+  "pattern": [
+    "PWP",
+    "CCC",
+    "PWP"
+  ],
+  "result": {
+    "id": "ic:lv_transformer"
+  },
+  "show_notification": false
+}

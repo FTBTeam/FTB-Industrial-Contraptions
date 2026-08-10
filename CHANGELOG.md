@@ -5,6 +5,62 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [26.1.2.10]
+
+> ## ⚠️ BREAKING CHANGE: THE MOD ID CHANGED FROM `ftbic` TO `ic`
+>
+> **BACK UP YOUR WORLD BEFORE INSTALLING THIS VERSION.** Take a full copy of the
+> save folder (and the whole instance if you can) and keep it somewhere the
+> launcher will not touch. This update rewrites how every block and item in the
+> mod is identified. A compatibility layer is in place and testing has been
+> clean, but no compatibility layer is a substitute for a backup you can roll
+> back to.
+>
+> **Pack developers: this WILL break your pack until you update your files.**
+> Any recipe, tag, loot table, KubeJS script, quest file, or config that
+> references `ftbic:` or lives under `data/ftbic/` has to be changed to `ic:`.
+> Registry aliases do not cover data files. Read the Migration section below
+> before you ship an update.
+
+### Changed
+
+* **The mod is now called Industrial Contraptions.** The `FTB` prefix has been dropped from the name, the mod ID, and every item and block ID. `ftbic:copper_ingot` is now `ic:copper_ingot`, the config file is `config/ic-common.toml`, the command is `/ic`, and the jar is `industrial-contraptions-<version>.jar`.
+
+### Fixed
+
+* **GUI and JEI text can now be translated.** Around 160 strings were hardcoded English and no language file could reach them: every reactor component tooltip in JEI, the recipe time and energy readouts, machine progress and slot tooltips, the pump, quarry, solar panel and teleporter screens, and the whole reactor simulator UI (buttons, verdict lines, stats, preset management, and the per-component tooltips). All of them are `ic.gui.*`, `ic.jei.*` and `ic.reactor.*` keys now.
+* JEI machine categories take their title from the machine's block translation key instead of its internal display name, so a translated machine name shows up in JEI too.
+
+### Added
+
+* **Japanese (ja_jp) translation** — 454 entries covering every block, item, tooltip and config string. Thanks to [@Nia1111](https://github.com/Nia1111) ([FTBTeam/FTB-Industrial-Contraptions#48](https://github.com/FTBTeam/FTB-Industrial-Contraptions/pull/48)).
+* **Chinese (zh_cn) translation** expanded from 142 to 424 entries, covering the newly translatable GUI and JEI text plus the reactor simulator. Thanks to [@xingluo01](https://github.com/xingluo01) for the translation and for the original localization work in [FTBTeam/FTB-Industrial-Contraptions#50](https://github.com/FTBTeam/FTB-Industrial-Contraptions/pull/50).
+
+### Migration
+
+**For players**
+
+* **Back up your world first.** This is the one update where it genuinely matters. Copy the save folder before you launch.
+* **Existing worlds are expected to load unchanged.** Every block, item, block entity, entity, menu, sound, recipe type, recipe serializer, data component, and creative tab registers a `ftbic:` alias pointing at its new `ic:` ID, so machines, inventories, and saved contraptions all resolve on load. Nothing needs to be broken and replaced before updating.
+* **Once you load and save a world on this version, going back to an older FTBIC build is not supported.** Roll back to your backup instead.
+* **Your config is carried over.** `config/ftbic-common.toml` is copied to `config/ic-common.toml` the first time the new version starts, if the new file does not already exist. The old file is left in place and can be deleted once you have confirmed the settings came across.
+* **Saved reactor layouts are moved** from `local/ftbic/reactor_layout` to `local/ic/reactor_layout`.
+* **`/ftbic` still works** as an alias for `/ic`.
+
+**For pack developers and modpack authors**
+
+Registry aliases apply to registry lookups only. They do **not** apply to anything read from a data file path or matched by string, so all of the following need updating by hand:
+
+* **Recipes and recipe overrides** referencing `ftbic:` items, and anything under `data/ftbic/recipe/`.
+* **Tags**, both files under `data/ftbic/tags/` and any `ftbic:` entries inside your own tag files. Note `ftbic:reinforced` is now `ic:reinforced`.
+* **Loot tables and advancements** under `data/ftbic/`, and any that reference `ftbic:` blocks or items.
+* **KubeJS scripts** matching on `ftbic:` IDs, including recipe removals by ID, `ItemStack.of("ftbic:...")` lookups, and event filters.
+* **Quest files** (FTB Quests and similar), where task and reward item IDs are stored as plain strings.
+* **Config and script references to `config/ftbic-common.toml`**, which is now `config/ic-common.toml`.
+* **Anything that depends on the mod ID itself**, such as `neoforge:mod_loaded` conditions on `ftbic`, dependency entries in `neoforge.mods.toml`, resource pack folders named `assets/ftbic/`, and CurseForge or Modrinth automation keyed to the old jar name.
+
+The safest approach is a project-wide search for `ftbic` across your pack, then replace with `ic` and test on a copy of the world.
+
 ## [26.1.2.9]
 
 ### Fixed

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:ingots/copper",
+    "R": "minecraft:redstone",
+    "T": "ic:lv_transformer",
+    "W": "ic:lv_cable"
+  },
+  "pattern": [
+    "RWR",
+    "PTP",
+    "RWR"
+  ],
+  "result": {
+    "id": "ic:lv_rectifier"
+  },
+  "show_notification": false
+}

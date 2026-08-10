@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ic:carbon_leggings",
+    "G": "#c:dusts/glowstone",
+    "I": "ic:iridium_alloy",
+    "M": "ic:advanced_machine_block"
+  },
+  "pattern": [
+    "III",
+    "MAM",
+    "G G"
+  ],
+  "result": {
+    "id": "ic:quantum_leggings"
+  },
+  "show_notification": false
+}

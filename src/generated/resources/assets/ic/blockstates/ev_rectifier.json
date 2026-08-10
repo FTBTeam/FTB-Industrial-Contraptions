@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "dark=false,facing=down": {
+      "model": "ic:block/electric/light/ev_rectifier",
+      "x": 90
+    },
+    "dark=false,facing=east": {
+      "model": "ic:block/electric/light/ev_rectifier",
+      "y": 90
+    },
+    "dark=false,facing=north": {
+      "model": "ic:block/electric/light/ev_rectifier"
+    },
+    "dark=false,facing=south": {
+      "model": "ic:block/electric/light/ev_rectifier",
+      "y": 180
+    },
+    "dark=false,facing=up": {
+      "model": "ic:block/electric/light/ev_rectifier",
+      "x": 270
+    },
+    "dark=false,facing=west": {
+      "model": "ic:block/electric/light/ev_rectifier",
+      "y": 270
+    },
+    "dark=true,facing=down": {
+      "model": "ic:block/electric/dark/ev_rectifier",
+      "x": 90
+    },
+    "dark=true,facing=east": {
+      "model": "ic:block/electric/dark/ev_rectifier",
+      "y": 90
+    },
+    "dark=true,facing=north": {
+      "model": "ic:block/electric/dark/ev_rectifier"
+    },
+    "dark=true,facing=south": {
+      "model": "ic:block/electric/dark/ev_rectifier",
+      "y": 180
+    },
+    "dark=true,facing=up": {
+      "model": "ic:block/electric/dark/ev_rectifier",
+      "x": 270
+    },
+    "dark=true,facing=west": {
+      "model": "ic:block/electric/dark/ev_rectifier",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:advanced_circuit",
+    "E": "ic:advanced_alloy",
+    "T": "ic:hv_transformer",
+    "W": "ic:ev_cable"
+  },
+  "pattern": [
+    " W ",
+    "CTE",
+    " W "
+  ],
+  "result": {
+    "id": "ic:ev_transformer"
+  },
+  "show_notification": false
+}

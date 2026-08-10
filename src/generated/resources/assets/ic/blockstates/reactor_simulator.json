@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "dark=false": {
+      "model": "ic:block/electric/light/reactor_simulator"
+    },
+    "dark=true": {
+      "model": "ic:block/electric/dark/reactor_simulator"
+    }
+  }
+}

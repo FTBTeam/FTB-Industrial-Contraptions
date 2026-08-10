@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ic:block/constantan_block"
+    }
+  }
+}

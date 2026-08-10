@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "bottom": "ftbic:block/electric/light/advanced_bottom",
-    "side": "ftbic:block/electric/light/advanced_side",
-    "top": "ftbic:block/electric/light/advanced_top"
-  }
-}

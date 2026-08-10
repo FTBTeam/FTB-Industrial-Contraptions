@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/electrum"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:electrum_gear"
+      }
+    }
+  ]
+}

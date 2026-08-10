@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:iridium_circuit",
+    "G": "ic:basic_generator",
+    "H": "ic:nuclear_reactor_chamber"
+  },
+  "pattern": [
+    "HCH",
+    "HHH",
+    "HGH"
+  ],
+  "result": {
+    "id": "ic:nuclear_reactor"
+  },
+  "show_notification": false
+}

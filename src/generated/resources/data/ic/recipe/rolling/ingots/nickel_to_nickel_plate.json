@@ -1,0 +1,15 @@
+{
+  "type": "ic:rolling",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/nickel"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:nickel_plate"
+      }
+    }
+  ]
+}

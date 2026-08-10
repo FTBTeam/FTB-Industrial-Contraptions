@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:redstone_torch",
+    "#c:gems/lapis"
+  ],
+  "result": {
+    "id": "ic:landmark"
+  },
+  "show_notification": false
+}

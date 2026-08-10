@@ -1,0 +1,15 @@
+{
+  "type": "ic:rolling",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/enderium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:enderium_plate"
+      }
+    }
+  ]
+}

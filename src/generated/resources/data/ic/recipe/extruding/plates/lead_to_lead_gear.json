@@ -1,0 +1,16 @@
+{
+  "type": "ic:extruding",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": "#c:plates/lead"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:lead_gear"
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "neoforge:definition_type": "contex:definition",
+  "contex_meta": [
+    {
+      "type": "contex:full",
+      "predicate": {
+        "type": "contex:match_tag",
+        "tag": "ic:reinforced"
+      },
+      "occlusion_mode": "solid_or_self",
+      "state_predicate": { },
+      "textures": [
+        {
+          "main_texture": "ic:block/reinforced_stone",
+          "compact/hor": "ic:block/reinforced_stone_hor",
+          "compact/vert": "ic:block/reinforced_stone_vert",
+          "compact/cross": "ic:block/reinforced_stone_cross",
+          "compact/full": "ic:block/reinforced_stone_full"
+        }
+      ]
+    }
+  ],
+  "strategy": "contex:compact",
+  "variants": {
+    "": { "model": "ic:block/lv_reinforced_cable" }
+  }
+}

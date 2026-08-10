@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:electronic_circuit",
+    "M": "ic:machine_block",
+    "P": "minecraft:piston"
+  },
+  "pattern": [
+    "PCP",
+    "PMP"
+  ],
+  "result": {
+    "id": "ic:roller"
+  },
+  "show_notification": false
+}

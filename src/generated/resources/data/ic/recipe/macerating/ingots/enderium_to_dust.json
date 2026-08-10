@@ -1,0 +1,15 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:ingots/enderium"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:enderium_dust"
+      }
+    }
+  ]
+}

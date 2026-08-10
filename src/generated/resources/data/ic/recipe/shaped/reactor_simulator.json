@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:writable_book",
+    "H": "ic:reactor_plating",
+    "P": "ic:dense_copper_plate"
+  },
+  "pattern": [
+    "HPH",
+    "PBP",
+    "HPH"
+  ],
+  "result": {
+    "id": "ic:reactor_simulator"
+  },
+  "show_notification": false
+}

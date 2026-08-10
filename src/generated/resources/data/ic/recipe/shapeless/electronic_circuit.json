@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ic:lv_cable",
+    "ic:lv_cable",
+    "ic:lv_cable",
+    "#c:dusts/redstone",
+    "ic:industrial_grade_metal",
+    "#c:dusts/redstone",
+    "ic:lv_cable",
+    "ic:lv_cable",
+    "ic:lv_cable"
+  ],
+  "result": {
+    "id": "ic:electronic_circuit"
+  },
+  "show_notification": false
+}

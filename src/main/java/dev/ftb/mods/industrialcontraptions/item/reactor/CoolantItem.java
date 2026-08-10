@@ -1,0 +1,17 @@
+package dev.ftb.mods.industrialcontraptions.item.reactor;
+
+import net.minecraft.world.item.ItemStack;
+
+public class CoolantItem extends BaseReactorItem {
+	public final int maxHeat;
+
+	public CoolantItem(Properties props, int maxHeat) {
+		super(props.durability(Math.max(1, maxHeat)));
+		this.maxHeat = maxHeat;
+	}
+
+	@Override
+	public boolean isHeatAcceptor(ItemStack stack) {
+		return stack.getMaxDamage() > 0;
+	}
+}

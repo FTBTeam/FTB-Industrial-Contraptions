@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "ic:lv_battery",
+    "C": "ic:electronic_circuit",
+    "P": "#minecraft:planks",
+    "W": "ic:lv_cable"
+  },
+  "pattern": [
+    "PPP",
+    "WBW",
+    "PCP"
+  ],
+  "result": {
+    "id": "ic:energy_storage_upgrade"
+  },
+  "show_notification": false
+}

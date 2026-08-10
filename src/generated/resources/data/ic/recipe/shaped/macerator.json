@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:electronic_circuit",
+    "F": "minecraft:flint",
+    "M": "ic:machine_block",
+    "S": "#c:cobblestones"
+  },
+  "pattern": [
+    "FFF",
+    "SMS",
+    " C "
+  ],
+  "result": {
+    "id": "ic:macerator"
+  },
+  "show_notification": false
+}

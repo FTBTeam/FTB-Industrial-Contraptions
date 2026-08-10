@@ -1,0 +1,16 @@
+{
+  "type": "ic:separating",
+  "inputs": [
+    {
+      "count": 6,
+      "ingredient": "minecraft:kelp"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:latex_ball"
+      }
+    }
+  ]
+}

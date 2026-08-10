@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:compressed_coal_ball",
+    "O": "#c:obsidians"
+  },
+  "pattern": [
+    "CCC",
+    "COC",
+    "CCC"
+  ],
+  "result": {
+    "id": "ic:graphene"
+  },
+  "show_notification": false
+}

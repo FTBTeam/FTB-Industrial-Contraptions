@@ -1,0 +1,487 @@
+package dev.ftb.mods.industrialcontraptions.datagen;
+
+import dev.ftb.mods.industrialcontraptions.IC;
+import dev.ftb.mods.industrialcontraptions.material.MaterialEntries;
+import net.minecraft.data.PackOutput;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+
+public class ICLanguageProvider extends LanguageProvider {
+	public ICLanguageProvider(PackOutput output) {
+		super(output, IC.MOD_ID, "en_us");
+	}
+
+	@Override
+	protected void addTranslations() {
+		MaterialEntries.all().forEach(entry -> {
+			String text = entry.component().translation(entry.material().displayName());
+			String suffix = IC.MOD_ID + "." + entry.name();
+			if (entry.component().isBlock()) {
+				add("block." + suffix, text);
+				add("item." + suffix, text);
+			} else {
+				add("item." + suffix, text);
+			}
+		});
+
+		add("itemGroup.ic", "Industrial Contraptions");
+
+		add("block.ic.active_nuke", "Active Nuke");
+		add("block.ic.advanced_centrifuge", "Advanced Centrifuge");
+		add("block.ic.advanced_compressor", "Advanced Compressor");
+		add("block.ic.advanced_macerator", "Advanced Macerator");
+		add("block.ic.advanced_machine_block", "Advanced Machine Block");
+		add("block.ic.advanced_powered_furnace", "Advanced Powered Furnace");
+		add("block.ic.alloy_smelter", "Alloy Smelter");
+		add("block.ic.antimatter_constructor", "Antimatter Constructor");
+		add("block.ic.basic_generator", "Basic Generator");
+		add("block.ic.burnt_cable", "Burnt Cable");
+		add("block.ic.burnt_reinforced_cable", "Burnt Reinforced Cable");
+		add("block.ic.canning_machine", "Canning Machine");
+		add("block.ic.centrifuge", "Centrifuge");
+		add("block.ic.charge_pad", "Charge Pad");
+		add("block.ic.compressor", "Compressor");
+		add("block.ic.enderium_block", "Block of Enderium");
+		add("block.ic.ev_battery_box", "EV Battery Box");
+		add("block.ic.ev_cable", "EV Cable");
+		add("block.ic.ev_reinforced_cable", "Reinforced EV Cable");
+		add("block.ic.ev_rectifier", "EV Energy Rectifier");
+		add("block.ic.ev_solar_panel", "EV Solar Panel");
+		add("block.ic.ev_transformer", "EV Transformer");
+		add("block.ic.exfluid", "Ex-Fluid");
+		add("block.ic.extruder", "Extruder");
+		add("block.ic.geothermal_generator", "Geothermal Generator");
+		add("block.ic.hv_battery_box", "HV Battery Box");
+		add("block.ic.hv_cable", "HV Cable");
+		add("block.ic.hv_reinforced_cable", "Reinforced HV Cable");
+		add("block.ic.hv_rectifier", "HV Energy Rectifier");
+		add("block.ic.hv_solar_panel", "HV Solar Panel");
+		add("block.ic.hv_transformer", "HV Transformer");
+		add("block.ic.iron_furnace", "Iron Furnace");
+		add("block.ic.iv_cable", "IV Cable");
+		add("block.ic.iv_reinforced_cable", "Reinforced IV Cable");
+		add("block.ic.iv_rectifier", "IV Energy Rectifier");
+		add("block.ic.landmark", "Landmark");
+		add("block.ic.lv_battery_box", "LV Battery Box");
+		add("block.ic.lv_cable", "LV Cable");
+		add("block.ic.lv_reinforced_cable", "Reinforced LV Cable");
+		add("block.ic.lv_rectifier", "LV Energy Rectifier");
+		add("block.ic.lv_solar_panel", "LV Solar Panel");
+		add("block.ic.lv_transformer", "LV Transformer");
+		add("block.ic.macerator", "Macerator");
+		add("block.ic.machine_block", "Machine Block");
+		add("block.ic.mv_battery_box", "MV Battery Box");
+		add("block.ic.mv_cable", "MV Cable");
+		add("block.ic.mv_reinforced_cable", "Reinforced MV Cable");
+		add("block.ic.mv_rectifier", "MV Energy Rectifier");
+		add("block.ic.mv_solar_panel", "MV Solar Panel");
+		add("block.ic.mv_transformer", "MV Transformer");
+		add("block.ic.nuclear_reactor", "Nuclear Reactor");
+		add("block.ic.nuclear_reactor.broadcast", "%s forgot to cool their Nuclear Reactor!");
+		add("block.ic.nuclear_reactor_chamber", "Nuclear Reactor Chamber");
+		add("block.ic.nuke", "Nuke");
+		add("block.ic.nuke.broadcast", "%s triggered a nuke!");
+		add("block.ic.powered_crafting_table", "Powered Crafting Table");
+		add("block.ic.powered_furnace", "Powered Furnace");
+		add("block.ic.pump", "Pump");
+		add("block.ic.quarry", "Quarry");
+		add("block.ic.reactor_simulator", "Reactor Simulator");
+		add("block.ic.reinforced_glass", "Reinforced Glass");
+		add("block.ic.reinforced_stone", "Reinforced Stone");
+		add("block.ic.reprocessor", "Reprocessor");
+		add("block.ic.roller", "Roller");
+		add("block.ic.rubber_sheet", "Rubber Sheet");
+		add("block.ic.teleporter", "Teleporter");
+		add("block.ic.teleporter.empty", "No destinations available. Name a peer teleporter and own/publish it.");
+		add("block.ic.teleporter.load_error", "The destination chunk has to be loaded!");
+		add("block.ic.teleporter.name_hint", "Teleporter ID");
+		add("block.ic.teleporter.perm_error", "Only the owner of this teleporter can change its settings!");
+		add("block.ic.teleporter.pick_header", "Click a destination to link:");
+		add("block.ic.wind_mill", "Wind Mill");
+
+		add("item.ic.active_nuke", "Active Nuke");
+		add("item.ic.advanced_alloy", "Advanced Alloy");
+		add("item.ic.advanced_centrifuge", "Advanced Centrifuge");
+		add("item.ic.advanced_circuit", "Advanced Circuit");
+		add("item.ic.advanced_compressor", "Advanced Compressor");
+		add("item.ic.advanced_heat_exchanger", "Advanced Heat Exchanger");
+		add("item.ic.advanced_heat_vent", "Advanced Heat Vent");
+		add("item.ic.advanced_macerator", "Advanced Macerator");
+		add("item.ic.advanced_machine_block", "Advanced Machine Block");
+		add("item.ic.advanced_powered_furnace", "Advanced Powered Furnace");
+		add("item.ic.alloy_smelter", "Alloy Smelter");
+		add("item.ic.antimatter", "Antimatter");
+		add("item.ic.antimatter_constructor", "Antimatter Constructor");
+		add("item.ic.antimatter_crystal", "Antimatter Crystal");
+		add("item.ic.basic_generator", "Basic Generator");
+		add("item.ic.burnt_cable", "Burnt Cable");
+		add("item.ic.burnt_reinforced_cable", "Burnt Reinforced Cable");
+		add("item.ic.canned_food", "Canned Food");
+		add("item.ic.canning_machine", "Canning Machine");
+		add("item.ic.carbon_boots", "Carbon Boots");
+		add("item.ic.carbon_chestplate", "Carbon Chestplate");
+		add("item.ic.carbon_fiber_mesh", "Carbon Fiber Mesh");
+		add("item.ic.carbon_fibers", "Carbon Fibers");
+		add("item.ic.carbon_helmet", "Carbon Helmet");
+		add("item.ic.carbon_leggings", "Carbon Leggings");
+		add("item.ic.carbon_plate", "Carbon Plate");
+		add("item.ic.centrifuge", "Centrifuge");
+		add("item.ic.charge_pad", "Charge Pad");
+		add("item.ic.coal_ball", "Coal Ball");
+		add("item.ic.component_heat_exchanger", "Component Heat Exchanger");
+		add("item.ic.component_heat_vent", "Component Heat Vent");
+		add("item.ic.compressed_coal_ball", "Compressed Coal Ball");
+		add("item.ic.compressor", "Compressor");
+		add("item.ic.containment_reactor_plating", "Containment Reactor Plating");
+		add("item.ic.copper_coil", "Copper Coil");
+		add("item.ic.creative_battery", "Creative Battery");
+		add("item.ic.dark_spray_paint_can", "Spray Paint Can (Dark)");
+		add("item.ic.dense_copper_plate", "Dense Copper Plate");
+		add("item.ic.dual_uranium_fuel_rod", "Dual Uranium Fuel Rod");
+		add("item.ic.ejector_upgrade", "Ejector Upgrade");
+		add("item.ic.electronic_circuit", "Electronic Circuit");
+		add("item.ic.empty_can", "Empty Can");
+		add("item.ic.enderium_block", "Block of Enderium");
+		add("item.ic.enderium_dust", "Enderium Dust");
+		add("item.ic.enderium_gear", "Enderium Gear");
+		add("item.ic.enderium_ingot", "Enderium Ingot");
+		add("item.ic.enderium_nugget", "Enderium Nugget");
+		add("item.ic.enderium_plate", "Enderium Plate");
+		add("item.ic.enderium_rod", "Enderium Rod");
+		add("item.ic.enderium_wire", "Enderium Wire");
+		add("item.ic.energy_crystal", "Energy Crystal");
+		add("item.ic.energy_storage_upgrade", "Energy Storage Upgrade");
+		add("item.ic.ev_battery", "EV Battery");
+		add("item.ic.ev_battery_box", "EV Battery Box");
+		add("item.ic.ev_cable", "EV Cable");
+		add("item.ic.ev_reinforced_cable", "Reinforced EV Cable");
+		add("item.ic.ev_rectifier", "EV Energy Rectifier");
+		add("item.ic.ev_solar_panel", "EV Solar Panel");
+		add("item.ic.ev_transformer", "EV Transformer");
+		add("item.ic.exfluid", "Ex-Fluid");
+		add("item.ic.extruder", "Extruder");
+		add("item.ic.fluid_cell", "Fluid Cell");
+		add("item.ic.fluid_cell.contents", "%s / %s mB of %s");
+		add("item.ic.fluid_cell.empty", "Empty");
+		add("item.ic.fuse", "Fuse");
+		add("item.ic.guide", "Industrial Contraptions Guide");
+		add("item.ic.geothermal_generator", "Geothermal Generator");
+		add("item.ic.graphene", "Graphene");
+		add("item.ic.heat_capacity_reactor_plating", "Heat-Capacity Reactor Plating");
+		add("item.ic.heat_exchanger", "Heat Exchanger");
+		add("item.ic.heat_vent", "Heat Vent");
+		add("item.ic.hv_battery", "HV Battery");
+		add("item.ic.hv_battery_box", "HV Battery Box");
+		add("item.ic.hv_cable", "HV Cable");
+		add("item.ic.hv_reinforced_cable", "Reinforced HV Cable");
+		add("item.ic.hv_rectifier", "HV Energy Rectifier");
+		add("item.ic.hv_solar_panel", "HV Solar Panel");
+		add("item.ic.hv_transformer", "HV Transformer");
+		add("item.ic.industrial_grade_metal", "Industrial Grade Metal");
+		add("item.ic.iridium_alloy", "Iridium Alloy");
+		add("item.ic.iridium_circuit", "Iridium Circuit");
+		add("item.ic.iridium_neutron_reflector", "Iridium Neutron Reflector");
+		add("item.ic.iron_furnace", "Iron Furnace");
+		add("item.ic.iv_cable", "IV Cable");
+		add("item.ic.iv_reinforced_cable", "Reinforced IV Cable");
+		add("item.ic.iv_rectifier", "IV Energy Rectifier");
+		add("item.ic.landmark", "Landmark");
+		add("item.ic.large_coolant_cell", "Large Coolant Cell");
+		add("item.ic.light_spray_paint_can", "Spray Paint Can (Light)");
+		add("item.ic.location_card", "Location Card");
+		add("item.ic.location_card.unbound", "Unbound");
+		add("item.ic.location_card.unnamed", "Unnamed Teleporter");
+		add("item.ic.location_card.bound", "Saved destination: %s");
+		add("item.ic.location_card.linked", "Teleporter linked to %s");
+		add("item.ic.location_card.cleared", "Location cleared!");
+		add("item.ic.lv_battery", "LV Battery");
+		add("item.ic.lv_battery_box", "LV Battery Box");
+		add("item.ic.lv_cable", "LV Cable");
+		add("item.ic.lv_reinforced_cable", "Reinforced LV Cable");
+		add("item.ic.lv_rectifier", "LV Energy Rectifier");
+		add("item.ic.lv_solar_panel", "LV Solar Panel");
+		add("item.ic.lv_transformer", "LV Transformer");
+		add("item.ic.macerator", "Macerator");
+		add("item.ic.machine_block", "Machine Block");
+		add("item.ic.mechanical_elytra", "Mechanical Elytra");
+		add("item.ic.medium_coolant_cell", "Medium Coolant Cell");
+		add("item.ic.mixed_metal_blend", "Mixed Metal Blend");
+		add("item.ic.mv_battery", "MV Battery");
+		add("item.ic.mv_battery_box", "MV Battery Box");
+		add("item.ic.mv_cable", "MV Cable");
+		add("item.ic.mv_reinforced_cable", "Reinforced MV Cable");
+		add("item.ic.mv_rectifier", "MV Energy Rectifier");
+		add("item.ic.mv_solar_panel", "MV Solar Panel");
+		add("item.ic.mv_transformer", "MV Transformer");
+		add("item.ic.neutron_reflector", "Neutron Reflector");
+		add("item.ic.nuclear_reactor", "Nuclear Reactor");
+		add("item.ic.nuclear_reactor_chamber", "Nuclear Reactor Chamber");
+		add("item.ic.nuke", "Nuke");
+		add("item.ic.nuke_arrow", "Nuke Arrow");
+		add("item.ic.overclocked_heat_vent", "Overclocked Heat Vent");
+		add("item.ic.overclocker_upgrade", "Overclocker Upgrade");
+		add("item.ic.powered_crafting_table", "Powered Crafting Table");
+		add("item.ic.powered_furnace", "Powered Furnace");
+		add("item.ic.protein_bar", "Feed The Beast\u00e2\u201e\u00a2 Protein Bar");
+		add("item.ic.pump", "Pump");
+		add("item.ic.quad_uranium_fuel_rod", "Quad Uranium Fuel Rod");
+		add("item.ic.quantum_boots", "Quantum Boots");
+		add("item.ic.quantum_chestplate", "Quantum Chestplate");
+		add("item.ic.quantum_helmet", "Quantum Helmet");
+		add("item.ic.quantum_leggings", "Quantum Leggings");
+		add("item.ic.quarry", "Quarry");
+		add("item.ic.reactor_heat_exchanger", "Reactor Heat Exchanger");
+		add("item.ic.reactor_heat_vent", "Reactor Heat Vent");
+		add("item.ic.reactor_plating", "Reactor Plating");
+		add("item.ic.reactor_simulator", "Reactor Simulator");
+		add("item.ic.reinforced_glass", "Reinforced Glass");
+		add("item.ic.reinforced_stone", "Reinforced Stone");
+		add("item.ic.reprocessor", "Reprocessor");
+		add("item.ic.roller", "Roller");
+		add("item.ic.rubber", "Rubber");
+		add("item.ic.rubber_sheet", "Rubber Sheet");
+		add("item.ic.sticky_resin", "Sticky Resin");
+		add("item.ic.latex_ball", "Latex Ball");
+		add("item.ic.scrap", "Scrap");
+		add("item.ic.scrap_box", "Scrap Box");
+		add("item.ic.single_use_battery", "Single Use Battery");
+		add("item.ic.small_coolant_cell", "Small Coolant Cell");
+		add("item.ic.spray_paint_can.tooltip", "Right-click on a machine to change its theme");
+		add("item.ic.teleporter", "Teleporter");
+		add("item.ic.thick_neutron_reflector", "Thick Neutron Reflector");
+		add("item.ic.tooltip.creative_energy", "Infinite Energy");
+		add("item.ic.tooltip.energy", "%s / %s zaps");
+		add("item.ic.tooltip.tier", "Tier: %s");
+		add("item.ic.transformer_upgrade", "Transformer Upgrade");
+		add("item.ic.uranium_fuel_rod", "Uranium Fuel Rod");
+		add("item.ic.wind_mill", "Wind Mill");
+
+		add("recipe.ic.alloy_smelting", "Alloy Smelting");
+		add("recipe.ic.canning", "Canning");
+		add("recipe.ic.compressing", "Compressing");
+		add("recipe.ic.extruding", "Extruding");
+		add("recipe.ic.macerating", "Macerating");
+		add("recipe.ic.reconstructing", "Reconstructing");
+		add("recipe.ic.reprocessing", "Reprocessing");
+		add("recipe.ic.rolling", "Rolling");
+		add("recipe.ic.separating", "Separating");
+
+		add("ic.any_item", "Any Item");
+		add("ic.energy_capacity", "Capacity: %s");
+		add("ic.energy_output", "Output: %s");
+		add("ic.energy_usage", "Usage: %s");
+		add("ic.fuse_info", "Right-click with a fuse to repair burnt machines.");
+		add("ic.max_input", "Max Input: %s");
+		add("ic.requires_chestplate", "Requires Chestplate to function");
+		add("ic.zap_to_fe_conversion", "%s = %s FE");
+
+		add("ic.jade.burnt", "\u00c2\u00a7cBurnt");
+		add("ic.jade.cable_tier", "Tier: %s");
+		add("ic.jade.fluid", "Fluid: %s / %s mB");
+		add("ic.jade.fluid_empty", "Tank: Empty");
+		add("ic.jade.lava", "Lava: %s / %s mB");
+		add("ic.jade.progress", "Progress: %s%%");
+		add("ic.jade.starving", "Starving for power");
+		add("ic.jade.reactor_heat", "Heat: %s%%");
+		add("ic.jade.reactor_output", "Output: %s/t");
+		add("ic.jade.reactor_paused", "Paused (%s/t when active)");
+		add("ic.jade.water", "Water: %s / %s mB");
+		add("ic.jade.tele_power", "Power: HV (shared with linked pair)");
+		add("ic.jade.tele_send_items", "Sending: %s items");
+		add("ic.jade.tele_receive_items", "Received: %s items");
+		add("ic.jade.tele_send_fluid", "Sending %s: %s / %s mB");
+		add("ic.jade.tele_send_fluid_empty", "Send tank: Empty (0 / %s mB)");
+		add("ic.jade.tele_receive_fluid", "Received %s: %s / %s mB");
+		add("ic.jade.tele_receive_fluid_empty", "Receive tank: Empty (0 / %s mB)");
+
+		add("config.jade.plugin_ic.cable_tier", "Cable Tier");
+		add("config.jade.plugin_ic.energy", "Energy");
+
+		add("ic.jei.chance", "Chance: %s%%");
+		add("ic.jei.recipe_time_energy", "%ss · %s zaps");
+		add("ic.jei.energy_per_tick", "%s z/t");
+		add("ic.jei.burn_time", "%ss @ %s z/t");
+		add("ic.jei.total_zaps", "= %s zaps");
+		add("ic.jei.zaps_per_mb", "%s z/mB @ %s z/bucket");
+		add("ic.jei.zaps_per_tank", "= %s zaps / full tank (%s mB)");
+		add("ic.jei.boost", "+%s zaps boost");
+
+		add("ic.jei.antimatter.line1", "Produced by the Antimatter Constructor.");
+		add("ic.jei.antimatter.line2", "Each antimatter requires %s zaps of progress.");
+		add("ic.jei.antimatter.line3", "Boost items consumed in the input slot accelerate progress.");
+		add("ic.jei.antimatter.line4", "See \"Antimatter Constructor\" recipes for boost values.");
+
+		add("ic.jei.rod.title", "Nuclear fuel rod");
+		add("ic.jei.rod.desc", "%s-rod pack: %s pulse(s) per cycle");
+		add("ic.jei.rod.energy", "Energy: %s zap/t base (×(pulses+reflectors))");
+		add("ic.jei.rod.heat", "Heat: %s/cycle base. Distributed into neighboring heat acceptors.");
+		add("ic.jei.rod.durability", "Durability: %s cycles before the rod is spent.");
+
+		add("ic.jei.coolant.title", "Coolant cell");
+		add("ic.jei.coolant.desc", "Passive heat buffer. Absorbs heat distributed by adjacent fuel rods.");
+		add("ic.jei.coolant.capacity", "Capacity: %s heat.");
+		add("ic.jei.coolant.vent_pair", "Pair with a Component Heat Vent to replenish durability each cycle.");
+
+		add("ic.jei.vent.title", "Heat vent");
+		add("ic.jei.vent.desc", "Removes heat each reactor cycle.");
+		add("ic.jei.vent.durability", "Durability: %s heat absorption.");
+		add("ic.jei.vent.self_cool", "Self cooling: %s/cycle (heals own durability).");
+		add("ic.jei.vent.reactor_cool", "Reactor cooling: %s/cycle removed from reactor heat pool.");
+		add("ic.jei.vent.component_cool", "Component cooling: %s/cycle to each adjacent coolant cell.");
+
+		add("ic.jei.exchanger.title", "Heat exchanger");
+		add("ic.jei.exchanger.desc", "Balances heat between neighbors and the reactor core.");
+		add("ic.jei.exchanger.durability", "Durability: %s heat buffer.");
+		add("ic.jei.exchanger.adjacent", "Adjacent transfer: up to %s/cycle per neighbor.");
+		add("ic.jei.exchanger.core", "Core transfer: up to %s/cycle to/from the reactor heat pool.");
+
+		add("ic.jei.plating.title", "Reactor plating");
+		add("ic.jei.plating.desc", "Modifies the reactor hull itself.");
+		add("ic.jei.plating.heat_bonus", "Max heat bonus: +%s (stacks with other plating).");
+		add("ic.jei.plating.explosion", "Explosion dampening: ×%s (-%s%% radius per plating).");
+
+		add("ic.jei.reflector.title", "Neutron reflector");
+		add("ic.jei.reflector.desc", "Bounces pulses back into adjacent fuel rods.");
+		add("ic.jei.reflector.pulse_effect", "Each reflector adjacent to a rod adds +1 pulse (more energy AND more heat).");
+		add("ic.jei.reflector.durability_infinite", "Durability: infinite (iridium-reinforced).");
+		add("ic.jei.reflector.durability", "Durability: %s pulses before the reflector burns out.");
+
+		add("ic.reactor.paused", "Paused");
+		add("ic.reactor.energy_output", "%d z/t");
+		add("ic.reactor.heat_percentage", "%d%%");
+
+		add("ic.reactor.tooltip.paused", "Paused (%d z/t when active)");
+		add("ic.reactor.tooltip.output", "Output: %d z/t");
+		add("ic.reactor.tooltip.resume", "Resume reactor");
+		add("ic.reactor.tooltip.pause", "Pause reactor");
+		add("ic.reactor.tooltip.redstone_enabled", "Redstone control: enabled");
+		add("ic.reactor.tooltip.redstone_disabled", "Redstone control: disabled");
+		add("ic.reactor.tooltip.show_jei", "Show reactor components in JEI");
+
+		add("ic.gui.antimatter_constructor.boosted", "Boosted. Click to show boost items.");
+		add("ic.gui.antimatter_constructor.boost", "Click to show boost items");
+
+		add("ic.gui.basic_generator.burn_time", "Burn time: %s s. Click to show fuels.");
+
+		add("ic.gui.slot.upgrade", "Upgrade Slot");
+		add("ic.gui.slot.battery", "Battery Slot");
+		add("ic.gui.slot.pickaxe", "Pickaxe Slot (applies enchantments to mined blocks)");
+
+		add("ic.gui.iron_furnace.progress", "Progress: %s%%. Click to show recipes.");
+
+		add("ic.gui.machine.progress", "Progress: %s%%. Click to show recipes.");
+
+		add("ic.gui.pump.paused", "Paused. Click to resume.");
+		add("ic.gui.pump.running", "Running. Click to pause.");
+
+		add("ic.gui.quarry.paused", "Paused. Click to resume.");
+		add("ic.gui.quarry.running", "Running. Click to pause.");
+
+		add("ic.gui.solar_panel.producing", "Producing");
+		add("ic.gui.solar_panel.no_sunlight", "No sunlight");
+
+		add("ic.gui.teleporter.name_label", "Name");
+		add("ic.gui.teleporter.public_label", "Public");
+		add("ic.gui.teleporter.private_label", "Private");
+		add("ic.gui.teleporter.unnamed", "Unnamed");
+		add("ic.gui.teleporter.linked_format", "Linked: %s");
+		add("ic.gui.teleporter.not_linked", "Not linked. Click below.");
+		add("ic.gui.teleporter.clear_storage", "Clear Storage");
+		add("ic.gui.teleporter.clear_fluids", "Clear Fluids");
+		add("ic.gui.teleporter.no_teleporters", "No teleporters available");
+		add("ic.gui.teleporter.choose_destination", "Choose destination");
+		add("ic.gui.teleporter.no_teleporters_found", "No teleporters found");
+		add("ic.gui.teleporter.public_tooltip", "Public. Anyone can link to this teleporter. Click to make private.");
+		add("ic.gui.teleporter.private_tooltip", "Private. Only you can link to this teleporter. Click to make public.");
+		add("ic.gui.teleporter.unlink_tooltip", "Unlink destination");
+		add("ic.gui.teleporter.name_tooltip", "Give this teleporter a name so you can find it in other teleporters' lists.");
+		add("ic.gui.teleporter.entry_tooltip", "%s\nCost: %s per jump\nClick to link");
+
+		add("ic.gui.reactor_sim.start", "Start");
+		add("ic.gui.reactor_sim.pause", "Pause");
+		add("ic.gui.reactor_sim.restart", "Restart");
+		add("ic.gui.reactor_sim.clear", "Clear");
+		add("ic.gui.reactor_sim.chambers", "Chambers: %d/%d");
+		add("ic.gui.reactor_sim.water", "Water: %s");
+		add("ic.gui.reactor_sim.components", "Components");
+		add("ic.gui.reactor_sim.presets", "Presets");
+		add("ic.gui.reactor_sim.no_presets", "(none)");
+		add("ic.gui.reactor_sim.analyze", "Analyze");
+		add("ic.gui.reactor_sim.import_btn", "Import");
+		add("ic.gui.reactor_sim.export_btn", "Export");
+		add("ic.gui.reactor_sim.verdict_stable", "Result: STABLE");
+		add("ic.gui.reactor_sim.verdict_unstable", "Result: overheats at cycle %d");
+		add("ic.gui.reactor_sim.verdict_none", "Result: not analyzed");
+		add("ic.gui.reactor_sim.stats", "%d z/t  |  total %s  |  cycle %d");
+		add("ic.gui.reactor_sim.save_name_label", "Name");
+		add("ic.gui.reactor_sim.save_error_invalid_name", "Invalid name");
+		add("ic.gui.reactor_sim.save_error_reserved", "Reserved name");
+		add("ic.gui.reactor_sim.save_error_no_sim", "No simulator");
+		add("ic.gui.reactor_sim.save_error_failed", "Save failed");
+		add("ic.gui.reactor_sim.save_success", "Preset saved: %s");
+		add("ic.gui.reactor_sim.remove_success", "Preset removed: %s");
+		add("ic.gui.reactor_sim.import_error", "Clipboard is not a valid reactor design.");
+		add("ic.gui.reactor_sim.export_success", "Reactor design copied to clipboard.");
+		add("ic.gui.reactor_sim.chambers_title", "Chambers");
+		add("ic.gui.reactor_sim.chambers_desc1", "Number of Nuclear Reactor Chambers attached to the real reactor");
+		add("ic.gui.reactor_sim.chambers_desc2", "Each chamber adds one column to the grid (currently %d columns active)");
+		add("ic.gui.reactor_sim.chambers_desc3", "Chambers also expose more outer hull faces for water cooling");
+		add("ic.gui.reactor_sim.water_title", "Water env factor");
+		add("ic.gui.reactor_sim.water_desc1", "Fraction of outward hull faces touching water (0.00 to 1.00)");
+		add("ic.gui.reactor_sim.water_desc2", "Current cooling multiplier: x%s");
+		add("ic.gui.reactor_sim.water_desc3", "Applied to vent \"reactor cool\" values each cycle");
+		add("ic.gui.reactor_sim.water_desc4", "(1.0 at 0.00 water up to x%s at 1.00 water)");
+		add("ic.gui.reactor_sim.stats_title", "Simulation stats");
+		add("ic.gui.reactor_sim.stats_desc1", "Verdict line: stability analysis result");
+		add("ic.gui.reactor_sim.stats_desc2", "N z/t: energy output this cycle");
+		add("ic.gui.reactor_sim.stats_desc3", "total: cumulative energy since Start");
+		add("ic.gui.reactor_sim.stats_desc4", "cN: cycle counter (1 cycle = 1 reactor tick)");
+		add("ic.gui.reactor_sim.stats_desc5", "Speed controls cycles per game tick: 20x = 1/t, 1000x = 50/t");
+		add("ic.gui.reactor_sim.load_title", "Load");
+		add("ic.gui.reactor_sim.load_desc", "Apply the selected preset to this simulator");
+		add("ic.gui.reactor_sim.load_hint", "Clears current layout first, then sets chambers and components");
+		add("ic.gui.reactor_sim.save_title", "Save");
+		add("ic.gui.reactor_sim.save_desc", "Save the current layout as a new preset");
+		add("ic.gui.reactor_sim.save_hint", "Stored locally in local/ic/reactor_layout/");
+		add("ic.gui.reactor_sim.remove_title", "Remove");
+		add("ic.gui.reactor_sim.remove_desc", "Delete the selected preset file");
+		add("ic.gui.reactor_sim.remove_locked", "Built-in presets cannot be removed");
+
+		add("ic.gui.reactor_sim.item.fuel_rod.title", "Fuel rod");
+		add("ic.gui.reactor_sim.item.fuel_rod.base_pulses", "  Base pulses: %d (+1 per adjacent reflector or rod)");
+		add("ic.gui.reactor_sim.item.fuel_rod.energy", "  Energy: p x %s zap/t");
+		add("ic.gui.reactor_sim.item.fuel_rod.heat", "  Heat:   p x (p+1) x %s / cycle");
+		add("ic.gui.reactor_sim.item.fuel_rod.spread", "    spread over adjacent heat acceptors");
+		add("ic.gui.reactor_sim.item.fuel_rod.heat_example", "  p=%d -> %d heat | p=%d -> %d heat");
+		add("ic.gui.reactor_sim.item.fuel_rod.durability", "  Durability: %d cycles");
+
+		add("ic.gui.reactor_sim.item.heat_vent.title", "Heat vent");
+		add("ic.gui.reactor_sim.item.heat_vent.heat_buffer", "  Own heat buffer: %s");
+		add("ic.gui.reactor_sim.item.heat_vent.no_buffer", "  No own heat buffer");
+		add("ic.gui.reactor_sim.item.heat_vent.self_cool", "  Self-heal: %s heat / cycle");
+		add("ic.gui.reactor_sim.item.heat_vent.reactor_cool", "  Reactor cool: %s heat / cycle");
+		add("ic.gui.reactor_sim.item.heat_vent.water_hint", "    multiplied by water env factor");
+		add("ic.gui.reactor_sim.item.heat_vent.component_cool", "  Adjacent coolant cooling: %s heat / cycle each");
+
+		add("ic.gui.reactor_sim.item.exchanger.title", "Heat exchanger");
+		add("ic.gui.reactor_sim.item.exchanger.heat_buffer", "  Own heat buffer: %s");
+		add("ic.gui.reactor_sim.item.exchanger.adjacent", "  Adjacent transfer: up to %s / cycle per neighbour");
+		add("ic.gui.reactor_sim.item.exchanger.core", "  Core transfer: up to %s / cycle vs reactor");
+		add("ic.gui.reactor_sim.item.exchanger.transfer_direction", "  Moves heat from hotter side to cooler side");
+
+		add("ic.gui.reactor_sim.item.coolant.title", "Coolant cell");
+		add("ic.gui.reactor_sim.item.coolant.capacity", "  Capacity: %s heat");
+		add("ic.gui.reactor_sim.item.coolant.passive", "  Passive. Soaks heat distributed by adjacent fuel rods");
+		add("ic.gui.reactor_sim.item.coolant.vent_pair", "  Component heat vents can refill durability");
+
+		add("ic.gui.reactor_sim.item.reflector.title", "Neutron reflector");
+		add("ic.gui.reactor_sim.item.reflector.pulse_boost", "  +1 pulse on each adjacent fuel rod");
+		add("ic.gui.reactor_sim.item.reflector.energy_heat_note", "  Each added pulse raises energy AND heat");
+		add("ic.gui.reactor_sim.item.reflector.durability", "  Durability: %d pulses reflected");
+		add("ic.gui.reactor_sim.item.reflector.infinite", "  Infinite durability");
+
+		add("ic.gui.reactor_sim.item.plating.title", "Reactor plating");
+		add("ic.gui.reactor_sim.item.plating.heat_capacity", "  +%s max reactor heat (raises meltdown threshold)");
+		add("ic.gui.reactor_sim.item.plating.blast", "  Blast radius: x%s (%s)");
+		add("ic.gui.reactor_sim.item.plating.multiply_hint", "  Applies once per plating, multiplicative");
+	}
+}

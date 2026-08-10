@@ -1,0 +1,15 @@
+{
+  "type": "ic:macerating",
+  "inputs": [
+    {
+      "ingredient": "#c:obsidians"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "id": "ic:obsidian_dust"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "ic:iridium_circuit",
+    "E": "minecraft:nether_star",
+    "G": "#c:dusts/glowstone",
+    "M": "ic:advanced_machine_block"
+  },
+  "pattern": [
+    "GCG",
+    "MEM",
+    "GCG"
+  ],
+  "result": {
+    "id": "ic:antimatter_constructor"
+  },
+  "show_notification": false
+}

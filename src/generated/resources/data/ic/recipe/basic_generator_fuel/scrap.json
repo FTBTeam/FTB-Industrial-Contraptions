@@ -1,0 +1,5 @@
+{
+  "type": "ic:basic_generator_fuel",
+  "ingredient": "ic:scrap",
+  "ticks": 400
+}

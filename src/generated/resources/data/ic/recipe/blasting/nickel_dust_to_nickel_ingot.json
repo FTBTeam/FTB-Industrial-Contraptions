@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "ingredient": "ic:nickel_dust",
+  "result": {
+    "id": "ic:nickel_ingot"
+  },
+  "show_notification": false
+}
