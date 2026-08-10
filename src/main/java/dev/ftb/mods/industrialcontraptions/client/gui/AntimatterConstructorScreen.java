@@ -27,8 +27,8 @@ public class AntimatterConstructorScreen extends ElectricBlockScreen<AntimatterC
 	protected void extractOverlayTooltips(GuiGraphicsExtractor g, int mouseX, int mouseY) {
 		if (isIn(mouseX, mouseY, leftPos + 81, topPos + 37, 14, 14)) {
 			Component label = this.menu.hasBoost()
-					? Component.literal("Boosted. Click to show boost items.")
-					: Component.literal("Click to show boost items");
+					? Component.translatable("ic.gui.antimatter_constructor.boosted")
+					: Component.translatable("ic.gui.antimatter_constructor.boost");
 			g.setTooltipForNextFrame(label, mouseX, mouseY);
 		}
 	}

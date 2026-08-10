@@ -26,6 +26,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * **The mod is now called Industrial Contraptions.** The `FTB` prefix has been dropped from the name, the mod ID, and every item and block ID. `ftbic:copper_ingot` is now `ic:copper_ingot`, the config file is `config/ic-common.toml`, the command is `/ic`, and the jar is `industrial-contraptions-<version>.jar`.
 
+### Fixed
+
+* **GUI and JEI text can now be translated.** Around 160 strings were hardcoded English and no language file could reach them: every reactor component tooltip in JEI, the recipe time and energy readouts, machine progress and slot tooltips, the pump, quarry, solar panel and teleporter screens, and the whole reactor simulator UI (buttons, verdict lines, stats, preset management, and the per-component tooltips). All of them are `ic.gui.*`, `ic.jei.*` and `ic.reactor.*` keys now.
+* JEI machine categories take their title from the machine's block translation key instead of its internal display name, so a translated machine name shows up in JEI too.
+
+### Added
+
+* **Chinese (zh_cn) translation** expanded from 142 to 424 entries, covering the newly translatable GUI and JEI text plus the reactor simulator. Thanks to [@xingluo01](https://github.com/xingluo01) for the translation and for the original localization work in [FTBTeam/FTB-Industrial-Contraptions#50](https://github.com/FTBTeam/FTB-Industrial-Contraptions/pull/50).
+
 ### Migration
 
 **For players**

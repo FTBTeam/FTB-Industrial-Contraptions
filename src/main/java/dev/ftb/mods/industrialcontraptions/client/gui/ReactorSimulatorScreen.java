@@ -133,7 +133,7 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		int boxX = leftPos + PICKER_X + 4;
 		int boxY = topPos + getPresetTopY() + 14;
 		int boxW = getPresetPanelWidth() - 8;
-		saveNameBox = new EditBox(font, boxX, boxY, boxW, 12, Component.literal("Name"));
+		saveNameBox = new EditBox(font, boxX, boxY, boxW, 12, Component.translatable("ic.gui.reactor_sim.save_name_label"));
 		saveNameBox.setMaxLength(ReactorPresetLibrary.MAX_NAME_LENGTH);
 		saveNameBox.setVisible(false);
 		saveNameBox.setHint(Component.literal("a-z 0-9 _ - . /").withStyle(ChatFormatting.DARK_GRAY));
@@ -193,9 +193,9 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		drawSpeedRow(g, mouseX, mouseY);
 		drawControlRow(g, mouseX, mouseY);
 		drawStepperRow(g, leftPos + 8, topPos + ROW_STEPPERS_Y, STEPPER_W,
-				"Chambers: " + menu.getChambers() + "/6", mouseX, mouseY);
+				Component.translatable("ic.gui.reactor_sim.chambers", menu.getChambers(), 6).getString(), mouseX, mouseY);
 		drawStepperRow(g, leftPos + 8 + STEPPER_W + 4, topPos + ROW_STEPPERS_Y, STEPPER_W,
-				"Water: " + String.format("%.2f", menu.getWaterThousandths() / 1000D), mouseX, mouseY);
+				Component.translatable("ic.gui.reactor_sim.water", String.format("%.2f", menu.getWaterThousandths() / 1000D)).getString(), mouseX, mouseY);
 		drawVerdictRow(g);
 		drawStatsRow(g);
 		drawBottomRow(g, mouseX, mouseY);
@@ -228,69 +228,69 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		Item it = stack.getItem();
 		if (it instanceof FuelRodItem rod) {
 			out.add(Component.empty());
-			out.add(Component.literal("Fuel rod").withStyle(ChatFormatting.YELLOW));
-			out.add(Component.literal("  Base pulses: " + rod.pulses + " (+1 per adjacent reflector or rod)").withStyle(ChatFormatting.GRAY));
-			out.add(Component.literal("  Energy: p x " + fmt(rod.energyMultiplier) + " zap/t").withStyle(ChatFormatting.AQUA));
-			out.add(Component.literal("  Heat:   p x (p+1) x " + fmt(rod.heatMultiplier) + " / cycle").withStyle(ChatFormatting.RED));
-			out.add(Component.literal("    spread over adjacent heat acceptors").withStyle(ChatFormatting.DARK_GRAY));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.fuel_rod.title").withStyle(ChatFormatting.YELLOW));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.fuel_rod.base_pulses", rod.pulses).withStyle(ChatFormatting.GRAY));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.fuel_rod.energy", fmt(rod.energyMultiplier)).withStyle(ChatFormatting.AQUA));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.fuel_rod.heat", fmt(rod.heatMultiplier)).withStyle(ChatFormatting.RED));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.fuel_rod.spread").withStyle(ChatFormatting.DARK_GRAY));
 			int heatP1 = (int) Math.round(rod.heatMultiplier * rod.pulses * (rod.pulses + 1));
 			int heatMax = (int) Math.round(rod.heatMultiplier * (rod.pulses + 4) * (rod.pulses + 5));
-			out.add(Component.literal("  p=" + rod.pulses + " -> " + heatP1 + " heat | p=" + (rod.pulses + 4) + " -> " + heatMax + " heat").withStyle(ChatFormatting.DARK_GRAY));
-			out.add(Component.literal("  Durability: " + rod.maxDurability + " cycles").withStyle(ChatFormatting.DARK_GRAY));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.fuel_rod.heat_example", rod.pulses, heatP1, rod.pulses + 4, heatMax).withStyle(ChatFormatting.DARK_GRAY));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.fuel_rod.durability", rod.maxDurability).withStyle(ChatFormatting.DARK_GRAY));
 		} else if (it instanceof HeatVentItem vent) {
 			out.add(Component.empty());
-			out.add(Component.literal("Heat vent").withStyle(ChatFormatting.YELLOW));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.heat_vent.title").withStyle(ChatFormatting.YELLOW));
 			if (vent.maxHeat > 0) {
-				out.add(Component.literal("  Own heat buffer: " + vent.maxHeat).withStyle(ChatFormatting.GRAY));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.heat_vent.heat_buffer", vent.maxHeat).withStyle(ChatFormatting.GRAY));
 			} else {
-				out.add(Component.literal("  No own heat buffer").withStyle(ChatFormatting.DARK_GRAY));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.heat_vent.no_buffer").withStyle(ChatFormatting.DARK_GRAY));
 			}
 			if (vent.selfCool > 0) {
-				out.add(Component.literal("  Self-heal: " + vent.selfCool + " heat / cycle").withStyle(ChatFormatting.AQUA));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.heat_vent.self_cool", vent.selfCool).withStyle(ChatFormatting.AQUA));
 			}
 			if (vent.reactorCool > 0) {
-				out.add(Component.literal("  Reactor cool: " + vent.reactorCool + " heat / cycle").withStyle(ChatFormatting.AQUA));
-				out.add(Component.literal("    multiplied by water env factor").withStyle(ChatFormatting.DARK_GRAY));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.heat_vent.reactor_cool", vent.reactorCool).withStyle(ChatFormatting.AQUA));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.heat_vent.water_hint").withStyle(ChatFormatting.DARK_GRAY));
 			}
 			if (vent.componentCool > 0) {
-				out.add(Component.literal("  Adjacent coolant cooling: " + vent.componentCool + " heat / cycle each").withStyle(ChatFormatting.AQUA));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.heat_vent.component_cool", vent.componentCool).withStyle(ChatFormatting.AQUA));
 			}
 		} else if (it instanceof HeatExchangerItem ex) {
 			out.add(Component.empty());
-			out.add(Component.literal("Heat exchanger").withStyle(ChatFormatting.YELLOW));
-			out.add(Component.literal("  Own heat buffer: " + ex.maxHeat).withStyle(ChatFormatting.GRAY));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.exchanger.title").withStyle(ChatFormatting.YELLOW));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.exchanger.heat_buffer", ex.maxHeat).withStyle(ChatFormatting.GRAY));
 			if (ex.heatTransferToAdjacent > 0) {
-				out.add(Component.literal("  Adjacent transfer: up to " + ex.heatTransferToAdjacent + " / cycle per neighbour").withStyle(ChatFormatting.AQUA));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.exchanger.adjacent", ex.heatTransferToAdjacent).withStyle(ChatFormatting.AQUA));
 			}
 			if (ex.heatTransferToCore > 0) {
-				out.add(Component.literal("  Core transfer: up to " + ex.heatTransferToCore + " / cycle vs reactor").withStyle(ChatFormatting.AQUA));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.exchanger.core", ex.heatTransferToCore).withStyle(ChatFormatting.AQUA));
 			}
-			out.add(Component.literal("  Moves heat from hotter side to cooler side").withStyle(ChatFormatting.DARK_GRAY));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.exchanger.transfer_direction").withStyle(ChatFormatting.DARK_GRAY));
 		} else if (it instanceof CoolantItem cool) {
 			out.add(Component.empty());
-			out.add(Component.literal("Coolant cell").withStyle(ChatFormatting.YELLOW));
-			out.add(Component.literal("  Capacity: " + cool.maxHeat + " heat").withStyle(ChatFormatting.AQUA));
-			out.add(Component.literal("  Passive. Soaks heat distributed by adjacent fuel rods").withStyle(ChatFormatting.GRAY));
-			out.add(Component.literal("  Component heat vents can refill durability").withStyle(ChatFormatting.DARK_GRAY));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.coolant.title").withStyle(ChatFormatting.YELLOW));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.coolant.capacity", cool.maxHeat).withStyle(ChatFormatting.AQUA));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.coolant.passive").withStyle(ChatFormatting.GRAY));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.coolant.vent_pair").withStyle(ChatFormatting.DARK_GRAY));
 		} else if (it instanceof NeutronReflectorItem ref) {
 			out.add(Component.empty());
-			out.add(Component.literal("Neutron reflector").withStyle(ChatFormatting.YELLOW));
-			out.add(Component.literal("  +1 pulse on each adjacent fuel rod").withStyle(ChatFormatting.AQUA));
-			out.add(Component.literal("  Each added pulse raises energy AND heat").withStyle(ChatFormatting.GRAY));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.reflector.title").withStyle(ChatFormatting.YELLOW));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.reflector.pulse_boost").withStyle(ChatFormatting.AQUA));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.reflector.energy_heat_note").withStyle(ChatFormatting.GRAY));
 			if (ref.maxDurability > 0) {
-				out.add(Component.literal("  Durability: " + ref.maxDurability + " pulses reflected").withStyle(ChatFormatting.DARK_GRAY));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.reflector.durability", ref.maxDurability).withStyle(ChatFormatting.DARK_GRAY));
 			} else {
-				out.add(Component.literal("  Infinite durability").withStyle(ChatFormatting.GOLD));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.reflector.infinite").withStyle(ChatFormatting.GOLD));
 			}
 		} else if (it instanceof ReactorPlatingItem pl) {
 			out.add(Component.empty());
-			out.add(Component.literal("Reactor plating").withStyle(ChatFormatting.YELLOW));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.plating.title").withStyle(ChatFormatting.YELLOW));
 			if (pl.heatCapacity > 0) {
-				out.add(Component.literal("  +" + pl.heatCapacity + " max reactor heat (raises meltdown threshold)").withStyle(ChatFormatting.AQUA));
+				out.add(Component.translatable("ic.gui.reactor_sim.item.plating.heat_capacity", pl.heatCapacity).withStyle(ChatFormatting.AQUA));
 			}
 			double pct = (1.0 - pl.explosionResistance) * 100.0;
-			out.add(Component.literal("  Blast radius: x" + fmt(pl.explosionResistance) + " (" + String.format("-%.0f%%", pct) + ")").withStyle(ChatFormatting.GOLD));
-			out.add(Component.literal("  Applies once per plating, multiplicative").withStyle(ChatFormatting.DARK_GRAY));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.plating.blast", fmt(pl.explosionResistance), String.format("-%.0f%%", pct)).withStyle(ChatFormatting.GOLD));
+			out.add(Component.translatable("ic.gui.reactor_sim.item.plating.multiply_hint").withStyle(ChatFormatting.DARK_GRAY));
 		}
 	}
 
@@ -306,10 +306,10 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		if (isIn(mouseX, mouseY, chX, stY, STEPPER_W, BUTTON_H)) {
 			int cols = 3 + menu.getChambers();
 			g.setComponentTooltipForNextFrame(font, List.of(
-					Component.literal("Chambers").withStyle(ChatFormatting.YELLOW),
-					Component.literal("Number of Nuclear Reactor Chambers attached to the real reactor").withStyle(ChatFormatting.GRAY),
-					Component.literal("Each chamber adds one column to the grid (currently " + cols + " columns active)").withStyle(ChatFormatting.GRAY),
-					Component.literal("Chambers also expose more outer hull faces for water cooling").withStyle(ChatFormatting.DARK_GRAY)
+					Component.translatable("ic.gui.reactor_sim.chambers_title").withStyle(ChatFormatting.YELLOW),
+					Component.translatable("ic.gui.reactor_sim.chambers_desc1").withStyle(ChatFormatting.GRAY),
+					Component.translatable("ic.gui.reactor_sim.chambers_desc2", cols).withStyle(ChatFormatting.GRAY),
+					Component.translatable("ic.gui.reactor_sim.chambers_desc3").withStyle(ChatFormatting.DARK_GRAY)
 			), mouseX, mouseY, ItemStack.EMPTY);
 			return;
 		}
@@ -318,23 +318,23 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 			double max = ICConfig.NUCLEAR.WATER_COOLING_MULTIPLIER.get();
 			double mult = 1D + factor * (max - 1D);
 			g.setComponentTooltipForNextFrame(font, List.of(
-					Component.literal("Water env factor").withStyle(ChatFormatting.YELLOW),
-					Component.literal("Fraction of outward hull faces touching water (0.00 to 1.00)").withStyle(ChatFormatting.GRAY),
-					Component.literal(String.format("Current cooling multiplier: x%.2f", mult)).withStyle(ChatFormatting.AQUA),
-					Component.literal("Applied to vent \"reactor cool\" values each cycle").withStyle(ChatFormatting.DARK_GRAY),
-					Component.literal(String.format("(1.0 at 0.00 water up to x%.2f at 1.00 water)", max)).withStyle(ChatFormatting.DARK_GRAY)
+					Component.translatable("ic.gui.reactor_sim.water_title").withStyle(ChatFormatting.YELLOW),
+					Component.translatable("ic.gui.reactor_sim.water_desc1").withStyle(ChatFormatting.GRAY),
+					Component.translatable("ic.gui.reactor_sim.water_desc2", String.format("%.2f", mult)).withStyle(ChatFormatting.AQUA),
+					Component.translatable("ic.gui.reactor_sim.water_desc3").withStyle(ChatFormatting.DARK_GRAY),
+					Component.translatable("ic.gui.reactor_sim.water_desc4", String.format("%.2f", max)).withStyle(ChatFormatting.DARK_GRAY)
 			), mouseX, mouseY, ItemStack.EMPTY);
 			return;
 		}
 		if (isIn(mouseX, mouseY, leftPos + 8, topPos + ROW_STATS_Y, MAIN_W - 16, 10)
 				|| isIn(mouseX, mouseY, leftPos + 8, topPos + ROW_VERDICT_Y, MAIN_W - 16, 10)) {
 			g.setComponentTooltipForNextFrame(font, List.of(
-					Component.literal("Simulation stats").withStyle(ChatFormatting.YELLOW),
-					Component.literal("Verdict line: stability analysis result").withStyle(ChatFormatting.GRAY),
-					Component.literal("N z/t: energy output this cycle").withStyle(ChatFormatting.GRAY),
-					Component.literal("total: cumulative energy since Start").withStyle(ChatFormatting.GRAY),
-					Component.literal("cN: cycle counter (1 cycle = 1 reactor tick)").withStyle(ChatFormatting.GRAY),
-					Component.literal("Speed controls cycles per game tick: 20x = 1/t, 1000x = 50/t").withStyle(ChatFormatting.DARK_GRAY)
+					Component.translatable("ic.gui.reactor_sim.stats_title").withStyle(ChatFormatting.YELLOW),
+					Component.translatable("ic.gui.reactor_sim.stats_desc1").withStyle(ChatFormatting.GRAY),
+					Component.translatable("ic.gui.reactor_sim.stats_desc2").withStyle(ChatFormatting.GRAY),
+					Component.translatable("ic.gui.reactor_sim.stats_desc3").withStyle(ChatFormatting.GRAY),
+					Component.translatable("ic.gui.reactor_sim.stats_desc4").withStyle(ChatFormatting.GRAY),
+					Component.translatable("ic.gui.reactor_sim.stats_desc5").withStyle(ChatFormatting.DARK_GRAY)
 			), mouseX, mouseY, ItemStack.EMPTY);
 		}
 	}
@@ -376,7 +376,7 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		int py = topPos + PICKER_Y;
 		int gridCenterX = leftPos + PICKER_INNER_X + (PICKER_COLS * PICKER_SLOT) / 2;
 
-		textCenter(g, "Components", gridCenterX, py + 3, 0xFF000000);
+		textCenter(g, Component.translatable("ic.gui.reactor_sim.components").getString(), gridCenterX, py + 3, 0xFF000000);
 
 		int innerX = leftPos + PICKER_INNER_X;
 		int innerY = topPos + PICKER_INNER_Y;
@@ -416,7 +416,7 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		int w = getPresetPanelWidth();
 
 		g.fill(x + 2, y - 1, x + w - 2, y, 0xFF6E6E6E);
-		textCenter(g, "Presets", x + w / 2, y + 1, 0xFF000000);
+		textCenter(g, Component.translatable("ic.gui.reactor_sim.presets").getString(), x + w / 2, y + 1, 0xFF000000);
 
 		if (saveMode) {
 			drawSaveRow(g, x, y, w, mouseX, mouseY);
@@ -430,7 +430,9 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		boolean ddHover = isIn(mouseX, mouseY, ddX, ddY, ddW, ddH);
 		g.fill(ddX, ddY, ddX + ddW, ddY + ddH, 0xFF333333);
 		g.fill(ddX + 1, ddY + 1, ddX + ddW - 1, ddY + ddH - 1, ddHover ? 0xFFBCE0FF : 0xFFE0E0E0);
-		String label = presets.isEmpty() ? "(none)" : truncate(presets.get(selectedPreset).name(), ddW - 14);
+		String label = presets.isEmpty()
+				? Component.translatable("ic.gui.reactor_sim.no_presets").getString()
+				: truncate(presets.get(selectedPreset).name(), ddW - 14);
 		g.text(font, Component.literal(label), ddX + 4, ddY + 3, 0xFF000000, false);
 		int arrowX = ddX + ddW - 8;
 		int arrowY = ddY + 5;
@@ -587,26 +589,26 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		int iconX = x + (w - iconsTotalW) / 2;
 		if (isIn(mouseX, mouseY, iconX, iconRowY, PRESET_ICON_W, PRESET_ICON_W)) {
 			g.setComponentTooltipForNextFrame(font, List.of(
-					Component.literal("Load").withStyle(ChatFormatting.YELLOW),
-					Component.literal("Apply the selected preset to this simulator").withStyle(ChatFormatting.GRAY),
-					Component.literal("Clears current layout first, then sets chambers and components").withStyle(ChatFormatting.DARK_GRAY)
+					Component.translatable("ic.gui.reactor_sim.load_title").withStyle(ChatFormatting.YELLOW),
+					Component.translatable("ic.gui.reactor_sim.load_desc").withStyle(ChatFormatting.GRAY),
+					Component.translatable("ic.gui.reactor_sim.load_hint").withStyle(ChatFormatting.DARK_GRAY)
 			), mouseX, mouseY, ItemStack.EMPTY);
 			return;
 		}
 		if (isIn(mouseX, mouseY, iconX + PRESET_ICON_W + PRESET_ICON_GAP, iconRowY, PRESET_ICON_W, PRESET_ICON_W)) {
 			g.setComponentTooltipForNextFrame(font, List.of(
-					Component.literal("Save").withStyle(ChatFormatting.YELLOW),
-					Component.literal("Save the current layout as a new preset").withStyle(ChatFormatting.GRAY),
-					Component.literal("Stored locally in local/ic/reactor_layout/").withStyle(ChatFormatting.DARK_GRAY)
+					Component.translatable("ic.gui.reactor_sim.save_title").withStyle(ChatFormatting.YELLOW),
+					Component.translatable("ic.gui.reactor_sim.save_desc").withStyle(ChatFormatting.GRAY),
+					Component.translatable("ic.gui.reactor_sim.save_hint").withStyle(ChatFormatting.DARK_GRAY)
 			), mouseX, mouseY, ItemStack.EMPTY);
 			return;
 		}
 		if (isIn(mouseX, mouseY, iconX + (PRESET_ICON_W + PRESET_ICON_GAP) * 2, iconRowY, PRESET_ICON_W, PRESET_ICON_W)) {
 			boolean removable = !presets.isEmpty() && !presets.get(selectedPreset).builtin();
 			List<Component> lines = new ArrayList<>();
-			lines.add(Component.literal("Remove").withStyle(ChatFormatting.YELLOW));
-			lines.add(Component.literal("Delete the selected preset file").withStyle(ChatFormatting.GRAY));
-			if (!removable) lines.add(Component.literal("Built-in presets cannot be removed").withStyle(ChatFormatting.DARK_GRAY));
+			lines.add(Component.translatable("ic.gui.reactor_sim.remove_title").withStyle(ChatFormatting.YELLOW));
+			lines.add(Component.translatable("ic.gui.reactor_sim.remove_desc").withStyle(ChatFormatting.GRAY));
+			if (!removable) lines.add(Component.translatable("ic.gui.reactor_sim.remove_locked").withStyle(ChatFormatting.DARK_GRAY));
 			g.setComponentTooltipForNextFrame(font, lines, mouseX, mouseY, ItemStack.EMPTY);
 		}
 	}
@@ -629,7 +631,12 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 
 	private void drawControlRow(GuiGraphicsExtractor g, int mouseX, int mouseY) {
 		int y = topPos + ROW_CONTROL_Y;
-		String[] labels = {"Start", "Pause", "Restart", "Clear"};
+		String[] labels = {
+				Component.translatable("ic.gui.reactor_sim.start").getString(),
+				Component.translatable("ic.gui.reactor_sim.pause").getString(),
+				Component.translatable("ic.gui.reactor_sim.restart").getString(),
+				Component.translatable("ic.gui.reactor_sim.clear").getString()
+		};
 		boolean running = menu.isRunning();
 		boolean paused = menu.isPaused();
 		for (int i = 0; i < 4; i++) {
@@ -669,12 +676,12 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		String verdictStr;
 		int verdictColor;
 		if (verdict == ReactorSimulatorBlockEntity.VERDICT_STABLE) {
-			verdictStr = "Result: STABLE"; verdictColor = 0xFF007F1F;
+			verdictStr = Component.translatable("ic.gui.reactor_sim.verdict_stable").getString(); verdictColor = 0xFF007F1F;
 		} else if (verdict == ReactorSimulatorBlockEntity.VERDICT_UNSTABLE) {
-			verdictStr = "Result: overheats at cycle " + menu.getUnstableCycle();
+			verdictStr = Component.translatable("ic.gui.reactor_sim.verdict_unstable", menu.getUnstableCycle()).getString();
 			verdictColor = 0xFFCC0000;
 		} else {
-			verdictStr = "Result: not analyzed"; verdictColor = 0xFF606060;
+			verdictStr = Component.translatable("ic.gui.reactor_sim.verdict_none").getString(); verdictColor = 0xFF606060;
 		}
 		g.text(font, Component.literal(verdictStr), leftPos + 10, y, verdictColor, false);
 	}
@@ -684,16 +691,16 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		long total = menu.getTotalEnergy();
 		int perTick = menu.getLastEnergy();
 		long cycle = menu.getElapsedCycles();
-		String stats = perTick + " z/t  |  total " + formatShort(total) + "  |  cycle " + cycle;
+		String stats = Component.translatable("ic.gui.reactor_sim.stats", perTick, formatShort(total), cycle).getString();
 		g.text(font, Component.literal(stats), leftPos + 10, y, 0xFF404040, false);
 	}
 
 	private void drawBottomRow(GuiGraphicsExtractor g, int mouseX, int mouseY) {
 		int y = topPos + ROW_BUTTONS_Y;
 		int startX = leftPos + BOTTOM_BTN_START_X;
-		drawTextButton(g, startX, y, BOTTOM_BTN_W, "Analyze", mouseX, mouseY);
-		drawTextButton(g, startX + BOTTOM_BTN_W + BOTTOM_BTN_GAP, y, BOTTOM_BTN_W, "Import", mouseX, mouseY);
-		drawTextButton(g, startX + (BOTTOM_BTN_W + BOTTOM_BTN_GAP) * 2, y, BOTTOM_BTN_W, "Export", mouseX, mouseY);
+		drawTextButton(g, startX, y, BOTTOM_BTN_W, Component.translatable("ic.gui.reactor_sim.analyze").getString(), mouseX, mouseY);
+		drawTextButton(g, startX + BOTTOM_BTN_W + BOTTOM_BTN_GAP, y, BOTTOM_BTN_W, Component.translatable("ic.gui.reactor_sim.import_btn").getString(), mouseX, mouseY);
+		drawTextButton(g, startX + (BOTTOM_BTN_W + BOTTOM_BTN_GAP) * 2, y, BOTTOM_BTN_W, Component.translatable("ic.gui.reactor_sim.export_btn").getString(), mouseX, mouseY);
 	}
 
 	private void drawTextButton(GuiGraphicsExtractor g, int x, int y, int w, String label, int mouseX, int mouseY) {
@@ -826,7 +833,7 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 					ReactorDesign.fromJson(clip);
 					ClientPacketDistributor.sendToServer(SimulatorActionPayload.importDesign(clip));
 				} catch (IllegalArgumentException ex) {
-					sendLocalMessage("Clipboard is not a valid reactor design.", ChatFormatting.RED);
+					sendLocalMessage(Component.translatable("ic.gui.reactor_sim.import_error"), ChatFormatting.RED);
 				}
 			}
 			return true;
@@ -835,7 +842,7 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 			if (menu.blockEntity instanceof ReactorSimulatorBlockEntity sim) {
 				String json = sim.exportDesign().toJson();
 				Minecraft.getInstance().keyboardHandler.setClipboard(json);
-				sendLocalMessage("Reactor design copied to clipboard.", ChatFormatting.GREEN);
+				sendLocalMessage(Component.translatable("ic.gui.reactor_sim.export_success"), ChatFormatting.GREEN);
 			}
 			return true;
 		}
@@ -940,22 +947,22 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 	private void tryConfirmSave() {
 		String name = saveNameBox.getValue().trim();
 		if (!ReactorPresetLibrary.isValidName(name)) {
-			saveError = "Invalid name";
+			saveError = Component.translatable("ic.gui.reactor_sim.save_error_invalid_name").getString();
 			return;
 		}
 		for (ReactorPresetLibrary.Preset p : presets) {
 			if (p.builtin() && p.name().equalsIgnoreCase(name)) {
-				saveError = "Reserved name";
+				saveError = Component.translatable("ic.gui.reactor_sim.save_error_reserved").getString();
 				return;
 			}
 		}
 		if (!(menu.blockEntity instanceof ReactorSimulatorBlockEntity sim)) {
-			saveError = "No simulator";
+			saveError = Component.translatable("ic.gui.reactor_sim.save_error_no_sim").getString();
 			return;
 		}
 		ReactorDesign design = sim.exportDesign();
 		if (!ReactorPresetLibrary.save(name, design)) {
-			saveError = "Save failed";
+			saveError = Component.translatable("ic.gui.reactor_sim.save_error_failed").getString();
 			return;
 		}
 		refreshPresets();
@@ -966,7 +973,7 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 			}
 		}
 		exitSaveMode();
-		sendLocalMessage("Preset saved: " + name, ChatFormatting.GREEN);
+		sendLocalMessage(Component.translatable("ic.gui.reactor_sim.save_success", name), ChatFormatting.GREEN);
 	}
 
 	private void doRemove() {
@@ -974,15 +981,15 @@ public class ReactorSimulatorScreen extends ElectricBlockScreen<ReactorSimulator
 		ReactorPresetLibrary.Preset p = presets.get(selectedPreset);
 		if (p.builtin()) return;
 		if (ReactorPresetLibrary.remove(p.name())) {
-			sendLocalMessage("Preset removed: " + p.name(), ChatFormatting.YELLOW);
+			sendLocalMessage(Component.translatable("ic.gui.reactor_sim.remove_success", p.name()), ChatFormatting.YELLOW);
 		}
 		refreshPresets();
 		selectedPreset = 0;
 	}
 
-	private void sendLocalMessage(String text, ChatFormatting color) {
+	private void sendLocalMessage(Component text, ChatFormatting color) {
 		var p = Minecraft.getInstance().player;
-		if (p != null) p.sendSystemMessage(Component.literal(text).withStyle(color));
+		if (p != null) p.sendSystemMessage(text.copy().withStyle(color));
 	}
 
 	@Override

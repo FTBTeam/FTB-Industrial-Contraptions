@@ -12,6 +12,7 @@ import dev.ftb.mods.industrialcontraptions.recipe.BasicGeneratorFuelRecipe;
 import dev.ftb.mods.industrialcontraptions.recipe.ICRecipes;
 import dev.ftb.mods.industrialcontraptions.recipe.MachineRecipe;
 import dev.ftb.mods.industrialcontraptions.recipe.MachineRecipeType;
+import dev.ftb.mods.industrialcontraptions.util.ICUtils;
 import dev.ftb.mods.industrialcontraptions.util.IngredientWithCount;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -39,6 +40,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @JeiPlugin
 public class ICJEIPlugin implements IModPlugin {
@@ -83,10 +85,10 @@ public class ICJEIPlugin implements IModPlugin {
 		long zapsPer = Math.round(AntimatterConstructorBlockEntity.PRODUCTION_THRESHOLD);
 		r.addItemStackInfo(
 				new ItemStack(ICItems.ANTIMATTER.item.get()),
-				Component.literal("Produced by the Antimatter Constructor."),
-				Component.literal("Each antimatter requires " + zapsPer + " zaps of progress."),
-				Component.literal("Boost items consumed in the input slot accelerate progress."),
-				Component.literal("See \"Antimatter Constructor\" recipes for boost values."));
+				Component.translatable("ic.jei.antimatter.line1"),
+				Component.translatable("ic.jei.antimatter.line2", ICUtils.fmtInt(zapsPer)),
+				Component.translatable("ic.jei.antimatter.line3"),
+				Component.translatable("ic.jei.antimatter.line4"));
 
 		registerReactorComponentInfo(r);
 	}
@@ -125,54 +127,66 @@ public class ICJEIPlugin implements IModPlugin {
 		double baseEnergy = pulses * energyMult;
 		double baseHeat = heatMult * pulses * (pulses + 1);
 		r.addItemStackInfo(new ItemStack(item),
-				Component.literal("Nuclear fuel rod. " + rods + "-rod pack emits " + pulses + " pulse" + (pulses == 1 ? "" : "s") + "/cycle."),
-				Component.literal("Energy: " + baseEnergy + " zap/t base (×(pulses+reflectors))."),
-				Component.literal("Heat: " + baseHeat + "/cycle base. Distributed into neighboring heat acceptors."),
-				Component.literal("Durability: " + durability + " cycles before the rod is spent."));
+				Component.translatable("ic.jei.rod.title"),
+				Component.translatable("ic.jei.rod.desc", ICUtils.fmtInt(rods), ICUtils.fmtInt(pulses)),
+				Component.translatable("ic.jei.rod.energy", fmt(baseEnergy)),
+				Component.translatable("ic.jei.rod.heat", fmt(baseHeat)),
+				Component.translatable("ic.jei.rod.durability", ICUtils.fmtInt(durability)));
 	}
 
 	private static void coolantInfo(IRecipeRegistration r, Item item, int capacity) {
 		r.addItemStackInfo(new ItemStack(item),
-				Component.literal("Passive heat buffer. Absorbs heat distributed by adjacent fuel rods."),
-				Component.literal("Capacity: " + String.format("%,d", capacity) + " heat."),
-				Component.literal("Pair with a Component Heat Vent to replenish durability each cycle."));
+				Component.translatable("ic.jei.coolant.title"),
+				Component.translatable("ic.jei.coolant.desc"),
+				Component.translatable("ic.jei.coolant.capacity", ICUtils.fmtInt(capacity)),
+				Component.translatable("ic.jei.coolant.vent_pair"));
 	}
 
 	private static void ventInfo(IRecipeRegistration r, Item item, int maxHeat, int selfCool, int reactorCool, int componentCool) {
 		List<Component> lines = new ArrayList<>();
-		lines.add(Component.literal("Heat vent. Removes heat each reactor cycle."));
-		if (maxHeat > 0) lines.add(Component.literal("Durability: " + maxHeat + " heat absorption."));
-		if (selfCool > 0) lines.add(Component.literal("Self cooling: " + selfCool + "/cycle (heals own durability)."));
-		if (reactorCool > 0) lines.add(Component.literal("Reactor cooling: " + reactorCool + "/cycle removed from reactor heat pool."));
-		if (componentCool > 0) lines.add(Component.literal("Component cooling: " + componentCool + "/cycle to each adjacent coolant cell."));
+		lines.add(Component.translatable("ic.jei.vent.title"));
+		lines.add(Component.translatable("ic.jei.vent.desc"));
+		if (maxHeat > 0) lines.add(Component.translatable("ic.jei.vent.durability", ICUtils.fmtInt(maxHeat)));
+		if (selfCool > 0) lines.add(Component.translatable("ic.jei.vent.self_cool", ICUtils.fmtInt(selfCool)));
+		if (reactorCool > 0) lines.add(Component.translatable("ic.jei.vent.reactor_cool", ICUtils.fmtInt(reactorCool)));
+		if (componentCool > 0) lines.add(Component.translatable("ic.jei.vent.component_cool", ICUtils.fmtInt(componentCool)));
 		r.addItemStackInfo(new ItemStack(item), lines.toArray(Component[]::new));
 	}
 
 	private static void exchangerInfo(IRecipeRegistration r, Item item, int maxHeat, int toAdjacent, int toCore) {
 		List<Component> lines = new ArrayList<>();
-		lines.add(Component.literal("Heat exchanger. Balances heat between neighbors and the reactor core."));
-		lines.add(Component.literal("Durability: " + String.format("%,d", maxHeat) + " heat buffer."));
-		if (toAdjacent > 0) lines.add(Component.literal("Adjacent transfer: up to " + toAdjacent + "/cycle per neighbor."));
-		if (toCore > 0) lines.add(Component.literal("Core transfer: up to " + toCore + "/cycle to/from the reactor heat pool."));
-	    r.addItemStackInfo(new ItemStack(item), lines.toArray(Component[]::new));
+		lines.add(Component.translatable("ic.jei.exchanger.title"));
+		lines.add(Component.translatable("ic.jei.exchanger.desc"));
+		lines.add(Component.translatable("ic.jei.exchanger.durability", ICUtils.fmtInt(maxHeat)));
+		if (toAdjacent > 0) lines.add(Component.translatable("ic.jei.exchanger.adjacent", ICUtils.fmtInt(toAdjacent)));
+		if (toCore > 0) lines.add(Component.translatable("ic.jei.exchanger.core", ICUtils.fmtInt(toCore)));
+		r.addItemStackInfo(new ItemStack(item), lines.toArray(Component[]::new));
 	}
 
 	private static void platingInfo(IRecipeRegistration r, Item item, int heatCapacity, double explosionMod) {
 		int pct = (int) Math.round((1.0 - explosionMod) * 100.0);
 		r.addItemStackInfo(new ItemStack(item),
-				Component.literal("Reactor plating. Modifies the reactor hull itself."),
-				Component.literal("Max heat bonus: +" + String.format("%,d", heatCapacity) + " (stacks with other plating)."),
-				Component.literal("Explosion dampening: ×" + explosionMod + " (-" + pct + "% radius per plating)."));
+				Component.translatable("ic.jei.plating.title"),
+				Component.translatable("ic.jei.plating.desc"),
+				Component.translatable("ic.jei.plating.heat_bonus", ICUtils.fmtInt(heatCapacity)),
+				Component.translatable("ic.jei.plating.explosion", fmt(explosionMod), ICUtils.fmtInt(pct)));
 	}
 
 	private static void reflectorInfo(IRecipeRegistration r, Item item, int durability) {
 		r.addItemStackInfo(new ItemStack(item),
-				Component.literal("Neutron reflector. Bounces pulses back into adjacent fuel rods."),
-				Component.literal("Each reflector adjacent to a rod adds +1 pulse (more energy AND more heat)."),
-				Component.literal(durability == 0
-						? "Durability: infinite (iridium-reinforced)."
-						: "Durability: " + String.format("%,d", durability) + " pulses before the reflector burns out."));
+				Component.translatable("ic.jei.reflector.title"),
+				Component.translatable("ic.jei.reflector.desc"),
+				Component.translatable("ic.jei.reflector.pulse_effect"),
+				durability == 0
+						? Component.translatable("ic.jei.reflector.durability_infinite")
+						: Component.translatable("ic.jei.reflector.durability", ICUtils.fmtInt(durability)));
 	}
+
+	private static String fmt(double v) {
+		if (v == Math.floor(v) && !Double.isInfinite(v)) return String.valueOf((long) v);
+		return String.format(Locale.ROOT, "%.2f", v);
+	}
+
 
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration r) {

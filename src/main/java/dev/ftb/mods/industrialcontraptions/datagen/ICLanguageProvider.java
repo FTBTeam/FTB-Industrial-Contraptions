@@ -295,5 +295,193 @@ public class ICLanguageProvider extends LanguageProvider {
 
 		add("config.jade.plugin_ic.cable_tier", "Cable Tier");
 		add("config.jade.plugin_ic.energy", "Energy");
+
+		add("ic.jei.chance", "Chance: %s%%");
+		add("ic.jei.recipe_time_energy", "%ss · %s zaps");
+		add("ic.jei.energy_per_tick", "%s z/t");
+		add("ic.jei.burn_time", "%ss @ %s z/t");
+		add("ic.jei.total_zaps", "= %s zaps");
+		add("ic.jei.zaps_per_mb", "%s z/mB @ %s z/bucket");
+		add("ic.jei.zaps_per_tank", "= %s zaps / full tank (%s mB)");
+		add("ic.jei.boost", "+%s zaps boost");
+
+		add("ic.jei.antimatter.line1", "Produced by the Antimatter Constructor.");
+		add("ic.jei.antimatter.line2", "Each antimatter requires %s zaps of progress.");
+		add("ic.jei.antimatter.line3", "Boost items consumed in the input slot accelerate progress.");
+		add("ic.jei.antimatter.line4", "See \"Antimatter Constructor\" recipes for boost values.");
+
+		add("ic.jei.rod.title", "Nuclear fuel rod");
+		add("ic.jei.rod.desc", "%s-rod pack: %s pulse(s) per cycle");
+		add("ic.jei.rod.energy", "Energy: %s zap/t base (×(pulses+reflectors))");
+		add("ic.jei.rod.heat", "Heat: %s/cycle base. Distributed into neighboring heat acceptors.");
+		add("ic.jei.rod.durability", "Durability: %s cycles before the rod is spent.");
+
+		add("ic.jei.coolant.title", "Coolant cell");
+		add("ic.jei.coolant.desc", "Passive heat buffer. Absorbs heat distributed by adjacent fuel rods.");
+		add("ic.jei.coolant.capacity", "Capacity: %s heat.");
+		add("ic.jei.coolant.vent_pair", "Pair with a Component Heat Vent to replenish durability each cycle.");
+
+		add("ic.jei.vent.title", "Heat vent");
+		add("ic.jei.vent.desc", "Removes heat each reactor cycle.");
+		add("ic.jei.vent.durability", "Durability: %s heat absorption.");
+		add("ic.jei.vent.self_cool", "Self cooling: %s/cycle (heals own durability).");
+		add("ic.jei.vent.reactor_cool", "Reactor cooling: %s/cycle removed from reactor heat pool.");
+		add("ic.jei.vent.component_cool", "Component cooling: %s/cycle to each adjacent coolant cell.");
+
+		add("ic.jei.exchanger.title", "Heat exchanger");
+		add("ic.jei.exchanger.desc", "Balances heat between neighbors and the reactor core.");
+		add("ic.jei.exchanger.durability", "Durability: %s heat buffer.");
+		add("ic.jei.exchanger.adjacent", "Adjacent transfer: up to %s/cycle per neighbor.");
+		add("ic.jei.exchanger.core", "Core transfer: up to %s/cycle to/from the reactor heat pool.");
+
+		add("ic.jei.plating.title", "Reactor plating");
+		add("ic.jei.plating.desc", "Modifies the reactor hull itself.");
+		add("ic.jei.plating.heat_bonus", "Max heat bonus: +%s (stacks with other plating).");
+		add("ic.jei.plating.explosion", "Explosion dampening: ×%s (-%s%% radius per plating).");
+
+		add("ic.jei.reflector.title", "Neutron reflector");
+		add("ic.jei.reflector.desc", "Bounces pulses back into adjacent fuel rods.");
+		add("ic.jei.reflector.pulse_effect", "Each reflector adjacent to a rod adds +1 pulse (more energy AND more heat).");
+		add("ic.jei.reflector.durability_infinite", "Durability: infinite (iridium-reinforced).");
+		add("ic.jei.reflector.durability", "Durability: %s pulses before the reflector burns out.");
+
+		add("ic.reactor.paused", "Paused");
+		add("ic.reactor.energy_output", "%d z/t");
+		add("ic.reactor.heat_percentage", "%d%%");
+
+		add("ic.reactor.tooltip.paused", "Paused (%d z/t when active)");
+		add("ic.reactor.tooltip.output", "Output: %d z/t");
+		add("ic.reactor.tooltip.resume", "Resume reactor");
+		add("ic.reactor.tooltip.pause", "Pause reactor");
+		add("ic.reactor.tooltip.redstone_enabled", "Redstone control: enabled");
+		add("ic.reactor.tooltip.redstone_disabled", "Redstone control: disabled");
+		add("ic.reactor.tooltip.show_jei", "Show reactor components in JEI");
+
+		add("ic.gui.antimatter_constructor.boosted", "Boosted. Click to show boost items.");
+		add("ic.gui.antimatter_constructor.boost", "Click to show boost items");
+
+		add("ic.gui.basic_generator.burn_time", "Burn time: %s s. Click to show fuels.");
+
+		add("ic.gui.slot.upgrade", "Upgrade Slot");
+		add("ic.gui.slot.battery", "Battery Slot");
+		add("ic.gui.slot.pickaxe", "Pickaxe Slot (applies enchantments to mined blocks)");
+
+		add("ic.gui.iron_furnace.progress", "Progress: %s%%. Click to show recipes.");
+
+		add("ic.gui.machine.progress", "Progress: %s%%. Click to show recipes.");
+
+		add("ic.gui.pump.paused", "Paused. Click to resume.");
+		add("ic.gui.pump.running", "Running. Click to pause.");
+
+		add("ic.gui.quarry.paused", "Paused. Click to resume.");
+		add("ic.gui.quarry.running", "Running. Click to pause.");
+
+		add("ic.gui.solar_panel.producing", "Producing");
+		add("ic.gui.solar_panel.no_sunlight", "No sunlight");
+
+		add("ic.gui.teleporter.name_label", "Name");
+		add("ic.gui.teleporter.public_label", "Public");
+		add("ic.gui.teleporter.private_label", "Private");
+		add("ic.gui.teleporter.unnamed", "Unnamed");
+		add("ic.gui.teleporter.linked_format", "Linked: %s");
+		add("ic.gui.teleporter.not_linked", "Not linked. Click below.");
+		add("ic.gui.teleporter.clear_storage", "Clear Storage");
+		add("ic.gui.teleporter.clear_fluids", "Clear Fluids");
+		add("ic.gui.teleporter.no_teleporters", "No teleporters available");
+		add("ic.gui.teleporter.choose_destination", "Choose destination");
+		add("ic.gui.teleporter.no_teleporters_found", "No teleporters found");
+		add("ic.gui.teleporter.public_tooltip", "Public. Anyone can link to this teleporter. Click to make private.");
+		add("ic.gui.teleporter.private_tooltip", "Private. Only you can link to this teleporter. Click to make public.");
+		add("ic.gui.teleporter.unlink_tooltip", "Unlink destination");
+		add("ic.gui.teleporter.name_tooltip", "Give this teleporter a name so you can find it in other teleporters' lists.");
+		add("ic.gui.teleporter.entry_tooltip", "%s\nCost: %s per jump\nClick to link");
+
+		add("ic.gui.reactor_sim.start", "Start");
+		add("ic.gui.reactor_sim.pause", "Pause");
+		add("ic.gui.reactor_sim.restart", "Restart");
+		add("ic.gui.reactor_sim.clear", "Clear");
+		add("ic.gui.reactor_sim.chambers", "Chambers: %d/%d");
+		add("ic.gui.reactor_sim.water", "Water: %s");
+		add("ic.gui.reactor_sim.components", "Components");
+		add("ic.gui.reactor_sim.presets", "Presets");
+		add("ic.gui.reactor_sim.no_presets", "(none)");
+		add("ic.gui.reactor_sim.analyze", "Analyze");
+		add("ic.gui.reactor_sim.import_btn", "Import");
+		add("ic.gui.reactor_sim.export_btn", "Export");
+		add("ic.gui.reactor_sim.verdict_stable", "Result: STABLE");
+		add("ic.gui.reactor_sim.verdict_unstable", "Result: overheats at cycle %d");
+		add("ic.gui.reactor_sim.verdict_none", "Result: not analyzed");
+		add("ic.gui.reactor_sim.stats", "%d z/t  |  total %s  |  cycle %d");
+		add("ic.gui.reactor_sim.save_name_label", "Name");
+		add("ic.gui.reactor_sim.save_error_invalid_name", "Invalid name");
+		add("ic.gui.reactor_sim.save_error_reserved", "Reserved name");
+		add("ic.gui.reactor_sim.save_error_no_sim", "No simulator");
+		add("ic.gui.reactor_sim.save_error_failed", "Save failed");
+		add("ic.gui.reactor_sim.save_success", "Preset saved: %s");
+		add("ic.gui.reactor_sim.remove_success", "Preset removed: %s");
+		add("ic.gui.reactor_sim.import_error", "Clipboard is not a valid reactor design.");
+		add("ic.gui.reactor_sim.export_success", "Reactor design copied to clipboard.");
+		add("ic.gui.reactor_sim.chambers_title", "Chambers");
+		add("ic.gui.reactor_sim.chambers_desc1", "Number of Nuclear Reactor Chambers attached to the real reactor");
+		add("ic.gui.reactor_sim.chambers_desc2", "Each chamber adds one column to the grid (currently %d columns active)");
+		add("ic.gui.reactor_sim.chambers_desc3", "Chambers also expose more outer hull faces for water cooling");
+		add("ic.gui.reactor_sim.water_title", "Water env factor");
+		add("ic.gui.reactor_sim.water_desc1", "Fraction of outward hull faces touching water (0.00 to 1.00)");
+		add("ic.gui.reactor_sim.water_desc2", "Current cooling multiplier: x%s");
+		add("ic.gui.reactor_sim.water_desc3", "Applied to vent \"reactor cool\" values each cycle");
+		add("ic.gui.reactor_sim.water_desc4", "(1.0 at 0.00 water up to x%s at 1.00 water)");
+		add("ic.gui.reactor_sim.stats_title", "Simulation stats");
+		add("ic.gui.reactor_sim.stats_desc1", "Verdict line: stability analysis result");
+		add("ic.gui.reactor_sim.stats_desc2", "N z/t: energy output this cycle");
+		add("ic.gui.reactor_sim.stats_desc3", "total: cumulative energy since Start");
+		add("ic.gui.reactor_sim.stats_desc4", "cN: cycle counter (1 cycle = 1 reactor tick)");
+		add("ic.gui.reactor_sim.stats_desc5", "Speed controls cycles per game tick: 20x = 1/t, 1000x = 50/t");
+		add("ic.gui.reactor_sim.load_title", "Load");
+		add("ic.gui.reactor_sim.load_desc", "Apply the selected preset to this simulator");
+		add("ic.gui.reactor_sim.load_hint", "Clears current layout first, then sets chambers and components");
+		add("ic.gui.reactor_sim.save_title", "Save");
+		add("ic.gui.reactor_sim.save_desc", "Save the current layout as a new preset");
+		add("ic.gui.reactor_sim.save_hint", "Stored locally in local/ic/reactor_layout/");
+		add("ic.gui.reactor_sim.remove_title", "Remove");
+		add("ic.gui.reactor_sim.remove_desc", "Delete the selected preset file");
+		add("ic.gui.reactor_sim.remove_locked", "Built-in presets cannot be removed");
+
+		add("ic.gui.reactor_sim.item.fuel_rod.title", "Fuel rod");
+		add("ic.gui.reactor_sim.item.fuel_rod.base_pulses", "  Base pulses: %d (+1 per adjacent reflector or rod)");
+		add("ic.gui.reactor_sim.item.fuel_rod.energy", "  Energy: p x %s zap/t");
+		add("ic.gui.reactor_sim.item.fuel_rod.heat", "  Heat:   p x (p+1) x %s / cycle");
+		add("ic.gui.reactor_sim.item.fuel_rod.spread", "    spread over adjacent heat acceptors");
+		add("ic.gui.reactor_sim.item.fuel_rod.heat_example", "  p=%d -> %d heat | p=%d -> %d heat");
+		add("ic.gui.reactor_sim.item.fuel_rod.durability", "  Durability: %d cycles");
+
+		add("ic.gui.reactor_sim.item.heat_vent.title", "Heat vent");
+		add("ic.gui.reactor_sim.item.heat_vent.heat_buffer", "  Own heat buffer: %s");
+		add("ic.gui.reactor_sim.item.heat_vent.no_buffer", "  No own heat buffer");
+		add("ic.gui.reactor_sim.item.heat_vent.self_cool", "  Self-heal: %s heat / cycle");
+		add("ic.gui.reactor_sim.item.heat_vent.reactor_cool", "  Reactor cool: %s heat / cycle");
+		add("ic.gui.reactor_sim.item.heat_vent.water_hint", "    multiplied by water env factor");
+		add("ic.gui.reactor_sim.item.heat_vent.component_cool", "  Adjacent coolant cooling: %s heat / cycle each");
+
+		add("ic.gui.reactor_sim.item.exchanger.title", "Heat exchanger");
+		add("ic.gui.reactor_sim.item.exchanger.heat_buffer", "  Own heat buffer: %s");
+		add("ic.gui.reactor_sim.item.exchanger.adjacent", "  Adjacent transfer: up to %s / cycle per neighbour");
+		add("ic.gui.reactor_sim.item.exchanger.core", "  Core transfer: up to %s / cycle vs reactor");
+		add("ic.gui.reactor_sim.item.exchanger.transfer_direction", "  Moves heat from hotter side to cooler side");
+
+		add("ic.gui.reactor_sim.item.coolant.title", "Coolant cell");
+		add("ic.gui.reactor_sim.item.coolant.capacity", "  Capacity: %s heat");
+		add("ic.gui.reactor_sim.item.coolant.passive", "  Passive. Soaks heat distributed by adjacent fuel rods");
+		add("ic.gui.reactor_sim.item.coolant.vent_pair", "  Component heat vents can refill durability");
+
+		add("ic.gui.reactor_sim.item.reflector.title", "Neutron reflector");
+		add("ic.gui.reactor_sim.item.reflector.pulse_boost", "  +1 pulse on each adjacent fuel rod");
+		add("ic.gui.reactor_sim.item.reflector.energy_heat_note", "  Each added pulse raises energy AND heat");
+		add("ic.gui.reactor_sim.item.reflector.durability", "  Durability: %d pulses reflected");
+		add("ic.gui.reactor_sim.item.reflector.infinite", "  Infinite durability");
+
+		add("ic.gui.reactor_sim.item.plating.title", "Reactor plating");
+		add("ic.gui.reactor_sim.item.plating.heat_capacity", "  +%s max reactor heat (raises meltdown threshold)");
+		add("ic.gui.reactor_sim.item.plating.blast", "  Blast radius: x%s (%s)");
+		add("ic.gui.reactor_sim.item.plating.multiply_hint", "  Applies once per plating, multiplicative");
 	}
 }
