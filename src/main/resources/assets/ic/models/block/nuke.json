@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/tnt",
+  "textures": {
+    "side": "ic:block/nuke_side"
+  }
+}

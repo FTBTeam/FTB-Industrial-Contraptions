@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [26.1.2.10]
+
+### Changed
+
+* **The mod is now called Industrial Contraptions.** The `FTB` prefix has been dropped from the name, the mod ID, and every item and block ID. `ftbic:copper_ingot` is now `ic:copper_ingot`, the config file is `config/ic-common.toml`, the command is `/ic`, and the jar is `industrial-contraptions-<version>.jar`.
+
+### Migration
+
+* **Existing worlds load unchanged.** Every block, item, block entity, entity, menu, sound, recipe type, recipe serializer, data component, and creative tab registers a `ftbic:` alias pointing at its new `ic:` ID, so machines, inventories, and saved contraptions all resolve on load. No items are lost and nothing needs to be broken and replaced before updating.
+* **Your config is carried over.** `config/ftbic-common.toml` is copied to `config/ic-common.toml` the first time the new version starts, if the new file does not already exist. The old file is left in place and can be deleted once you have confirmed the settings came across.
+* **Saved reactor layouts are moved** from `local/ftbic/reactor_layout` to `local/ic/reactor_layout`.
+* **`/ftbic` still works** as an alias for `/ic`.
+* **Pack authors:** registry aliases do not extend to data files. Recipes, tags, and loot tables in your own datapacks that reference `ftbic:` IDs or live under `data/ftbic/` must be updated to `ic:` by hand. The same applies to KubeJS scripts and any recipe or tag overrides.
+
 ## [26.1.2.9]
 
 ### Fixed

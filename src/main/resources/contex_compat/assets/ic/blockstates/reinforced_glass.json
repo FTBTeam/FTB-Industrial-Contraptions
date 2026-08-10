@@ -1,0 +1,23 @@
+{
+  "neoforge:definition_type": "contex:definition",
+  "contex_meta": [
+    {
+      "type": "contex:full",
+      "occlusion_mode": "solid_or_self",
+      "state_predicate": { },
+      "textures": [
+        {
+          "main_texture": "ic:block/reinforced_glass",
+          "compact/hor": "ic:block/reinforced_glass_hor",
+          "compact/vert": "ic:block/reinforced_glass_vert",
+          "compact/cross": "ic:block/reinforced_glass_cross",
+          "compact/full": "ic:block/reinforced_glass_full"
+        }
+      ]
+    }
+  ],
+  "strategy": "contex:compact",
+  "variants": {
+    "": { "model": "ic:block/reinforced_glass" }
+  }
+}

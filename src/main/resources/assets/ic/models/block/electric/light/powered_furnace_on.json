@@ -1,0 +1,9 @@
+{
+  "parent": "ic:block/orientable_2d",
+  "textures": {
+    "side": "ic:block/electric/light/basic_side",
+    "front": "ic:block/electric/light/powered_furnace_front_on",
+    "top": "ic:block/electric/light/basic_top",
+    "bottom": "ic:block/electric/light/basic_bottom"
+  }
+}

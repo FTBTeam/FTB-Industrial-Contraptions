@@ -1,0 +1,9 @@
+{
+  "parent": "ic:block/orientable_2d",
+  "textures": {
+    "side": "ic:block/electric/dark/basic_side",
+    "front": "ic:block/electric/dark/centrifuge_front_off",
+    "top": "ic:block/electric/dark/centrifuge_top",
+    "bottom": "ic:block/electric/dark/basic_bottom"
+  }
+}

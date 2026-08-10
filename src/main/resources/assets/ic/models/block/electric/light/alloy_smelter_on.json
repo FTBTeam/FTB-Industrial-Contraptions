@@ -1,0 +1,9 @@
+{
+  "parent": "ic:block/orientable_2d",
+  "textures": {
+    "side": "ic:block/electric/light/advanced_side",
+    "front": "ic:block/electric/light/alloy_smelter_front_on",
+    "top": "ic:block/electric/light/advanced_top",
+    "bottom": "ic:block/electric/light/advanced_bottom"
+  }
+}

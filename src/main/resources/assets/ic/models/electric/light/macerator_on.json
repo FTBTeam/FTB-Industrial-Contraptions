@@ -1,0 +1,9 @@
+{
+  "parent": "ic:block/orientable_2d",
+  "textures": {
+    "side": "ic:block/electric/light/basic_side",
+    "front": "ic:block/electric/light/macerator_front",
+    "top": "ic:block/electric/light/macerator_top_on",
+    "bottom": "ic:block/electric/light/basic_bottom"
+  }
+}

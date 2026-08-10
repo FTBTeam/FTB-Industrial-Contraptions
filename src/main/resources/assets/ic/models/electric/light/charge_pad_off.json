@@ -1,0 +1,9 @@
+{
+  "parent": "ic:block/orientable_2d",
+  "textures": {
+    "side": "ic:block/electric/light/basic_side",
+    "front": "ic:block/electric/light/basic_side",
+    "top": "ic:block/electric/light/charge_pad_top_off",
+    "bottom": "ic:block/electric/light/basic_bottom"
+  }
+}

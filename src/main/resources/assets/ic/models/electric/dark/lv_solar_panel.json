@@ -1,0 +1,9 @@
+{
+  "parent": "ic:block/orientable_2d",
+  "textures": {
+    "side": "ic:block/electric/dark/basic_side",
+    "front": "ic:block/electric/dark/basic_side",
+    "top": "ic:block/electric/dark/lv_solar_panel_top",
+    "bottom": "ic:block/electric/dark/basic_bottom"
+  }
+}
