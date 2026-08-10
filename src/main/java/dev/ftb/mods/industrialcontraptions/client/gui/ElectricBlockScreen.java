@@ -66,11 +66,11 @@ public class ElectricBlockScreen<T extends ElectricBlockMenu> extends AbstractCo
 		Slot slot = this.hoveredSlot;
 		if (slot == null || slot.hasItem()) return;
 		if (slot instanceof UpgradeSlot) {
-			graphics.setTooltipForNextFrame(Component.literal("Upgrade Slot"), mouseX, mouseY);
+			graphics.setTooltipForNextFrame(Component.translatable("ic.gui.slot.upgrade"), mouseX, mouseY);
 		} else if (slot instanceof BatterySlot) {
-			graphics.setTooltipForNextFrame(Component.literal("Battery Slot"), mouseX, mouseY);
+			graphics.setTooltipForNextFrame(Component.translatable("ic.gui.slot.battery"), mouseX, mouseY);
 		} else if (slot instanceof PickaxeSlot) {
-			graphics.setTooltipForNextFrame(Component.literal("Pickaxe Slot (applies enchantments to mined blocks)"), mouseX, mouseY);
+			graphics.setTooltipForNextFrame(Component.translatable("ic.gui.slot.pickaxe"), mouseX, mouseY);
 		}
 	}
 

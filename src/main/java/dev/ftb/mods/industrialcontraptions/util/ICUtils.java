@@ -15,6 +15,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
+import java.util.Locale;
+
 public final class ICUtils {
 	public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().setStrictness(Strictness.LENIENT).create();
 	public static final TagKey<Block> REINFORCED = TagKey.create(Registries.BLOCK, IC.id("reinforced"));
@@ -29,6 +31,14 @@ public final class ICUtils {
 
 	public static String formatEnergyValue(double energy) {
 		return String.format("%,d", (long) energy);
+	}
+
+	public static String fmtInt(long value) {
+		return String.format(Locale.ROOT, "%,d", value);
+	}
+
+	public static String fmtDouble(double value, int decimals) {
+		return String.format(Locale.ROOT, "%." + decimals + "f", value);
 	}
 
 	public static MutableComponent formatEnergy(double energy) {

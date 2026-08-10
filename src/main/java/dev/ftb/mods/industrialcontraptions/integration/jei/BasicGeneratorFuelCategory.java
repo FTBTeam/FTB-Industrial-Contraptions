@@ -5,6 +5,7 @@ import dev.ftb.mods.industrialcontraptions.block.ICElectricBlocks;
 import dev.ftb.mods.industrialcontraptions.item.ICItems;
 import dev.ftb.mods.industrialcontraptions.recipe.BasicGeneratorFuelRecipe;
 import dev.ftb.mods.industrialcontraptions.recipe.ICRecipes;
+import dev.ftb.mods.industrialcontraptions.util.ICUtils;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -50,10 +51,11 @@ public class BasicGeneratorFuelCategory extends AbstractRecipeCategory<RecipeHol
 
 		builder.addAnimatedRecipeFlame(300).setPosition(26, 5);
 
-		builder.addText(Component.literal(String.format("%.1fs @ %.0f z/t", seconds, zapsPerTick)), 100, 9)
+		builder.addText(Component.translatable("ic.jei.burn_time",
+						ICUtils.fmtDouble(seconds, 1), ICUtils.fmtDouble(zapsPerTick, 0)), 100, 9)
 				.setPosition(44, 3)
 				.setColor(0xFF404040);
-		builder.addText(Component.literal(String.format("= %,d zaps", totalZaps)), 100, 9)
+		builder.addText(Component.translatable("ic.jei.total_zaps", ICUtils.fmtInt(totalZaps)), 100, 9)
 				.setPosition(44, 14)
 				.setColor(0xFF0A7F0A);
 	}
