@@ -14,6 +14,7 @@ import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -195,7 +196,7 @@ public interface FTBICItems {
 				.component(DataComponents.GLIDER, Unit.INSTANCE)
 				.component(DataComponents.EQUIPPABLE, Equippable
 						.builder(EquipmentSlot.CHEST)
-						.setEquipSound(SoundEvents.ARMOR_EQUIP_ELYTRA)
+						.setEquipSound(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EMPTY))
 						.setAsset(ResourceKey.create(EquipmentAssets.ROOT_ID, FTBIC.id("mechanical_elytra")))
 						.setDamageOnHurt(false)
 						.build())
