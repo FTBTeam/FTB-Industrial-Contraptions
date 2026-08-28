@@ -9,7 +9,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -49,8 +48,10 @@ public final class FTBICConfig {
 		public final ModConfigSpec.DoubleValue MECHANICAL_ELYTRA_RECHARGE;
 		public final ModConfigSpec.DoubleValue ARMOR_DAMAGE_ENERGY;
 		public final ModConfigSpec.DoubleValue ARMOR_FLIGHT_ENERGY;
-		public final ModConfigSpec.DoubleValue ARMOR_FLIGHT_BOOST;
-		public final ModConfigSpec.DoubleValue ARMOR_FLIGHT_STOP;
+		public final ModConfigSpec.DoubleValue ARMOR_FLIGHT_BOOST_RATE;
+		public final ModConfigSpec.DoubleValue ARMOR_FLIGHT_BOOST_ENERGY;
+		public final ModConfigSpec.DoubleValue ARMOR_FLIGHT_STOP_RATE;
+		public final ModConfigSpec.DoubleValue ARMOR_FLIGHT_STOP_ENERGY;
 
 		Equipment(ModConfigSpec.Builder b) {
 			b.push("equipment");
@@ -60,8 +61,10 @@ public final class FTBICConfig {
 			MECHANICAL_ELYTRA_RECHARGE = b.comment("How much power is recharged passively").defineInRange("mechanical_elytra_recharge", 1D, 0D, 100_000D);
 			ARMOR_DAMAGE_ENERGY = b.comment("Armor damage energy").defineInRange("armor_damage_energy", 5_000D, 0D, Double.POSITIVE_INFINITY);
 			ARMOR_FLIGHT_ENERGY = b.comment("Armor flight energy").defineInRange("armor_flight_energy", 5D, 0D, Double.POSITIVE_INFINITY);
-			ARMOR_FLIGHT_BOOST = b.comment("Boost gained from wearing the armor during flight").defineInRange("armor_flight_boost", 50D, 0D, 100_000D);
-			ARMOR_FLIGHT_STOP = b.comment("Force used to stop flight").defineInRange("armor_flight_stop", 15D, 0D, 100_000D);
+			ARMOR_FLIGHT_BOOST_RATE = b.comment("Speed increased by % of standard firework rocket boost while wearing armor during flight").defineInRange("armor_flight_boost_rate", 100D, 0D, 200D);
+			ARMOR_FLIGHT_BOOST_ENERGY = b.comment("Energy used to boost flight").defineInRange("armor_flight_boost_energy", 50D, 0D, 100_000D);
+			ARMOR_FLIGHT_STOP_RATE = b.comment("Speed % reduced when braking").defineInRange("armor_flight_stop_rate", 9D, 0D, 100D);
+			ARMOR_FLIGHT_STOP_ENERGY = b.comment("Energy used to stop flight").defineInRange("armor_flight_stop_energy", 15D, 0D, 100_000D);
 			b.pop();
 		}
 	}

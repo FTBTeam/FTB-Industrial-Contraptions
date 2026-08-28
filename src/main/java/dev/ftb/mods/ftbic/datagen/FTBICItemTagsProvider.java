@@ -23,6 +23,8 @@ public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
 	private static final TagKey<Item> REACTOR_COMPONENT = TagKey.create(Registries.ITEM, FTBIC.id("reactor_component"));
 	private static final TagKey<Item> REINFORCED = TagKey.create(Registries.ITEM, FTBIC.id("reinforced"));
 	private static final TagKey<Item> COMMON_SILICON = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "silicon"));
+	private static final TagKey<Item> REPAIRS_CARBON_ARMOR = TagKey.create(Registries.ITEM, FTBIC.id("repairs_carbon_armor"));
+	private static final TagKey<Item> REPAIRS_QUANTUM_ARMOR = TagKey.create(Registries.ITEM, FTBIC.id("repairs_quantum_armor"));
 
 	public FTBICItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
 		super(output, Registries.ITEM, lookup, item -> item.builtInRegistryHolder().key(), FTBIC.MOD_ID);
@@ -100,6 +102,12 @@ public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
 				.addOptionalTag(ItemTags.LEAVES)
 				.addOptionalTag(ItemTags.SAPLINGS)
 				.addOptionalTag(ItemTags.DIRT);
+			
+		tag(REPAIRS_CARBON_ARMOR)
+			.add(FTBICItems.CARBON_PLATE.item.get());
+		
+		tag(REPAIRS_QUANTUM_ARMOR)
+			.add(FTBICItems.IRIDIUM_ALLOY.item.get());
 	}
 
 	private static TagKey<Item> commonItemTag(String fullPath) {
