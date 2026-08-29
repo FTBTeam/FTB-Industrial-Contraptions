@@ -11,6 +11,7 @@ import dev.ftb.mods.ftbic.item.reactor.HeatExchangerItem;
 import dev.ftb.mods.ftbic.item.reactor.HeatVentItem;
 import dev.ftb.mods.ftbic.item.reactor.NeutronReflectorItem;
 import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
+import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import dev.ftb.mods.ftbic.util.EnergyArmorMaterial;
 import dev.ftb.mods.ftbic.util.EnergyTier;
 import net.minecraft.core.component.DataComponents;
@@ -30,6 +31,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface FTBICItems {
@@ -60,9 +62,18 @@ public interface FTBICItems {
 		return REGISTRY.register(id, name -> new Item(props(name)));
 	}
 
+	static DeferredItem<Item> scrapBoxItem(String id) {
+		return REGISTRY.register(id, name -> new Item(props(name)
+			.component(ModDataComponents.LOOT_BOX, FTBIC.id("gameplay/scrap_box"))));
+	}
+
 	static MaterialItem material(String id) {
+		return material(id, FTBICItems::basicItem);
+	}
+
+	static MaterialItem material(String id, Function<String, DeferredItem<Item>> factory) {
 		MaterialItem m = new MaterialItem(id);
-		m.item = basicItem(id);
+		m.item = factory.apply(id);
 		MATERIALS.add(m);
 		return m;
 	}
@@ -111,7 +122,7 @@ public interface FTBICItems {
 	MaterialItem CARBON_FIBER_MESH = material("carbon_fiber_mesh");
 	MaterialItem CARBON_PLATE = material("carbon_plate");
 	MaterialItem SCRAP = material("scrap");
-	MaterialItem SCRAP_BOX = material("scrap_box");
+	MaterialItem SCRAP_BOX = material("scrap_box", FTBICItems::scrapBoxItem);
 	MaterialItem ELECTRONIC_CIRCUIT = material("electronic_circuit");
 	MaterialItem ADVANCED_CIRCUIT = material("advanced_circuit");
 	MaterialItem IRIDIUM_CIRCUIT = material("iridium_circuit");

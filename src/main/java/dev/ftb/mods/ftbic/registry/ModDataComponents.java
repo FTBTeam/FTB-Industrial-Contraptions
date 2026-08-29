@@ -6,6 +6,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -59,6 +60,11 @@ public final class ModDataComponents {
 			DATA_COMPONENTS.registerComponentType("battery_active", b -> b
 					.persistent(Unit.CODEC)
 					.networkSynchronized(StreamCodec.unit(Unit.INSTANCE)));
+
+	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Identifier>> LOOT_BOX =
+			DATA_COMPONENTS.registerComponentType("loot_box", b -> b
+					.persistent(Identifier.CODEC)
+					.networkSynchronized(Identifier.STREAM_CODEC));
 
 	private ModDataComponents() {}
 }
