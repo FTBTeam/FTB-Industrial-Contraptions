@@ -24,6 +24,11 @@ public class SuperconductingCableRenderer implements BlockEntityRenderer<Superco
 	}
 
 	@Override
+	public boolean shouldRender(SuperconductingCableBlockEntity entity, Vec3 cameraPosition) {
+		return entity.isGlowing() && BlockEntityRenderer.super.shouldRender(entity, cameraPosition);
+	}
+
+	@Override
 	public SuperconductingCableRenderState createRenderState() {
 		return new SuperconductingCableRenderState();
 	}
@@ -34,7 +39,7 @@ public class SuperconductingCableRenderer implements BlockEntityRenderer<Superco
 		BlockEntityRenderer.super.extractRenderState(entity, state, partialTick, cameraPos, crumbling);
 		state.connections = 0;
 		state.strength = entity.pulseStrength(partialTick);
-		if (!entity.isTransferring() || entity.getLevel() == null) return;
+		if (state.strength <= 0F || entity.getLevel() == null) return;
 		for (Direction direction : Direction.values()) {
 			if (entity.getBlockState().getValue(CableBlock.CONNECTION[direction.ordinal()])) {
 				state.connections |= 1 << direction.ordinal();

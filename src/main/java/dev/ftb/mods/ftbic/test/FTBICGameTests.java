@@ -71,6 +71,7 @@ public class FTBICGameTests {
 		reg(event, "review_bank_port_charge_slots", ReviewFixGameTests::bankPortChargeSlots, env, 100);
 		reg(event, "review_underpowered_machine_finishes", ReviewFixGameTests::underpoweredMachineFinishes, env, 60);
 		reg(event, "review_update_tag_skips_menu_data", ReviewFixGameTests::updateTagSkipsMenuData, env, 60);
+		reg(event, "review_superconducting_pulse_follows_transfers", ReviewFixGameTests::superconductingPulseFollowsTransfers, env, 100);
 		reg(event, "energy_retention_battery_box_drop", EnergyRetentionGameTests::batteryBoxDropKeepsEnergy, env, 60);
 		reg(event, "energy_retention_battery_box_place", EnergyRetentionGameTests::batteryBoxPlacementRestoresEnergy, env, 60);
 		reg(event, "energy_retention_bank_cell", EnergyRetentionGameTests::bankCellRoundTrip, env, 60);

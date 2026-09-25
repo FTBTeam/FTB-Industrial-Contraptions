@@ -3,7 +3,9 @@ package dev.ftb.mods.ftbic.test;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
+import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.block.entity.SuperconductingCableBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.GeneratorBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.BankCellBlockEntity;
@@ -245,6 +247,21 @@ final class ReviewFixGameTests {
 		helper.assertValueEqual(2, machine.upgradeInventory.countUpgrades(FTBICItems.OVERCLOCKER_UPGRADE.get()), "Client updates keep installed upgrades");
 		helper.assertValueEqual("Tester", machine.placerName, "Client updates keep the placer");
 		helper.succeed();
+	}
+
+	static void superconductingPulseFollowsTransfers(GameTestHelper helper) {
+		helper.setBlock(POS, FTBICBlocks.SUPERCONDUCTING_CABLE.get());
+		SuperconductingCableBlockEntity cable = helper.getBlockEntity(POS, SuperconductingCableBlockEntity.class);
+		cable.recordTransfer();
+		helper.assertTrue(cable.getUpdateTag(helper.getLevel().registryAccess()).getBooleanOr("Active", false), "Chunk data tells new viewers the cable is active");
+		for (int delay = 5; delay <= 40; delay += 5) {
+			helper.runAfterDelay(delay, cable::recordTransfer);
+		}
+		helper.runAfterDelay(41, () -> helper.assertTrue(cable.isTransferring(), "A busy cable stays active past a single pulse"));
+		helper.runAfterDelay(70, () -> {
+			helper.assertFalse(cable.isTransferring(), "The cable turns off once transfers stop");
+			helper.succeed();
+		});
 	}
 
 	private static int playerSlot(AbstractContainerMenu menu, Player player, int inventorySlot) {
