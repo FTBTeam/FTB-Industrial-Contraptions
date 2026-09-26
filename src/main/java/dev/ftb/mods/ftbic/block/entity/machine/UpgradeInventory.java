@@ -96,6 +96,30 @@ public class UpgradeInventory {
 		}
 	}
 
+	/** Sets one upgrade type's total without consuming items; rejects invalid changes atomically. */
+	public boolean setUpgradeCount(Item item, int count) {
+		if (!(item instanceof UpgradeItem) || count < 0 || count > MAX_PER_TYPE_UPGRADES) return false;
+		UpgradeInventory planned = new UpgradeInventory(entity, getSlots(), limit);
+		for (int slot = 0; slot < getSlots(); slot++) {
+			ItemStack current = stacks.get(slot);
+			planned.stacks.set(slot, current.is(item) ? ItemStack.EMPTY : current.copy());
+		}
+		ItemStack upgrade = new ItemStack(item);
+		int remaining = count;
+		for (int slot = 0; slot < getSlots() && remaining > 0; slot++) {
+			if (!planned.stacks.get(slot).isEmpty()) continue;
+			int moved = Math.min(remaining, planned.getSlotLimit(slot, upgrade));
+			if (moved > 0) {
+				planned.stacks.set(slot, upgrade.copyWithCount(moved));
+				remaining -= moved;
+			}
+		}
+		if (remaining > 0) return false;
+		for (int slot = 0; slot < getSlots(); slot++) stacks.set(slot, planned.stacks.get(slot));
+		onContentsChanged(0);
+		return true;
+	}
+
 	public int countUpgrades(Item item) {
 		int count = 0;
 		for (ItemStack stack : stacks) {

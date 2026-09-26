@@ -1,19 +1,26 @@
 package dev.ftb.mods.ftbic.commands;
 
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.MaterialItem;
+import dev.ftb.mods.ftbic.item.UpgradeItem;
 import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
+import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -47,8 +54,38 @@ public final class FTBICCommands {
 	public static void register(RegisterCommandsEvent event) {
 		LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("ftbic")
 				.requires(s -> Commands.LEVEL_GAMEMASTERS.check(s.permissions()))
-				.then(Commands.literal("showcase").executes(FTBICCommands::runShowcase));
+				.then(Commands.literal("showcase").executes(FTBICCommands::runShowcase))
+				.then(Commands.literal("setupgrades")
+						.then(Commands.argument("pos", BlockPosArgument.blockPos())
+								.then(Commands.argument("upgrade", ItemArgument.item(event.getBuildContext()))
+										.suggests((ctx, builder) -> SharedSuggestionProvider.suggestResource(
+												BuiltInRegistries.ITEM.stream().filter(item -> item instanceof UpgradeItem)
+														.map(BuiltInRegistries.ITEM::getKey), builder))
+										.then(Commands.argument("count", IntegerArgumentType.integer(0))
+												.executes(FTBICCommands::runSetUpgrades)))));
 		event.getDispatcher().register(root);
+	}
+
+	private static int runSetUpgrades(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+		CommandSourceStack src = ctx.getSource();
+		BlockPos pos = BlockPosArgument.getLoadedBlockPos(ctx, "pos");
+		if (!(src.getLevel().getBlockEntity(pos) instanceof BasicMachineBlockEntity machine)) {
+			src.sendFailure(Component.literal("No upgradeable machine at " + pos.toShortString() + "."));
+			return 0;
+		}
+		Item upgrade = ItemArgument.getItem(ctx, "upgrade").createItemStack(1).getItem();
+		if (!(upgrade instanceof UpgradeItem)) {
+			src.sendFailure(Component.literal("That item is not a machine upgrade."));
+			return 0;
+		}
+		int count = IntegerArgumentType.getInteger(ctx, "count");
+		if (!machine.upgradeInventory.setUpgradeCount(upgrade, count)) {
+			src.sendFailure(Component.literal("Cannot set that upgrade count: incompatible upgrade, upgrade limit exceeded, or not enough upgrade slots."));
+			return 0;
+		}
+		src.sendSuccess(() -> Component.literal("Set " + BuiltInRegistries.ITEM.getKey(upgrade) + " to " + count
+				+ " at " + pos.toShortString() + "."), true);
+		return 1;
 	}
 
 	private static int runShowcase(CommandContext<CommandSourceStack> ctx) {

@@ -1,5 +1,6 @@
 package dev.ftb.mods.ftbic.test;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity;
 import dev.ftb.mods.ftbic.item.FTBICItems;
@@ -66,6 +67,35 @@ final class UpgradeInventoryGameTests {
 		BlockPos pos = machine.getBlockPos();
 		BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
 		player.getMainHandItem().onItemUseFirst(new UseOnContext(player, InteractionHand.MAIN_HAND, hit));
+	}
+
+	static void setUpgradesCommand(GameTestHelper h) {
+		h.setBlock(POS, FTBICElectricBlocks.MACERATOR.block.get());
+		var machine = h.getBlockEntity(POS, BasicMachineBlockEntity.class);
+		var inventory = machine.upgradeInventory;
+		BlockPos pos = h.absolutePos(POS);
+		String command = "ftbic setupgrades " + pos.getX() + " " + pos.getY() + " " + pos.getZ() + " ";
+		var server = h.getLevel().getServer();
+		var source = server.createCommandSourceStack().withLevel(h.getLevel());
+		var dispatcher = server.getCommands().getDispatcher();
+		try {
+			h.assertValueEqual(1, dispatcher.execute(command + "ftbic:overclocker_upgrade 4", source), "Command installs upgrades");
+			h.assertValueEqual(4, inventory.countUpgrades(FTBICItems.OVERCLOCKER_UPGRADE.get()), "Requested total installed");
+			h.assertValueEqual(1, dispatcher.execute(command + "ftbic:transformer_upgrade 2", source), "Other upgrade types can coexist");
+			h.assertValueEqual(1, dispatcher.execute(command + "ftbic:overclocker_upgrade 1", source), "Command replaces the total rather than adding");
+			h.assertValueEqual(1, inventory.countUpgrades(FTBICItems.OVERCLOCKER_UPGRADE.get()), "Total reduced");
+			h.assertValueEqual(2, inventory.countUpgrades(FTBICItems.TRANSFORMER_UPGRADE.get()), "Other types preserved");
+			h.assertValueEqual(0, dispatcher.execute(command + "ftbic:overclocker_upgrade 5", source), "Over-limit count rejected");
+			h.assertValueEqual(1, inventory.countUpgrades(FTBICItems.OVERCLOCKER_UPGRADE.get()), "Rejected count leaves existing upgrades intact");
+			h.assertValueEqual(0, dispatcher.execute(command + "ftbic:parallel_processing_upgrade 1", source), "Incompatible upgrade rejected");
+			h.assertValueEqual(0, dispatcher.execute(command + "minecraft:stone 1", source), "Non-upgrade rejected");
+			h.assertValueEqual(1, dispatcher.execute(command + "ftbic:overclocker_upgrade 0", source), "Zero removes upgrades");
+			h.assertValueEqual(0, inventory.countUpgrades(FTBICItems.OVERCLOCKER_UPGRADE.get()), "Selected type removed");
+			h.assertValueEqual(2, inventory.countUpgrades(FTBICItems.TRANSFORMER_UPGRADE.get()), "Removal preserves other types");
+		} catch (CommandSyntaxException e) {
+			throw new IllegalStateException("setupgrades command failed", e);
+		}
+		h.succeed();
 	}
 
 	private UpgradeInventoryGameTests() {}
