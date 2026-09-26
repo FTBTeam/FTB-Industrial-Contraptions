@@ -16,32 +16,34 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
 public record EnergyModePayload(boolean fullFE, double rate) implements CustomPacketPayload {
-	public static final Type<EnergyModePayload> TYPE = new Type<>(FTBIC.id("energy_mode"));
+    public static final Type<EnergyModePayload> TYPE = new Type<>(FTBIC.id("energy_mode"));
 
-	public static final StreamCodec<FriendlyByteBuf, EnergyModePayload> STREAM_CODEC = StreamCodec.composite(
-			ByteBufCodecs.BOOL, EnergyModePayload::fullFE,
-			ByteBufCodecs.DOUBLE, EnergyModePayload::rate,
-			EnergyModePayload::new);
+    public static final StreamCodec<FriendlyByteBuf, EnergyModePayload> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.BOOL,
+            EnergyModePayload::fullFE,
+            ByteBufCodecs.DOUBLE,
+            EnergyModePayload::rate,
+            EnergyModePayload::new);
 
-	@Override
-	public Type<? extends CustomPacketPayload> type() {
-		return TYPE;
-	}
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
 
-	public static void handleOnClient(EnergyModePayload payload, IPayloadContext context) {
-		double rate = Double.isFinite(payload.rate) && payload.rate > 0D ? payload.rate : 1D;
-		context.enqueueWork(() -> EnergyDisplay.sync(payload.fullFE, rate));
-	}
+    public static void handleOnClient(EnergyModePayload payload, IPayloadContext context) {
+        double rate = Double.isFinite(payload.rate) && payload.rate > 0D ? payload.rate : 1D;
+        context.enqueueWork(() -> EnergyDisplay.sync(payload.fullFE, rate));
+    }
 
-	@SubscribeEvent
-	public static void onDatapackSync(OnDatapackSyncEvent event) {
-		var payload = new EnergyModePayload(FTBICConfig.ENERGY.FULL_FE_MODE.get(), ZapFEConversion.rate());
-		if (event.getPlayer() != null) {
-			FTBICNet.sendToPlayer(event.getPlayer(), payload);
-		} else {
-			for (ServerPlayer player : event.getPlayerList().getPlayers()) {
-				FTBICNet.sendToPlayer(player, payload);
-			}
-		}
-	}
+    @SubscribeEvent
+    public static void onDatapackSync(OnDatapackSyncEvent event) {
+        var payload = new EnergyModePayload(FTBICConfig.ENERGY.FULL_FE_MODE.get(), ZapFEConversion.rate());
+        if (event.getPlayer() != null) {
+            FTBICNet.sendToPlayer(event.getPlayer(), payload);
+        } else {
+            for (ServerPlayer player : event.getPlayerList().getPlayers()) {
+                FTBICNet.sendToPlayer(player, payload);
+            }
+        }
+    }
 }

@@ -7,34 +7,34 @@ import net.minecraft.resources.Identifier;
 
 public class FTBICGuide {
 
-	public static final Identifier GUIDE_ID = FTBIC.id("guide");
+    public static final Identifier GUIDE_ID = FTBIC.id("guide");
 
-	private static Guide guide;
+    private static Guide guide;
 
-	public static void init() {
-		try {
-			guide = Guide.builder(GUIDE_ID)
-				.defaultNamespace(FTBIC.MOD_ID)
-				.folder("ftbic")
-				.extension(TagCompiler.EXTENSION_POINT, new EnergyTagCompiler())
-				.extension(TagCompiler.EXTENSION_POINT, new EnergyModeTagCompiler())
-				.build();
-			FTBIC.LOGGER.info("FTBIC GuideME guide registered");
-		} catch (Exception e) {
-			FTBIC.LOGGER.warn("Failed to initialize GuideME integration: {}", e.getMessage());
-		}
-	}
+    public static void init() {
+        try {
+            guide = Guide.builder(GUIDE_ID)
+                    .defaultNamespace(FTBIC.MOD_ID)
+                    .folder("ftbic")
+                    .extension(TagCompiler.EXTENSION_POINT, new EnergyTagCompiler())
+                    .extension(TagCompiler.EXTENSION_POINT, new EnergyModeTagCompiler())
+                    .build();
+            FTBIC.LOGGER.info("FTBIC GuideME guide registered");
+        } catch (Exception e) {
+            FTBIC.LOGGER.warn("Failed to initialize GuideME integration: {}", e.getMessage());
+        }
+    }
 
-	public static Guide getGuide() {
-		return guide;
-	}
+    public static Guide getGuide() {
+        return guide;
+    }
 
-	public static boolean isGuideAvailable() {
-		try {
-			Class.forName("guideme.Guide");
-			return true;
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
-	}
+    public static boolean isGuideAvailable() {
+        try {
+            Class.forName("guideme.Guide");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
 }

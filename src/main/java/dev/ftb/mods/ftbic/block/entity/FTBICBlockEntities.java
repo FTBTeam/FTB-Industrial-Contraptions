@@ -1,6 +1,9 @@
 package dev.ftb.mods.ftbic.block.entity;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.block.FTBICBlocks;
+import java.util.Set;
+import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -8,32 +11,26 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.Set;
-import java.util.function.Supplier;
-import dev.ftb.mods.ftbic.block.FTBICBlocks;
-
 public final class FTBICBlockEntities {
-	public static final DeferredRegister<BlockEntityType<?>> REGISTRY =
-			DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, FTBIC.MOD_ID);
+    public static final DeferredRegister<BlockEntityType<?>> REGISTRY =
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, FTBIC.MOD_ID);
 
-	public static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> register(String id,
-			BlockEntityType.BlockEntitySupplier<T> supplier, Supplier<? extends Block> block) {
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> holder =
-				(DeferredHolder) REGISTRY.register(id, () -> new BlockEntityType<>(supplier, Set.of(block.get())));
-		return holder;
-	}
+    public static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> register(
+            String id, BlockEntityType.BlockEntitySupplier<T> supplier, Supplier<? extends Block> block) {
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> holder =
+                (DeferredHolder) REGISTRY.register(id, () -> new BlockEntityType<>(supplier, Set.of(block.get())));
+        return holder;
+    }
 
-	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> IRON_FURNACE = register(
-			"iron_furnace", IronFurnaceBlockEntity::new,
-			() -> FTBICBlocks.IRON_FURNACE.get());
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> IRON_FURNACE =
+            register("iron_furnace", IronFurnaceBlockEntity::new, () -> FTBICBlocks.IRON_FURNACE.get());
 
-	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> ACTIVE_NUKE = register(
-			"active_nuke", ActiveNukeBlockEntity::new,
-			() -> FTBICBlocks.ACTIVE_NUKE.get());
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> ACTIVE_NUKE =
+            register("active_nuke", ActiveNukeBlockEntity::new, () -> FTBICBlocks.ACTIVE_NUKE.get());
 
-	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> SUPERCONDUCTING_CABLE = register(
-			"superconducting_cable", SuperconductingCableBlockEntity::new, FTBICBlocks.SUPERCONDUCTING_CABLE);
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<?>> SUPERCONDUCTING_CABLE =
+            register("superconducting_cable", SuperconductingCableBlockEntity::new, FTBICBlocks.SUPERCONDUCTING_CABLE);
 
-	private FTBICBlockEntities() {}
+    private FTBICBlockEntities() {}
 }

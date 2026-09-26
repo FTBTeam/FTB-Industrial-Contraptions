@@ -20,38 +20,40 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
 public class LootBoxItemHandler {
-	@SubscribeEvent
-	public static void onUse(PlayerInteractEvent.RightClickItem event) {
-		ItemStack stack = event.getItemStack();
-		Identifier tableId = stack.get(ModDataComponents.LOOT_BOX.get());
-		if (tableId == null) return;
+    @SubscribeEvent
+    public static void onUse(PlayerInteractEvent.RightClickItem event) {
+        ItemStack stack = event.getItemStack();
+        Identifier tableId = stack.get(ModDataComponents.LOOT_BOX.get());
+        if (tableId == null) return;
 
-		if (!(event.getLevel() instanceof ServerLevel serverLevel)) {
-			event.setCancellationResult(InteractionResult.SUCCESS);
-			event.setCanceled(true);
-			return;
-		}
+        if (!(event.getLevel() instanceof ServerLevel serverLevel)) {
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            event.setCanceled(true);
+            return;
+        }
 
-		LootTable table = serverLevel.getServer().reloadableRegistries()
-				.getLootTable(ResourceKey.create(Registries.LOOT_TABLE, tableId));
-		if (table == LootTable.EMPTY) {
-			FTBIC.LOGGER.warn("Loot box {} references missing loot table {}", stack.getItem(), tableId);
-			return;
-		}
+        LootTable table = serverLevel
+                .getServer()
+                .reloadableRegistries()
+                .getLootTable(ResourceKey.create(Registries.LOOT_TABLE, tableId));
+        if (table == LootTable.EMPTY) {
+            FTBIC.LOGGER.warn("Loot box {} references missing loot table {}", stack.getItem(), tableId);
+            return;
+        }
 
-		Player player = event.getEntity();
-		LootParams params = new LootParams.Builder(serverLevel)
-				.withParameter(LootContextParams.THIS_ENTITY, player)
-				.withParameter(LootContextParams.ORIGIN, player.position())
-				.create(LootContextParamSets.GIFT);
-		int count = player.isShiftKeyDown() ? stack.getCount() : 1;
-		for (int i = 0; i < count; i++) {
-			for (ItemStack reward : table.getRandomItems(params)) {
-				Containers.dropItemStack(serverLevel, player.getX(), player.getY(), player.getZ(), reward);
-			}
-		}
-		stack.consume(count, player);
-		event.setCancellationResult(InteractionResult.SUCCESS_SERVER);
-		event.setCanceled(true);
-	}
+        Player player = event.getEntity();
+        LootParams params = new LootParams.Builder(serverLevel)
+                .withParameter(LootContextParams.THIS_ENTITY, player)
+                .withParameter(LootContextParams.ORIGIN, player.position())
+                .create(LootContextParamSets.GIFT);
+        int count = player.isShiftKeyDown() ? stack.getCount() : 1;
+        for (int i = 0; i < count; i++) {
+            for (ItemStack reward : table.getRandomItems(params)) {
+                Containers.dropItemStack(serverLevel, player.getX(), player.getY(), player.getZ(), reward);
+            }
+        }
+        stack.consume(count, player);
+        event.setCancellationResult(InteractionResult.SUCCESS_SERVER);
+        event.setCanceled(true);
+    }
 }

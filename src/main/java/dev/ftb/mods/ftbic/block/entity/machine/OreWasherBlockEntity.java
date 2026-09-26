@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class OreWasherBlockEntity extends FluidMachineBlockEntity {
-	public OreWasherBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.ORE_WASHER, FTBICRecipes.WASHING, pos, state);
-	}
+    public OreWasherBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.ORE_WASHER, FTBICRecipes.WASHING, pos, state);
+    }
 }

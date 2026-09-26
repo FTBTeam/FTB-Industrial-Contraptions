@@ -20,43 +20,53 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 
 public class BasicGeneratorFuelCategory extends AbstractRecipeCategory<RecipeHolder<BasicGeneratorFuelRecipe>> {
-	public static final int WIDTH = 148;
-	public static final int HEIGHT = 26;
+    public static final int WIDTH = 148;
+    public static final int HEIGHT = 26;
 
-	public BasicGeneratorFuelCategory(IGuiHelper helper) {
-		super(jeiType(),
-				Component.translatable("block.ftbic.basic_generator"),
-				helper.createDrawableItemStack(new ItemStack(FTBICElectricBlocks.BASIC_GENERATOR.item.get())),
-				WIDTH, HEIGHT);
-	}
+    public BasicGeneratorFuelCategory(IGuiHelper helper) {
+        super(
+                jeiType(),
+                Component.translatable("block.ftbic.basic_generator"),
+                helper.createDrawableItemStack(new ItemStack(FTBICElectricBlocks.BASIC_GENERATOR.item.get())),
+                WIDTH,
+                HEIGHT);
+    }
 
-	@SuppressWarnings("unchecked")
-	private static IRecipeHolderType<BasicGeneratorFuelRecipe> jeiType() {
-		return IRecipeType.create((RecipeType<BasicGeneratorFuelRecipe>) (RecipeType<?>) FTBICRecipes.BASIC_GENERATOR_FUEL.get());
-	}
+    @SuppressWarnings("unchecked")
+    private static IRecipeHolderType<BasicGeneratorFuelRecipe> jeiType() {
+        return IRecipeType.create(
+                (RecipeType<BasicGeneratorFuelRecipe>) (RecipeType<?>) FTBICRecipes.BASIC_GENERATOR_FUEL.get());
+    }
 
-	@Override
-	public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<BasicGeneratorFuelRecipe> holder, IFocusGroup focuses) {
-		builder.addInputSlot(4, 4)
-				.setStandardSlotBackground()
-				.add(holder.value().ingredient());
-	}
+    @Override
+    public void setRecipe(
+            IRecipeLayoutBuilder builder, RecipeHolder<BasicGeneratorFuelRecipe> holder, IFocusGroup focuses) {
+        builder.addInputSlot(4, 4)
+                .setStandardSlotBackground()
+                .add(holder.value().ingredient());
+    }
 
-	@Override
-	public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<BasicGeneratorFuelRecipe> holder, IFocusGroup focuses) {
-		int ticks = holder.value().ticks();
-		double seconds = ticks / 20.0D;
-		double zapsPerTick = FTBICItems.safeGet(
-				FTBICConfig.MACHINES.BASIC_GENERATOR_OUTPUT, 10D);
-		long totalZaps = Math.round(zapsPerTick * ticks);
+    @Override
+    public void createRecipeExtras(
+            IRecipeExtrasBuilder builder, RecipeHolder<BasicGeneratorFuelRecipe> holder, IFocusGroup focuses) {
+        int ticks = holder.value().ticks();
+        double seconds = ticks / 20.0D;
+        double zapsPerTick = FTBICItems.safeGet(FTBICConfig.MACHINES.BASIC_GENERATOR_OUTPUT, 10D);
+        long totalZaps = Math.round(zapsPerTick * ticks);
 
-		builder.addAnimatedRecipeFlame(300).setPosition(26, 5);
+        builder.addAnimatedRecipeFlame(300).setPosition(26, 5);
 
-		builder.addText(Component.translatable("ftbic.jei.burn_time", FTBICUtils.fmtDouble(seconds, 1), EnergyDisplay.perTick(zapsPerTick)), 100, 9)
-				.setPosition(44, 3)
-				.setColor(0xFF404040);
-		builder.addText(Component.translatable("ftbic.jei.total_zaps", EnergyDisplay.amount(totalZaps)), 100, 9)
-				.setPosition(44, 14)
-				.setColor(0xFF0A7F0A);
-	}
+        builder.addText(
+                        Component.translatable(
+                                "ftbic.jei.burn_time",
+                                FTBICUtils.fmtDouble(seconds, 1),
+                                EnergyDisplay.perTick(zapsPerTick)),
+                        100,
+                        9)
+                .setPosition(44, 3)
+                .setColor(0xFF404040);
+        builder.addText(Component.translatable("ftbic.jei.total_zaps", EnergyDisplay.amount(totalZaps)), 100, 9)
+                .setPosition(44, 14)
+                .setColor(0xFF0A7F0A);
+    }
 }

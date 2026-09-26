@@ -14,22 +14,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class ActiveNukeBlock extends Block implements EntityBlock {
-	public ActiveNukeBlock(BlockBehaviour.Properties props) {
-		super(props);
-	}
+    public ActiveNukeBlock(BlockBehaviour.Properties props) {
+        super(props);
+    }
 
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new ActiveNukeBlockEntity(pos, state);
-	}
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ActiveNukeBlockEntity(pos, state);
+    }
 
-	@Nullable
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-		if (level.isClientSide()) return null;
-		if (type != FTBICBlockEntities.ACTIVE_NUKE.get()) return null;
-		return (lvl, pos, st, be) -> {
-			if (be instanceof ActiveNukeBlockEntity anbe) anbe.serverTick();
-		};
-	}
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide()) return null;
+        if (type != FTBICBlockEntities.ACTIVE_NUKE.get()) return null;
+        return (lvl, pos, st, be) -> {
+            if (be instanceof ActiveNukeBlockEntity anbe) anbe.serverTick();
+        };
+    }
 }

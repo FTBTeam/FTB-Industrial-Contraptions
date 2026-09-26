@@ -9,10 +9,10 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 
 @EventBusSubscriber(modid = FTBIC.MOD_ID, value = Dist.CLIENT)
 public final class EnergyDisplayClient {
-	@SubscribeEvent
-	public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
-		EnergyDisplay.clearSync();
-	}
+    @SubscribeEvent
+    public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+        EnergyDisplay.clearSync();
+    }
 
-	private EnergyDisplayClient() {}
+    private EnergyDisplayClient() {}
 }

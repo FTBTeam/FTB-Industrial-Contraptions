@@ -13,70 +13,73 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ChargePadBlockEntity extends ElectricBlockEntityRef {
-	public ChargePadBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.CHARGE_PAD, pos, state);
-	}
+    public ChargePadBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.CHARGE_PAD, pos, state);
+    }
 
-	@Override
-	public boolean isItemValid(int slot, ItemStack stack) {
-		if (!super.isItemValid(slot, stack)) return false;
-		if (stack.getItem() instanceof EnergyItemHandler handler) {
-			return handler.canInsertEnergy() && !handler.isCreativeEnergyItem();
-		}
-		return BatterySlotHelper.isForeignEnergyItem(stack);
-	}
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+        if (!super.isItemValid(slot, stack)) return false;
+        if (stack.getItem() instanceof EnergyItemHandler handler) {
+            return handler.canInsertEnergy() && !handler.isCreativeEnergyItem();
+        }
+        return BatterySlotHelper.isForeignEnergyItem(stack);
+    }
 
-	@Override
-	public void tick() {
-		super.tick();
-		if (level == null || level.isClientSide() || energy <= 0D) return;
-		for (ItemStack stack : inputItems) {
-			double accepted;
-			if (stack.getItem() instanceof EnergyItemHandler handler) {
-				if (handler.isCreativeEnergyItem()) continue;
-				accepted = handler.insertEnergy(stack, energy, false);
-			} else {
-				accepted = BatterySlotHelper.chargeForeignItem(stack, energy);
-			}
-			if (accepted > 0D) {
-				energy -= accepted;
-				active = true;
-				setChanged();
-				if (energy <= 0D) return;
-			}
-		}
-	}
+    @Override
+    public void tick() {
+        super.tick();
+        if (level == null || level.isClientSide() || energy <= 0D) return;
+        for (ItemStack stack : inputItems) {
+            double accepted;
+            if (stack.getItem() instanceof EnergyItemHandler handler) {
+                if (handler.isCreativeEnergyItem()) continue;
+                accepted = handler.insertEnergy(stack, energy, false);
+            } else {
+                accepted = BatterySlotHelper.chargeForeignItem(stack, energy);
+            }
+            if (accepted > 0D) {
+                energy -= accepted;
+                active = true;
+                setChanged();
+                if (energy <= 0D) return;
+            }
+        }
+    }
 
-	@Override
-	public void stepOn(ServerPlayer player) {
-		if (energy <= 0D) return;
-		Inventory inv = player.getInventory();
-		for (int i = 0; i < inv.getContainerSize(); i++) {
-			ItemStack stack = inv.getItem(i);
-			double accepted;
-			if (stack.getItem() instanceof EnergyItemHandler eh) {
-				if (eh.isCreativeEnergyItem()) continue;
-				accepted = eh.insertEnergy(stack, energy, false);
-			} else {
-				accepted = BatterySlotHelper.chargeForeignItem(stack, energy);
-			}
-			if (accepted > 0D) {
-				energy -= accepted;
-				active = true;
-				setChanged();
-				if (energy <= 0D) return;
-			}
-		}
-	}
+    @Override
+    public void stepOn(ServerPlayer player) {
+        if (energy <= 0D) return;
+        Inventory inv = player.getInventory();
+        for (int i = 0; i < inv.getContainerSize(); i++) {
+            ItemStack stack = inv.getItem(i);
+            double accepted;
+            if (stack.getItem() instanceof EnergyItemHandler eh) {
+                if (eh.isCreativeEnergyItem()) continue;
+                accepted = eh.insertEnergy(stack, energy, false);
+            } else {
+                accepted = BatterySlotHelper.chargeForeignItem(stack, energy);
+            }
+            if (accepted > 0D) {
+                energy -= accepted;
+                active = true;
+                setChanged();
+                if (energy <= 0D) return;
+            }
+        }
+    }
 
-	@Override
-	public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, RandomSource r) {
-		for (int i = 0; i < 5; i++) {
-			level.addParticle(DustParticleOptions.REDSTONE,
-					x + r.nextFloat(),
-					y + 1F + r.nextFloat() * 2F,
-					z + r.nextFloat(),
-					0D, 0D, 0D);
-		}
-	}
+    @Override
+    public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, RandomSource r) {
+        for (int i = 0; i < 5; i++) {
+            level.addParticle(
+                    DustParticleOptions.REDSTONE,
+                    x + r.nextFloat(),
+                    y + 1F + r.nextFloat() * 2F,
+                    z + r.nextFloat(),
+                    0D,
+                    0D,
+                    0D);
+        }
+    }
 }

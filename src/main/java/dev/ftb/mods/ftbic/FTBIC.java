@@ -24,34 +24,34 @@ import org.slf4j.Logger;
 
 @Mod(FTBIC.MOD_ID)
 public class FTBIC {
-	public static final String MOD_ID = "ftbic";
-	public static final String MOD_NAME = "FTB Industrial Contraptions";
-	public static final Logger LOGGER = LogUtils.getLogger();
+    public static final String MOD_ID = "ftbic";
+    public static final String MOD_NAME = "FTB Industrial Contraptions";
+    public static final Logger LOGGER = LogUtils.getLogger();
 
-	public static Identifier id(String path) {
-		return Identifier.fromNamespaceAndPath(MOD_ID, path);
-	}
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
+    }
 
-	public FTBIC(IEventBus eventBus, ModContainer container) {
-		FTBICElectricBlocks.init();
-		MaterialEntries.register();
+    public FTBIC(IEventBus eventBus, ModContainer container) {
+        FTBICElectricBlocks.init();
+        MaterialEntries.register();
 
-		ModDataComponents.DATA_COMPONENTS.register(eventBus);
-		ModCreativeTabs.TABS.register(eventBus);
-		FTBICBlocks.REGISTRY.register(eventBus);
-		FTBICItems.REGISTRY.register(eventBus);
-		FTBICBlockEntities.REGISTRY.register(eventBus);
-		FTBICSounds.REGISTRY.register(eventBus);
-		FTBICEntities.REGISTRY.register(eventBus);
-		FTBICMenus.REGISTRY.register(eventBus);
-		FTBICRecipes.SERIALIZERS.register(eventBus);
-		FTBICRecipes.TYPES.register(eventBus);
-		FTBICRecipes.CONDITIONS.register(eventBus);
-		FTBICIngredientTypes.REGISTRY.register(eventBus);
-		FTBICGameTests.TEST_INSTANCE_TYPES.register(eventBus);
+        ModDataComponents.DATA_COMPONENTS.register(eventBus);
+        ModCreativeTabs.TABS.register(eventBus);
+        FTBICBlocks.REGISTRY.register(eventBus);
+        FTBICItems.REGISTRY.register(eventBus);
+        FTBICBlockEntities.REGISTRY.register(eventBus);
+        FTBICSounds.REGISTRY.register(eventBus);
+        FTBICEntities.REGISTRY.register(eventBus);
+        FTBICMenus.REGISTRY.register(eventBus);
+        FTBICRecipes.SERIALIZERS.register(eventBus);
+        FTBICRecipes.TYPES.register(eventBus);
+        FTBICRecipes.CONDITIONS.register(eventBus);
+        FTBICIngredientTypes.REGISTRY.register(eventBus);
+        FTBICGameTests.TEST_INSTANCE_TYPES.register(eventBus);
 
-		container.registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_SPEC);
-		FTBICConfig.init();
-		FTBICUtils.init();
-	}
+        container.registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_SPEC);
+        FTBICConfig.init();
+        FTBICUtils.init();
+    }
 }

@@ -2,16 +2,12 @@ package dev.ftb.mods.ftbic.block;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
-import dev.ftb.mods.ftbic.block.entity.machine.ReactorSimulatorBlockEntity;
-import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
-import dev.ftb.mods.ftbic.item.ConfigurationCardItem;
 import dev.ftb.mods.ftbic.block.entity.machine.BatchFeederBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.FluidMachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.HydroponicBlockEntity;
-import dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity;
-import net.neoforged.neoforge.transfer.fluid.FluidUtil;
-import net.neoforged.neoforge.transfer.access.ItemAccess;
-import net.neoforged.neoforge.capabilities.Capabilities;
+import dev.ftb.mods.ftbic.block.entity.machine.MachineBlockEntity;
+import dev.ftb.mods.ftbic.block.entity.machine.ReactorSimulatorBlockEntity;
+import dev.ftb.mods.ftbic.item.ConfigurationCardItem;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.ReactorBlueprintItem;
 import net.minecraft.core.BlockPos;
@@ -46,216 +42,263 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.fluid.FluidUtil;
 import org.jetbrains.annotations.Nullable;
 
 public class ElectricBlock extends Block implements EntityBlock, SprayPaintable {
-	public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
+    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
-	public final ElectricBlockInstance electricBlockInstance;
+    public final ElectricBlockInstance electricBlockInstance;
 
-	public ElectricBlock(ElectricBlockInstance m, BlockBehaviour.Properties props) {
-		super(props.strength(3.5F).requiresCorrectToolForDrops());
-		electricBlockInstance = m;
-		BlockState state = getStateDefinition().any().setValue(SprayPaintable.DARK, false);
+    public ElectricBlock(ElectricBlockInstance m, BlockBehaviour.Properties props) {
+        super(props.strength(3.5F).requiresCorrectToolForDrops());
+        electricBlockInstance = m;
+        BlockState state = getStateDefinition().any().setValue(SprayPaintable.DARK, false);
 
-		if (m.facingProperty != null) {
-			state = state.setValue(m.facingProperty, Direction.SOUTH);
-		}
+        if (m.facingProperty != null) {
+            state = state.setValue(m.facingProperty, Direction.SOUTH);
+        }
 
-		if (m.canBeActive) {
-			state = state.setValue(ACTIVE, false);
-		}
+        if (m.canBeActive) {
+            state = state.setValue(ACTIVE, false);
+        }
 
-		registerDefaultState(state);
-	}
+        registerDefaultState(state);
+    }
 
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return electricBlockInstance.blockEntity.get().create(pos, state);
-	}
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return electricBlockInstance.blockEntity.get().create(pos, state);
+    }
 
-	@Nullable
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-		return level.isClientSide() ? null : ElectricBlockEntity::ticker;
-	}
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide() ? null : ElectricBlockEntity::ticker;
+    }
 
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(SprayPaintable.DARK);
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(SprayPaintable.DARK);
 
-		if (ElectricBlockInstance.current != null) {
-			if (ElectricBlockInstance.current.facingProperty != null) {
-				builder.add(ElectricBlockInstance.current.facingProperty);
-			}
-			if (ElectricBlockInstance.current.canBeActive) {
-				builder.add(ACTIVE);
-			}
-		}
-	}
+        if (ElectricBlockInstance.current != null) {
+            if (ElectricBlockInstance.current.facingProperty != null) {
+                builder.add(ElectricBlockInstance.current.facingProperty);
+            }
+            if (ElectricBlockInstance.current.canBeActive) {
+                builder.add(ACTIVE);
+            }
+        }
+    }
 
-	@Override
-	protected BlockState rotate(BlockState state, Rotation rotation) {
-		return electricBlockInstance.facingProperty == null
-				? state
-				: state.setValue(electricBlockInstance.facingProperty, rotation.rotate(state.getValue(electricBlockInstance.facingProperty)));
-	}
+    @Override
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        return electricBlockInstance.facingProperty == null
+                ? state
+                : state.setValue(
+                        electricBlockInstance.facingProperty,
+                        rotation.rotate(state.getValue(electricBlockInstance.facingProperty)));
+    }
 
-	@Override
-	protected BlockState mirror(BlockState state, Mirror mirror) {
-		if (electricBlockInstance.facingProperty == null) return state;
-		Rotation rotation = mirror.getRotation(state.getValue(electricBlockInstance.facingProperty));
-		return state.setValue(electricBlockInstance.facingProperty, rotation.rotate(state.getValue(electricBlockInstance.facingProperty)));
-	}
+    @Override
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        if (electricBlockInstance.facingProperty == null) return state;
+        Rotation rotation = mirror.getRotation(state.getValue(electricBlockInstance.facingProperty));
+        return state.setValue(
+                electricBlockInstance.facingProperty,
+                rotation.rotate(state.getValue(electricBlockInstance.facingProperty)));
+    }
 
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-		if (electricBlockInstance.facingProperty == null) {
-			return defaultBlockState();
-		} else if (electricBlockInstance.facingProperty == BlockStateProperties.HORIZONTAL_FACING) {
-			return defaultBlockState().setValue(electricBlockInstance.facingProperty, ctx.getHorizontalDirection().getOpposite());
-		} else {
-			return defaultBlockState().setValue(electricBlockInstance.facingProperty, ctx.getNearestLookingDirection().getOpposite());
-		}
-	}
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        if (electricBlockInstance.facingProperty == null) {
+            return defaultBlockState();
+        } else if (electricBlockInstance.facingProperty == BlockStateProperties.HORIZONTAL_FACING) {
+            return defaultBlockState()
+                    .setValue(
+                            electricBlockInstance.facingProperty,
+                            ctx.getHorizontalDirection().getOpposite());
+        } else {
+            return defaultBlockState()
+                    .setValue(
+                            electricBlockInstance.facingProperty,
+                            ctx.getNearestLookingDirection().getOpposite());
+        }
+    }
 
-	@Override
-	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource r) {
-		if (level.getBlockEntity(pos) instanceof ElectricBlockEntity be) {
-			if (be.isBurnt()) {
-				if (r.nextInt(2) == 0) {
-					double dx = pos.getX() + 0.4 + r.nextDouble() * 0.2;
-					double dy = pos.getY() + 0.8 + r.nextDouble() * 0.2;
-					double dz = pos.getZ() + 0.4 + r.nextDouble() * 0.2;
-					level.addParticle(ParticleTypes.LARGE_SMOKE, dx, dy, dz, 0D, 0.01D, 0D);
-				}
-			} else if (be instanceof MachineBlockEntity m && m.starving) {
-				if (r.nextInt(4) == 0) {
-					double dx = pos.getX() + 0.3 + r.nextDouble() * 0.4;
-					double dy = pos.getY() + 0.5 + r.nextDouble() * 0.4;
-					double dz = pos.getZ() + 0.3 + r.nextDouble() * 0.4;
-					level.addParticle(ParticleTypes.ELECTRIC_SPARK, dx, dy, dz, 0D, 0D, 0D);
-				}
-				if (r.nextInt(80) == 0) {
-					level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-							SoundEvents.REDSTONE_TORCH_BURNOUT, SoundSource.BLOCKS,
-							0.3F, 0.5F + r.nextFloat() * 0.2F, false);
-				}
-			} else if (electricBlockInstance.canBeActive
-					&& state.hasProperty(ACTIVE) && state.getValue(ACTIVE)
-					&& r.nextInt(6) == 0) {
-				double dx = pos.getX() + r.nextDouble();
-				double dy = pos.getY() + 0.1 + r.nextDouble() * 0.2;
-				double dz = pos.getZ() + r.nextDouble();
-				level.addParticle(ParticleTypes.ELECTRIC_SPARK, dx, dy, dz, 0D, 0D, 0D);
-			}
-		}
-	}
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource r) {
+        if (level.getBlockEntity(pos) instanceof ElectricBlockEntity be) {
+            if (be.isBurnt()) {
+                if (r.nextInt(2) == 0) {
+                    double dx = pos.getX() + 0.4 + r.nextDouble() * 0.2;
+                    double dy = pos.getY() + 0.8 + r.nextDouble() * 0.2;
+                    double dz = pos.getZ() + 0.4 + r.nextDouble() * 0.2;
+                    level.addParticle(ParticleTypes.LARGE_SMOKE, dx, dy, dz, 0D, 0.01D, 0D);
+                }
+            } else if (be instanceof MachineBlockEntity m && m.starving) {
+                if (r.nextInt(4) == 0) {
+                    double dx = pos.getX() + 0.3 + r.nextDouble() * 0.4;
+                    double dy = pos.getY() + 0.5 + r.nextDouble() * 0.4;
+                    double dz = pos.getZ() + 0.3 + r.nextDouble() * 0.4;
+                    level.addParticle(ParticleTypes.ELECTRIC_SPARK, dx, dy, dz, 0D, 0D, 0D);
+                }
+                if (r.nextInt(80) == 0) {
+                    level.playLocalSound(
+                            pos.getX() + 0.5,
+                            pos.getY() + 0.5,
+                            pos.getZ() + 0.5,
+                            SoundEvents.REDSTONE_TORCH_BURNOUT,
+                            SoundSource.BLOCKS,
+                            0.3F,
+                            0.5F + r.nextFloat() * 0.2F,
+                            false);
+                }
+            } else if (electricBlockInstance.canBeActive
+                    && state.hasProperty(ACTIVE)
+                    && state.getValue(ACTIVE)
+                    && r.nextInt(6) == 0) {
+                double dx = pos.getX() + r.nextDouble();
+                double dy = pos.getY() + 0.1 + r.nextDouble() * 0.2;
+                double dz = pos.getZ() + r.nextDouble();
+                level.addParticle(ParticleTypes.ELECTRIC_SPARK, dx, dy, dz, 0D, 0D, 0D);
+            }
+        }
+    }
 
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
+        super.onPlace(state, level, pos, state1, b);
+        if (!level.isClientSide()
+                && (!state.is(state1.getBlock())
+                        || (electricBlockInstance.facingProperty != null
+                                && state.getValue(electricBlockInstance.facingProperty)
+                                        != state1.getValue(electricBlockInstance.facingProperty)))) {
+            level.invalidateCapabilities(pos);
+            ElectricBlockEntity.electricNetworkUpdated(level, pos);
+        }
+    }
 
-	@Override
-	protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
-		super.onPlace(state, level, pos, state1, b);
-		if (!level.isClientSide() && (!state.is(state1.getBlock())
-				|| (electricBlockInstance.facingProperty != null && state.getValue(electricBlockInstance.facingProperty) != state1.getValue(electricBlockInstance.facingProperty)))) {
-			level.invalidateCapabilities(pos);
-			ElectricBlockEntity.electricNetworkUpdated(level, pos);
-		}
-	}
+    @Override
+    public void setPlacedBy(
+            Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, entity, stack);
+        if (level.getBlockEntity(pos) instanceof ElectricBlockEntity be) {
+            be.onPlacedBy(entity, stack);
+        }
+    }
 
-	@Override
-	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
-		super.setPlacedBy(level, pos, state, entity, stack);
-		if (level.getBlockEntity(pos) instanceof ElectricBlockEntity be) {
-			be.onPlacedBy(entity, stack);
-		}
-	}
+    @Override
+    protected void affectNeighborsAfterRemoval(
+            BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        ElectricBlockEntity.electricNetworkUpdated(level, pos);
+        level.updateNeighbourForOutputSignal(pos, this);
+    }
 
-	@Override
-	protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
-		ElectricBlockEntity.electricNetworkUpdated(level, pos);
-		level.updateNeighbourForOutputSignal(pos, this);
-	}
+    @Override
+    protected void neighborChanged(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Block block,
+            @Nullable Orientation orientation,
+            boolean movedByPiston) {
+        super.neighborChanged(state, level, pos, block, orientation, movedByPiston);
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof ElectricBlockEntity be) {
+            be.neighborChanged(pos, block);
+        }
+    }
 
-	@Override
-	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation orientation, boolean movedByPiston) {
-		super.neighborChanged(state, level, pos, block, orientation, movedByPiston);
-		if (!level.isClientSide() && level.getBlockEntity(pos) instanceof ElectricBlockEntity be) {
-			be.neighborChanged(pos, block);
-		}
-	}
+    @Override
+    protected InteractionResult useItemOn(
+            ItemStack stack,
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hit) {
+        if (stack.getItem() instanceof ConfigurationCardItem) {
+            return stack.getItem().useOn(new UseOnContext(player, hand, hit));
+        }
+        if (stack.getItem() instanceof ReactorBlueprintItem
+                && (level.getBlockEntity(pos) instanceof NuclearReactorBlockEntity
+                        || level.getBlockEntity(pos) instanceof ReactorSimulatorBlockEntity)) {
+            return stack.getItem().useOn(new UseOnContext(player, hand, hit));
+        }
+        if (!(level.getBlockEntity(pos) instanceof ElectricBlockEntity be)) {
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
+        }
+        if (be.isBurnt() && stack.is(FTBICItems.FUSE.item.get())) {
+            be.setBurnt(false);
+            level.playSound(player, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 0.3F, 0.6F);
+            if (!level.isClientSide() && !player.isCreative()) {
+                stack.shrink(1);
+            }
+            return InteractionResult.SUCCESS;
+        }
+        if (be.isBurnt()) {
+            if (!level.isClientSide()) {
+                player.sendSystemMessage(Component.translatable("ftbic.fuse_info"));
+            }
+            return InteractionResult.SUCCESS;
+        }
+        if (be instanceof BatchFeederBlockEntity feeder
+                && !stack.isEmpty()
+                && player.mayBuild()
+                && level.mayInteract(player, pos)
+                && ItemAccess.forStack(stack).oneByOne().getCapability(Capabilities.Fluid.ITEM) != null) {
+            if (level.isClientSide()
+                    || FluidUtil.interactWithFluidHandler(player, hand, pos, feeder.fluidHandler.manualAccess)) {
+                return InteractionResult.SUCCESS;
+            }
+        }
+        if ((be instanceof FluidMachineBlockEntity || be instanceof HydroponicBlockEntity)
+                && !stack.isEmpty()
+                && player.mayBuild()
+                && level.mayInteract(player, pos)
+                && ItemAccess.forStack(stack).oneByOne().getCapability(Capabilities.Fluid.ITEM) != null) {
+            if (level.isClientSide()
+                    || FluidUtil.interactWithFluidHandler(player, hand, level, pos, hit.getDirection())) {
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
+    }
 
-	@Override
-	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		if (stack.getItem() instanceof ConfigurationCardItem) {
-			return stack.getItem().useOn(new UseOnContext(player, hand, hit));
-		}
-		if (stack.getItem() instanceof ReactorBlueprintItem
-				&& (level.getBlockEntity(pos) instanceof NuclearReactorBlockEntity
-				|| level.getBlockEntity(pos) instanceof ReactorSimulatorBlockEntity)) {
-			return stack.getItem().useOn(new UseOnContext(player, hand, hit));
-		}
-		if (!(level.getBlockEntity(pos) instanceof ElectricBlockEntity be)) {
-			return InteractionResult.TRY_WITH_EMPTY_HAND;
-		}
-		if (be.isBurnt() && stack.is(FTBICItems.FUSE.item.get())) {
-			be.setBurnt(false);
-			level.playSound(player, pos, SoundEvents.STONE_BUTTON_CLICK_ON,
-					SoundSource.BLOCKS, 0.3F, 0.6F);
-			if (!level.isClientSide() && !player.isCreative()) {
-				stack.shrink(1);
-			}
-			return InteractionResult.SUCCESS;
-		}
-		if (be.isBurnt()) {
-			if (!level.isClientSide()) {
-				player.sendSystemMessage(Component.translatable("ftbic.fuse_info"));
-			}
-			return InteractionResult.SUCCESS;
-		}
-		if (be instanceof BatchFeederBlockEntity feeder && !stack.isEmpty() && player.mayBuild() && level.mayInteract(player, pos)
-				&& ItemAccess.forStack(stack).oneByOne().getCapability(Capabilities.Fluid.ITEM) != null) {
-			if (level.isClientSide() || FluidUtil.interactWithFluidHandler(player, hand, pos, feeder.fluidHandler.manualAccess)) {
-				return InteractionResult.SUCCESS;
-			}
-		}
-		if ((be instanceof FluidMachineBlockEntity || be instanceof HydroponicBlockEntity)
-				&& !stack.isEmpty() && player.mayBuild() && level.mayInteract(player, pos)
-				&& ItemAccess.forStack(stack).oneByOne().getCapability(Capabilities.Fluid.ITEM) != null) {
-			if (level.isClientSide() || FluidUtil.interactWithFluidHandler(player, hand, level, pos, hit.getDirection())) {
-				return InteractionResult.SUCCESS;
-			}
-		}
-		return InteractionResult.TRY_WITH_EMPTY_HAND;
-	}
+    @Override
+    protected InteractionResult useWithoutItem(
+            BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (level.getBlockEntity(pos) instanceof ElectricBlockEntity be && !be.isBurnt()) {
+            return be.rightClick(player, InteractionHand.MAIN_HAND, hit);
+        }
+        return InteractionResult.PASS;
+    }
 
-	@Override
-	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-		if (level.getBlockEntity(pos) instanceof ElectricBlockEntity be && !be.isBurnt()) {
-			return be.rightClick(player, InteractionHand.MAIN_HAND, hit);
-		}
-		return InteractionResult.PASS;
-	}
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+        if (!level.isClientSide()
+                && entity instanceof ServerPlayer sp
+                && level.getBlockEntity(pos) instanceof ElectricBlockEntity be
+                && !be.isBurnt()) {
+            be.stepOn(sp);
+        }
+        super.stepOn(level, pos, state, entity);
+    }
 
-	@Override
-	public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-		if (!level.isClientSide() && entity instanceof ServerPlayer sp
-				&& level.getBlockEntity(pos) instanceof ElectricBlockEntity be && !be.isBurnt()) {
-			be.stepOn(sp);
-		}
-		super.stepOn(level, pos, state, entity);
-	}
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof ElectricBlockEntity be) {
+            return be.getRedstoneOutputSignalEnergyStorage();
+        }
+        return 0;
+    }
 
-	@Override
-	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
-		if (!level.isClientSide() && level.getBlockEntity(pos) instanceof ElectricBlockEntity be) {
-			return be.getRedstoneOutputSignalEnergyStorage();
-		}
-		return 0;
-	}
-
-	@Override
-	protected boolean hasAnalogOutputSignal(BlockState state) {
-		return true;
-	}
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
 }

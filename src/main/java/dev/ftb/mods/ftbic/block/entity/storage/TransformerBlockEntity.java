@@ -8,23 +8,25 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class TransformerBlockEntity extends GeneratorBlockEntity {
-	public TransformerBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
-		super(type, pos, state);
-	}
+    public TransformerBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
 
-	@Override
-	public void initProperties() {
-		super.initProperties();
-		maxEnergyOutputTransfer = maxEnergyOutput;
-	}
+    @Override
+    public void initProperties() {
+        super.initProperties();
+        maxEnergyOutputTransfer = maxEnergyOutput;
+    }
 
-	@Override
-	public boolean isValidEnergyOutputSide(Direction direction) {
-		return direction != getFacing(Direction.NORTH) && allowsTransfer(SideConfiguration.Resource.ENERGY, direction, false);
-	}
+    @Override
+    public boolean isValidEnergyOutputSide(Direction direction) {
+        return direction != getFacing(Direction.NORTH)
+                && allowsTransfer(SideConfiguration.Resource.ENERGY, direction, false);
+    }
 
-	@Override
-	public boolean isValidEnergyInputSide(Direction direction) {
-		return direction == getFacing(Direction.NORTH) && allowsTransfer(SideConfiguration.Resource.ENERGY, direction, true);
-	}
+    @Override
+    public boolean isValidEnergyInputSide(Direction direction) {
+        return direction == getFacing(Direction.NORTH)
+                && allowsTransfer(SideConfiguration.Resource.ENERGY, direction, true);
+    }
 }

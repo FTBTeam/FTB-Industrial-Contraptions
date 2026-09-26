@@ -8,15 +8,15 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
 public final class FTBICDataGen {
 
-	@SubscribeEvent
-	public static void gatherClientData(GatherDataEvent.Client event) {
-		event.createProvider(FTBICModelProvider::new);
-		event.createProvider(FTBICRecipeProvider.Runner::new);
-		event.createProvider(FTBICLanguageProvider::new);
-		event.createProvider(FTBICBlockTagsProvider::new);
-		event.createProvider(FTBICItemTagsProvider::new);
-		event.createProvider(FTBICLootTableProvider::new);
-	}
+    @SubscribeEvent
+    public static void gatherClientData(GatherDataEvent.Client event) {
+        event.createProvider(FTBICModelProvider::new);
+        event.createProvider(FTBICRecipeProvider.Runner::new);
+        event.createProvider(FTBICLanguageProvider::new);
+        event.createProvider(FTBICBlockTagsProvider::new);
+        event.createProvider(FTBICItemTagsProvider::new);
+        event.createProvider(FTBICLootTableProvider::new);
+    }
 
-	private FTBICDataGen() {}
+    private FTBICDataGen() {}
 }

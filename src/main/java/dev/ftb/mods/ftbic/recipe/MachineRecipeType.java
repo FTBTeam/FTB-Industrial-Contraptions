@@ -5,6 +5,9 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.ftb.mods.ftbic.util.IngredientWithCount;
 import dev.ftb.mods.ftbic.util.StackWithChance;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -15,62 +18,87 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public final class MachineRecipeType {
-	private static final List<MachineRecipeType> INSTANCES = new ArrayList<>();
-	public static final List<MachineRecipeType> ALL = Collections.unmodifiableList(INSTANCES);
+    private static final List<MachineRecipeType> INSTANCES = new ArrayList<>();
+    public static final List<MachineRecipeType> ALL = Collections.unmodifiableList(INSTANCES);
 
-	public final String id;
-	public final boolean twoInputs;
-	public final boolean extraOutput;
-	public final DeferredHolder<RecipeType<?>, RecipeType<MachineRecipe>> TYPE;
-	public final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<MachineRecipe>> SERIALIZER;
+    public final String id;
+    public final boolean twoInputs;
+    public final boolean extraOutput;
+    public final DeferredHolder<RecipeType<?>, RecipeType<MachineRecipe>> TYPE;
+    public final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<MachineRecipe>> SERIALIZER;
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public MachineRecipeType(String id,
-			boolean twoInputs,
-			boolean extraOutput,
-			DeferredRegister<RecipeType<?>> typeRegistry,
-			DeferredRegister<RecipeSerializer<?>> serializerRegistry) {
-		this.id = id;
-		this.twoInputs = twoInputs;
-		this.extraOutput = extraOutput;
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public MachineRecipeType(
+            String id,
+            boolean twoInputs,
+            boolean extraOutput,
+            DeferredRegister<RecipeType<?>> typeRegistry,
+            DeferredRegister<RecipeSerializer<?>> serializerRegistry) {
+        this.id = id;
+        this.twoInputs = twoInputs;
+        this.extraOutput = extraOutput;
 
-		this.TYPE = (DeferredHolder) typeRegistry.register(id, () -> new RecipeType<MachineRecipe>() {
-			@Override public String toString() { return "ftbic:" + id; }
-		});
+        this.TYPE = (DeferredHolder) typeRegistry.register(id, () -> new RecipeType<MachineRecipe>() {
+            @Override
+            public String toString() {
+                return "ftbic:" + id;
+            }
+        });
 
-		this.SERIALIZER = (DeferredHolder) serializerRegistry.register(id,
-				() -> new RecipeSerializer<>(buildMapCodec(), buildStreamCodec()));
+        this.SERIALIZER = (DeferredHolder)
+                serializerRegistry.register(id, () -> new RecipeSerializer<>(buildMapCodec(), buildStreamCodec()));
 
-		INSTANCES.add(this);
-	}
+        INSTANCES.add(this);
+    }
 
-	private MapCodec<MachineRecipe> buildMapCodec() {
-		return RecordCodecBuilder.mapCodec(i -> i.group(
-				IngredientWithCount.CODEC.listOf().optionalFieldOf("inputs", List.of()).forGetter(r -> r.inputs),
-				SizedFluidIngredient.CODEC.listOf().optionalFieldOf("input_fluids", List.of()).forGetter(r -> r.inputFluids),
-				StackWithChance.CODEC.listOf().optionalFieldOf("outputs", List.of()).forGetter(r -> r.outputs),
-				FluidStack.CODEC.listOf().optionalFieldOf("output_fluids", List.of()).forGetter(r -> r.outputFluids),
-				Codec.DOUBLE.optionalFieldOf("processing_time", 1D).forGetter(r -> r.processingTime),
-				Codec.BOOL.optionalFieldOf("hide_from_jei", false).forGetter(r -> r.hideFromJEI),
-				SoilOption.CODEC.listOf().optionalFieldOf("soil_options", List.of()).forGetter(r -> r.soilOptions)
-		).apply(i, (ins, inF, outs, outF, time, hide, soils) ->
-				new MachineRecipe(this, ins, inF, outs, outF, time, hide, soils)));
-	}
+    private MapCodec<MachineRecipe> buildMapCodec() {
+        return RecordCodecBuilder.mapCodec(i -> i.group(
+                        IngredientWithCount.CODEC
+                                .listOf()
+                                .optionalFieldOf("inputs", List.of())
+                                .forGetter(r -> r.inputs),
+                        SizedFluidIngredient.CODEC
+                                .listOf()
+                                .optionalFieldOf("input_fluids", List.of())
+                                .forGetter(r -> r.inputFluids),
+                        StackWithChance.CODEC
+                                .listOf()
+                                .optionalFieldOf("outputs", List.of())
+                                .forGetter(r -> r.outputs),
+                        FluidStack.CODEC
+                                .listOf()
+                                .optionalFieldOf("output_fluids", List.of())
+                                .forGetter(r -> r.outputFluids),
+                        Codec.DOUBLE.optionalFieldOf("processing_time", 1D).forGetter(r -> r.processingTime),
+                        Codec.BOOL.optionalFieldOf("hide_from_jei", false).forGetter(r -> r.hideFromJEI),
+                        SoilOption.CODEC
+                                .listOf()
+                                .optionalFieldOf("soil_options", List.of())
+                                .forGetter(r -> r.soilOptions))
+                .apply(
+                        i,
+                        (ins, inF, outs, outF, time, hide, soils) ->
+                                new MachineRecipe(this, ins, inF, outs, outF, time, hide, soils)));
+    }
 
-	private StreamCodec<RegistryFriendlyByteBuf, MachineRecipe> buildStreamCodec() {
-		return StreamCodec.composite(
-				IngredientWithCount.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.inputs,
-				SizedFluidIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.inputFluids,
-				StackWithChance.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.outputs,
-				FluidStack.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.outputFluids,
-				ByteBufCodecs.DOUBLE, r -> r.processingTime,
-				ByteBufCodecs.BOOL, r -> r.hideFromJEI,
-				SoilOption.STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.soilOptions,
-				(ins, inF, outs, outF, time, hide, soils) -> new MachineRecipe(this, ins, inF, outs, outF, time, hide, soils));
-	}
+    private StreamCodec<RegistryFriendlyByteBuf, MachineRecipe> buildStreamCodec() {
+        return StreamCodec.composite(
+                IngredientWithCount.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                r -> r.inputs,
+                SizedFluidIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                r -> r.inputFluids,
+                StackWithChance.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                r -> r.outputs,
+                FluidStack.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                r -> r.outputFluids,
+                ByteBufCodecs.DOUBLE,
+                r -> r.processingTime,
+                ByteBufCodecs.BOOL,
+                r -> r.hideFromJEI,
+                SoilOption.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                r -> r.soilOptions,
+                (ins, inF, outs, outF, time, hide, soils) ->
+                        new MachineRecipe(this, ins, inF, outs, outF, time, hide, soils));
+    }
 }

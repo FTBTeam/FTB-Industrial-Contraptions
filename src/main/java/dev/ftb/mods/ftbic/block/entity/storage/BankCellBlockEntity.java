@@ -12,28 +12,27 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class BankCellBlockEntity extends ElectricBlockEntity {
-	public BankCellBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.INDUSTRIAL_BANK_CELL, pos, state);
-	}
+    public BankCellBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.INDUSTRIAL_BANK_CELL, pos, state);
+    }
 
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
-		return new BankMenu(id, inventory, this);
-	}
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inventory) {
+        return new BankMenu(id, inventory, this);
+    }
 
-	@Override
-	public int supportedTransfers(Resource resource, Face face) {
-		return 0;
-	}
+    @Override
+    public int supportedTransfers(Resource resource, Face face) {
+        return 0;
+    }
 
-	@Override
-	public boolean isValidEnergyInputSide(Direction direction) {
-		return false;
-	}
+    @Override
+    public boolean isValidEnergyInputSide(Direction direction) {
+        return false;
+    }
 
-	@Override
-	public boolean keepsEnergyWhenBroken() {
-		return true;
-	}
-
+    @Override
+    public boolean keepsEnergyWhenBroken() {
+        return true;
+    }
 }
