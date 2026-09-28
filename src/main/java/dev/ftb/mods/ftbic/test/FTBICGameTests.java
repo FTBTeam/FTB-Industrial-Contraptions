@@ -33,6 +33,9 @@ public class FTBICGameTests {
                 event.registerEnvironment(FTBIC.id("default"), new TestEnvironmentDefinition.AllOf());
         Holder<TestEnvironmentDefinition<?>> nightEnv =
                 event.registerEnvironment(FTBIC.id("night"), new TestEnvironmentDefinition.AllOf());
+        reg(event, "sound_charge_completion", SoundGameTests::chargingCompletion, env, 60);
+        reg(event, "sound_hot_idle_reactor", SoundGameTests::hotIdleReactor, env, 60);
+        reg(event, "sound_critical_idle_reactor", SoundGameTests::criticalIdleReactor, env, 60);
         reg(event, "upgrade_shift_click_limit", UpgradeInventoryGameTests::shiftClickLimit, env, 60);
         reg(event, "upgrade_sneak_insert", UpgradeInventoryGameTests::sneakInsert, env, 60);
         reg(event, "upgrade_set_command", UpgradeInventoryGameTests::setUpgradesCommand, env, 60);
@@ -60,6 +63,9 @@ public class FTBICGameTests {
         reg(event, "energy_mode_direct_fe_input_clamps", EnergyModeGameTests::directFEInputClamps, env, 60);
         reg(event, "energy_mode_display_follows_mode", EnergyModeGameTests::energyDisplayFollowsMode, env, 60);
         reg(event, "energy_mode_reactor_exposes_fe", EnergyModeGameTests::reactorExposesFE, env, 60);
+        reg(event, "reactor_fe_chamber_push", ReactorFEGameTests::chamberPush, env, 60);
+        reg(event, "reactor_fe_consuming_meter", ReactorFEGameTests::cableToConsumingMeter, env, 60);
+        reg(event, "reactor_fe_chamber_pull", ReactorFEGameTests::chamberPull, env, 60);
         reg(event, "review_batteries_use_configured_charge", ReviewFixGameTests::batteriesUseConfiguredCharge, env, 60);
         reg(event, "review_bank_blocks_drop_themselves", ReviewFixGameTests::bankBlocksDropThemselves, env, 60);
         reg(event, "review_upgraded_energy_survives_reload", ReviewFixGameTests::upgradedEnergySurvivesReload, env, 60);

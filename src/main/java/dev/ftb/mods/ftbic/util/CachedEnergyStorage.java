@@ -52,7 +52,11 @@ public final class CachedEnergyStorage {
     public boolean shouldReceiveEnergy() {
         if (feHandlerCache != null) {
             var fe = feHandlerCache.getCapability();
-            return fe != null && fe.getAmountAsLong() < fe.getCapacityAsLong();
+            // Routers and consuming meters can accept FE without storing any of it.
+            if (fe == null) return false;
+            try (Transaction tx = Transaction.openRoot()) {
+                return fe.insert(Integer.MAX_VALUE, tx) > 0;
+            }
         }
         return energyHandler.getEnergy() < energyHandler.getEnergyCapacity();
     }

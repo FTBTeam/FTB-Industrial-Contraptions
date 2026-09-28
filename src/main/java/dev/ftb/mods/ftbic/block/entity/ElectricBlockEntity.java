@@ -17,6 +17,7 @@ import dev.ftb.mods.ftbic.block.entity.storage.EnergyRectifierBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.storage.TransformerBlockEntity;
 import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import dev.ftb.mods.ftbic.screen.MachineMenu;
+import dev.ftb.mods.ftbic.sound.FTBICSounds;
 import dev.ftb.mods.ftbic.util.GhostItem;
 import dev.ftb.mods.ftbic.util.SideConfiguration;
 import dev.ftb.mods.ftbic.util.SideConfiguration.Face;
@@ -44,6 +45,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
@@ -505,6 +507,15 @@ public class ElectricBlockEntity extends BlockEntity implements ZapEnergyHandler
     }
 
     public void neighborChanged(BlockPos neighborPos, Block neighborBlock) {}
+
+    private long nextChargeChimeTick;
+
+    protected void playChargeCompleteSound() {
+        if (level != null && !level.isClientSide() && level.getGameTime() >= nextChargeChimeTick) {
+            level.playSound(null, worldPosition, FTBICSounds.CHARGE_COMPLETE.get(), SoundSource.BLOCKS, 0.5F, 1F);
+            nextChargeChimeTick = level.getGameTime() + 40;
+        }
+    }
 
     public void stepOn(ServerPlayer player) {}
 

@@ -778,5 +778,18 @@
   "recipe.ftbic.reconstructing": "Reconstructing",
   "recipe.ftbic.reprocessing": "Reprocessing",
   "recipe.ftbic.rolling": "Rolling",
-  "recipe.ftbic.separating": "Separating"
+  "recipe.ftbic.separating": "Separating",
+  "subtitles.ftbic.centrifuge": "Centrifuge spins",
+  "subtitles.ftbic.charge_complete": "Charging complete",
+  "subtitles.ftbic.compressor": "Compressor presses",
+  "subtitles.ftbic.generator": "Generator runs",
+  "subtitles.ftbic.macerator": "Macerator grinds",
+  "subtitles.ftbic.nuclear_explosion": "Nuclear explosion",
+  "subtitles.ftbic.nuke_arm": "Nuke armed",
+  "subtitles.ftbic.nuke_tick": "Nuke countdown",
+  "subtitles.ftbic.ore_washer": "Water circulates",
+  "subtitles.ftbic.radiation": "Radiation crackles",
+  "subtitles.ftbic.reactor_critical": "Reactor heat critical",
+  "subtitles.ftbic.reactor_warning": "Reactor heat warning",
+  "subtitles.ftbic.teleport": "Teleporter activates"
 }

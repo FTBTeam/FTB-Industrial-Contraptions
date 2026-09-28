@@ -12,6 +12,19 @@ public class FTBICLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        add("subtitles.ftbic.macerator", "Macerator grinds");
+        add("subtitles.ftbic.compressor", "Compressor presses");
+        add("subtitles.ftbic.centrifuge", "Centrifuge spins");
+        add("subtitles.ftbic.ore_washer", "Water circulates");
+        add("subtitles.ftbic.reactor_warning", "Reactor heat warning");
+        add("subtitles.ftbic.reactor_critical", "Reactor heat critical");
+        add("subtitles.ftbic.nuke_arm", "Nuke armed");
+        add("subtitles.ftbic.nuke_tick", "Nuke countdown");
+        add("subtitles.ftbic.generator", "Generator runs");
+        add("subtitles.ftbic.charge_complete", "Charging complete");
+        add("subtitles.ftbic.teleport", "Teleporter activates");
+        add("subtitles.ftbic.nuclear_explosion", "Nuclear explosion");
+        add("subtitles.ftbic.radiation", "Radiation crackles");
         add("block.ftbic.industrial_bank_cell", "Industrial Battery Bank Cell");
         add("item.ftbic.industrial_bank_cell", "Industrial Battery Bank Cell");
         add("block.ftbic.industrial_bank_port", "Industrial Battery Bank Port");

@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.util;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.sound.FTBICSounds;
 import it.unimi.dsi.fastutil.longs.Long2ByteOpenHashMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
@@ -8,17 +9,20 @@ import java.util.Random;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ExplosionParticleInfo;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
 
 public final class NuclearExplosion {
     private static final byte FLAG_IN_EXPLOSION = 1 << 0;
@@ -31,6 +35,27 @@ public final class NuclearExplosion {
     private static final byte MASK_KIND = FLAG_REINFORCED | FLAG_AIR | FLAG_BREAKABLE;
 
     private NuclearExplosion() {}
+
+    public static void explodeWithClaims(
+            ServerLevel level, @Nullable Entity source, double x, double y, double z, float radius) {
+        level.explode(
+                source,
+                null,
+                null,
+                x,
+                y,
+                z,
+                radius,
+                true,
+                Level.ExplosionInteraction.BLOCK,
+                ParticleTypes.EXPLOSION,
+                ParticleTypes.EXPLOSION_EMITTER,
+                WeightedList.<ExplosionParticleInfo>builder()
+                        .add(new ExplosionParticleInfo(ParticleTypes.POOF, 0.5F, 1F))
+                        .add(new ExplosionParticleInfo(ParticleTypes.SMOKE, 1F, 1F))
+                        .build(),
+                FTBICSounds.NUCLEAR_EXPLOSION);
+    }
 
     public static void detonate(ServerLevel level, BlockPos center, double radius, UUID ownerId, String ownerName) {
         long start = System.currentTimeMillis();
@@ -180,7 +205,7 @@ public final class NuclearExplosion {
         }
 
         level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, cx, cy, cz, 1, 0D, 0D, 0D, 0D);
-        level.playSound(null, cx, cy, cz, SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4F, 0.7F);
+        level.playSound(null, cx, cy, cz, FTBICSounds.NUCLEAR_EXPLOSION.get(), SoundSource.BLOCKS, 4F, 1F);
 
         NuclearFallout.apply(level, center, radius);
 

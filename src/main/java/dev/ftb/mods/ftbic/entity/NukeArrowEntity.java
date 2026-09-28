@@ -52,8 +52,7 @@ public final class NukeArrowEntity extends AbstractArrow {
             double radius = FTBICConfig.NUCLEAR.NUKE_RADIUS.get();
             BlockPos pos = BlockPos.containing(at);
             if (FTBICConfig.NUCLEAR.NUKE_RESPECTS_CLAIMS.get()) {
-                server.explode(
-                        this, null, null, at.x, at.y, at.z, (float) radius, true, Level.ExplosionInteraction.BLOCK);
+                NuclearExplosion.explodeWithClaims(server, this, at.x, at.y, at.z, (float) radius);
                 NuclearFallout.apply(server, pos, radius);
             } else {
                 Entity owner = getOwner();

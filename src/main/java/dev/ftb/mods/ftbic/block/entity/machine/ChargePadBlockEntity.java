@@ -30,43 +30,43 @@ public class ChargePadBlockEntity extends ElectricBlockEntityRef {
     public void tick() {
         super.tick();
         if (level == null || level.isClientSide() || energy <= 0D) return;
+        boolean charged = false;
+        boolean needsCharge = false;
         for (ItemStack stack : inputItems) {
-            double accepted;
-            if (stack.getItem() instanceof EnergyItemHandler handler) {
-                if (handler.isCreativeEnergyItem()) continue;
-                accepted = handler.insertEnergy(stack, energy, false);
-            } else {
-                accepted = BatterySlotHelper.chargeForeignItem(stack, energy);
-            }
-            if (accepted > 0D) {
-                energy -= accepted;
-                active = true;
-                setChanged();
-                if (energy <= 0D) return;
-            }
+            charged |= chargeStack(stack);
+            needsCharge |= BatterySlotHelper.needsCharge(stack);
         }
+        if (charged && !needsCharge) playChargeCompleteSound();
     }
 
     @Override
     public void stepOn(ServerPlayer player) {
         if (energy <= 0D) return;
         Inventory inv = player.getInventory();
+        boolean charged = false;
+        boolean needsCharge = false;
         for (int i = 0; i < inv.getContainerSize(); i++) {
             ItemStack stack = inv.getItem(i);
-            double accepted;
-            if (stack.getItem() instanceof EnergyItemHandler eh) {
-                if (eh.isCreativeEnergyItem()) continue;
-                accepted = eh.insertEnergy(stack, energy, false);
-            } else {
-                accepted = BatterySlotHelper.chargeForeignItem(stack, energy);
-            }
-            if (accepted > 0D) {
-                energy -= accepted;
-                active = true;
-                setChanged();
-                if (energy <= 0D) return;
-            }
+            charged |= chargeStack(stack);
+            needsCharge |= BatterySlotHelper.needsCharge(stack);
         }
+        if (charged && !needsCharge) playChargeCompleteSound();
+    }
+
+    private boolean chargeStack(ItemStack stack) {
+        if (energy <= 0D) return false;
+        double accepted;
+        if (stack.getItem() instanceof EnergyItemHandler handler) {
+            if (handler.isCreativeEnergyItem()) return false;
+            accepted = handler.insertEnergy(stack, energy, false);
+        } else {
+            accepted = BatterySlotHelper.chargeForeignItem(stack, energy);
+        }
+        if (accepted <= 0D) return false;
+        energy -= accepted;
+        active = true;
+        setChanged();
+        return true;
     }
 
     @Override

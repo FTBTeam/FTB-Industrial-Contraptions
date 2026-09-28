@@ -13,7 +13,9 @@ import dev.ftb.mods.ftbic.util.FTBICUtils;
 import dev.ftb.mods.ftbic.util.NuclearExplosion;
 import dev.ftb.mods.ftbic.util.NuclearFallout;
 import dev.ftb.mods.ftbic.util.ReactorDesign;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -124,6 +126,21 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
         if (slot < 0 || slot >= reactor.inputItems.length) return false;
         int col = slot % NuclearReactor.MAX_COLUMNS;
         return col < reactor.activeColumns;
+    }
+
+    @Override
+    protected List<BlockPos> energyOutputPositions() {
+        List<BlockPos> positions = new ArrayList<>();
+        positions.add(worldPosition);
+        if (level != null) {
+            for (Direction dir : FTBICUtils.DIRECTIONS) {
+                BlockPos pos = worldPosition.relative(dir);
+                if (level.getBlockState(pos).getBlock() instanceof NuclearReactorChamberBlock) {
+                    positions.add(pos);
+                }
+            }
+        }
+        return positions;
     }
 
     public int countAttachedChambers() {
@@ -246,6 +263,8 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
         pendingChamberRecompute = true;
     }
 
+    private long nextHeatAlarmTick;
+
     private void checkPoweredState(Level level, BlockPos pos) {
         if (reactor.allowRedstoneControl) {
             reactor.paused = !level.hasNeighborSignal(pos);
@@ -282,8 +301,16 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
         if (h >= 1F) {
             detonate();
         } else if (h >= 0.75F) {
-            if (level.getGameTime() % 25L == 0L && reactor.energyOutput > 0D) {
-                level.playSound(null, worldPosition, FTBICSounds.RADIATION.get(), SoundSource.BLOCKS, 0.5F, 1F);
+            if (level.getGameTime() >= nextHeatAlarmTick) {
+                boolean critical = h >= 0.9F;
+                level.playSound(
+                        null,
+                        worldPosition,
+                        critical ? FTBICSounds.REACTOR_CRITICAL.get() : FTBICSounds.REACTOR_WARNING.get(),
+                        SoundSource.BLOCKS,
+                        0.8F,
+                        1F);
+                nextHeatAlarmTick = level.getGameTime() + (critical ? 40 : 80);
             }
         }
     }
@@ -317,16 +344,13 @@ public class NuclearReactorBlockEntity extends GeneratorBlockEntity {
                         false);
 
         if (FTBICConfig.NUCLEAR.REACTOR_MELTDOWN_RESPECTS_CLAIMS.get()) {
-            server.explode(
-                    null,
-                    null,
+            NuclearExplosion.explodeWithClaims(
+                    server,
                     null,
                     worldPosition.getX() + 0.5,
                     worldPosition.getY() + 0.5,
                     worldPosition.getZ() + 0.5,
-                    (float) reactor.explosionRadius,
-                    true,
-                    Level.ExplosionInteraction.BLOCK);
+                    (float) reactor.explosionRadius);
             NuclearFallout.apply(server, worldPosition, reactor.explosionRadius);
         } else {
             NuclearExplosion.detonate(server, worldPosition, reactor.explosionRadius, placerId, placerName);

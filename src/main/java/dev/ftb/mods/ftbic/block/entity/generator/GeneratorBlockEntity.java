@@ -50,8 +50,8 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
     private CachedEnergyStorage[] connectedEnergyBlocks;
     private int scannedEnergyNeighbours;
     private int[] validConsumerIndices;
-    private BlockCapabilityCache<EnergyHandler, Direction>[] fePushCaches;
-    private BlockCapabilityCache<ZapEnergyHandler, Direction>[] zapPushCaches;
+    private final Map<Long, BlockCapabilityCache<EnergyHandler, Direction>> fePushCaches = new HashMap<>();
+    private final Map<Long, BlockCapabilityCache<ZapEnergyHandler, Direction>> zapPushCaches = new HashMap<>();
     private final Map<Long, BlockCapabilityCache<EnergyHandler, Direction>> feFindCaches = new HashMap<>();
     private final Map<Long, BlockCapabilityCache<ZapEnergyHandler, Direction>> zapFindCaches = new HashMap<>();
 
@@ -116,15 +116,25 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
 
         double remainingOutput = maxEnergyOutputTransfer - pushFEToNeighbours();
 
+        boolean chargedItem = false;
         for (BatteryInventory inventory : chargeInventories()) {
             if (energy <= 0D || remainingOutput <= 0D) break;
-            double accepted = chargeItem(inventory.getStackInSlot(0), remainingOutput);
+            ItemStack battery = inventory.getStackInSlot(0);
+            boolean neededCharge = BatterySlotHelper.needsCharge(battery);
+            double accepted = chargeItem(battery, remainingOutput);
             if (accepted > 0) {
+                chargedItem |= neededCharge;
                 energy -= accepted;
                 remainingOutput -= accepted;
                 active = true;
                 setChanged();
             }
+        }
+
+        if (chargedItem
+                && chargeInventories().stream()
+                        .noneMatch(inventory -> BatterySlotHelper.needsCharge(inventory.getStackInSlot(0)))) {
+            playChargeCompleteSound();
         }
 
         double transferable = Math.min(energy, remainingOutput);
@@ -207,58 +217,57 @@ public class GeneratorBlockEntity extends ElectricBlockEntity {
         if (energy <= 0D || maxEnergyOutputTransfer <= 0D) return 0D;
         if (!(level instanceof ServerLevel serverLevel)) return 0D;
         double remaining = maxEnergyOutputTransfer;
-        for (Direction dir : FTBICUtils.DIRECTIONS) {
-            if (!isValidEnergyOutputSide(dir)) continue;
-            // Native cable output below already handles these routes and voltage rules.
-            if (level.getBlockState(worldPosition.relative(dir)).getBlock() instanceof CableBlock) continue;
-            if (zapPushCache(serverLevel, dir).getCapability() != null) continue;
-            EnergyHandler fe = fePushCache(serverLevel, dir).getCapability();
-            if (fe == null) continue;
-            double zapsAvailable = Math.min(energy, remaining);
-            int feToOffer = ZapFEConversion.zapsToFEFloor(zapsAvailable);
-            if (feToOffer <= 0) continue;
-            try (Transaction tx = Transaction.openRoot()) {
-                int feAccepted = fe.insert(feToOffer, tx);
-                if (feAccepted > 0) {
-                    double zapsConsumed = Math.min(ZapFEConversion.feToZaps(feAccepted), energy);
-                    energy -= zapsConsumed;
-                    remaining -= zapsConsumed;
-                    tx.commit();
-                    active = true;
-                    setChanged();
+        for (BlockPos outputPos : energyOutputPositions()) {
+            for (Direction dir : FTBICUtils.DIRECTIONS) {
+                if (!isValidEnergyOutputSide(dir)) continue;
+                // Native cable output below already handles these routes and voltage rules.
+                if (level.getBlockState(outputPos.relative(dir)).getBlock() instanceof CableBlock) continue;
+                if (zapPushCache(serverLevel, outputPos, dir).getCapability() != null) continue;
+                EnergyHandler fe = fePushCache(serverLevel, outputPos, dir).getCapability();
+                if (fe == null) continue;
+                double zapsAvailable = Math.min(energy, remaining);
+                int feToOffer = ZapFEConversion.zapsToFEFloor(zapsAvailable);
+                if (feToOffer <= 0) continue;
+                try (Transaction tx = Transaction.openRoot()) {
+                    int feAccepted = fe.insert(feToOffer, tx);
+                    if (feAccepted > 0) {
+                        double zapsConsumed = Math.min(ZapFEConversion.feToZaps(feAccepted), energy);
+                        energy -= zapsConsumed;
+                        remaining -= zapsConsumed;
+                        tx.commit();
+                        active = true;
+                        setChanged();
+                    }
                 }
+                if (energy <= 0D || remaining <= 0D) break;
             }
             if (energy <= 0D || remaining <= 0D) break;
         }
         return maxEnergyOutputTransfer - remaining;
     }
 
-    @SuppressWarnings("unchecked")
-    private BlockCapabilityCache<EnergyHandler, Direction> fePushCache(ServerLevel serverLevel, Direction dir) {
-        if (fePushCaches == null) {
-            fePushCaches = new BlockCapabilityCache[FTBICUtils.DIRECTIONS.length];
-        }
-        BlockCapabilityCache<EnergyHandler, Direction> c = fePushCaches[dir.ordinal()];
-        if (c == null) {
-            c = BlockCapabilityCache.create(
-                    Capabilities.Energy.BLOCK, serverLevel, worldPosition.relative(dir), dir.getOpposite());
-            fePushCaches[dir.ordinal()] = c;
-        }
-        return c;
+    protected List<BlockPos> energyOutputPositions() {
+        return List.of(worldPosition);
     }
 
-    @SuppressWarnings("unchecked")
-    private BlockCapabilityCache<ZapEnergyHandler, Direction> zapPushCache(ServerLevel serverLevel, Direction dir) {
-        if (zapPushCaches == null) {
-            zapPushCaches = new BlockCapabilityCache[FTBICUtils.DIRECTIONS.length];
-        }
-        BlockCapabilityCache<ZapEnergyHandler, Direction> c = zapPushCaches[dir.ordinal()];
-        if (c == null) {
-            c = BlockCapabilityCache.create(
-                    FTBICCapabilities.ZAP_ENERGY_BLOCK, serverLevel, worldPosition.relative(dir), dir.getOpposite());
-            zapPushCaches[dir.ordinal()] = c;
-        }
-        return c;
+    private BlockCapabilityCache<EnergyHandler, Direction> fePushCache(
+            ServerLevel serverLevel, BlockPos outputPos, Direction dir) {
+        BlockPos target = outputPos.relative(dir);
+        long key = target.asLong() ^ ((long) dir.ordinal() << 56);
+        return fePushCaches.computeIfAbsent(
+                key,
+                ignored ->
+                        BlockCapabilityCache.create(Capabilities.Energy.BLOCK, serverLevel, target, dir.getOpposite()));
+    }
+
+    private BlockCapabilityCache<ZapEnergyHandler, Direction> zapPushCache(
+            ServerLevel serverLevel, BlockPos outputPos, Direction dir) {
+        BlockPos target = outputPos.relative(dir);
+        long key = target.asLong() ^ ((long) dir.ordinal() << 56);
+        return zapPushCaches.computeIfAbsent(
+                key,
+                ignored -> BlockCapabilityCache.create(
+                        FTBICCapabilities.ZAP_ENERGY_BLOCK, serverLevel, target, dir.getOpposite()));
     }
 
     @Override

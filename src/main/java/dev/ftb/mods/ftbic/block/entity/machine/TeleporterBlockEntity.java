@@ -7,6 +7,7 @@ import dev.ftb.mods.ftbic.block.entity.generator.GeneratorBlockEntity;
 import dev.ftb.mods.ftbic.net.TeleporterListPayload;
 import dev.ftb.mods.ftbic.registry.TeleporterChunkTickets;
 import dev.ftb.mods.ftbic.screen.TeleporterMenu;
+import dev.ftb.mods.ftbic.sound.FTBICSounds;
 import dev.ftb.mods.ftbic.util.CachedEnergyStorage;
 import dev.ftb.mods.ftbic.util.SideConfiguration;
 import dev.ftb.mods.ftbic.util.TeleporterEntry;
@@ -26,7 +27,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
@@ -306,8 +306,8 @@ public class TeleporterBlockEntity extends GeneratorBlockEntity {
                 worldPosition.getX() + 0.5,
                 worldPosition.getY() + 1.5,
                 worldPosition.getZ() + 0.5,
-                SoundEvents.ENDERMAN_TELEPORT,
-                SoundSource.NEUTRAL,
+                FTBICSounds.TELEPORT.get(),
+                SoundSource.BLOCKS,
                 1F,
                 1F);
         linkedLevel.playSound(
@@ -315,8 +315,8 @@ public class TeleporterBlockEntity extends GeneratorBlockEntity {
                 player.getX(),
                 player.getEyeY(),
                 player.getZ(),
-                SoundEvents.ENDERMAN_TELEPORT,
-                SoundSource.NEUTRAL,
+                FTBICSounds.TELEPORT.get(),
+                SoundSource.BLOCKS,
                 1F,
                 1F);
         cooldown = 20;

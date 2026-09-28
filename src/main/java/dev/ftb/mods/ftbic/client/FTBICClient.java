@@ -40,6 +40,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
@@ -48,6 +49,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 public final class FTBICClient {
 
     public FTBICClient(IEventBus eventBus, ModContainer container) {
+        container.registerConfig(ModConfig.Type.CLIENT, FTBICClientConfig.SPEC);
         if (ModList.get().isLoaded("guideme")) {
             FTBICGuide.init();
         }
