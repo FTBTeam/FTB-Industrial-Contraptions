@@ -30,7 +30,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="iridium_alloy" scale="2" />
 
-  Composite metals combine multiple ingots into new high-tier materials. The <ItemLink id="alloy_smelter" /> is the workhorse — every metallic alloy goes through it.
+  Composite metals combine multiple ingots into new high-tier materials. The <ItemLink id="alloy_smelter" /> is the workhorse: every metallic alloy goes through it.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -82,7 +82,7 @@ Made in the <ItemLink id="alloy_smelter" /> from raw ingots. Each can be re-mace
 ***
 
 <Column alignItems="center" fullWidth={true}>
-  ## <Color id="gold">Steel — The Advanced Alloy Gateway</Color>
+  ## <Color id="gold">Steel: The Advanced Alloy Gateway</Color>
 </Column>
 
 <Row>
@@ -90,7 +90,7 @@ Made in the <ItemLink id="alloy_smelter" /> from raw ingots. Each can be re-mace
   ### <Color id="aqua">Steel Ingot</Color>
 </Row>
 
-The most important alloy in the chain — **every advanced alloy recipe begins with steel.** Made in the <ItemLink id="alloy_smelter" /> by alloying <ItemLink id="industrial_grade_metal" /> with carbon:
+The most important alloy in the chain: **every advanced alloy recipe begins with steel.** Made in the <ItemLink id="alloy_smelter" /> by alloying <ItemLink id="industrial_grade_metal" /> with carbon:
 
 * 1 industrial grade metal + 1 coal → 1 steel ingot
 * 1 industrial grade metal + 1 charcoal → 1 steel ingot
@@ -111,7 +111,7 @@ Stockpile steel before tackling the <ItemLink id="advanced_machine_block" />, <I
   ### <Color id="aqua">Mixed Metal Blend</Color>
 </Row>
 
-Recovered by macerating <ItemLink id="advanced_alloy" /> back into a blend that can be re-smelted into advanced alloy. There is no shaped craft for blend — the alloy smelter recipes skip this stage entirely.
+Recovered by macerating <ItemLink id="advanced_alloy" /> back into a blend that can be re-smelted into advanced alloy. There is no shaped craft for blend. The alloy smelter recipes skip this stage entirely.
 
 <RecipesFor id="mixed_metal_blend" />
 
@@ -120,7 +120,7 @@ Recovered by macerating <ItemLink id="advanced_alloy" /> back into a blend that 
   ### <Color id="aqua">Industrial Grade Metal</Color>
 </Row>
 
-Compressed iron — three iron ingots crushed into one. Feeds the <ItemLink id="machine_block" /> and is the primary ingredient for steel.
+Compressed iron: three iron ingots crushed into one. Feeds the <ItemLink id="machine_block" /> and is the primary ingredient for steel.
 
 <RecipeFor id="industrial_grade_metal" />
 
@@ -142,7 +142,7 @@ The cornerstone of every late-game machine, armor piece, reactor component, and 
 * 1 steel + 1 electrum + 1 aluminum → 1 advanced alloy
 * 1 steel + 2 invar + 1 aluminum → 1 advanced alloy
 
-Pick whichever path matches your available alloys — bronze is the cheapest if you have copper/tin spare, invar takes more raw iron, electrum is the most efficient ingot count if you have silver and gold to burn.
+Pick whichever path matches your available alloys: bronze is the cheapest if you have copper/tin spare, invar takes more raw iron, electrum is the most efficient ingot count if you have silver and gold to burn.
 
 <RecipesFor id="advanced_alloy" />
 
@@ -151,7 +151,7 @@ Pick whichever path matches your available alloys — bronze is the cheapest if 
   ### <Color id="aqua">Iridium Alloy</Color>
 </Row>
 
-Iridium plates reinforced with <ItemLink id="advanced_alloy" />. Final-tier alloy — required for <ItemLink id="iridium_circuit" />, <ItemLink id="iridium_neutron_reflector" />, and <ItemLink id="quantum_helmet" />.
+Iridium plates reinforced with <ItemLink id="advanced_alloy" />. Final-tier alloy, required for <ItemLink id="iridium_circuit" />, <ItemLink id="iridium_neutron_reflector" />, and <ItemLink id="quantum_helmet" />.
 
 <RecipeFor id="iridium_alloy" />
 
@@ -162,7 +162,7 @@ Iridium plates reinforced with <ItemLink id="advanced_alloy" />. Final-tier allo
   ## <Color id="gold">Enderium</Color>
 </Column>
 
-Purple-blue magical alloy — used in the <ItemLink id="teleporter" />, <ItemLink id="iv_cable" />, and advanced circuits.
+Purple-blue magical alloy, used in the <ItemLink id="teleporter" />, <ItemLink id="iv_cable" />, and advanced circuits.
 
 <Row>
   <ItemImage id="enderium_ingot" />

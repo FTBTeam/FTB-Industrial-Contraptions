@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ftbic:iv_cable",
+    "ftbic:iv_cable",
+    "minecraft:redstone",
+    "minecraft:glowstone_dust"
+  ],
+  "result": {
+    "count": 2,
+    "id": "ftbic:superconducting_cable"
+  },
+  "show_notification": false
+}

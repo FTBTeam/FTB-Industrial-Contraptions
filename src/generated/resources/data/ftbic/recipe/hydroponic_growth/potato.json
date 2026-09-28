@@ -1,0 +1,44 @@
+{
+  "type": "ftbic:hydroponic_growth",
+  "input_fluids": [
+    {
+      "amount": 250,
+      "ingredient": "minecraft:water"
+    }
+  ],
+  "inputs": [
+    {
+      "ingredient": "minecraft:potato"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "minecraft:potato"
+      }
+    },
+    {
+      "item": {
+        "count": 2,
+        "id": "minecraft:potato"
+      }
+    },
+    {
+      "chance": 0.05,
+      "item": {
+        "id": "minecraft:potato"
+      }
+    }
+  ],
+  "soil_options": [
+    {
+      "ingredient": "minecraft:dirt",
+      "speed": 1.0
+    },
+    {
+      "ingredient": "minecraft:moss_block",
+      "speed": 1.25
+    }
+  ]
+}

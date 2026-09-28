@@ -7,9 +7,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.Nullable;
 
 public record MaterialEntry(
-		Material material,
-		MaterialComponent component,
-		String name,
-		@Nullable DeferredBlock<Block> block,
-		DeferredItem<Item> item) {
-}
+        Material material,
+        MaterialComponent component,
+        String name,
+        @Nullable DeferredBlock<Block> block,
+        DeferredItem<Item> item) {}

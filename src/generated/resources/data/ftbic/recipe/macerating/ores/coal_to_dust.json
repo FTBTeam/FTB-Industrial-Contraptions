@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "ftbic:recipe_toggle",
+      "option": "add_gem_from_ore_recipes"
+    }
+  ],
   "type": "ftbic:macerating",
   "inputs": [
     {

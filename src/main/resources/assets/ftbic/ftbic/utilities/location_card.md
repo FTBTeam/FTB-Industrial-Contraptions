@@ -13,7 +13,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="location_card" scale="2" />
 
-  A portable shortcut for binding <ItemLink id="teleporter" />s. Save a teleporter's coordinates to the card, then use the card to program another teleporter's destination — no need to scroll the peer-discovery list.
+  A portable shortcut for binding <ItemLink id="teleporter" />s. Save a teleporter's coordinates to the card, then use the card to program another teleporter's destination, with no need to scroll the peer-discovery list.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>

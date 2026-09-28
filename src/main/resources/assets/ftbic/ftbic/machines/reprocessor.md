@@ -15,7 +15,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="reprocessor" scale="2" />
 
-  Turns **any junk item** into <ItemLink id="scrap" />. Scrap is a premium Basic Generator fuel and the stepping-stone to <ItemLink id="scrap_box" /> — a randomised jackpot of rare materials.
+  Turns **any junk item** into <ItemLink id="scrap" />. Scrap is a premium Basic Generator fuel and can be crafted into <ItemLink id="scrap_box" /> for a random reward.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -25,9 +25,9 @@ item_ids:
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
 
-* Input: cobblestone, dirt, rotten flesh, sticks — anything tagged recyclable.
+* Input: cobblestone, dirt, rotten flesh, sticks, or anything tagged recyclable.
 * Output: ~12.5% chance of scrap per operation (configurable).
-* **Stats:** LV tier, 4,000 zap buffer, 8 zap/t use.
+* **Stats:** MV tier, <Energy config="machines.reprocessor_capacity" /> buffer, <Energy config="machines.reprocessor_use" rate="true" /> use.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 
@@ -36,6 +36,6 @@ item_ids:
   ### <Color id="aqua">Scrap Box</Color>
 </Row>
 
-9 scrap compress into a Scrap Box. Right-clicking gives a random loot drop — anything from coal to diamond gear.
+9 scrap compress into a Scrap Box. Use it to drop one random item, ranging from common materials to rare iridium dust. Crouch while using a stack to open every box at once.
 
 <RecipeFor id="scrap_box" />

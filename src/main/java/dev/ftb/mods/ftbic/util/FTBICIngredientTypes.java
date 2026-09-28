@@ -7,12 +7,17 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public final class FTBICIngredientTypes {
-	public static final DeferredRegister<IngredientType<?>> REGISTRY =
-			DeferredRegister.create(NeoForgeRegistries.INGREDIENT_TYPES, FTBIC.MOD_ID);
+    public static final DeferredRegister<IngredientType<?>> REGISTRY =
+            DeferredRegister.create(NeoForgeRegistries.INGREDIENT_TYPES, FTBIC.MOD_ID);
 
-	public static final DeferredHolder<IngredientType<?>, IngredientType<FluidCellIngredient>> FLUID_CELL =
-			REGISTRY.register("fluid_cell",
-					() -> new IngredientType<>(FluidCellIngredient.CODEC, FluidCellIngredient.STREAM_CODEC));
+    public static final DeferredHolder<IngredientType<?>, IngredientType<FluidCellIngredient>> FLUID_CELL =
+            REGISTRY.register(
+                    "fluid_cell",
+                    () -> new IngredientType<>(FluidCellIngredient.CODEC, FluidCellIngredient.STREAM_CODEC));
 
-	private FTBICIngredientTypes() {}
+    public static final DeferredHolder<IngredientType<?>, IngredientType<RefiningIngredient>> REFINING =
+            REGISTRY.register(
+                    "refining", () -> new IngredientType<>(RefiningIngredient.CODEC, RefiningIngredient.STREAM_CODEC));
+
+    private FTBICIngredientTypes() {}
 }

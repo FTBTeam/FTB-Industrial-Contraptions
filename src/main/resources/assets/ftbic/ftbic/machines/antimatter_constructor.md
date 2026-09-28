@@ -15,7 +15,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="antimatter_constructor" scale="2" />
 
-  The endgame machine. Fabricates <ItemLink id="antimatter" /> and <ItemLink id="antimatter_crystal" /> — the only materials used in <ItemLink id="quantum_helmet" /> and the <ItemLink id="iv_rectifier" /> line.
+  The endgame machine. Fabricates <ItemLink id="antimatter" /> and <ItemLink id="antimatter_crystal" />, the only materials used in <ItemLink id="quantum_helmet" /><ZapMode> and the <ItemLink id="iv_rectifier" /> line</ZapMode>.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -29,9 +29,9 @@ item_ids:
   ## <Color id="gold">Operation</Color>
 </Column>
 
-* **Tier:** EV
-* **Buffer:** 1,000,000 zaps
-* Slowly accumulates antimatter fuel from raw energy. Requires a sustained EV feed — plan for a nuclear reactor or a wall of <ItemLink id="ev_solar_panel" />s.
+* **Tier:** IV
+* **Buffer:** <Energy config="machines.antimatter_constructor_capacity" />
+* Slowly accumulates antimatter fuel from raw energy. Requires a sustained IV feed. Plan for a nuclear reactor or a wall of <ItemLink id="ev_solar_panel" />s.
 * Accepts "boost" items (see `antimatter_boost` recipes) that temporarily multiply output.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -41,6 +41,6 @@ item_ids:
   ### <Color id="aqua">Antimatter Crystal</Color>
 </Row>
 
-Compressed antimatter — the gem form, used directly in late-game recipes.
+Compressed antimatter: the gem form, used directly in late-game recipes.
 
 <RecipeFor id="antimatter_crystal" />

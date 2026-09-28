@@ -34,7 +34,7 @@ item_ids:
   ## <Color id="gold">Coolant Cells</Color>
 </Column>
 
-Store heat in a finite buffer. When a cell saturates, it stops absorbing — designs that rely solely on cells are **pulse** designs with planned downtime.
+Store heat in a finite buffer. When a cell saturates, it stops absorbing. Designs that rely solely on cells are **pulse** designs with planned downtime.
 
 <Row>
   <ItemImage id="small_coolant_cell" />
@@ -98,7 +98,7 @@ Pulls heat from adjacent **components** (coolant cells) rather than the hull. Th
   ### <Color id="aqua">Overclocked Heat Vent</Color>
 </Row>
 
-Hybrid vent — dissipates to both hull and neighbors. Self-damaging under heavy load but potent when placed correctly.
+Hybrid vent: dissipates to both hull and neighbors. Self-damaging under heavy load but potent when placed correctly.
 
 <RecipeFor id="overclocked_heat_vent" />
 
@@ -118,7 +118,7 @@ The endgame vent. Used in IV-class designs.
   ## <Color id="gold">Heat Exchangers</Color>
 </Column>
 
-Exchangers **equalize** heat — they move heat from hotter neighbors to cooler ones, or from the reactor hull into a component. Without exchangers, heat stays concentrated around fuel rods.
+Exchangers **equalize** heat: they move heat from hotter neighbors to cooler ones, or from the reactor hull into a component. Without exchangers, heat stays concentrated around fuel rods.
 
 <Row>
   <ItemImage id="heat_exchanger" />
@@ -132,7 +132,7 @@ Exchangers **equalize** heat — they move heat from hotter neighbors to cooler 
   ### <Color id="aqua">Reactor Heat Exchanger</Color>
 </Row>
 
-Exchanges heat specifically with the reactor hull — pulls hull heat into the component grid to be dissipated by vents.
+Exchanges heat specifically with the reactor hull. It pulls hull heat into the component grid to be dissipated by vents.
 
 <RecipeFor id="reactor_heat_exchanger" />
 

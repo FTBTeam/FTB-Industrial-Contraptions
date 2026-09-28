@@ -13,7 +13,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="fluid_cell" scale="2" />
 
-  A portable 1-bucket fluid container. Accepts any fluid, stacks only when empty, and integrates with every machine that has a fluid slot — including the <ItemLink id="geothermal_generator" />.
+  A portable 1-bucket fluid container. Accepts any fluid, stacks up to 16 when the cells have identical contents, and integrates with every machine that has a fluid slot, including the <ItemLink id="geothermal_generator" />.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -24,6 +24,7 @@ item_ids:
 ***
 
 * Capacity: 1,000 mB (one bucket).
+* Empty cells stack together. Filled cells also stack when they contain the same fluid and amount.
 * Right-click a fluid source block to fill; right-click in the air to empty.
 * Insert into a machine's fluid slot to pipe its contents in (or out, depending on the machine).
 * Safer than buckets since dropped cells do not deplete sources.

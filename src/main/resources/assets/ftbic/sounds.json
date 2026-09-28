@@ -1,9 +1,118 @@
 {
-	"radiation": {
-		"sounds": [
-			"minecraft:ambient/nether/basalt_deltas/click2",
-			"minecraft:ambient/nether/basalt_deltas/click5",
-			"minecraft:ambient/nether/basalt_deltas/click7"
-		]
-	}
+  "radiation": {
+    "sounds": [
+      "minecraft:ambient/nether/basalt_deltas/click2",
+      "minecraft:ambient/nether/basalt_deltas/click5",
+      "minecraft:ambient/nether/basalt_deltas/click7"
+    ],
+    "subtitle": "subtitles.ftbic.radiation"
+  },
+  "macerator": {
+    "subtitle": "subtitles.ftbic.macerator",
+    "sounds": [
+      {
+        "name": "ftbic:macerator",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "compressor": {
+    "subtitle": "subtitles.ftbic.compressor",
+    "sounds": [
+      {
+        "name": "ftbic:compressor",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "centrifuge": {
+    "subtitle": "subtitles.ftbic.centrifuge",
+    "sounds": [
+      {
+        "name": "ftbic:centrifuge",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "ore_washer": {
+    "subtitle": "subtitles.ftbic.ore_washer",
+    "sounds": [
+      {
+        "name": "ftbic:ore_washer",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "reactor_warning": {
+    "subtitle": "subtitles.ftbic.reactor_warning",
+    "sounds": [
+      {
+        "name": "ftbic:reactor_warning",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+  "reactor_critical": {
+    "subtitle": "subtitles.ftbic.reactor_critical",
+    "sounds": [
+      {
+        "name": "ftbic:reactor_critical",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+  "nuke_arm": {
+    "subtitle": "subtitles.ftbic.nuke_arm",
+    "sounds": [
+      {
+        "name": "ftbic:nuke_arm",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+  "nuke_tick": {
+    "subtitle": "subtitles.ftbic.nuke_tick",
+    "sounds": [
+      {
+        "name": "ftbic:nuke_tick",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+  "generator": {
+    "subtitle": "subtitles.ftbic.generator",
+    "sounds": [
+      {
+        "name": "ftbic:generator",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "charge_complete": {
+    "subtitle": "subtitles.ftbic.charge_complete",
+    "sounds": [
+      {
+        "name": "ftbic:charge_complete",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+  "teleport": {
+    "subtitle": "subtitles.ftbic.teleport",
+    "sounds": [
+      {
+        "name": "ftbic:teleport",
+        "attenuation_distance": 32
+      }
+    ]
+  },
+  "nuclear_explosion": {
+    "subtitle": "subtitles.ftbic.nuclear_explosion",
+    "sounds": [
+      {
+        "name": "ftbic:nuclear_explosion",
+        "attenuation_distance": 32
+      }
+    ]
+  }
 }

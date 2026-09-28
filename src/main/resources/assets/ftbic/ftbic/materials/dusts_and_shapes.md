@@ -55,7 +55,7 @@ Ground coal. Crafting input for carbon fibers and coal balls.
   ### <Color id="aqua">Diamond Dust</Color>
 </Row>
 
-Grind a diamond in a macerator, compress two dusts back into a diamond — a free +100% when you want diamonds from recycled gear.
+Grind a diamond in a macerator, compress two dusts back into a diamond, for a free +100% when you want diamonds from recycled gear.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:paper",
+    "minecraft:redstone",
+    "ftbic:electronic_circuit"
+  ],
+  "result": {
+    "id": "ftbic:configuration_card"
+  },
+  "show_notification": false
+}

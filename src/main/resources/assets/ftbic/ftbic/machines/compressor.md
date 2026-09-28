@@ -15,7 +15,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="compressor" scale="2" />
 
-  Squeezes materials into denser forms — carbon into <ItemLink id="carbon_plate" />, copper plates into <ItemLink id="dense_copper_plate" />, snowballs into ice, dust stacks into gems.
+  Squeezes materials into denser forms: carbon into <ItemLink id="carbon_plate" />, copper plates into <ItemLink id="dense_copper_plate" />, snowballs into ice, dust stacks into gems.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -45,6 +45,6 @@ item_ids:
   ### <Color id="aqua">Advanced Compressor</Color>
 </Row>
 
-HV tier. 16 zap/t, 10,000 zap buffer. Same recipes — faster.
+MV tier. <Energy config="machines.advanced_compressor_use" rate="true" />, <Energy config="machines.advanced_compressor_capacity" /> buffer. Same recipes and speed, and it accepts <ItemLink id="parallel_processing_upgrade" />s.
 
 <RecipeFor id="advanced_compressor" />

@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.ftb.mods.ftbic.mixin",
+  "plugin": "dev.ftb.mods.ftbic.mixin.FTBICMixinPlugin",
+  "mixins": [
+    "compat.mysticalagriculture.RecipeIngredientCacheMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

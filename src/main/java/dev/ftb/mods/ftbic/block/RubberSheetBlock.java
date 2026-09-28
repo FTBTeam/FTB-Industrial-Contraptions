@@ -10,14 +10,14 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class RubberSheetBlock extends SlimeBlock {
-	public static final VoxelShape SHAPE = box(0D, 0D, 0D, 16D, 3D, 16D);
+    public static final VoxelShape SHAPE = box(0D, 0D, 0D, 16D, 3D, 16D);
 
-	public RubberSheetBlock(BlockBehaviour.Properties props) {
-		super(props.strength(1F).friction(0.8F).sound(SoundType.SLIME_BLOCK));
-	}
+    public RubberSheetBlock(BlockBehaviour.Properties props) {
+        super(props.strength(1F).friction(0.8F).sound(SoundType.SLIME_BLOCK));
+    }
 
-	@Override
-	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-		return SHAPE;
-	}
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
+        return SHAPE;
+    }
 }

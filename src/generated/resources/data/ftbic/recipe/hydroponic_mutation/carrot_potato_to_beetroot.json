@@ -1,0 +1,26 @@
+{
+  "type": "ftbic:hydroponic_mutation",
+  "input_fluids": [
+    {
+      "amount": 500,
+      "ingredient": "minecraft:water"
+    }
+  ],
+  "inputs": [
+    {
+      "ingredient": "minecraft:carrot"
+    },
+    {
+      "ingredient": "minecraft:potato"
+    }
+  ],
+  "outputs": [
+    {
+      "chance": 0.15,
+      "item": {
+        "id": "minecraft:beetroot_seeds"
+      }
+    }
+  ],
+  "processing_time": 2.0
+}

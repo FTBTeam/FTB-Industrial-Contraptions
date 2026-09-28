@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class LVTransformerBlockEntity extends TransformerBlockEntity {
-	public LVTransformerBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.LV_TRANSFORMER, pos, state);
-	}
+    public LVTransformerBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.LV_TRANSFORMER, pos, state);
+    }
 }

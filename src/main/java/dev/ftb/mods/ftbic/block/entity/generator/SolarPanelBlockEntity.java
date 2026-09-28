@@ -9,26 +9,29 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SolarPanelBlockEntity extends GeneratorBlockEntity {
-	public SolarPanelBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
-		super(type, pos, state);
-	}
+    public SolarPanelBlockEntity(ElectricBlockInstance type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
 
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory inv) {
-		return new SolarPanelMenu(id, inv, this);
-	}
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv) {
+        return new SolarPanelMenu(id, inv, this);
+    }
 
-	@Override
-	public void initProperties() {
-		super.initProperties();
-		maxEnergyOutputTransfer = Math.max(FTBICConfig.ENERGY.LV_TRANSFER_RATE.get(), maxEnergyOutput);
-	}
+    @Override
+    public void initProperties() {
+        super.initProperties();
+        maxEnergyOutputTransfer = Math.max(FTBICConfig.ENERGY.LV_TRANSFER_RATE.get(), maxEnergyOutput);
+    }
 
-	@Override
-	public void handleGeneration() {
-		if (energy < energyCapacity && level.isBrightOutside() && level.canSeeSky(worldPosition.above())) {
-			energy += Math.min(energyCapacity - energy, maxEnergyOutput);
-			setChanged();
-		}
-	}
+    @Override
+    public void handleGeneration() {
+        if (energy < energyCapacity
+                && level.isBrightOutside()
+                && !level.getBlockState(worldPosition.above()).canOcclude()
+                && level.canSeeSky(worldPosition.above())) {
+            energy += Math.min(energyCapacity - energy, maxEnergyOutput);
+            setChanged();
+        }
+    }
 }

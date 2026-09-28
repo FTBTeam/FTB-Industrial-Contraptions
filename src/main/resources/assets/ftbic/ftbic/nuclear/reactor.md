@@ -14,7 +14,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="nuclear_reactor" scale="2" />
 
-  The reactor core. A 3×3 interior grid of component slots, expandable with up to **6 reactor chambers** (one on each face) for a total of 9 + 6×3 = 27 slots.
+  The reactor core has **3 columns of 6 slots** (18 slots). Attach up to **6 reactor chambers**, one on each face, to expand it to **9 columns and 54 slots**.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -28,7 +28,7 @@ item_ids:
   ## <Color id="gold">Reactor Chamber</Color>
 </Column>
 
-Attach a chamber to any face of the reactor to unlock a new column of 3 component slots (up to a maximum of 6 chambers → 9 columns → 27 total slots). Chambers also forward piped-in **power** and **items** through to the central reactor — plug a cable or hopper into a chamber face and it reaches the reactor's network and inventory exactly as if you'd attached it to the reactor directly.
+Attach a chamber to any face of the reactor to unlock another column of **6 component slots**, up to 9 columns and 54 slots with all six chambers. Chambers also forward **power** and **items** to the central reactor, so cables and item pipes can connect through a chamber.
 
 <RecipeFor id="nuclear_reactor_chamber" />
 
@@ -40,10 +40,12 @@ Attach a chamber to any face of the reactor to unlock a new column of 3 componen
 </Column>
 
 * **Tier:** output is EV by default; maximal designs can push into IV territory.
-* **Internal buffer:** 50,000 zaps.
-* Open the GUI and drop components into the grid — fuel rods, heat vents, coolant cells, reflectors, plating.
-* Toggle the reactor with redstone. Without a signal it pauses — letting you cool between pulses.
+* **Internal buffer:** <Energy config="machines.nuclear_reactor_capacity" />.
+* Open the GUI and drop components into the grid: fuel rods, heat vents, coolant cells, reflectors, plating.
+* Toggle the reactor with redstone. Without a signal it pauses, letting you cool between pulses.
 * Jade / Top shows live heat % and output.
+
+Use [Reactor Blueprints](blueprint.md) to load a planned layout as ghost slots and fill it from your inventory with **Build from Inventory**.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
@@ -57,9 +59,9 @@ The reactor samples every outward-facing face of its hull and attached chambers 
 * 0 water-adjacent faces → **1×** cooling (baseline)
 * Fully submerged → **2×** cooling
 
-Cheap trick: drop the reactor into a shallow pool and seal the top with glass — every `reactorCool` value doubles for free. Flowing or still water both count; lava and air don't.
+Cheap trick: drop the reactor into a shallow pool and seal the top with glass. Every `reactorCool` value doubles for free. Flowing or still water both count; lava and air don't.
 
-Reinforced cables (and their burnt variant) are treated as **neutral** faces — they are skipped entirely when the ratio is computed. Running power out of a submerged reactor through a reinforced cable will not dilute your water bonus.
+Reinforced cables (and their burnt variant) are treated as **neutral** faces: they are skipped entirely when the ratio is computed. Running power out of a submerged reactor through a reinforced cable will not dilute your water bonus.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 
@@ -67,6 +69,6 @@ Reinforced cables (and their burnt variant) are treated as **neutral** faces —
   ## <Color id="gold">Containment</Color>
 </Column>
 
-Reactors always explode when heat hits 100%. Wall the reactor with blast-resistant blocks (<ItemLink id="reinforced_stone" /> or <ItemLink id="reinforced_glass" />) before pushing aggressive designs — the explosion scales from **10 blocks base radius** to a hard cap of **80 blocks**, enough to reach bedrock.
+Reactors always explode when heat hits 100%. Wall the reactor with blast-resistant blocks (<ItemLink id="reinforced_stone" /> or <ItemLink id="reinforced_glass" />) before pushing aggressive designs. The explosion scales from **10 blocks base radius** to a hard cap of **80 blocks**, enough to reach bedrock.
 
 See [Fuel Rods](fuel_rods.md), [Cooling](cooling.md), [Reflectors](reflectors.md), and [Plating](plating.md) for the pieces that go in the slots.

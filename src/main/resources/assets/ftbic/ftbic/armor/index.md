@@ -10,7 +10,7 @@ navigation:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="quantum_chestplate" scale="2" />
 
-  FTBIC armor consumes **zaps** to absorb damage, fly, and run its set effects. Chestplates hold the energy for the whole set — without one, the rest of the armor provides only its base durability.
+  FTBIC armor consumes **<EnergyUnit />** to absorb damage and power flight. Chestplates hold the energy for the whole set. The pieces never wear down, but they provide no protection when the matching chestplate is empty or absent.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -20,7 +20,7 @@ navigation:
   ## <Color id="gold">Charging</Color>
 </Column>
 
-Drop pieces into a <ItemLink id="charge_pad" /> or a charge slot on a battery box. Quantum armor accepts EV charge rates; carbon armor caps at HV.
+Wear the chestplate and stand on a powered <ItemLink id="charge_pad" />, or place the chestplate in one of its four charging slots. The other armor pieces do not store energy.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

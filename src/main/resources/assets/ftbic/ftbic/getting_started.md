@@ -18,7 +18,7 @@ navigation:
 ***
 
 <Column alignItems="center" fullWidth={true}>
-  ## <Color id="gold">Step 1 — Rubber</Color>
+  ## <Color id="gold">Step 1: Rubber</Color>
 </Column>
 
 Hunt slimes (or build a slime farm) and **smelt** each slime ball to get **8 rubber**. A handful of slime balls is enough to wire up the whole early game.
@@ -28,7 +28,7 @@ Rubber is used for nearly every cable and machine in the mod.
 <ItemImage id="minecraft:air" scale="0.25"/>
 
 <Column alignItems="center" fullWidth={true}>
-  ## <Color id="gold">Step 2 — The Iron Furnace</Color>
+  ## <Color id="gold">Step 2: The Iron Furnace</Color>
 </Column>
 
 Before electricity, smelt twice as efficiently with a fuel-powered upgrade over vanilla.
@@ -45,7 +45,7 @@ Burns 1 coal for **12 items** (vs. vanilla's 8). A reliable first step while you
 <ItemImage id="minecraft:air" scale="0.25"/>
 
 <Column alignItems="center" fullWidth={true}>
-  ## <Color id="gold">Step 3 — Circuits & the Machine Block</Color>
+  ## <Color id="gold">Step 3: Circuits & the Machine Block</Color>
 </Column>
 
 <Row>
@@ -69,14 +69,14 @@ Copper wire plus redstone on an iron plate. Required for nearly every LV-tier de
 <ItemImage id="minecraft:air" scale="0.25"/>
 
 <Column alignItems="center" fullWidth={true}>
-  ## <Color id="gold">Step 4 — First Power</Color>
+  ## <Color id="gold">Step 4: First Power</Color>
 </Column>
 
 Build a <ItemLink id="basic_generator" />, connect it with <ItemLink id="lv_cable" /> to a <ItemLink id="macerator" /> or <ItemLink id="powered_furnace" />, and you are in the energy age.
 
 <RecipeFor id="basic_generator" />
 
-Ore doubling via the macerator is the single biggest early-game payoff — every raw ingot becomes **2 dusts**, which smelt back into ingots.
+Macerate each supported raw ore into **2 crushed ore**, then smelt it for two ingots. Add an [Ore Washer and Centrifuge](machines/ore_refining.md) to reach **5 ingots per raw ore**, or **15 per ore block**.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 
@@ -84,10 +84,10 @@ Ore doubling via the macerator is the single biggest early-game payoff — every
   ## <Color id="gold">Progression at a Glance</Color>
 </Column>
 
-1. **LV** — Basic Generator, first machines, Macerator, Powered Furnace
-2. **MV** — Solar panels, ore processing chains (dusts → plates/gears/rods)
-3. **HV** — Advanced machines, Compressor, Extruder, Roller
-4. **EV** — Nuclear reactor, Quantum gear, Teleporter
-5. **IV / endgame** — Antimatter, Mechanical Elytra, full automation
+1. **LV**: Basic Generator, first machines, Macerator, Powered Furnace
+2. **MV**: Solar panels, ore processing chains (dusts → plates/gears/rods)
+3. **HV**: Advanced machines, Compressor, Extruder, Roller
+4. **EV**: Nuclear reactor, Quantum gear, Teleporter
+5. **IV / endgame**: Antimatter, Mechanical Elytra, full automation
 
 Read the [Energy Network](energy/index.md) page next to understand **tiers**, **voltage**, and what happens when you feed too much into a low-tier cable.

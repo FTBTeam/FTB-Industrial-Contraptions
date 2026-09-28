@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:advanced_alloy",
+    "B": "ftbic:ev_battery_box",
+    "E": "ftbic:energy_crystal",
+    "G": "#c:glass_blocks/colorless",
+    "M": "ftbic:advanced_machine_block"
+  },
+  "pattern": [
+    "AGA",
+    "EBE",
+    "AMA"
+  ],
+  "result": {
+    "id": "ftbic:industrial_bank_cell"
+  },
+  "show_notification": false
+}

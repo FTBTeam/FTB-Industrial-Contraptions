@@ -22,14 +22,14 @@ navigation:
 
 | Generator | Tier | Output | Conditions |
 |-----------|------|--------|-----------|
-| <ItemLink id="basic_generator" /> | LV | 10 zap/t | While fuel burns |
-| <ItemLink id="geothermal_generator" /> | LV | 20 zap/t | Needs lava in tank |
-| <ItemLink id="wind_mill" /> | LV | 0.3–6.5 zap/t | Height-dependent |
-| <ItemLink id="lv_solar_panel" /> | LV | 1 zap/t | Daylight, sky access |
-| <ItemLink id="mv_solar_panel" /> | MV | 8 zap/t | Daylight, sky access |
-| <ItemLink id="hv_solar_panel" /> | HV | 64 zap/t | Daylight, sky access |
-| <ItemLink id="ev_solar_panel" /> | EV | 512 zap/t | Daylight, sky access |
-| <ItemLink id="nuclear_reactor" /> | up to IV | 1,000+ zap/t | Depends on layout |
+| <ItemLink id="basic_generator" /> | LV | <Energy config="machines.basic_generator_output" rate="true" /> | While fuel burns |
+| <ItemLink id="geothermal_generator" /> | LV | <Energy config="machines.geothermal_generator_output" rate="true" /> | Needs lava in tank |
+| <ItemLink id="wind_mill" /> | LV | <ZapMode>0.3 to 6.5 z/t</ZapMode><FEMode><Energy config="machines.wind_mill_min_output" rate="true" /> to <Energy config="machines.wind_mill_max_output" rate="true" /></FEMode> | Height-dependent |
+| <ItemLink id="lv_solar_panel" /> | LV | <Energy config="machines.lv_solar_panel_output" rate="true" /> | Daylight, sky access |
+| <ItemLink id="mv_solar_panel" /> | MV | <Energy config="machines.mv_solar_panel_output" rate="true" /> | Daylight, sky access |
+| <ItemLink id="hv_solar_panel" /> | HV | <Energy config="machines.hv_solar_panel_output" rate="true" /> | Daylight, sky access |
+| <ItemLink id="ev_solar_panel" /> | EV | <Energy config="machines.ev_solar_panel_output" rate="true" /> | Daylight, sky access |
+| <ItemLink id="nuclear_reactor" /> | up to IV | <Energy zaps="1000" rate="true" /> or more | Depends on layout |
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

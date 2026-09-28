@@ -14,30 +14,27 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record SelectTeleporterPayload(ResourceKey<Level> dimension, BlockPos pos) implements CustomPacketPayload {
-	public static final Type<SelectTeleporterPayload> TYPE = new Type<>(FTBIC.id("select_teleporter"));
+    public static final Type<SelectTeleporterPayload> TYPE = new Type<>(FTBIC.id("select_teleporter"));
 
-	public static final StreamCodec<FriendlyByteBuf, SelectTeleporterPayload> STREAM_CODEC = StreamCodec.of(
-			(buf, pl) -> {
-				buf.writeIdentifier(pl.dimension.identifier());
-				buf.writeBlockPos(pl.pos);
-			},
-			buf -> new SelectTeleporterPayload(
-					ResourceKey.create(Registries.DIMENSION, buf.readIdentifier()),
-					buf.readBlockPos())
-	);
+    public static final StreamCodec<FriendlyByteBuf, SelectTeleporterPayload> STREAM_CODEC = StreamCodec.of(
+            (buf, pl) -> {
+                buf.writeIdentifier(pl.dimension.identifier());
+                buf.writeBlockPos(pl.pos);
+            },
+            buf -> new SelectTeleporterPayload(
+                    ResourceKey.create(Registries.DIMENSION, buf.readIdentifier()), buf.readBlockPos()));
 
-	@Override
-	public Type<? extends CustomPacketPayload> type() {
-		return TYPE;
-	}
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
 
-	public static void handleOnServer(SelectTeleporterPayload payload, IPayloadContext context) {
-		context.enqueueWork(() -> {
-			if (!(context.player() instanceof ServerPlayer sp)) return;
-			if (!(sp.containerMenu instanceof TeleporterMenu menu)) return;
-			if (!(menu.blockEntity instanceof TeleporterBlockEntity source)) return;
-			source.select(sp, payload.dimension, payload.pos);
-		});
-	}
-
+    public static void handleOnServer(SelectTeleporterPayload payload, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (!(context.player() instanceof ServerPlayer sp)) return;
+            if (!(sp.containerMenu instanceof TeleporterMenu menu)) return;
+            if (!(menu.blockEntity instanceof TeleporterBlockEntity source)) return;
+            source.select(sp, payload.dimension, payload.pos);
+        });
+    }
 }

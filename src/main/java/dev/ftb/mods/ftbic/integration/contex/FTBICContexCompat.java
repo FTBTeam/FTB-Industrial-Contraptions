@@ -12,21 +12,21 @@ import net.neoforged.neoforge.event.AddPackFindersEvent;
 
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
 public final class FTBICContexCompat {
-	private static final String CONTEX_MOD_ID = "contex";
+    private static final String CONTEX_MOD_ID = "contex";
 
-	@SubscribeEvent
-	public static void onAddPackFinders(AddPackFindersEvent event) {
-		if (event.getPackType() != PackType.CLIENT_RESOURCES) return;
-		if (!ModList.get().isLoaded(CONTEX_MOD_ID)) return;
+    @SubscribeEvent
+    public static void onAddPackFinders(AddPackFindersEvent event) {
+        if (event.getPackType() != PackType.CLIENT_RESOURCES) return;
+        if (!ModList.get().isLoaded(CONTEX_MOD_ID)) return;
 
-		event.addPackFinders(
-				FTBIC.id("contex_compat"),
-				PackType.CLIENT_RESOURCES,
-				Component.literal("FTB IC ConTeX Compat"),
-				PackSource.BUILT_IN,
-				true,
-				Pack.Position.TOP);
-	}
+        event.addPackFinders(
+                FTBIC.id("contex_compat"),
+                PackType.CLIENT_RESOURCES,
+                Component.literal("FTB IC ConTeX Compat"),
+                PackSource.BUILT_IN,
+                true,
+                Pack.Position.TOP);
+    }
 
-	private FTBICContexCompat() {}
+    private FTBICContexCompat() {}
 }

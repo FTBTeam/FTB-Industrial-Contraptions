@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:paper",
+    "minecraft:blue_dye",
+    "ftbic:electronic_circuit"
+  ],
+  "result": {
+    "id": "ftbic:reactor_blueprint"
+  },
+  "show_notification": false
+}

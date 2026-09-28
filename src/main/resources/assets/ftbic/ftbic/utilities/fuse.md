@@ -23,4 +23,4 @@ item_ids:
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
 
-Machines burn out when fed higher voltage than they accept — see [Transformers](../energy/transformers.md) and the burn-out notes on the [Energy Network](../energy/index.md) page. Burnt cables are not repairable; recycle them for <ItemLink id="scrap" />.
+Machines burn out when fed higher voltage than they accept. See [Transformers](../energy/transformers.md) and the burn-out notes on the [Energy Network](../energy/index.md) page. Burnt cables are not repairable; recycle them for <ItemLink id="scrap" />.

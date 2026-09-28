@@ -13,7 +13,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="ejector_upgrade" scale="2" />
 
-  Automatically pushes finished items out of the machine's output slot into any adjacent inventory — hopper, chest, pipe, or another machine.
+  Automatically pushes finished items out of the machine's output slot into an adjacent inventory through a face that permits item output.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -23,6 +23,6 @@ item_ids:
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
 
-* Transfer rate is defined by the machine's configured **item transfer efficiency** (default 20 items/second-ish).
+* Choose output faces using [Side Configuration](../machines/side_configuration.md). Input-only and disabled item faces do not eject.
 * Pairs well with the <ItemLink id="powered_crafting_table" /> to build automation chains without hopper chains.
-* One ejector upgrade is enough — additional copies do not speed up output.
+* One ejector upgrade is enough. Additional copies do not speed up output.

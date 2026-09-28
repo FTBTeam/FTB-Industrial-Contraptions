@@ -26,7 +26,7 @@ item_ids:
   ### <Color id="aqua">Electronic Circuit</Color>
 </Row>
 
-Copper wire + redstone on iron. Gates the **LV** tier — used in every basic machine.
+Copper wire + redstone on iron. Gates the **LV** tier and is used in every basic machine.
 
 <RecipeFor id="electronic_circuit" />
 
@@ -35,7 +35,7 @@ Copper wire + redstone on iron. Gates the **LV** tier — used in every basic ma
   ### <Color id="aqua">Advanced Circuit</Color>
 </Row>
 
-Electronic circuits + glowstone + <ItemLink id="enderium_ingot" />. Gates **HV/EV** machines — advanced variants, teleporters, the antimatter constructor.
+Electronic circuits + glowstone + <ItemLink id="enderium_ingot" />. Gates **HV/EV** machines: advanced variants, teleporters, the antimatter constructor.
 
 <RecipeFor id="advanced_circuit" />
 
@@ -44,6 +44,6 @@ Electronic circuits + glowstone + <ItemLink id="enderium_ingot" />. Gates **HV/E
   ### <Color id="aqua">Iridium Circuit</Color>
 </Row>
 
-Advanced circuits + <ItemLink id="iridium_alloy" />. Gates **IV / endgame** — quantum gear and the final cable tier.
+Advanced circuits + <ItemLink id="iridium_alloy" />. Gates **IV / endgame**: quantum gear and the final cable tier.
 
 <RecipeFor id="iridium_circuit" />

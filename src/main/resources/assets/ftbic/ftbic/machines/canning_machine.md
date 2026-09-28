@@ -40,6 +40,7 @@ Stamped from tin plates. The container for every canned recipe.
 </Row>
 
 Takes any food item plus an empty can. Canned variants stack larger and preserve the full nutrition of the original.
+Eating canned food returns an empty can.
 
 <Row>
   <ItemImage id="light_spray_paint_can" />
@@ -50,4 +51,4 @@ Fill an <ItemLink id="empty_can" /> with any dye to make a <ItemLink id="light_s
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 
-**Stats:** LV tier, 1,200 zap buffer, 1 zap/t use.
+**Stats:** LV tier, <Energy config="machines.canning_machine_capacity" /> buffer, <Energy config="machines.canning_machine_use" rate="true" /> use.

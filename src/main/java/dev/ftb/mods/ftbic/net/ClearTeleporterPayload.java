@@ -10,28 +10,27 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ClearTeleporterPayload(boolean clearItems, boolean clearFluids) implements CustomPacketPayload {
-	public static final Type<ClearTeleporterPayload> TYPE = new Type<>(FTBIC.id("clear_teleporter"));
+    public static final Type<ClearTeleporterPayload> TYPE = new Type<>(FTBIC.id("clear_teleporter"));
 
-	public static final StreamCodec<FriendlyByteBuf, ClearTeleporterPayload> STREAM_CODEC = StreamCodec.of(
-			(buf, pl) -> {
-				buf.writeBoolean(pl.clearItems);
-				buf.writeBoolean(pl.clearFluids);
-			},
-			buf -> new ClearTeleporterPayload(buf.readBoolean(), buf.readBoolean())
-	);
+    public static final StreamCodec<FriendlyByteBuf, ClearTeleporterPayload> STREAM_CODEC = StreamCodec.of(
+            (buf, pl) -> {
+                buf.writeBoolean(pl.clearItems);
+                buf.writeBoolean(pl.clearFluids);
+            },
+            buf -> new ClearTeleporterPayload(buf.readBoolean(), buf.readBoolean()));
 
-	@Override
-	public Type<? extends CustomPacketPayload> type() {
-		return TYPE;
-	}
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
 
-	public static void handleOnServer(ClearTeleporterPayload payload, IPayloadContext context) {
-		context.enqueueWork(() -> {
-			if (!(context.player() instanceof ServerPlayer sp)) return;
-			if (!(sp.containerMenu instanceof TeleporterMenu menu)) return;
-			if (!(menu.blockEntity instanceof TeleporterBlockEntity be)) return;
-			if (payload.clearItems) be.clearStorage();
-			if (payload.clearFluids) be.clearFluids();
-		});
-	}
+    public static void handleOnServer(ClearTeleporterPayload payload, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (!(context.player() instanceof ServerPlayer sp)) return;
+            if (!(sp.containerMenu instanceof TeleporterMenu menu)) return;
+            if (!(menu.blockEntity instanceof TeleporterBlockEntity be)) return;
+            if (payload.clearItems) be.clearStorage();
+            if (payload.clearFluids) be.clearFluids();
+        });
+    }
 }

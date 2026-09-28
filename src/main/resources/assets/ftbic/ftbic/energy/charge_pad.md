@@ -27,9 +27,10 @@ item_ids:
   ## <Color id="gold">Usage</Color>
 </Column>
 
-* Wire power into any face — accepts up to **EV** input.
-* Internal buffer: 1,000,000 zaps.
+* Wire power into any face. The pad accepts up to **IV** input.
+* Internal buffer: <Energy config="machines.charge_pad_capacity" />.
 * Stand on top to recharge worn armor (<ItemLink id="carbon_chestplate" />, <ItemLink id="quantum_chestplate" />, <ItemLink id="mechanical_elytra" />) and any batteries in the inventory.
-* Faster than plugging batteries into a battery box one at a time — the full inventory charges in place.
+* Open the pad to charge up to four inserted rechargeable items, including Carbon and Quantum chestplates.
+* Standing on the pad and charging inserted items both draw from its energy buffer.
 
-Pair with an <ItemLink id="ev_battery_box" /> above a kitted-out player station for instant top-off after every expedition.
+Pair with an <ItemLink id="ev_battery_box" /> above a player station for quick charging after every expedition.

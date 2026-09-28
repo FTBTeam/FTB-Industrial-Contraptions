@@ -15,7 +15,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="iridium_neutron_reflector" scale="2" />
 
-  Reflectors count as a **valid rod neighbor** for output calculations — a rod next to a reflector behaves as if it had another rod there. Each reflector has a finite lifetime except the iridium one.
+  Reflectors count as a **valid rod neighbor** for output calculations: a rod next to a reflector behaves as if it had another rod there. Each reflector has a finite lifetime except the iridium one.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>

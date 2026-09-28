@@ -9,15 +9,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ReinforcedBlock extends Block {
-	public ReinforcedBlock(Properties props) {
-		super(props);
-	}
+    public ReinforcedBlock(Properties props) {
+        super(props);
+    }
 
-	@Override
-	public boolean canEntityDestroy(BlockState state, BlockGetter level, BlockPos pos, Entity entity) {
-		if (entity instanceof WitherBoss || entity instanceof WitherSkull) {
-			return false;
-		}
-		return super.canEntityDestroy(state, level, pos, entity);
-	}
+    @Override
+    public boolean canEntityDestroy(BlockState state, BlockGetter level, BlockPos pos, Entity entity) {
+        if (entity instanceof WitherBoss || entity instanceof WitherSkull) {
+            return false;
+        }
+        return super.canEntityDestroy(state, level, pos, entity);
+    }
 }

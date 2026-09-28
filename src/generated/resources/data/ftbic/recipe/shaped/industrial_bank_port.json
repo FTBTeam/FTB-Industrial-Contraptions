@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:advanced_alloy",
+    "C": "ftbic:advanced_circuit",
+    "M": "ftbic:advanced_machine_block",
+    "W": "ftbic:iv_cable"
+  },
+  "pattern": [
+    "AWA",
+    "CMC",
+    "AWA"
+  ],
+  "result": {
+    "id": "ftbic:industrial_bank_port"
+  },
+  "show_notification": false
+}

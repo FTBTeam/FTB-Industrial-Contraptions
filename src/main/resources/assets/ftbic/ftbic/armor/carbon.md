@@ -16,7 +16,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="carbon_chestplate" scale="2" />
 
-  The entry-tier powered armor set. Absorbs damage by spending 5,000 zaps per hit instead of durability. Capacity: **1,000,000 zaps** on the chestplate.
+  The entry tier powered armor set. Absorbs damage by spending <Energy config="equipment.armor_damage_energy" /> per point of damage absorbed instead of losing durability. Capacity: **<Energy config="equipment.carbon_armor_capacity" />** on the chestplate.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -55,4 +55,4 @@ Holds the full set's energy reserve.
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
 
-Without a charged chestplate, the other pieces provide only their baseline (weak) protection — the set only absorbs damage as a whole.
+Without a charged chestplate, the other pieces provide no protection. A low charge absorbs only as much damage as the remaining charge can cover.

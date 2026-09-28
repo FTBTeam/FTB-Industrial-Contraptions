@@ -13,7 +13,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="mechanical_elytra" scale="2" />
 
-  A powered elytra that recharges passively and glides without durability damage — as long as it has zaps.
+  A powered elytra with iron chestplate protection and a dedicated wing texture. It recharges in daylight under open sky and glides while it has charge.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -23,7 +23,7 @@ item_ids:
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
 
-* Capacity: **50,000 zaps**.
-* Passive recharge rate: 1 zap/t while equipped — full recharge takes ~40 minutes from empty, but in practice it sips energy faster than gliding burns it at cruise.
+* Capacity: **<Energy config="equipment.mechanical_elytra_capacity" />**.
+* Passive recharge rate: <Energy config="equipment.mechanical_elytra_recharge" rate="true" /> while worn in daylight under open sky, and not while gliding. Full recharge takes about 40 minutes from empty.
 * Can also be charged in a <ItemLink id="charge_pad" /> or battery box.
-* Replaces the chestplate slot — wear carbon or quantum chestplates separately if you want armor absorption during flight. (This one is a stand-in for an elytra, not a protective chestplate.)
+* Uses the chestplate slot, so it cannot combine with a powered armor chestplate. Hold sneak while gliding to slow down.

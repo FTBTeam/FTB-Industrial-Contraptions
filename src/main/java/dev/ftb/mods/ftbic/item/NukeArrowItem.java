@@ -9,12 +9,13 @@ import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
 public class NukeArrowItem extends ArrowItem {
-	public NukeArrowItem(Properties props) {
-		super(props);
-	}
+    public NukeArrowItem(Properties props) {
+        super(props);
+    }
 
-	@Override
-	public AbstractArrow createArrow(Level level, ItemStack pickupItemStack, LivingEntity owner, @Nullable ItemStack weapon) {
-		return new NukeArrowEntity(level, owner);
-	}
+    @Override
+    public AbstractArrow createArrow(
+            Level level, ItemStack pickupItemStack, LivingEntity owner, @Nullable ItemStack weapon) {
+        return new NukeArrowEntity(level, owner);
+    }
 }

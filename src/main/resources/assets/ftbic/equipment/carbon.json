@@ -1,0 +1,10 @@
+{
+  "layers": {
+    "humanoid": [
+      { "texture": "ftbic:carbon" }
+    ],
+    "humanoid_leggings": [
+      { "texture": "ftbic:carbon" }
+    ]
+  }
+}

@@ -27,7 +27,7 @@ item_ids:
   ### <Color id="aqua">LV Solar Panel</Color>
 </Row>
 
-1 zap/t during the day. Buffer: 60 zaps. Entry-tier solar.
+<Energy config="machines.lv_solar_panel_output" rate="true" /> during the day. Buffer: <Energy config="machines.lv_solar_panel_capacity" times="60" />. Entry-tier solar.
 
 <RecipeFor id="lv_solar_panel" />
 
@@ -38,7 +38,7 @@ item_ids:
   ### <Color id="aqua">MV Solar Panel</Color>
 </Row>
 
-8 zap/t during the day. Buffer: 480 zaps.
+<Energy config="machines.mv_solar_panel_output" rate="true" /> during the day. Buffer: <Energy config="machines.mv_solar_panel_capacity" times="60" />.
 
 <RecipeFor id="mv_solar_panel" />
 
@@ -49,7 +49,7 @@ item_ids:
   ### <Color id="aqua">HV Solar Panel</Color>
 </Row>
 
-64 zap/t during the day. Buffer: 3,840 zaps.
+<Energy config="machines.hv_solar_panel_output" rate="true" /> during the day. Buffer: <Energy config="machines.hv_solar_panel_capacity" times="60" />.
 
 <RecipeFor id="hv_solar_panel" />
 
@@ -60,6 +60,6 @@ item_ids:
   ### <Color id="aqua">EV Solar Panel</Color>
 </Row>
 
-512 zap/t during the day. Buffer: 30,720 zaps. The largest solar output in the mod.
+<Energy config="machines.ev_solar_panel_output" rate="true" /> during the day. Buffer: <Energy config="machines.ev_solar_panel_capacity" times="60" />. The largest solar output in the mod.
 
 <RecipeFor id="ev_solar_panel" />
