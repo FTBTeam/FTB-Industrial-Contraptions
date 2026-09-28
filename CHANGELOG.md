@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-* Upgrade slots now limit each upgrade type separately, so four transformers can coexist with overclockers and ejectors. Excess items remain in the player's inventory when shift-clicking.
 * Sneak-right-clicking a machine with an upgrade now installs it, including a stack of up to four, without opening the UI.
 * Teleporter destination lists stay inside the machine screen above the inventory, with scrolling for longer lists. Its controls now match the industrial machine UI.
 * Jade's energy bar now uses the entire Industrial Battery Bank's stored energy and capacity when looking at either a cell or a port.
