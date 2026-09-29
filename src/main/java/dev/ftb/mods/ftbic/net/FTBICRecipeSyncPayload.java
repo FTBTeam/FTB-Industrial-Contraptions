@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbic.net;
 
 import dev.ftb.mods.ftbic.FTBIC;
-import dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache;
+import dev.ftb.mods.ftbic.client.ClientRecipeCache;
 import java.util.List;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

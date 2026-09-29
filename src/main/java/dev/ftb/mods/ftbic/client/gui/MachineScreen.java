@@ -3,7 +3,7 @@ package dev.ftb.mods.ftbic.client.gui;
 import dev.ftb.mods.ftbic.block.entity.machine.BasicMachineBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.ChargePadBlockEntity;
 import dev.ftb.mods.ftbic.block.entity.machine.FluidMachineBlockEntity;
-import dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache;
+import dev.ftb.mods.ftbic.client.ClientRecipeCache;
 import dev.ftb.mods.ftbic.screen.MachineMenu;
 import java.util.List;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

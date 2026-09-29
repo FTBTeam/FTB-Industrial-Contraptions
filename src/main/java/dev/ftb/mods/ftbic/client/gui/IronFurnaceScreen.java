@@ -1,6 +1,6 @@
 package dev.ftb.mods.ftbic.client.gui;
 
-import dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache;
+import dev.ftb.mods.ftbic.client.ClientRecipeCache;
 import dev.ftb.mods.ftbic.net.FTBICNet;
 import dev.ftb.mods.ftbic.net.SetGhostIngredientPayload;
 import dev.ftb.mods.ftbic.screen.IronFurnaceMenu;

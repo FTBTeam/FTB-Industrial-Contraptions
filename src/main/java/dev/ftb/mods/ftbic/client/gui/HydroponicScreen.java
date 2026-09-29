@@ -1,7 +1,7 @@
 package dev.ftb.mods.ftbic.client.gui;
 
 import dev.ftb.mods.ftbic.block.entity.machine.HydroponicBlockEntity;
-import dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache;
+import dev.ftb.mods.ftbic.client.ClientRecipeCache;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.screen.HydroponicMenu;
 import java.util.List;
