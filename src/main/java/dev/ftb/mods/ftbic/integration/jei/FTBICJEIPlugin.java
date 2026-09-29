@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.machine.AntimatterConstructorBlockEntity;
+import dev.ftb.mods.ftbic.client.ClientRecipeCache;
 import dev.ftb.mods.ftbic.client.gui.AntimatterConstructorScreen;
 import dev.ftb.mods.ftbic.client.gui.BasicGeneratorScreen;
 import dev.ftb.mods.ftbic.client.gui.BatchFeederScreen;
@@ -253,7 +254,9 @@ public class FTBICJEIPlugin implements IModPlugin {
 
     @Override
     public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-        ClientRecipeCache.setRuntime(jeiRuntime);
+        if (!(ClientRecipeCache.viewer() instanceof JeiRecipeViewer viewer && viewer.runtime() == jeiRuntime)) {
+            ClientRecipeCache.setViewer(new JeiRecipeViewer(jeiRuntime));
+        }
         hideEmptyInputRecipes(jeiRuntime);
         hideUnusedElectricBlocks(jeiRuntime);
     }
@@ -298,7 +301,7 @@ public class FTBICJEIPlugin implements IModPlugin {
 
     @Override
     public void onRuntimeUnavailable() {
-        ClientRecipeCache.clearRuntime();
+        ClientRecipeCache.setViewer(null);
     }
 
     @Override

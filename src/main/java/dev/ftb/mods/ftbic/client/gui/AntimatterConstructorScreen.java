@@ -1,6 +1,6 @@
 package dev.ftb.mods.ftbic.client.gui;
 
-import dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache;
+import dev.ftb.mods.ftbic.client.ClientRecipeCache;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.screen.AntimatterConstructorMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

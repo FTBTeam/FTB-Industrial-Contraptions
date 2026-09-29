@@ -2,7 +2,6 @@ package dev.ftb.mods.ftbic.client;
 
 import com.mojang.serialization.MapCodec;
 import dev.ftb.mods.ftbic.FTBIC;
-import dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache;
 import dev.ftb.mods.ftbic.item.RefiningItem;
 import dev.ftb.mods.ftbic.material.MaterialColor;
 import dev.ftb.mods.ftbic.material.RefiningCatalog;

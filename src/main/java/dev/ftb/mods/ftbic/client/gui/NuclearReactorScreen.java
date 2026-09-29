@@ -2,7 +2,7 @@ package dev.ftb.mods.ftbic.client.gui;
 
 import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
-import dev.ftb.mods.ftbic.integration.jei.ClientRecipeCache;
+import dev.ftb.mods.ftbic.client.ClientRecipeCache;
 import dev.ftb.mods.ftbic.item.ReactorBlueprintItem;
 import dev.ftb.mods.ftbic.item.reactor.NuclearReactor;
 import dev.ftb.mods.ftbic.item.reactor.ReactorItem;
