@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ReprocessorBlockEntity extends MachineBlockEntity {
-	public ReprocessorBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.REPROCESSOR, FTBICRecipes.REPROCESSING, pos, state);
-	}
+    public ReprocessorBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.REPROCESSOR, FTBICRecipes.REPROCESSING, pos, state);
+    }
 }

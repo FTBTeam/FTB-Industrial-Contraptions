@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class EVSolarPanelBlockEntity extends SolarPanelBlockEntity {
-	public EVSolarPanelBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.EV_SOLAR_PANEL, pos, state);
-	}
+    public EVSolarPanelBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.EV_SOLAR_PANEL, pos, state);
+    }
 }

@@ -8,19 +8,19 @@ import net.minecraft.client.renderer.entity.state.ArrowRenderState;
 import net.minecraft.resources.Identifier;
 
 public class NukeArrowRenderer extends ArrowRenderer<NukeArrowEntity, ArrowRenderState> {
-	private static final Identifier TEXTURE = FTBIC.id("textures/item/nuke_arrow.png");
+    private static final Identifier TEXTURE = FTBIC.id("textures/item/nuke_arrow.png");
 
-	public NukeArrowRenderer(EntityRendererProvider.Context context) {
-		super(context);
-	}
+    public NukeArrowRenderer(EntityRendererProvider.Context context) {
+        super(context);
+    }
 
-	@Override
-	public ArrowRenderState createRenderState() {
-		return new ArrowRenderState();
-	}
+    @Override
+    public ArrowRenderState createRenderState() {
+        return new ArrowRenderState();
+    }
 
-	@Override
-	protected Identifier getTextureLocation(ArrowRenderState state) {
-		return TEXTURE;
-	}
+    @Override
+    protected Identifier getTextureLocation(ArrowRenderState state) {
+        return TEXTURE;
+    }
 }

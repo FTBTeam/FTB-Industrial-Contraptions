@@ -15,7 +15,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="nuke" scale="2" />
 
-  <Color id="red">**Warning: fully destructive.**</Color> Default radius is **36 blocks** — any structure inside that sphere is vaporized, all dropped items despawn.
+  <Color id="red">**Warning: fully destructive.**</Color> Default radius is **36 blocks**. Any structure inside that sphere is vaporized, all dropped items despawn.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -37,6 +37,6 @@ Placed and armed with redstone. Counts down like primed TNT, then detonates.
   ### <Color id="aqua">Nuke Arrow</Color>
 </Row>
 
-A conventional arrow wrapped around a nuke. Fired from a bow — detonates on impact. **Do not fire at your base.**
+A conventional arrow wrapped around a nuke. Fired from a bow, it detonates on impact. **Do not fire at your base.**
 
 <RecipeFor id="nuke_arrow" />

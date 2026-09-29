@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "ftbic:recipe_toggle",
+      "option": "add_canned_food_recipes"
+    }
+  ],
   "type": "ftbic:canning",
   "inputs": [
     {

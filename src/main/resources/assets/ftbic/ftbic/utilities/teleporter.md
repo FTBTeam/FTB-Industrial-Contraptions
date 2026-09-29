@@ -13,7 +13,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="teleporter" scale="2" />
 
-  A player-targeted teleportation pad. Pair two teleporters by name, feed one MV power or higher, and stand on it to snap to the other. A linked pair also acts as a 2-way item and fluid pipe — see below.
+  A player-targeted teleportation pad. Pair two teleporters by name, feed one MV power or higher, and stand on it to snap to the other. A linked pair also acts as a 2-way item and fluid pipe (see below).
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -25,8 +25,8 @@ item_ids:
 
 1. Place a teleporter and open its GUI.
 2. Set its **ID** (the name other teleporters will see it by).
-3. Choose whether to **publish** it — public teleporters appear in everyone's list; unpublished ones only show to the owner.
-4. Wire in **HV power** on any side. The teleporter is a full HV node — it accepts HV input and also emits HV output, so either side of the pair can act as a power source or sink.
+3. Choose whether to **publish** it: public teleporters appear in everyone's list; unpublished ones only show to the owner.
+4. Wire in **HV power** on any side. The teleporter is a full HV node: it accepts HV input and also emits HV output, so either side of the pair can act as a power source or sink.
 5. From another teleporter's GUI, pick the destination from the list. Picking a destination automatically links the other end back as well, provided the other end is not already pointed at something else.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -36,11 +36,11 @@ item_ids:
   ## <Color id="gold">Energy Cost</Color>
 </Column>
 
-* **Minimum:** 100 zaps (distances up to 16 blocks).
-* **Maximum:** 10,000 zaps (distances at or above 1,200 blocks).
+* **Minimum:** <Energy config="machines.teleporter_min_use" /> (distances up to 16 blocks).
+* **Maximum:** <Energy config="machines.teleporter_max_use" /> (distances at or above 1,200 blocks).
 * Scales linearly between those bounds.
 
-The destination chunk **must be loaded** — if the target is far away, pre-load it with a chunk loader or the teleport will error out.
+The destination chunk **must be loaded**. If the target is far away, pre-load it with a chunk loader or the teleport will error out.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
@@ -54,7 +54,7 @@ Only the teleporter's **owner** can rename, delete, or unpublish it.
   ## <Color id="gold">Item and Fluid Pipe</Color>
 </Column>
 
-A linked pair of teleporters is also a bi-directional pipe. Hoppers, pipes, pumps — anything that can push items or fluids into a block — work against either teleporter. Whatever goes in one side comes out near the other.
+A linked pair of teleporters is also a bi-directional pipe. Hoppers, pipes, pumps (anything that can push items or fluids into a block) work against either teleporter. Whatever goes in one side comes out near the other.
 
 Each teleporter has two internal buffers for each resource type:
 
@@ -74,11 +74,11 @@ The teleporter item model exposes sending storage as "insert only" slots and rec
   ## <Color id="gold">Transport Power</Color>
 </Column>
 
-Moving resources through the link costs a small idle drain on the **sending** teleporter — not per item, but once per second while traffic is flowing. If nothing has moved in the last second, the drain stops.
+Moving resources through the link costs a small idle drain on the **sending** teleporter, not per item, but once per second while traffic is flowing. If nothing has moved in the last second, the drain stops.
 
 The pair **shares power at 100%**: every few ticks the two buffers rebalance to equal fill, so feeding power to one teleporter makes it available at both ends immediately. Either teleporter can also **output HV** to an attached cable network. A common setup: place a teleporter next to your generators and another next to your quarries or machines, then cable the far side into your machine grid. Power flows in whichever direction is needed, even across dimensions.
 
-Teleporters are filtered out of each other's push networks, so putting two linked teleporters on the same cable run will not ping-pong — the balance mechanism handles their pair transfer and the cable network handles everything else.
+Teleporters are filtered out of each other's push networks, so putting two linked teleporters on the same cable run will not ping-pong. The balance mechanism handles their pair transfer and the cable network handles everything else.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

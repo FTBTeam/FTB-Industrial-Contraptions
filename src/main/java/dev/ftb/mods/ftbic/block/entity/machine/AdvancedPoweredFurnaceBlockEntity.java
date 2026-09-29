@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AdvancedPoweredFurnaceBlockEntity extends MachineBlockEntity {
-	public AdvancedPoweredFurnaceBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.ADVANCED_POWERED_FURNACE, FTBICRecipes.SMELTING, pos, state);
-	}
+    public AdvancedPoweredFurnaceBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.ADVANCED_POWERED_FURNACE, FTBICRecipes.SMELTING, pos, state);
+    }
 }

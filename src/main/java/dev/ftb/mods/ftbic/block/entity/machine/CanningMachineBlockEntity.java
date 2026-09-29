@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class CanningMachineBlockEntity extends MachineBlockEntity {
-	public CanningMachineBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.CANNING_MACHINE, FTBICRecipes.CANNING, pos, state);
-	}
+    public CanningMachineBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.CANNING_MACHINE, FTBICRecipes.CANNING, pos, state);
+    }
 }

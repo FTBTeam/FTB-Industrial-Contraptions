@@ -14,7 +14,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="macerator" scale="2" />
 
-  The ore-doubling cornerstone. Grinds ores into **2 dusts** each, ingots into dust, and cobblestone into sand.
+  Starts the [ore refining chain](ore_refining.md): supported ore blocks become **3 raw ore**, each raw ore becomes **2 crushed ore**, and each block of raw ore becomes **18 crushed ore**. It also grinds ingots into dust and cobblestone into sand.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -28,7 +28,7 @@ item_ids:
   ## <Color id="gold">Why It Matters</Color>
 </Column>
 
-* Raw ore blocks → **2 dust** (smelt in any furnace for double ingot yield).
+* Supported ore blocks yield **3 raw ore**, then **6 crushed ore**. Wash and centrifuge for **15 ingots**.
 * Ingots → 1 dust (for recycling or chain processing).
 * Cobblestone → sand, gravel → flint, etc.
 
@@ -42,6 +42,6 @@ item_ids:
   ### <Color id="aqua">Advanced Macerator</Color>
 </Row>
 
-HV version: 10,000 zap buffer, 16 zap/t, much faster recipe ticks.
+MV version: <Energy config="machines.advanced_macerator_capacity" /> buffer, <Energy config="machines.advanced_macerator_use" rate="true" />. Same recipe speed, and it accepts <ItemLink id="parallel_processing_upgrade" />s.
 
 <RecipeFor id="advanced_macerator" />

@@ -17,13 +17,25 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="hv_rectifier" scale="2" />
 
-  FTBIC cables and generators already **push FE** into any FE-accepting block — you do not need a rectifier to run vanilla quarries, mekanism machines, or any other FE-consuming mod.
+  FTBIC cables and generators already **push FE** into any FE-accepting block. You do not need a rectifier to run vanilla quarries, mekanism machines, or any other FE-consuming mod.
+
+  <ZapMode>
 
   You **do** need a rectifier when an FE-producing source needs to feed power **into** an FTBIC machine or network. FTBIC machines do not accept FE directly; the rectifier is the one-way adapter that converts incoming FE into zaps.
+
+  </ZapMode>
+
+  <FEMode>
+
+  **Full FE mode** is enabled, so rectifiers are hidden and cannot be crafted. Every FTBIC machine accepts FE directly on its faces. FE input is capped at the machine's input rate and never burns it out.
+
+  </FEMode>
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
+
+<ZapMode>
 
 <Column alignItems="center" fullWidth={true}>
   ## <Color id="gold">How They Work</Color>
@@ -35,48 +47,50 @@ The conversion rate is **1 zap = 8 FE** by default (configurable). Each tier's r
 
 | Rectifier | Zap rate |
 |-----------|----------|
-| LV | 32 zap/t |
-| MV | 128 zap/t |
-| HV | 512 zap/t |
-| EV | 2,048 zap/t |
-| IV | 8,192 zap/t |
+| LV | <Energy config="energy.lv_transfer_rate" rate="true" /> |
+| MV | <Energy config="energy.mv_transfer_rate" rate="true" /> |
+| HV | <Energy config="energy.hv_transfer_rate" rate="true" /> |
+| EV | <Energy config="energy.ev_transfer_rate" rate="true" /> |
+| IV | <Energy config="energy.iv_transfer_rate" rate="true" /> |
 
-If you only need to power **FE** machines from FTBIC generators, skip the rectifier entirely — any FTBIC cable or machine output face pushes FE on its own.
+If you only need to power **FE** machines from FTBIC generators, skip the rectifier entirely. Any FTBIC cable or machine output face pushes FE on its own.
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
+
+</ZapMode>
 
 <Row>
   <ItemImage id="lv_rectifier" />
   ### <Color id="aqua">LV Energy Rectifier</Color>
 </Row>
 
-<RecipeFor id="lv_rectifier" />
+<RecipeFor id="lv_rectifier" fallbackText="Not craftable while full FE mode is enabled." />
 
 <Row>
   <ItemImage id="mv_rectifier" />
   ### <Color id="aqua">MV Energy Rectifier</Color>
 </Row>
 
-<RecipeFor id="mv_rectifier" />
+<RecipeFor id="mv_rectifier" fallbackText="Not craftable while full FE mode is enabled." />
 
 <Row>
   <ItemImage id="hv_rectifier" />
   ### <Color id="aqua">HV Energy Rectifier</Color>
 </Row>
 
-<RecipeFor id="hv_rectifier" />
+<RecipeFor id="hv_rectifier" fallbackText="Not craftable while full FE mode is enabled." />
 
 <Row>
   <ItemImage id="ev_rectifier" />
   ### <Color id="aqua">EV Energy Rectifier</Color>
 </Row>
 
-<RecipeFor id="ev_rectifier" />
+<RecipeFor id="ev_rectifier" fallbackText="Not craftable while full FE mode is enabled." />
 
 <Row>
   <ItemImage id="iv_rectifier" />
   ### <Color id="aqua">IV Energy Rectifier</Color>
 </Row>
 
-<RecipeFor id="iv_rectifier" />
+<RecipeFor id="iv_rectifier" fallbackText="Not craftable while full FE mode is enabled." />

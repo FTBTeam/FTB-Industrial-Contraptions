@@ -12,62 +12,75 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
 public final class FTBICNet {
 
-	@SubscribeEvent
-	public static void registerPayloads(RegisterPayloadHandlersEvent event) {
-		var registrar = event.registrar(FTBIC.MOD_ID);
+    @SubscribeEvent
+    public static void registerPayloads(RegisterPayloadHandlersEvent event) {
+        var registrar = event.registrar(FTBIC.MOD_ID);
+        registrar.playToServer(
+                SetGhostIngredientPayload.TYPE,
+                SetGhostIngredientPayload.STREAM_CODEC,
+                SetGhostIngredientPayload::handleOnServer);
+        registrar.playToServer(
+                BatchFluidPayload.TYPE, BatchFluidPayload.STREAM_CODEC, BatchFluidPayload::handleOnServer);
+        registrar.playToServer(
+                QuarryFilterPayload.TYPE, QuarryFilterPayload.STREAM_CODEC, QuarryFilterPayload::handleOnServer);
+        registrar.playToServer(GhostSlotPayload.TYPE, GhostSlotPayload.STREAM_CODEC, GhostSlotPayload::handleOnServer);
+        registrar.playToServer(
+                SideConfigurationPayload.TYPE,
+                SideConfigurationPayload.STREAM_CODEC,
+                SideConfigurationPayload::handleOnServer);
+        registrar.playToServer(
+                ReactorDesignPayload.TYPE, ReactorDesignPayload.STREAM_CODEC, ReactorDesignPayload::handleOnServer);
 
-		registrar.playToClient(
-				MoveLaserPayload.TYPE,
-				MoveLaserPayload.STREAM_CODEC,
-				MoveLaserPayload::handleOnClient);
+        registrar.playToClient(MoveLaserPayload.TYPE, MoveLaserPayload.STREAM_CODEC, MoveLaserPayload::handleOnClient);
 
-		registrar.playToServer(
-				SelectTeleporterPayload.TYPE,
-				SelectTeleporterPayload.STREAM_CODEC,
-				SelectTeleporterPayload::handleOnServer);
+        registrar.playToServer(
+                SelectTeleporterPayload.TYPE,
+                SelectTeleporterPayload.STREAM_CODEC,
+                SelectTeleporterPayload::handleOnServer);
 
-		registrar.playToServer(
-				SelectCraftingRecipePayload.TYPE,
-				SelectCraftingRecipePayload.STREAM_CODEC,
-				SelectCraftingRecipePayload::handleOnServer);
+        registrar.playToServer(
+                SelectCraftingRecipePayload.TYPE,
+                SelectCraftingRecipePayload.STREAM_CODEC,
+                SelectCraftingRecipePayload::handleOnServer);
 
-		registrar.playToServer(
-				ConfigureTeleporterPayload.TYPE,
-				ConfigureTeleporterPayload.STREAM_CODEC,
-				ConfigureTeleporterPayload::handleOnServer);
+        registrar.playToServer(
+                ConfigureTeleporterPayload.TYPE,
+                ConfigureTeleporterPayload.STREAM_CODEC,
+                ConfigureTeleporterPayload::handleOnServer);
 
-		registrar.playToServer(
-				ClearTeleporterPayload.TYPE,
-				ClearTeleporterPayload.STREAM_CODEC,
-				ClearTeleporterPayload::handleOnServer);
+        registrar.playToServer(
+                ClearTeleporterPayload.TYPE,
+                ClearTeleporterPayload.STREAM_CODEC,
+                ClearTeleporterPayload::handleOnServer);
 
-		registrar.playToServer(
-				SimulatorActionPayload.TYPE,
-				SimulatorActionPayload.STREAM_CODEC,
-				SimulatorActionPayload::handleOnServer);
+        registrar.playToServer(
+                SimulatorActionPayload.TYPE,
+                SimulatorActionPayload.STREAM_CODEC,
+                SimulatorActionPayload::handleOnServer);
 
-		registrar.playToClient(
-				TeleporterListPayload.TYPE,
-				TeleporterListPayload.STREAM_CODEC,
-				TeleporterListPayload::handleOnClient);
+        registrar.playToClient(
+                TeleporterListPayload.TYPE, TeleporterListPayload.STREAM_CODEC, TeleporterListPayload::handleOnClient);
 
-		registrar.playToClient(
-				FTBICRecipeSyncPayload.TYPE,
-				FTBICRecipeSyncPayload.STREAM_CODEC,
-				FTBICRecipeSyncPayload::handleOnClient);
-	}
+        registrar.playToClient(
+                FTBICRecipeSyncPayload.TYPE,
+                FTBICRecipeSyncPayload.STREAM_CODEC,
+                FTBICRecipeSyncPayload::handleOnClient);
 
-	public static void sendToPlayer(ServerPlayer player, CustomPacketPayload payload) {
-		PacketDistributor.sendToPlayer(player, payload);
-	}
+        registrar.playToClient(
+                EnergyModePayload.TYPE, EnergyModePayload.STREAM_CODEC, EnergyModePayload::handleOnClient);
+    }
 
-	public static void sendToAll(CustomPacketPayload payload) {
-		PacketDistributor.sendToAllPlayers(payload);
-	}
+    public static void sendToPlayer(ServerPlayer player, CustomPacketPayload payload) {
+        PacketDistributor.sendToPlayer(player, payload);
+    }
 
-	public static void sendToServer(CustomPacketPayload payload) {
-		ClientPacketDistributor.sendToServer(payload);
-	}
+    public static void sendToAll(CustomPacketPayload payload) {
+        PacketDistributor.sendToAllPlayers(payload);
+    }
 
-	private FTBICNet() {}
+    public static void sendToServer(CustomPacketPayload payload) {
+        ClientPacketDistributor.sendToServer(payload);
+    }
+
+    private FTBICNet() {}
 }

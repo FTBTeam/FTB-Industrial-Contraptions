@@ -12,7 +12,7 @@ navigation:
 
   <ItemImage id="advanced_machine_block" scale="2" />
 
-  A tech mod of power generation, ore processing, nuclear engineering, and late-game gear, built around a dedicated energy grid measured in **zaps**.
+  A tech mod of power generation, ore processing, nuclear engineering, and late-game gear, built around a dedicated energy grid measured in **<EnergyUnit />**.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -22,9 +22,9 @@ navigation:
   ## <Color id="gold">Start Here</Color>
 </Column>
 
-* <ItemImage id="iron_furnace" scale="0.75"/> [Getting Started](getting_started.md) — your first machine block, first generator, first cables
-* <ItemImage id="lv_cable" scale="0.75"/> [Energy Network](energy/index.md) — zaps, tiers, wiring, storage
-* <ItemImage id="basic_generator" scale="0.75"/> [Generators](generators/index.md) — turning fuel, heat, sun, and wind into zaps
+* <ItemImage id="iron_furnace" scale="0.75"/> [Getting Started](getting_started.md): your first machine block, first generator, first cables
+* <ItemImage id="lv_cable" scale="0.75"/> [Energy Network](energy/index.md): <EnergyUnit />, tiers, cabling, storage
+* <ItemImage id="basic_generator" scale="0.75"/> [Generators](generators/index.md): turning fuel, heat, sun, and wind into <EnergyUnit />
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***

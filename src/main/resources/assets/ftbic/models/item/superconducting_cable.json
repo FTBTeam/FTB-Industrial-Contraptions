@@ -1,0 +1,907 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "cable": "ftbic:block/superconducting_cable",
+    "particle": "ftbic:block/superconducting_cable"
+  },
+  "elements": [
+    {
+      "name": "Long magnetic guide rail",
+      "from": [
+        5,
+        5,
+        0
+      ],
+      "to": [
+        6,
+        6,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            8,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            8,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            1,
+            16
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1,
+            16
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Long magnetic guide rail",
+      "from": [
+        5,
+        10,
+        0
+      ],
+      "to": [
+        6,
+        11,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            8,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            8,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            1,
+            16
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1,
+            16
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Long magnetic guide rail",
+      "from": [
+        10,
+        5,
+        0
+      ],
+      "to": [
+        11,
+        6,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            8,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            8,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            1,
+            16
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1,
+            16
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Long magnetic guide rail",
+      "from": [
+        10,
+        10,
+        0
+      ],
+      "to": [
+        11,
+        11,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            8,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            8,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            1,
+            16
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1,
+            16
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Upper insulator",
+      "from": [
+        6,
+        10,
+        0
+      ],
+      "to": [
+        10,
+        11,
+        1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Lower insulator",
+      "from": [
+        6,
+        5,
+        0
+      ],
+      "to": [
+        10,
+        6,
+        1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Left insulator",
+      "from": [
+        5,
+        6,
+        0
+      ],
+      "to": [
+        6,
+        10,
+        1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Right insulator",
+      "from": [
+        10,
+        6,
+        0
+      ],
+      "to": [
+        11,
+        10,
+        1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Upper insulator",
+      "from": [
+        6,
+        10,
+        15
+      ],
+      "to": [
+        10,
+        11,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Lower insulator",
+      "from": [
+        6,
+        5,
+        15
+      ],
+      "to": [
+        10,
+        6,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            12,
+            1
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Left insulator",
+      "from": [
+        5,
+        6,
+        15
+      ],
+      "to": [
+        6,
+        10,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Right insulator",
+      "from": [
+        10,
+        6,
+        15
+      ],
+      "to": [
+        11,
+        10,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "texture": "#cable"
+        }
+      }
+    },
+    {
+      "name": "Dormant beam core",
+      "from": [
+        7,
+        7,
+        0
+      ],
+      "to": [
+        9,
+        9,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            0,
+            14,
+            2
+          ],
+          "texture": "#cable"
+        },
+        "east": {
+          "uv": [
+            12,
+            0,
+            16,
+            2
+          ],
+          "texture": "#cable"
+        },
+        "south": {
+          "uv": [
+            12,
+            0,
+            14,
+            2
+          ],
+          "texture": "#cable"
+        },
+        "west": {
+          "uv": [
+            12,
+            0,
+            16,
+            2
+          ],
+          "texture": "#cable"
+        },
+        "up": {
+          "uv": [
+            12,
+            0,
+            14,
+            16
+          ],
+          "texture": "#cable"
+        },
+        "down": {
+          "uv": [
+            12,
+            0,
+            14,
+            16
+          ],
+          "texture": "#cable"
+        }
+      }
+    }
+  ],
+  "render_type": "minecraft:cutout"
+}

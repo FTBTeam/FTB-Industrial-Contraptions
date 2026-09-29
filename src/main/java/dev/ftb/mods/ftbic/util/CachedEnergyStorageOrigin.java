@@ -4,9 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 
 public class CachedEnergyStorageOrigin {
-	public Direction direction;
-	public BlockPos cablePos = null;
-	public EnergyTier cableTier = null;
-	public double cableTransferRate = Double.POSITIVE_INFINITY;
-	public boolean cableBurnt = false;
+    public Direction direction;
+    public BlockPos cablePos = null;
+    public EnergyTier cableTier = null;
+    public double cableTransferRate = Double.POSITIVE_INFINITY;
+    public boolean cableBurnt = false;
 }

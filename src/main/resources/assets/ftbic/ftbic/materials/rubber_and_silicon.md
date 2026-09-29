@@ -26,7 +26,7 @@ item_ids:
   ### <Color id="aqua">Rubber</Color>
 </Row>
 
-Smelt a vanilla **slime ball** for **8 rubber** — the main production path. Slime farms scale effortlessly, and the 8× yield per smelt keeps cable crafting cheap.
+Smelt a vanilla **slime ball** for **8 rubber**. This is the main production path. Slime farms scale effortlessly, and the 8× yield per smelt keeps cable crafting cheap.
 
 <RecipesFor id="rubber" />
 

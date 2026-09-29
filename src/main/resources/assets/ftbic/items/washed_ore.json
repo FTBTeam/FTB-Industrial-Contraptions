@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "ftbic:item/washed_ore",
+    "tints": [
+      {
+        "type": "ftbic:refining_material"
+      }
+    ]
+  }
+}

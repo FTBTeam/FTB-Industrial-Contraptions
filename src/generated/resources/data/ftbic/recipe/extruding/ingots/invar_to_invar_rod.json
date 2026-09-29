@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "ftbic:recipe_toggle",
+      "option": "add_rod_recipes"
+    }
+  ],
   "type": "ftbic:extruding",
   "inputs": [
     {

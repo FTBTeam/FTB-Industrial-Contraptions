@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.item;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.registry.ModDataComponents;
+import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -29,79 +30,83 @@ import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 
-import java.util.function.Consumer;
-
 public class FluidCellItem extends Item {
-	public FluidCellItem(Properties props) {
-		super(props.stacksTo(16));
-	}
+    public FluidCellItem(Properties props) {
+        super(props.stacksTo(16));
+    }
 
-	public static FluidStack getStored(ItemStack stack) {
-		SimpleFluidContent fs = stack.get(ModDataComponents.FLUID_CELL_CONTENT.get());
-		return fs == null ? FluidStack.EMPTY : fs.copy();
-	}
+    public static FluidStack getStored(ItemStack stack) {
+        SimpleFluidContent fs = stack.get(ModDataComponents.FLUID_CELL_CONTENT.get());
+        return fs == null ? FluidStack.EMPTY : fs.copy();
+    }
 
-	public static void setStored(ItemStack stack, FluidStack fluid) {
-		if (fluid == null || fluid.isEmpty()) {
-			stack.remove(ModDataComponents.FLUID_CELL_CONTENT.get());
-		} else {
-			stack.set(ModDataComponents.FLUID_CELL_CONTENT.get(), SimpleFluidContent.copyOf(fluid));
-		}
-	}
+    public static void setStored(ItemStack stack, FluidStack fluid) {
+        if (fluid == null || fluid.isEmpty()) {
+            stack.remove(ModDataComponents.FLUID_CELL_CONTENT.get());
+        } else {
+            stack.set(ModDataComponents.FLUID_CELL_CONTENT.get(), SimpleFluidContent.copyOf(fluid));
+        }
+    }
 
-	public static int capacity() {
-		return FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get();
-	}
+    public static int capacity() {
+        return FTBICConfig.NUCLEAR.FLUID_CELL_CAPACITY.get();
+    }
 
-	@Override
-	public InteractionResult use(Level level, Player player, InteractionHand hand) {
-		ItemStack stack = player.getItemInHand(hand);
-		FluidStack stored = getStored(stack);
-		BlockHitResult hit = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
-		if (hit.getType() != HitResult.Type.BLOCK) return InteractionResult.PASS;
+    @Override
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        FluidStack stored = getStored(stack);
+        BlockHitResult hit = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
+        if (hit.getType() != HitResult.Type.BLOCK) return InteractionResult.PASS;
 
-		BlockPos pos = hit.getBlockPos();
-		if (!level.mayInteract(player, pos)
-				|| !player.mayUseItemAt(pos.relative(hit.getDirection()), hit.getDirection(), stack)) {
-			return InteractionResult.FAIL;
-		}
+        BlockPos pos = hit.getBlockPos();
+        if (!level.mayInteract(player, pos)
+                || !player.mayUseItemAt(pos.relative(hit.getDirection()), hit.getDirection(), stack)) {
+            return InteractionResult.FAIL;
+        }
 
-		BlockState state = level.getBlockState(pos);
-		if (stored.isEmpty() && state.getBlock() instanceof BucketPickup bucketPickup) {
-			ItemStack picked = bucketPickup.pickupBlock(player, level, pos, state);
-			if (picked.getItem() instanceof BucketItem bucketItem) {
-				Fluid f = bucketItem.content;
-				if (f != Fluids.EMPTY) {
-					player.awardStat(Stats.ITEM_USED.get(this));
-					bucketPickup.getPickupSound(state).ifPresent(s -> player.playSound(s, 1F, 1F));
-					FluidStack newStored = new FluidStack(f, capacity());
-					ItemStack filled = stack.copyWithCount(1);
-					setStored(filled, newStored);
-					ItemStack result = ItemUtils.createFilledResult(stack, player, filled);
-					if (player instanceof ServerPlayer sp) {
-						CriteriaTriggers.FILLED_BUCKET.trigger(sp, picked);
-					}
-					return InteractionResult.SUCCESS.heldItemTransformedTo(result);
-				}
-			}
-		}
-		return InteractionResult.PASS;
-	}
+        BlockState state = level.getBlockState(pos);
+        if (stored.isEmpty() && state.getBlock() instanceof BucketPickup bucketPickup) {
+            ItemStack picked = bucketPickup.pickupBlock(player, level, pos, state);
+            if (picked.getItem() instanceof BucketItem bucketItem) {
+                Fluid f = bucketItem.content;
+                if (f != Fluids.EMPTY) {
+                    player.awardStat(Stats.ITEM_USED.get(this));
+                    bucketPickup.getPickupSound(state).ifPresent(s -> player.playSound(s, 1F, 1F));
+                    FluidStack newStored = new FluidStack(f, capacity());
+                    ItemStack filled = stack.copyWithCount(1);
+                    setStored(filled, newStored);
+                    ItemStack result = ItemUtils.createFilledResult(stack, player, filled);
+                    if (player instanceof ServerPlayer sp) {
+                        CriteriaTriggers.FILLED_BUCKET.trigger(sp, picked);
+                    }
+                    return InteractionResult.SUCCESS.heldItemTransformedTo(result);
+                }
+            }
+        }
+        return InteractionResult.PASS;
+    }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display,
-			Consumer<Component> tooltip, TooltipFlag flag) {
-		super.appendHoverText(stack, context, display, tooltip, flag);
-		FluidStack stored = getStored(stack);
-		if (stored.isEmpty()) {
-			tooltip.accept(Component.translatable("item.ftbic.fluid_cell.empty")
-					.withStyle(ChatFormatting.DARK_GRAY));
-		} else {
-			var fluidId = BuiltInRegistries.FLUID.getKey(stored.getFluid());
-			tooltip.accept(Component.translatable("item.ftbic.fluid_cell.contents",
-							stored.getAmount(), capacity(), fluidId == null ? "?" : fluidId.getPath())
-					.withStyle(ChatFormatting.GRAY));
-		}
-	}
+    @Override
+    @SuppressWarnings("deprecation")
+    public void appendHoverText(
+            ItemStack stack,
+            TooltipContext context,
+            TooltipDisplay display,
+            Consumer<Component> tooltip,
+            TooltipFlag flag) {
+        super.appendHoverText(stack, context, display, tooltip, flag);
+        FluidStack stored = getStored(stack);
+        if (stored.isEmpty()) {
+            tooltip.accept(Component.translatable("item.ftbic.fluid_cell.empty").withStyle(ChatFormatting.DARK_GRAY));
+        } else {
+            var fluidId = BuiltInRegistries.FLUID.getKey(stored.getFluid());
+            tooltip.accept(Component.translatable(
+                            "item.ftbic.fluid_cell.contents",
+                            stored.getAmount(),
+                            capacity(),
+                            fluidId == null ? "?" : fluidId.getPath())
+                    .withStyle(ChatFormatting.GRAY));
+        }
+    }
 }

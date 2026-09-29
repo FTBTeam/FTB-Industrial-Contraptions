@@ -1,0 +1,1156 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "down": "false",
+        "north": "false",
+        "east": "false",
+        "south": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_0"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "true",
+        "east": "false",
+        "south": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_1"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "false",
+        "east": "true",
+        "south": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_2"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "true",
+        "east": "true",
+        "south": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_3"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "false",
+        "east": "false",
+        "south": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_4"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "true",
+        "east": "false",
+        "south": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_5"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "false",
+        "east": "true",
+        "south": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_6"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "true",
+        "east": "true",
+        "south": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_7"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "false",
+        "east": "false",
+        "south": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_8"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "true",
+        "east": "false",
+        "south": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_9"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "false",
+        "east": "true",
+        "south": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_10"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "true",
+        "east": "true",
+        "south": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_11"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "false",
+        "east": "false",
+        "south": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_12"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "true",
+        "east": "false",
+        "south": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_13"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "false",
+        "east": "true",
+        "south": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_14"
+      }
+    },
+    {
+      "when": {
+        "down": "false",
+        "north": "true",
+        "east": "true",
+        "south": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_down_15"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "false",
+        "east": "false",
+        "north": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_0"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "true",
+        "east": "false",
+        "north": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_1"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "false",
+        "east": "true",
+        "north": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_2"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "true",
+        "east": "true",
+        "north": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_3"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "false",
+        "east": "false",
+        "north": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_4"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "true",
+        "east": "false",
+        "north": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_5"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "false",
+        "east": "true",
+        "north": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_6"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "true",
+        "east": "true",
+        "north": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_7"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "false",
+        "east": "false",
+        "north": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_8"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "true",
+        "east": "false",
+        "north": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_9"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "false",
+        "east": "true",
+        "north": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_10"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "true",
+        "east": "true",
+        "north": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_11"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "false",
+        "east": "false",
+        "north": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_12"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "true",
+        "east": "false",
+        "north": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_13"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "false",
+        "east": "true",
+        "north": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_14"
+      }
+    },
+    {
+      "when": {
+        "up": "false",
+        "south": "true",
+        "east": "true",
+        "north": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_up_15"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "false",
+        "west": "false",
+        "down": "false",
+        "east": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_0"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "true",
+        "west": "false",
+        "down": "false",
+        "east": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_1"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "false",
+        "west": "true",
+        "down": "false",
+        "east": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_2"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "true",
+        "west": "true",
+        "down": "false",
+        "east": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_3"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "false",
+        "west": "false",
+        "down": "true",
+        "east": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_4"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "true",
+        "west": "false",
+        "down": "true",
+        "east": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_5"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "false",
+        "west": "true",
+        "down": "true",
+        "east": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_6"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "true",
+        "west": "true",
+        "down": "true",
+        "east": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_7"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "false",
+        "west": "false",
+        "down": "false",
+        "east": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_8"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "true",
+        "west": "false",
+        "down": "false",
+        "east": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_9"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "false",
+        "west": "true",
+        "down": "false",
+        "east": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_10"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "true",
+        "west": "true",
+        "down": "false",
+        "east": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_11"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "false",
+        "west": "false",
+        "down": "true",
+        "east": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_12"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "true",
+        "west": "false",
+        "down": "true",
+        "east": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_13"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "false",
+        "west": "true",
+        "down": "true",
+        "east": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_14"
+      }
+    },
+    {
+      "when": {
+        "north": "false",
+        "up": "true",
+        "west": "true",
+        "down": "true",
+        "east": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_north_15"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "false",
+        "east": "false",
+        "down": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_0"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "true",
+        "east": "false",
+        "down": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_1"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "false",
+        "east": "true",
+        "down": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_2"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "true",
+        "east": "true",
+        "down": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_3"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "false",
+        "east": "false",
+        "down": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_4"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "true",
+        "east": "false",
+        "down": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_5"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "false",
+        "east": "true",
+        "down": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_6"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "true",
+        "east": "true",
+        "down": "true",
+        "west": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_7"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "false",
+        "east": "false",
+        "down": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_8"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "true",
+        "east": "false",
+        "down": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_9"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "false",
+        "east": "true",
+        "down": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_10"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "true",
+        "east": "true",
+        "down": "false",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_11"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "false",
+        "east": "false",
+        "down": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_12"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "true",
+        "east": "false",
+        "down": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_13"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "false",
+        "east": "true",
+        "down": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_14"
+      }
+    },
+    {
+      "when": {
+        "south": "false",
+        "up": "true",
+        "east": "true",
+        "down": "true",
+        "west": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_south_15"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "false",
+        "south": "false",
+        "down": "false",
+        "north": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_0"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "true",
+        "south": "false",
+        "down": "false",
+        "north": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_1"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "false",
+        "south": "true",
+        "down": "false",
+        "north": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_2"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "true",
+        "south": "true",
+        "down": "false",
+        "north": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_3"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "false",
+        "south": "false",
+        "down": "true",
+        "north": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_4"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "true",
+        "south": "false",
+        "down": "true",
+        "north": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_5"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "false",
+        "south": "true",
+        "down": "true",
+        "north": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_6"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "true",
+        "south": "true",
+        "down": "true",
+        "north": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_7"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "false",
+        "south": "false",
+        "down": "false",
+        "north": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_8"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "true",
+        "south": "false",
+        "down": "false",
+        "north": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_9"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "false",
+        "south": "true",
+        "down": "false",
+        "north": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_10"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "true",
+        "south": "true",
+        "down": "false",
+        "north": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_11"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "false",
+        "south": "false",
+        "down": "true",
+        "north": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_12"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "true",
+        "south": "false",
+        "down": "true",
+        "north": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_13"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "false",
+        "south": "true",
+        "down": "true",
+        "north": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_14"
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "true",
+        "south": "true",
+        "down": "true",
+        "north": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_west_15"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "false",
+        "north": "false",
+        "down": "false",
+        "south": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_0"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "true",
+        "north": "false",
+        "down": "false",
+        "south": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_1"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "false",
+        "north": "true",
+        "down": "false",
+        "south": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_2"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "true",
+        "north": "true",
+        "down": "false",
+        "south": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_3"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "false",
+        "north": "false",
+        "down": "true",
+        "south": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_4"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "true",
+        "north": "false",
+        "down": "true",
+        "south": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_5"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "false",
+        "north": "true",
+        "down": "true",
+        "south": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_6"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "true",
+        "north": "true",
+        "down": "true",
+        "south": "false"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_7"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "false",
+        "north": "false",
+        "down": "false",
+        "south": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_8"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "true",
+        "north": "false",
+        "down": "false",
+        "south": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_9"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "false",
+        "north": "true",
+        "down": "false",
+        "south": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_10"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "true",
+        "north": "true",
+        "down": "false",
+        "south": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_11"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "false",
+        "north": "false",
+        "down": "true",
+        "south": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_12"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "true",
+        "north": "false",
+        "down": "true",
+        "south": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_13"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "false",
+        "north": "true",
+        "down": "true",
+        "south": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_14"
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "true",
+        "north": "true",
+        "down": "true",
+        "south": "true"
+      },
+      "apply": {
+        "model": "ftbic:block/industrial_bank_port_east_15"
+      }
+    }
+  ]
+}

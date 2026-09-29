@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:advanced_machine_block",
+    "C": "ftbic:advanced_circuit",
+    "G": "#c:glass_blocks/colorless",
+    "H": "ftbic:hydroponic_accelerator",
+    "M": "minecraft:water_bucket",
+    "W": "ftbic:copper_coil"
+  },
+  "pattern": [
+    "GHG",
+    "CAC",
+    "WMW"
+  ],
+  "result": {
+    "id": "ftbic:advanced_hydroponic_accelerator"
+  },
+  "show_notification": false
+}

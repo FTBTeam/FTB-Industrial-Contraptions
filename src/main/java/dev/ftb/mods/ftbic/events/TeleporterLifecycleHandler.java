@@ -10,15 +10,15 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 
 @EventBusSubscriber(modid = FTBIC.MOD_ID)
 public final class TeleporterLifecycleHandler {
-	@SubscribeEvent
-	public static void onLevelUnload(LevelEvent.Unload event) {
-		TeleporterBlockEntity.purgeLevel(event.getLevel() instanceof Level l ? l : null);
-	}
+    @SubscribeEvent
+    public static void onLevelUnload(LevelEvent.Unload event) {
+        TeleporterBlockEntity.purgeLevel(event.getLevel() instanceof Level l ? l : null);
+    }
 
-	@SubscribeEvent
-	public static void onServerStopping(ServerStoppingEvent event) {
-		TeleporterBlockEntity.purgeAll();
-	}
+    @SubscribeEvent
+    public static void onServerStopping(ServerStoppingEvent event) {
+        TeleporterBlockEntity.purgeAll();
+    }
 
-	private TeleporterLifecycleHandler() {}
+    private TeleporterLifecycleHandler() {}
 }

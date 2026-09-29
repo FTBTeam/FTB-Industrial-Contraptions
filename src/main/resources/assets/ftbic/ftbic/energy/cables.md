@@ -10,6 +10,7 @@ item_ids:
   - ftbic:hv_cable
   - ftbic:ev_cable
   - ftbic:iv_cable
+  - ftbic:superconducting_cable
   - ftbic:burnt_cable
   - ftbic:lv_reinforced_cable
   - ftbic:mv_reinforced_cable
@@ -32,7 +33,7 @@ item_ids:
 
 <Row>
   <ItemImage id="lv_cable" />
-  ### <Color id="aqua">LV Cable — 32 zaps/t</Color>
+  ### <Color id="aqua">LV Cable (<Energy config="energy.lv_transfer_rate" rate="true" />)</Color>
 </Row>
 
 Rubber-coated copper. The default cable for basic generators, the macerator, and the powered furnace.
@@ -43,7 +44,7 @@ Rubber-coated copper. The default cable for basic generators, the macerator, and
 
 <Row>
   <ItemImage id="mv_cable" />
-  ### <Color id="aqua">MV Cable — 128 zaps/t</Color>
+  ### <Color id="aqua">MV Cable (<Energy config="energy.mv_transfer_rate" rate="true" />)</Color>
 </Row>
 
 Insulated gold wire. Used between MV transformers and mid-tier machines.
@@ -54,7 +55,7 @@ Insulated gold wire. Used between MV transformers and mid-tier machines.
 
 <Row>
   <ItemImage id="hv_cable" />
-  ### <Color id="aqua">HV Cable — 512 zaps/t</Color>
+  ### <Color id="aqua">HV Cable (<Energy config="energy.hv_transfer_rate" rate="true" />)</Color>
 </Row>
 
 Insulated iron wire. Necessary for advanced machines and the first stage out of a nuclear reactor.
@@ -65,7 +66,7 @@ Insulated iron wire. Necessary for advanced machines and the first stage out of 
 
 <Row>
   <ItemImage id="ev_cable" />
-  ### <Color id="aqua">EV Cable — 2,048 zaps/t</Color>
+  ### <Color id="aqua">EV Cable (<Energy config="energy.ev_transfer_rate" rate="true" />)</Color>
 </Row>
 
 Insulated iridium wire. Feeds the Teleporter, Antimatter Constructor, and Quantum gear charge pads.
@@ -76,12 +77,27 @@ Insulated iridium wire. Feeds the Teleporter, Antimatter Constructor, and Quantu
 
 <Row>
   <ItemImage id="iv_cable" />
-  ### <Color id="aqua">IV Cable — 8,192 zaps/t</Color>
+  ### <Color id="aqua">IV Cable (<Energy config="energy.iv_transfer_rate" rate="true" />)</Color>
 </Row>
 
-The highest transfer rate in the mod. Reserved for maxed-out reactor designs and the endgame antimatter chain.
+Glass cable for high-output reactor designs and the endgame antimatter chain.
 
 <RecipeFor id="iv_cable" />
+
+<ItemImage id="minecraft:air" scale="0.25"/>
+
+<Row>
+  <ItemImage id="superconducting_cable" />
+  ### <Color id="aqua">Superconducting Cable (Unlimited <EnergyUnit rate="true" />)</Color>
+</Row>
+
+Combine **two IV glass cables**, **one redstone dust**, and **one glowstone dust** in any crafting grid to make **two Superconducting Cables**.
+
+Superconducting cables have no transfer limit and cannot burn from overload. Machines still obey their own input and output limits, and the configured maximum cable length still applies. Connect superconducting cables to each other; different cable tiers do not connect directly.
+
+A glowing cyan pulse travels through the exposed core while energy is transferred. It fades when the source stops supplying energy or the destination fills. Branches with no accepted transfer stay dark. The glow works without shaders.
+
+<RecipeFor id="superconducting_cable" />
 
 <ItemImage id="minecraft:air" scale="0.25"/>
 
@@ -105,39 +121,39 @@ What a cable becomes if it receives too much voltage. Break it, replace it with 
   A full cube with the toughness of <ItemLink id="reinforced_stone" /> that still passes power at its tier rate. Use these to run cables **through** a reactor containment wall without leaving a gap. Each tier takes its color from the matching regular cable.
 </Column>
 
-Reinforced cables connect to regular cables of the same tier, so transitioning at the wall needs no transformer. If a reinforced cable is overloaded it collapses into a <ItemLink id="burnt_reinforced_cable" /> — a dead reinforced-stone block with a scorched core — rather than a flimsy burnt cable, keeping the containment intact.
+Reinforced cables connect to regular cables of the same tier, so transitioning at the wall needs no transformer. If a reinforced cable is overloaded it collapses into a <ItemLink id="burnt_reinforced_cable" /> (a dead reinforced-stone block with a scorched core) rather than a flimsy burnt cable, keeping the containment intact.
 
 <Row>
   <ItemImage id="lv_reinforced_cable" />
-  ### <Color id="aqua">Reinforced LV Cable — 32 zaps/t</Color>
+  ### <Color id="aqua">Reinforced LV Cable (<Energy config="energy.lv_transfer_rate" rate="true" />)</Color>
 </Row>
 
 <RecipeFor id="lv_reinforced_cable" />
 
 <Row>
   <ItemImage id="mv_reinforced_cable" />
-  ### <Color id="aqua">Reinforced MV Cable — 128 zaps/t</Color>
+  ### <Color id="aqua">Reinforced MV Cable (<Energy config="energy.mv_transfer_rate" rate="true" />)</Color>
 </Row>
 
 <RecipeFor id="mv_reinforced_cable" />
 
 <Row>
   <ItemImage id="hv_reinforced_cable" />
-  ### <Color id="aqua">Reinforced HV Cable — 512 zaps/t</Color>
+  ### <Color id="aqua">Reinforced HV Cable (<Energy config="energy.hv_transfer_rate" rate="true" />)</Color>
 </Row>
 
 <RecipeFor id="hv_reinforced_cable" />
 
 <Row>
   <ItemImage id="ev_reinforced_cable" />
-  ### <Color id="aqua">Reinforced EV Cable — 2,048 zaps/t</Color>
+  ### <Color id="aqua">Reinforced EV Cable (<Energy config="energy.ev_transfer_rate" rate="true" />)</Color>
 </Row>
 
 <RecipeFor id="ev_reinforced_cable" />
 
 <Row>
   <ItemImage id="iv_reinforced_cable" />
-  ### <Color id="aqua">Reinforced IV Cable — 8,192 zaps/t</Color>
+  ### <Color id="aqua">Reinforced IV Cable (<Energy config="energy.iv_transfer_rate" rate="true" />)</Color>
 </Row>
 
 <RecipeFor id="iv_reinforced_cable" />

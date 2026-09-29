@@ -3,15 +3,15 @@ package dev.ftb.mods.ftbic.item.reactor;
 import net.minecraft.world.item.ItemStack;
 
 public class CoolantItem extends BaseReactorItem {
-	public final int maxHeat;
+    public final int maxHeat;
 
-	public CoolantItem(Properties props, int maxHeat) {
-		super(props.durability(Math.max(1, maxHeat)));
-		this.maxHeat = maxHeat;
-	}
+    public CoolantItem(Properties props, int maxHeat) {
+        super(props.durability(Math.max(1, maxHeat)));
+        this.maxHeat = maxHeat;
+    }
 
-	@Override
-	public boolean isHeatAcceptor(ItemStack stack) {
-		return stack.getMaxDamage() > 0;
-	}
+    @Override
+    public boolean isHeatAcceptor(ItemStack stack) {
+        return stack.getMaxDamage() > 0;
+    }
 }

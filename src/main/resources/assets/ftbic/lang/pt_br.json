@@ -247,7 +247,7 @@
   "item.ftbic.teleporter": "Teletransportador",
   "item.ftbic.thick_neutron_reflector": "Refletor de Nêutrons Espesso",
   "item.ftbic.tooltip.creative_energy": "Energia Infinita",
-  "item.ftbic.tooltip.energy": "%s / %s zaps",
+  "item.ftbic.tooltip.energy": "%s / %s",
   "item.ftbic.tooltip.tier": "Nível: %s",
   "item.ftbic.transformer_upgrade": "Melhoria de Transformador",
   "item.ftbic.uranium_fuel_rod": "Vara de Combustível de Urânio",

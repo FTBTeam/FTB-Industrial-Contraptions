@@ -15,7 +15,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="quad_uranium_fuel_rod" scale="2" />
 
-  Fuel rods produce **heat** and **output**. Doubling up rods (dual, quad) exponentially increases both — at the cost of much heavier cooling requirements.
+  Fuel rods produce **heat** and **output**. Doubling up rods (dual, quad) exponentially increases both, at the cost of much heavier cooling requirements.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -26,7 +26,7 @@ item_ids:
   ### <Color id="aqua">Uranium Fuel Rod</Color>
 </Row>
 
-Fabricated in a <ItemLink id="canning_machine" /> from depleted uranium. Base unit — 1× output, 1× heat.
+Fabricated in a <ItemLink id="canning_machine" /> from depleted uranium. Base unit: 1× output, 1× heat.
 
 <RecipeFor id="uranium_fuel_rod" />
 
@@ -35,7 +35,7 @@ Fabricated in a <ItemLink id="canning_machine" /> from depleted uranium. Base un
   ### <Color id="aqua">Dual Uranium Fuel Rod</Color>
 </Row>
 
-Two rods bonded together. 4× output, 2× heat — efficient per cell, but twice the cooling load.
+Two rods bonded together. 4× output, 2× heat (efficient per cell, but twice the cooling load).
 
 <RecipeFor id="dual_uranium_fuel_rod" />
 
@@ -57,5 +57,5 @@ The core of high-output designs. 10× output, 4× heat. Needs careful placement 
 
 A rod emits heat/output for each of its **valid neighbors** (rod, reflector, or heat-dissipating component). Empty slots count as nothing. Design rule of thumb:
 
-* A single rod with 4 reflectors produces as much as a quad rod with 2 reflectors — start there.
+* A single rod with 4 reflectors produces as much as a quad rod with 2 reflectors. Start there.
 * Scale up to dual/quad rods only after your cooling scales.

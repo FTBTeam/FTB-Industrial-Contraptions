@@ -23,4 +23,6 @@ item_ids:
 <ItemImage id="minecraft:air" scale="0.25"/>
 ***
 
-Stack up to **4** to let any LV machine accept IV power directly — the classic companion to heavy overclocking, since overclockers drastically increase power draw beyond the base tier's cable capacity.
+Stack up to **4** to let any LV machine accept IV power directly. This is the classic companion to heavy overclocking, since overclockers drastically increase power draw beyond the base tier's cable capacity.
+
+With all **4** installed, the machine takes any amount of power<ZapMode>, zaps or FE,</ZapMode> and can no longer burn out from overvoltage.

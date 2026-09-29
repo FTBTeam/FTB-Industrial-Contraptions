@@ -16,7 +16,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="mv_transformer" scale="2" />
 
-  Transformers step voltage **down** from a higher tier to a lower one, or **up** by placing them backwards. Every transformer has a single higher-tier face and five lower-tier faces.
+  Transformers step voltage **down** from a higher tier to a lower one. They cannot step voltage up. Every transformer has a single higher-tier face and five lower-tier faces.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -31,7 +31,7 @@ Without a transformer, feeding HV into an LV machine burns it out instantly. Tra
   ### <Color id="aqua">LV Transformer</Color>
 </Row>
 
-Steps MV (128 zap/t) down to LV (32 zap/t).
+Steps MV (<Energy config="energy.mv_transfer_rate" rate="true" />) down to LV (<Energy config="energy.lv_transfer_rate" rate="true" />).
 
 <RecipeFor id="lv_transformer" />
 
@@ -40,7 +40,7 @@ Steps MV (128 zap/t) down to LV (32 zap/t).
   ### <Color id="aqua">MV Transformer</Color>
 </Row>
 
-Steps HV (512 zap/t) down to MV (128 zap/t).
+Steps HV (<Energy config="energy.hv_transfer_rate" rate="true" />) down to MV (<Energy config="energy.mv_transfer_rate" rate="true" />).
 
 <RecipeFor id="mv_transformer" />
 
@@ -49,7 +49,7 @@ Steps HV (512 zap/t) down to MV (128 zap/t).
   ### <Color id="aqua">HV Transformer</Color>
 </Row>
 
-Steps EV (2,048 zap/t) down to HV (512 zap/t).
+Steps EV (<Energy config="energy.ev_transfer_rate" rate="true" />) down to HV (<Energy config="energy.hv_transfer_rate" rate="true" />).
 
 <RecipeFor id="hv_transformer" />
 
@@ -58,6 +58,6 @@ Steps EV (2,048 zap/t) down to HV (512 zap/t).
   ### <Color id="aqua">EV Transformer</Color>
 </Row>
 
-Steps IV (8,192 zap/t) down to EV (2,048 zap/t).
+Steps IV (<Energy config="energy.iv_transfer_rate" rate="true" />) down to EV (<Energy config="energy.ev_transfer_rate" rate="true" />).
 
 <RecipeFor id="ev_transformer" />

@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "ftbic:recipe_toggle",
+      "option": "add_plate_recipes"
+    }
+  ],
   "type": "ftbic:compressing",
   "inputs": [
     {

@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AdvancedCompressorBlockEntity extends MachineBlockEntity {
-	public AdvancedCompressorBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.ADVANCED_COMPRESSOR, FTBICRecipes.COMPRESSING, pos, state);
-	}
+    public AdvancedCompressorBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.ADVANCED_COMPRESSOR, FTBICRecipes.COMPRESSING, pos, state);
+    }
 }

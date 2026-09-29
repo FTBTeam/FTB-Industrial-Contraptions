@@ -33,4 +33,4 @@ item_ids:
 * By default, drained fluids are replaced with <ItemLink id="exfluid" /> to prevent infinite-source exploits. Disable in config if you prefer hollow holes.
 * Pipe connected machines or <ItemLink id="fluid_cell" />s to the side to export the fluid.
 
-**Stats:** HV tier, 10,000 zap buffer, 3 zap/t use.
+**Stats:** HV tier, <Energy config="machines.pump_capacity" /> buffer, <Energy config="machines.pump_use" rate="true" /> use.

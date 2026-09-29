@@ -1,0 +1,232 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:dirt",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:coarse_dirt",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gravel",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sand",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_sand",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:cobblestone",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:cobbled_deepslate",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:tuff",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:andesite",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diorite",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:granite",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:netherrack",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stick",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:fluid_cell",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:empty_can",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:canned_food",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:protein_bar"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:rotten_flesh",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:bone",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:feather",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:rubber",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:fuse",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:single_use_battery"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly",
+              "options": "#minecraft:on_random_loot"
+            }
+          ],
+          "name": "minecraft:copper_shovel",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly",
+              "options": "#minecraft:on_random_loot"
+            }
+          ],
+          "name": "minecraft:copper_pickaxe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly",
+              "options": "#minecraft:on_random_loot"
+            }
+          ],
+          "name": "minecraft:copper_axe",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:obsidian",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:electronic_circuit",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:aluminum_dust"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:copper_dust"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:gold_dust"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:iron_dust"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:lead_dust"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:nickel_dust"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:silver_dust"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:tin_dust"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diamond"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:amethyst_shard",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:pointed_dripstone",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:overclocker_upgrade"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:mixed_metal_blend",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ftbic:iridium_dust"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ftbic:gameplay/scrap_box"
+}

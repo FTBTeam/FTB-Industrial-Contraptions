@@ -4,6 +4,7 @@ plugins {
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.141'
     id 'me.modmuss50.mod-publish-plugin' version '2.1.1'
+    id 'com.diffplug.spotless' version '8.10.3'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -144,5 +145,16 @@ publishMods {
         client = true
         server = true
         optional("jei", "jade", "guideme")
+    }
+}
+
+spotless {
+    java {
+        target 'src/*/java/**/*.java'
+        palantirJavaFormat()
+        importOrder()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
     }
 }

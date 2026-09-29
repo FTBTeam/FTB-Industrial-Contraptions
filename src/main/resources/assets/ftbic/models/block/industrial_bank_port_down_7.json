@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "face": "ftbic:block/industrial_bank_port_7",
+    "particle": "ftbic:block/industrial_bank_port_item"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#face",
+          "cullface": "down"
+        }
+      }
+    }
+  ]
+}

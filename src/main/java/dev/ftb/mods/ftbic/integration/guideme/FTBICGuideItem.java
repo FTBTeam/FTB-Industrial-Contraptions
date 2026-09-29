@@ -9,16 +9,16 @@ import net.minecraft.world.level.Level;
 import net.neoforged.fml.ModList;
 
 public class FTBICGuideItem extends Item {
-	public FTBICGuideItem(Properties properties) {
-		super(properties);
-	}
+    public FTBICGuideItem(Properties properties) {
+        super(properties);
+    }
 
-	@Override
-	public InteractionResult use(Level level, Player player, InteractionHand hand) {
-		if (level.isClientSide() && ModList.get().isLoaded("guideme")) {
-			GuidesCommon.openGuide(player, FTBICGuide.GUIDE_ID);
-			return InteractionResult.CONSUME;
-		}
-		return InteractionResult.SUCCESS;
-	}
+    @Override
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+        if (level.isClientSide() && ModList.get().isLoaded("guideme")) {
+            GuidesCommon.openGuide(player, FTBICGuide.GUIDE_ID);
+            return InteractionResult.CONSUME;
+        }
+        return InteractionResult.SUCCESS;
+    }
 }

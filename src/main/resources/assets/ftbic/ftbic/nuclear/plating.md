@@ -15,7 +15,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="reactor_plating" scale="2" />
 
-  Plating modifies the **reactor hull** itself — its total heat capacity and its explosion radius if the worst happens.
+  Plating modifies the **reactor hull** itself: its total heat capacity and its explosion radius if the worst happens.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -35,7 +35,7 @@ Reduces explosion damage if the reactor melts down.
   ### <Color id="aqua">Heat-Capacity Reactor Plating</Color>
 </Row>
 
-Increases the reactor's total heat buffer — slower to reach critical, easier to run pulsed designs.
+Increases the reactor's total heat buffer: slower to reach critical, easier to run pulsed designs.
 
 <RecipeFor id="heat_capacity_reactor_plating" />
 

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:bucket",
+    "C": "ftbic:electronic_circuit",
+    "G": "#c:glass_blocks/colorless",
+    "M": "ftbic:machine_block",
+    "P": "minecraft:piston",
+    "W": "ftbic:copper_coil"
+  },
+  "pattern": [
+    "GPG",
+    "CMC",
+    "WBW"
+  ],
+  "result": {
+    "id": "ftbic:ore_washer"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "ftbic:copper_coil",
+    "C": "ftbic:electronic_circuit",
+    "G": "#c:glass_blocks/colorless",
+    "M": "ftbic:machine_block",
+    "P": "minecraft:piston",
+    "W": "minecraft:water_bucket"
+  },
+  "pattern": [
+    "GPG",
+    "CWC",
+    "BMB"
+  ],
+  "result": {
+    "id": "ftbic:hydroponic_accelerator"
+  },
+  "show_notification": false
+}

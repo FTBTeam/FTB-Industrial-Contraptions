@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ftbic:advanced_alloy",
+    "C": "ftbic:advanced_circuit",
+    "W": "ftbic:hv_cable"
+  },
+  "pattern": [
+    "ACA",
+    "WCW",
+    "ACA"
+  ],
+  "result": {
+    "id": "ftbic:parallel_processing_upgrade"
+  },
+  "show_notification": false
+}

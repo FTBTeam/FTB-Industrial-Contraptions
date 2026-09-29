@@ -2,7 +2,10 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.screen.QuarryMenu;
+import dev.ftb.mods.ftbic.util.QuarryFilter;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
@@ -18,169 +21,199 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.common.util.FakePlayerFactory;
-
-import java.util.List;
 
 public class QuarryBlockEntity extends DiggingBaseBlockEntity {
-	public ItemStack pickaxeStack = ItemStack.EMPTY;
+    public ItemStack pickaxeStack = ItemStack.EMPTY;
+    private QuarryFilter filter = QuarryFilter.DEFAULT;
 
-	public QuarryBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.QUARRY, pos, state);
-	}
+    public QuarryFilter getFilter() {
+        return filter;
+    }
 
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory inv) {
-		return new QuarryMenu(id, inv, this);
-	}
+    public void setFilter(QuarryFilter value) {
+        filter = value;
+        skippedBlocks = 0;
+        setChanged();
+        if (level != null && !level.isClientSide())
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+    }
 
-	public Container pickaxeContainer() {
-		return new PickaxeContainer();
-	}
+    public boolean hasFilterUpgrade() {
+        return upgradeInventory.countUpgrades(FTBICItems.QUARRY_FILTER_UPGRADE.get()) > 0;
+    }
 
-	@Override
-	public void upgradesChanged() {
-		super.upgradesChanged();
-		if (!pickaxeStack.isEmpty() && pickaxeStack.is(ItemTags.PICKAXES) && level != null) {
-			int efficiency = EnchantmentHelper.getItemEnchantmentLevel(
-					level.registryAccess().holderOrThrow(Enchantments.EFFICIENCY), pickaxeStack);
-			if (efficiency > 0) {
-				progressSpeed *= 1D + 0.1D * efficiency;
-			}
-		}
-	}
+    @Override
+    protected boolean skipEmptyTargetsWithoutEnergy() {
+        return hasFilterUpgrade();
+    }
 
-	@Override
-	protected void saveAdditional(ValueOutput output) {
-		super.saveAdditional(output);
-		if (!pickaxeStack.isEmpty()) {
-			output.store("Pickaxe", ItemStack.CODEC, pickaxeStack);
-		}
-	}
+    @Override
+    public boolean isValidBlock(BlockState state, BlockPos pos) {
+        return super.isValidBlock(state, pos) && (!hasFilterUpgrade() || filter.matches(state));
+    }
 
-	@Override
-	protected void loadAdditional(ValueInput input) {
-		super.loadAdditional(input);
-		pickaxeStack = input.read("Pickaxe", ItemStack.CODEC).orElse(ItemStack.EMPTY);
-		if (!pickaxeStack.isEmpty()) {
-			initProperties();
-			upgradesChanged();
-		}
-	}
+    public QuarryBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.QUARRY, pos, state);
+    }
 
-	@Override
-	public void onBroken(Level level, BlockPos pos) {
-		super.onBroken(level, pos);
-		if (!pickaxeStack.isEmpty()) {
-			Block.popResource(level, pos, pickaxeStack);
-			pickaxeStack = ItemStack.EMPTY;
-		}
-	}
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv) {
+        return new QuarryMenu(id, inv, this);
+    }
 
-	@Override
-	public void digBlock(BlockState state, BlockPos miningPos) {
-		if (!(level instanceof ServerLevel server)) return;
+    public Container pickaxeContainer() {
+        return new PickaxeContainer();
+    }
 
-		ItemStack tool = pickaxeStack;
-		List<ItemStack> drops;
-		if (!tool.isEmpty() && tool.is(ItemTags.PICKAXES)) {
-			drops = Block.getDrops(state, server, miningPos, null, FakePlayerFactory.getMinecraft(server), tool);
-		} else {
-			drops = Block.getDrops(state, server, miningPos, null);
-		}
+    @Override
+    public void upgradesChanged() {
+        super.upgradesChanged();
+        if (!pickaxeStack.isEmpty() && pickaxeStack.is(ItemTags.PICKAXES) && level != null) {
+            int efficiency = EnchantmentHelper.getItemEnchantmentLevel(
+                    level.registryAccess().holderOrThrow(Enchantments.EFFICIENCY), pickaxeStack);
+            if (efficiency > 0) {
+                progressSpeed *= 1D + 0.1D * efficiency;
+            }
+        }
+    }
 
-		if (!canFitAllDrops(drops)) {
-			paused = true;
-			setChanged();
-			return;
-		}
-		level.removeBlock(miningPos, false);
-		for (ItemStack drop : drops) {
-			addToOutputs(drop);
-		}
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        if (!pickaxeStack.isEmpty()) {
+            output.store("Pickaxe", ItemStack.CODEC, pickaxeStack);
+        }
+        output.store("QuarryFilter", QuarryFilter.CODEC, filter);
+    }
 
-		if (!tool.isEmpty() && tool.is(ItemTags.PICKAXES)
-				&& FTBICConfig.MACHINES.QUARRY_PICKAXE_TAKES_DAMAGE.get() && tool.isDamageableItem()) {
-			tool.hurtAndBreak(1, server, null, item -> {
-				pickaxeStack = ItemStack.EMPTY;
-				initProperties();
-				upgradesChanged();
-			});
-		}
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        if (!isClientSync(input)) {
+            pickaxeStack = input.read("Pickaxe", ItemStack.CODEC).orElse(ItemStack.EMPTY);
+        }
+        filter = input.read("QuarryFilter", QuarryFilter.CODEC).orElse(QuarryFilter.DEFAULT);
+        if (!pickaxeStack.isEmpty()) {
+            initProperties();
+            upgradesChanged();
+        }
+    }
 
-		setChanged();
-	}
+    @Override
+    public void onBroken(Level level, BlockPos pos) {
+        super.onBroken(level, pos);
+        if (!pickaxeStack.isEmpty()) {
+            Block.popResource(level, pos, pickaxeStack);
+            pickaxeStack = ItemStack.EMPTY;
+        }
+    }
 
-	private class PickaxeContainer implements Container {
-		@Override
-		public int getContainerSize() {
-			return 1;
-		}
+    @Override
+    public void digBlock(BlockState state, BlockPos miningPos) {
+        if (!(level instanceof ServerLevel server)) return;
 
-		@Override
-		public boolean isEmpty() {
-			return pickaxeStack.isEmpty();
-		}
+        ItemStack tool = pickaxeStack;
+        List<ItemStack> drops;
+        if (!tool.isEmpty() && tool.is(ItemTags.PICKAXES)) {
+            drops = Block.getDrops(state, server, miningPos, null, getFakePlayer(server), tool);
+        } else {
+            drops = Block.getDrops(state, server, miningPos, null);
+        }
 
-		@Override
-		public ItemStack getItem(int slot) {
-			return slot == 0 ? pickaxeStack : ItemStack.EMPTY;
-		}
+        if (!canFitAllDrops(drops)) {
+            paused = true;
+            setChanged();
+            return;
+        }
+        clearMinedBlock(miningPos, state);
+        for (ItemStack drop : drops) {
+            addToOutputs(drop);
+        }
 
-		@Override
-		public ItemStack removeItem(int slot, int count) {
-			if (slot != 0 || pickaxeStack.isEmpty() || count <= 0) return ItemStack.EMPTY;
-			ItemStack taken = pickaxeStack.copy();
-			taken.setCount(Math.min(count, pickaxeStack.getCount()));
-			pickaxeStack.shrink(taken.getCount());
-			if (pickaxeStack.isEmpty()) pickaxeStack = ItemStack.EMPTY;
-			setChanged();
-			return taken;
-		}
+        if (!tool.isEmpty()
+                && tool.is(ItemTags.PICKAXES)
+                && FTBICConfig.MACHINES.QUARRY_PICKAXE_TAKES_DAMAGE.get()
+                && tool.isDamageableItem()) {
+            tool.hurtAndBreak(1, server, null, item -> {
+                pickaxeStack = ItemStack.EMPTY;
+                initProperties();
+                upgradesChanged();
+            });
+        }
 
-		@Override
-		public ItemStack removeItemNoUpdate(int slot) {
-			if (slot != 0) return ItemStack.EMPTY;
-			ItemStack removed = pickaxeStack;
-			pickaxeStack = ItemStack.EMPTY;
-			return removed;
-		}
+        setChanged();
+    }
 
-		@Override
-		public void setItem(int slot, ItemStack stack) {
-			if (slot != 0) return;
-			pickaxeStack = stack == null ? ItemStack.EMPTY : stack;
-			setChanged();
-		}
+    private class PickaxeContainer implements Container {
+        @Override
+        public int getContainerSize() {
+            return 1;
+        }
 
-		@Override
-		public void setChanged() {
-			if (hasLevel() && !level.isClientSide()) {
-				initProperties();
-				upgradesChanged();
-			}
-			QuarryBlockEntity.this.setChanged();
-		}
+        @Override
+        public boolean isEmpty() {
+            return pickaxeStack.isEmpty();
+        }
 
-		@Override
-		public boolean stillValid(Player player) {
-			return !QuarryBlockEntity.this.isRemoved();
-		}
+        @Override
+        public ItemStack getItem(int slot) {
+            return slot == 0 ? pickaxeStack : ItemStack.EMPTY;
+        }
 
-		@Override
-		public void clearContent() {
-			pickaxeStack = ItemStack.EMPTY;
-			setChanged();
-		}
+        @Override
+        public ItemStack removeItem(int slot, int count) {
+            if (slot != 0 || pickaxeStack.isEmpty() || count <= 0) return ItemStack.EMPTY;
+            ItemStack taken = pickaxeStack.copy();
+            taken.setCount(Math.min(count, pickaxeStack.getCount()));
+            pickaxeStack.shrink(taken.getCount());
+            if (pickaxeStack.isEmpty()) pickaxeStack = ItemStack.EMPTY;
+            setChanged();
+            return taken;
+        }
 
-		@Override
-		public int getMaxStackSize() {
-			return 1;
-		}
+        @Override
+        public ItemStack removeItemNoUpdate(int slot) {
+            if (slot != 0) return ItemStack.EMPTY;
+            ItemStack removed = pickaxeStack;
+            pickaxeStack = ItemStack.EMPTY;
+            return removed;
+        }
 
-		@Override
-		public boolean canPlaceItem(int slot, ItemStack stack) {
-			return slot == 0 && stack.is(ItemTags.PICKAXES);
-		}
-	}
+        @Override
+        public void setItem(int slot, ItemStack stack) {
+            if (slot != 0) return;
+            pickaxeStack = stack == null ? ItemStack.EMPTY : stack;
+            setChanged();
+        }
+
+        @Override
+        public void setChanged() {
+            if (hasLevel() && !level.isClientSide()) {
+                initProperties();
+                upgradesChanged();
+            }
+            QuarryBlockEntity.this.setChanged();
+        }
+
+        @Override
+        public boolean stillValid(Player player) {
+            return !QuarryBlockEntity.this.isRemoved();
+        }
+
+        @Override
+        public void clearContent() {
+            pickaxeStack = ItemStack.EMPTY;
+            setChanged();
+        }
+
+        @Override
+        public int getMaxStackSize() {
+            return 1;
+        }
+
+        @Override
+        public boolean canPlaceItem(int slot, ItemStack stack) {
+            return slot == 0 && stack.is(ItemTags.PICKAXES);
+        }
+    }
 }

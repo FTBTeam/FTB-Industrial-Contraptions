@@ -1,0 +1,44 @@
+{
+  "type": "ftbic:hydroponic_growth",
+  "input_fluids": [
+    {
+      "amount": 250,
+      "ingredient": "minecraft:water"
+    }
+  ],
+  "inputs": [
+    {
+      "ingredient": "minecraft:wheat_seeds"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "minecraft:wheat"
+      }
+    },
+    {
+      "item": {
+        "count": 2,
+        "id": "minecraft:wheat_seeds"
+      }
+    },
+    {
+      "chance": 0.1,
+      "item": {
+        "id": "minecraft:wheat_seeds"
+      }
+    }
+  ],
+  "soil_options": [
+    {
+      "ingredient": "minecraft:dirt",
+      "speed": 1.0
+    },
+    {
+      "ingredient": "minecraft:moss_block",
+      "speed": 1.25
+    }
+  ]
+}

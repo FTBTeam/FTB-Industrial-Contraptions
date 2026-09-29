@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class EVRectifierBlockEntity extends EnergyRectifierBlockEntity {
-	public EVRectifierBlockEntity(BlockPos pos, BlockState state) {
-		super(FTBICElectricBlocks.EV_RECTIFIER, pos, state);
-	}
+    public EVRectifierBlockEntity(BlockPos pos, BlockState state) {
+        super(FTBICElectricBlocks.EV_RECTIFIER, pos, state);
+    }
 }

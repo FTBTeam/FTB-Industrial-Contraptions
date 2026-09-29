@@ -1,0 +1,28 @@
+{
+  "type": "ftbic:separating",
+  "input_fluids": [
+    {
+      "amount": 1000,
+      "ingredient": "minecraft:lava"
+    }
+  ],
+  "outputs": [
+    {
+      "item": {
+        "count": 2,
+        "id": "ftbic:tin_nugget"
+      }
+    },
+    {
+      "item": {
+        "id": "minecraft:copper_nugget"
+      }
+    },
+    {
+      "chance": 0.25,
+      "item": {
+        "id": "minecraft:gold_nugget"
+      }
+    }
+  ]
+}

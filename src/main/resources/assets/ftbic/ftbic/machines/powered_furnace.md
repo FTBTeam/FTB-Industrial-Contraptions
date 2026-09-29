@@ -14,7 +14,7 @@ item_ids:
 <Column alignItems="center" fullWidth={true}>
   <ItemImage id="powered_furnace" scale="2" />
 
-  An electric furnace that runs any vanilla smelting recipe. 3 zap/t, 1,200 zap buffer, LV tier.
+  An electric furnace that runs any vanilla smelting recipe. <Energy config="machines.powered_furnace_use" rate="true" />, <Energy config="machines.powered_furnace_capacity" /> buffer, LV tier.
 </Column>
 
 <ItemImage id="minecraft:air" scale="0.25"/>
@@ -29,7 +29,7 @@ item_ids:
   ### <Color id="aqua">Advanced Powered Furnace</Color>
 </Row>
 
-HV version with 10,000 zap buffer and 16 zap/t throughput — same recipes, much faster.
+MV version with a buffer of <Energy config="machines.advanced_powered_furnace_capacity" /> and <Energy config="machines.advanced_powered_furnace_use" rate="true" /> throughput. Same recipes and speed, and it accepts <ItemLink id="parallel_processing_upgrade" />s.
 
 <RecipeFor id="advanced_powered_furnace" />
 
