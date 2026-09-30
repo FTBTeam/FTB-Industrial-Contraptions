@@ -61,6 +61,14 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
     }
 
     @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+        if (!super.isItemValid(slot, stack)) {
+            return false;
+        }
+        return stack.isEmpty() || !(level instanceof ServerLevel) || getFuelTicksFor(stack) > 0;
+    }
+
+    @Override
     public void handleGeneration() {
         if (fuelTicks > 0) {
             fuelTicks--;
