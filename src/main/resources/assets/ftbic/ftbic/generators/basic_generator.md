@@ -40,10 +40,13 @@ Place fuel in the only inventory slot. The generator keeps burning until the fue
   ## <Color id="gold">Accepted Fuels</Color>
 </Column>
 
-Anything that burns in a vanilla furnace works, plus a few extras:
+Only these fuels burn, and the slot accepts nothing else. Other furnace fuels, such as lava buckets and blaze rods, won't go in.
 
-* Coal, charcoal, coal blocks, logs, planks, saplings, sticks
-* Sugar cane, cactus
-* <ItemLink id="scrap" /> (surprisingly potent per item)
+* Coal and charcoal: 1,600 ticks
+* Coal blocks: 16,000 ticks
+* Logs and planks: 300 ticks
+* Saplings, sticks and sugar cane: 100 ticks
+* Cactus: 200 ticks
+* <ItemLink id="scrap" />: 400 ticks, a strong fuel for how cheap it is
 
 <RecipesFor id="scrap" />
