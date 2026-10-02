@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [26.1.2.13]
 
+### Added
+
+* Advanced Ore Washer, Advanced Canning Machine, Advanced Roller and Advanced Extruder. They run at MV, use the same recipes as their basic versions, and accept Parallel Processing Upgrades.
+
 ### Changed
 
+* The Advanced Hydroponic Accelerator now accepts Parallel Processing Upgrades. Each lane grows one crop per seed in its seed slot in the same cycle, up to four, using that many times the lane's water and power.
 * The Hydroponic Accelerator keeps the seed in its seed slot during Growth mode when the recipe returns that seed, sending only the extra seeds to the output. One seed now keeps a lane running without feeding it back in.
 * FTBIC rubber is now in the `c:rubber` item tag.
 

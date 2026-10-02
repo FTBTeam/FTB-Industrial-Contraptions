@@ -44,6 +44,7 @@ public class FTBICGameTests {
         reg(event, "refining_discovery_overrides", RefiningGameTests::discoveryAndOverrides, env, 60);
         reg(event, "refining_colors", RefiningGameTests::colors, env, 60);
         reg(event, "hydroponic_catalyst_speed", HydroponicGameTests::catalystAndSpeed, env, 60);
+        reg(event, "hydroponic_parallel_lanes", HydroponicGameTests::parallelLanes, env, 60);
         reg(event, "hydroponic_consumed_seed", HydroponicGameTests::consumedSeed, env, 60);
         reg(event, "hydroponic_mutation_lanes", HydroponicGameTests::mutationAndLanes, env, 60);
         reg(event, "bank_connected_storage", BankGameTests::connectedStorage, env, 60);

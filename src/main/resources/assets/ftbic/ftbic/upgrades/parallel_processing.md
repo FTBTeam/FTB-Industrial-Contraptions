@@ -20,7 +20,7 @@ item_ids:
 
 ## Compatible machines
 
-Install this upgrade in the **Advanced Powered Furnace**, **Advanced Macerator**, **Advanced Compressor**, **Advanced Centrifuge**, **Alloy Smelter**, or **Reprocessor**. The limit is **three upgrades per machine**, shared across its upgrade slots. Basic processors and utility machines do not accept it.
+Install this upgrade in the **Advanced Powered Furnace**, **Advanced Macerator**, **Advanced Compressor**, **Advanced Centrifuge**, **Advanced Ore Washer**, **Advanced Canning Machine**, **Advanced Roller**, **Advanced Extruder**, **Advanced Hydroponic Accelerator**, **Alloy Smelter**, or **Reprocessor**. The limit is **three upgrades per machine**, shared across its upgrade slots. Basic processors and utility machines do not accept it.
 
 ## How batches work
 
@@ -28,6 +28,7 @@ Install this upgrade in the **Advanced Powered Furnace**, **Advanced Macerator**
 * At the start of each cycle, the machine chooses as many operations as its ingredients, output space, and stored energy allow. It can still run smaller batches.
 * Every operation needs a full set of ingredients. In a recipe with multiple item ingredients, keep each ingredient in its own input slot, with enough items for the batch.
 * Centrifuge batches multiply both item and fluid quantities. Each operation rolls chance outputs independently. The machine requires room for every possible output before proceeding.
+* In the **Advanced Hydroponic Accelerator**, each lane runs its own batch. A lane runs one operation per seed in its seed slot, up to the upgrade limit, and every operation uses its own share of water. Mutation crosses need one parent seed on each side per operation.
 * Ingredients are consumed when the cycle finishes. Adding ingredients during a cycle increases the next batch, without increasing the batch already in progress.
 
 The **running / maximum** counter beneath the progress arrow shows how many operations are running. Hover over it for an explanation. An idle or blocked machine shows zero running operations.

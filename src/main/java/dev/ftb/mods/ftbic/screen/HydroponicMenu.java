@@ -34,6 +34,7 @@ public final class HydroponicMenu extends ElectricBlockMenu {
     private final DataSlot mode = DataSlot.standalone();
     private final DataSlot[] laneProgress = new DataSlot[4];
     private final DataSlot[] laneDuration = new DataSlot[4];
+    private final DataSlot[] laneOperations = new DataSlot[4];
 
     public HydroponicMenu(int id, Inventory inv, FriendlyByteBuf buf) {
         super(FTBICMenus.HYDROPONIC.get(), id, inv, buf);
@@ -50,8 +51,10 @@ public final class HydroponicMenu extends ElectricBlockMenu {
         for (int i = 0; i < 4; i++) {
             laneProgress[i] = DataSlot.standalone();
             laneDuration[i] = DataSlot.standalone();
+            laneOperations[i] = DataSlot.standalone();
             addDataSlot(laneProgress[i]);
             addDataSlot(laneDuration[i]);
+            addDataSlot(laneOperations[i]);
         }
     }
 
@@ -109,6 +112,7 @@ public final class HydroponicMenu extends ElectricBlockMenu {
                 int lane = machine.isMutationMode() && machine.isAdvanced() ? i / 2 * 2 : i;
                 laneProgress[i].set(machine.getProgress(lane));
                 laneDuration[i].set(machine.getDuration(lane));
+                laneOperations[i].set(machine.getProgress(lane) > 0 ? machine.getOperations(lane) : 0);
             }
         }
         super.broadcastChanges();
@@ -116,6 +120,10 @@ public final class HydroponicMenu extends ElectricBlockMenu {
 
     public boolean mutationMode() {
         return mode.get() != 0;
+    }
+
+    public int laneOperations(int lane) {
+        return laneOperations[lane].get();
     }
 
     public float laneFraction(int lane) {

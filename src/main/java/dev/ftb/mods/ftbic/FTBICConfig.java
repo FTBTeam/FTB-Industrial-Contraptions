@@ -207,6 +207,14 @@ public final class FTBICConfig {
         public final ModConfigSpec.DoubleValue ADVANCED_CENTRIFUGE_USE;
         public final ModConfigSpec.DoubleValue ADVANCED_COMPRESSOR_CAPACITY;
         public final ModConfigSpec.DoubleValue ADVANCED_COMPRESSOR_USE;
+        public final ModConfigSpec.DoubleValue ADVANCED_ORE_WASHER_CAPACITY;
+        public final ModConfigSpec.DoubleValue ADVANCED_ORE_WASHER_USE;
+        public final ModConfigSpec.DoubleValue ADVANCED_CANNING_MACHINE_CAPACITY;
+        public final ModConfigSpec.DoubleValue ADVANCED_CANNING_MACHINE_USE;
+        public final ModConfigSpec.DoubleValue ADVANCED_ROLLER_CAPACITY;
+        public final ModConfigSpec.DoubleValue ADVANCED_ROLLER_USE;
+        public final ModConfigSpec.DoubleValue ADVANCED_EXTRUDER_CAPACITY;
+        public final ModConfigSpec.DoubleValue ADVANCED_EXTRUDER_USE;
         public final ModConfigSpec.DoubleValue TELEPORTER_CAPACITY;
         public final ModConfigSpec.DoubleValue TELEPORTER_MIN_USE;
         public final ModConfigSpec.DoubleValue TELEPORTER_MIN_DISTANCE;
@@ -303,6 +311,15 @@ public final class FTBICConfig {
             ADVANCED_CENTRIFUGE_USE = b.defineInRange("advanced_centrifuge_use", 16D, 0D, 100_000D);
             ADVANCED_COMPRESSOR_CAPACITY = b.defineInRange("advanced_compressor_capacity", 10_000D, 1D, 100_000D);
             ADVANCED_COMPRESSOR_USE = b.defineInRange("advanced_compressor_use", 16D, 0D, 100_000D);
+            ADVANCED_ORE_WASHER_CAPACITY = b.defineInRange("advanced_ore_washer_capacity", 10_000D, 1D, 100_000D);
+            ADVANCED_ORE_WASHER_USE = b.defineInRange("advanced_ore_washer_use", 16D, 0D, 100_000D);
+            ADVANCED_CANNING_MACHINE_CAPACITY =
+                    b.defineInRange("advanced_canning_machine_capacity", 10_000D, 1D, 100_000D);
+            ADVANCED_CANNING_MACHINE_USE = b.defineInRange("advanced_canning_machine_use", 16D, 0D, 100_000D);
+            ADVANCED_ROLLER_CAPACITY = b.defineInRange("advanced_roller_capacity", 10_000D, 1D, 100_000D);
+            ADVANCED_ROLLER_USE = b.defineInRange("advanced_roller_use", 16D, 0D, 100_000D);
+            ADVANCED_EXTRUDER_CAPACITY = b.defineInRange("advanced_extruder_capacity", 10_000D, 1D, 100_000D);
+            ADVANCED_EXTRUDER_USE = b.defineInRange("advanced_extruder_use", 16D, 0D, 100_000D);
             TELEPORTER_CAPACITY = b.defineInRange("teleporter_capacity", 1_000_000D, 1D, 10_000_000D);
             TELEPORTER_MIN_USE = b.defineInRange("teleporter_min_use", 100D, 0D, 100_000D);
             TELEPORTER_MIN_DISTANCE = b.defineInRange("teleporter_min_distance", 16D, 1D, 100_000D);

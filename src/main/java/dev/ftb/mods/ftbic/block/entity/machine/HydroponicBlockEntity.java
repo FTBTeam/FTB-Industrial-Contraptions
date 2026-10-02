@@ -25,10 +25,11 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.FluidStack;
 
-public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
+public final class HydroponicBlockEntity extends MachineBlockEntity {
     private final boolean advanced;
-    private final int[] progress = new int[4];
-    private final int[] duration = new int[4];
+    private final int[] laneProgress = new int[4];
+    private final int[] laneDuration = new int[4];
+    private final int[] laneOperations = new int[4];
     private final String[] recipeIds = new String[4];
     private final Match[] cachedMatches = new Match[4];
     private boolean mutationMode;
@@ -36,6 +37,7 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
     private int syncTimer;
     private FluidStack syncedFluid = FluidStack.EMPTY;
     private RecipeMap cachedRecipes;
+    private int runningOperations;
     public final HydroponicWaterHandler fluidHandler = new HydroponicWaterHandler(this);
 
     public HydroponicBlockEntity(BlockPos pos, BlockState state) {
@@ -47,7 +49,7 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
     }
 
     private HydroponicBlockEntity(ElectricBlockInstance instance, boolean advanced, BlockPos pos, BlockState state) {
-        super(instance, pos, state);
+        super(instance, FTBICRecipes.HYDROPONIC_GROWTH, pos, state);
         this.advanced = advanced;
         Arrays.fill(recipeIds, "");
     }
@@ -65,11 +67,27 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
     }
 
     public int getProgress(int lane) {
-        return progress[lane];
+        return laneProgress[lane];
     }
 
     public int getDuration(int lane) {
-        return duration[lane];
+        return laneDuration[lane];
+    }
+
+    public int getOperations(int lane) {
+        return laneOperations[lane];
+    }
+
+    @Override
+    public int getRunningOperations() {
+        return active ? runningOperations : 0;
+    }
+
+    @Override
+    public void upgradesChanged() {
+        super.upgradesChanged();
+        int capacity = getParallelCapacity();
+        for (int lane = 0; lane < 4; lane++) if (laneOperations[lane] > capacity) restart(lane);
     }
 
     public int getTankCapacity() {
@@ -149,22 +167,21 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    protected void processRecipes() {
         if (!(level instanceof ServerLevel server) || isBurnt()) return;
         RecipeMap currentRecipes = server.recipeAccess().recipeMap();
         if (cachedRecipes != currentRecipes) {
             if (cachedRecipes != null) for (int lane = 0; lane < 4; lane++) reset(lane);
             cachedRecipes = currentRecipes;
         }
-        boolean running = false;
+        runningOperations = 0;
         int count = mutationMode ? advanced ? 2 : 1 : getLaneCount();
         int first = (int) (server.getGameTime() % count);
         for (int offset = 0; offset < count; offset++) {
             int operation = (first + offset) % count;
-            running |= process(server, operation);
+            runningOperations += process(server, operation);
         }
-        active = running;
+        active = runningOperations > 0;
         if (++syncTimer >= 20) {
             syncTimer = 0;
             setChanged();
@@ -175,47 +192,66 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
         }
     }
 
-    private boolean process(ServerLevel server, int operation) {
+    private int process(ServerLevel server, int operation) {
         int lane = mutationMode && advanced ? operation * 2 : operation;
         Match match = cachedMatches[lane];
         if (match == null) {
             match = mutationMode ? findMutation(server, operation) : findGrowth(server, lane);
             cachedMatches[lane] = match;
         }
-        if (match == null) {
+        if (match == null || !hasSeedInputs(match.recipe, lane, 1)) {
             reset(lane);
-            return false;
-        }
-        if (!hasSeedInputs(match.recipe, lane)) {
-            reset(lane);
-            return false;
+            return 0;
         }
         int ticks = Math.max(1, (int) Math.ceil(match.recipe.processingTime
                 * FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get()
                 / (match.speed * progressSpeed)));
-        if (!recipeIds[lane].equals(match.id) || duration[lane] != ticks) {
+        if (!recipeIds[lane].equals(match.id) || laneDuration[lane] != ticks) {
             reset(lane);
             cachedMatches[lane] = match;
             recipeIds[lane] = match.id;
-            duration[lane] = ticks;
+            laneDuration[lane] = ticks;
         }
-        if (!hasFluid(match.recipe) || !canFit(match, lane) || energy < energyUse) return false;
-        energy -= energyUse;
-        progress[lane]++;
-        if (progress[lane] >= ticks) {
-            if (mutationMode) finishMutation(match, lane);
-            else finishGrowth(match, lane);
-            consumeFluid(match.recipe);
+        int operations = laneOperations[lane];
+        if (operations > getParallelCapacity() || operations > 0 && !hasSeedInputs(match.recipe, lane, operations)) {
+            restart(lane);
+            operations = 0;
+        }
+        if (operations == 0) {
+            for (int n = getParallelCapacity(); n > 0; n--) {
+                if (energy >= energyUse * n
+                        && hasSeedInputs(match.recipe, lane, n)
+                        && hasFluid(match.recipe, n)
+                        && canFit(match, lane, n)) {
+                    operations = n;
+                    laneOperations[lane] = n;
+                    break;
+                }
+            }
+            if (operations == 0) return 0;
+        }
+        if (!hasFluid(match.recipe, operations) || !canFit(match, lane, operations) || energy < energyUse * operations)
+            return 0;
+        energy -= energyUse * operations;
+        laneProgress[lane]++;
+        if (laneProgress[lane] >= ticks) {
+            if (mutationMode) finishMutation(match, lane, operations);
+            else finishGrowth(match, lane, operations);
+            consumeFluid(match.recipe, operations);
             reset(lane);
             setChanged();
             fluidChanged();
         }
-        return true;
+        return operations;
     }
 
-    private boolean hasSeedInputs(MachineRecipe recipe, int lane) {
-        if (!mutationMode) return recipe.inputs.getFirst().matches(inputItems[advanced ? lane * 2 : 0]);
-        return !inputItems[lane * 2].isEmpty() && !inputItems[(lane + 1) * 2].isEmpty();
+    private boolean hasSeedInputs(MachineRecipe recipe, int lane, int operations) {
+        if (!mutationMode) {
+            ItemStack seed = inputItems[advanced ? lane * 2 : 0];
+            return recipe.inputs.getFirst().ingredient().test(seed)
+                    && seed.getCount() >= (long) recipe.inputs.getFirst().count() * operations;
+        }
+        return inputItems[lane * 2].getCount() >= operations && inputItems[(lane + 1) * 2].getCount() >= operations;
     }
 
     private Match findGrowth(ServerLevel server, int lane) {
@@ -267,33 +303,33 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
         return null;
     }
 
-    private boolean hasFluid(MachineRecipe recipe) {
+    private boolean hasFluid(MachineRecipe recipe, int operations) {
         if (recipe.inputFluids.isEmpty()) return true;
         if (recipe.inputFluids.size() != 1) return false;
         var required = recipe.inputFluids.getFirst();
-        return required.test(inputFluid) && inputFluid.getAmount() >= required.amount();
+        return required.test(inputFluid) && inputFluid.getAmount() >= (long) required.amount() * operations;
     }
 
-    private void consumeFluid(MachineRecipe recipe) {
+    private void consumeFluid(MachineRecipe recipe, int operations) {
         if (!recipe.inputFluids.isEmpty())
-            inputFluid.shrink(recipe.inputFluids.getFirst().amount());
+            inputFluid.shrink(recipe.inputFluids.getFirst().amount() * operations);
     }
 
-    private boolean canFit(Match match, int lane) {
+    private boolean canFit(Match match, int lane, int operations) {
         MachineRecipe recipe = match.recipe;
         if (!mutationMode) {
             int base = advanced ? lane * 3 : 0;
             int kept = keptSeedOutput(recipe, lane);
             for (int i = 0; i < recipe.outputs.size(); i++) {
-                int target = advanced ? base + i : i;
-                if (!fits(target, growthOutput(recipe, i, kept))) return false;
+                ItemStack stack = growthOutput(recipe, i, kept);
+                if (!fits(base + i, stack.copyWithCount(stack.getCount() * operations))) return false;
             }
             return true;
         }
         ItemStack mutant = recipe.outputs.getFirst().stack();
-        return fits(lane * 3, mutant)
-                && fits(lane * 3 + 1, inputItems[lane * 2].copyWithCount(1))
-                && fits((lane + 1) * 3 + 1, inputItems[(lane + 1) * 2].copyWithCount(1));
+        return fits(lane * 3, mutant.copyWithCount(mutant.getCount() * operations))
+                && fits(lane * 3 + 1, inputItems[lane * 2].copyWithCount(operations))
+                && fits((lane + 1) * 3 + 1, inputItems[(lane + 1) * 2].copyWithCount(operations));
     }
 
     private boolean fits(int slot, ItemStack add) {
@@ -311,15 +347,18 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
         else outputItems[slot].grow(add.getCount());
     }
 
-    private void finishGrowth(Match match, int lane) {
+    private void finishGrowth(Match match, int lane, int operations) {
         int kept = keptSeedOutput(match.recipe, lane);
         if (kept < 0)
             inputItems[advanced ? lane * 2 : 0].shrink(
-                    match.recipe.inputs.getFirst().count());
-        for (int i = 0; i < match.recipe.outputs.size(); i++) {
-            StackWithChance output = match.recipe.outputs.get(i);
-            if (output.chance() < 1 && level.getRandom().nextDouble() >= output.chance()) continue;
-            insert(advanced ? lane * 3 + i : i, growthOutput(match.recipe, i, kept));
+                    match.recipe.inputs.getFirst().count() * operations);
+        int base = advanced ? lane * 3 : 0;
+        for (int op = 0; op < operations; op++) {
+            for (int i = 0; i < match.recipe.outputs.size(); i++) {
+                StackWithChance output = match.recipe.outputs.get(i);
+                if (output.chance() < 1 && level.getRandom().nextDouble() >= output.chance()) continue;
+                insert(base + i, growthOutput(match.recipe, i, kept));
+            }
         }
     }
 
@@ -341,24 +380,31 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
         return stack.copyWithCount(stack.getCount() - recipe.inputs.getFirst().count());
     }
 
-    private void finishMutation(Match match, int lane) {
+    private void finishMutation(Match match, int lane, int operations) {
         int first = lane * 2;
         int second = (lane + 1) * 2;
-        ItemStack a = inputItems[first].copyWithCount(1);
-        ItemStack b = inputItems[second].copyWithCount(1);
-        inputItems[first].shrink(1);
-        inputItems[second].shrink(1);
         StackWithChance output = match.recipe.outputs.getFirst();
-        if (level.getRandom().nextDouble() < output.chance()) insert(lane * 3, output.stack());
-        else {
-            insert(lane * 3 + 1, a);
-            insert((lane + 1) * 3 + 1, b);
+        for (int op = 0; op < operations; op++) {
+            ItemStack a = inputItems[first].copyWithCount(1);
+            ItemStack b = inputItems[second].copyWithCount(1);
+            inputItems[first].shrink(1);
+            inputItems[second].shrink(1);
+            if (level.getRandom().nextDouble() < output.chance()) insert(lane * 3, output.stack());
+            else {
+                insert(lane * 3 + 1, a);
+                insert((lane + 1) * 3 + 1, b);
+            }
         }
     }
 
+    private void restart(int lane) {
+        laneProgress[lane] = 0;
+        laneOperations[lane] = 0;
+    }
+
     private void reset(int lane) {
-        progress[lane] = 0;
-        duration[lane] = 0;
+        restart(lane);
+        laneDuration[lane] = 0;
         recipeIds[lane] = "";
         cachedMatches[lane] = null;
     }
@@ -369,8 +415,9 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
         output.putBoolean("MutationMode", mutationMode);
         output.store("InputFluid", FluidStack.OPTIONAL_CODEC, inputFluid);
         for (int i = 0; i < 4; i++) {
-            output.putInt("HydroProgress" + i, progress[i]);
-            output.putInt("HydroDuration" + i, duration[i]);
+            output.putInt("HydroProgress" + i, laneProgress[i]);
+            output.putInt("HydroDuration" + i, laneDuration[i]);
+            output.putInt("HydroOperations" + i, laneOperations[i]);
             output.putString("HydroRecipe" + i, recipeIds[i]);
         }
     }
@@ -381,8 +428,9 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
         mutationMode = advanced && input.getBooleanOr("MutationMode", false);
         inputFluid = input.read("InputFluid", FluidStack.OPTIONAL_CODEC).orElse(FluidStack.EMPTY);
         for (int i = 0; i < 4; i++) {
-            progress[i] = Math.max(0, input.getIntOr("HydroProgress" + i, 0));
-            duration[i] = Math.max(0, input.getIntOr("HydroDuration" + i, 0));
+            laneProgress[i] = Math.max(0, input.getIntOr("HydroProgress" + i, 0));
+            laneDuration[i] = Math.max(0, input.getIntOr("HydroDuration" + i, 0));
+            laneOperations[i] = Math.clamp(input.getIntOr("HydroOperations" + i, 0), 0, 4);
             recipeIds[i] = input.getStringOr("HydroRecipe" + i, "");
         }
     }

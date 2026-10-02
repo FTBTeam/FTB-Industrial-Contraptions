@@ -6,6 +6,7 @@ navigation:
   position: 8
 item_ids:
   - ftbic:canning_machine
+  - ftbic:advanced_canning_machine
   - ftbic:empty_can
   - ftbic:canned_food
 ---
@@ -52,3 +53,15 @@ Fill an <ItemLink id="empty_can" /> with any dye to make a <ItemLink id="light_s
 <ItemImage id="minecraft:air" scale="0.25"/>
 
 **Stats:** LV tier, <Energy config="machines.canning_machine_capacity" /> buffer, <Energy config="machines.canning_machine_use" rate="true" /> use.
+
+<ItemImage id="minecraft:air" scale="0.25"/>
+***
+
+<Row>
+  <ItemImage id="advanced_canning_machine" />
+  ### <Color id="aqua">Advanced Canning Machine</Color>
+</Row>
+
+MV tier. <Energy config="machines.advanced_canning_machine_use" rate="true" />, <Energy config="machines.advanced_canning_machine_capacity" /> buffer. Same recipes and speed, and it accepts <ItemLink id="parallel_processing_upgrade" />s.
+
+<RecipeFor id="advanced_canning_machine" />

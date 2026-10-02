@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.test;
 
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.entity.machine.HydroponicBlockEntity;
+import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.SoilOption;
@@ -113,6 +114,34 @@ final class HydroponicGameTests {
             machine.tick();
             h.assertValueEqual(1, machine.inputItems[0].getCount(), "Recipes without a returned seed consume it");
             h.assertTrue(machine.outputItems[1].is(Items.STICK), "Byproduct output unchanged");
+        });
+        h.succeed();
+    }
+
+    static void parallelLanes(GameTestHelper h) {
+        HydroponicBlockEntity basic = place(h, false);
+        ItemStack upgrade = new ItemStack(FTBICItems.PARALLEL_PROCESSING_UPGRADE.get());
+        h.assertTrue(!basic.upgradeInventory.isItemValid(0, upgrade), "Basic accelerator rejects parallel upgrades");
+        HydroponicBlockEntity machine = place(h, true);
+        h.assertTrue(
+                machine.upgradeInventory.isItemValid(0, upgrade), "Advanced accelerator accepts parallel upgrades");
+        machine.upgradeInventory.setStackInSlot(0, new ItemStack(FTBICItems.PARALLEL_PROCESSING_UPGRADE.get(), 3));
+        machine.energy = machine.getEnergyCapacity();
+        CentrifugeFluidGameTests.withRecipes(h, List.of(growth(Items.WHEAT_SEEDS, Items.WHEAT, 0.001)), () -> {
+            machine.setStackInSlot(0, new ItemStack(Items.WHEAT_SEEDS, 4));
+            machine.setStackInSlot(1, new ItemStack(Items.DIRT));
+            machine.setStackInSlot(2, new ItemStack(Items.WHEAT_SEEDS, 2));
+            machine.setStackInSlot(3, new ItemStack(Items.DIRT));
+            double before = machine.energy;
+            machine.tick();
+            h.assertValueEqual(8, machine.outputItems[0].getCount(), "Four seeds grow four crops at once");
+            h.assertValueEqual(4, machine.outputItems[1].getCount(), "Four parallel cycles return four extra seeds");
+            h.assertValueEqual(4, machine.inputItems[0].getCount(), "Parallel seeds stay in the slot");
+            h.assertValueEqual(4, machine.outputItems[3].getCount(), "Two seeds run two operations");
+            h.assertValueEqual(500, machine.getInputFluid().getAmount(), "Water scales with operations");
+            h.assertTrue(
+                    Math.abs(before - machine.energy - 6 * machine.energyUse) < 0.001,
+                    "Each operation pays the lane energy cost");
         });
         h.succeed();
     }

@@ -189,6 +189,10 @@ public class FTBICLanguageProvider extends LanguageProvider {
         add("block.ftbic.active_nuke", "Active Nuke");
         add("block.ftbic.advanced_centrifuge", "Advanced Centrifuge");
         add("block.ftbic.advanced_compressor", "Advanced Compressor");
+        add("block.ftbic.advanced_ore_washer", "Advanced Ore Washer");
+        add("block.ftbic.advanced_canning_machine", "Advanced Canning Machine");
+        add("block.ftbic.advanced_roller", "Advanced Roller");
+        add("block.ftbic.advanced_extruder", "Advanced Extruder");
         add("block.ftbic.advanced_macerator", "Advanced Macerator");
         add("block.ftbic.advanced_machine_block", "Advanced Machine Block");
         add("block.ftbic.advanced_powered_furnace", "Advanced Powered Furnace");
@@ -275,6 +279,10 @@ public class FTBICLanguageProvider extends LanguageProvider {
         add("item.ftbic.advanced_centrifuge", "Advanced Centrifuge");
         add("item.ftbic.advanced_circuit", "Advanced Circuit");
         add("item.ftbic.advanced_compressor", "Advanced Compressor");
+        add("item.ftbic.advanced_ore_washer", "Advanced Ore Washer");
+        add("item.ftbic.advanced_canning_machine", "Advanced Canning Machine");
+        add("item.ftbic.advanced_roller", "Advanced Roller");
+        add("item.ftbic.advanced_extruder", "Advanced Extruder");
         add("item.ftbic.advanced_heat_exchanger", "Advanced Heat Exchanger");
         add("item.ftbic.advanced_heat_vent", "Advanced Heat Vent");
         add("item.ftbic.advanced_macerator", "Advanced Macerator");
