@@ -15,7 +15,7 @@ item_ids:
 
 <RecipeFor id="hydroponic_accelerator" />
 
-Place a seed in the **seed** slot and an allowed block in the **soil** slot. The soil stays in the machine and is never consumed. Supply water and energy to grow crops. The output slots keep produce, returned seeds, and the optional byproduct separate. The starter wheat recipe accepts dirt at normal speed or moss at **1.25× speed**. JEI lists the soil choices and speed for every recipe.
+Place a seed in the **seed** slot and an allowed block in the **soil** slot. The soil stays in the machine and is never consumed. Supply water and energy to grow crops. When a recipe returns its seed, the seed stays in the seed slot and keeps growing, and only the extra seeds go to the output, so one seed is enough to run the machine indefinitely. The output slots keep produce, returned seeds, and the optional byproduct separate. The starter wheat recipe accepts dirt at normal speed or moss at **1.25× speed**. JEI lists the soil choices and speed for every recipe.
 
 The basic machine has one growing pair and three output slots. The water tank holds 16,000 mB. A default growth cycle uses 250 mB. Use **I/O** to configure item, fluid, and energy faces. The **L** button locks seed and soil slots to exact items; you can also drag items from JEI onto those slots to set ghost locks. Ghost locks are filters and do not supply ingredients.
 

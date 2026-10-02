@@ -283,9 +283,10 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
         MachineRecipe recipe = match.recipe;
         if (!mutationMode) {
             int base = advanced ? lane * 3 : 0;
+            int kept = keptSeedOutput(recipe, lane);
             for (int i = 0; i < recipe.outputs.size(); i++) {
                 int target = advanced ? base + i : i;
-                if (!fits(target, recipe.outputs.get(i).stack())) return false;
+                if (!fits(target, growthOutput(recipe, i, kept))) return false;
             }
             return true;
         }
@@ -311,13 +312,33 @@ public final class HydroponicBlockEntity extends BasicMachineBlockEntity {
     }
 
     private void finishGrowth(Match match, int lane) {
-        inputItems[advanced ? lane * 2 : 0].shrink(
-                match.recipe.inputs.getFirst().count());
+        int kept = keptSeedOutput(match.recipe, lane);
+        if (kept < 0)
+            inputItems[advanced ? lane * 2 : 0].shrink(
+                    match.recipe.inputs.getFirst().count());
         for (int i = 0; i < match.recipe.outputs.size(); i++) {
             StackWithChance output = match.recipe.outputs.get(i);
             if (output.chance() < 1 && level.getRandom().nextDouble() >= output.chance()) continue;
-            insert(advanced ? lane * 3 + i : i, output.stack());
+            insert(advanced ? lane * 3 + i : i, growthOutput(match.recipe, i, kept));
         }
+    }
+
+    private int keptSeedOutput(MachineRecipe recipe, int lane) {
+        ItemStack seed = inputItems[advanced ? lane * 2 : 0];
+        int consumed = recipe.inputs.getFirst().count();
+        for (int i = 0; i < recipe.outputs.size(); i++) {
+            StackWithChance output = recipe.outputs.get(i);
+            ItemStack stack = output.stack();
+            if (output.chance() >= 1 && stack.getCount() >= consumed && ItemStack.isSameItemSameComponents(stack, seed))
+                return i;
+        }
+        return -1;
+    }
+
+    private ItemStack growthOutput(MachineRecipe recipe, int index, int kept) {
+        ItemStack stack = recipe.outputs.get(index).stack();
+        if (index != kept) return stack;
+        return stack.copyWithCount(stack.getCount() - recipe.inputs.getFirst().count());
     }
 
     private void finishMutation(Match match, int lane) {
