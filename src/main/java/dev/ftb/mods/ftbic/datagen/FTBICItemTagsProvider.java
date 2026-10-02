@@ -23,6 +23,8 @@ public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
     private static final TagKey<Item> REINFORCED = TagKey.create(Registries.ITEM, FTBIC.id("reinforced"));
     private static final TagKey<Item> COMMON_SILICON =
             TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "silicon"));
+    private static final TagKey<Item> COMMON_RUBBER =
+            TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "rubber"));
 
     public FTBICItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
         super(
@@ -47,6 +49,8 @@ public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
                 tag(COMMON_SILICON).add(item);
             }
         }
+
+        tag(COMMON_RUBBER).add(FTBICItems.RUBBER.item.get());
 
         tag(ItemTags.ARROWS).add(FTBICItems.NUKE_ARROW.get());
 

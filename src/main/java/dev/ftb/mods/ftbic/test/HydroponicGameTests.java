@@ -73,7 +73,7 @@ final class HydroponicGameTests {
         machine.setMutationMode(true);
         h.assertTrue(!machine.isMutationMode(), "Only the advanced machine can enable mutation");
         CentrifugeFluidGameTests.withRecipes(h, List.of(growth(Items.WHEAT_SEEDS, Items.WHEAT, 0.1)), () -> {
-            machine.setStackInSlot(0, new ItemStack(Items.WHEAT_SEEDS, 2));
+            machine.setStackInSlot(0, new ItemStack(Items.WHEAT_SEEDS));
             machine.setStackInSlot(1, new ItemStack(Items.DIRT));
             machine.tick();
             h.assertValueEqual(20, machine.getDuration(0), "Dirt uses the base time");
@@ -84,10 +84,35 @@ final class HydroponicGameTests {
             h.assertTrue(
                     machine.inputItems[1].is(Items.MOSS_BLOCK) && machine.inputItems[1].getCount() == 1,
                     "Soil remains unchanged after harvest");
-            h.assertValueEqual(1, machine.inputItems[0].getCount(), "One seed consumed");
+            h.assertValueEqual(1, machine.inputItems[0].getCount(), "Seed stays in its slot");
             h.assertValueEqual(2, machine.outputItems[0].getCount(), "Produce output filled");
-            h.assertValueEqual(2, machine.outputItems[1].getCount(), "Seed output filled");
+            h.assertValueEqual(1, machine.outputItems[1].getCount(), "Only the extra seed is output");
             h.assertValueEqual(1_750, machine.getInputFluid().getAmount(), "Water consumed once");
+            for (int i = 0; i < 16; i++) machine.tick();
+            h.assertValueEqual(4, machine.outputItems[0].getCount(), "A single seed keeps growing");
+            h.assertValueEqual(2, machine.outputItems[1].getCount(), "Second cycle returns another seed");
+            h.assertValueEqual(1_500, machine.getInputFluid().getAmount(), "Water consumed twice");
+        });
+        h.succeed();
+    }
+
+    static void consumedSeed(GameTestHelper h) {
+        HydroponicBlockEntity machine = place(h, false);
+        MachineRecipe recipe = new MachineRecipe(
+                FTBICRecipes.HYDROPONIC_GROWTH,
+                List.of(new IngredientWithCount(Ingredient.of(Items.WHEAT_SEEDS), 1)),
+                List.of(SizedFluidIngredient.of(Fluids.WATER, 250)),
+                List.of(output(Items.WHEAT, 1, 1), output(Items.STICK, 1, 1)),
+                List.of(),
+                0.001,
+                false,
+                List.of(new SoilOption(Ingredient.of(Items.DIRT), 1)));
+        CentrifugeFluidGameTests.withRecipes(h, List.of(recipe), () -> {
+            machine.setStackInSlot(0, new ItemStack(Items.WHEAT_SEEDS, 2));
+            machine.setStackInSlot(1, new ItemStack(Items.DIRT));
+            machine.tick();
+            h.assertValueEqual(1, machine.inputItems[0].getCount(), "Recipes without a returned seed consume it");
+            h.assertTrue(machine.outputItems[1].is(Items.STICK), "Byproduct output unchanged");
         });
         h.succeed();
     }
