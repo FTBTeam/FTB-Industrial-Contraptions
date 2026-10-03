@@ -3,11 +3,15 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.screen.PumpMenu;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
+import dev.ftb.mods.ftbic.util.SideConfiguration;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
@@ -19,10 +23,16 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class PumpBlockEntity extends DiggingBaseBlockEntity {
     public Fluid storedFluid = Fluids.EMPTY;
     public int fluidAmount = 0;
+    private BlockCapabilityCache<ResourceHandler<FluidResource>, Direction>[] fluidEjectCaches;
 
     public PumpBlockEntity(BlockPos pos, BlockState state) {
         super(FTBICElectricBlocks.PUMP, pos, state);
@@ -130,5 +140,47 @@ public class PumpBlockEntity extends DiggingBaseBlockEntity {
     public void tick() {
         super.tick();
         if (level != null && !level.isClientSide() && !isEffectivelyPaused()) tryFillBucket();
+        if (autoEject) ejectFluid();
+    }
+
+    private void ejectFluid() {
+        if (!(level instanceof ServerLevel serverLevel)) return;
+
+        for (Direction dir : FTBICUtils.DIRECTIONS) {
+            if (fluidAmount <= 0 || storedFluid == Fluids.EMPTY) return;
+            if (!allowsTransfer(SideConfiguration.Resource.FLUIDS, dir, false)) continue;
+            ResourceHandler<FluidResource> handler =
+                    fluidEjectCache(serverLevel, dir).getCapability();
+            if (handler == null) continue;
+
+            int inserted;
+            try (Transaction txn = Transaction.openRoot()) {
+                inserted = handler.insert(FluidResource.of(storedFluid), fluidAmount, txn);
+                if (inserted > 0) txn.commit();
+            }
+            if (inserted > 0) {
+                fluidAmount -= inserted;
+                if (fluidAmount <= 0) {
+                    fluidAmount = 0;
+                    storedFluid = Fluids.EMPTY;
+                }
+                setChanged();
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private BlockCapabilityCache<ResourceHandler<FluidResource>, Direction> fluidEjectCache(
+            ServerLevel serverLevel, Direction dir) {
+        if (fluidEjectCaches == null) {
+            fluidEjectCaches = new BlockCapabilityCache[FTBICUtils.DIRECTIONS.length];
+        }
+        BlockCapabilityCache<ResourceHandler<FluidResource>, Direction> c = fluidEjectCaches[dir.ordinal()];
+        if (c == null) {
+            c = BlockCapabilityCache.create(
+                    Capabilities.Fluid.BLOCK, serverLevel, worldPosition.relative(dir), dir.getOpposite());
+            fluidEjectCaches[dir.ordinal()] = c;
+        }
+        return c;
     }
 }
