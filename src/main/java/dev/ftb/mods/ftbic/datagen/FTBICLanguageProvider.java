@@ -293,6 +293,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
         add("item.ftbic.antimatter_constructor", "Antimatter Constructor");
         add("item.ftbic.antimatter_crystal", "Antimatter Crystal");
         add("item.ftbic.basic_generator", "Basic Generator");
+        add("item.ftbic.batch_feeder", "Batch Feeder");
         add("item.ftbic.burnt_cable", "Burnt Cable");
         add("item.ftbic.burnt_reinforced_cable", "Burnt Reinforced Cable");
         add("item.ftbic.canned_food", "Canned Food");
