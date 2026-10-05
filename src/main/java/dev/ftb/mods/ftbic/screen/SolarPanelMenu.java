@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.screen;
 
 import dev.ftb.mods.ftbic.block.entity.ElectricBlockEntity;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.DataSlot;
@@ -22,7 +23,7 @@ public class SolarPanelMenu extends ElectricBlockMenu {
     public void broadcastChanges() {
         super.broadcastChanges();
         if (blockEntity != null && blockEntity.getLevel() != null) {
-            boolean sunny = blockEntity.getLevel().isBrightOutside()
+            boolean sunny = FTBICUtils.isDaylight(blockEntity.getLevel())
                     && blockEntity
                             .getLevel()
                             .canSeeSky(blockEntity.getBlockPos().above());

@@ -14,7 +14,9 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.dimension.DimensionType;
 
 public final class FTBICUtils {
     public static final Gson GSON = new GsonBuilder()
@@ -61,6 +63,14 @@ public final class FTBICUtils {
 
     public static MutableComponent formatHeat(int heat) {
         return Component.literal("").append(String.format("%,d ", heat)).append(FTBICConfig.HEAT_FORMAT);
+    }
+
+    public static boolean isDaylight(Level level) {
+        if (level.isBrightOutside()) {
+            return true;
+        }
+        DimensionType type = level.dimensionType();
+        return type.hasFixedTime() && type.hasSkyLight() && level.getSkyDarken() < 4;
     }
 
     public static int packInt(int value, int max) {
