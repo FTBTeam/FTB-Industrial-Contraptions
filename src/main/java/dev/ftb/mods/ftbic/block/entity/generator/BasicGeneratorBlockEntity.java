@@ -1,9 +1,11 @@
 package dev.ftb.mods.ftbic.block.entity.generator;
 
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.client.ClientRecipeCache;
 import dev.ftb.mods.ftbic.recipe.BasicGeneratorFuelRecipe;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.screen.BasicGeneratorMenu;
+import java.util.Collection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
@@ -45,16 +47,19 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
     }
 
     private int getFuelTicksFor(ItemStack stack) {
-        if (stack.isEmpty() || !(level instanceof ServerLevel server)) {
+        if (stack.isEmpty() || level == null) {
             return 0;
         }
         @SuppressWarnings("unchecked")
         RecipeType<BasicGeneratorFuelRecipe> type =
                 (RecipeType<BasicGeneratorFuelRecipe>) (RecipeType<?>) FTBICRecipes.BASIC_GENERATOR_FUEL.get();
-        for (RecipeHolder<BasicGeneratorFuelRecipe> holder :
-                server.recipeAccess().recipeMap().byType(type)) {
-            if (holder.value().ingredient().test(stack)) {
-                return holder.value().ticks();
+        Collection<? extends RecipeHolder<?>> recipes = level instanceof ServerLevel server
+                ? server.recipeAccess().recipeMap().byType(type)
+                : ClientRecipeCache.recipesForType(type);
+        for (RecipeHolder<?> holder : recipes) {
+            if (holder.value() instanceof BasicGeneratorFuelRecipe fuel
+                    && fuel.ingredient().test(stack)) {
+                return fuel.ticks();
             }
         }
         return 0;
@@ -65,7 +70,7 @@ public class BasicGeneratorBlockEntity extends GeneratorBlockEntity {
         if (!super.isItemValid(slot, stack)) {
             return false;
         }
-        return stack.isEmpty() || !(level instanceof ServerLevel) || getFuelTicksFor(stack) > 0;
+        return stack.isEmpty() || level == null || getFuelTicksFor(stack) > 0;
     }
 
     @Override
