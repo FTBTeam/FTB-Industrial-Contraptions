@@ -304,7 +304,10 @@ public class MachineBlockEntity extends BasicMachineBlockEntity {
             return;
         }
         syncStarving();
+        processRecipes();
+    }
 
+    protected void processRecipes() {
         MachineRecipe recipe = findRecipe();
 
         if (recipe == null) {

@@ -62,10 +62,14 @@ final class ParallelProcessingGameTests {
                 FTBICElectricBlocks.ADVANCED_COMPRESSOR,
                 FTBICElectricBlocks.ADVANCED_POWERED_FURNACE,
                 FTBICElectricBlocks.ADVANCED_CENTRIFUGE,
+                FTBICElectricBlocks.ADVANCED_ORE_WASHER,
+                FTBICElectricBlocks.ADVANCED_CANNING_MACHINE,
+                FTBICElectricBlocks.ADVANCED_ROLLER,
+                FTBICElectricBlocks.ADVANCED_EXTRUDER,
                 FTBICElectricBlocks.ALLOY_SMELTER,
                 FTBICElectricBlocks.REPROCESSOR)) {
             var machine = place(h, type, 3);
-            // One output fits all six processor layouts.
+            // One output fits all ten processor layouts.
             var recipe = new MachineRecipe(
                     machine.recipeType,
                     List.of(new IngredientWithCount(Ingredient.of(Items.CLAY_BALL), 2)),

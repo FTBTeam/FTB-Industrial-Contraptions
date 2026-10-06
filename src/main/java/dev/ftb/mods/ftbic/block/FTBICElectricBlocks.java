@@ -180,7 +180,6 @@ public interface FTBICElectricBlocks {
 
     ElectricBlockInstance ADVANCED_POWERED_FURNACE = register(
                     "advanced_powered_furnace", AdvancedPoweredFurnaceBlockEntity::new)
-            .wip()
             .advanced()
             .canBurn()
             .energyCapacity(FTBICConfig.MACHINES.ADVANCED_POWERED_FURNACE_CAPACITY)
@@ -197,7 +196,6 @@ public interface FTBICElectricBlocks {
             .io(3, 1);
 
     ElectricBlockInstance ADVANCED_MACERATOR = register("advanced_macerator", AdvancedMaceratorBlockEntity::new)
-            .wip()
             .advanced()
             .canBurn()
             .energyCapacity(FTBICConfig.MACHINES.ADVANCED_MACERATOR_CAPACITY)
@@ -206,7 +204,6 @@ public interface FTBICElectricBlocks {
             .io(1, 2);
 
     ElectricBlockInstance ADVANCED_CENTRIFUGE = register("advanced_centrifuge", AdvancedCentrifugeBlockEntity::new)
-            .wip()
             .advanced()
             .canBurn()
             .energyCapacity(FTBICConfig.MACHINES.ADVANCED_CENTRIFUGE_CAPACITY)
@@ -215,7 +212,6 @@ public interface FTBICElectricBlocks {
             .io(1, 3);
 
     ElectricBlockInstance ADVANCED_COMPRESSOR = register("advanced_compressor", AdvancedCompressorBlockEntity::new)
-            .wip()
             .advanced()
             .canBurn()
             .energyCapacity(FTBICConfig.MACHINES.ADVANCED_COMPRESSOR_CAPACITY)
@@ -223,8 +219,40 @@ public interface FTBICElectricBlocks {
             .energyUsage(FTBICConfig.MACHINES.ADVANCED_COMPRESSOR_USE)
             .io(1, 1);
 
+    ElectricBlockInstance ADVANCED_ORE_WASHER = register("advanced_ore_washer", AdvancedOreWasherBlockEntity::new)
+            .advanced()
+            .canBurn()
+            .energyCapacity(FTBICConfig.MACHINES.ADVANCED_ORE_WASHER_CAPACITY)
+            .maxEnergyInput(FTBICConfig.ENERGY.MV_TRANSFER_RATE)
+            .energyUsage(FTBICConfig.MACHINES.ADVANCED_ORE_WASHER_USE)
+            .io(1, 1);
+
+    ElectricBlockInstance ADVANCED_CANNING_MACHINE = register(
+                    "advanced_canning_machine", AdvancedCanningMachineBlockEntity::new)
+            .advanced()
+            .canBurn()
+            .energyCapacity(FTBICConfig.MACHINES.ADVANCED_CANNING_MACHINE_CAPACITY)
+            .maxEnergyInput(FTBICConfig.ENERGY.MV_TRANSFER_RATE)
+            .energyUsage(FTBICConfig.MACHINES.ADVANCED_CANNING_MACHINE_USE)
+            .io(2, 1);
+
+    ElectricBlockInstance ADVANCED_ROLLER = register("advanced_roller", AdvancedRollerBlockEntity::new)
+            .advanced()
+            .canBurn()
+            .energyCapacity(FTBICConfig.MACHINES.ADVANCED_ROLLER_CAPACITY)
+            .maxEnergyInput(FTBICConfig.ENERGY.MV_TRANSFER_RATE)
+            .energyUsage(FTBICConfig.MACHINES.ADVANCED_ROLLER_USE)
+            .io(1, 1);
+
+    ElectricBlockInstance ADVANCED_EXTRUDER = register("advanced_extruder", AdvancedExtruderBlockEntity::new)
+            .advanced()
+            .canBurn()
+            .energyCapacity(FTBICConfig.MACHINES.ADVANCED_EXTRUDER_CAPACITY)
+            .maxEnergyInput(FTBICConfig.ENERGY.MV_TRANSFER_RATE)
+            .energyUsage(FTBICConfig.MACHINES.ADVANCED_EXTRUDER_USE)
+            .io(1, 1);
+
     ElectricBlockInstance TELEPORTER = register("teleporter", TeleporterBlockEntity::new)
-            .wip()
             .advanced()
             .energyCapacity(FTBICConfig.MACHINES.TELEPORTER_CAPACITY)
             .maxEnergyInput(FTBICConfig.ENERGY.HV_TRANSFER_RATE)
@@ -242,7 +270,6 @@ public interface FTBICElectricBlocks {
 
     ElectricBlockInstance POWERED_CRAFTING_TABLE = register(
                     "powered_crafting_table", PoweredCraftingTableBlockEntity::new)
-            .wip()
             .noRotation()
             .cantBeActive()
             .canBurn()

@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.block.entity.generator;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.screen.SolarPanelMenu;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -27,7 +28,7 @@ public class SolarPanelBlockEntity extends GeneratorBlockEntity {
     @Override
     public void handleGeneration() {
         if (energy < energyCapacity
-                && level.isBrightOutside()
+                && FTBICUtils.isDaylight(level)
                 && !level.getBlockState(worldPosition.above()).canOcclude()
                 && level.canSeeSky(worldPosition.above())) {
             energy += Math.min(energyCapacity - energy, maxEnergyOutput);

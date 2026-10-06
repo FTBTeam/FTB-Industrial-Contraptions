@@ -320,7 +320,10 @@ public class FTBICJEIPlugin implements IModPlugin {
                 catalystType(FTBICRecipes.MACERATING),
                 FTBICElectricBlocks.MACERATOR.block.get(),
                 FTBICElectricBlocks.ADVANCED_MACERATOR.block.get());
-        r.addCraftingStation(catalystType(FTBICRecipes.WASHING), FTBICElectricBlocks.ORE_WASHER.block.get());
+        r.addCraftingStation(
+                catalystType(FTBICRecipes.WASHING),
+                FTBICElectricBlocks.ORE_WASHER.block.get(),
+                FTBICElectricBlocks.ADVANCED_ORE_WASHER.block.get());
         r.addCraftingStation(
                 catalystType(FTBICRecipes.HYDROPONIC_GROWTH),
                 FTBICElectricBlocks.HYDROPONIC_ACCELERATOR.block.get(),
@@ -337,9 +340,18 @@ public class FTBICJEIPlugin implements IModPlugin {
                 FTBICElectricBlocks.COMPRESSOR.block.get(),
                 FTBICElectricBlocks.ADVANCED_COMPRESSOR.block.get());
         r.addCraftingStation(catalystType(FTBICRecipes.REPROCESSING), FTBICElectricBlocks.REPROCESSOR.block.get());
-        r.addCraftingStation(catalystType(FTBICRecipes.CANNING), FTBICElectricBlocks.CANNING_MACHINE.block.get());
-        r.addCraftingStation(catalystType(FTBICRecipes.ROLLING), FTBICElectricBlocks.ROLLER.block.get());
-        r.addCraftingStation(catalystType(FTBICRecipes.EXTRUDING), FTBICElectricBlocks.EXTRUDER.block.get());
+        r.addCraftingStation(
+                catalystType(FTBICRecipes.CANNING),
+                FTBICElectricBlocks.CANNING_MACHINE.block.get(),
+                FTBICElectricBlocks.ADVANCED_CANNING_MACHINE.block.get());
+        r.addCraftingStation(
+                catalystType(FTBICRecipes.ROLLING),
+                FTBICElectricBlocks.ROLLER.block.get(),
+                FTBICElectricBlocks.ADVANCED_ROLLER.block.get());
+        r.addCraftingStation(
+                catalystType(FTBICRecipes.EXTRUDING),
+                FTBICElectricBlocks.EXTRUDER.block.get(),
+                FTBICElectricBlocks.ADVANCED_EXTRUDER.block.get());
         r.addCraftingStation(catalystType(FTBICRecipes.ALLOY_SMELTING), FTBICElectricBlocks.ALLOY_SMELTER.block.get());
         r.addCraftingStation(RecipeTypes.CRAFTING, FTBICElectricBlocks.POWERED_CRAFTING_TABLE.block.get());
         r.addCraftingStation(RecipeTypes.SMELTING, FTBICBlocks.IRON_FURNACE.get());

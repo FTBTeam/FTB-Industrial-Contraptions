@@ -29,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeMap;
@@ -73,7 +74,7 @@ final class CentrifugeFluidGameTests {
     }
 
     /** Install a fixture only during this synchronous test; restore before any world tick or other test. */
-    static void withRecipes(GameTestHelper h, List<MachineRecipe> recipes, Runnable action) {
+    static void withRecipes(GameTestHelper h, List<? extends Recipe<?>> recipes, Runnable action) {
         try {
             RecipeManager manager = h.getLevel().getServer().getRecipeManager();
             Field field = RecipeManager.class.getDeclaredField("recipes");

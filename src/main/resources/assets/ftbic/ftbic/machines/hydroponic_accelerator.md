@@ -29,6 +29,6 @@ The Advanced Hydroponic Accelerator alone can switch between **Growth** and **Mu
 
 <RecipeFor id="advanced_hydroponic_accelerator" />
 
-The advanced machine has **four independent seed and soil pairs** and twelve output slots, grouped as produce, seeds, and byproduct for each lane. Every input pair can have its own ghost locks and crop. Its water tank holds 32,000 mB. Each active lane draws power separately, up to four times the single-lane use.
+The advanced machine has **four independent seed and soil pairs** and twelve output slots, grouped as produce, seeds, and byproduct for each lane. Every input pair can have its own ghost locks and crop. Its water tank holds 32,000 mB. Each active lane draws power separately, up to four times the single-lane use. It also accepts <ItemLink id="parallel_processing_upgrade" />s: each lane then grows one crop per seed in its seed slot in the same cycle, up to four, using that many times the lane's water and power.
 
 In Mutation mode, lanes **1 + 2** and **3 + 4** form two independent crosses. Each parent uses its own soil. The slower soil determines the cross speed. Failed parents return to their respective lane's seed output. The mode, locks, and progress persist when the world is saved.

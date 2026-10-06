@@ -72,6 +72,10 @@ public final class ClientRecipeCache {
         if (viewer != null) viewer.add(variants, CACHE);
     }
 
+    public static synchronized List<RecipeHolder<?>> recipesForType(RecipeType<?> type) {
+        return List.copyOf(CACHE.getOrDefault(type, List.of()));
+    }
+
     public static synchronized void showRecipesForType(RecipeType<?> vanillaType) {
         showRecipesForTypes(List.of(vanillaType));
     }
