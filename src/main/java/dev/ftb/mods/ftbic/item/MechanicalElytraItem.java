@@ -4,6 +4,7 @@ import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.registry.ModDataComponents;
 import dev.ftb.mods.ftbic.util.EnergyDisplay;
 import dev.ftb.mods.ftbic.util.EnergyItemHandler;
+import dev.ftb.mods.ftbic.util.FTBICUtils;
 import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -46,7 +47,7 @@ public class MechanicalElytraItem extends Item implements EnergyItemHandler {
 
         double rechargeRate = FTBICConfig.EQUIPMENT.MECHANICAL_ELYTRA_RECHARGE.get();
         if (rechargeRate <= 0D) return;
-        if (!level.isBrightOutside()) return;
+        if (!FTBICUtils.isDaylight(level)) return;
         if (!level.canSeeSky(le.blockPosition())) return;
         insertEnergy(stack, rechargeRate, false);
     }

@@ -6,6 +6,7 @@ navigation:
   position: 5
 item_ids:
   - ftbic:extruder
+  - ftbic:advanced_extruder
 ---
 
 # <Color id="gold">Extruder</Color>
@@ -38,3 +39,15 @@ Every metal registered in FTB Materials has all three recipes unless disabled in
 <ItemImage id="minecraft:air" scale="0.25"/>
 
 **Stats:** LV tier, <Energy config="machines.extruder_capacity" /> buffer, <Energy config="machines.extruder_use" rate="true" /> use.
+
+<ItemImage id="minecraft:air" scale="0.25"/>
+***
+
+<Row>
+  <ItemImage id="advanced_extruder" />
+  ### <Color id="aqua">Advanced Extruder</Color>
+</Row>
+
+MV tier. <Energy config="machines.advanced_extruder_use" rate="true" />, <Energy config="machines.advanced_extruder_capacity" /> buffer. Same recipes and speed, and it accepts <ItemLink id="parallel_processing_upgrade" />s.
+
+<RecipeFor id="advanced_extruder" />

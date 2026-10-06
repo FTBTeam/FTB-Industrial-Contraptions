@@ -5,10 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [26.1.2.13]
+## [26.1.2.17]
+
+### Added
+
+* Hydroponic Accelerators support Productive Farming crop traits when it is installed. Growth shortens each growth cycle, Yield adds to the harvest, returned seeds keep the planted seed's traits, and each harvest can raise a trait on the planted seed. In Mutation mode the parent with the higher Mutability raises the chance of a cross and passes its traits to the new seed, and Productive Farming's own crop mutations also run. The `hydroponic_crop_traits` config option turns it off.
 
 ### Changed
 
+* MV and EV Cables are thinner, 6 pixels wide like LV Cables instead of 8 (FTBTesting/Testing-Issues#4581).
+
+## [26.1.2.16]
+
+### Fixed
+
+* Solar Panels and the Mechanical Elytra charge in dimensions with a fixed time and a bright sky, such as void and mining dimensions. They always counted those dimensions as night before.
+
+## [26.1.2.15]
+
+### Fixed
+
+* The Batch Feeder item now shows its name instead of an untranslated key in inventories, JEI and tooltips. (FTBTesting/Testing-Issues#4536)
+
+## [26.1.2.14]
+
+### Fixed
+
+* The Pump now pushes fluid out of its tank when it has an Ejector Upgrade, into any adjacent tank on a side whose fluid IO allows output. Before this the upgrade only moved items, so pumped fluid could only leave through a pipe pulling from the Pump or the bucket slot.
+
+## [26.1.2.13]
+
+### Added
+
+* Advanced Ore Washer, Advanced Canning Machine, Advanced Roller and Advanced Extruder. They run at MV, use the same recipes as their basic versions, and accept Parallel Processing Upgrades.
+
+### Changed
+
+* The Advanced Hydroponic Accelerator now accepts Parallel Processing Upgrades. Each lane grows one crop per seed in its seed slot in the same cycle, up to four, using that many times the lane's water and power.
 * The Hydroponic Accelerator keeps the seed in its seed slot during Growth mode when the recipe returns that seed, sending only the extra seeds to the output. One seed now keeps a lane running without feeding it back in.
 * FTBIC rubber is now in the `c:rubber` item tag.
 

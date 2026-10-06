@@ -111,8 +111,9 @@ public final class MachineSounds {
             return FTBICSounds.COMPRESSOR.get();
         if (type == FTBICElectricBlocks.CENTRIFUGE || type == FTBICElectricBlocks.ADVANCED_CENTRIFUGE)
             return FTBICSounds.CENTRIFUGE.get();
-        if (type == FTBICElectricBlocks.ORE_WASHER || type == FTBICElectricBlocks.PUMP)
-            return FTBICSounds.ORE_WASHER.get();
+        if (type == FTBICElectricBlocks.ORE_WASHER
+                || type == FTBICElectricBlocks.ADVANCED_ORE_WASHER
+                || type == FTBICElectricBlocks.PUMP) return FTBICSounds.ORE_WASHER.get();
         if (type == FTBICElectricBlocks.BASIC_GENERATOR) return FTBICSounds.GENERATOR.get();
         return null;
     }

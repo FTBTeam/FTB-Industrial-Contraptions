@@ -98,7 +98,8 @@ public final class CapabilityRegistrar {
 
             if (instance == FTBICElectricBlocks.CENTRIFUGE
                     || instance == FTBICElectricBlocks.ADVANCED_CENTRIFUGE
-                    || instance == FTBICElectricBlocks.ORE_WASHER) {
+                    || instance == FTBICElectricBlocks.ORE_WASHER
+                    || instance == FTBICElectricBlocks.ADVANCED_ORE_WASHER) {
                 event.registerBlockEntity(
                         Capabilities.Fluid.BLOCK,
                         type,

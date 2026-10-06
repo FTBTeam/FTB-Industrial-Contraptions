@@ -54,11 +54,11 @@ public interface FTBICBlocks {
     DeferredBlock<CableBlock> LV_CABLE = REGISTRY.register(
             "lv_cable", name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.WOOL), EnergyTier.LV, 5));
     DeferredBlock<CableBlock> MV_CABLE = REGISTRY.register(
-            "mv_cable", name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.WOOL), EnergyTier.MV, 4));
+            "mv_cable", name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.WOOL), EnergyTier.MV, 5));
     DeferredBlock<CableBlock> HV_CABLE = REGISTRY.register(
             "hv_cable", name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.WOOL), EnergyTier.HV, 6));
     DeferredBlock<CableBlock> EV_CABLE = REGISTRY.register(
-            "ev_cable", name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.WOOL), EnergyTier.EV, 4));
+            "ev_cable", name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.WOOL), EnergyTier.EV, 5));
     DeferredBlock<CableBlock> IV_CABLE = REGISTRY.register(
             "iv_cable", name -> new CableBlock(props(name).strength(0.9F).sound(SoundType.GLASS), EnergyTier.IV, 6));
     DeferredBlock<CableBlock> SUPERCONDUCTING_CABLE = REGISTRY.register(

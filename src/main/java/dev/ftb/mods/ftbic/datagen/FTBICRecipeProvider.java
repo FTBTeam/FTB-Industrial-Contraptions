@@ -1113,6 +1113,54 @@ public class FTBICRecipeProvider extends RecipeProvider {
                 'W',
                 i("ftbic:copper_coil"));
         shaped(
+                "advanced_ore_washer",
+                ftbicStack("advanced_ore_washer", 1),
+                new String[] {"CCC", "CFC", "WMW"},
+                'C',
+                i("ftbic:fluid_cell"),
+                'F',
+                i("ftbic:ore_washer"),
+                'M',
+                i("ftbic:advanced_machine_block"),
+                'W',
+                i("ftbic:copper_coil"));
+        shaped(
+                "advanced_canning_machine",
+                ftbicStack("advanced_canning_machine", 1),
+                new String[] {"CCC", "CFC", "WMW"},
+                'C',
+                commonOrTag("c:plates/tin"),
+                'F',
+                i("ftbic:canning_machine"),
+                'M',
+                i("ftbic:advanced_machine_block"),
+                'W',
+                i("ftbic:copper_coil"));
+        shaped(
+                "advanced_roller",
+                ftbicStack("advanced_roller", 1),
+                new String[] {"CCC", "CFC", "WMW"},
+                'C',
+                commonOrTag("c:plates/iron"),
+                'F',
+                i("ftbic:roller"),
+                'M',
+                i("ftbic:advanced_machine_block"),
+                'W',
+                i("ftbic:copper_coil"));
+        shaped(
+                "advanced_extruder",
+                ftbicStack("advanced_extruder", 1),
+                new String[] {"CCC", "CFC", "WMW"},
+                'C',
+                commonOrTag("c:rods/iron"),
+                'F',
+                i("ftbic:extruder"),
+                'M',
+                i("ftbic:advanced_machine_block"),
+                'W',
+                i("ftbic:copper_coil"));
+        shaped(
                 "advanced_heat_exchanger",
                 ftbicStack("advanced_heat_exchanger", 1),
                 new String[] {"WCW", "VBV", "WCW"},

@@ -36,7 +36,6 @@ public class ElectricBlockInstance {
     public Supplier<Double> maxEnergyOutput = () -> 0D;
     public Supplier<Double> energyUsage = () -> 0D;
     public Supplier<Double> maxEnergyInput = () -> 0D;
-    public boolean wip = false;
     public boolean bankCasing = false;
     public int inputItemCount = 0;
     public int outputItemCount = 0;
@@ -105,11 +104,6 @@ public class ElectricBlockInstance {
 
     public ElectricBlockInstance canBurn() {
         canBurn = true;
-        return this;
-    }
-
-    public ElectricBlockInstance wip() {
-        wip = true;
         return this;
     }
 

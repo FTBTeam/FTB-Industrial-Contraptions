@@ -6,6 +6,7 @@ navigation:
   position: 4
 item_ids:
   - ftbic:ore_washer
+  - ftbic:advanced_ore_washer
   - ftbic:crushed_ore
   - ftbic:washed_ore
   - ftbic:refined_concentrate
@@ -38,6 +39,12 @@ The washer accepts LV power and holds **16,000 mB** in each tank. Its default re
 By default it uses **<Energy config="machines.ore_washer_use" rate="true" />** and takes **20 seconds** per wash, before upgrades. The basic macerator takes 10 seconds per crushing operation, or 90 seconds for a block of raw ore; the basic centrifuge takes 30 seconds per refining batch. Machine configuration and material definitions can change these values.
 
 Processing waits for a complete item batch, enough fluid and power, and space for every output. Use a [Batch Feeder](batch_feeder.md) to deliver two crushed ore with one bucket of water together.
+
+### Advanced Ore Washer
+
+<RecipeFor id="ftbic:advanced_ore_washer" />
+
+MV tier. <Energy config="machines.advanced_ore_washer_use" rate="true" />, <Energy config="machines.advanced_ore_washer_capacity" /> buffer. Same recipes, speed and tanks as the Ore Washer, and it accepts <ItemLink id="parallel_processing_upgrade" />s. Each parallel wash needs its own two crushed ore and 1,000 mB of water.
 
 ## Materials and automation
 

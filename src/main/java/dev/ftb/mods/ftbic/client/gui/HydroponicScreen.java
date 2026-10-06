@@ -84,6 +84,20 @@ public final class HydroponicScreen extends ElectricBlockScreen<HydroponicMenu> 
             tankTooltip(
                     g, leftPos + 10, topPos + 45, mouseX, mouseY, machine.getInputFluid(), machine.getTankCapacity());
         if (!(menu.blockEntity instanceof HydroponicBlockEntity machine)) return;
+        if (menu.parallelCapacity.get() > 1) {
+            for (int lane = 0; lane < (advanced ? 4 : 1); lane++) {
+                if (isIn(mouseX, mouseY, leftPos + 90, topPos + menu.laneY(lane), 24, 17)) {
+                    g.setTooltipForNextFrame(
+                            Component.translatable(
+                                    "ftbic.gui.machine.parallel_tooltip",
+                                    menu.laneOperations(lane),
+                                    menu.parallelCapacity.get()),
+                            mouseX,
+                            mouseY);
+                    return;
+                }
+            }
+        }
         Slot hovered = hoveredSlot;
         if (hovered == null || hovered.hasItem()) return;
         int index = menu.slots.indexOf(hovered);
