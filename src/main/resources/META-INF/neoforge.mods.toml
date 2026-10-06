@@ -41,3 +41,10 @@ type = "optional"
 versionRange = "*"
 ordering = "BEFORE"
 side = "CLIENT"
+
+[[dependencies.${mod_id}]]
+modId = "productivefarming"
+type = "optional"
+versionRange = "*"
+ordering = "NONE"
+side = "BOTH"
