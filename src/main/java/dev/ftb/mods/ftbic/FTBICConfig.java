@@ -183,6 +183,7 @@ public final class FTBICConfig {
         public final ModConfigSpec.DoubleValue HYDROPONIC_ACCELERATOR_USE;
         public final ModConfigSpec.DoubleValue ADVANCED_HYDROPONIC_ACCELERATOR_CAPACITY;
         public final ModConfigSpec.DoubleValue ADVANCED_HYDROPONIC_ACCELERATOR_USE;
+        public final ModConfigSpec.BooleanValue HYDROPONIC_CROP_TRAITS;
         public final ModConfigSpec.DoubleValue CENTRIFUGE_CAPACITY;
         public final ModConfigSpec.DoubleValue CENTRIFUGE_USE;
         public final ModConfigSpec.DoubleValue COMPRESSOR_CAPACITY;
@@ -285,6 +286,9 @@ public final class FTBICConfig {
                     b.defineInRange("advanced_hydroponic_accelerator_capacity", 16_000D, 1D, 100_000D);
             ADVANCED_HYDROPONIC_ACCELERATOR_USE =
                     b.defineInRange("advanced_hydroponic_accelerator_use_per_lane", 8D, 0D, 100_000D);
+            HYDROPONIC_CROP_TRAITS = b.comment(
+                            "When Productive Farming is installed, Hydroponic Accelerators apply its crop traits: Growth shortens growth time, Yield adds to the harvest, harvests can raise a trait on the planted seed, and Mutability raises mutation chances. Productive Farming crop mutations also run in mutation mode")
+                    .define("hydroponic_crop_traits", true);
             CENTRIFUGE_CAPACITY = b.defineInRange("centrifuge_capacity", 1_200D, 1D, 100_000D);
             CENTRIFUGE_USE = b.defineInRange("centrifuge_use", 2D, 0D, 100_000D);
             COMPRESSOR_CAPACITY = b.defineInRange("compressor_capacity", 1_200D, 1D, 100_000D);

@@ -2,6 +2,7 @@ package dev.ftb.mods.ftbic.test;
 
 import com.mojang.serialization.MapCodec;
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.integration.productivefarming.CropTraits;
 import java.util.function.Consumer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -11,6 +12,7 @@ import net.minecraft.gametest.framework.TestData;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterGameTestsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -47,6 +49,7 @@ public class FTBICGameTests {
         reg(event, "hydroponic_parallel_lanes", HydroponicGameTests::parallelLanes, env, 60);
         reg(event, "hydroponic_consumed_seed", HydroponicGameTests::consumedSeed, env, 60);
         reg(event, "hydroponic_mutation_lanes", HydroponicGameTests::mutationAndLanes, env, 60);
+        if (ModList.get().isLoaded(CropTraits.MOD_ID)) HydroponicCropTraitGameTests.register(event, env);
         reg(event, "bank_connected_storage", BankGameTests::connectedStorage, env, 60);
         reg(event, "bank_cell_seam_states", BankGameTests::cellSeamStates, env, 60);
         reg(event, "bank_charge_display", BankGameTests::chargeDisplayTracksBank, env, 60);
@@ -639,7 +642,7 @@ public class FTBICGameTests {
                 20);
     }
 
-    private static void reg(
+    static void reg(
             RegisterGameTestsEvent event,
             String name,
             Consumer<GameTestHelper> function,

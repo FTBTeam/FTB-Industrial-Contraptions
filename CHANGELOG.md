@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [26.1.2.17]
+
+### Added
+
+* Hydroponic Accelerators support Productive Farming crop traits when it is installed. Growth shortens each growth cycle, Yield adds to the harvest, returned seeds keep the planted seed's traits, and each harvest can raise a trait on the planted seed. In Mutation mode the parent with the higher Mutability raises the chance of a cross and passes its traits to the new seed, and Productive Farming's own crop mutations also run. The `hydroponic_crop_traits` config option turns it off.
+
 ## [26.1.2.16]
 
 ### Fixed

@@ -77,6 +77,11 @@ repositories {
     }
 }
 
+configurations {
+    localRuntime
+    runtimeClasspath.extendsFrom localRuntime
+}
+
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
@@ -92,6 +97,12 @@ dependencies {
 
     // GuideME - In-game guidebook (optional)
     implementation("org.appliedenergistics:guideme:${guideme_version}")
+
+    compileOnly("curse.maven:productive-farming-944463:8840697")
+    if (project.hasProperty('withProductiveFarming')) {
+        localRuntime("curse.maven:productive-farming-944463:8840697")
+        localRuntime("curse.maven:productive-bees-377897:8988434")
+    }
 }
 
 tasks.withType(ProcessResources).configureEach {

@@ -3,6 +3,7 @@ package dev.ftb.mods.ftbic.block.entity.machine;
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
+import dev.ftb.mods.ftbic.integration.productivefarming.CropTraits;
 import dev.ftb.mods.ftbic.recipe.FTBICRecipes;
 import dev.ftb.mods.ftbic.recipe.MachineRecipe;
 import dev.ftb.mods.ftbic.recipe.SoilOption;
@@ -11,9 +12,13 @@ import dev.ftb.mods.ftbic.util.HydroponicWaterHandler;
 import dev.ftb.mods.ftbic.util.SideConfiguration.Face;
 import dev.ftb.mods.ftbic.util.SideConfiguration.Resource;
 import dev.ftb.mods.ftbic.util.StackWithChance;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
@@ -203,9 +208,9 @@ public final class HydroponicBlockEntity extends MachineBlockEntity {
             reset(lane);
             return 0;
         }
-        int ticks = Math.max(1, (int) Math.ceil(match.recipe.processingTime
+        int ticks = traitTicks(lane, Math.max(1, (int) Math.ceil(match.recipe.processingTime
                 * FTBICConfig.MACHINES.MACHINE_RECIPE_BASE_TICKS.get()
-                / (match.speed * progressSpeed)));
+                / (match.speed * progressSpeed))));
         if (!recipeIds[lane].equals(match.id) || laneDuration[lane] != ticks) {
             reset(lane);
             cachedMatches[lane] = match;
@@ -245,6 +250,14 @@ public final class HydroponicBlockEntity extends MachineBlockEntity {
         return operations;
     }
 
+    private int traitTicks(int lane, int ticks) {
+        CropTraits traits = CropTraits.get();
+        if (!mutationMode) return traits.adjustGrowthTime(ticks, inputItems[advanced ? lane * 2 : 0]);
+        return Math.max(
+                traits.adjustGrowthTime(ticks, inputItems[lane * 2]),
+                traits.adjustGrowthTime(ticks, inputItems[(lane + 1) * 2]));
+    }
+
     private boolean hasSeedInputs(MachineRecipe recipe, int lane, int operations) {
         if (!mutationMode) {
             ItemStack seed = inputItems[advanced ? lane * 2 : 0];
@@ -270,7 +283,7 @@ public final class HydroponicBlockEntity extends MachineBlockEntity {
                     || !recipe.inputs.getFirst().matches(seed)) continue;
             for (SoilOption option : recipe.soilOptions) {
                 if (option.matches(soil))
-                    return new Match(recipe, holder.id().identifier().toString(), option.speed());
+                    return new Match(recipe, holder.id().identifier().toString(), option.speed(), ItemStack.EMPTY, 0);
             }
         }
         return null;
@@ -297,10 +310,26 @@ public final class HydroponicBlockEntity extends MachineBlockEntity {
                     && recipe.inputs.get(1).ingredient().test(b);
             boolean reverse = recipe.inputs.get(0).ingredient().test(b)
                     && recipe.inputs.get(1).ingredient().test(a);
-            if (direct || reverse)
-                return new Match(recipe, holder.id().identifier().toString(), Math.min(parentA.speed, parentB.speed));
+            if (direct || reverse) {
+                StackWithChance output = recipe.outputs.getFirst();
+                return new Match(
+                        recipe,
+                        holder.id().identifier().toString(),
+                        Math.min(parentA.speed, parentB.speed),
+                        output.stack(),
+                        output.chance());
+            }
         }
-        return null;
+        Optional<CropTraits.Mutation> mutation = CropTraits.get().findMutation(server, a, b);
+        if (mutation.isEmpty()) return null;
+        MachineRecipe slower =
+                parentA.recipe.processingTime >= parentB.recipe.processingTime ? parentA.recipe : parentB.recipe;
+        return new Match(
+                slower,
+                mutation.get().id(),
+                Math.min(parentA.speed, parentB.speed),
+                mutation.get().result(),
+                mutation.get().chance());
     }
 
     private boolean hasFluid(MachineRecipe recipe, int operations) {
@@ -319,14 +348,14 @@ public final class HydroponicBlockEntity extends MachineBlockEntity {
         MachineRecipe recipe = match.recipe;
         if (!mutationMode) {
             int base = advanced ? lane * 3 : 0;
-            int kept = keptSeedOutput(recipe, lane);
-            for (int i = 0; i < recipe.outputs.size(); i++) {
-                ItemStack stack = growthOutput(recipe, i, kept);
+            List<ItemStack> harvest = harvest(recipe, lane, keptSeedOutput(recipe, lane), null);
+            for (int i = 0; i < harvest.size(); i++) {
+                ItemStack stack = harvest.get(i);
                 if (!fits(base + i, stack.copyWithCount(stack.getCount() * operations))) return false;
             }
             return true;
         }
-        ItemStack mutant = recipe.outputs.getFirst().stack();
+        ItemStack mutant = mutant(match, lane);
         return fits(lane * 3, mutant.copyWithCount(mutant.getCount() * operations))
                 && fits(lane * 3 + 1, inputItems[lane * 2].copyWithCount(operations))
                 && fits((lane + 1) * 3 + 1, inputItems[(lane + 1) * 2].copyWithCount(operations));
@@ -354,12 +383,38 @@ public final class HydroponicBlockEntity extends MachineBlockEntity {
                     match.recipe.inputs.getFirst().count() * operations);
         int base = advanced ? lane * 3 : 0;
         for (int op = 0; op < operations; op++) {
-            for (int i = 0; i < match.recipe.outputs.size(); i++) {
-                StackWithChance output = match.recipe.outputs.get(i);
-                if (output.chance() < 1 && level.getRandom().nextDouble() >= output.chance()) continue;
-                insert(base + i, growthOutput(match.recipe, i, kept));
-            }
+            List<ItemStack> harvest = harvest(match.recipe, lane, kept, level.getRandom());
+            for (int i = 0; i < harvest.size(); i++) insert(base + i, harvest.get(i));
         }
+        ItemStack seed = inputItems[advanced ? lane * 2 : 0];
+        for (int op = 0; op < operations; op++) CropTraits.get().rollIncrease(seed, level.getRandom());
+    }
+
+    private List<ItemStack> harvest(MachineRecipe recipe, int lane, int kept, RandomSource random) {
+        List<ItemStack> harvest = new ArrayList<>(recipe.outputs.size());
+        for (int i = 0; i < recipe.outputs.size(); i++) {
+            StackWithChance output = recipe.outputs.get(i);
+            boolean dropped = random == null || output.chance() >= 1 || random.nextDouble() < output.chance();
+            ItemStack stack = dropped ? growthOutput(recipe, i, kept).copy() : ItemStack.EMPTY;
+            harvest.add(stack.isEmpty() ? ItemStack.EMPTY : stack);
+        }
+        List<ItemStack> drops = new ArrayList<>(harvest.size());
+        for (ItemStack stack : harvest) if (!stack.isEmpty()) drops.add(stack);
+        CropTraits.get().applyToHarvest(drops, inputItems[advanced ? lane * 2 : 0]);
+        return harvest;
+    }
+
+    private ItemStack mutationParent(int lane) {
+        ItemStack first = inputItems[lane * 2];
+        ItemStack second = inputItems[(lane + 1) * 2];
+        CropTraits traits = CropTraits.get();
+        return traits.mutability(second) > traits.mutability(first) ? second : first;
+    }
+
+    private ItemStack mutant(Match match, int lane) {
+        ItemStack mutant = match.mutant.copy();
+        CropTraits.get().inheritTraits(mutationParent(lane), mutant);
+        return mutant;
     }
 
     private int keptSeedOutput(MachineRecipe recipe, int lane) {
@@ -368,8 +423,9 @@ public final class HydroponicBlockEntity extends MachineBlockEntity {
         for (int i = 0; i < recipe.outputs.size(); i++) {
             StackWithChance output = recipe.outputs.get(i);
             ItemStack stack = output.stack();
-            if (output.chance() >= 1 && stack.getCount() >= consumed && ItemStack.isSameItemSameComponents(stack, seed))
-                return i;
+            if (output.chance() >= 1
+                    && stack.getCount() >= consumed
+                    && CropTraits.get().sameCrop(stack, seed)) return i;
         }
         return -1;
     }
@@ -383,13 +439,14 @@ public final class HydroponicBlockEntity extends MachineBlockEntity {
     private void finishMutation(Match match, int lane, int operations) {
         int first = lane * 2;
         int second = (lane + 1) * 2;
-        StackWithChance output = match.recipe.outputs.getFirst();
+        ItemStack mutant = mutant(match, lane);
+        double chance = CropTraits.get().mutationChance(match.chance, mutationParent(lane));
         for (int op = 0; op < operations; op++) {
             ItemStack a = inputItems[first].copyWithCount(1);
             ItemStack b = inputItems[second].copyWithCount(1);
             inputItems[first].shrink(1);
             inputItems[second].shrink(1);
-            if (level.getRandom().nextDouble() < output.chance()) insert(lane * 3, output.stack());
+            if (level.getRandom().nextDouble() < chance) insert(lane * 3, mutant.copy());
             else {
                 insert(lane * 3 + 1, a);
                 insert((lane + 1) * 3 + 1, b);
@@ -435,5 +492,5 @@ public final class HydroponicBlockEntity extends MachineBlockEntity {
         }
     }
 
-    private record Match(MachineRecipe recipe, String id, double speed) {}
+    private record Match(MachineRecipe recipe, String id, double speed, ItemStack mutant, double chance) {}
 }
