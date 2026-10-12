@@ -111,6 +111,7 @@ public class FTBICGameTests {
         reg(event, "digging_area_survives_reload", DiggingGameTests::areaSurvivesReload, env, 100);
         reg(event, "digging_no_energy_without_area", DiggingGameTests::noEnergyWithoutArea, env, 100);
         reg(event, "digging_quarry_clears_fluid", DiggingGameTests::quarryClearsFluid, env, 100);
+        reg(event, "digging_speed_carries_over", DiggingGameTests::speedCarriesOver, env, 100);
         reg(event, "digging_pump_uses_own_settings", DiggingGameTests::pumpUsesOwnSettings, env, 100);
         reg(event, "digging_landmark_area", DiggingGameTests::landmarkArea, env, 100);
         reg(event, "digging_protected_block_skipped", DiggingGameTests::protectedBlockSkipped, env, 100);
