@@ -921,11 +921,10 @@ public class FTBICGameTestFunctions {
         helper.setBlock(CENTER, FTBICElectricBlocks.QUARRY.block.get());
         QuarryBlockEntity quarry = helper.getBlockEntity(CENTER, QuarryBlockEntity.class);
         quarry.energy = 0D;
-        long startingTick = quarry.tick;
 
         helper.runAfterDelay(40, () -> {
             QuarryBlockEntity after = helper.getBlockEntity(CENTER, QuarryBlockEntity.class);
-            helper.assertValueEqual(startingTick, after.tick, "Quarry tick should not advance without energy");
+            helper.assertValueEqual(0D, after.digProgress, "Quarry progress should not advance without energy");
             helper.succeed();
         });
     }
