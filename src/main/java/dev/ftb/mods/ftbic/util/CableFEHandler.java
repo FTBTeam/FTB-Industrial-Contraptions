@@ -2,9 +2,14 @@ package dev.ftb.mods.ftbic.util;
 
 import dev.ftb.mods.ftbic.FTBICConfig;
 import dev.ftb.mods.ftbic.block.CableBlock;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -16,6 +21,7 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 public final class CableFEHandler implements EnergyHandler {
     // External handlers may forward back into this network synchronously.
     private static final Set<ServerLevel> TRANSFERRING = new HashSet<>();
+    private static final Map<ServerLevel, TickMemo> MEMOS = new WeakHashMap<>();
     private final ServerLevel level;
     private final BlockPos pos;
     private final Direction side;
@@ -52,12 +58,21 @@ public final class CableFEHandler implements EnergyHandler {
         try {
             int offered = Math.min(amount, ZapFEConversion.zapsToFEFloor(cable.tier.transferRate()));
             if (offered <= 0) return 0;
+            CableRouteCache.Route route = CableRouteCache.get(level, pos, cable.tier);
+            TickMemo memo = memo(level);
+            if (memo.saturated.contains(route)) return 0;
             int remaining = offered;
             BlockPos source = side == null ? null : pos.relative(side);
+            boolean skippedSource = false;
             BitSet filled = new BitSet();
-            for (CableRouteCache.Endpoint endpoint :
-                    CableRouteCache.get(level, pos, cable.tier).endpoints()) {
-                if (filled.get(endpoint.receiver()) || endpoint.pos().equals(source)) continue;
+            for (CableRouteCache.Endpoint endpoint : route.endpoints()) {
+                if (filled.get(endpoint.receiver())) continue;
+                if (endpoint.pos().equals(source)) {
+                    skippedSource = true;
+                    continue;
+                }
+                long face = faceKey(endpoint);
+                if (memo.full.contains(face)) continue;
                 EnergyHandler receiver = endpoint.energy().getCapability();
                 if (receiver == null) continue;
                 int accepted = receiver.insert(remaining, transaction);
@@ -66,12 +81,40 @@ public final class CableFEHandler implements EnergyHandler {
                     remaining -= accepted;
                     if (endpoint.pulse() != null)
                         new TransferPulse(level, endpoint.pulse()).updateSnapshots(transaction);
+                } else {
+                    memo.full.add(face);
                 }
                 if (remaining <= 0) break;
             }
+            if (remaining == offered && !skippedSource) memo.saturated.add(route);
             return offered - remaining;
         } finally {
             TRANSFERRING.remove(level);
+        }
+    }
+
+    private static TickMemo memo(ServerLevel level) {
+        long now = level.getGameTime();
+        TickMemo memo = MEMOS.get(level);
+        if (memo == null || memo.tick != now) {
+            memo = new TickMemo(now);
+            MEMOS.put(level, memo);
+        }
+        return memo;
+    }
+
+    private static long faceKey(CableRouteCache.Endpoint endpoint) {
+        Direction face = endpoint.energy().context();
+        return endpoint.pos().asLong() * 7L + (face == null ? 6 : face.ordinal());
+    }
+
+    private static final class TickMemo {
+        private final long tick;
+        private final Set<CableRouteCache.Route> saturated = Collections.newSetFromMap(new IdentityHashMap<>());
+        private final LongOpenHashSet full = new LongOpenHashSet();
+
+        private TickMemo(long tick) {
+            this.tick = tick;
         }
     }
 
