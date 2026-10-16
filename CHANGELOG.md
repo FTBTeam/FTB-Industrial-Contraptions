@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 * When its output is full, the Quarry now waits on the block it was about to mine. Before, it moved on and left that block until its next pass over the area.
+* Heavy server lag when FE generators from other mods feed a cable network whose machines are all full. Each cable network now notes which machines had no room during a tick and skips them for the rest of that tick, so repeated pushes no longer check every machine on the network again.
 
 ## [26.1.2.17]
 
