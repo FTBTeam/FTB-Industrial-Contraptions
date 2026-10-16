@@ -47,6 +47,8 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
     public static final int MAX_AREA_SIZE = LANDMARK_SEARCH_RADIUS * 2 + 1;
     private static final int LANDMARK_SEARCH_DEPTH = 128;
     private static final int LANDMARK_SEARCH_HEIGHT = 4;
+    private static final int MAX_DIGS_PER_TICK = 4;
+    private static final int MAX_SKIP_SCAN = 32;
 
     private static final WeakHashMap<Level, Set<DiggingBaseBlockEntity>> PER_LEVEL = new WeakHashMap<>();
 
@@ -75,7 +77,9 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
 
     public boolean paused = false;
     public boolean redstonePaused = false;
-    public long tick = 0L;
+    public long column = 0L;
+    public double digProgress = 0D;
+    protected boolean targetChecked = false;
     public int boundaryHighlightTicks = 0;
     public float laserX = 0.5F;
     public float laserZ = 0.5F;
@@ -120,7 +124,8 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putBoolean("Paused", paused);
-        output.putLong("Tick", tick);
+        output.putLong("Column", column);
+        if (digProgress > 0D) output.putDouble("DigProgress", digProgress);
         output.putInt("OffsetX", offsetX);
         output.putInt("OffsetZ", offsetZ);
         output.putInt("SizeX", sizeX);
@@ -136,7 +141,10 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         paused = input.getBooleanOr("Paused", false);
-        tick = input.getLongOr("Tick", 0L);
+        column = input.getLongOr(
+                "Column", input.getLongOr("Tick", 0L) / Math.max(diggingMineTicks + diggingMoveTicks, 1));
+        digProgress = Math.max(input.getDoubleOr("DigProgress", 0D), 0D);
+        targetChecked = false;
         offsetX = Mth.clamp(input.getIntOr("OffsetX", 0), -LANDMARK_SEARCH_RADIUS, LANDMARK_SEARCH_RADIUS);
         offsetZ = Mth.clamp(input.getIntOr("OffsetZ", 0), -LANDMARK_SEARCH_RADIUS, LANDMARK_SEARCH_RADIUS);
         sizeX = readAreaSize(input, "SizeX");
@@ -183,71 +191,89 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
         }
         long area = (long) interiorW * interiorD;
 
-        int miningTicks = Math.max((int) (diggingMineTicks / progressSpeed), 1);
-        int moveTicks = Math.max((int) (diggingMoveTicks / progressSpeed), 1);
-        int totalTicks = miningTicks + moveTicks;
-        if (skipEmptyTargetsWithoutEnergy() && tick % totalTicks == 0) {
-            int scanned = 0;
-            boolean found = false;
-            while (scanned++ < 32) {
-                long column = tick / totalTicks % area;
-                int row = (int) (column / interiorW);
-                int col = row % 2 == 0 ? (int) (column % interiorW) : interiorW - 1 - (int) (column % interiorW);
-                int x = worldPosition.getX() + offsetX + 1 + col;
-                int z = worldPosition.getZ() + offsetZ + 1 + row;
-                if (findMinableY(x, z) != INVALID_Y) {
-                    skippedBlocks = 0;
-                    found = true;
-                    break;
-                }
-                tick += totalTicks;
-                if (++skippedBlocks >= area) {
-                    paused = true;
-                    skippedBlocks = 0;
-                    break;
-                }
-            }
+        if (skipEmptyTargetsWithoutEnergy() && !targetChecked && !seekMinableColumn(interiorW, area)) {
             setChanged();
-            if (!found) return;
+            return;
         }
         if (energy < energyUse) return;
         energy -= energyUse;
         active = true;
 
-        if ((tick % totalTicks) == totalTicks - 1) {
-            long pos = (tick / totalTicks) % area;
-            int row = (int) (pos / interiorW);
-            int col = row % 2 == 0 ? (int) (pos % interiorW) : (interiorW - 1 - (int) (pos % interiorW));
+        double cycle = Math.max(diggingMineTicks + diggingMoveTicks, 1);
+        digProgress += progressSpeed;
+        boolean moved = false;
+        for (int digs = 0; digs < MAX_DIGS_PER_TICK && digProgress >= cycle && !paused; digs++) {
+            if (skipEmptyTargetsWithoutEnergy() && !targetChecked && !seekMinableColumn(interiorW, area)) break;
+            if (digColumn(interiorW, area)) moved = true;
+            if (paused) break;
+            digProgress -= cycle;
+            column++;
+            targetChecked = false;
+        }
+        digProgress = Math.min(digProgress, cycle);
 
-            int mx = worldPosition.getX() + offsetX + 1 + col;
-            int mz = worldPosition.getZ() + offsetZ + 1 + row;
-            int my = findMinableY(mx, mz);
+        if (moved && level instanceof ServerLevel server) {
+            PacketDistributor.sendToPlayersTrackingChunk(
+                    server,
+                    ChunkPos.containing(worldPosition),
+                    new MoveLaserPayload(worldPosition, laserX, laserY, laserZ));
+        }
+        // Persist progress + energy so a mid-operation chunk unload doesn't lose progress.
+        setChanged();
+    }
 
-            if (my == INVALID_Y) {
-                skippedBlocks++;
-                if (skippedBlocks >= area * 2) {
-                    paused = true;
-                    skippedBlocks = 0;
-                }
-            } else {
-                BlockPos miningPos = new BlockPos(mx, my, mz);
-                BlockState state = level.getBlockState(miningPos);
+    private int columnX(int interiorW, long area) {
+        long pos = column % area;
+        int row = (int) (pos / interiorW);
+        return row % 2 == 0 ? (int) (pos % interiorW) : interiorW - 1 - (int) (pos % interiorW);
+    }
+
+    private int columnZ(int interiorW, long area) {
+        return (int) (column % area / interiorW);
+    }
+
+    private boolean seekMinableColumn(int interiorW, long area) {
+        for (int scanned = 0; scanned < MAX_SKIP_SCAN; scanned++) {
+            int x = worldPosition.getX() + offsetX + 1 + columnX(interiorW, area);
+            int z = worldPosition.getZ() + offsetZ + 1 + columnZ(interiorW, area);
+            if (findMinableY(x, z) != INVALID_Y) {
                 skippedBlocks = 0;
-                laserX = (float) (offsetX + 1 + col + 0.5);
-                laserZ = (float) (offsetZ + 1 + row + 0.5);
-                laserY = my;
-                if (level instanceof ServerLevel server) {
-                    PacketDistributor.sendToPlayersTrackingChunk(
-                            server,
-                            ChunkPos.containing(worldPosition),
-                            new MoveLaserPayload(worldPosition, laserX, laserY, laserZ));
-                }
-                digBlock(state, miningPos);
+                targetChecked = true;
+                return true;
+            }
+            column++;
+            if (++skippedBlocks >= area) {
+                paused = true;
+                skippedBlocks = 0;
+                return false;
             }
         }
-        tick++;
-        // Persist tick + energy so a mid-operation chunk unload doesn't lose progress.
-        setChanged();
+        return false;
+    }
+
+    private boolean digColumn(int interiorW, long area) {
+        int col = columnX(interiorW, area);
+        int row = columnZ(interiorW, area);
+        int mx = worldPosition.getX() + offsetX + 1 + col;
+        int mz = worldPosition.getZ() + offsetZ + 1 + row;
+        int my = findMinableY(mx, mz);
+
+        if (my == INVALID_Y) {
+            skippedBlocks++;
+            if (skippedBlocks >= area * 2) {
+                paused = true;
+                skippedBlocks = 0;
+            }
+            return false;
+        }
+        BlockPos miningPos = new BlockPos(mx, my, mz);
+        BlockState state = level.getBlockState(miningPos);
+        skippedBlocks = 0;
+        laserX = (float) (offsetX + 1 + col + 0.5);
+        laserZ = (float) (offsetZ + 1 + row + 0.5);
+        laserY = my;
+        digBlock(state, miningPos);
+        return true;
     }
 
     public boolean isValidBlock(BlockState state, BlockPos pos) {
@@ -456,6 +482,7 @@ public class DiggingBaseBlockEntity extends BasicMachineBlockEntity {
         sizeZ = Math.max(1, z1 - z0 + 1);
 
         boundaryHighlightTicks = 60;
+        targetChecked = false;
 
         laserX = offsetX + sizeX / 2.0F;
         laserZ = offsetZ + sizeZ / 2.0F;

@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [26.1.2.18]
+
+### Changed
+
+* The Quarry no longer tops out at 10 blocks per second. Every Overclocker Upgrade and every level of Efficiency on its pickaxe now makes it faster, so four Overclockers with an Efficiency V pickaxe mine about 13 blocks per second. Speed now rises evenly with each upgrade instead of in uneven steps. Before, Overclockers past the cap raised power use without adding any speed. Four Overclockers with no pickaxe now mine about 9 blocks per second instead of 10.
+
+### Fixed
+
+* When its output is full, the Quarry now waits on the block it was about to mine. Before, it moved on and left that block until its next pass over the area.
+* Heavy server lag when FE generators from other mods feed a cable network whose machines are all full. Each cable network now notes which machines had no room during a tick and skips them for the rest of that tick, so repeated pushes no longer check every machine on the network again.
+
 ## [26.1.2.17]
 
 ### Added

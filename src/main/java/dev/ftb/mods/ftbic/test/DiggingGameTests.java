@@ -110,7 +110,7 @@ final class DiggingGameTests {
                 quarry.tick();
             }
             h.assertValueEqual(quarry.energy, full, "Energy with a " + area[0] + "x" + area[1] + " area");
-            h.assertValueEqual(quarry.tick, 0L, "Progress with a " + area[0] + "x" + area[1] + " area");
+            h.assertValueEqual(quarry.digProgress, 0D, "Progress with a " + area[0] + "x" + area[1] + " area");
         }
         h.assertTrue(h.getBlockState(COLUMN).is(Blocks.STONE), "Nothing is mined without an area");
         h.succeed();
@@ -131,6 +131,42 @@ final class DiggingGameTests {
             cobble |= out.is(Items.COBBLESTONE);
         }
         h.assertTrue(cobble, "Stone below the water reaches the output");
+        h.succeed();
+    }
+
+    static void speedCarriesOver(GameTestHelper h) {
+        var quarry = place(h, FTBICElectricBlocks.QUARRY.block.get(), QuarryBlockEntity.class, 5, 3);
+        quarry.diggingMineTicks = 8;
+        quarry.diggingMoveTicks = 2;
+        quarry.progressSpeed = 4D;
+        BlockPos second = COLUMN.east();
+        h.setBlock(COLUMN, Blocks.STONE);
+        h.setBlock(second, Blocks.STONE);
+        quarry.tick();
+        quarry.tick();
+        h.assertTrue(h.getBlockState(COLUMN).is(Blocks.STONE), "No dig before a full cycle of progress");
+        quarry.tick();
+        h.assertTrue(h.getBlockState(COLUMN).isAir(), "First dig once progress passes the cycle");
+        h.assertValueEqual(quarry.digProgress, 2D, "Leftover progress carries into the next cycle");
+        quarry.tick();
+        h.assertTrue(h.getBlockState(second).is(Blocks.STONE), "Second column waits for its cycle");
+        quarry.tick();
+        h.assertTrue(h.getBlockState(second).isAir(), "Carried progress shortens the second cycle");
+
+        long start = quarry.column;
+        quarry.digProgress = 0D;
+        quarry.skippedBlocks = 0;
+        quarry.progressSpeed = 25D;
+        quarry.tick();
+        h.assertValueEqual(quarry.column - start, 2L, "Several digs in one tick at high speed");
+        h.assertValueEqual(quarry.digProgress, 5D, "Remainder kept after several digs");
+        quarry.digProgress = 0D;
+        quarry.skippedBlocks = 0;
+        quarry.progressSpeed = 1000D;
+        start = quarry.column;
+        quarry.tick();
+        h.assertValueEqual(quarry.column - start, 4L, "Digs per tick are limited");
+        h.assertValueEqual(quarry.digProgress, 10D, "Excess progress is not banked past one cycle");
         h.succeed();
     }
 

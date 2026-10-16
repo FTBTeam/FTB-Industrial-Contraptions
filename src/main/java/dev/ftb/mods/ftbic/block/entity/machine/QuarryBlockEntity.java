@@ -33,6 +33,7 @@ public class QuarryBlockEntity extends DiggingBaseBlockEntity {
     public void setFilter(QuarryFilter value) {
         filter = value;
         skippedBlocks = 0;
+        targetChecked = false;
         setChanged();
         if (level != null && !level.isClientSide())
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);

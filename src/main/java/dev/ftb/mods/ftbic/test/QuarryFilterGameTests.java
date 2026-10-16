@@ -83,7 +83,8 @@ final class QuarryFilterGameTests {
         quarry.tick();
         h.assertTrue(
                 before - quarry.energy == quarry.energyUse, "Unmatched column skipped without spending mining energy");
-        h.assertValueEqual(3L, quarry.tick, "Scan advances past first column and starts second");
+        h.assertValueEqual(1L, quarry.column, "Scan advances past first column to the second");
+        h.assertValueEqual(1D, quarry.digProgress, "Second column starts its dig cycle");
         quarry.tick();
         h.assertTrue(h.getBlockState(first).is(Blocks.STONE), "First unmatched stone remains");
         h.assertTrue(h.getBlockState(second).is(Blocks.STONE), "Stone over matching ore remains");
