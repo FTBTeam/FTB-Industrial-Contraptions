@@ -1,6 +1,5 @@
 package dev.ftb.mods.ftbic.test;
 
-import dev.ftb.mods.ftbic.FTBIC;
 import dev.ftb.mods.ftbic.block.CableBlock;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
@@ -11,8 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
@@ -20,11 +17,9 @@ import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-@EventBusSubscriber(modid = FTBIC.MOD_ID)
 final class ReactorFEGameTests {
     private static final BlockPos POS = new BlockPos(2, 2, 2);
 
-    @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         if (!Boolean.getBoolean("ftbic.test.reactorFE")) return;
         event.registerBlock(

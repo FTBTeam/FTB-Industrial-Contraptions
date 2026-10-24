@@ -20,6 +20,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLLoader;
 import org.slf4j.Logger;
 
 @Mod(FTBIC.MOD_ID)
@@ -48,7 +49,9 @@ public class FTBIC {
         FTBICRecipes.TYPES.register(eventBus);
         FTBICRecipes.CONDITIONS.register(eventBus);
         FTBICIngredientTypes.REGISTRY.register(eventBus);
-        FTBICGameTests.TEST_INSTANCE_TYPES.register(eventBus);
+        if (!FMLLoader.getCurrent().isProduction()) {
+            FTBICGameTests.init(eventBus);
+        }
 
         container.registerConfig(ModConfig.Type.COMMON, FTBICConfig.COMMON_SPEC);
         FTBICConfig.init();
