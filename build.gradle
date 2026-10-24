@@ -93,7 +93,8 @@ dependencies {
 
     // Jade - block-info tooltips. Compile against the CurseForge jar; same coordinates as
     // the auroral reference project.
-    implementation("curse.maven:jade-324717:7817285")
+    compileOnly("curse.maven:jade-324717:7817285")
+    localRuntime("curse.maven:jade-324717:7817285")
 
     // GuideME - In-game guidebook (optional)
     implementation("org.appliedenergistics:guideme:${guideme_version}")

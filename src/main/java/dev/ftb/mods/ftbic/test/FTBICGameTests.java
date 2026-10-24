@@ -11,14 +11,12 @@ import net.minecraft.gametest.framework.GameTestInstance;
 import net.minecraft.gametest.framework.TestData;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.resources.Identifier;
-import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterGameTestsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-@EventBusSubscriber(modid = FTBIC.MOD_ID)
 public class FTBICGameTests {
 
     private static final Identifier EMPTY_STRUCTURE = FTBIC.id("empty");
@@ -29,7 +27,12 @@ public class FTBICGameTests {
     public static final DeferredHolder<MapCodec<? extends GameTestInstance>, MapCodec<DirectGameTestInstance>>
             DIRECT_TYPE = TEST_INSTANCE_TYPES.register("direct", () -> DirectGameTestInstance.CODEC);
 
-    @SubscribeEvent
+    public static void init(IEventBus eventBus) {
+        TEST_INSTANCE_TYPES.register(eventBus);
+        eventBus.addListener(FTBICGameTests::registerTests);
+        eventBus.addListener(ReactorFEGameTests::registerCapabilities);
+    }
+
     public static void registerTests(RegisterGameTestsEvent event) {
         Holder<TestEnvironmentDefinition<?>> env =
                 event.registerEnvironment(FTBIC.id("default"), new TestEnvironmentDefinition.AllOf());
@@ -56,8 +59,7 @@ public class FTBICGameTests {
         reg(event, "bank_combined_displays", BankGameTests::combinedDisplays, env, 60);
         reg(event, "bank_port_face_styles", BankGameTests::portFaceStyles, env, 60);
         reg(event, "bank_sustained_cable_charging", BankGameTests::sustainedCableCharging, env, 60);
-        reg(event, "bank_jade_energy_bar", BankJadeGameTests::combinedEnergyBar, env, 60);
-        reg(event, "jade_hides_default_energy_bar", BankJadeGameTests::electricBlocksHideDefaultBar, env, 60);
+        if (ModList.get().isLoaded("jade")) BankJadeGameTests.register(event, env);
         reg(event, "superconducting_unlimited_transfer", SuperconductingCableGameTests::unlimitedTransfer, env, 60);
         reg(event, "superconducting_active_routes", SuperconductingCableGameTests::onlyUsedRoutesPulse, env, 60);
         reg(event, "superconducting_connections", SuperconductingCableGameTests::connectionsAndRemoval, env, 60);
