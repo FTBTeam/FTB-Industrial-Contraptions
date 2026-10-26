@@ -9,14 +9,23 @@ import dev.ftb.mods.ftbic.util.ZapFEConversion;
 import java.lang.reflect.Proxy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.event.RegisterGameTestsEvent;
 import snownee.jade.addon.universal.EnergyStorageProvider;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.view.EnergyView;
 
 final class BankJadeGameTests {
+    static void register(RegisterGameTestsEvent event, Holder<TestEnvironmentDefinition<?>> env) {
+        FTBICGameTests.reg(event, "bank_jade_energy_bar", BankJadeGameTests::combinedEnergyBar, env, 60);
+        FTBICGameTests.reg(
+                event, "jade_hides_default_energy_bar", BankJadeGameTests::electricBlocksHideDefaultBar, env, 60);
+    }
+
     static void combinedEnergyBar(GameTestHelper helper) {
         BlockPos portPos = new BlockPos(3, 2, 3);
         helper.setBlock(portPos, FTBICElectricBlocks.INDUSTRIAL_BANK_PORT.block.get());
