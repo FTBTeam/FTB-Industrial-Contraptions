@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "ftbic:energy"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "ftbic:industrial_bank_port"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ftbic:blocks/industrial_bank_port"
+}

@@ -1,0 +1,1156 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_0"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_1"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "true",
+        "south": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_2"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "false",
+        "south": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_3"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "true",
+        "south": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_4"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_5"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "true",
+        "south": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_6"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "false",
+        "south": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_7"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "true",
+        "south": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_8"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_9"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "true",
+        "south": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_10"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "false",
+        "south": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_11"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "true",
+        "south": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_12"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_13"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "true",
+        "south": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_14"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "false",
+        "south": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_down_15"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "true",
+        "south": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_0"
+      },
+      "when": {
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_1"
+      },
+      "when": {
+        "east": "false",
+        "north": "false",
+        "south": "true",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_2"
+      },
+      "when": {
+        "east": "true",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_3"
+      },
+      "when": {
+        "east": "true",
+        "north": "false",
+        "south": "true",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_4"
+      },
+      "when": {
+        "east": "false",
+        "north": "true",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_5"
+      },
+      "when": {
+        "east": "false",
+        "north": "true",
+        "south": "true",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_6"
+      },
+      "when": {
+        "east": "true",
+        "north": "true",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_7"
+      },
+      "when": {
+        "east": "true",
+        "north": "true",
+        "south": "true",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_8"
+      },
+      "when": {
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_9"
+      },
+      "when": {
+        "east": "false",
+        "north": "false",
+        "south": "true",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_10"
+      },
+      "when": {
+        "east": "true",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_11"
+      },
+      "when": {
+        "east": "true",
+        "north": "false",
+        "south": "true",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_12"
+      },
+      "when": {
+        "east": "false",
+        "north": "true",
+        "south": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_13"
+      },
+      "when": {
+        "east": "false",
+        "north": "true",
+        "south": "true",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_14"
+      },
+      "when": {
+        "east": "true",
+        "north": "true",
+        "south": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_up_15"
+      },
+      "when": {
+        "east": "true",
+        "north": "true",
+        "south": "true",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_0"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_1"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_2"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_3"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_4"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_5"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_6"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_7"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "false",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_8"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_9"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_10"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_11"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "north": "false",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_12"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "north": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_13"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "north": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_14"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "north": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_north_15"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "north": "false",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_0"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_1"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "south": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_2"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_3"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "south": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_4"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_5"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "south": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_6"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_7"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "south": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_8"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "south": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_9"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "south": "false",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_10"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "south": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_11"
+      },
+      "when": {
+        "down": "false",
+        "east": "true",
+        "south": "false",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_12"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "south": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_13"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "south": "false",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_14"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "south": "false",
+        "up": "false",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_south_15"
+      },
+      "when": {
+        "down": "true",
+        "east": "true",
+        "south": "false",
+        "up": "true",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_0"
+      },
+      "when": {
+        "down": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_1"
+      },
+      "when": {
+        "down": "false",
+        "north": "false",
+        "south": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_2"
+      },
+      "when": {
+        "down": "false",
+        "north": "false",
+        "south": "true",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_3"
+      },
+      "when": {
+        "down": "false",
+        "north": "false",
+        "south": "true",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_4"
+      },
+      "when": {
+        "down": "true",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_5"
+      },
+      "when": {
+        "down": "true",
+        "north": "false",
+        "south": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_6"
+      },
+      "when": {
+        "down": "true",
+        "north": "false",
+        "south": "true",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_7"
+      },
+      "when": {
+        "down": "true",
+        "north": "false",
+        "south": "true",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_8"
+      },
+      "when": {
+        "down": "false",
+        "north": "true",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_9"
+      },
+      "when": {
+        "down": "false",
+        "north": "true",
+        "south": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_10"
+      },
+      "when": {
+        "down": "false",
+        "north": "true",
+        "south": "true",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_11"
+      },
+      "when": {
+        "down": "false",
+        "north": "true",
+        "south": "true",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_12"
+      },
+      "when": {
+        "down": "true",
+        "north": "true",
+        "south": "false",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_13"
+      },
+      "when": {
+        "down": "true",
+        "north": "true",
+        "south": "false",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_14"
+      },
+      "when": {
+        "down": "true",
+        "north": "true",
+        "south": "true",
+        "up": "false",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_west_15"
+      },
+      "when": {
+        "down": "true",
+        "north": "true",
+        "south": "true",
+        "up": "true",
+        "west": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_0"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_1"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_2"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "true",
+        "south": "false",
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_3"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "true",
+        "south": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_4"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_5"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_6"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "true",
+        "south": "false",
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_7"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "true",
+        "south": "false",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_8"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "true",
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_9"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_10"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "true",
+        "south": "true",
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_11"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "true",
+        "south": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_12"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "false",
+        "south": "true",
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_13"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "false",
+        "south": "true",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_14"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "true",
+        "south": "true",
+        "up": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "ftbic:block/industrial_bank_cell_east_15"
+      },
+      "when": {
+        "down": "true",
+        "east": "false",
+        "north": "true",
+        "south": "true",
+        "up": "true"
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "ftbic:block/reinforced_cable_base",
+  "textures": {
+    "center": "ftbic:block/hv_cable"
+  }
+}
