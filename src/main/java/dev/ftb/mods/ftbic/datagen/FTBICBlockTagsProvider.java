@@ -26,6 +26,12 @@ public class FTBICBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(commonBlockTag("relocation_not_permitted"))
+                .add(FTBICBlocks.LANDMARK.get())
+                .add(FTBICElectricBlocks.QUARRY.block.get())
+                .add(FTBICElectricBlocks.PUMP.block.get());
+        tag(commonBlockTag("storage_blocks/enderium")).add(FTBICBlocks.ENDERIUM_BLOCK.get());
+
         tag(FTBICUtils.REINFORCED)
                 .add(FTBICBlocks.REINFORCED_STONE.get())
                 .add(FTBICBlocks.REINFORCED_GLASS.get())

@@ -426,7 +426,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
         add("item.ftbic.overclocker_upgrade", "Overclocker Upgrade");
         add("item.ftbic.powered_crafting_table", "Powered Crafting Table");
         add("item.ftbic.powered_furnace", "Powered Furnace");
-        add("item.ftbic.protein_bar", "Feed The Beast\u00e2\u201e\u00a2 Protein Bar");
+        add("item.ftbic.protein_bar", "Feed The Beast\u2122 Protein Bar");
         add("item.ftbic.pump", "Pump");
         add("item.ftbic.quad_uranium_fuel_rod", "Quad Uranium Fuel Rod");
         add("item.ftbic.quantum_boots", "Quantum Boots");
@@ -484,7 +484,7 @@ public class FTBICLanguageProvider extends LanguageProvider {
         add("ftbic.requires_chestplate", "Requires Chestplate to function");
         add("ftbic.zap_to_fe_conversion", "%s = %s FE");
 
-        add("ftbic.jade.burnt", "\u00c2\u00a7cBurnt");
+        add("ftbic.jade.burnt", "\u00a7cBurnt");
         add("ftbic.jade.cable_tier", "Tier: %s");
         add("ftbic.jade.fluid", "Fluid: %s / %s mB");
         add("ftbic.jade.fluid_empty", "Tank: Empty");

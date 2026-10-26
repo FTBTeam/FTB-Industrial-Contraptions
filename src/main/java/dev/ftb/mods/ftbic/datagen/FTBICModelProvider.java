@@ -7,10 +7,13 @@ import dev.ftb.mods.ftbic.block.ElectricBlockInstance;
 import dev.ftb.mods.ftbic.block.FTBICBlocks;
 import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.block.SprayPaintable;
+import dev.ftb.mods.ftbic.client.RefiningTintSource;
 import dev.ftb.mods.ftbic.item.ElectricBlockItem;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.RefiningItem;
 import dev.ftb.mods.ftbic.material.MaterialEntries;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -20,14 +23,18 @@ import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.renderer.block.dispatch.Variant;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -45,16 +52,18 @@ public class FTBICModelProvider extends ModelProvider {
 
     @Override
     protected Stream<? extends Holder<Block>> getKnownBlocks() {
-        return Stream.empty();
+        return FTBICBlocks.REGISTRY.getEntries().stream();
     }
 
     @Override
     protected Stream<? extends Holder<Item>> getKnownItems() {
-        return Stream.empty();
+        return FTBICItems.REGISTRY.getEntries().stream();
     }
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        remainingBlockstates(blockModels);
+        simpleModels(blockModels);
         MaterialEntries.all().forEach(entry -> {
             if (entry.component().isBlock()) {
                 blockModels.createTrivialCube(entry.block().get());
@@ -86,9 +95,11 @@ public class FTBICModelProvider extends ModelProvider {
 
         for (ElectricBlockInstance m : FTBICElectricBlocks.ALL) {
             if (m.bankCasing) {
+                FTBICBankModels.generate(blockModels, m);
                 blockModels.registerSimpleItemModel(m.item.get(), FTBIC.id("block/" + m.id + "_item"));
                 continue;
             }
+            FTBICMachineModels.generate(blockModels, m);
             String modelPath = "block/electric/light/" + m.id + (m.canBeActive ? "_off" : "");
             blockModels.registerSimpleItemModel(m.item.get(), FTBIC.id(modelPath));
             electricBlockstate(blockModels, m);
@@ -115,7 +126,12 @@ public class FTBICModelProvider extends ModelProvider {
             Item item = holder.get();
             String id = holder.getId().getPath();
 
-            if (item instanceof ElectricBlockItem || item instanceof RefiningItem) continue;
+            if (item instanceof ElectricBlockItem) continue;
+            if (item instanceof RefiningItem) {
+                Identifier model = itemModels.createFlatItemModel(item, ModelTemplates.FLAT_ITEM);
+                itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(model, new RefiningTintSource()));
+                continue;
+            }
 
             if (item instanceof BlockItem) {
                 if (CUSTOM_CABLE_ITEMS.contains(id)) {
@@ -134,6 +150,47 @@ public class FTBICModelProvider extends ModelProvider {
                 itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
             }
         }
+    }
+
+    private static void remainingBlockstates(BlockModelGenerators models) {
+        for (var block :
+                List.of(FTBICBlocks.ACTIVE_NUKE, FTBICBlocks.NUKE, FTBICBlocks.LANDMARK, FTBICBlocks.RUBBER_SHEET)) {
+            models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(
+                    block.get(),
+                    BlockModelGenerators.plainVariant(
+                            FTBIC.id("block/" + block.getId().getPath()))));
+        }
+        var coral = WeightedList.<Variant>builder();
+        for (String type : List.of("horn", "fire", "bubble", "brain", "tube")) {
+            coral.add(new Variant(Identifier.withDefaultNamespace("block/dead_" + type + "_coral_block")), 1);
+        }
+        models.blockStateOutput.accept(
+                BlockModelGenerators.createSimpleBlock(FTBICBlocks.EXFLUID.get(), new MultiVariant(coral.build())));
+    }
+
+    private static void simpleModels(BlockModelGenerators models) {
+        ModelTemplate tnt = new ModelTemplate(
+                Optional.of(Identifier.withDefaultNamespace("block/tnt")), Optional.empty(), TextureSlot.SIDE);
+        for (String name : List.of("nuke", "active_nuke")) {
+            String texture = name.equals("nuke") ? "nuke_side" : "nuke_side_active";
+            tnt.create(
+                    FTBIC.id("block/" + name),
+                    new TextureMapping().put(TextureSlot.SIDE, new Material(FTBIC.id("block/" + texture))),
+                    models.modelOutput);
+        }
+        TextureSlot center = TextureSlot.create("center");
+        ModelTemplate reinforced =
+                new ModelTemplate(Optional.of(FTBIC.id("block/reinforced_cable_base")), Optional.empty(), center);
+        for (String tier : List.of("lv", "mv", "hv", "ev", "iv", "burnt")) {
+            reinforced.create(
+                    FTBIC.id("block/" + tier + "_reinforced_cable"),
+                    new TextureMapping().put(center, new Material(FTBIC.id("block/" + tier + "_cable"))),
+                    models.modelOutput);
+        }
+        ModelTemplates.CUBE_ALL.create(
+                FTBIC.id("enderium_block"),
+                TextureMapping.cube(new Material(FTBIC.id("block/enderium_block"))),
+                models.modelOutput);
     }
 
     private static void electricBlockstate(BlockModelGenerators blockModels, ElectricBlockInstance m) {
