@@ -10,7 +10,13 @@ public final class FTBICDataGen {
 
     @SubscribeEvent
     public static void gatherClientData(GatherDataEvent.Client event) {
+        event.createDatapackRegistryObjects(FTBICWorldgen.registries());
         event.createProvider(FTBICModelProvider::new);
+        event.createProvider(FTBICEquipmentProvider::new);
+        event.createProvider(FTBICSoundProvider::new);
+        event.createProvider(FTBICTextureMetadataProvider::new);
+        event.createProvider(FTBICContexProvider::new);
+        event.createProvider(FTBICCompatRecipeProvider::new);
         event.createProvider(FTBICRecipeProvider.Runner::new);
         event.createProvider(FTBICLanguageProvider::new);
         event.createProvider(FTBICBlockTagsProvider::new);

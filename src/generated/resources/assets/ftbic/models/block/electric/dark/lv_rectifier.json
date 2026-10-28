@@ -1,0 +1,7 @@
+{
+  "parent": "ftbic:block/orientable_3d",
+  "textures": {
+    "front": "ftbic:block/electric/dark/lv_rectifier_in",
+    "side": "ftbic:block/electric/dark/lv_rectifier_out"
+  }
+}

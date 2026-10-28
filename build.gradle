@@ -107,7 +107,7 @@ dependencies {
 }
 
 tasks.withType(ProcessResources).configureEach {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    duplicatesStrategy = DuplicatesStrategy.FAIL
     var replaceProperties = [
             mod_id                 : mod_id,
             version                : version,
