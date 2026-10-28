@@ -1,0 +1,103 @@
+{
+  "centrifuge": {
+    "sounds": [
+      "ftbic:centrifuge"
+    ],
+    "subtitle": "subtitles.ftbic.centrifuge"
+  },
+  "charge_complete": {
+    "sounds": [
+      {
+        "attenuation_distance": 32,
+        "name": "ftbic:charge_complete"
+      }
+    ],
+    "subtitle": "subtitles.ftbic.charge_complete"
+  },
+  "compressor": {
+    "sounds": [
+      "ftbic:compressor"
+    ],
+    "subtitle": "subtitles.ftbic.compressor"
+  },
+  "generator": {
+    "sounds": [
+      "ftbic:generator"
+    ],
+    "subtitle": "subtitles.ftbic.generator"
+  },
+  "macerator": {
+    "sounds": [
+      "ftbic:macerator"
+    ],
+    "subtitle": "subtitles.ftbic.macerator"
+  },
+  "nuclear_explosion": {
+    "sounds": [
+      {
+        "attenuation_distance": 32,
+        "name": "ftbic:nuclear_explosion"
+      }
+    ],
+    "subtitle": "subtitles.ftbic.nuclear_explosion"
+  },
+  "nuke_arm": {
+    "sounds": [
+      {
+        "attenuation_distance": 32,
+        "name": "ftbic:nuke_arm"
+      }
+    ],
+    "subtitle": "subtitles.ftbic.nuke_arm"
+  },
+  "nuke_tick": {
+    "sounds": [
+      {
+        "attenuation_distance": 32,
+        "name": "ftbic:nuke_tick"
+      }
+    ],
+    "subtitle": "subtitles.ftbic.nuke_tick"
+  },
+  "ore_washer": {
+    "sounds": [
+      "ftbic:ore_washer"
+    ],
+    "subtitle": "subtitles.ftbic.ore_washer"
+  },
+  "radiation": {
+    "sounds": [
+      "ambient/nether/basalt_deltas/click2",
+      "ambient/nether/basalt_deltas/click5",
+      "ambient/nether/basalt_deltas/click7"
+    ],
+    "subtitle": "subtitles.ftbic.radiation"
+  },
+  "reactor_critical": {
+    "sounds": [
+      {
+        "attenuation_distance": 32,
+        "name": "ftbic:reactor_critical"
+      }
+    ],
+    "subtitle": "subtitles.ftbic.reactor_critical"
+  },
+  "reactor_warning": {
+    "sounds": [
+      {
+        "attenuation_distance": 32,
+        "name": "ftbic:reactor_warning"
+      }
+    ],
+    "subtitle": "subtitles.ftbic.reactor_warning"
+  },
+  "teleport": {
+    "sounds": [
+      {
+        "attenuation_distance": 32,
+        "name": "ftbic:teleport"
+      }
+    ],
+    "subtitle": "subtitles.ftbic.teleport"
+  }
+}

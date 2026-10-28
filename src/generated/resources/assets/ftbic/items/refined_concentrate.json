@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "ftbic:item/refined_concentrate",
+    "tints": [
+      {
+        "type": "ftbic:refining_material"
+      }
+    ]
+  }
+}

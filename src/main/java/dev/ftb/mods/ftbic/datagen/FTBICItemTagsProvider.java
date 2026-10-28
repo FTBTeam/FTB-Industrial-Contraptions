@@ -1,6 +1,7 @@
 package dev.ftb.mods.ftbic.datagen;
 
 import dev.ftb.mods.ftbic.FTBIC;
+import dev.ftb.mods.ftbic.block.FTBICElectricBlocks;
 import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.material.Material;
 import dev.ftb.mods.ftbic.material.MaterialComponent;
@@ -37,6 +38,19 @@ public class FTBICItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(commonItemTag("dusts/enderium")).add(FTBICItems.ENDERIUM_DUST.item.get());
+        tag(commonItemTag("gears/enderium")).add(FTBICItems.ENDERIUM_GEAR.item.get());
+        tag(commonItemTag("ingots/enderium")).add(FTBICItems.ENDERIUM_INGOT.item.get());
+        tag(commonItemTag("nuggets/enderium")).add(FTBICItems.ENDERIUM_NUGGET.item.get());
+        tag(commonItemTag("plates/enderium")).add(FTBICItems.ENDERIUM_PLATE.item.get());
+        tag(commonItemTag("relocation_not_permitted"))
+                .add(FTBICItems.LANDMARK.get())
+                .add(FTBICElectricBlocks.QUARRY.item.get())
+                .add(FTBICElectricBlocks.PUMP.item.get());
+        tag(commonItemTag("rods/enderium")).add(FTBICItems.ENDERIUM_ROD.item.get());
+        tag(commonItemTag("storage_blocks/enderium")).add(FTBICItems.ENDERIUM_BLOCK.get());
+        tag(commonItemTag("wires/enderium")).add(FTBICItems.ENDERIUM_WIRE.item.get());
+
         for (var entry : MaterialEntries.all()) {
             Item item = entry.item().get();
             Material mat = entry.material();
