@@ -68,9 +68,23 @@ public record SideConfiguration(int items, int fluids, int energy) {
             };
         }
 
+        private static final Face[][] RELATIVE = createRelativeLookup();
+
+        private static Face[][] createRelativeLookup() {
+            Direction[] directions = Direction.values();
+            Face[][] result = new Face[directions.length][directions.length];
+            for (Direction front : directions) {
+                for (Face face : values()) {
+                    result[front.ordinal()][face.direction(front).ordinal()] = face;
+                }
+            }
+            return result;
+        }
+
         public static Face relative(Direction front, Direction side) {
-            for (Face face : values()) if (face.direction(front) == side) return face;
-            throw new IllegalArgumentException("Unmapped machine face");
+            int frontIndex = front.ordinal();
+            if (side == null) throw new IllegalArgumentException("Unmapped machine face");
+            return RELATIVE[frontIndex][side.ordinal()];
         }
     }
 
