@@ -26,6 +26,11 @@ public record SideConfiguration(int items, int fluids, int energy) {
         ENERGY
     }
 
+    private static final class Modes {
+        // Enum.values() clones its array. Keep this private copy out of the per-transfer path.
+        private static final Mode[] VALUES = Mode.values();
+    }
+
     public enum Mode {
         DEFAULT("*", 0xFFB0B0B0),
         DISABLED("X", 0xFFEE7777),
@@ -68,9 +73,23 @@ public record SideConfiguration(int items, int fluids, int energy) {
             };
         }
 
+        private static final Face[][] RELATIVE = createRelativeLookup();
+
+        private static Face[][] createRelativeLookup() {
+            Direction[] directions = Direction.values();
+            Face[][] result = new Face[directions.length][directions.length];
+            for (Direction front : directions) {
+                for (Face face : values()) {
+                    result[front.ordinal()][face.direction(front).ordinal()] = face;
+                }
+            }
+            return result;
+        }
+
         public static Face relative(Direction front, Direction side) {
-            for (Face face : values()) if (face.direction(front) == side) return face;
-            throw new IllegalArgumentException("Unmapped machine face");
+            int frontIndex = front.ordinal();
+            if (side == null) throw new IllegalArgumentException("Unmapped machine face");
+            return RELATIVE[frontIndex][side.ordinal()];
         }
     }
 
@@ -82,7 +101,7 @@ public record SideConfiguration(int items, int fluids, int energy) {
                     case ENERGY -> energy;
                 };
         int mode = packed >> (face.ordinal() * 3) & 7;
-        return mode < Mode.values().length ? Mode.values()[mode] : Mode.DEFAULT;
+        return mode < Modes.VALUES.length ? Modes.VALUES[mode] : Mode.DEFAULT;
     }
 
     public SideConfiguration with(Resource resource, Face face, Mode mode) {

@@ -32,6 +32,11 @@ public class ElectricBlockEnergyHandler extends SnapshotJournal<Double> implemen
         return fe >= (double) Long.MAX_VALUE ? Long.MAX_VALUE : (long) fe;
     }
 
+    // Queried only for this exact storage implementation, never forwarding subclasses.
+    boolean hasNoInsertRoom() {
+        return !canInsert || be.isBurnt() || be.getEnergyCapacity() - be.getEnergy() <= 0D;
+    }
+
     @Override
     public int insert(int amount, TransactionContext transaction) {
         if (!canInsert || amount <= 0 || be.isBurnt()) return 0;

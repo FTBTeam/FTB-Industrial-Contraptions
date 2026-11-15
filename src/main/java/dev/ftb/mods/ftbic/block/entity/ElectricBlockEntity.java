@@ -61,12 +61,19 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class ElectricBlockEntity extends BlockEntity implements ZapEnergyHandler {
+    // Block states are immutable. Keep only the last lookup; rotations and property changes miss immediately.
+    @Nullable
+    private FacingCache cachedFacing;
+
+    private record FacingCache(BlockState state, EnumProperty<Direction> property, Direction direction) {}
+
     private static final Map<ResourceKey<Level>, long[]> ELECTRIC_NETWORK_CHANGES = new HashMap<>();
     private static final String CLIENT_SYNC = "ClientSync";
     private static final Set<String> MENU_SYNCED_KEYS =
@@ -522,12 +529,20 @@ public class ElectricBlockEntity extends BlockEntity implements ZapEnergyHandler
     public void spawnActiveParticles(Level level, double x, double y, double z, BlockState state, RandomSource r) {}
 
     public Direction getFacing(Direction def) {
-        if (electricBlockInstance.facingProperty == null) {
+        var property = electricBlockInstance.facingProperty;
+        if (property == null) {
             return def;
         }
         BlockState state = getBlockState();
         if (state.getBlock() instanceof ElectricBlock) {
-            return state.getValue(electricBlockInstance.facingProperty);
+            var cached = cachedFacing;
+            if (cached != null && state == cached.state() && property == cached.property()) {
+                return cached.direction();
+            }
+            // Resolve before caching so failed lookups retain their original behavior.
+            Direction facing = state.getValue(property);
+            cachedFacing = new FacingCache(state, property, facing);
+            return facing;
         }
         return def;
     }
