@@ -26,6 +26,11 @@ public record SideConfiguration(int items, int fluids, int energy) {
         ENERGY
     }
 
+    private static final class Modes {
+        // Enum.values() clones its array. Keep this private copy out of the per-transfer path.
+        private static final Mode[] VALUES = Mode.values();
+    }
+
     public enum Mode {
         DEFAULT("*", 0xFFB0B0B0),
         DISABLED("X", 0xFFEE7777),
@@ -96,7 +101,7 @@ public record SideConfiguration(int items, int fluids, int energy) {
                     case ENERGY -> energy;
                 };
         int mode = packed >> (face.ordinal() * 3) & 7;
-        return mode < Mode.values().length ? Mode.values()[mode] : Mode.DEFAULT;
+        return mode < Modes.VALUES.length ? Modes.VALUES[mode] : Mode.DEFAULT;
     }
 
     public SideConfiguration with(Resource resource, Face face, Mode mode) {

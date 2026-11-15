@@ -21,7 +21,8 @@ public record SidedEnergyHandler(
 
     @Override
     public int insert(int amount, TransactionContext tx) {
-        if (amount > 0 && delegate.getClass() == ElectricBlockEnergyHandler.class
+        if (amount > 0
+                && delegate.getClass() == ElectricBlockEnergyHandler.class
                 && ((ElectricBlockEnergyHandler) delegate).hasNoInsertRoom()) return 0;
         if (side != null && delegate instanceof ElectricBlockEnergyHandler && !machine.isValidEnergyInputSide(side))
             return 0;

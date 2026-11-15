@@ -1,0 +1,7 @@
+modLoader="javafml"
+loaderVersion="[11,)"
+license="MIT"
+[[mods]]
+modId="itv_facing_qa"
+version="1.0.0"
+displayName="Local Facing QA"
